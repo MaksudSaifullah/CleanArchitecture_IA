@@ -1,6 +1,7 @@
 ﻿
 using AutoMapper;
 using Internal.Audit.Application.Features.Users.Commands.AddUser;
+using Internal.Audit.Application.Features.Users.Commands.UpdateUser;
 using Internal.Audit.Application.Features.Users.Queries.GetUserList;
 using Internal.Audit.Domain.Entities;
 
@@ -12,5 +13,6 @@ public class MappingProfile: Profile
     {
         CreateMap<User, UserDTO>().ReverseMap();
         CreateMap<User, AddUserCommand>().ReverseMap();
+        CreateMap<User, UpdateUserCommand>().ReverseMap();
     }
 }

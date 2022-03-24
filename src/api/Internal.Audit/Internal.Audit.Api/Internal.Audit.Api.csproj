@@ -12,7 +12,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Internal.Audit.Application\Internal.Audit.Application.csproj" />
-    <ProjectReference Include="..\Internal.Audit.Infrastructure.Data\Internal.Audit.Infrastructure.Data.csproj" />
+    <ProjectReference Include="..\Internal.Audit.Infrastructure.Persistent\Internal.Audit.Infrastructure.Persistent.csproj" />
   </ItemGroup>
 
 </Project>

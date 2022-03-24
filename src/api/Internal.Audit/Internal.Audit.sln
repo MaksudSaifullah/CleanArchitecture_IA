@@ -3,15 +3,15 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.0.31903.59
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Internal.Audit.Api", "Internal.Audit.Api\Internal.Audit.Api.csproj", "{41DD35FE-67F7-4381-B019-099B4E0AF2A5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Internal.Audit.Api", "Internal.Audit.Api\Internal.Audit.Api.csproj", "{41DD35FE-67F7-4381-B019-099B4E0AF2A5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Internal.Audit.Application", "Internal.Audit.Application\Internal.Audit.Application.csproj", "{3F46F36D-5530-4979-A87E-E3F93BB4AEFB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Internal.Audit.Application", "Internal.Audit.Application\Internal.Audit.Application.csproj", "{3F46F36D-5530-4979-A87E-E3F93BB4AEFB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Internal.Audit.Domain", "Internal.Audit.Domain\Internal.Audit.Domain.csproj", "{56BD7B48-16BC-4459-AEFA-CD8C930F72C4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Internal.Audit.Domain", "Internal.Audit.Domain\Internal.Audit.Domain.csproj", "{56BD7B48-16BC-4459-AEFA-CD8C930F72C4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Internal.Audit.Infrastructure.Data", "Internal.Audit.Infrastructure.Data\Internal.Audit.Infrastructure.Data.csproj", "{1F7A7067-D202-4AA9-9718-CDA37766819A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Internal.Audit.Infrastructure.Notification", "Internal.Audit.Infrastructure.Notification\Internal.Audit.Infrastructure.Notification.csproj", "{0A9588B3-6683-407B-92D0-962129CD152F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Internal.Audit.Infrastructure.Notification", "Internal.Audit.Infrastructure.Notification\Internal.Audit.Infrastructure.Notification.csproj", "{0A9588B3-6683-407B-92D0-962129CD152F}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Internal.Audit.Infrastructure.Persistent", "Internal.Audit.Infrastructure.Persistent\Internal.Audit.Infrastructure.Persistent.csproj", "{67D8EB73-1C43-48B1-B484-66F00222189A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -31,14 +31,14 @@ Global
 		{56BD7B48-16BC-4459-AEFA-CD8C930F72C4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{56BD7B48-16BC-4459-AEFA-CD8C930F72C4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{56BD7B48-16BC-4459-AEFA-CD8C930F72C4}.Release|Any CPU.Build.0 = Release|Any CPU
-		{1F7A7067-D202-4AA9-9718-CDA37766819A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{1F7A7067-D202-4AA9-9718-CDA37766819A}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{1F7A7067-D202-4AA9-9718-CDA37766819A}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{1F7A7067-D202-4AA9-9718-CDA37766819A}.Release|Any CPU.Build.0 = Release|Any CPU
 		{0A9588B3-6683-407B-92D0-962129CD152F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{0A9588B3-6683-407B-92D0-962129CD152F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0A9588B3-6683-407B-92D0-962129CD152F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0A9588B3-6683-407B-92D0-962129CD152F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{67D8EB73-1C43-48B1-B484-66F00222189A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{67D8EB73-1C43-48B1-B484-66F00222189A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{67D8EB73-1C43-48B1-B484-66F00222189A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{67D8EB73-1C43-48B1-B484-66F00222189A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

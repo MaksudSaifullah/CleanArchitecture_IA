@@ -6,8 +6,4 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\Internal.Audit.Application\Internal.Audit.Application.csproj" />
-  </ItemGroup>
-
 </Project>

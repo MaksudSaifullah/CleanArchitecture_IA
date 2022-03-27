@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Internal.Audit.Api.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/v{version:apiVersion}/user")]
     [ApiController]
     public class UserController : ControllerBase
     {

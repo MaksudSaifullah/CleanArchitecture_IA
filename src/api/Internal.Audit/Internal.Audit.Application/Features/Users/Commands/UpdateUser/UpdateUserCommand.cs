@@ -1,8 +1,10 @@
 ﻿
+using Internal.Audit.Application.Common.Security;
 using MediatR;
 
 namespace Internal.Audit.Application.Features.Users.Commands.UpdateUser;
 
+[Authorize(Roles = "ADMIN")]
 public class UpdateUserCommand: IRequest<UpdateUserResponseDTO>
 {
     public long Id { get; set; }

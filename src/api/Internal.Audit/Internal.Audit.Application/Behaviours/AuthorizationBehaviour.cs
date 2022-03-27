@@ -21,8 +21,27 @@ public class AuthorizationBehaviour<TRequest, TResponse> : IPipelineBehavior<TRe
 
         if (authorizeAttributes.Any())
         {
-            if (string.IsNullOrEmpty(_currentAuthService.UserId))
+            if (string.IsNullOrEmpty(_currentAuthService.Email))
                 throw new UnauthorizedAccessException();
+
+            var roles = authorizeAttributes.SelectMany(a => a.Roles.Split(',')).ToList();
+
+            if (roles.Any())
+            {
+                var authorize = false;
+                foreach (var role in roles)
+                {
+                    if (role.Equals("ADMIN")) //TODO: need to check roles from DB
+                    {
+                        authorize = true;
+                        break;
+                    }
+                }
+
+                if(!authorize)
+                    throw new UnauthorizedAccessException();
+            }
+
         }
 
         return await next();

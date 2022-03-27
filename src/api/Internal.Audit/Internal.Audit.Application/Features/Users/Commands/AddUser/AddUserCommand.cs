@@ -1,8 +1,10 @@
 ﻿
+using Internal.Audit.Application.Common.Security;
 using MediatR;
 
 namespace Internal.Audit.Application.Features.Users.Commands.AddUser;
 
+[Authorize(Roles = "ADMIN")]
 public class AddUserCommand: IRequest<AddUserResponseDTO>
 {
     public long Id { get; set; }

@@ -3,6 +3,7 @@ using Internal.Audit.Application.Features.Users.Commands.DeleteUser;
 using Internal.Audit.Application.Features.Users.Commands.UpdateUser;
 using Internal.Audit.Application.Features.Users.Queries.GetUserList;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -10,6 +11,7 @@ namespace Internal.Audit.Api.Controllers
 {
     [Route("api/v{version:apiVersion}/user")]
     [ApiController]
+    //[Authorize]
     public class UserController : ControllerBase
     {
         private readonly IMediator _mediator;

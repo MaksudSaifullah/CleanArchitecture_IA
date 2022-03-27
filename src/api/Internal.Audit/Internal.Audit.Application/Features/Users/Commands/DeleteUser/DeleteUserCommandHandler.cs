@@ -7,18 +7,19 @@ namespace Internal.Audit.Application.Features.Users.Commands.DeleteUser;
 
 public class DeleteUserCommandHandler : IRequestHandler<DeleteUserCommand, DeleteUserResponseDTO>
 {
+    private readonly IUnitOfWork _unitOfWork;
     private readonly IUserRepository _userRepository;
-    private readonly IMapper _mapper;
 
-    public DeleteUserCommandHandler(IUserRepository userRepository, IMapper mapper)
+    public DeleteUserCommandHandler(IUserRepository userRepository, IUnitOfWork unitOfWork)
     {
         _userRepository = userRepository ?? throw new ArgumentNullException(nameof(userRepository));
-        _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
+        _unitOfWork = unitOfWork ?? throw new ArgumentNullException(nameof(unitOfWork));
     }
 
     public async Task<DeleteUserResponseDTO> Handle(DeleteUserCommand request, CancellationToken cancellationToken)
     {
         var result = await _userRepository.Delete(request.Id);
-        return new DeleteUserResponseDTO(request.Id, result, result ? "User Deleted Successfully!" : "Error while deleting user!");
+        var rowsAffected = await _unitOfWork.CommitAsync();
+        return new DeleteUserResponseDTO(request.Id, rowsAffected> 0, rowsAffected > 0 ? "User Deleted Successfully!" : "Error while deleting user!");
     }
 }

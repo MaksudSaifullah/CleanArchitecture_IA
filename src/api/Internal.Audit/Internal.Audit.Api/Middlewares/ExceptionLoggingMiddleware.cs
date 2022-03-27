@@ -23,7 +23,7 @@ public class ExceptionLoggingMiddleware
         catch (Exception ex)
         {
             LogException(ex);
-            await HandleException(httpContext);
+            await HandleException(httpContext, ex.Message);
         }
     }
     private void LogException(Exception exception)
@@ -33,7 +33,7 @@ public class ExceptionLoggingMiddleware
             ": Something went wrong: " + exception.Message);
     }
 
-    private async Task HandleException(HttpContext context)
+    private async Task HandleException(HttpContext context, string exceptionMessage)
     {
         context.Response.ContentType = "application/json";
         context.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
@@ -41,7 +41,7 @@ public class ExceptionLoggingMiddleware
         (
             0,
             false,
-            "Something went wrong. Please contact administrator"
+            $"Something went wrong ({exceptionMessage}). Please contact administrator"
         ).ToString());
     }
 }

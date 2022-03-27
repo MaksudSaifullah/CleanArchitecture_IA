@@ -9,19 +9,22 @@ namespace Internal.Audit.Application.Features.Users.Commands.UpdateUser;
 
 public class UpdateUserCommandHandler : IRequestHandler<UpdateUserCommand, UpdateUserResponseDTO>
 {
+    private readonly IUnitOfWork _unitOfWork;
     private readonly IUserRepository _userRepository;
     private readonly IMapper _mapper;
 
-    public UpdateUserCommandHandler(IUserRepository userRepository, IMapper mapper)
+    public UpdateUserCommandHandler(IUserRepository userRepository, IMapper mapper, IUnitOfWork unitOfWork)
     {
         _userRepository = userRepository ?? throw new ArgumentNullException(nameof(userRepository));
         _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
+        _unitOfWork = unitOfWork ?? throw new ArgumentNullException(nameof(unitOfWork));
     }
 
     public async Task<UpdateUserResponseDTO> Handle(UpdateUserCommand request, CancellationToken cancellationToken)
     {
         var user = _mapper.Map<User>(request);
         var modifiedUser = await _userRepository.Update(user);
-        return new UpdateUserResponseDTO(modifiedUser.Id, modifiedUser.Id > 0, modifiedUser.Id > 0 ? "User Updated Successfully!" : "Error while updating user!");
+        var rowsAffected = await _unitOfWork.CommitAsync();
+        return new UpdateUserResponseDTO(modifiedUser.Id, rowsAffected > 0, rowsAffected > 0 ? "User Updated Successfully!" : "Error while updating user!");
     }
 }

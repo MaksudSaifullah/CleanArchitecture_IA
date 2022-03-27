@@ -43,10 +43,10 @@ public class PerformanceLoggingBehaviour<TRequest, TResponse> : IPipelineBehavio
         if (elapsedMilliseconds > timeThreshold)
         {
             var requestName = typeof(TRequest).Name;
-            var userId = _currentAuthService.UserId ?? string.Empty;
+            var email = _currentAuthService.Email ?? string.Empty;
 
             _logger.LogWarning("CleanArchitecture Long Running Request: {Name} ({ElapsedMilliseconds} milliseconds) {@UserId} {@Request}",
-                requestName, elapsedMilliseconds, userId, request);
+                requestName, elapsedMilliseconds, email, request);
         }
 
         return response;

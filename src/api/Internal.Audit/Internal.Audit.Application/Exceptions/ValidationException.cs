@@ -13,11 +13,18 @@ public class ValidationException: ApplicationException
     }
 
     public ValidationException(IEnumerable<ValidationFailure> failures)
-        : this()
+        : base(FormatExceptions(failures))
     {
         Errors = failures
             .GroupBy(e => e.PropertyName, e => e.ErrorMessage)
             .ToDictionary(failureGroup => failureGroup.Key, failureGroup => failureGroup.ToArray());
+    }
+
+    private static string FormatExceptions(IEnumerable<ValidationFailure> failures)
+    {
+        var exceptios = failures.Select(e => $"{e.PropertyName}: {e.ErrorMessage}");
+
+        return string.Join(Environment.NewLine, exceptios);
     }
     
 }

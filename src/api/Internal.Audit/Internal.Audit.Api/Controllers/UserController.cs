@@ -11,7 +11,7 @@ namespace Internal.Audit.Api.Controllers
 {
     [Route("api/v{version:apiVersion}/user")]
     [ApiController]
-    //[Authorize]
+    [Authorize]
     public class UserController : ControllerBase
     {
         private readonly IMediator _mediator;

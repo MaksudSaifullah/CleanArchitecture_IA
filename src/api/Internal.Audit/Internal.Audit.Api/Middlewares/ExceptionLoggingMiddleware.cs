@@ -41,7 +41,7 @@ public class ExceptionLoggingMiddleware
         (
             0,
             false,
-            $"Something went wrong ({exceptionMessage}). Please contact administrator"
+            $"{exceptionMessage}"
         ).ToString());
     }
 }

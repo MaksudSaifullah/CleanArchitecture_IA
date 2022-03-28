@@ -6,11 +6,11 @@ using System.Linq.Expressions;
 
 namespace Internal.Audit.Infrastructure.Persistent.Repositories;
 
-public class RepositoryBase<TEntity> : IAsyncRepository<TEntity> where TEntity : EntityBase
+public class CommandRepositoryBase<TEntity> : IAsyncCommandRepository<TEntity> where TEntity : EntityBase
 {
     protected readonly InternalAuditContext _dbContext;
 
-    public RepositoryBase(InternalAuditContext dbContext)
+    public CommandRepositoryBase(InternalAuditContext dbContext)
     {
         _dbContext = dbContext ?? throw new ArgumentNullException(nameof(dbContext));
     }

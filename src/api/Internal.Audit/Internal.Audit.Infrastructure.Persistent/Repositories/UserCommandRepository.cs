@@ -4,9 +4,9 @@ using Internal.Audit.Domain.Entities;
 
 namespace Internal.Audit.Infrastructure.Persistent.Repositories;
 
-public class UserRepository : RepositoryBase<User>, IUserRepository
+public class UserCommandRepository : CommandRepositoryBase<User>, IUserCommandRepository
 {
-    public UserRepository(InternalAuditContext context): base(context)
+    public UserCommandRepository(InternalAuditContext context): base(context)
     {
     }   
     

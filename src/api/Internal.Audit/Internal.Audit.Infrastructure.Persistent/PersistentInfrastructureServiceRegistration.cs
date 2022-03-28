@@ -15,8 +15,10 @@ public static class PersistentInfrastructureServiceRegistration
             options.UseSqlServer(configuration.GetConnectionString("InternalAuditDb")));
 
         services.AddScoped<IUnitOfWork, UnitOfWork>();
-        services.AddScoped(typeof(IAsyncRepository<>), typeof(RepositoryBase<>));
-        services.AddScoped<IUserRepository, UserRepository>();
+        services.AddScoped(typeof(IAsyncCommandRepository<>), typeof(CommandRepositoryBase<>));
+        services.AddScoped(typeof(IAsyncQueryRepository<>), typeof(QueryRepositoryBase<>));
+        services.AddScoped<IUserCommandRepository, UserCommandRepository>();
+        services.AddScoped<IUserQueryRepository>(s => new UserQueryRepository(configuration.GetConnectionString("InternalAuditDb")));
 
         return services;
     }

@@ -8,9 +8,9 @@ namespace Internal.Audit.Application.Features.Users.Commands.DeleteUser;
 public class DeleteUserCommandHandler : IRequestHandler<DeleteUserCommand, DeleteUserResponseDTO>
 {
     private readonly IUnitOfWork _unitOfWork;
-    private readonly IUserRepository _userRepository;
+    private readonly IUserCommandRepository _userRepository;
 
-    public DeleteUserCommandHandler(IUserRepository userRepository, IUnitOfWork unitOfWork)
+    public DeleteUserCommandHandler(IUserCommandRepository userRepository, IUnitOfWork unitOfWork)
     {
         _userRepository = userRepository ?? throw new ArgumentNullException(nameof(userRepository));
         _unitOfWork = unitOfWork ?? throw new ArgumentNullException(nameof(unitOfWork));

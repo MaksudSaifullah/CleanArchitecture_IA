@@ -9,10 +9,10 @@ namespace Internal.Audit.Application.Features.Users.Commands.AddUser;
 public class AddUserCommandHandler : IRequestHandler<AddUserCommand, AddUserResponseDTO>
 {
     private readonly IUnitOfWork _unitOfWork;
-    private readonly IUserRepository _userRepository;
+    private readonly IUserCommandRepository _userRepository;
     private readonly IMapper _mapper;
 
-    public AddUserCommandHandler(IUserRepository userRepository, IMapper mapper, IUnitOfWork unitOfWork)
+    public AddUserCommandHandler(IUserCommandRepository userRepository, IMapper mapper, IUnitOfWork unitOfWork)
     {
         _userRepository = userRepository ?? throw new ArgumentNullException(nameof(userRepository));
         _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));

@@ -10,10 +10,10 @@ namespace Internal.Audit.Application.Features.Users.Commands.UpdateUser;
 public class UpdateUserCommandHandler : IRequestHandler<UpdateUserCommand, UpdateUserResponseDTO>
 {
     private readonly IUnitOfWork _unitOfWork;
-    private readonly IUserRepository _userRepository;
+    private readonly IUserCommandRepository _userRepository;
     private readonly IMapper _mapper;
 
-    public UpdateUserCommandHandler(IUserRepository userRepository, IMapper mapper, IUnitOfWork unitOfWork)
+    public UpdateUserCommandHandler(IUserCommandRepository userRepository, IMapper mapper, IUnitOfWork unitOfWork)
     {
         _userRepository = userRepository ?? throw new ArgumentNullException(nameof(userRepository));
         _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));

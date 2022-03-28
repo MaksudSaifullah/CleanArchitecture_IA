@@ -11,21 +11,18 @@ namespace Internal.Audit.Application.Features.Users.Queries.GetAuthUser;
 
 public class GetAuthUserQeuryHandler : IRequestHandler<GetAuthUserQeury, AuthUserDTO>
 {
-    private readonly IUnitOfWork _uniOfWork;
-    private readonly IUserRepository _userRepository;
+    private readonly IUserQueryRepository _userRepository;
     private readonly IJwtTokenService _jwtTokenService;
 
-    public GetAuthUserQeuryHandler(IUserRepository userRepository, IJwtTokenService jwtTokenService, IUnitOfWork unitOfWork)
+    public GetAuthUserQeuryHandler(IUserQueryRepository userRepository, IJwtTokenService jwtTokenService)
     {
         _userRepository = userRepository ?? throw new ArgumentNullException(nameof(userRepository));
         _jwtTokenService = jwtTokenService ?? throw new ArgumentNullException(nameof(jwtTokenService));
-        _uniOfWork = unitOfWork ?? throw new ArgumentNullException(nameof(unitOfWork));
     }
 
     public async Task<AuthUserDTO> Handle(GetAuthUserQeury request, CancellationToken cancellationToken)
     {
-        var user = (await _userRepository.Get(u => u.Email.Equals(request.Email) && u.Password.Equals(request.Password))).FirstOrDefault();
-        var rowsAffected = await _uniOfWork.CommitAsync();
+        var user = await _userRepository.GetByUserEmail(request.Email, request.Password);
         if (user == null)
             return new AuthUserDTO { Success = false };
 

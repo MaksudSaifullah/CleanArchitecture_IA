@@ -18,7 +18,7 @@ public static class WebApplicationExtensions
             }
             catch (Exception ex)
             {
-                if (retry <= 10)
+                if (retry <= 10) //TODO: will integrate Polly for circuit breaker pattern
                 {
                     retry++;
                     System.Threading.Thread.Sleep(2000);

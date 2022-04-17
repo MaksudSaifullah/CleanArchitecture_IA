@@ -49,4 +49,63 @@ public class QueryRepositoryBase<TEntity> : IAsyncQueryRepository<TEntity> where
         connection.Open();
         return await connection.QueryFirstOrDefaultAsync<TEntity>(query, dynamicParameters, commandType: isProcedure ? System.Data.CommandType.StoredProcedure : System.Data.CommandType.Text);
     }
+
+    public async Task<IEnumerable<TEntity>> Get<TFirst, TSecond, TEntity>(string sql, Func<TFirst, TSecond, TEntity> map, Dictionary<string, object> parameters, string splitters, bool isProcedure = false) where TFirst : class where TSecond : class where TEntity : class
+    {
+        var dynamicParameters = new DynamicParameters();
+        foreach (var param in parameters) dynamicParameters.Add(param.Key, param.Value);
+
+        using var connection = new SqlConnection(_connectionString);
+        connection.Open();
+        return (IEnumerable<TEntity>)await connection.QueryAsync<TFirst, TSecond, TEntity>(sql, map, parameters, commandType: isProcedure ? System.Data.CommandType.StoredProcedure : System.Data.CommandType.Text, splitOn: splitters);
+
+    }
+
+    public async Task<IEnumerable<TEntity>> Get<TFirst, TSecond, TThird, TEntity>(string sql, Func<TFirst, TSecond, TThird, TEntity> map, Dictionary<string, object> parameters, string splitters, bool isProcedure = false)
+        where TFirst : class
+        where TSecond : class
+        where TThird : class
+        where TEntity : class
+    {
+        var dynamicParameters = new DynamicParameters();
+        foreach (var param in parameters) dynamicParameters.Add(param.Key, param.Value);
+
+        using var connection = new SqlConnection(_connectionString);
+        connection.Open();
+        return (IEnumerable<TEntity>)await connection.QueryAsync<TFirst, TSecond, TThird, TEntity>(sql, map, parameters, commandType: isProcedure ? System.Data.CommandType.StoredProcedure : System.Data.CommandType.Text, splitOn: splitters);
+
+    }
+
+    public async Task<IEnumerable<TEntity>> Get<TFirst, TSecond, TThird, TFourth, TEntity>(string sql, Func<TFirst, TSecond, TThird, TFourth, TEntity> map, Dictionary<string, object> parameters, string splitters, bool isProcedure = false)
+        where TFirst : class
+        where TSecond : class
+        where TThird : class
+        where TFourth : class
+        where TEntity : class
+    {
+        var dynamicParameters = new DynamicParameters();
+        foreach (var param in parameters) dynamicParameters.Add(param.Key, param.Value);
+
+        using var connection = new SqlConnection(_connectionString);
+        connection.Open();
+        return (IEnumerable<TEntity>)await connection.QueryAsync<TFirst, TSecond,TThird,TFourth, TEntity>(sql, map, parameters, commandType: isProcedure ? System.Data.CommandType.StoredProcedure : System.Data.CommandType.Text, splitOn: splitters);
+
+    }
+
+    public async Task<IEnumerable<TEntity>> Get<TFirst, TSecond, TThird, TFourth,TFifth, TEntity>(string sql, Func<TFirst, TSecond, TThird, TFourth, TFifth, TEntity> map, Dictionary<string, object> parameters, string splitters, bool isProcedure = false)
+       where TFirst : class
+       where TSecond : class
+       where TThird : class
+       where TFourth : class
+       where TFifth : class
+       where TEntity : class
+    {
+        var dynamicParameters = new DynamicParameters();
+        foreach (var param in parameters) dynamicParameters.Add(param.Key, param.Value);
+
+        using var connection = new SqlConnection(_connectionString);
+        connection.Open();
+        return (IEnumerable<TEntity>)await connection.QueryAsync<TFirst, TSecond, TThird, TFourth, TFifth , TEntity>(sql, map, parameters, commandType: isProcedure ? System.Data.CommandType.StoredProcedure : System.Data.CommandType.Text, splitOn: splitters);
+
+    }
 }

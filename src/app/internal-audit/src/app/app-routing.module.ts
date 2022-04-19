@@ -8,7 +8,7 @@ const routes: Routes = [
   {path: 'login', component: LoginComponent},
   {path: 'register', component: RegisterComponent},
 
-  {path: 'dashboard', loadChildren: () => import('./private/private.module').then((m) => m.PrivateModule)},
+  //{path: 'dashboard', loadChildren: () => import('./private/private.module').then((m) => m.PrivateModule)},
 
   {path: '', redirectTo: '/login', pathMatch: 'full'},
   {path: '**', component: NotFoundComponent}

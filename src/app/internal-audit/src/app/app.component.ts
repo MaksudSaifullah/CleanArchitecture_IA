@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import { RouterQuery } from '@datorama/akita-ng-router-store';
+import { Observable } from 'rxjs';
 import { SessionQuery } from './core/state/user/User.Query';
 import { SessionStore, User } from './core/state/user/User.Store';
 
@@ -9,8 +11,9 @@ import { SessionStore, User } from './core/state/user/User.Store';
 })
 export class AppComponent {
   title = 'internal-audit';
+  routerQueryParams$: Observable<any> | undefined;
 
-  constructor(protected store: SessionStore, query: SessionQuery) {
+  constructor(protected store: SessionStore, query: SessionQuery, private routerQuery: RouterQuery) {
 
     // Create a data
     const user : User[] =[
@@ -34,4 +37,7 @@ export class AppComponent {
 
   }
 
+  public ngOnInit() {
+    this.routerQueryParams$ = this.routerQuery.selectParams();
+  }
 }

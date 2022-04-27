@@ -7,9 +7,6 @@ import { AboutComponent } from './components/about/about.component';
 import { NotFoundComponent } from './components/notfound/not-found/not-found.component';
 import { LoginComponent } from './components/login/login.component';
 import { RegisterComponent } from './components/register/register.component';
-import { AkitaNgRouterStoreModule } from '@datorama/akita-ng-router-store';
-import { AkitaNgDevtools } from '@datorama/akita-ngdevtools';
-import { environment } from 'src/environments/environment';
 
 
 @NgModule({
@@ -22,9 +19,7 @@ import { environment } from 'src/environments/environment';
   ],
   imports: [
     CommonModule,
-    PublicRoutingModule,
-    AkitaNgRouterStoreModule,
-    environment.production ? [] : AkitaNgDevtools.forRoot()
+    PublicRoutingModule
     
   ]
 })

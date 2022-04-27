@@ -11,7 +11,7 @@ export interface User {
   providedIn: 'root'
 })
 
-@StoreConfig({ name: 'session', idKey: 'id' })
+@StoreConfig({ name: 'user', idKey: 'id' })
 export class SessionStore extends EntityStore<User> {
   constructor() {
     super() ;

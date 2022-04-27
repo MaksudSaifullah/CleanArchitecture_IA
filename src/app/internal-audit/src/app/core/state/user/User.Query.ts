@@ -9,9 +9,9 @@ import { SessionStore, User } from "./User.Store";
   })
 
 export class SessionQuery extends QueryEntity<User> {
-  selectArticle$ = this.routerQuery.selectParams('id').pipe(
-    switchMap(id => this.selectEntity(id))
- );
+//   selectArticle$ = this.routerQuery.selectParams('id').pipe(
+//     switchMap(id => this.selectEntity(id))
+//  );
     constructor(protected override store: SessionStore, private routerQuery: RouterQuery){
       super(store);
     }

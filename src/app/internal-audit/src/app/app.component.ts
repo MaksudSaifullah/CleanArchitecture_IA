@@ -11,8 +11,8 @@ import { SessionStore, User } from './core/state/user/User.Store';
 })
 export class AppComponent {
   title = 'internal-audit';
-  routerQueryParams$: Observable<any> | undefined;
-
+  routerQueryParams: any;
+  
   constructor(protected store: SessionStore, query: SessionQuery, private routerQuery: RouterQuery) {
 
     // Create a data
@@ -34,10 +34,11 @@ export class AppComponent {
 
     console.log('GETALL',  query.getAll());
 
-
   }
 
   public ngOnInit() {
-    this.routerQueryParams$ = this.routerQuery.selectParams();
+    this.routerQueryParams = this.routerQuery.selectParams(['id', 'type']).subscribe();
+    const params = this.routerQuery.selectQueryParams(['id', 'type']).subscribe();
+    console.log(params);
   }
 }

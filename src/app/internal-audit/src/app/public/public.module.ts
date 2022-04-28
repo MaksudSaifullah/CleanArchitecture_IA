@@ -7,6 +7,7 @@ import { AboutComponent } from './components/about/about.component';
 import { NotFoundComponent } from './components/notfound/not-found/not-found.component';
 import { LoginComponent } from './components/login/login.component';
 import { RegisterComponent } from './components/register/register.component';
+import { RouterModule } from '@angular/router';
 
 
 @NgModule({
@@ -19,8 +20,7 @@ import { RegisterComponent } from './components/register/register.component';
   ],
   imports: [
     CommonModule,
-    PublicRoutingModule
-    
+    PublicRoutingModule,
   ]
 })
 export class PublicModule { }

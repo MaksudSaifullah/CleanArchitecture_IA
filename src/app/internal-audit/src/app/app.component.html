@@ -1,8 +1,8 @@
 <div>
     <a routerLink="/" [routerLinkActive]="'active'" [routerLinkActiveOptions]="{ exact: true }">Home (root)</a>
-    <a routerLink="/login" [routerLinkActive]="'active'" [routerLinkActiveOptions]="{ exact: true }">A Component param a</a>
-    <a routerLink="/register" [routerLinkActive]="'active'" [routerLinkActiveOptions]="{ exact: true }">B Component</a>
+    <a routerLink="/login" [routerLinkActive]="'active'" [routerLinkActiveOptions]="{ exact: true }">Login</a>
+    <a routerLink="/register" [routerLinkActive]="'active'" [routerLinkActiveOptions]="{ exact: true }">Register</a>
   </div>
 <router-outlet></router-outlet>
 
-{{routerQueryParams$ | async | json}}
+{{routerQueryParams | async | json}}

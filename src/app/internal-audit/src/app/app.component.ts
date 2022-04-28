@@ -37,8 +37,6 @@ export class AppComponent {
   }
 
   public ngOnInit() {
-    this.routerQueryParams = this.routerQuery.selectParams(['id', 'type']).subscribe();
-    const params = this.routerQuery.selectQueryParams(['id', 'type']).subscribe();
-    console.log(params);
+    this.routerQueryParams = this.routerQuery.selectParams();
   }
 }

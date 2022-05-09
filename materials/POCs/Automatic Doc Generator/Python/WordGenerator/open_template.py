@@ -8,18 +8,20 @@ from docx.oxml.ns import qn
 import win32com.client
 from docx.shared import Pt, Inches
 from docx.enum.text import WD_BREAK
+from flask import send_file
+
 import GraphMaker
 
-coverPageDict = {"EntityName": "Bangladesh", "BranchAuditMonthName": "Dhaka August", "Report#": "Report 123456",
-                 "AuditPerformer": "Md. Sahidul Islam", "AuditIssuer": "Pulok Bhai", "AuditDate": "21/03/2022"}
-
-sectionData = {"ContentOfEnvironment": "Environment Content", "ContentOfScope": "Scope Content",
-               "ContentOfOpinion": "Opinion Content"}
-
-description = r"Le Lorem Ipsum est simplement du faux texte employé dans la composition et la mise en page avant impression. Le Lorem Ipsum est le faux texte standard de l'imprimerie depuis les années 1500, quand un imprimeur anonyme assembla ensemble des morceaux de texte pour réaliser un livre spécimen de polices de texte. Il n'a pas fait que survivre cinq siècles, mais s'est aussi adapté à la bureautique informatique, sans que son contenu n'en soit modifié. Il a été popularisé dans les années 1960 grâce à la vente de feuilles Letraset contenant des passages du Lorem Ipsum, et, plus récemment, par son inclusion dans des applications de mise en page de texte, comme Aldus PageMaker."
-
-detailedIssueTableContent = {"IssueTitle": "Shezan Bhai", "IssueOwner": "Rahimin bhai", "IssueRating": "Five star",
-                             "IssueTargetDate": "23-03-2022", "IssueDescription": description}
+# coverPageDict = {"EntityName": "Bangladesh", "BranchAuditMonthName": "Dhaka August", "Report#": "Report 123456",
+#                  "AuditPerformer": "Md. Sahidul Islam", "AuditIssuer": "Pulok Bhai", "AuditDate": "21/03/2022"}
+#
+# sectionData = {"ContentOfEnvironment": "Environment Content", "ContentOfScope": "Scope Content",
+#                "ContentOfOpinion": "Opinion Content"}
+#
+# description = r"Le Lorem Ipsum est simplement du faux texte employé dans la composition et la mise en page avant impression. Le Lorem Ipsum est le faux texte standard de l'imprimerie depuis les années 1500, quand un imprimeur anonyme assembla ensemble des morceaux de texte pour réaliser un livre spécimen de polices de texte. Il n'a pas fait que survivre cinq siècles, mais s'est aussi adapté à la bureautique informatique, sans que son contenu n'en soit modifié. Il a été popularisé dans les années 1960 grâce à la vente de feuilles Letraset contenant des passages du Lorem Ipsum, et, plus récemment, par son inclusion dans des applications de mise en page de texte, comme Aldus PageMaker."
+#
+# detailedIssueTableContent = {"IssueTitle": "Shezan Bhai", "IssueOwner": "Rahimin bhai", "IssueRating": "Five star",
+#                              "IssueTargetDate": "23-03-2022", "IssueDescription": description}
 
 
 def update_toc(docx_file):
@@ -30,7 +32,7 @@ def update_toc(docx_file):
     word.Quit()
 
 
-def update_texts(document, coverPage=True):
+def update_texts(document, coverPageDict, sectionData, coverPage=True):
     # updating cover page #check for misuse
     for paragraph in document.paragraphs:
         if coverPage and paragraph.text.strip() in coverPageDict:
@@ -39,19 +41,19 @@ def update_texts(document, coverPage=True):
             paragraph.text = coverPageDict[paragraph.text.strip()]
         # updating sections 1-3
         if paragraph.text.strip() in sectionData:
-            paragraph.text = sectionData[paragraph.text.strip()] + description
+            paragraph.text = sectionData[paragraph.text.strip()]
             paragraph.style = document.styles['Normal']
 
 
-def update_header(document, section=0):
+def update_header(document, headerText, section=0):
     section = document.sections[section]
     header = section.header
     paragraph = header.paragraphs[0]
-    paragraph.text = "\t\tReport No: 123456"
+    paragraph.text = "\t\t" + headerText
     paragraph.style = document.styles["Header"]
 
 
-def update_table(document):
+def update_table(document, detailedIssueTableContent):
     table = document.tables[-1]
     table.cell(0, 1).text = detailedIssueTableContent["IssueTitle"]
     table.cell(1, 1).text = detailedIssueTableContent["IssueOwner"]
@@ -81,24 +83,30 @@ def keep_table_on_one_page(doc):
         ppr.keepNext_val = True
 
 
-document = Document("INTERNAL AUDIT REPORT.docx")
-style = document.styles['Normal']
-font = style.font
-font.name = 'Arial'
-font.size = Pt(10)
+def callable_from_others(coverPageDict, sectionData, detailedIssueTableContent, graph):
+    document = Document("INTERNAL AUDIT REPORT.docx")
+    style = document.styles['Normal']
+    font = style.font
+    font.name = 'Arial'
+    font.size = Pt(10)
 
-update_texts(document)
-update_header(document, 0)
-update_header(document, 1)
-GraphMaker.graphMaker()
-update_table(document)
-keep_table_on_one_page(document)
+    update_texts(document, coverPageDict, sectionData)
+    update_header(document, coverPageDict["Report#"], 0)
+    update_header(document, coverPageDict["Report#"], 1)
+    GraphMaker.graphMaker(graph)
+    update_table(document, detailedIssueTableContent)
+    keep_table_on_one_page(document)
 
 
-document.save("template_output.docx")
-update_toc(r"C:\Users\sahidul\PycharmProjects\WordGenerator\template_output.docx")
-openers = {'linux': 'libreoffice template_output.docx',
-           'linux2': 'libreoffice template_output.docx',
-           'darwin': 'open template_output.docx',
-           'win32': 'start template_output.docx'}
-os.system(openers[sys.platform])
+    document.save("template_output.docx")
+    update_toc(r"C:\Users\sahidul\PycharmProjects\WordGenerator\template_output.docx")
+    # openers = {'linux': 'libreoffice template_output.docx',
+    #        'linux2': 'libreoffice template_output.docx',
+    #        'darwin': 'open template_output.docx',
+    #        'win32': 'start template_output.docx'}
+    # os.system(openers[sys.platform])
+
+    try:
+        return send_file('template_output.docx', attachment_filename='output.docx')
+    except Exception as e:
+        return str(e)

@@ -3,7 +3,7 @@ GO
 
 Create table [security].[PasswordPolicy]
 (
-	Id bigint not null primary key identity(1,1),
+	Id uniqueidentifier not null primary key,
 	MinLength int not null,
 	[MaxLength] int not null,
 	AllowAlphabet bit not null,
@@ -21,24 +21,55 @@ Create table [security].[PasswordPolicy]
 	CreatedBy nvarchar(10) not null,
 	CreatedOn datetime not null,
 	UpdatedBy nvarchar(10) null,
-	UpdatedOn datetime null
+	UpdatedOn datetime null,
+	ReviewedBy nvarchar(10) null,
+	ReviewedOn datetime null,
+	ApprovedBy nvarchar(10) null,
+	ApprovedOn datetime null,
+	IsDeleted bit not null default(0)
 )
 GO
 
 Create table [security].[UserLockingPolicy]
 (
-	Id bigint not null primary key identity(1,1),
+	Id uniqueidentifier not null primary key,
 	LockedOnNoLoginActivity bit not null,
 	NoLoginActivityDays int null,
 	LockedOnFailedLoginAttempts bit not null,
 	NumberOfFailedLoginAttempts int null,
 	FailedLoginAttemptsDuration int null,
 	FailedLoginLockedDuration int null,
+	UnlockedOnByAdmin bit not null,
+	UnlockedOnByAdminDuration int null,
 	StartDate datetime not null,
 	EndDate datetime null,
 	CreatedBy nvarchar(10) not null,
 	CreatedOn datetime not null,
 	UpdatedBy nvarchar(10) null,
-	UpdatedOn datetime null
+	UpdatedOn datetime null,
+	ReviewedBy nvarchar(10) null,
+	ReviewedOn datetime null,
+	ApprovedBy nvarchar(10) null,
+	ApprovedOn datetime null,
+	IsDeleted bit not null default(0)
+)
+GO
+
+Create table [security].[SessionPolicy]
+(
+	Id uniqueidentifier not null primary key,
+	IsEnabled bit not null,
+	Duration int null,
+	StartDate datetime not null,
+	EndDate datetime null,
+	CreatedBy nvarchar(10) not null,
+	CreatedOn datetime not null,
+	UpdatedBy nvarchar(10) null,
+	UpdatedOn datetime null,
+	ReviewedBy nvarchar(10) null,
+	ReviewedOn datetime null,
+	ApprovedBy nvarchar(10) null,
+	ApprovedOn datetime null,
+	IsDeleted bit not null default(0)
 )
 GO

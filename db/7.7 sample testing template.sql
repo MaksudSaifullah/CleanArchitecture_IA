@@ -1,9 +1,9 @@
 Use InternalAuditDb
 GO
 
-Create table [config].[ControlActivitynType]
+Create table [config].[ControlActivityType]
 (
-	Id uniqueidentifier not null,
+	Id uniqueidentifier not null primary key,
 	[Name] nvarchar(50) not null,
 	IsActive bit not null default(1),
 	CreatedBy nvarchar(10) not null,
@@ -20,7 +20,7 @@ Go
 
 Create table [config].[SampleSelectionMethodType]
 (
-	Id uniqueidentifier not null,
+	Id uniqueidentifier not null primary key,
 	[Name] nvarchar(50) not null,
 	IsActive bit not null default(1),
 	CreatedBy nvarchar(10) not null,
@@ -38,15 +38,16 @@ Go
 Create table [dbo].[SampleTestingTemplate]
 (
 	Id uniqueidentifier not null primary key,
-	WorkpaperId nvarchar(20) not null unique,
+	WorkpaperCode nvarchar(20) not null unique,
 	ScheduleId uniqueidentifier not null, --foreign key references [dbo].[Schedule](Id)
 	TopicHeadId uniqueidentifier not null, --foreign key references [dbo].[TopicHead](Id)
 	BranchId uniqueidentifier not null, --foreign key references [dbo].[Branch](Id)
+	QuestionnaireId uniqueidentifier not null, --foreign key references [dbo].[Questionaaire](Id)
 	Particulars nvarchar(100) not null,
 	DateOfTesting datetime not null,
 	SampledMonth int not null,
 	ControlActivitynTypeId uniqueidentifier not null foreign key references [config].[ControlActivitynType](Id),
-	SampleSize int not null,
+	SampleSize int not null, --??
 	SampleSelectionMethodTypeId uniqueidentifier not null foreign key references [config].[SampleSelectionMethodType](Id),
 	PeriodFrom datetime not null,
 	PeriodTo datetime not null,
@@ -66,7 +67,7 @@ Create table [dbo].[SampleTestingTemplate]
 )
 GO
 
-Create table [dbo].[SampleTestingTemplateDocument]
+Create table [dbo].[SampleTestingTemplateEvidenceDocument]
 (
 	Id uniqueidentifier not null primary key,
 	SampleTestingTemplateId uniqueidentifier not null foreign key references [dbo].[BranchChecklistTestStep](Id),

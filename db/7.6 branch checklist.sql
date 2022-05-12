@@ -38,7 +38,7 @@ Go
 Create table [dbo].[BranchChecklistOverview]
 (
 	Id uniqueidentifier not null primary key,
-	ChecklistId nvarchar(20) not null unique,
+	ChecklistCode nvarchar(20) not null unique,
 	ScheduleId uniqueidentifier not null, --foreign key references [dbo].[Schedule](Id)
 	BranchId uniqueidentifier not null, --foreign key references [dbo].[Branch](Id)
 	RegionId uniqueidentifier not null, --foreign key references [dbo].[Region](Id)
@@ -74,7 +74,7 @@ Create table [dbo].[BranchChecklistTestStep]
 	ObtainedScore decimal(10,5) not null,
 	[Weight] decimal(10,5) not null,
 	WeightedScore decimal(10,5) not null,
-	DocumentId uniqueidentifier null foreign key references [dms].[Document](Id),
+	--DocumentId uniqueidentifier null foreign key references [dms].[Document](Id),
 	[Status] int not null, -- 0 = draft, 1 = saved etc.
 	CreatedBy nvarchar(10) not null,
 	CreatedOn datetime not null,
@@ -88,7 +88,7 @@ Create table [dbo].[BranchChecklistTestStep]
 )
 GO
 
-Create table [dbo].[BranchChecklistTestStepDocument]
+Create table [dbo].[BranchChecklistTestStepEvidenceDocument]
 (
 	Id uniqueidentifier not null primary key,
 	BranchChecklistTestStepId uniqueidentifier not null foreign key references [dbo].[BranchChecklistTestStep](Id),

@@ -30,6 +30,27 @@ CREATE TABLE [seven].[Issue](
 	[IsDeleted] [bit] NOT NULL DEFAULT 0,
 	)
 
+CREATE TABLE [seven].[Action](
+	[Id] [uniqueidentifier] DEFAULT NEWID() NOT NULL PRIMARY KEY,	
+	[PlanId] [nvarchar](20) NOT NULL UNIQUE,
+	[IssueId] [uniqueidentifier] NOT NULL FOREIGN KEY REFERENCES [seven].[Issue](Id),	
+	[OwnerUserId] [BIGINT] NOT NULL FOREIGN KEY REFERENCES [security].[User](Id),
+	[ManagementPlan] [nvarchar](max) NOT NULL,
+	[TargetDate] [datetime] NOT NULL,
+	[IsActionTaken] [bit] NOT NULL DEFAULT 0,
+	[ActionTakenDate] [datetime] NULL,
+	[EvidenceFilePath] [nvarchar](MAX) NULL,
+	[ActionTakenRemarks] [nvarchar](MAX) NULL,
+	[CreatedBy] [nvarchar](10) NOT NULL,
+	[CreatedOn] [datetime] NOT NULL,
+	[UpdatedBy] [nvarchar](10) NULL,
+	[UpdatedOn] [datetime] NULL,
+	[ReviewedBy] [nvarchar](10) NULL,
+	[ReviewedOn] [datetime] NULL,
+	[ApprovedBy] [nvarchar](10) NULL,
+	[ApprovedOn] [datetime] NULL,
+	[IsDeleted] [bit] NOT NULL DEFAULT 0,
+	)
 
 CREATE TABLE [config].[IssueImpactType](
 	[Id] [uniqueidentifier] DEFAULT NEWID() NOT NULL PRIMARY KEY,

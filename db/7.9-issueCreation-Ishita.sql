@@ -30,7 +30,7 @@ CREATE TABLE [seven].[Issue](
 	[IsDeleted] [bit] NOT NULL DEFAULT 0,
 	)
 
-CREATE TABLE [seven].[Action](
+CREATE TABLE [seven].[IssueAction](
 	[Id] [uniqueidentifier] DEFAULT NEWID() NOT NULL PRIMARY KEY,	
 	[PlanCode] [nvarchar](20) NOT NULL UNIQUE,
 	[IssueId] [uniqueidentifier] NOT NULL FOREIGN KEY REFERENCES [seven].[Issue](Id),	
@@ -111,29 +111,3 @@ CREATE TABLE [config].[RatingType](
 	[ApprovedOn] [datetime] NULL,
 	[IsDeleted] [bit] NOT NULL DEFAULT 0
 	)
---7.10
-CREATE TABLE [seven].[IssueValidation](
-	[Id] [uniqueidentifier] NOT NULL PRIMARY KEY,
-	[IssueId] [uniqueidentifier] NOT NULL FOREIGN KEY REFERENCES [seven].[Issue](Id),
-	[ClosureSummary] [nvarchar](max) NOT NULL,
-	[ValidatedByUserId] [bigint] NOT NULL FOREIGN KEY REFERENCES [security].[User](Id),
-	[ValidationDate] [datetime] NOT NULL,
-	[ReviewedByUserID] [bigint] NULL FOREIGN KEY REFERENCES [security].[User](Id),
-	[ReviewDate] [datetime] NULL,
-	[ReviewEvidenceFilePath] [nvarchar](MAX) NULL,-- ref with document table 
-	[ApprovedByUserId] [bigint] NULL FOREIGN KEY REFERENCES [security].[User](Id),--[uniqueidentifier]
-	[ApprovalDate] [datetime] NULL,
-	[ApprovalEvidenceFilePath] [nvarchar](MAX) NULL,-- ref with document table 
-	[IssueClosureDate] [datetime] NULL,
-	[CreatedBy] [nvarchar](10) NOT NULL,
-	[CreatedOn] [datetime] NOT NULL,
-	[UpdatedBy] [nvarchar](10) NULL,
-	[UpdatedOn] [datetime] NULL,
-	[ReviewedBy] [nvarchar](10) NULL,
-	[ReviewedOn] [datetime] NULL,
-	[ApprovedBy] [nvarchar](10) NULL,
-	[ApprovedOn] [datetime] NULL,
-	[IsDeleted] [bit] NOT NULL DEFAULT 0,
-	)
-
-	-- IssueValidationAction table

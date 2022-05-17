@@ -150,8 +150,9 @@ CREATE TABLE [seven].[IssueValidationActionDocuments](
 -- 7.11
 CREATE TABLE [seven].[Report](
 	[Id] [uniqueidentifier] NOT NULL PRIMARY KEY DEFAULT NEWSEQUENTIALID(),
-	[DraftCode] [nvarchar](20) NOT NULL UNIQUE,
-	[FinalCode] [nvarchar](20) NOT NULL UNIQUE,
+	[ReportCode] [nvarchar](20) NOT NULL UNIQUE,
+	--[DraftCode] [nvarchar](20) NOT NULL UNIQUE,
+	--[FinalCode] [nvarchar](20) NOT NULL UNIQUE,
 	[AuditId] [uniqueidentifier] NOT NULL FOREIGN KEY REFERENCES [seven].[AuditCreation](Id),
 	[Country] [uniqueidentifier] NOT NULL FOREIGN KEY REFERENCES [security].[Country](Id),
 	[IssuedBy] [uniqueidentifier] NOT NULL FOREIGN KEY REFERENCES [security].[Employee](Id),
@@ -165,7 +166,8 @@ CREATE TABLE [seven].[Report](
 	[Opinion] [nvarchar](500) NOT NULL,
 	[ReportReviewDate] [datetime] NULL,
 	[ReportApproveDate] [datetime] NULL,
-	[IsFinal] [bit] NOT NULL DEFAULT 0,
+	[DraftVersion] [int] NOT NULL,
+	[IsFinal] [bit] NOT NULL DEFAULT 0, --draft or final
 	[IsActive] [bit] NOT NULL DEFAULT 1,
 	[CreatedBy] [nvarchar](10) NOT NULL,
 	[CreatedOn] [datetime] NOT NULL,

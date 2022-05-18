@@ -1,6 +1,8 @@
-CREATE TABLE [common].[YearQuarter](
+CREATE TABLE [common].[DurationType](
 	[Id] [uniqueidentifier] NOT NULL PRIMARY KEY DEFAULT NEWSEQUENTIALID(),
-	[Quarter] [nvarchar](20) NOT NULL,
+	[Name] [nvarchar](20) NOT NULL,
+	[Type] [nvarchar](10) NOT NULL,   -- type will month(Jan,feb....), day(sun,mon....).... etc
+	[IsActive] [bit] NOT NULL DEFAULT (1),
 	[CreatedBy] [nvarchar](10) NOT NULL,
 	[CreatedOn] [datetime] NOT NULL,
 	[UpdatedBy] [nvarchar](10) NULL,
@@ -35,6 +37,7 @@ CREATE TABLE [common].[Process](
 CREATE TABLE [common].[KeyIssuesType](
 	[Id] [uniqueidentifier]  NOT NULL PRIMARY KEY DEFAULT NEWSEQUENTIALID(),
 	[Name] [nvarchar](20) NOT NULL,
+	[IsActive] [bit] NOT NULL DEFAULT (1),
 	[CreatedBy] [nvarchar](10) NOT NULL,
 	[CreatedOn] [datetime] NOT NULL,
 	[UpdatedBy] [nvarchar](10) NULL,
@@ -43,18 +46,19 @@ CREATE TABLE [common].[KeyIssuesType](
 	[ReviewedOn] [datetime] NULL,
 	[ApprovedBy] [nvarchar](10) NULL,
 	[ApprovedOn] [datetime] NULL,
-	[IsDeleted] [bit] NOT NULL,
+	[IsDeleted] [bit] NOT NULL DEFAULT (0)
 )
 	
+	--IssueStatusType missing
 CREATE TABLE [nine].[RiskAssessmentProcess](
 	[Id] [uniqueidentifier] NOT NULL PRIMARY KEY DEFAULT NEWSEQUENTIALID(),
 	[RiskAssesmentId] [uniqueidentifier] FOREIGN KEY (RiskAssesmentId) REFERENCES seven.RiskAssesment(Id),
-	[CountryId] [uniqueidentifier] FOREIGN KEY (CountryId) REFERENCES common.Country(Id),
-	[AuditTypeId] [uniqueidentifier] FOREIGN KEY (AuditTypeId) REFERENCES common.AuditType(Id),
+	--[CountryId] [uniqueidentifier] FOREIGN KEY (CountryId) REFERENCES common.Country(Id),  
+	--[AuditTypeId] [uniqueidentifier] FOREIGN KEY (AuditTypeId) REFERENCES common.AuditType(Id),
 	[KeyIssuesTypeId] [uniqueidentifier] FOREIGN KEY (KeyIssuesTypeId) REFERENCES common.KeyIssuesType(Id),
 	[IssueStatusTypeId] [uniqueidentifier] FOREIGN KEY (IssueStatusTypeId) REFERENCES eight.AuditableFunction(Id),
-	[EffectiveFrom] [nchar](10) NOT NULL,
-	[EffectiveTo] [nchar](10) NOT NULL,
+	--[EffectiveFrom] [nchar](10) NOT NULL,
+	--[EffectiveTo] [nchar](10) NOT NULL,
 	[IsExternalAuditIssue] [bit] NOT NULL,
 	[IssueName] [nchar](10) NULL,
 	[IsManagementConcern] [bit] NOT NULL,
@@ -73,9 +77,9 @@ CREATE TABLE [nine].[RiskAssessmentProcess](
 	[WeightedScore5] [decimal](10, 2) NULL,
 	[IsWeight30RegulatoryStatutoryRequirement6] [bit] NOT NULL,
 	[WeightedScore6] [decimal](10, 2) NULL,
-	[SummationOfWeights] [nvarchar](50) NULL,
-	[RiskRating] [nvarchar](50) NULL,
-	[AuditFrequency] [nvarchar](50) NULL,
+	[SummationOfWeights] [decimal](10, 2) NULL,
+	[RiskRating] [nvarchar](50) NOT NULL,
+	[AuditFrequency] [nvarchar](50) NOT NULL,
 	[CreatedBy] [nvarchar](10) NULL,
 	[CreatedOn] [datetime] NOT NULL,
 	[UpdatedBy] [nvarchar](10) NULL,
@@ -108,10 +112,10 @@ CREATE TABLE [nine].[RiskAssessmentProcess](
  )
  
  
-CREATE TABLE [nine].[AuditSubplan](
+CREATE TABLE [nine].[AuditSubPlan](
 	[Id] [uniqueidentifier] NOT NULL PRIMARY KEY DEFAULT NEWSEQUENTIALID(),
 	[AuditPlanId] [uniqueidentifier] NOT NULL FOREIGN KEY (AuditPlanId) REFERENCES seven.AuditPlan(Id),
-	[YearQuarterId] [uniqueidentifier] NOT NULL FOREIGN KEY (YearQuarterId) REFERENCES common.YearQuarter(Id),
+	[DurationTypeId] [uniqueidentifier] NOT NULL FOREIGN KEY (DurationTypeId) REFERENCES common.DurationType(Id),
 	[ReviewPeriodFrom] [datetime] NOT NULL,
 	[ReviewPeriodTo] [datetime] NOT NULL,
 	[AvailableManDays] [int] NOT NULL,
@@ -131,9 +135,9 @@ CREATE TABLE [nine].[AuditSubplan](
 
 
 
-CREATE TABLE [nine].[AuditSubplanProcesses](
+CREATE TABLE [nine].[AuditSubPlanProcess](
 	[Id] [uniqueidentifier] NOT NULL PRIMARY KEY DEFAULT NEWSEQUENTIALID(),
-	[AuditSubplanId] [uniqueidentifier] NOT NULL FOREIGN KEY (AuditSubplanId) REFERENCES nine.AuditSubplan(Id),
+	[AuditSubPlanId] [uniqueidentifier] NOT NULL FOREIGN KEY (AuditSubPlanId) REFERENCES nine.AuditSubPlan(Id),
 	[AuditableFunctionId] [uniqueidentifier] NOT NULL FOREIGN KEY (AuditableFunctionId) REFERENCES eight.AuditableFunction(Id),
 	[ProcessId] [uniqueidentifier] NOT NULL FOREIGN KEY (ProcessId) REFERENCES common.Process(Id),
 	[RatingTypeId] [uniqueidentifier] NOT NULL FOREIGN KEY (RatingTypeId) REFERENCES config.RatingType(Id),

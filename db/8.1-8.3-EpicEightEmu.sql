@@ -20,7 +20,7 @@
 --)
 
 CREATE TABLE [eight].[RiskRating](
-	[Id] [uniqueidentifier] NOT NULL PRIMARY KEY DEFAULT (NEWID()),
+	[Id] [uniqueidentifier] NOT NULL PRIMARY KEY DEFAULT (newsequentialid()),
 	[CountryId] [bigint] NOT NULL CONSTRAINT FK_RiskRatingMap FOREIGN KEY (CountryId) REFERENCES [security].[Country](Id),  -- change with uniqueidentifier
 	[RiskRatingTypeId] [uniqueidentifier] NOT NULL CONSTRAINT FK_RiskRatingType FOREIGN KEY(RiskRatingTypeId) REFERENCES [common].[RiskRatingType](Id), 
 	[MinWeightSum] [int]  NOT NULL,

@@ -91,15 +91,13 @@ CREATE TABLE [six].[RiskCriteriaType](
 
 
 CREATE TABLE [six].[TestSteps](
-	[Id] [uniqueidentifier] NOT NULL PRIMARY KEY DEFAULT (newsequentialid()),
+	[Id] [uniqueidentifier] NOT NULL PRIMARY KEY DEFAULT (newsequentialid()),	
+	[CountryId] [uniqueidentifier] NOT NULL FOREIGN KEY REFERENCES [common].[Country](Id),
+	[TopicHeadId] [uniqueidentifier] NOT NULL FOREIGN KEY REFERENCES [six].[TopicHead](Id),
+	[QuestionaireId] [uniqueidentifier] NOT NULL FOREIGN KEY REFERENCES [six].[Questionaire](Id),
 	[Title] [nvarchar](500) NOT NULL,
 	[EffectiveFrom] [datetime] NOT NULL,
 	[EffectiveTo] [datetime] NOT NULL,
-
-	[CountryId] [bigint] NOT NULL FOREIGN KEY REFERENCES [security].[Country](Id),
-	[TopicHeadId] [uniqueidentifier] NOT NULL FOREIGN KEY REFERENCES [six].[TopicHead](Id),
-	[QuentionaireId] [uniqueidentifier] NOT NULL FOREIGN KEY REFERENCES [six].[Quentionaire](Id),
-
 	[CreatedBy] [nvarchar](10) NOT NULL,
 	[CreatedOn] [datetime] NOT NULL,
 	[UpdatedBy] [nvarchar](10) NULL,

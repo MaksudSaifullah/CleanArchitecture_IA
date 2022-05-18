@@ -2,6 +2,7 @@ CREATE TABLE [common].[DurationType](
 	[Id] [uniqueidentifier] NOT NULL PRIMARY KEY DEFAULT NEWSEQUENTIALID(),
 	[Name] [nvarchar](20) NOT NULL,
 	[Type] [nvarchar](10) NOT NULL,   -- type will month(Jan,feb....), day(sun,mon....).... etc
+	[Remarks] [nvarchar](50) NOT NULL,
 	[IsActive] [bit] NOT NULL DEFAULT (1),
 	[CreatedBy] [nvarchar](10) NOT NULL,
 	[CreatedOn] [datetime] NOT NULL,

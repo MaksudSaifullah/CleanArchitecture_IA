@@ -5,8 +5,8 @@ CREATE TABLE [seven].[IssueValidation](
 	[ValidatedByUserId] [uniqueidentifier] NOT NULL FOREIGN KEY REFERENCES [security].[Employee](Id),
 	[ReviewedByUserID] [uniqueidentifier] NULL FOREIGN KEY REFERENCES [security].[Employee](Id),
 	[ApprovedByUserId] [uniqueidentifier] NULL FOREIGN KEY REFERENCES [security].[Employee](Id),
-	[ReviewEvidenceDocumentId] [uniqueidentifier] NOT NULL FOREIGN KEY REFERENCES [dms].[Document](Id),
-	[ApprovalEvidenceDocumentId] [uniqueidentifier] NOT NULL FOREIGN KEY REFERENCES [dms].[Document](Id),
+	[ReviewEvidenceDocumentId] [uniqueidentifier] NULL FOREIGN KEY REFERENCES [dms].[Document](Id),
+	[ApprovalEvidenceDocumentId] [uniqueidentifier] NULL FOREIGN KEY REFERENCES [dms].[Document](Id),
 	[ClosureSummary] [nvarchar](500) NOT NULL,	
 	[ValidationDate] [datetime] NOT NULL,	
 	[ReviewDate] [datetime] NULL,	
@@ -100,6 +100,7 @@ CREATE TABLE [config].[ControlActivityNature](
 	[ApprovedOn] [datetime] NULL,
 	[IsDeleted] [bit] NOT NULL DEFAULT 0
 )
+-- no need, will use durationtype table
 CREATE TABLE [config].[ControlFrequency](
 	[Id] [uniqueidentifier] NOT NULL PRIMARY KEY DEFAULT NEWSEQUENTIALID(),
 	[Name] [nvarchar](50) NOT NULL,
@@ -135,7 +136,7 @@ CREATE TABLE [seven].[IssueValidationActionDocuments](
 	[IssueValidationActionId] [uniqueidentifier] NOT NULL FOREIGN KEY REFERENCES [seven].[IssueValidationAction](Id),
 	[IssueValidationActionDocumentTypeId] [uniqueidentifier] NOT NULL FOREIGN KEY REFERENCES [seven].[IssueValidationActionDocumentType](Id),
 	[DocumentId] [uniqueidentifier] NOT NULL FOREIGN KEY REFERENCES [dms].[Document](Id),
-	[Name] [nvarchar](50) NOT NULL,
+	--[Name] [nvarchar](50) NOT NULL,
 	[IsActive] [bit] NOT NULL DEFAULT 1,
 	[CreatedBy] [nvarchar](10) NOT NULL,
 	[CreatedOn] [datetime] NOT NULL,

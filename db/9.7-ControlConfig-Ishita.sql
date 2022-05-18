@@ -16,8 +16,8 @@ CREATE TABLE [config].[Entity](
 
 CREATE TABLE [nine].[ControlConfiguration](
 	[Id] [uniqueidentifier] NOT NULL PRIMARY KEY DEFAULT NEWSEQUENTIALID(),
-	[AuditId] [uniqueidentifier] NOT NULL FOREIGN KEY REFERENCES [seven].[AuditCreation](Id),
-	[AuditableEntityId] [uniqueidentifier] NOT NULL FOREIGN KEY REFERENCES [config].[Entity](Id),
+	[AuditId] [uniqueidentifier] NOT NULL FOREIGN KEY REFERENCES [seven].[Audit](Id),
+	[AuditableEntityId] [uniqueidentifier] NOT NULL FOREIGN KEY REFERENCES [config].[Entity](Id),-- need to check??
 	[ProcessId] [uniqueidentifier] NOT NULL FOREIGN KEY REFERENCES [config].[Process](Id), --table from emran vai
 	[RiskNameId] [uniqueidentifier] NOT NULL FOREIGN KEY REFERENCES [config].[RiskName](Id),
 	[ControlName] [uniqueidentifier] NOT NULL FOREIGN KEY REFERENCES [config].[ControlName](Id),

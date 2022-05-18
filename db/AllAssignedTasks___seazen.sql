@@ -15,7 +15,7 @@ CREATE TABLE [common].[YearQuarter](
 	
 CREATE TABLE [common].[Process](
 	[Id] [uniqueidentifier] NOT NULL PRIMARY KEY DEFAULT NEWSEQUENTIALID(),
-	[CountryId] [uniqueidentifier] NOT NULL FOREIGN KEY (CountryId) REFERENCES common.Country(Id),
+	--[CountryId] [uniqueidentifier] NOT NULL FOREIGN KEY (CountryId) REFERENCES common.Country(Id), will get from auditableFuntion table
 	[AuditableFunctionId] [uniqueidentifier] NOT NULL FOREIGN KEY (AuditableFunctionId) REFERENCES eight.AuditableFunction(Id),
 	[Name] [nvarchar](50) NOT NULL,
 	[EffeciveFrom] [datetime] NOT NULL,
@@ -148,6 +148,11 @@ CREATE TABLE [nine].[AuditSubplanProcesses](
 	[ApprovedOn] [datetime] NULL,
 	[IsDeleted] [bit] NOT NULL DEFAULT (0)
  )
+ 
+ 
+ 
+ 
+ 
  
  CREATE TABLE [common].[AuditFrequencyType](
 	[Id] [uniqueidentifier] NOT NULL PRIMARY KEY DEFAULT NEWSEQUENTIALID(),

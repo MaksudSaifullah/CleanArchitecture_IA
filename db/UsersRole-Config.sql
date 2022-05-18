@@ -18,15 +18,21 @@ Create table [common].[Country]
 )
 GO
 
+--drop table [common].[User]
+
+
+
+
+
 CREATE TABLE [common].[User]
 (
 	[Id] [uniqueidentifier] NOT NULL PRIMARY KEY DEFAULT (newsequentialid()),
 	[UserName] nvarchar(10) not null,
-	[Password] [nvarchar](100) null,
-	[IsEnabled] [bit] not null default 1,
+	[Password] [nvarchar](100) null,	
 	[IsAccountExpired] [bit] not null default 0,
 	[IsPasswordExpired] [bit] not null default 0,
-	[IsAccountLoacked] [bit] not null default 0,
+	[IsAccountLocked] [bit] not null default 0,
+	[IsActive] [bit] not null default 1,
 	[CreatedBy] [nvarchar](10) not null,
 	[CreatedOn] [datetime] not null,
 	[UpdatedBy] [nvarchar](10) null,
@@ -57,11 +63,11 @@ CREATE TABLE [common].[Role]
 )
 GO
 
-CREATE TABLE [common].[UsersRole]
+CREATE TABLE [common].[UserRole]
 (
 	[Id] [uniqueidentifier] NOT NULL PRIMARY KEY DEFAULT (newsequentialid()),
-	[UserID] [uniqueidentifier] NOT NULL FOREIGN KEY REFERENCES [common].[User](Id),
-	[RoleID] [uniqueidentifier] NOT NULL FOREIGN KEY REFERENCES [common].[Role](Id),
+	[UserId] [uniqueidentifier] NOT NULL FOREIGN KEY REFERENCES [common].[User](Id),
+	[RoleId] [uniqueidentifier] NOT NULL FOREIGN KEY REFERENCES [common].[Role](Id),
 	[IsActive] [bit] not null default 1,
 	[CreatedBy] [nvarchar](10) not null,
 	[CreatedOn] [datetime] not null,
@@ -75,11 +81,11 @@ CREATE TABLE [common].[UsersRole]
 )
 GO
 
-CREATE TABLE [common].[UsersCountry]
+CREATE TABLE [common].[UserCountry]
 (
 	[Id] [uniqueidentifier] NOT NULL PRIMARY KEY DEFAULT (newsequentialid()),
-	[UserID] [uniqueidentifier] NOT NULL FOREIGN KEY REFERENCES [common].[User](Id),
-	[CountryID] [uniqueidentifier] NOT NULL FOREIGN KEY REFERENCES [common].[Country](Id),
+	[UserId] [uniqueidentifier] NOT NULL FOREIGN KEY REFERENCES [common].[User](Id),
+	[CountryId] [uniqueidentifier] NOT NULL FOREIGN KEY REFERENCES [common].[Country](Id),
 	[IsActive] [bit] not null default 1,
 	[CreatedBy] [nvarchar](10) not null,
 	[CreatedOn] [datetime] not null,

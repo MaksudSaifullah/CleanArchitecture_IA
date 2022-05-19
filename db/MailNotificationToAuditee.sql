@@ -1,6 +1,6 @@
 
 
-CREATE TABLE [seven].[MailNotificationToAuditee]
+CREATE TABLE [seven].[MailNotificationToAuditee]   -- may be used by 9.9(epic)
 (
 	[Id] [uniqueidentifier] NOT NULL primary key default newsequentialid(),
 	[AuditId] [uniqueidentifier] NOT NULL foreign key references [seven].[Audit](Id),

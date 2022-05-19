@@ -5,7 +5,7 @@ CREATE TABLE [six].[Questionnaire](
 	[Question] [nvarchar](500) NOT NULL,
 	[EffectiveFrom] [datetime] NOT NULL,
 	[EffectiveTo] [datetime] NOT NULL,
-	[IsActive] [bit] NOT NULL DEFAULT 0,
+	[IsActive] [bit] NOT NULL DEFAULT 1,
 	[CreatedBy] [nvarchar](10) NOT NULL,
 	[CreatedOn] [datetime] NOT NULL,
 	[UpdatedBy] [nvarchar](10) NULL,
@@ -19,13 +19,13 @@ CREATE TABLE [six].[Questionnaire](
 
 CREATE TABLE [five].[RiskProfile](
 	[Id] [uniqueidentifier] NOT NULL PRIMARY KEY DEFAULT NEWSEQUENTIALID(),
-	[LikelihoodLevelTypeId] [uniqueidentifier] NOT NULL FOREIGN KEY REFERENCES [config].[LikelihoodType], --will there be any generic table?
-	[ImpactLevelTypeId] [uniqueidentifier] NOT NULL FOREIGN KEY REFERENCES [config].[ImpactType], --will there be any generic table?
+	[LikelihoodTypeId] [uniqueidentifier] NOT NULL FOREIGN KEY REFERENCES [config].[LikelihoodType](Id), --will there be any generic table?
+	[ImpactTypeId] [uniqueidentifier] NOT NULL FOREIGN KEY REFERENCES [config].[ImpactType](Id), --will there be any generic table?
 	[RiskRating] [uniqueidentifier] NOT NULL FOREIGN KEY REFERENCES [config].[RatingType](Id),	
 	[EffectiveFrom] [datetime] NOT NULL,
 	[EffectiveTo] [datetime] NOT NULL,
 	[Description] [nvarchar](200) NULL,
-	[IsActive] [bit] NOT NULL DEFAULT 0,
+	[IsActive] [bit] NOT NULL DEFAULT 1,
 	[CreatedBy] [nvarchar](10) NOT NULL,
 	[CreatedOn] [datetime] NOT NULL,
 	[UpdatedBy] [nvarchar](10) NULL,

@@ -84,7 +84,7 @@ CREATE TABLE [seven].[IssueStatusHistory](
 	[IsDeleted] [bit] NOT NULL DEFAULT 0
 	)
 
-CREATE TABLE [config].[IssueImpactType](
+CREATE TABLE [config].[ImpactType](
 	[Id] [uniqueidentifier] NOT NULL PRIMARY KEY DEFAULT NEWSEQUENTIALID(),
 	[Name] [nvarchar](50) NOT NULL,
 	[IsActive] [bit] NOT NULL DEFAULT 1,
@@ -99,7 +99,7 @@ CREATE TABLE [config].[IssueImpactType](
 	[IsDeleted] [bit] NOT NULL DEFAULT 0
 	)
 
-CREATE TABLE [config].[IssueLikelihoodType](
+CREATE TABLE [config].[LikelihoodType](
 	[Id] [uniqueidentifier] NOT NULL PRIMARY KEY DEFAULT NEWSEQUENTIALID(),
 	[Name] [nvarchar](50) NOT NULL,
 	[IsActive] [bit] NOT NULL DEFAULT 1,

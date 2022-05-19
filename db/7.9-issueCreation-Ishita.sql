@@ -4,8 +4,8 @@ CREATE TABLE [seven].[Issue](
 	[AuditId] [uniqueidentifier] NOT NULL FOREIGN KEY REFERENCES [seven].[Audit](Id),
 	[AuditScheduleId] [uniqueidentifier] NOT NULL FOREIGN KEY REFERENCES [seven].[AuditSchedule](Id),
 	[BranchId] [uniqueidentifier] NOT NULL, --FK for Branch	
-	[ImpactTypeId] [uniqueidentifier] NOT NULL FOREIGN KEY REFERENCES [Config].[IssueImpactType](Id),
-	[LikelihoodTypeId] [uniqueidentifier] NOT NULL FOREIGN KEY REFERENCES [config].[IssueLikelihoodType](Id),
+	[ImpactTypeId] [uniqueidentifier] NOT NULL FOREIGN KEY REFERENCES [Config].[ImpactType](Id),
+	[LikelihoodTypeId] [uniqueidentifier] NOT NULL FOREIGN KEY REFERENCES [config].[LikelihoodType](Id),
 	[RatingTypeId] [uniqueidentifier] NOT NULL FOREIGN KEY REFERENCES [config].[RatingType](Id),
 	[StatusTypeId] [uniqueidentifier] NULL FOREIGN KEY REFERENCES [config].[IssueStatusType](Id),
 	[IssueTitle] [nvarchar](100) NOT NULL,	

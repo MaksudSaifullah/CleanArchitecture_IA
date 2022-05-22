@@ -1,0 +1,25 @@
+CREATE TABLE [nine].[ToR](
+	[Id] [uniqueidentifier]  PRIMARY KEY DEFAULT (NEWSEQUENTIALID()) NOT NULL ,
+	[AuditId]  [uniqueidentifier] NOT NULL FOREIGN KEY (AuditId) REFERENCES [seven].[Audit](Id),
+	[AuditableFunctionid] [uniqueidentifier] NOT NULL FOREIGN KEY (AuditableFunctionid) REFERENCES [eight].[AuditableFunction](Id), --Line Of business
+	[TorId] [nvarchar](10) NOT NULL,
+	[AuditObjection] [nvarchar](max) NOT NULL,
+	[ScopeNCoverage] [nvarchar](max) NOT NULL,
+	[OutOfScope] [nvarchar](max) NOT NULL,
+	[Methodology] [nvarchar](max) NOT NULL,
+	[ProcedureNGuidelineReference] [nvarchar](max) NOT NULL,
+	[AuditResources] [nvarchar](max) NOT NULL,
+	[IsMailSent] [bit] NOT NULL DEFAULT 0,
+	[MailTo]  [nvarchar](100) NULL,
+	[MailCc]  [nvarchar](100) NULL,
+	[MailBcc]  [nvarchar](100)  NULL,
+	[CreatedBy] [nvarchar](10) NOT NULL,
+	[CreatedOn] [datetime] NOT NULL,
+	[UpdatedBy] [nvarchar](10) NULL,
+	[UpdatedOn] [datetime] NULL,
+	[ReviewedBy] [nvarchar](10) NULL,
+	[ReviewedOn] [datetime] NULL,
+	[ApprovedBy] [nvarchar](10) NULL,
+	[ApprovedOn] [datetime] NULL,
+	[IsDeleted] [bit] NOT NULL DEFAULT 0
+)

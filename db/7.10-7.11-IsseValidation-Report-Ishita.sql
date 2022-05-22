@@ -149,15 +149,12 @@ CREATE TABLE [seven].[IssueValidationActionDocuments](
 	[IsDeleted] [bit] NOT NULL DEFAULT 0
 )
 -- 7.11
-CREATE TABLE [seven].[Report](
+CREATE TABLE [seven].[AuditExecutionReport](
 	[Id] [uniqueidentifier] NOT NULL PRIMARY KEY DEFAULT NEWSEQUENTIALID(),
-	[ReportCode] [nvarchar](20) NOT NULL UNIQUE,
-	--[DraftCode] [nvarchar](20) NOT NULL UNIQUE,
-	--[FinalCode] [nvarchar](20) NOT NULL UNIQUE,
-	[AuditId] [uniqueidentifier] NOT NULL FOREIGN KEY REFERENCES [seven].[AuditCreation](Id),
-	[Country] [uniqueidentifier] NOT NULL FOREIGN KEY REFERENCES [security].[Country](Id),
-	[IssueId] [uniqueidentifier] NOT NULL FOREIGN KEY REFERENCES [seven].[Issue](Id),         --need to check
-	[IssuedBy] [uniqueidentifier] NOT NULL FOREIGN KEY REFERENCES [security].[Employee](Id),
+	[ReportCode] [nvarchar](20) NOT NULL UNIQUE,	
+	[AuditId] [uniqueidentifier] NOT NULL FOREIGN KEY REFERENCES [seven].[Audit](Id),
+	[Country] [uniqueidentifier] NOT NULL FOREIGN KEY REFERENCES [common].[Country](Id),
+	[ReportIssuedBy] [uniqueidentifier] NOT NULL FOREIGN KEY REFERENCES [security].[Employee](Id),
 	[ReportReviewedBy] [uniqueidentifier] NULL FOREIGN KEY REFERENCES [security].[Employee](Id),
 	[ReportApprovedBy] [uniqueidentifier] NULL FOREIGN KEY REFERENCES [security].[Employee](Id),
 	[ReviewEvidenceId] [uniqueidentifier] NOT NULL FOREIGN KEY REFERENCES [dms].[Document](Id),
@@ -171,6 +168,20 @@ CREATE TABLE [seven].[Report](
 	[DraftVersion] [int] NOT NULL,
 	[IsFinal] [bit] NOT NULL DEFAULT 0, --draft or final
 	[IsActive] [bit] NOT NULL DEFAULT 1,
+	[CreatedBy] [nvarchar](10) NOT NULL,
+	[CreatedOn] [datetime] NOT NULL,
+	[UpdatedBy] [nvarchar](10) NULL,
+	[UpdatedOn] [datetime] NULL,
+	[ReviewedBy] [nvarchar](10) NULL,
+	[ReviewedOn] [datetime] NULL,
+	[ApprovedBy] [nvarchar](10) NULL,
+	[ApprovedOn] [datetime] NULL,
+	[IsDeleted] [bit] NOT NULL DEFAULT 0
+)
+CREATE TABLE [seven].[AuditExecutionReportIssues](
+	[Id] [uniqueidentifier] NOT NULL PRIMARY KEY DEFAULT NEWSEQUENTIALID(),
+	[AuditExecutionReportId] [uniqueidentifier] NOT NULL FOREIGN KEY REFERENCES [seven].[AuditExecutionReport](Id),
+	[IssueId] [uniqueidentifier] NOT NULL FOREIGN KEY REFERENCES [seven].[Issue](Id),
 	[CreatedBy] [nvarchar](10) NOT NULL,
 	[CreatedOn] [datetime] NOT NULL,
 	[UpdatedBy] [nvarchar](10) NULL,

@@ -1,0 +1,21 @@
+CREATE TABLE [nine].[RCD-OE](
+	[Id] [uniqueidentifier] NOT NULL PRIMARY KEY DEFAULT NEWSEQUENTIALID(),
+	[RCDOECode] [nvarchar](20) NOT NULL UNIQUE,	
+	[OETestScriptId] [uniqueidentifier] NOT NULL FOREIGN KEY REFERENCES [OETestScript](Id),
+	[Policy] [nvarchar](200) NOT NULL,
+	[OETestSteps] [nvarchar](200) NOT NULL,
+	[OETestResult] [nvarchar](500) NOT NULL,
+	[OETestConclusion] [nvarchar](5) NOT NULL, --generic table?
+	[IsIssueIdentified] [bit] NOT NULL,
+	[IsIssueReportable] [bit] NOT NULL,
+	[IssueEvidenceReference] [nvarchar](200) NOT NULL,
+	[CreatedBy] [nvarchar](10) NOT NULL,
+	[CreatedOn] [datetime] NOT NULL,
+	[UpdatedBy] [nvarchar](10) NULL,
+	[UpdatedOn] [datetime] NULL,
+	[ReviewedBy] [nvarchar](10) NULL,
+	[ReviewedOn] [datetime] NULL,
+	[ApprovedBy] [nvarchar](10) NULL,
+	[ApprovedOn] [datetime] NULL,
+	[IsDeleted] [bit] NOT NULL DEFAULT 0,
+	)

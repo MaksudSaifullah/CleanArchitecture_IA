@@ -240,7 +240,22 @@ CREATE TABLE [seven].[RiskAssesment](
 	[IsDeleted] [bit] NOT NULL DEFAULT (0)
 	)
 	
-	
+	CREATE TABLE [nine].[RCDDesignPhase](
+	[Id] [uniqueidentifier] NOT NULL PRIMARY KEY DEFAULT NEWSEQUENTIALID(),
+	[DETestScriptId] [uniqueidentifier] NOT NULL FOREIGN KEY (DETestScriptId) REFERENCES nine.DETestScript(Id), -- need to know the table name
+	PolicyStandardsGuidelineReference [nvarchar](50) NOT NULL,
+	IssueReportable bit NULL DEFAULT 1,
+	IssueEvidenceReference [nvarchar](500)  NULL,
+	[CreatedBy] [nvarchar](10) NOT NULL,
+	[CreatedOn] [datetime] NOT NULL,
+	[UpdatedBy] [nvarchar](10) NULL,
+	[UpdatedOn] [datetime] NULL,
+	[ReviewedBy] [nvarchar](10) NULL,
+	[ReviewedOn] [datetime] NULL,
+	[ApprovedBy] [nvarchar](10) NULL,
+	[ApprovedOn] [datetime] NULL,
+	[IsDeleted] [bit] NOT NULL DEFAULT (0)
+	)
 	
 	
 	

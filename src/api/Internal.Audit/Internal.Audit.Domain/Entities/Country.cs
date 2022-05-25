@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 namespace Internal.Audit.Domain.Entities
 {
    
-    [Table("Counrty", Schema = "common")]
+    [Table("Country", Schema = "common")]
     public class Country : EntityBase
     {
         [Required]
@@ -20,6 +20,9 @@ namespace Internal.Audit.Domain.Entities
         [Required]
         [MaxLength(10)]
         public string Code { get; set; } = null!;
+
+        //Navigation properties
+        public virtual ICollection<UserCountry> UserCountries { get; set; } = null!;
 
     }
 }

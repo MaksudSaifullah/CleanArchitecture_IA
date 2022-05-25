@@ -17,16 +17,19 @@ public class User: EntityBase
     public string Password { get; set; } = null!;   
 
     [Required]
-    [DefaultValue(false)]
+    [DefaultValue("0")]
     public bool IsEnabled { get; set; }
     [Required]
-    [DefaultValue(false)]
+    [DefaultValue("0")]
     public bool IsAccountExpired { get; set; }
     [Required]
-    [DefaultValue(false)]
+    [DefaultValue("0")]
     public bool IsPasswordExpired { get; set; }
     [Required]
-    [DefaultValue(false)]
-    public bool IsAccountLocked { get; set; } 
-   
+    [DefaultValue("0")]
+    public bool IsAccountLocked { get; set; }
+
+    //Navigation properties
+    public virtual ICollection<UserCountry> UserCountries { get; set; } = null!;
+
 }

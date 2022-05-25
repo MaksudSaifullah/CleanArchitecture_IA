@@ -2,6 +2,8 @@
 using Internal.Audit.Domain.Common;
 using Internal.Audit.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
+using System.ComponentModel;
+using System.Reflection;
 
 namespace Internal.Audit.Infrastructure.Persistent;
 
@@ -12,6 +14,26 @@ public class InternalAuditContext: DbContext
     }
 
     public DbSet<User> Users { get; set; }
+    public DbSet<Country> Countries { get; set; }
+    public DbSet<UserCountry> UserCountries { get; set; }
+
+
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    {
+        foreach (var entityType in modelBuilder.Model.GetEntityTypes())
+        {
+            foreach (var property in entityType.GetProperties())
+            {
+                var memberInfo = property.PropertyInfo ?? (MemberInfo)property.FieldInfo;
+                if (memberInfo == null) continue;
+                var defaultValue = Attribute.GetCustomAttribute(memberInfo, typeof(DefaultValueAttribute)) as DefaultValueAttribute;
+                if (defaultValue == null) continue;
+                if(defaultValue.Value != null)
+                property.SetDefaultValueSql(defaultValue.Value.ToString());
+            }
+        }
+        base.OnModelCreating(modelBuilder);
+    }
 
     public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
     {
@@ -24,8 +46,8 @@ public class InternalAuditContext: DbContext
                     entry.Entity.CreatedOn = DateTime.Now;
                     break;
                 case EntityState.Modified:
-                    entry.Entity.LastModifiedBy = "system";
-                    entry.Entity.LastModifiedOn = DateTime.Now;
+                    entry.Entity.UpdatedBy = "system";
+                    entry.Entity.UpdatedOn = DateTime.Now;
                     break;
             }
         }

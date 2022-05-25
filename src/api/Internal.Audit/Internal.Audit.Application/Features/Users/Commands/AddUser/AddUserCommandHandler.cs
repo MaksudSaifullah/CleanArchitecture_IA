@@ -46,7 +46,7 @@ public class AddUserCommandHandler : IRequestHandler<AddUserCommand, AddUserResp
     {
         return await _mailService.FormatSubject(_configuration["MailSettings:UserCreationMail:Subject"], "##", mailVariables)
                                         .FormatBody(_configuration["MailSettings:UserCreationMail:Body"], "##", mailVariables)
-                                        .Setup(_configuration["MailSettings:DefaultSender"], new List<string> { user.Email }, new List<string>(), true)
+                                        .Setup(_configuration["MailSettings:DefaultSender"], new List<string> { user.UserName }, new List<string>(), true)
                                         .SendAsync();
     }
 }

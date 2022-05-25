@@ -6,9 +6,10 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace Internal.Audit.Domain.Common;
 
 public abstract class EntityBase
-{
-    [Column("Id", TypeName = "NEWSEQUENTIALID()")]
-    [Key]   
+{   
+    [Key]
+    [Column("Id", TypeName = "uniqueidentifier")]
+    [DefaultValue("newsequentialid()")]
     public Guid Id { get; protected set; }  //NEWSEQUENTIALID
 
     [Required]
@@ -34,7 +35,7 @@ public abstract class EntityBase
     public DateTime? ApprovedOn { get; set; }
 
     [Required]
-    [DefaultValue(false)]
+    [DefaultValue("0")]
     public bool IsDeleted { get; set; }
 
 

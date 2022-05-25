@@ -39,7 +39,7 @@ public class ExceptionLoggingMiddleware
         context.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
         await context.Response.WriteAsync(new BaseResponseDTO
         (
-            0,
+            Guid.NewGuid(),
             false,
             $"{exceptionMessage}"
         ).ToString());

@@ -20,7 +20,8 @@ public class InternalAuditContextSeed
         {
             new User
             {
-                Email = "admin.ia@asa-international.com", Password = "@dmin123", Status = true, LoginStatus = false
+                UserName = "Admin", Password = "@dmin123", IsPasswordExpired = false, IsEnabled = true, IsDeleted = false,
+                IsAccountExpired = false, IsAccountLocked = false
             }
 
         };

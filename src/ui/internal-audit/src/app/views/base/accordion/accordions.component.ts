@@ -14,7 +14,7 @@ export class AccordionsComponent {
     private sanitizer: DomSanitizer
   ) { }
 
-  getAccordionBodyText(value: string) {
+getAccordionBodyText(value: string) {
     const textSample = `
       <strong>This is the <mark>#${value}</mark> item accordion body.</strong> It is hidden by
       default, until the collapse plugin adds the appropriate classes that we use to

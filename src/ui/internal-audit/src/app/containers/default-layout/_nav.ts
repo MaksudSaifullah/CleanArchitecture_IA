@@ -17,7 +17,7 @@ export const navItems: INavData[] = [
     children: [
       {
         name: 'Loan Officers',
-        url: '/base/accordion',
+        url: '/public/register',
         iconComponent: { name: 'cil-pencil' },
       },
       {

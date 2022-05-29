@@ -12,6 +12,6 @@ public class UserCommandRepository : CommandRepositoryBase<User>, IUserCommandRe
     
     public Task<IReadOnlyList<User>> Get(bool activeOnly)
     {
-        return Get(u => u.Status, u => u.OrderByDescending(x => x.CreatedOn));
+        return Get(u => u.IsEnabled, u => u.OrderByDescending(x => x.CreatedOn));
     }
 }

@@ -95,7 +95,7 @@ builder.Services.AddMvc().ConfigureApiBehaviorOptions(options =>
 
         return new BadRequestObjectResult(new BaseResponseDTO
         (
-            Id:0,
+            Id: Guid.NewGuid(),
             Success: false,
             Message: errors
         ));

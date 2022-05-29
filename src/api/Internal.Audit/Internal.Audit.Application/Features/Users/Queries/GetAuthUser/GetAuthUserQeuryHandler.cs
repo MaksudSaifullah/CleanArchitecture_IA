@@ -26,9 +26,9 @@ public class GetAuthUserQeuryHandler : IRequestHandler<GetAuthUserQeury, AuthUse
         if (user == null)
             return new AuthUserDTO { Success = false };
 
-        var token = _jwtTokenService.GenerateJwtToken(user.Email, "ADMIN");
+        var token = _jwtTokenService.GenerateJwtToken(user.UserName, "ADMIN");
 
-        return new AuthUserDTO { Success = true, Email = user.Email, Name = "", Role = "ADMIN", Token = token };
+        return new AuthUserDTO { Success = true, UserName = user.UserName, Name = "", Role = "ADMIN", Token = token };
 
     }
 }

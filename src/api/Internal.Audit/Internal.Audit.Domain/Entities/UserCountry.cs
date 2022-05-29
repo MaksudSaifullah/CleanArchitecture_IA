@@ -1,5 +1,7 @@
-﻿using System;
+﻿using Internal.Audit.Domain.Common;
+using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
@@ -8,7 +10,8 @@ using System.Threading.Tasks;
 
 namespace Internal.Audit.Domain.Entities
 {
-    internal class UserCountry
+    [Table("UserCountry", Schema = "security")]
+    public class UserCountry: EntityBase
     {
         [Required]
        
@@ -16,13 +19,15 @@ namespace Internal.Audit.Domain.Entities
         [Required]
         public Guid UserId { get; set; }
         [Required]
-        public string IsActive { get; set; } = null!;
+        [DefaultValue("1")]
+        public bool IsActive { get; set; }
 
+        //Navigation properties
         [ForeignKey("CountryId")]
-        public virtual Country Country { get; set; }
+        public virtual Country Country { get; set; } = null!;
 
         [ForeignKey("UserId")]
-        public virtual User User { get; set; }
+        public virtual User User { get; set; } = null!;
 
 
 

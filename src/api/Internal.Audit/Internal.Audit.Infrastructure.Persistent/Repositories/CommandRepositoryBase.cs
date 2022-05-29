@@ -28,7 +28,7 @@ public class CommandRepositoryBase<TEntity> : IAsyncCommandRepository<TEntity> w
         return true;
     }
 
-    public async Task<bool> Delete(long id)
+    public async Task<bool> Delete(Guid id)
     {
         var dbSet = _dbContext.Set<TEntity>();
         var entity = await dbSet.FindAsync(id);
@@ -42,7 +42,7 @@ public class CommandRepositoryBase<TEntity> : IAsyncCommandRepository<TEntity> w
         return await _dbContext.Set<TEntity>().ToListAsync();
     }
 
-    public async Task<TEntity> Get(long id)
+    public async Task<TEntity> Get(Guid id)
     {
         return await _dbContext.Set<TEntity>().FindAsync(id);
     }

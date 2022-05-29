@@ -47,7 +47,7 @@ namespace Internal.Audit.Api.Controllers
         }
 
         [HttpDelete("{id}")]
-        public async Task<ActionResult<UpdateUserResponseDTO>> Delete(long id)
+        public async Task<ActionResult<UpdateUserResponseDTO>> Delete(Guid id)
         {
             var command = new DeleteUserCommand(id);
             var result = await _mediator.Send(command);

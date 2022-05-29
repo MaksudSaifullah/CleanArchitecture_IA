@@ -5,7 +5,7 @@ namespace Internal.Audit.Application.Features.Users.Commands.UpdateUser;
 
 public record UpdateUserResponseDTO : BaseResponseDTO
 {
-    public UpdateUserResponseDTO(long Id, bool Success, string Message) : base(Id, Success, Message)
+    public UpdateUserResponseDTO(Guid Id, bool Success, string Message) : base(Id, Success, Message)
     {
     }
 }

@@ -20,4 +20,10 @@
     <PackageReference Include="Serilog.AspNetCore" Version="5.0.0" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Features\Countries\Commands\AddCountry\" />
+    <Folder Include="Features\Countries\Commands\DeleteCountry\" />
+    <Folder Include="Features\Countries\Commands\UpdateCountry\" />
+  </ItemGroup>
+
 </Project>

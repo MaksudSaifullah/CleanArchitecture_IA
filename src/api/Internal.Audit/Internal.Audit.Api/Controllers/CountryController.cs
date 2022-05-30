@@ -1,4 +1,10 @@
-﻿using Internal.Audit.Application.Features.Countries.Queries.GetCountryList;
+﻿
+using Internal.Audit.Application.Features.Countries.Commands.AddCountry;
+using Internal.Audit.Application.Features.Countries.Commands.DeleteCountry;
+using Internal.Audit.Application.Features.Countries.Commands.UpdateCountry;
+using Internal.Audit.Application.Features.Countries.Queries.GetCountryById;
+using Internal.Audit.Application.Features.Countries.Queries.GetCountryList;
+using Internal.Audit.Application.Features.Users.Commands.AddUser;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -23,26 +29,41 @@ namespace Internal.Audit.Api.Controllers
 
         }
 
-        //[HttpPost()]
-        //public async Task<ActionResult<AddUserResponseDTO>> Add(AddUserCommand command)
+        [HttpGet("{Id}")]
+        public async Task<ActionResult<CountryByIdDTO>> GetById(Guid Id)
+        {
+            var query = new GetCountryQuery(Id);
+            var users = await _mediator.Send(query);
+            return Ok(users);
+
+        }
+
+        [HttpPost]
+        public async Task<ActionResult<AddCountryResponseDTO>> Add(AddCountryCommand command)
+        {
+            var result = await _mediator.Send(command);
+            return Ok(result);
+        }
+
+        [HttpPut]
+        public async Task<ActionResult<UpdateCountryResponseDTO>> Update(UpdateCountryCommand command)
+        {
+            var result = await _mediator.Send(command);
+            return Ok(result);
+        }
+
+        [HttpDelete("{Id}")]
+        public async Task<ActionResult<DeleteCountryResponseDTO>> Delete(Guid Id)
+        {
+            var command = new DeleteCountryCommand(Id);
+            var result = await _mediator.Send(command);
+            return Ok(result);
+        }
+
+        //[HttpDelete("{Id}")]
+        //public async Task<ActionResult<DeleteCountryResponseDTO>> Delete(Guid Id)
         //{
-        //    var result = await _mediator.Send(command);
-        //    return Ok(result);
-
-        //}
-
-        //[HttpPut()]
-        //public async Task<ActionResult<UpdateUserResponseDTO>> Update(UpdateUserCommand command)
-        //{
-        //    var result = await _mediator.Send(command);
-        //    return Ok(result);
-
-        //}
-
-        //[HttpDelete("{id}")]
-        //public async Task<ActionResult<UpdateUserResponseDTO>> Delete(Guid id)
-        //{
-        //    var command = new DeleteUserCommand(id);
+        //    var command = new DeleteCountryCommand(Id);
         //    var result = await _mediator.Send(command);
         //    return Ok(result);
 

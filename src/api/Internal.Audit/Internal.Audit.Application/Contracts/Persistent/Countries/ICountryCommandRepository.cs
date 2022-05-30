@@ -9,4 +9,5 @@ namespace Internal.Audit.Application.Contracts.Persistent.Countries;
 
 public interface ICountryCommandRepository : IAsyncCommandRepository<Country>
 {
+    //Task<IReadOnlyList<Country>> Get(bool activeOnly);
 }

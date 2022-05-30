@@ -17,11 +17,9 @@ public abstract class EntityBase
     public string CreatedBy { get; set; } = null!;
     [Required]
     public DateTime CreatedOn { get; set; }
-
-    [Required]
+    
     [MaxLength(10)]
     public string? UpdatedBy { get; set; } = null!;
-    [Required]
     public DateTime? UpdatedOn { get; set; }
 
 

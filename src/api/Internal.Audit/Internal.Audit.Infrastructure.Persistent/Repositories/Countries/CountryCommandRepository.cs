@@ -6,12 +6,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Internal.Audit.Infrastructure.Persistent.Repositories.Countries
+namespace Internal.Audit.Infrastructure.Persistent.Repositories.Countries;
+
+public class CountryCommandRepository : CommandRepositoryBase<Country>, ICountryCommandRepository
 {
-    public class CountryCommandRepository : CommandRepositoryBase<Country>, ICountryCommandRepository
+    public CountryCommandRepository(InternalAuditContext context) : base(context)
     {
-        public CountryCommandRepository(InternalAuditContext context) : base(context)
-        {
-        }
     }
+
 }

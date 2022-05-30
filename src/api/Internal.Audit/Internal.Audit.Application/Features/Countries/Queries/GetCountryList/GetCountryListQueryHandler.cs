@@ -19,7 +19,7 @@ namespace Internal.Audit.Application.Features.Countries.Queries.GetCountryList
         {
             var countries = await _countryRepository.GetAll();
             return _mapper.Map<List<CountryDTO>>(countries);
-        }
+        }        
     }
 }
 

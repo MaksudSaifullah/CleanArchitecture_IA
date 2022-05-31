@@ -21,7 +21,7 @@ CREATE TABLE [five].[RiskProfile](
 	[Id] [uniqueidentifier] NOT NULL PRIMARY KEY DEFAULT NEWSEQUENTIALID(),
 	[LikelihoodTypeId] [uniqueidentifier] NOT NULL FOREIGN KEY REFERENCES [config].[LikelihoodType](Id), --will there be any generic table?
 	[ImpactTypeId] [uniqueidentifier] NOT NULL FOREIGN KEY REFERENCES [config].[ImpactType](Id), --will there be any generic table?
-	[RiskRating] [uniqueidentifier] NOT NULL FOREIGN KEY REFERENCES [config].[RatingType](Id),	
+	[RatingType] [uniqueidentifier] NOT NULL FOREIGN KEY REFERENCES [config].[RatingType](Id),	
 	[EffectiveFrom] [datetime] NOT NULL,
 	[EffectiveTo] [datetime] NOT NULL,
 	[Description] [nvarchar](200) NULL,

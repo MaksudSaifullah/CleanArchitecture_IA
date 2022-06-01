@@ -1,6 +1,7 @@
 ﻿
 using Internal.Audit.Domain.Common;
 using Internal.Audit.Domain.Entities;
+using Internal.Audit.Domain.Entities.common;
 using Microsoft.EntityFrameworkCore;
 using System.ComponentModel;
 using System.Reflection;
@@ -16,6 +17,7 @@ public class InternalAuditContext: DbContext
     public DbSet<User> Users { get; set; }
     public DbSet<Country> Countries { get; set; }
     public DbSet<UserCountry> UserCountries { get; set; }
+    public DbSet<Designation> Designations { get; set; }
 
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)

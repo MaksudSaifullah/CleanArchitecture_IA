@@ -3,6 +3,7 @@
 CREATE TABLE [security].[Designation](
 	[Id] [uniqueidentifier]  PRIMARY KEY DEFAULT (NEWSEQUENTIALID()) NOT NULL ,
 	[Name] [nvarchar](100) NOT NULL,
+	[Description] [nvarchar](500) NOT NULL,
 	[IsActive] bit NOT NULL DEFAULT 1,
 	[CreatedBy] [nvarchar](10) NOT NULL,
 	[CreatedOn] [datetime] NOT NULL,
@@ -21,7 +22,7 @@ CREATE TABLE [security].[Employee](
 	[DesignationId][uniqueidentifier] FOREIGN KEY (DesignationId) REFERENCES [security].[Designation](Id),
 	[Name] [nvarchar](100) NOT NULL,
 	[Email] [nvarchar](50) NULL,
-	[Photo] [nvarchar](150) NULL,
+	[Photo] [uniqueidentifier] NULL, --foreign key document
 	[IsActive] bit NOT NULL DEFAULT 1,
 	[CreatedBy] [nvarchar](10) NOT NULL,
 	[CreatedOn] [datetime] NOT NULL,

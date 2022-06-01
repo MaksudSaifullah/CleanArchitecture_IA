@@ -28,7 +28,7 @@ CREATE TABLE [seven].[Issue](
 	[IsDeleted] [bit] NOT NULL DEFAULT 0
 	)
 
-CREATE TABLE [seven].[IssueAction](
+CREATE TABLE [seven].[IssueActionPlan](
 	[Id] [uniqueidentifier] NOT NULL PRIMARY KEY DEFAULT NEWSEQUENTIALID(),
 	[PlanCode] [nvarchar](20) NOT NULL UNIQUE,
 	[IssueId] [uniqueidentifier] NOT NULL FOREIGN KEY REFERENCES [seven].[Issue](Id),	
@@ -69,7 +69,7 @@ CREATE TABLE [seven].[IssueOwners](
 CREATE TABLE [seven].[IssueStatusHistory](
 	[Id] [uniqueidentifier] NOT NULL PRIMARY KEY DEFAULT NEWSEQUENTIALID(),
 	[IssueId] [uniqueidentifier] NOT NULL FOREIGN KEY REFERENCES [seven].[Issue](Id),
-	[IssueStatusId] [uniqueidentifier] NOT NULL FOREIGN KEY REFERENCES [config].[IssueStatusType](Id),
+	[IssueStatusTypeId] [uniqueidentifier] NOT NULL FOREIGN KEY REFERENCES [config].[IssueStatusType](Id),
 	[ModifiedBy] [uniqueidentifier] NOT NULL FOREIGN KEY REFERENCES [security].[Employee](Id),
 	[ModificationDate] [datetime] NOT NULL,
 	[IsActive] [bit] NOT NULL DEFAULT 1,

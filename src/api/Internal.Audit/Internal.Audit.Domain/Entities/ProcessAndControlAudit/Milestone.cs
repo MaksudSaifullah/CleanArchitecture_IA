@@ -7,9 +7,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Internal.Audit.Domain.Entities;
+namespace Internal.Audit.Domain.Entities.ProcessAndControlAudit;
 
-[Table("Milestone", Schema = "pac")]
+[Table("Milestone", Schema = "ProcessAndControlAudit")]
 public class Milestone : EntityBase
 {
 

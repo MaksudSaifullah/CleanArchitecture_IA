@@ -8,25 +8,25 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Internal.Audit.Domain.Entities.config
+namespace Internal.Audit.Domain.Entities.Config;
+
+[Table("DurationType", Schema = "Config")]
+public class DurationType : EntityBase
 {
-    [Table("DurationType", Schema = "config")]
-    public class DurationType : EntityBase
-    {
-        [Required]
-        [MaxLength(20)]
-        public string Name { get; set; } = null!;
+    [Required]
+    [MaxLength(20)]
+    public string Name { get; set; } = null!;
 
-        [Required]
-        [MaxLength(10)]
-        public string Type { get; set; } = null!;
+    [Required]
+    [MaxLength(10)]
+    public string Type { get; set; } = null!;
 
-        [Required]
-        [MaxLength(10)]
-        public string Remarks { get; set; } = null!;
+    [Required]
+    [MaxLength(10)]
+    public string Remarks { get; set; } = null!;
 
-        [Required]
-        [DefaultValue("0")]
-        public bool IsActive { get; set; }
-    }
+    [Required]
+    [DefaultValue("0")]
+    public bool IsActive { get; set; }
+
 }

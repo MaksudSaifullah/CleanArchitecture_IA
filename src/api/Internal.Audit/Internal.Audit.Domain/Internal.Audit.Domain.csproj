@@ -7,7 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Entities\pac\" />
+    <Folder Include="Entities\ProcessAndControlAudit\" />
   </ItemGroup>
 
 </Project>

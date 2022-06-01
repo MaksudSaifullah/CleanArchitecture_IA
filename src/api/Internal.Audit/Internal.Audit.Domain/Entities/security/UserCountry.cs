@@ -8,27 +8,27 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Internal.Audit.Domain.Entities.security
+namespace Internal.Audit.Domain.Entities.Security;
+
+[Table("UserCountry", Schema = "Security")]
+public class UserCountry : EntityBase
 {
-    [Table("UserCountry", Schema = "security")]
-    public class UserCountry : EntityBase
-    {
-        [Required]
-        public Guid CountryId { get; set; }
+    [Required]
+    public Guid CountryId { get; set; }
 
-        [Required]
-        public Guid UserId { get; set; }
+    [Required]
+    public Guid UserId { get; set; }
 
-        [Required]
-        [DefaultValue("1")]
-        public bool IsActive { get; set; }
+    [Required]
+    [DefaultValue("1")]
+    public bool IsActive { get; set; }
 
-        //Navigation properties
-        [ForeignKey("CountryId")]
-        public virtual Country Country { get; set; } = null!;
+    //Navigation properties
+    [ForeignKey("CountryId")]
+    public virtual Country Country { get; set; } = null!;
 
-        [ForeignKey("UserId")]
-        public virtual User User { get; set; } = null!;
+    [ForeignKey("UserId")]
+    public virtual User User { get; set; } = null!;
 
-    }
 }
+

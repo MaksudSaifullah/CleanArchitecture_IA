@@ -7,21 +7,22 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Internal.Audit.Domain.Entities.common
+namespace Internal.Audit.Domain.Entities.Common;
+
+
+[Table("Country", Schema = "Common")]
+public class Country : EntityBase
 {
-    [Table("Country", Schema = "common")]
-    public class Country : EntityBase
-    {
-        [Required]
-        [MaxLength(20)]
-        public string Name { get; set; } = null!;
+    [Required]
+    [MaxLength(20)]
+    public string Name { get; set; } = null!;
 
-        [Required]
-        [MaxLength(10)]
-        public string Code { get; set; } = null!;
+    [Required]
+    [MaxLength(10)]
+    public string Code { get; set; } = null!;
 
-        //Navigation properties
-        public virtual ICollection<UserCountry> UserCountries { get; set; } = null!;
+    //Navigation properties
+    public virtual ICollection<UserCountry> UserCountries { get; set; } = null!;
 
-    }
+
 }

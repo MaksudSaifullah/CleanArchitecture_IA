@@ -30,7 +30,7 @@ public class TopicHead : EntityBase
     public DateTime EffectiveTo { get; set; }
 
     [Required]
-    [MaxLength(100)]
+    [MaxLength(300)]
     public string Description { get; set; }
 
     [ForeignKey("CountryId")]

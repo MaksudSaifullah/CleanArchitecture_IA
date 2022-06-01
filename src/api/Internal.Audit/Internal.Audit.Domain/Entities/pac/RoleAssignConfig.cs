@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Internal.Audit.Domain.Entities;
 
-[Table("RoleAssignConfig", Schema = "")]
+[Table("RoleAssignConfig", Schema = "pac")]
 public class RoleAssignConfig : EntityBase
 {
     [Required]

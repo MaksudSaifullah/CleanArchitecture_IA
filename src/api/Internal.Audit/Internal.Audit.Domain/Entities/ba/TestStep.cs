@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 namespace Internal.Audit.Domain.Entities;
 
 
-[Table("TestStep", Schema = "")]
+[Table("TestStep", Schema = "ba")]
 public class TestStep : EntityBase
 {
     [Required]

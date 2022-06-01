@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Internal.Audit.Domain.Entities;
 
-[Table("Milestone", Schema = "")]
+[Table("Milestone", Schema = "pac")]
 public class Milestone : EntityBase
 {
 

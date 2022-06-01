@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 namespace Internal.Audit.Domain.Entities;
 
 
-[Table("RiskCriteria", Schema = "")]
+[Table("RiskCriteria", Schema = "ba")]
 public class RiskCriteria : EntityBase
 {
     [Required]

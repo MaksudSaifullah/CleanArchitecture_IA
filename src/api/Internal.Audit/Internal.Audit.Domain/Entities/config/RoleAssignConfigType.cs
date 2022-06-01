@@ -10,9 +10,8 @@ using System.Threading.Tasks;
 
 namespace Internal.Audit.Domain.Entities;
 
-
-[Table("AuditRoleType", Schema = "")]
-public class AuditRoleType : EntityBase
+[Table("RoleAssignConfigType", Schema = "config")]
+public class RoleAssignConfigType : EntityBase
 {
     [Required]
     [DefaultValue("1")]

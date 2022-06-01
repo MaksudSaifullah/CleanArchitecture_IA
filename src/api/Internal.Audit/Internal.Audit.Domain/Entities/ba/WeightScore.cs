@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 namespace Internal.Audit.Domain.Entities;
 
 
-[Table("WeightScore", Schema = "")]
+[Table("WeightScore", Schema = "ba")]
 public class WeightScore : EntityBase
 {
     [Required]

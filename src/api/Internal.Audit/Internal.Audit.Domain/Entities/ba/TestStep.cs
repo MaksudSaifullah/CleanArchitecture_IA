@@ -1,7 +1,6 @@
 ﻿using Internal.Audit.Domain.Common;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
@@ -10,15 +9,18 @@ using System.Threading.Tasks;
 
 namespace Internal.Audit.Domain.Entities;
 
-[Table("TopicHead", Schema = "ba")]
-public class TopicHead : EntityBase
+
+[Table("TestStep", Schema = "ba")]
+public class TestStep : EntityBase
 {
     [Required]
     public Guid CountryId { get; set; }
 
     [Required]
-    [DefaultValue("1")]
-    public bool IsActive { get; set; }
+    public Guid TopicHeadId { get; set; }
+
+    [Required]
+    public Guid QuestionaireId { get; set; }
 
     [Required]
     [MaxLength(100)]
@@ -29,10 +31,12 @@ public class TopicHead : EntityBase
     [Required]
     public DateTime EffectiveTo { get; set; }
 
-    [Required]
-    [MaxLength(300)]
-    public string Description { get; set; }
-
     [ForeignKey("CountryId")]
     public virtual Country Country { get; set; } = null!;
+
+    [ForeignKey("TopicHeadId")]
+    public virtual TopicHead TopicHead { get; set; } = null!;
+
+/*    [ForeignKey("QuestionaireId")]
+    public virtual Questionaire Questionaire { get; set; } = null!;*/
 }

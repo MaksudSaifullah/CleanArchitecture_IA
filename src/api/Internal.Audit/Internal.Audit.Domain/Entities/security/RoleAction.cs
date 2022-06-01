@@ -8,7 +8,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Action = Internal.Audit.Domain.Entities.common.Action;
+using Action = Internal.Audit.Domain.Entities.Common.Action;
 
 namespace Internal.Audit.Domain.Entities.Security;
 

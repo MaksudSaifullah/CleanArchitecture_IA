@@ -8,9 +8,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Internal.Audit.Domain.Entities;
+namespace Internal.Audit.Domain.Entities.Config;
 
-[Table("RiskCriteriaType", Schema = "config")]
+[Table("RiskCriteriaType", Schema = "Config")]
 public class RiskCriteriaType : EntityBase
 {
     [Required]

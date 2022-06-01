@@ -1,5 +1,5 @@
 ﻿using Internal.Audit.Domain.Common;
-using Internal.Audit.Domain.Entities.common;
+using Internal.Audit.Domain.Entities.Common;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;

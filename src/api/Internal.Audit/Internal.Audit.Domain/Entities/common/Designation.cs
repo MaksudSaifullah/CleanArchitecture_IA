@@ -8,20 +8,22 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Internal.Audit.Domain.Entities.common;
-
-[Table("Designation", Schema = "Common")]
-public class Designation : EntityBase
+namespace Internal.Audit.Domain.Entities.common
 {
-    [Required]
-    [MaxLength(50)]
-    public string Name { get; set; } = null!;
+    [Table("Designation", Schema = "Common")]
+    public class Designation : EntityBase
+    {
+        [Required]
+        [MaxLength(50)]
+        public string Name { get; set; } = null!;
 
-    [Required]
-    [MaxLength(50)]
-    public string Description { get; set; } = null!;
+        [Required]
+        [MaxLength(50)]
+        public string Description { get; set; } = null!;
 
-    [Required]
-    [DefaultValue("1")]
-    public bool IsActive { get; set; }
+        [Required]
+        [DefaultValue("1")]
+        public bool IsActive { get; set; }
+    }
 }
+

@@ -4,7 +4,6 @@ using Internal.Audit.Application.Features.Countries.Commands.DeleteCountry;
 using Internal.Audit.Application.Features.Countries.Commands.UpdateCountry;
 using Internal.Audit.Application.Features.Countries.Queries.GetCountryById;
 using Internal.Audit.Application.Features.Countries.Queries.GetCountryList;
-using Internal.Audit.Application.Features.Users.Commands.AddUser;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 

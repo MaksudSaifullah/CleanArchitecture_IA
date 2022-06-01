@@ -8,9 +8,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Internal.Audit.Domain.Entities;
+namespace Internal.Audit.Domain.Entities.BranchAudit;
 
-[Table("TopicHead", Schema = "ba")]
+[Table("TopicHead", Schema = "BranchAudit")]
 public class TopicHead : EntityBase
 {
     [Required]
@@ -21,18 +21,17 @@ public class TopicHead : EntityBase
     public bool IsActive { get; set; }
 
     [Required]
-    [MaxLength(100)]
-    public string Name { get; set; }
-
-    [Required]
     public DateTime EffectiveFrom { get; set; }
+
     [Required]
     public DateTime EffectiveTo { get; set; }
 
     [Required]
-    [MaxLength(300)]
-    public string Description { get; set; }
+    [MaxLength(200)]
+    public string Description { get; set; } = null!;
 
+    //Navigation properties
     [ForeignKey("CountryId")]
     public virtual Country Country { get; set; } = null!;
+
 }

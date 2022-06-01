@@ -1,4 +1,5 @@
 ﻿using Internal.Audit.Domain.Common;
+using Internal.Audit.Domain.Entities.Config;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -7,9 +8,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Internal.Audit.Domain.Entities;
+namespace Internal.Audit.Domain.Entities.ProcessAndControlAudit;
 
-[Table("RoleAssignConfig", Schema = "pac")]
+[Table("RoleAssignConfig", Schema = "ProcessAndControlAudit")]
 public class RoleAssignConfig : EntityBase
 {
     [Required]

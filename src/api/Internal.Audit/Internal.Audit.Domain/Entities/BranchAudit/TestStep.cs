@@ -7,10 +7,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Internal.Audit.Domain.Entities;
+namespace Internal.Audit.Domain.Entities.BranchAudit;
 
 
-[Table("TestStep", Schema = "ba")]
+[Table("TestStep", Schema = "BranchAudit")]
 public class TestStep : EntityBase
 {
     [Required]

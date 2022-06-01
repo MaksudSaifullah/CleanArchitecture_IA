@@ -1,4 +1,5 @@
 ﻿using Internal.Audit.Domain.Common;
+using Internal.Audit.Domain.Entities.Config;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -7,10 +8,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Internal.Audit.Domain.Entities;
+namespace Internal.Audit.Domain.Entities.BranchAudit;
 
 
-[Table("RiskCriteria", Schema = "ba")]
+[Table("RiskCriteria", Schema = "BranchAudit")]
 public class RiskCriteria : EntityBase
 {
     [Required]

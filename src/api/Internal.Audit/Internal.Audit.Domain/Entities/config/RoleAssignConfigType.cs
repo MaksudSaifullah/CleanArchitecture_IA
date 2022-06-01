@@ -8,9 +8,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Internal.Audit.Domain.Entities;
+namespace Internal.Audit.Domain.Entities.Config;
 
-[Table("RoleAssignConfigType", Schema = "config")]
+[Table("RoleAssignConfigType", Schema = "Config")]
 public class RoleAssignConfigType : EntityBase
 {
     [Required]

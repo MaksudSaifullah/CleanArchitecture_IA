@@ -23,7 +23,6 @@ public class UserCountry : EntityBase
     [DefaultValue("1")]
     public bool IsActive { get; set; }
 
-    //Navigation properties
     [ForeignKey("CountryId")]
     public virtual Country Country { get; set; } = null!;
 

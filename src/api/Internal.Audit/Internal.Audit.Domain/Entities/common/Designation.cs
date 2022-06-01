@@ -8,14 +8,18 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Internal.Audit.Domain.Entities;
+namespace Internal.Audit.Domain.Entities.common;
 
-[Table("Designation", Schema = "")]
+[Table("Designation", Schema = "Common")]
 public class Designation : EntityBase
 {
     [Required]
     [MaxLength(50)]
-    public string Name { get; set; }
+    public string Name { get; set; } = null!;
+
+    [Required]
+    [MaxLength(50)]
+    public string Description { get; set; } = null!;
 
     [Required]
     [DefaultValue("1")]

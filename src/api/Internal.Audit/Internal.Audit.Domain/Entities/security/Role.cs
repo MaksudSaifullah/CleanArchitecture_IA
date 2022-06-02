@@ -8,25 +8,26 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Internal.Audit.Domain.Entities.Config;
+namespace Internal.Audit.Domain.Entities.Security;
 
-[Table("DurationType", Schema = "Config")]
-public class DurationType : EntityBase
+[Table("Role", Schema = "Security")]
+public class Role : EntityBase
 {
     [Required]
     [MaxLength(20)]
     public string Name { get; set; } = null!;
 
     [Required]
-    [MaxLength(10)]
-    public string Type { get; set; } = null!;
-
-    [Required]
-    [MaxLength(10)]
-    public string Remarks { get; set; } = null!;
+    [MaxLength(50)]
+    public string Description { get; set; } = null!;
 
     [Required]
     [DefaultValue("0")]
     public bool IsActive { get; set; }
 
+    public virtual ICollection<RoleAction> roleActions { get; set; } = null!;
+    public virtual ICollection<RoleFeature> roleFeatures { get; set; } = null!;
+    public virtual ICollection<RoleModule> roleModules { get; set; } = null!;
+
 }
+

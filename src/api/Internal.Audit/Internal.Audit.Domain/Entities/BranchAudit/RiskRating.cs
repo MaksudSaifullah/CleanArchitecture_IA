@@ -8,31 +8,35 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Internal.Audit.Domain.Entities.pac
+namespace Internal.Audit.Domain.Entities.BranchAudit
 {
-    [Table("Function", Schema = "pac")]
-    public class Function : EntityBase
+    [Table("RiskRating", Schema = "BranchAudit")]
+    internal class RiskRating : EntityBase
     {
         [Required]
         public Guid CountryId { get; set; }
+        [Required]
+        public Guid RatingTypeId { get; set; }
+        [Required]
+        public int MinWeightSum { get; set; }
 
         [Required]
-        [MaxLength(50)]
-        public string Name { get; set; } = null!;
+        public int MaxWeightSum { get; set; }
 
         [Required]
-        public DateTime EffectiveFrom { get; set; }
+        public DateTime StartingDate { get; set; }
 
         [Required]
-        public DateTime EffectiveTo { get; set; }
+        public DateTime EndingDate { get; set; }
 
-        [Required]
-        [MaxLength(200)]
-        public string Description { get; set; } = null!;
+
+
 
         //Navigation properties
         [ForeignKey("CountryId")]
         public virtual Country Country { get; set; } = null!;
 
+        [ForeignKey("RatingTypeId")]
+        public virtual RatingType RatingType { get; set; } = null!; // foreign key
     }
 }

@@ -1,23 +1,23 @@
-CREATE TABLE [five].[UploadDocument](
-	[Id] [uniqueidentifier] PRIMARY KEY DEFAULT (newid()) NOT NULL,
-	[Name] [nvarchar](100) NOT NULL,
-	[Version] [nvarchar](3) NOT NULL,
-	[Description]  [nvarchar](200) NULL,
-	[Status] [bit] NOT NULL,
-	[StartingDate] [datetime] NOT NULL,
-	[EndingDate] [datetime] NOT NULL,
-	[FilePath]  [nvarchar](200) NOT NULL,	
-	[CreatedBy] [nvarchar](10) NOT NULL,
-	[UpdatedBy] [nvarchar](10) NULL,
-	[CreatedOn] [datetime] NULL,
-	[UpdatedOn] [datetime] NULL,
-	[IsDelete] [bit] NULL  DEFAULT ((0)) ,	
-	[ApprovedBy] [nvarchar](10) NULL,
-	[ApprovedOn] [datetime] NULL,
-	[ReviewedBy] [nvarchar](10) NULL,
-	[ReviewedOn] [datetime] NULL
+--CREATE TABLE [five].[UploadDocument](
+--	[Id] [uniqueidentifier] PRIMARY KEY DEFAULT (newid()) NOT NULL,
+--	[Name] [nvarchar](100) NOT NULL,
+--	[Version] [nvarchar](3) NOT NULL,
+--	[Description]  [nvarchar](200) NULL,
+--	[Status] [bit] NOT NULL,
+--	[StartingDate] [datetime] NOT NULL,
+--	[EndingDate] [datetime] NOT NULL,
+--	[FilePath]  [nvarchar](200) NOT NULL,	
+--	[CreatedBy] [nvarchar](10) NOT NULL,
+--	[UpdatedBy] [nvarchar](10) NULL,
+--	[CreatedOn] [datetime] NULL,
+--	[UpdatedOn] [datetime] NULL,
+--	[IsDelete] [bit] NULL  DEFAULT ((0)) ,	
+--	[ApprovedBy] [nvarchar](10) NULL,
+--	[ApprovedOn] [datetime] NULL,
+--	[ReviewedBy] [nvarchar](10) NULL,
+--	[ReviewedOn] [datetime] NULL
 
-)
+--)
 CREATE TABLE [five].[UploadDocumentNotifyList](
 	[Id] [uniqueidentifier] PRIMARY KEY  DEFAULT (newid()) NOT NULL ,
 	[DocumentId] [uniqueidentifier] NOT NULL CONSTRAINT FK_UploadDocumentNotify FOREIGN KEY (DocumentId) REFERENCES [five].[UploadDocument](Id),

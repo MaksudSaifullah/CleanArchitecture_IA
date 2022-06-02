@@ -8,9 +8,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Internal.Audit.Domain.Entities
+namespace Internal.Audit.Domain.Entities.ProcessAndControlAudit
 {
-    [Table("OETestScript", Schema = "pac")]
+    [Table("OETestScript", Schema = "ProcessAndControlAudit")]
     internal class OETestScript : EntityBase
     {
         [Required]

@@ -18,7 +18,7 @@ public class InternalAuditContext: DbContext
     public DbSet<Country> Countries { get; set; }
     public DbSet<UserCountry> UserCountries { get; set; }
     public DbSet<Designation> Designations { get; set; }
-
+    public DbSet<Role> Roles { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

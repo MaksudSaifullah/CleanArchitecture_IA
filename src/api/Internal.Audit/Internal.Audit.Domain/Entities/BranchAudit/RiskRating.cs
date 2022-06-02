@@ -1,4 +1,5 @@
 ﻿using Internal.Audit.Domain.Common;
+using Internal.Audit.Domain.Entities.Config;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;

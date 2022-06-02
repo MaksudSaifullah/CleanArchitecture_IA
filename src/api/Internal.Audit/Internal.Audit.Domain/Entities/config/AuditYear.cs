@@ -13,6 +13,6 @@ namespace Internal.Audit.Domain.Entities.Config
     public class AuditYear : EntityBase
     {
         [Required]        
-        public Int32 Code { get; set; }
+        public Int32 Code { get; set; } 
     }
 }

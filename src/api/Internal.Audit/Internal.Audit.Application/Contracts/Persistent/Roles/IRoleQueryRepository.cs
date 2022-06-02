@@ -1,4 +1,5 @@
 ﻿using Internal.Audit.Domain.Entities.common;
+using Internal.Audit.Domain.Entities.Security;
 using System;
 using System.Collections.Generic;
 using System.Linq;

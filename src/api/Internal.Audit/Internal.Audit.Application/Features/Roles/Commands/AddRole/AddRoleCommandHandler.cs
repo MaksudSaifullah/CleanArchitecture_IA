@@ -2,6 +2,7 @@
 using Internal.Audit.Application.Contracts.Persistent;
 using Internal.Audit.Application.Contracts.Persistent.Roles;
 using Internal.Audit.Domain.Entities.common;
+using Internal.Audit.Domain.Entities.Security;
 using MediatR;
 using Microsoft.Extensions.Configuration;
 using System;

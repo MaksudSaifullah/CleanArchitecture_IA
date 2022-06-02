@@ -4,9 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Internal.Audit.Application.Features.Countries.Commands.UpdateCountry
+namespace Internal.Audit.Application.Features.Countries.Commands.UpdateCountry;
+public class UpdateCountryCommandValidator
 {
-    internal class UpdateCountryCommandValidator
-    {
-    }
+    //todo: if needed
 }

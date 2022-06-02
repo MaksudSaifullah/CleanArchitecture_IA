@@ -11,6 +11,7 @@ using Internal.Audit.Application.Features.Users.Commands.UpdateUser;
 using Internal.Audit.Application.Features.Users.Queries.GetUserList;
 using Internal.Audit.Domain.Entities;
 using Internal.Audit.Domain.Entities.common;
+using Internal.Audit.Domain.Entities.Security;
 
 namespace Internal.Audit.Application.Mappings;
 

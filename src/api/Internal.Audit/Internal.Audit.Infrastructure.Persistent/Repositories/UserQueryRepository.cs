@@ -1,5 +1,6 @@
 ﻿using Internal.Audit.Application.Contracts.Persistent;
 using Internal.Audit.Domain.Entities;
+using Internal.Audit.Domain.Entities.Security;
 using System;
 using System.Collections.Generic;
 using System.Linq;

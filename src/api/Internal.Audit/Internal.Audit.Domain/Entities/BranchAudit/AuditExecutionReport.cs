@@ -1,4 +1,5 @@
 ﻿using Internal.Audit.Domain.Common;
+using Internal.Audit.Domain.Entities.Security;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -51,9 +52,9 @@ public class AuditExecutionReport : EntityBase
     [ForeignKey("ReportIssuedBy")]
     public virtual Employee ReportIssuer { get; set; } = null!;
     [ForeignKey("ReportReviewedBy")]
-    public virtual Employee ReportReviewer { get; set; }
+    public virtual Employee ReportReviewer { get; set; } = null!;
     [ForeignKey("ReportApprovedBy")]
-    public virtual Employee ReportApprover { get; set; }
+    public virtual Employee ReportApprover { get; set; } = null!;
     //TODO: Document
     //[ForeignKey("ReviewEvidenceId")]
     //public virtual Document ReviewEvidence { get; set; }

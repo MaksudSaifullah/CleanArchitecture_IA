@@ -1,4 +1,6 @@
 ﻿using Internal.Audit.Domain.Common;
+using Internal.Audit.Domain.Entities.BranchAudit;
+using Internal.Audit.Domain.Entities.Security;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;

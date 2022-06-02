@@ -1,6 +1,7 @@
 ﻿
 using Internal.Audit.Application.Contracts.Persistent;
 using Internal.Audit.Domain.Entities;
+using Internal.Audit.Domain.Entities.Security;
 
 namespace Internal.Audit.Infrastructure.Persistent.Repositories;
 

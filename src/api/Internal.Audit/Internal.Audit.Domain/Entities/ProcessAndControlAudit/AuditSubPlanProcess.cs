@@ -1,4 +1,5 @@
 ﻿using Internal.Audit.Domain.Common;
+using Internal.Audit.Domain.Entities.Config;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -8,32 +9,32 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Internal.Audit.Domain.Entities.ProcessAndControlAudit
+namespace Internal.Audit.Domain.Entities.ProcessAndControlAudit;
+
+[Table("AuditSubPlanProcess", Schema = "ProcessAndControlAudit")]
+public class AuditSubPlanProcess : EntityBase
 {
-    [Table("AuditSubPlanProcess", Schema = "ProcessAndControlAudit")]
-    public class AuditSubPlanProcess : EntityBase
-    {
-        public Guid AuditSubPlanId { get; set; }
-        public Guid AuditableFunctionId { get; set; }
-        public Guid ProcessId { get; set; }
-        public Guid RatingTypeId { get; set; }
+    public Guid AuditSubPlanId { get; set; }
+    public Guid AuditableFunctionId { get; set; }
+    public Guid ProcessId { get; set; }
+    public Guid RatingTypeId { get; set; }
 
-        [Required]
-        [DefaultValue("0")]
-        public bool IsChecked { get; set; }
+    [Required]
+    [DefaultValue("0")]
+    public bool IsChecked { get; set; }
 
 
-        [ForeignKey("AuditSubPlanId")]
-        public virtual AuditSubPlan AuditSubPlan { get; set; } = null!;
+    [ForeignKey("AuditSubPlanId")]
+    public virtual AuditSubPlan AuditSubPlan { get; set; } = null!;
 
-        //[ForeignKey("AuditableFunctionId")]
-        //public virtual AuditableFunction AuditableFunction { get; set; } = null!;
+    //[ForeignKey("AuditableFunctionId")]
+    //public virtual AuditableFunction AuditableFunction { get; set; } = null!;
 
-        //[ForeignKey("ProcessId")]
-        //public virtual Process Process { get; set; } = null!;
+    [ForeignKey("ProcessId")]
+    public virtual Process Process { get; set; } = null!;
 
-        [ForeignKey("AuditPlanId")]
-        public virtual AuditPlan AuditPlan { get; set; } = null!;
+    [ForeignKey("AuditPlanId")]
+    public virtual AuditPlan AuditPlan { get; set; } = null!;
 
-    }
+
 }

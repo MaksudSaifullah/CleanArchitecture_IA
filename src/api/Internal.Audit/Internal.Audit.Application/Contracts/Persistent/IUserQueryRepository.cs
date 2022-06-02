@@ -1,5 +1,6 @@
 ﻿
 using Internal.Audit.Domain.Entities;
+using Internal.Audit.Domain.Entities.Security;
 
 namespace Internal.Audit.Application.Contracts.Persistent;
 

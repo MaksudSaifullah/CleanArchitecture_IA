@@ -3,6 +3,7 @@ using AutoMapper;
 using Internal.Audit.Application.Contracts.Persistent;
 using Internal.Audit.Application.Features.Users.Commands.AddUser;
 using Internal.Audit.Domain.Entities;
+using Internal.Audit.Domain.Entities.Security;
 using MediatR;
 
 namespace Internal.Audit.Application.Features.Users.Commands.UpdateUser;

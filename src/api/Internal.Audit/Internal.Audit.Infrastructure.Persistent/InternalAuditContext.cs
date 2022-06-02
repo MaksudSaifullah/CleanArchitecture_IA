@@ -2,6 +2,7 @@
 using Internal.Audit.Domain.Common;
 using Internal.Audit.Domain.Entities;
 using Internal.Audit.Domain.Entities.common;
+using Internal.Audit.Domain.Entities.Security;
 using Microsoft.EntityFrameworkCore;
 using System.ComponentModel;
 using System.Reflection;

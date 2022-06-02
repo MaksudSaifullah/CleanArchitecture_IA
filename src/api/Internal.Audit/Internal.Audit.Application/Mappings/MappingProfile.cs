@@ -16,6 +16,7 @@ using Internal.Audit.Application.Features.Roles.Queries.GetRoleById;
 using Internal.Audit.Application.Features.Roles.Queries.GetRolesList;
 using Internal.Audit.Domain.Entities;
 using Internal.Audit.Domain.Entities.common;
+using Internal.Audit.Domain.Entities.Security;
 
 namespace Internal.Audit.Application.Mappings;
 

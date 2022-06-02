@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Internal.Audit.Domain.Entities.Config;
+namespace Internal.Audit.Domain.Entities.Config.Config;
 
 [Table("IssueStatus", Schema = "Config")]
 public class IssueStatus

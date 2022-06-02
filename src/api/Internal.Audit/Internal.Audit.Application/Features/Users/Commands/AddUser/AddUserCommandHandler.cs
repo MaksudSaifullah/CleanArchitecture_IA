@@ -4,6 +4,7 @@ using Internal.Audit.Application.Contracts.Notifications;
 using Internal.Audit.Application.Contracts.Persistent;
 using Internal.Audit.Application.Models;
 using Internal.Audit.Domain.Entities;
+using Internal.Audit.Domain.Entities.Security;
 using MediatR;
 using Microsoft.Extensions.Configuration;
 

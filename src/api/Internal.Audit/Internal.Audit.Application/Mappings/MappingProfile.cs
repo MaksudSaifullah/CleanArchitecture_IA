@@ -12,8 +12,14 @@ using Internal.Audit.Application.Features.Designation.Queries.GetDesignationList
 using Internal.Audit.Application.Features.Users.Commands.AddUser;
 using Internal.Audit.Application.Features.Users.Commands.UpdateUser;
 using Internal.Audit.Application.Features.Users.Queries.GetUserList;
+using Internal.Audit.Application.Features.Roles.Commands.AddRole;
+using Internal.Audit.Application.Features.Roles.Commands.DeleteRole;
+using Internal.Audit.Application.Features.Roles.Commands.UpdateRole;
+using Internal.Audit.Application.Features.Roles.Queries.GetRoleById;
+using Internal.Audit.Application.Features.Roles.Queries.GetRolesList;
 using Internal.Audit.Domain.Entities;
 using Internal.Audit.Domain.Entities.common;
+using Internal.Audit.Domain.Entities.Security;
 
 namespace Internal.Audit.Application.Mappings;
 
@@ -34,10 +40,13 @@ public class MappingProfile: Profile
         CreateMap<Country, DeleteCountryCommand>().ReverseMap();
         CreateMap<Designation, AddDesignationResponseDTO>().ReverseMap();
         CreateMap<Designation, AddDesignationCommand>().ReverseMap();
-        CreateMap<Designation, UpdateDesignationResponseDTO>().ReverseMap();
-        CreateMap<Designation, UpdateDesignationCommand>().ReverseMap();
-        CreateMap<Designation, DeleteDesignationResponseDTO>().ReverseMap();
-        CreateMap<Designation, DeleteDesignationCommand>().ReverseMap();
-        CreateMap<Designation, GetDesignationListResponseDTO>().ReverseMap();
+        CreateMap<Role, RoleDTO>().ReverseMap();
+        CreateMap<Role, RoleByIdDTO>().ReverseMap();
+        CreateMap<Role, AddRoleResponseDTO>().ReverseMap();
+        CreateMap<Role, AddRoleCommand>().ReverseMap();
+        CreateMap<Role, UpdateRoleResponseDTO>().ReverseMap();
+        CreateMap<Role, UpdateRoleCommand>().ReverseMap();
+        CreateMap<Role, DeleteRoleResponseDTO>().ReverseMap();
+        CreateMap<Role, DeleteRoleCommand>().ReverseMap();
     }
 }

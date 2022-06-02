@@ -8,6 +8,10 @@ using Internal.Audit.Infrastructure.Persistent.Repositories.Designations;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Internal.Audit.Application.Contracts.Persistent.Roles;
+
+using Internal.Audit.Infrastructure.Persistent.Repositories.Roles;
+
 
 namespace Internal.Audit.Infrastructure.Persistent;
 
@@ -27,6 +31,9 @@ public static class PersistentInfrastructureServiceRegistration
         services.AddScoped<ICountryQueryRepository>(s => new CountryQueryRepository(configuration.GetConnectionString("InternalAuditDb")));
         services.AddScoped<IDesignationCommandRepository, DesignationCommandRepository>();
         services.AddScoped<IDesignationQueryRepository>(s => new DesignationQueryRepository(configuration.GetConnectionString("InternalAuditDb")));
+        services.AddScoped<IRoleCommandRepository, RoleCommandRepository>();
+        services.AddScoped<IRoleQueryRepository>(s => new RoleQueryRepository(configuration.GetConnectionString("InternalAuditDb")));
+
 
         return services;
     }

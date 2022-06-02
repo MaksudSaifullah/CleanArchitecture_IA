@@ -1,5 +1,4 @@
 ﻿using Internal.Audit.Application.Contracts.Persistent.Roles;
-using Internal.Audit.Domain.Entities.common;
 using Internal.Audit.Domain.Entities.Security;
 using System;
 using System.Collections.Generic;
@@ -17,12 +16,12 @@ namespace Internal.Audit.Infrastructure.Persistent.Repositories.Roles
         }
         public async Task<IEnumerable<Role>> GetAll()
         {
-            var query = @"SELECT [Id],[Name],[Description] FROM [common].[Role] WHERE [IsDeleted] = 0";
+            var query = @"SELECT [Id],[Name],[Description] FROM [Security].[Role] WHERE [IsDeleted] = 0";
             return await Get(query);
         }
         public async Task<Role> GetById(Guid id)
         {
-            var query = "SELECT [Id],[Name],[Description] FROM [common].[Role] WHERE Id = @id AND [IsDeleted] = 0";
+            var query = "SELECT [Id],[Name],[Description] FROM [Security].[Role] WHERE Id = @id AND [IsDeleted] = 0";
             var parameters = new Dictionary<string, object> { { "id", id } };
 
             return await Single(query, parameters);

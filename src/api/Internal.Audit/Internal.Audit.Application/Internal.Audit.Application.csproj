@@ -21,11 +21,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Features\Designation\Commands\DeleteDesignation\" />
-    <Folder Include="Features\Designation\Commands\UpdateDesignation\" />
-    <Folder Include="Features\Designation\Queries\GetDesignationList\" />
     <Folder Include="Features\Designation\Queries\GetDesignationById\" />
-    <Folder Include="Features\Designation\Queries\" />
   </ItemGroup>
 
 </Project>

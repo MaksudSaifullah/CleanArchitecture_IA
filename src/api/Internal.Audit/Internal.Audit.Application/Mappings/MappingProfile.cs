@@ -48,5 +48,10 @@ public class MappingProfile: Profile
         CreateMap<Role, UpdateRoleCommand>().ReverseMap();
         CreateMap<Role, DeleteRoleResponseDTO>().ReverseMap();
         CreateMap<Role, DeleteRoleCommand>().ReverseMap();
+        CreateMap<Designation, UpdateDesignationResponseDTO>().ReverseMap();
+        CreateMap<Designation, UpdateDesignationCommand>().ReverseMap();
+        CreateMap<Designation, DeleteDesignationResponseDTO>().ReverseMap();
+        CreateMap<Designation, DeleteDesignationCommand>().ReverseMap();
+        CreateMap<Designation, GetDesignationListResponseDTO>().ReverseMap();
     }
 }

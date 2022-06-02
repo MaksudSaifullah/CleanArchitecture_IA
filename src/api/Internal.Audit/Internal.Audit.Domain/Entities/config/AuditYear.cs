@@ -7,14 +7,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Internal.Audit.Domain.Entities.Common;
-
-    [Table("RoleModule", Schema = "Security")]
-    public class AuditFrequencyType : EntityBase
+namespace Internal.Audit.Domain.Entities.Config
+{
+    [Table("AuditYear", Schema = "Config")]
+    public class AuditYear : EntityBase
     {
-        [Required]
-        [MaxLength(20)]
-        public string Name { get; set; } = null!;
-        
+        [Required]        
+        public Int32 Code { get; set; }
     }
-
+}

@@ -7,14 +7,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Internal.Audit.Domain.Entities.Common;
+namespace Internal.Audit.Domain.Entities.Config;
 
-[Table("RoleModule", Schema = "Security")]
-public class AuditType : EntityBase
+[Table("KeyIssuesType", Schema = "Config")]
+public class KeyIssuesType : EntityBase
 {
     [Required]
     [MaxLength(20)]
-    public string Name { get; set; } = null!;
-
+    public string Score { get; set; } = null!;
 }
 

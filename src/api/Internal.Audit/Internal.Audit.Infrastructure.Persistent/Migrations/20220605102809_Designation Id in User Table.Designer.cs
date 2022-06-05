@@ -4,6 +4,7 @@ using Internal.Audit.Infrastructure.Persistent;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Internal.Audit.Infrastructure.Persistent.Migrations
 {
     [DbContext(typeof(InternalAuditContext))]
-    partial class InternalAuditContextModelSnapshot : ModelSnapshot
+    [Migration("20220605102809_Designation Id in User Table")]
+    partial class DesignationIdinUserTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -761,8 +763,6 @@ namespace Internal.Audit.Infrastructure.Persistent.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("DesignationId");
-
                     b.ToTable("User", "Security");
                 });
 
@@ -929,17 +929,6 @@ namespace Internal.Audit.Infrastructure.Persistent.Migrations
                     b.Navigation("Module");
 
                     b.Navigation("Role");
-                });
-
-            modelBuilder.Entity("Internal.Audit.Domain.Entities.Security.User", b =>
-                {
-                    b.HasOne("Internal.Audit.Domain.Entities.common.Designation", "Designation")
-                        .WithMany()
-                        .HasForeignKey("DesignationId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Designation");
                 });
 
             modelBuilder.Entity("Internal.Audit.Domain.Entities.Security.UserCountry", b =>

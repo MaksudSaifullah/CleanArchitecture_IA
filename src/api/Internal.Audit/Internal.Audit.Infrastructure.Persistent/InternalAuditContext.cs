@@ -1,7 +1,7 @@
-﻿
-using Internal.Audit.Domain.Common;
+﻿using Internal.Audit.Domain.Common;
 using Internal.Audit.Domain.Entities;
 using Internal.Audit.Domain.Entities.common;
+using Internal.Audit.Domain.Entities.security;
 using Internal.Audit.Domain.Entities.Security;
 using Microsoft.EntityFrameworkCore;
 using System.ComponentModel;
@@ -20,6 +20,9 @@ public class InternalAuditContext: DbContext
     public DbSet<UserCountry> UserCountries { get; set; }
     public DbSet<Designation> Designations { get; set; }
     public DbSet<Role> Roles { get; set; }
+    public DbSet<PasswordPolicy> PasswordPolicies { get; set; }
+    public DbSet<SessionPolicy> SessionPolicies { get; set; }
+    public DbSet<UserLockingPolicy> UserLockingPolicies { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

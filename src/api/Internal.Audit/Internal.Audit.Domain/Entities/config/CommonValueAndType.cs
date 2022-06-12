@@ -1,6 +1,7 @@
 ﻿using Internal.Audit.Domain.Common;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
@@ -25,7 +26,11 @@ public class CommonValueAndType : EntityBase
     [Required]
     [MaxLength(50)]
     public string Text { get; set; } = null!;
-     
+
+    [Required]
+    [DefaultValue("1")]
+    public bool IsActive { get; set; }
+
     [Required]
     public int SortOrder { get; set; }
 }

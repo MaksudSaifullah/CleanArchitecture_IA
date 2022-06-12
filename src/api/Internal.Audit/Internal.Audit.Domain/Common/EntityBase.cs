@@ -10,7 +10,7 @@ public abstract class EntityBase
     [Key]
     [Column("Id", TypeName = "uniqueidentifier")]
     [DefaultValue("newsequentialid()")]
-    public Guid Id { get; protected set; }  //NEWSEQUENTIALID
+    public Guid Id { get; set; }  //NEWSEQUENTIALID
 
     [Required]
     [MaxLength(10)]

@@ -13,6 +13,8 @@ using Internal.Audit.Application.Contracts.Persistent.Roles;
 using Internal.Audit.Infrastructure.Persistent.Repositories.Roles;
 using Internal.Audit.Application.Contracts.Persistent.UserCountries;
 using Internal.Audit.Infrastructure.Persistent.Repositories.UserCountries;
+using Internal.Audit.Application.Contracts.Persistent.AccessPrivilege;
+using Internal.Audit.Infrastructure.Persistent.Repositories.AccessPrivilege;
 
 namespace Internal.Audit.Infrastructure.Persistent;
 
@@ -36,7 +38,9 @@ public static class PersistentInfrastructureServiceRegistration
         services.AddScoped<IRoleQueryRepository>(s => new RoleQueryRepository(configuration.GetConnectionString("InternalAuditDb")));
         services.AddScoped<IUserCountryCommandRepository, UserCountryCommandRepository>();
         services.AddScoped<IUserCountryQueryRepository>(s => new UserCountryQueryRepository(configuration.GetConnectionString("InternalAuditDb")));
-
+        services.AddScoped<IPasswordPolicyCommandRepository, PasswordPolicyCommandRepository>();
+        services.AddScoped<IUserLockingPolicyCommandRepository, UserLockingPolicyCommandRepository>();
+        services.AddScoped<ISessionPolicyCommandRepository, SessionPolicyCommandRepository>();
 
         return services;
     }

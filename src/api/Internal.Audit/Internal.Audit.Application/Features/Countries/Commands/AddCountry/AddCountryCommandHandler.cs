@@ -29,13 +29,7 @@ public class AddCountryCommandHandler : IRequestHandler<AddCountryCommand, AddCo
     {
         var country = _mapper.Map<Country>(request);
         var newCountry = await _countryRepository.Add(country);
-        var rowsAffected = await _unitOfWork.CommitAsync();
-
-        //if (rowsAffected > 0)
-        //{
-        //    var mailVariables = new Dictionary<string, string> { { "NAME", "Valued Customer" } };
-        //    await SendMail(user, mailVariables);
-        //}
+        var rowsAffected = await _unitOfWork.CommitAsync();      
 
         return new AddCountryResponseDTO(newCountry.Id, rowsAffected > 0, rowsAffected > 0 ? "Country Added Successfully!" : "Error while creating country!");
     }

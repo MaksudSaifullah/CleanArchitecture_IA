@@ -59,13 +59,5 @@ namespace Internal.Audit.Api.Controllers
             return Ok(result);
         }
 
-        //[HttpDelete("{Id}")]
-        //public async Task<ActionResult<DeleteCountryResponseDTO>> Delete(Guid Id)
-        //{
-        //    var command = new DeleteCountryCommand(Id);
-        //    var result = await _mediator.Send(command);
-        //    return Ok(result);
-
-        //}
     }
 }

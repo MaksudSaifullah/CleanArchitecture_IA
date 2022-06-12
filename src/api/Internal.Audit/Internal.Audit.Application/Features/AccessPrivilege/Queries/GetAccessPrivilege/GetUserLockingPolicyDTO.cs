@@ -1,6 +1,8 @@
-﻿namespace Internal.Audit.Application.Features.AccessPrivilege.Commands.AddAccessPrivilege;
-public class AddUserLockingPolicyCommandDTO
+﻿
+namespace Internal.Audit.Application.Features.AccessPrivilege.Queries.GetAccessPrivilege;
+public record GetUserLockingPolicyDTO
 {
+	public Guid Id { get; set; }
 	public bool IsLockedOnNoLoginActivity { get; set; }
 	public int NoLoginActivityDays { get; set; }
 	public bool LockedOnFailedLoginAttempts { get; set; }
@@ -9,6 +11,4 @@ public class AddUserLockingPolicyCommandDTO
 	public int FailedLoginLockedDuration { get; set; }
 	public bool UnlockedOnByAdmin { get; set; }
 	public int UnlockedOnByAdminDuration { get; set; }
-	public DateTime EffectiveFrom { get; set; }
-	public DateTime? EffectiveTo { get; set; }
 }

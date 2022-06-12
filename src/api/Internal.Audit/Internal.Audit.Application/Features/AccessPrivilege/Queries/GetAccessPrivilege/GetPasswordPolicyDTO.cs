@@ -1,6 +1,8 @@
-﻿namespace Internal.Audit.Application.Features.AccessPrivilege.Commands.AddAccessPrivilege;
-public class AddPasswordPolicyCommandDTO
+﻿
+namespace Internal.Audit.Application.Features.AccessPrivilege.Queries.GetAccessPrivilege;
+public record GetPasswordPolicyDTO
 {
+	public Guid Id { get; set; }
 	public int MinLength { get; set; }
 	public int MaxLength { get; set; }
 	public bool IsAlphabetMandatory { get; set; }
@@ -13,6 +15,4 @@ public class AddPasswordPolicyCommandDTO
 	public bool IsPasswordResetForcedPeriodically { get; set; }
 	public int? ForcePasswordResetDays { get; set; }
 	public int? NotifyPasswordResetDays { get; set; }
-	public DateTime EffectiveFrom { get; set; }
-	public DateTime? EffectiveTo { get; set; }
 }

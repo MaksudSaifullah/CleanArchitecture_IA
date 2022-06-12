@@ -4,7 +4,7 @@ namespace Internal.Audit.Application.Features.AccessPrivilege.Commands.AddAccess
 
 public class AddAccessPrivilegeCommand : IRequest<AddAccessPrivilegeResponseDTO>
 {
-	public AddPasswordPolicyCommandDTO PasswordPolicy { get; set; } = null!;
-	public AddUserLockingPolicyCommandDTO UserLockingPolicy { get; set; } = null!;
-	public AddSessionPolicyCommandDTO SessionPolicy { get; set; } = null!;
+	public AddPasswordPolicyDTO PasswordPolicy { get; set; } = null!;
+	public AddUserLockingPolicyDTO UserLockingPolicy { get; set; } = null!;
+	public AddSessionPolicyDTO SessionPolicy { get; set; } = null!;
 }

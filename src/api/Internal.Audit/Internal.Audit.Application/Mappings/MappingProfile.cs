@@ -24,6 +24,7 @@ using Internal.Audit.Application.Features.UserCountries.Commands.AddUserCountry;
 using Internal.Audit.Domain.Entities.security;
 using Internal.Audit.Application.Features.AccessPrivilege.Commands.AddAccessPrivilege;
 using Internal.Audit.Application.Features.AccessPrivilege.Commands.UpdateAccessPrivilege;
+using Internal.Audit.Application.Features.AccessPrivilege.Queries.GetAccessPrivilege;
 
 namespace Internal.Audit.Application.Mappings;
 
@@ -58,17 +59,22 @@ public class MappingProfile: Profile
         CreateMap<Designation, DeleteDesignationCommand>().ReverseMap();
         CreateMap<Designation, GetDesignationListResponseDTO>().ReverseMap();
         CreateMap<UserCountry, AddUserCountryCommand>().ReverseMap();
+
+        CreateMap<PasswordPolicy, GetPasswordPolicyDTO>().ReverseMap();
+        CreateMap<UserLockingPolicy, GetUserLockingPolicyDTO>().ReverseMap();
+        CreateMap<SessionPolicy, GetSessionPolicyDTO>().ReverseMap();
         CreateMap<PasswordPolicy, AddAccessPrivilegeResponseDTO>().ReverseMap();
-        CreateMap<PasswordPolicy, AddPasswordPolicyCommandDTO>().ReverseMap();
+        CreateMap<PasswordPolicy, AddPasswordPolicyDTO>().ReverseMap();
         CreateMap<SessionPolicy, AddAccessPrivilegeResponseDTO>().ReverseMap();
-        CreateMap<SessionPolicy, AddSessionPolicyCommandDTO>().ReverseMap();
+        CreateMap<SessionPolicy, AddSessionPolicyDTO>().ReverseMap();
         CreateMap<UserLockingPolicy, AddAccessPrivilegeResponseDTO>().ReverseMap();
-        CreateMap<UserLockingPolicy, AddUserLockingPolicyCommandDTO>().ReverseMap();
+        CreateMap<UserLockingPolicy, AddUserLockingPolicyDTO>().ReverseMap();
         CreateMap<PasswordPolicy, UpdateAccessPrivilegeResponseDTO>().ReverseMap();
         CreateMap<PasswordPolicy, UpdatePasswordPolicyCommandDTO>().ReverseMap();
         CreateMap<SessionPolicy, UpdateAccessPrivilegeResponseDTO>().ReverseMap();
         CreateMap<SessionPolicy, UpdateSessionPolicyCommandDTO>().ReverseMap();
         CreateMap<UserLockingPolicy, UpdateAccessPrivilegeResponseDTO>().ReverseMap();
         CreateMap<UserLockingPolicy, UpdateUserLockingPolicyCommandDTO>().ReverseMap();
+
     }
 }

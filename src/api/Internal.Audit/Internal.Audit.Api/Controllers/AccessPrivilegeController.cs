@@ -1,5 +1,6 @@
 ﻿using Internal.Audit.Application.Features.AccessPrivilege.Commands.AddAccessPrivilege;
 using Internal.Audit.Application.Features.AccessPrivilege.Commands.UpdateAccessPrivilege;
+using Internal.Audit.Application.Features.AccessPrivilege.Queries.GetAccessPrivilege;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -13,14 +14,14 @@ public class AccessPrivilegeController : ControllerBase
     {
         _mediator = madiator ?? throw new ArgumentNullException(nameof(madiator));
     }
-    //[HttpGet("all")]
-    //public async Task<ActionResult<AccessPrivilegeDTO>> Get()
-    //{
-    //    var query = new GetAccessPrivilegeQuery();
-    //    var users = await _mediator.Send(query);
-    //    return Ok(users);
+    [HttpGet]
+    public async Task<ActionResult<GetAccessPrivilegeDTO>> Get()
+    {
+        var query = new GetAccessPrivilegeQuery();
+        var accessPrivilege = await _mediator.Send(query);
+        return Ok(accessPrivilege);
 
-    //}
+    }
 
     [HttpPost]
     public async Task<ActionResult<AddAccessPrivilegeResponseDTO>> Add(AddAccessPrivilegeCommand command)

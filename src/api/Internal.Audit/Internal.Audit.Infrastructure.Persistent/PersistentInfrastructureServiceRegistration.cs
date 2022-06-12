@@ -41,6 +41,9 @@ public static class PersistentInfrastructureServiceRegistration
         services.AddScoped<IPasswordPolicyCommandRepository, PasswordPolicyCommandRepository>();
         services.AddScoped<IUserLockingPolicyCommandRepository, UserLockingPolicyCommandRepository>();
         services.AddScoped<ISessionPolicyCommandRepository, SessionPolicyCommandRepository>();
+        services.AddScoped<IPasswordPolicyQueryRepository>(s => new PasswordPolicyQueryRepository(configuration.GetConnectionString("InternalAuditDb")));
+        services.AddScoped<IUserLockingPolicyQueryRepository>(s => new UserLockingPolicyQueryRepository(configuration.GetConnectionString("InternalAuditDb")));
+        services.AddScoped<ISessionPolicyQueryRepository>(s => new SessionPolicyQueryRepository(configuration.GetConnectionString("InternalAuditDb")));
 
         return services;
     }

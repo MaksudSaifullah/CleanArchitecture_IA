@@ -23,7 +23,6 @@ namespace Internal.Audit.Test.Systems.Country.Commands
         private readonly IUnitOfWork _unitOfWork;
 
         private readonly Mock<ICountryCommandRepository> _mockRepo;
-        //private readonly Mock<ICountryQueryRepository> _mockRepoList;
         private readonly UpdateCountryCommand _countryUpdateRequest;
 
         public UpdateCountryCommandHandlerTest()
@@ -32,7 +31,6 @@ namespace Internal.Audit.Test.Systems.Country.Commands
             CountryMockData.updateAddCountryStatic();
 
             _mockRepo = MockCountryRepository.UpdateCountries();
-          //  _mockRepoList = MockCountryRepository.UpdateCountriesByID();
 
             var mapperConfig = new MapperConfiguration(c =>
             {
@@ -47,9 +45,9 @@ namespace Internal.Audit.Test.Systems.Country.Commands
             _countryUpdateRequest = new UpdateCountryCommand
             {
                 Id = new Guid("791D35FF-9EA2-4C7B-AA3A-840F50DC59C4"),
-                Name = "ASA International",
+                Name = "Rowanda",
                 Code = "005",
-                Remarks = "SE"
+                Remarks = ""
             };
         }
 

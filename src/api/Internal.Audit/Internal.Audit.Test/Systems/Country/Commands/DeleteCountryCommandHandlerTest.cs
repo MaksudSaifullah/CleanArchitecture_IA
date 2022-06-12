@@ -28,11 +28,8 @@ namespace Internal.Audit.Test.Systems.Country.Commands
         public DeleteCountryCommandHandlerTest()
         {
             CountryMockData.AddCountryStatic();
-            //_mockRepoList = MockCountryRepository.GetAllCountriesByID();
-            //_mockRepo = MockCountryRepository.CreateCountries();
             CountryMockData.updateAddCountryStatic();
 
-           // _mockRepoList = MockCountryRepository.DeleteCountriesByID();
             _mockRepo = MockCountryRepository.DeleteUpdateCountries();
 
             var mockUoW = new Mock<IUnitOfWork>();

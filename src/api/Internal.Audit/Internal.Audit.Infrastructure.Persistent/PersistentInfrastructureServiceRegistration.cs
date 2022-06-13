@@ -16,6 +16,15 @@ using Internal.Audit.Infrastructure.Persistent.Repositories.UserCountries;
 using Internal.Audit.Application.Contracts.Persistent.AccessPrivilege;
 using Internal.Audit.Infrastructure.Persistent.Repositories.AccessPrivilege;
 
+using Internal.Audit.Application.Contracts.Persistent.Modules;
+using Internal.Audit.Infrastructure.Persistent.Repositories.Modules;
+
+using Internal.Audit.Application.Contracts.Persistent.Features;
+using Internal.Audit.Infrastructure.Persistent.Repositories.Features;
+
+using Internal.Audit.Application.Contracts.Persistent.Actions;
+using Internal.Audit.Infrastructure.Persistent.Repositories.Actions;
+
 namespace Internal.Audit.Infrastructure.Persistent;
 
 public static class PersistentInfrastructureServiceRegistration
@@ -44,6 +53,9 @@ public static class PersistentInfrastructureServiceRegistration
         services.AddScoped<IPasswordPolicyQueryRepository>(s => new PasswordPolicyQueryRepository(configuration.GetConnectionString("InternalAuditDb")));
         services.AddScoped<IUserLockingPolicyQueryRepository>(s => new UserLockingPolicyQueryRepository(configuration.GetConnectionString("InternalAuditDb")));
         services.AddScoped<ISessionPolicyQueryRepository>(s => new SessionPolicyQueryRepository(configuration.GetConnectionString("InternalAuditDb")));
+        services.AddScoped<IModuleQueryRepository>(s => new ModuleQueryRepository(configuration.GetConnectionString("InternalAuditDb")));
+        services.AddScoped<IFeatureQueryRepository>(s => new FeatureQueryRepository(configuration.GetConnectionString("InternalAuditDb")));
+        services.AddScoped<IActionQueryRepository>(s => new ActionQueryRepository(configuration.GetConnectionString("InternalAuditDb")));
 
         return services;
     }

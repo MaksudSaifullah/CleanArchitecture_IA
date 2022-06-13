@@ -1,4 +1,4 @@
-import { INavData } from '@coreui/angular';
+import { INavData } from '@coreui/angular-pro';
 
 export const navItems: INavData[] = [
   {
@@ -10,22 +10,45 @@ export const navItems: INavData[] = [
       text: ''
     }
   },
+  
   {
-    name: 'Configuration',
-    title: true
-  },
-  {
-    name: 'Common',
-    url: '/common',
+    name: 'Public',
+    url: '/public',
     iconComponent: { name: 'cil-puzzle' },
     children: [
       {
-        name: 'Country',
-        url: '/configuration/country',
+        name: 'about',
+        url: '/public/about'
+      }
+    ]
+  },
+  {
+    name: 'Pages',
+    url: '/login',
+    iconComponent: { name: 'cil-star' },
+    children: [
+      {
+        name: 'Error 404',
+        url: '/404'
       },
       {
-        name: 'Ishita',
-        url: '/configuration/ishita',
+        name: 'Error 500',
+        url: '/500'
+      }
+    ]
+  },
+  {
+    name: 'Public',
+    url: '/about',
+    iconComponent: { name: 'cilPaperPlane' },
+    children: [
+      {
+        name: 'About',
+        url: '/about'
+      },
+      {
+        name: 'Login',
+        url: '/login'
       },
     ]
   },

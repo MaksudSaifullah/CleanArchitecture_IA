@@ -18,9 +18,11 @@ import { AppComponent } from './app.component';
 
 // Import containers
 import {
+  DefaultAsideComponent,
   DefaultFooterComponent,
   DefaultHeaderComponent,
   DefaultLayoutComponent,
+  EmailLayoutComponent,
 } from './containers';
 
 import {
@@ -42,22 +44,20 @@ import {
   SidebarModule,
   TabsModule,
   UtilitiesModule,
-} from '@coreui/angular';
+} from '@coreui/angular-pro';
 
 import { IconModule, IconSetService } from '@coreui/icons-angular';
-import { NG_ENTITY_SERVICE_CONFIG } from '@datorama/akita-ng-entity-service';
-import { AkitaNgDevtools } from '@datorama/akita-ngdevtools';
-import { AkitaNgRouterStoreModule } from '@datorama/akita-ng-router-store';
-import { environment } from '../environments/environment';
 
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
   suppressScrollX: true,
 };
 
 const APP_CONTAINERS = [
+  DefaultAsideComponent,
   DefaultFooterComponent,
   DefaultHeaderComponent,
   DefaultLayoutComponent,
+  EmailLayoutComponent,
 ];
 
 @NgModule({
@@ -89,8 +89,6 @@ const APP_CONTAINERS = [
     BadgeModule,
     ListGroupModule,
     CardModule,
-    environment.production ? [] : AkitaNgDevtools.forRoot(),
-    AkitaNgRouterStoreModule,
   ],
   providers: [
     {
@@ -102,8 +100,7 @@ const APP_CONTAINERS = [
       useValue: DEFAULT_PERFECT_SCROLLBAR_CONFIG,
     },
     IconSetService,
-    Title,
-    { provide: NG_ENTITY_SERVICE_CONFIG, useValue: { baseUrl: 'https://jsonplaceholder.typicode.com' }}
+    Title
   ],
   bootstrap: [AppComponent],
 })

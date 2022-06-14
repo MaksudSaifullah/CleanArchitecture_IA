@@ -24,6 +24,8 @@ using Internal.Audit.Infrastructure.Persistent.Repositories.Features;
 
 using Internal.Audit.Application.Contracts.Persistent.Actions;
 using Internal.Audit.Infrastructure.Persistent.Repositories.Actions;
+using Internal.Audit.Application.Contracts.Persistent.RiskProfiles;
+using Internal.Audit.Infrastructure.Persistent.Repositories.RiskProfiles;
 
 namespace Internal.Audit.Infrastructure.Persistent;
 
@@ -56,6 +58,8 @@ public static class PersistentInfrastructureServiceRegistration
         services.AddScoped<IModuleQueryRepository>(s => new ModuleQueryRepository(configuration.GetConnectionString("InternalAuditDb")));
         services.AddScoped<IFeatureQueryRepository>(s => new FeatureQueryRepository(configuration.GetConnectionString("InternalAuditDb")));
         services.AddScoped<IActionQueryRepository>(s => new ActionQueryRepository(configuration.GetConnectionString("InternalAuditDb")));
+        services.AddScoped<IRiskProfileCommandRepository, RiskProfileCommandRepository>();
+        services.AddScoped<IRiskProfileQueryRepository>(s => new RiskProfileQueryRepository(configuration.GetConnectionString("InternalAuditDb")));
 
         return services;
     }

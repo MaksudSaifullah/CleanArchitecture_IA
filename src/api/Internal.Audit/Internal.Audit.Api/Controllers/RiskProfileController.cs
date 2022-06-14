@@ -1,4 +1,9 @@
-﻿using MediatR;
+﻿using Internal.Audit.Application.Features.RiskProfiles.Commands.AddRiskProfile;
+using Internal.Audit.Application.Features.RiskProfiles.Commands.DeleteRiskProfile;
+using Internal.Audit.Application.Features.RiskProfiles.Commands.UpdateRiskProfile;
+using Internal.Audit.Application.Features.RiskProfiles.Queries.GetRiskProfileById;
+using Internal.Audit.Application.Features.RiskProfiles.Queries.GetRiskProfileList;
+using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Internal.Audit.Api.Controllers
@@ -17,8 +22,8 @@ namespace Internal.Audit.Api.Controllers
         public async Task<ActionResult<IEnumerable<RiskProfileDTO>>> GetList()
         {
             var query = new GetRiskProfileListQuery();
-            var users = await _mediator.Send(query);
-            return Ok(users);
+            var riskprofiles = await _mediator.Send(query);
+            return Ok(riskprofiles);
 
         }
 
@@ -26,8 +31,8 @@ namespace Internal.Audit.Api.Controllers
         public async Task<ActionResult<RiskProfileByIdDTO>> GetById(Guid Id)
         {
             var query = new GetRiskProfileQuery(Id);
-            var users = await _mediator.Send(query);
-            return Ok(users);
+            var riskprofiles = await _mediator.Send(query);
+            return Ok(riskprofiles);
 
         }
 

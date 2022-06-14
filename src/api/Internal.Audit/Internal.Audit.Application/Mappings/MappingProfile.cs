@@ -32,6 +32,8 @@ using Internal.Audit.Application.Features.Action.Queries.GetActionList;
 using Internal.Audit.Application.Features.RiskProfiles.Commands.AddRiskProfile;
 using Internal.Audit.Application.Features.RiskProfiles.Commands.UpdateRiskProfile;
 using Internal.Audit.Application.Features.RiskProfiles.Commands.DeleteRiskProfile;
+using Internal.Audit.Application.Features.RiskProfiles.Queries.GetRiskProfileList;
+using Internal.Audit.Application.Features.RiskProfiles.Queries.GetRiskProfileById;
 
 namespace Internal.Audit.Application.Mappings;
 

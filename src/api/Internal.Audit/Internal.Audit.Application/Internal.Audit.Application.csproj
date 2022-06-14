@@ -21,7 +21,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Features\AccessPrivilege\Commands\DeleteAccessPrivilege\" />
     <Folder Include="Features\Designation\Queries\GetDesignationById\" />
     <Folder Include="Features\UserCountries\Quiries\" />
   </ItemGroup>

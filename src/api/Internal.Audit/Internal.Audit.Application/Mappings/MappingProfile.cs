@@ -25,6 +25,11 @@ using Internal.Audit.Domain.Entities.security;
 using Internal.Audit.Application.Features.AccessPrivilege.Commands.AddAccessPrivilege;
 using Internal.Audit.Application.Features.AccessPrivilege.Commands.UpdateAccessPrivilege;
 using Internal.Audit.Application.Features.AccessPrivilege.Queries.GetAccessPrivilege;
+using Internal.Audit.Domain.Entities.Common;
+using Internal.Audit.Application.Features.Module.Queries.GetModuleList;
+using Internal.Audit.Application.Features.Feature.Queries.GetFeatureList;
+using Internal.Audit.Application.Features.Action.Queries.GetActionList;
+
 
 namespace Internal.Audit.Application.Mappings;
 
@@ -75,6 +80,11 @@ public class MappingProfile: Profile
         CreateMap<SessionPolicy, UpdateSessionPolicyCommandDTO>().ReverseMap();
         CreateMap<UserLockingPolicy, UpdateAccessPrivilegeResponseDTO>().ReverseMap();
         CreateMap<UserLockingPolicy, UpdateUserLockingPolicyCommandDTO>().ReverseMap();
+
+
+        CreateMap<Module, GetModuleListResponseDTO>().ReverseMap();
+        CreateMap<Feature, GetFeatureListResponseDTO>().ReverseMap();
+        CreateMap<Domain.Entities.Common.Action, GetActionListResponseDTO>().ReverseMap();
 
     }
 }

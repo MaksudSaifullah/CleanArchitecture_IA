@@ -5,3 +5,8 @@
 
 // temp fix .chartjs-tooltip-body-item padding
 @import "charts";
+
+// temp fix for dark-theme select options
+.dark-theme .form-select > option {
+  background-color: #282933;
+}

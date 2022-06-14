@@ -29,7 +29,9 @@ using Internal.Audit.Domain.Entities.Common;
 using Internal.Audit.Application.Features.Module.Queries.GetModuleList;
 using Internal.Audit.Application.Features.Feature.Queries.GetFeatureList;
 using Internal.Audit.Application.Features.Action.Queries.GetActionList;
-
+using Internal.Audit.Application.Features.RiskProfiles.Commands.AddRiskProfile;
+using Internal.Audit.Application.Features.RiskProfiles.Commands.UpdateRiskProfile;
+using Internal.Audit.Application.Features.RiskProfiles.Commands.DeleteRiskProfile;
 
 namespace Internal.Audit.Application.Mappings;
 
@@ -48,6 +50,16 @@ public class MappingProfile: Profile
         CreateMap<Country, UpdateCountryCommand>().ReverseMap();
         CreateMap<Country, DeleteCountryResponseDTO>().ReverseMap();
         CreateMap<Country, DeleteCountryCommand>().ReverseMap();
+
+        CreateMap<RiskProfile, RiskProfileDTO>().ReverseMap();
+        CreateMap<RiskProfile, RiskProfileByIdDTO>().ReverseMap();
+        CreateMap<RiskProfile, AddRiskProfileResponseDTO>().ReverseMap();
+        CreateMap<RiskProfile, AddRiskProfileCommand>().ReverseMap();
+        CreateMap<RiskProfile, UpdateRiskProfileResponseDTO>().ReverseMap();
+        CreateMap<RiskProfile, UpdateRiskProfileCommand>().ReverseMap();
+        CreateMap<RiskProfile, DeleteRiskProfileResponseDTO>().ReverseMap();
+        CreateMap<RiskProfile, DeleteRiskProfileCommand>().ReverseMap();
+
         CreateMap<Designation, AddDesignationResponseDTO>().ReverseMap();
         CreateMap<Designation, AddDesignationCommand>().ReverseMap();
         CreateMap<Role, RoleDTO>().ReverseMap();

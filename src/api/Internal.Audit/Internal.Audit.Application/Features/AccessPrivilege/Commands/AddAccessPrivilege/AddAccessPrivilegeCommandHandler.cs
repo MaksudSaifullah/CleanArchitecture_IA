@@ -30,13 +30,13 @@ public class AddAccessPrivilegeCommandHandler : IRequestHandler<AddAccessPrivile
         var newPasswordPolicy = await _passwordPolicyRepository.Add(passwordPolicy);
 
         var userLockingPolicy = _mapper.Map<UserLockingPolicy>(request.UserLockingPolicy);
-        var newUserLockingPolicy = await _userLockingPolicyRepository.Add(userLockingPolicy);
+        await _userLockingPolicyRepository.Add(userLockingPolicy);
 
         var sessionPolicy = _mapper.Map<SessionPolicy>(request.SessionPolicy);
-        var newSessionPolicy = await _sessionPolicyRepository.Add(sessionPolicy);
+        await _sessionPolicyRepository.Add(sessionPolicy);
         
         var rowsAffected = await _unitOfWork.CommitAsync();
 
-        return new AddAccessPrivilegeResponseDTO(newPasswordPolicy.Id, rowsAffected > 0, "Access Privilege Added Successfully!" );
+        return new AddAccessPrivilegeResponseDTO(newPasswordPolicy.Id, rowsAffected == 3, rowsAffected == 3 ? "Access Privilege Added Successfully!" : "Unsuccessful Attempt!" );
     }
 }

@@ -30,6 +30,7 @@ public class InternalAuditContext: DbContext
     public DbSet<RiskProfile> RiskProfiles { get; set; }
     public DbSet<Employee> Employees { get; set; }
     public DbSet<UserRole> UserRoles { get; set; }
+    public DbSet<DashBoardBase> DashBoardBases { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

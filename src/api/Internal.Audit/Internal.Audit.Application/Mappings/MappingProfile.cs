@@ -34,6 +34,11 @@ using Internal.Audit.Application.Features.RiskProfiles.Commands.UpdateRiskProfil
 using Internal.Audit.Application.Features.RiskProfiles.Commands.DeleteRiskProfile;
 using Internal.Audit.Application.Features.RiskProfiles.Queries.GetRiskProfileList;
 using Internal.Audit.Application.Features.RiskProfiles.Queries.GetRiskProfileById;
+using Internal.Audit.Application.Features.Dashboards.Queries.GetDashboardList;
+using Internal.Audit.Application.Features.Dashboards.Queries.GetDashboardById;
+using Internal.Audit.Application.Features.Dashboards.Commands.AddDashboard;
+using Internal.Audit.Application.Features.Dashboards.Commands.UpdateDashboard;
+using Internal.Audit.Application.Features.Dashboards.Commands.DeleteDashboard;
 
 namespace Internal.Audit.Application.Mappings;
 
@@ -61,6 +66,15 @@ public class MappingProfile: Profile
         CreateMap<RiskProfile, UpdateRiskProfileCommand>().ReverseMap();
         CreateMap<RiskProfile, DeleteRiskProfileResponseDTO>().ReverseMap();
         CreateMap<RiskProfile, DeleteRiskProfileCommand>().ReverseMap();
+
+        CreateMap<DashBoardBase, DashboardDTO>().ReverseMap();
+        CreateMap<DashBoardBase, DashboardByIdDTO>().ReverseMap();
+        CreateMap<DashBoardBase, AddDashboardResponseDTO>().ReverseMap();
+        CreateMap<DashBoardBase, AddDashboardCommand>().ReverseMap();
+        CreateMap<DashBoardBase, UpdateDashboardResponseDTO>().ReverseMap();
+        CreateMap<DashBoardBase, UpdateDashboardCommand>().ReverseMap();
+        CreateMap<DashBoardBase, DeleteDashboardResponseDTO>().ReverseMap();
+        CreateMap<DashBoardBase, DeleteDashboardCommand>().ReverseMap();
 
         CreateMap<Designation, AddDesignationResponseDTO>().ReverseMap();
         CreateMap<Designation, AddDesignationCommand>().ReverseMap();

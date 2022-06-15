@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace Internal.Audit.Application.Features.CommonValueAndTypes.Queries.GetLevelOfLikelihood;
-public record GetLevelOfLikelihoodQuery(Guid Id) : IRequest<LevelOfLikelihoodDTO>;
+public record GetLevelOfLikelihoodQuery : IRequest<List<LevelOfLikelihoodDTO>> 
+{ }
 
 

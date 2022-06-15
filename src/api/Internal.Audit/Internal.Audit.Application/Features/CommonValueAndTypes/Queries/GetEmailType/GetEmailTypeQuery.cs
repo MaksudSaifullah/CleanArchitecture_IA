@@ -6,6 +6,6 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace Internal.Audit.Application.Features.CommonValueAndTypes.Queries.GetEmailType;
-public record GetEmailTypeQuery(Guid Id) : IRequest<EmailTypeDTO>;
+public record GetEmailTypeQuery : IRequest<List<EmailTypeDTO>>;
 
 

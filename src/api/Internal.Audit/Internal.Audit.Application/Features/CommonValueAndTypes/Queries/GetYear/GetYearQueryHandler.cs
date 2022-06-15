@@ -8,7 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace Internal.Audit.Application.Features.CommonValueAndTypes.Queries.GetYear;
-public class GetYearQueryHandler : IRequestHandler<GetYearQuery, YearDTO>
+public class GetYearQueryHandler : IRequestHandler<GetYearQuery, List<YearDTO>>
 {
     private readonly ICommonValueAndTypeQueryRepository _commonValueAndTypesRepository;
     private readonly IMapper _mapper;
@@ -19,9 +19,9 @@ public class GetYearQueryHandler : IRequestHandler<GetYearQuery, YearDTO>
         _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
     }
 
-    public async Task<YearDTO> Handle(GetYearQuery request, CancellationToken cancellationToken)
+    public async Task<List<YearDTO>> Handle(GetYearQuery request, CancellationToken cancellationToken)
     {
-        var commonValueAndTypes = await _commonValueAndTypesRepository.GetControlFrequency();
-        return _mapper.Map<YearDTO>(commonValueAndTypes);
+        var commonValueAndTypes = await _commonValueAndTypesRepository.GetAllYear();
+        return _mapper.Map<List<YearDTO>>(commonValueAndTypes);
     }
 }

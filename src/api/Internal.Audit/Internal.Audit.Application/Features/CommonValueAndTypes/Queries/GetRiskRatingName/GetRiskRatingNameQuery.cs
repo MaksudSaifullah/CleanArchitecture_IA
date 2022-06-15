@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Internal.Audit.Application.Features.CommonValueAndTypes.Queries.GetCountryById;
-public record GetRiskRatingNameQuery(Guid Id) : IRequest<RiskRatingNameDTO>;
+namespace Internal.Audit.Application.Features.CommonValueAndTypes.Queries.GetRiskRatingName;
+public record GetRiskRatingNameQuery : IRequest<List<RiskRatingNameDTO>>;
 
 

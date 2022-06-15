@@ -8,7 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace Internal.Audit.Application.Features.CommonValueAndTypes.Queries.GetAuditConducted;
-public class GetAuditConductedQueryHandler : IRequestHandler<GetAuditConductedQuery, AuditConductedDTO>
+public class GetAuditConductedQueryHandler : IRequestHandler<GetAuditConductedQuery, List<AuditConductedDTO>>
 {
     private readonly ICommonValueAndTypeQueryRepository _commonValueAndTypeRepository;
     private readonly IMapper _mapper;
@@ -19,9 +19,9 @@ public class GetAuditConductedQueryHandler : IRequestHandler<GetAuditConductedQu
         _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
     }
 
-    public async Task<AuditConductedDTO> Handle(GetAuditConductedQuery request, CancellationToken cancellationToken)
+    public async Task<List<AuditConductedDTO>> Handle(GetAuditConductedQuery request, CancellationToken cancellationToken)
     {
-        var commonValueAndType = await _commonValueAndTypeRepository.GetEMailType();
-        return _mapper.Map<AuditConductedDTO>(commonValueAndType);
+        var commonValueAndType = await _commonValueAndTypeRepository.GetAllControlFrequency();
+        return _mapper.Map<List<AuditConductedDTO>>(commonValueAndType);
     }
 }

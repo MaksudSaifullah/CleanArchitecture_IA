@@ -8,7 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace Internal.Audit.Application.Features.CommonValueAndTypes.Queries.GetDetestConclusion;
-public class GetDetestConclusionQueryHandler : IRequestHandler<GetDetestConclusionQuery, DetestConclusionDTO>
+public class GetDetestConclusionQueryHandler : IRequestHandler<GetDetestConclusionQuery, List<DetestConclusionDTO>>
 {
     private readonly ICommonValueAndTypeQueryRepository _commonValueAndTypesRepository;
     private readonly IMapper _mapper;
@@ -19,9 +19,9 @@ public class GetDetestConclusionQueryHandler : IRequestHandler<GetDetestConclusi
         _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
     }
 
-    public async Task<DetestConclusionDTO> Handle(GetDetestConclusionQuery request, CancellationToken cancellationToken)
+    public async Task<List<DetestConclusionDTO>> Handle(GetDetestConclusionQuery request, CancellationToken cancellationToken)
     {
-        var commonValueAndTypes = await _commonValueAndTypesRepository.GetControlFrequency();
-        return _mapper.Map<DetestConclusionDTO>(commonValueAndTypes);
+        var commonValueAndTypes = await _commonValueAndTypesRepository.GetAllDetestConclusion();
+        return _mapper.Map<List<DetestConclusionDTO>>(commonValueAndTypes);
     }
 }

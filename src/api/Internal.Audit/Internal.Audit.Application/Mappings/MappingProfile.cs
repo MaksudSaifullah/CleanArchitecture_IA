@@ -35,6 +35,23 @@ using Internal.Audit.Application.Features.RiskProfiles.Commands.DeleteRiskProfil
 using Internal.Audit.Application.Features.RiskProfiles.Queries.GetRiskProfileList;
 using Internal.Audit.Application.Features.RiskProfiles.Queries.GetRiskProfileById;
 
+using Internal.Audit.Application.Features.CommonValueAndTypes.Queries.GetAuditConducted;
+using Internal.Audit.Application.Features.CommonValueAndTypes.Queries.GetControlFrequency;
+using Internal.Audit.Application.Features.CommonValueAndTypes.Queries.GetDetestConclusion;
+using Internal.Audit.Application.Features.CommonValueAndTypes.Queries.GetEmailType;
+using Internal.Audit.Application.Features.CommonValueAndTypes.Queries.GetIssueStatus;
+using Internal.Audit.Application.Features.CommonValueAndTypes.Queries.GetLevelOfImpact;
+using Internal.Audit.Application.Features.CommonValueAndTypes.Queries.GetLevelOfLikelihood;
+using Internal.Audit.Application.Features.CommonValueAndTypes.Queries.GetLOProductivity;
+using Internal.Audit.Application.Features.CommonValueAndTypes.Queries.GetNatureOfControlActivity;
+using Internal.Audit.Application.Features.CommonValueAndTypes.Queries.GetRiskRating;
+using Internal.Audit.Application.Features.CommonValueAndTypes.Queries.GetRiskRatingName;
+using Internal.Audit.Application.Features.CommonValueAndTypes.Queries.GetSampledMonth;
+using Internal.Audit.Application.Features.CommonValueAndTypes.Queries.GetSampleSelectionMethod;
+using Internal.Audit.Application.Features.CommonValueAndTypes.Queries.GetYear;
+using Internal.Audit.Application.Features.CommonValueAndTypes.Queries.GetYesNo;
+using Internal.Audit.Domain.Entities.Config;
+
 namespace Internal.Audit.Application.Mappings;
 
 public class MappingProfile: Profile
@@ -100,5 +117,21 @@ public class MappingProfile: Profile
         CreateMap<AuditFeature, GetFeatureListResponseDTO>().ReverseMap();
         CreateMap<AuditAction, GetActionListResponseDTO>().ReverseMap();
 
+        CreateMap<CommonValueAndType, AuditConductedDTO>().ReverseMap();
+        //CreateMap<CommonValueAndType, AuditConductedDTO>().ReverseMap();
+        CreateMap<CommonValueAndType, ControlFrequencyDTO>().ReverseMap();
+        CreateMap<CommonValueAndType, DetestConclusionDTO>().ReverseMap();
+        CreateMap<CommonValueAndType, EmailTypeDTO>().ReverseMap();
+        CreateMap<CommonValueAndType, IssueStatusDTO>().ReverseMap();
+        CreateMap<CommonValueAndType, LevelOfImpactDTO>().ReverseMap();
+        CreateMap<CommonValueAndType, LevelOfLikelihoodDTO>().ReverseMap();
+        CreateMap<CommonValueAndType, LOProductivityDTO>().ReverseMap();
+        CreateMap<CommonValueAndType, NatureOfControlActivityDTO>().ReverseMap();
+        CreateMap<CommonValueAndType, RiskRatingDTO>().ReverseMap();
+        CreateMap<CommonValueAndType, RiskRatingNameDTO>().ReverseMap();
+        CreateMap<CommonValueAndType, SampledMonthDTO>().ReverseMap();
+        CreateMap<CommonValueAndType, SampleSelectionMethodDTO>().ReverseMap();
+        CreateMap<CommonValueAndType, YearDTO>().ReverseMap();
+        CreateMap<CommonValueAndType, YesNoDTO>().ReverseMap();
     }
 }

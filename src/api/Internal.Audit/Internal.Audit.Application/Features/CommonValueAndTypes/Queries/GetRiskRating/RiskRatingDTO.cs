@@ -1,5 +1,5 @@
 ﻿
-namespace Internal.Audit.Application.Features.CommonValueAndTypes.Queries.GetCountryById;
+namespace Internal.Audit.Application.Features.CommonValueAndTypes.Queries.GetRiskRating;
 public record RiskRatingDTO
 {
     public Guid Id { get; set; }

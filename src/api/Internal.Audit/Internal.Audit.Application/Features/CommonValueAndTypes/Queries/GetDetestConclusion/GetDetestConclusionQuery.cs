@@ -6,6 +6,6 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace Internal.Audit.Application.Features.CommonValueAndTypes.Queries.GetDetestConclusion;
-public record GetDetestConclusionQuery(Guid Id) : IRequest<DetestConclusionDTO>;
+public record GetDetestConclusionQuery : IRequest<List<DetestConclusionDTO>>;
 
 

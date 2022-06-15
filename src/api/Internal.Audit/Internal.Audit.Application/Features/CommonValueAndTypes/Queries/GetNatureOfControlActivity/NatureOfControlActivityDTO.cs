@@ -1,5 +1,5 @@
 ﻿
-namespace Internal.Audit.Application.Features.CommonValueAndTypes.Queries.GetCountryById;
+namespace Internal.Audit.Application.Features.CommonValueAndTypes.Queries.GetNatureOfControlActivity;
 public record NatureOfControlActivityDTO
 {
     public Guid Id { get; set; }

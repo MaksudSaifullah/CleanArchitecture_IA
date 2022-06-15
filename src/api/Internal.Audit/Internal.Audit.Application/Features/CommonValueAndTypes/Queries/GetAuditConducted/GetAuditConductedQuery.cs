@@ -6,6 +6,6 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace Internal.Audit.Application.Features.CommonValueAndTypes.Queries.GetAuditConducted;
-public record GetAuditConductedQuery(Guid Id) : IRequest<AuditConductedDTO>;
+public record GetAuditConductedQuery : IRequest<List<AuditConductedDTO>>;
 
 

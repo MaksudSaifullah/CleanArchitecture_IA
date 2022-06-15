@@ -8,7 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace Internal.Audit.Application.Features.CommonValueAndTypes.Queries.GetYesNo;
-public class YesNoQueryHandler : IRequestHandler<YesNoQuery, YesNoDTO>
+public class YesNoQueryHandler : IRequestHandler<GetYesNoQuery, List<YesNoDTO>>
 {
     private readonly ICommonValueAndTypeQueryRepository _commonValueAndTypesRepository;
     private readonly IMapper _mapper;
@@ -19,9 +19,9 @@ public class YesNoQueryHandler : IRequestHandler<YesNoQuery, YesNoDTO>
         _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
     }
 
-    public async Task<YesNoDTO> Handle(YesNoQuery request, CancellationToken cancellationToken)
+    public async Task<List<YesNoDTO>> Handle(GetYesNoQuery request, CancellationToken cancellationToken)
     {
-        var commonValueAndTypes = await _commonValueAndTypesRepository.GetControlFrequency();
-        return _mapper.Map<YesNoDTO>(commonValueAndTypes);
+        var commonValueAndTypes = await _commonValueAndTypesRepository.GetAllYesNo();
+        return _mapper.Map< List<YesNoDTO>>(commonValueAndTypes);
     }
 }

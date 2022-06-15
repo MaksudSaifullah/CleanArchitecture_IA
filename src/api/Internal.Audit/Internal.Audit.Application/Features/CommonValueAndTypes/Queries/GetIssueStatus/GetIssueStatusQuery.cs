@@ -6,6 +6,6 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace Internal.Audit.Application.Features.CommonValueAndTypes.Queries.GetIssueStatus;
-public record GetIssueStatusQuery(Guid Id) : IRequest<IssueStatusDTO>;
+public record GetIssueStatusQuery : IRequest<List<IssueStatusDTO>>;
 
 

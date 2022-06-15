@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Internal.Audit.Application.Features.CommonValueAndTypes.Queries.GetCountryById;
-public record GetLOProductivityQuery(Guid Id) : IRequest<LOProductivityDTO>;
+namespace Internal.Audit.Application.Features.CommonValueAndTypes.Queries.GetLOProductivity;
+public record GetLOProductivityQuery : IRequest<List<LOProductivityDTO>>;
 
 

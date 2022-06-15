@@ -9,21 +9,21 @@ namespace Internal.Audit.Application.Contracts.Persistent.CommonValueAndTypes
 {
     public interface ICommonValueAndTypeQueryRepository : IAsyncQueryRepository<CommonValueAndType>
     {
-        Task<IEnumerable<CommonValueAndType>> GetEMailType();
-        Task<IEnumerable<CommonValueAndType>> GetLevelOfLikelihood();
-        Task<IEnumerable<CommonValueAndType>> GetLevelOfImpact();
-        Task<IEnumerable<CommonValueAndType>> GetRiskRating();
-        Task<IEnumerable<CommonValueAndType>> GetRiskRatingName();
-        Task<IEnumerable<CommonValueAndType>> GetLOProductivity();
-        Task<IEnumerable<CommonValueAndType>> GetYear();
-        Task<IEnumerable<CommonValueAndType>> GetSampledMonth();
-        Task<IEnumerable<CommonValueAndType>> GetSampleSelectionMethod();
-        Task<IEnumerable<CommonValueAndType>> GetNatureOfControlActivity();
-        Task<IEnumerable<CommonValueAndType>> GetControlFrequency();
-        Task<IEnumerable<CommonValueAndType>> GetIssueStatus();
-        Task<IEnumerable<CommonValueAndType>> GetAuditConducted();
-        Task<IEnumerable<CommonValueAndType>> GetDetestConclusion();
-        Task<IEnumerable<CommonValueAndType>> GetYesNo();
+        Task<IEnumerable<CommonValueAndType>> GetAllEMailType();
+        Task<IEnumerable<CommonValueAndType>> GetAllLevelOfLikelihood();
+        Task<IEnumerable<CommonValueAndType>> GetAllLevelOfImpact();
+        Task<IEnumerable<CommonValueAndType>> GetAllRiskRating();
+        Task<IEnumerable<CommonValueAndType>> GetAllRiskRatingName();
+        Task<IEnumerable<CommonValueAndType>> GetAllLOProductivity();
+        Task<IEnumerable<CommonValueAndType>> GetAllYear();
+        Task<IEnumerable<CommonValueAndType>> GetAllSampledMonth();
+        Task<IEnumerable<CommonValueAndType>> GetAllSampleSelectionMethod();
+        Task<IEnumerable<CommonValueAndType>> GetAllNatureOfControlActivity();
+        Task<IEnumerable<CommonValueAndType>> GetAllControlFrequency();
+        Task<IEnumerable<CommonValueAndType>> GetAllIssueStatus();
+        Task<IEnumerable<CommonValueAndType>> GetAllAuditConducted();
+        Task<IEnumerable<CommonValueAndType>> GetAllDetestConclusion();
+        Task<IEnumerable<CommonValueAndType>> GetAllYesNo();
 
     }
 }

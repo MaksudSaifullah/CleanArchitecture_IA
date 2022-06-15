@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace Internal.Audit.Application.Features.CommonValueAndTypes.Queries.GetControlFrequency;
-public record GetControlFrequencyQuery(Guid Id) : IRequest<ControlFrequencyDTO>;
+public class GetControlFrequencyQuery : IRequest<List<ControlFrequencyDTO>>
+{ }
 
 

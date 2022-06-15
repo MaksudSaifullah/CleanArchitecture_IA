@@ -6,6 +6,6 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace Internal.Audit.Application.Features.CommonValueAndTypes.Queries.GetYesNo;
-public record YesNoQuery(Guid Id) : IRequest<YesNoDTO>;
+public record GetYesNoQuery : IRequest<List<YesNoDTO>> { }
 
 

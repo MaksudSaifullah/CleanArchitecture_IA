@@ -7,8 +7,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Internal.Audit.Application.Features.CommonValueAndTypes.Queries.GetCountryById;
-public class GetLOProductivityQueryHandler : IRequestHandler<GetLOProductivityQuery, LOProductivityDTO>
+namespace Internal.Audit.Application.Features.CommonValueAndTypes.Queries.GetLOProductivity;
+public class GetLOProductivityQueryHandler : IRequestHandler<GetLOProductivityQuery, List<LOProductivityDTO>>
 {
     private readonly ICommonValueAndTypeQueryRepository _commonValueAndTypesRepository;
     private readonly IMapper _mapper;
@@ -19,9 +19,9 @@ public class GetLOProductivityQueryHandler : IRequestHandler<GetLOProductivityQu
         _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
     }
 
-    public async Task<LOProductivityDTO> Handle(GetLOProductivityQuery request, CancellationToken cancellationToken)
+    public async Task<List<LOProductivityDTO>> Handle(GetLOProductivityQuery request, CancellationToken cancellationToken)
     {
-        var commonValueAndTypes = await _commonValueAndTypesRepository.GetControlFrequency();
-        return _mapper.Map<LOProductivityDTO>(commonValueAndTypes);
+        var commonValueAndTypes = await _commonValueAndTypesRepository.GetAllLOProductivity();
+        return _mapper.Map<List<LOProductivityDTO>>(commonValueAndTypes);
     }
 }

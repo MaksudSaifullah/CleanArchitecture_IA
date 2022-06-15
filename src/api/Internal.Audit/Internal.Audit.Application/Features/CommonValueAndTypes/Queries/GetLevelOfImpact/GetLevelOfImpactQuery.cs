@@ -6,6 +6,6 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace Internal.Audit.Application.Features.CommonValueAndTypes.Queries.GetLevelOfImpact;
-public record GetLevelOfImpactQuery(Guid Id) : IRequest<LevelOfImpactDTO>;
+public record GetLevelOfImpactQuery : IRequest<List<LevelOfImpactDTO>>;
 
 

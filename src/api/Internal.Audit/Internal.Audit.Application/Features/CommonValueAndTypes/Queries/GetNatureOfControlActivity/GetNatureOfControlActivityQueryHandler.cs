@@ -7,8 +7,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Internal.Audit.Application.Features.CommonValueAndTypes.Queries.GetCountryById;
-public class GetNatureOfControlActivityQueryHandler : IRequestHandler<GetNatureOfControlActivityQuery, NatureOfControlActivityDTO>
+namespace Internal.Audit.Application.Features.CommonValueAndTypes.Queries.GetNatureOfControlActivity;
+public class GetNatureOfControlActivityQueryHandler : IRequestHandler<GetNatureOfControlActivityQuery, List<NatureOfControlActivityDTO>>
 {
     private readonly ICommonValueAndTypeQueryRepository _commonValueAndTypesRepository;
     private readonly IMapper _mapper;
@@ -19,9 +19,9 @@ public class GetNatureOfControlActivityQueryHandler : IRequestHandler<GetNatureO
         _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
     }
 
-    public async Task<NatureOfControlActivityDTO> Handle(GetNatureOfControlActivityQuery request, CancellationToken cancellationToken)
+    public async Task<List<NatureOfControlActivityDTO>> Handle(GetNatureOfControlActivityQuery request, CancellationToken cancellationToken)
     {
-        var commonValueAndTypes = await _commonValueAndTypesRepository.GetControlFrequency();
-        return _mapper.Map<NatureOfControlActivityDTO>(commonValueAndTypes);
+        var commonValueAndTypes = await _commonValueAndTypesRepository.GetAllNatureOfControlActivity();
+        return _mapper.Map<List<NatureOfControlActivityDTO>>(commonValueAndTypes);
     }
 }

@@ -6,6 +6,6 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace Internal.Audit.Application.Features.CommonValueAndTypes.Queries.GetYear;
-public record GetYearQuery(Guid Id) : IRequest<YearDTO>;
+public record GetYearQuery : IRequest<List<YearDTO>>;
 
 

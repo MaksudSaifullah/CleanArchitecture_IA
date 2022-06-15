@@ -8,7 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace Internal.Audit.Application.Features.CommonValueAndTypes.Queries.GetEmailType;
-public class GetEmailTypeQueryHandler : IRequestHandler<GetEmailTypeQuery, EmailTypeDTO>
+public class GetEmailTypeQueryHandler : IRequestHandler<GetEmailTypeQuery, List<EmailTypeDTO>>
 {
     private readonly ICommonValueAndTypeQueryRepository _commonValueAndTypesRepository;
     private readonly IMapper _mapper;
@@ -19,9 +19,9 @@ public class GetEmailTypeQueryHandler : IRequestHandler<GetEmailTypeQuery, Email
         _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
     }
 
-    public async Task<EmailTypeDTO> Handle(GetEmailTypeQuery request, CancellationToken cancellationToken)
+    public async Task<List<EmailTypeDTO>> Handle(GetEmailTypeQuery request, CancellationToken cancellationToken)
     {
-        var commonValueAndTypes = await _commonValueAndTypesRepository.GetControlFrequency();
-        return _mapper.Map<EmailTypeDTO>(commonValueAndTypes);
+        var commonValueAndTypes = await _commonValueAndTypesRepository.GetAllEMailType();
+        return _mapper.Map<List<EmailTypeDTO>>(commonValueAndTypes);
     }
 }

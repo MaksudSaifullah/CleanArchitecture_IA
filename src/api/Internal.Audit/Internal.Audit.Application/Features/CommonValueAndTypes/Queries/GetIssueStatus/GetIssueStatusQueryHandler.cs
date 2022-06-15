@@ -8,7 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace Internal.Audit.Application.Features.CommonValueAndTypes.Queries.GetIssueStatus;
-public class GetIssueStatusQueryHandler : IRequestHandler<GetIssueStatusQuery, IssueStatusDTO>
+public class GetIssueStatusQueryHandler : IRequestHandler<GetIssueStatusQuery, List<IssueStatusDTO>>
 {
     private readonly ICommonValueAndTypeQueryRepository _commonValueAndTypesRepository;
     private readonly IMapper _mapper;
@@ -19,9 +19,9 @@ public class GetIssueStatusQueryHandler : IRequestHandler<GetIssueStatusQuery, I
         _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
     }
 
-    public async Task<IssueStatusDTO> Handle(GetIssueStatusQuery request, CancellationToken cancellationToken)
+    public async Task<List<IssueStatusDTO>> Handle(GetIssueStatusQuery request, CancellationToken cancellationToken)
     {
-        var commonValueAndTypes = await _commonValueAndTypesRepository.GetControlFrequency();
-        return _mapper.Map<IssueStatusDTO>(commonValueAndTypes);
+        var commonValueAndTypes = await _commonValueAndTypesRepository.GetAllIssueStatus();
+        return _mapper.Map<List<IssueStatusDTO>>(commonValueAndTypes);
     }
 }

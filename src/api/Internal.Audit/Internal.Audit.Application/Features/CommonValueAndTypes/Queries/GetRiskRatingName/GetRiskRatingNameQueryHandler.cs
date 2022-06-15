@@ -7,8 +7,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Internal.Audit.Application.Features.CommonValueAndTypes.Queries.GetCountryById;
-public class GetRiskRatingNameQueryHandler : IRequestHandler<GetRiskRatingNameQuery, RiskRatingNameDTO>
+namespace Internal.Audit.Application.Features.CommonValueAndTypes.Queries.GetRiskRatingName;
+public class GetRiskRatingNameQueryHandler : IRequestHandler<GetRiskRatingNameQuery, List<RiskRatingNameDTO>>
 {
     private readonly ICommonValueAndTypeQueryRepository _commonValueAndTypesRepository;
     private readonly IMapper _mapper;
@@ -19,9 +19,9 @@ public class GetRiskRatingNameQueryHandler : IRequestHandler<GetRiskRatingNameQu
         _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
     }
 
-    public async Task<RiskRatingNameDTO> Handle(GetRiskRatingNameQuery request, CancellationToken cancellationToken)
+    public async Task<List<RiskRatingNameDTO>> Handle(GetRiskRatingNameQuery request, CancellationToken cancellationToken)
     {
-        var commonValueAndTypes = await _commonValueAndTypesRepository.GetControlFrequency();
-        return _mapper.Map<RiskRatingNameDTO>(commonValueAndTypes);
+        var commonValueAndTypes = await _commonValueAndTypesRepository.GetAllRiskRatingName();
+        return _mapper.Map< List<RiskRatingNameDTO>>(commonValueAndTypes);
     }
 }

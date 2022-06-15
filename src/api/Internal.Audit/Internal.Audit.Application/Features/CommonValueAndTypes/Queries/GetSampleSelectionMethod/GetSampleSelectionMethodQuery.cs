@@ -6,6 +6,6 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace Internal.Audit.Application.Features.CommonValueAndTypes.Queries.GetSampleSelectionMethod;
-public record GetSampleSelectionMethodQuery(Guid Id) : IRequest<SampleSelectionMethodDTO>;
+public record GetSampleSelectionMethodQuery : IRequest<List<SampleSelectionMethodDTO>>;
 
 

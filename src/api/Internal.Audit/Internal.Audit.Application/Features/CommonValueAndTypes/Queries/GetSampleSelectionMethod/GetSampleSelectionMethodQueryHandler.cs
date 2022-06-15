@@ -8,7 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace Internal.Audit.Application.Features.CommonValueAndTypes.Queries.GetSampleSelectionMethod;
-public class GetSampleSelectionMethodQueryHandler : IRequestHandler<GetSampleSelectionMethodQuery, SampleSelectionMethodDTO>
+public class GetSampleSelectionMethodQueryHandler : IRequestHandler<GetSampleSelectionMethodQuery, List<SampleSelectionMethodDTO>>
 {
     private readonly ICommonValueAndTypeQueryRepository _commonValueAndTypesRepository;
     private readonly IMapper _mapper;
@@ -19,9 +19,9 @@ public class GetSampleSelectionMethodQueryHandler : IRequestHandler<GetSampleSel
         _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
     }
 
-    public async Task<SampleSelectionMethodDTO> Handle(GetSampleSelectionMethodQuery request, CancellationToken cancellationToken)
+    public async Task<List<SampleSelectionMethodDTO>> Handle(GetSampleSelectionMethodQuery request, CancellationToken cancellationToken)
     {
-        var commonValueAndTypes = await _commonValueAndTypesRepository.GetControlFrequency();
-        return _mapper.Map<SampleSelectionMethodDTO>(commonValueAndTypes);
+        var commonValueAndTypes = await _commonValueAndTypesRepository.GetAllSampleSelectionMethod();
+        return _mapper.Map< List<SampleSelectionMethodDTO>>(commonValueAndTypes);
     }
 }

@@ -5,7 +5,8 @@ import { AboutComponent } from './components/about/about.component';
 import { LoginComponent } from './components/login/login.component';
 import { ButtonModule, CardModule, FormModule, GridModule } from '@coreui/angular-pro';
 import { IconModule } from '@coreui/icons-angular';
-
+import { ReactiveFormsModule } from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
 
 
 @NgModule({
@@ -20,7 +21,9 @@ import { IconModule } from '@coreui/icons-angular';
     ButtonModule,
     GridModule,
     IconModule,
-    FormModule
-  ]
+    FormModule,
+    ReactiveFormsModule,
+    HttpClientModule,
+  ],
 })
 export class PublicModule { }

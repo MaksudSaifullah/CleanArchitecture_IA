@@ -1,62 +1,80 @@
-<div class="bg-light min-vh-100 d-flex flex-row align-items-center">
-    <c-container breakpoint="md">
-      <c-row class="justify-content-center">
-        <c-col lg="10" xl="8">
-          <c-card-group>
-            <c-card class="p-4">
-              <c-card-body>
-                <form cForm>
-                  <h1>Login</h1>
-                  <p class="text-medium-emphasis">Sign In to your account</p>
-                  <c-input-group class="mb-3">
-                    <span cInputGroupText>
-                      <svg cIcon name="cilUser"></svg>
-                    </span>
-                    <input autoComplete="username" cFormControl placeholder="Username" />
-                  </c-input-group>
-                  <c-input-group class="mb-4">
-                    <span cInputGroupText>
-                      <svg cIcon name="cilLockLocked"></svg>
-                    </span>
-                    <input
-                      autoComplete="current-password"
-                      cFormControl
-                      placeholder="Password"
-                      type="password"
-                    />
-                  </c-input-group>
-                  <c-row>
-                    <c-col xs="6">
-                      <button cButton class="px-4" color="primary">
-                        Login
-                      </button>
-                    </c-col>
-                    <c-col class="text-right" xs="6">
-                      <button cButton class="px-0" color="link">
-                        Forgot password?
-                      </button>
-                    </c-col>
-                  </c-row>
-                </form>
-              </c-card-body>
-            </c-card>
-            <c-card [ngStyle]="{'minWidth.%': 44}" class="text-white bg-primary py-5">
-              <c-card-body class="text-center">
-                <div>
-                  <h2>Sign up</h2>
-                  <p>
-                    Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-                    tempor incididunt ut labore et dolore magna aliqua.
-                  </p>
-                  <button [active]="true" cButton class="mt-3" color="primary" routerLink="/register">
-                    Register Now!
-                  </button>
-                </div>
-              </c-card-body>
-            </c-card>
-          </c-card-group>
-        </c-col>
-      </c-row>
-    </c-container>
-  </div>
-  
+<div class="bg-secondary min-vh-100 d-flex flex-row align-items-center">
+  <c-container>
+    <c-row class="justify-content-center">
+
+      <c-col md="4">
+          <c-card class="p-4 bg-login-card">
+          <img src="/assets/images/logo.png" class="login-logo"/>
+            <c-card-body>
+              <form cForm class="login-form needs-validation" [formGroup]="loginForm" (ngSubmit)="onSubmit()"
+              novalidate >
+                <c-input-group class="mb-3">
+                  <span cInputGroupText>
+                    <svg cIcon name="cilUser"></svg>
+                  </span>
+                  <input autoComplete="username" cFormControl placeholder="Username" formControlName="username" required/>
+
+                </c-input-group>
+                <div cRow *ngIf="loginForm.get('username')?.invalid &&
+                loginForm.get('username')?.errors &&
+                      (loginForm.get('username')?.dirty || loginForm.get('username')?.touched)">
+                  <small class="text-danger"
+                      *ngIf="loginForm.get('username').hasError('required')">
+                      This field is required.
+                  </small>
+                  <small class="text-danger"
+                      *ngIf="loginForm.get('username').hasError('minlength')">
+                      The minimum length for this field is {{loginForm.get('username').errors.minlength.requiredLength}} characters.
+                  </small>
+                  <small class="text-danger"
+                      *ngIf="loginForm.get('username').hasError('maxlength')">
+                      The maximum length for this field is {{loginForm.get('username').errors.maxlength.requiredLength}} characters.
+                  </small>
+              </div>
+                <c-input-group class="mb-4">
+                  <span cInputGroupText>
+                    <svg cIcon name="cilLockLocked"></svg>
+                  </span>
+                  <input
+                    autoComplete="current-password"
+                    cFormControl
+                    placeholder="Password"
+                    type="password" formControlName="password" required
+                  />
+
+                </c-input-group>
+
+                <c-row *ngIf="loginForm.get('password')?.invalid &&
+                loginForm.get('password')?.errors &&
+                      (loginForm.get('password')?.dirty || loginForm.get('password')?.touched)">
+                  <small class="text-danger"
+                      *ngIf="loginForm.get('password').hasError('required')">
+                      This field is required.
+                  </small>
+                  <small class="text-danger"
+                      *ngIf="loginForm.get('password').hasError('minlength')">
+                      The minimum length for this field is {{loginForm.get('password').errors.minlength.requiredLength}} characters.
+                  </small>
+                  <small class="text-danger"
+                      *ngIf="loginForm.get('password').hasError('maxlength')">
+                      The maximum length for this field is {{loginForm.get('password').errors.maxlength.requiredLength}} characters.
+                  </small>
+                </c-row>
+                <c-row>
+                  <div class="d-grid gap-2">
+
+                    <button class="btn btn-primary" type="submit">
+                      <svg cIcon name="cilLockLocked" title="Login Lock Icon"></svg>
+                      Login</button>
+                  </div>
+
+                </c-row>
+              </form>
+            </c-card-body>
+          </c-card>
+      </c-col>
+    </c-row>
+  </c-container>
+</div>
+
+

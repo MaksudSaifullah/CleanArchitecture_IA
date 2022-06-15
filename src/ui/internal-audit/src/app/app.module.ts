@@ -3,7 +3,6 @@ import { HashLocationStrategy, LocationStrategy, PathLocationStrategy } from '@a
 import { BrowserModule, Title } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ReactiveFormsModule } from '@angular/forms';
-
 import {
   PERFECT_SCROLLBAR_CONFIG,
   PerfectScrollbarConfigInterface,
@@ -12,7 +11,7 @@ import {
 
 // Import routing module
 import { AppRoutingModule } from './app-routing.module';
-
+import {CoreModule} from './core/core.module'
 // Import app component
 import { AppComponent } from './app.component';
 
@@ -47,6 +46,9 @@ import {
 } from '@coreui/angular-pro';
 
 import { IconModule, IconSetService } from '@coreui/icons-angular';
+import { HttpClientModule } from '@angular/common/http';
+import { AuthService } from './core/auth/auth.service';
+import { HttpService } from './core/services/http.service';
 
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
   suppressScrollX: true,
@@ -89,6 +91,8 @@ const APP_CONTAINERS = [
     BadgeModule,
     ListGroupModule,
     CardModule,
+    CoreModule,
+    HttpClientModule
   ],
   providers: [
     {
@@ -99,6 +103,7 @@ const APP_CONTAINERS = [
       provide: PERFECT_SCROLLBAR_CONFIG,
       useValue: DEFAULT_PERFECT_SCROLLBAR_CONFIG,
     },
+    AuthService,HttpService,
     IconSetService,
     Title
   ],

@@ -96,9 +96,9 @@ public class MappingProfile: Profile
         CreateMap<UserLockingPolicy, UpdateUserLockingPolicyCommandDTO>().ReverseMap();
 
 
-        CreateMap<Module, GetModuleListResponseDTO>().ReverseMap();
-        CreateMap<Feature, GetFeatureListResponseDTO>().ReverseMap();
-        CreateMap<Domain.Entities.Common.Action, GetActionListResponseDTO>().ReverseMap();
+        CreateMap<AuditModule, GetModuleListResponseDTO>().ReverseMap();
+        CreateMap<AuditFeature, GetFeatureListResponseDTO>().ReverseMap();
+        CreateMap<AuditAction, GetActionListResponseDTO>().ReverseMap();
 
     }
 }

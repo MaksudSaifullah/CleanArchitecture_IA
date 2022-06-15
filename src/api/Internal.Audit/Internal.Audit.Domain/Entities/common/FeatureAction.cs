@@ -22,12 +22,12 @@ public class FeatureAction : EntityBase
     public Guid ActionId { get; set; }
 
     [ForeignKey("ModuleId")]
-    public virtual Module Module { get; set; } = null!;
+    public virtual AuditModule Module { get; set; } = null!;
 
     [ForeignKey("FeatureId")]
-    public virtual Feature Feature { get; set; } = null!;
+    public virtual AuditFeature Feature { get; set; } = null!;
 
     [ForeignKey("ActionId")]
-    public virtual Action Action { get; set; } = null!;
+    public virtual AuditAction Action { get; set; } = null!;
 
 }

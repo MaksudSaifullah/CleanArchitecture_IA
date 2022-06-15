@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 namespace Internal.Audit.Domain.Entities.Common;
 
 [Table("Module", Schema = "Common")]
-public class Module : EntityBase
+public class AuditModule : EntityBase
 {
     [Required]
     [MaxLength(20)]

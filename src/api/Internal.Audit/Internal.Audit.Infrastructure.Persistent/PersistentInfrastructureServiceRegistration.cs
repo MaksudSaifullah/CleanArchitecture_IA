@@ -28,6 +28,8 @@ using Internal.Audit.Application.Contracts.Persistent.RiskProfiles;
 using Internal.Audit.Infrastructure.Persistent.Repositories.RiskProfiles;
 using Internal.Audit.Infrastructure.Persistent.Repositories.CommonValueAndTypes;
 using Internal.Audit.Application.Contracts.Persistent.CommonValueAndTypes;
+using Internal.Audit.Application.Contracts.Persistent.Dashboards;
+using Internal.Audit.Infrastructure.Persistent.Repositories.Dashboards;
 
 namespace Internal.Audit.Infrastructure.Persistent;
 
@@ -63,6 +65,7 @@ public static class PersistentInfrastructureServiceRegistration
         services.AddScoped<IRiskProfileCommandRepository, RiskProfileCommandRepository>();
         services.AddScoped<IRiskProfileQueryRepository>(s => new RiskProfileQueryRepository(configuration.GetConnectionString("InternalAuditDb")));
         services.AddScoped<ICommonValueAndTypeQueryRepository>(s => new CommonValueAndTypeQueryRepository(configuration.GetConnectionString("InternalAuditDb")));
+        services.AddScoped<IDashboardQueryRepository>(s => new DashboardQueryRepository(configuration.GetConnectionString("InternalAuditDb")));
 
         return services;
     }

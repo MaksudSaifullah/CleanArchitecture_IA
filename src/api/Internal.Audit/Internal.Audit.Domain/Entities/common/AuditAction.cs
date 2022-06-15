@@ -13,7 +13,7 @@ namespace Internal.Audit.Domain.Entities.Common;
 
 
 [Table("Action", Schema = "Common")]
-public class Action : EntityBase
+public class AuditAction : EntityBase
 {
     [Required]
     [MaxLength(20)]

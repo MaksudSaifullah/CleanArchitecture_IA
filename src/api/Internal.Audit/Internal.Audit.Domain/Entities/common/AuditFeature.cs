@@ -13,7 +13,7 @@ using System.Threading.Tasks;
 namespace Internal.Audit.Domain.Entities.Common;
 
 [Table("Feature", Schema = "Common")]
-public class Feature : EntityBase
+public class AuditFeature : EntityBase
 {
     [Required]
     [MaxLength(20)]

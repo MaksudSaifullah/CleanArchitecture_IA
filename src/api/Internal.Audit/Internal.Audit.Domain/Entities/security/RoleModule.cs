@@ -21,7 +21,7 @@ public class RoleModule : EntityBase
 
 
     [ForeignKey("ModuleId")]
-    public virtual Module Module { get; set; } = null!;
+    public virtual AuditModule Module { get; set; } = null!;
 
     [ForeignKey("RoleId")]
     public virtual Role Role { get; set; } = null!;

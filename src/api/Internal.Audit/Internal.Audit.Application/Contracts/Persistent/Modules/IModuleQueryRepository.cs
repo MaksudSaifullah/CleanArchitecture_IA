@@ -2,9 +2,9 @@
 
 namespace Internal.Audit.Application.Contracts.Persistent.Modules;
 
-public interface IModuleQueryRepository : IAsyncQueryRepository<Module>
+public interface IModuleQueryRepository : IAsyncQueryRepository<AuditModule>
 {
-    Task<IEnumerable<Module>> GetAll();
+    Task<IEnumerable<AuditModule>> GetAll();
     //Task<Module> GetById(Guid id);
 }
 

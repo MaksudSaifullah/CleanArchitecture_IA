@@ -20,7 +20,7 @@ public class RoleFeature : EntityBase
     public Guid RoleId { get; set; }
 
     [ForeignKey("FeatureId")]
-    public virtual Feature Feature { get; set; } = null!;
+    public virtual AuditFeature Feature { get; set; } = null!;
 
     [ForeignKey("RoleId")]
     public virtual Role Role { get; set; } = null!;

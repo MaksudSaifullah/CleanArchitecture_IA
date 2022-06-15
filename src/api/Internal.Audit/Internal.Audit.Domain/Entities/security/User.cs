@@ -16,9 +16,6 @@ public class User : EntityBase
 {
 
     [Required]
-    public Guid DesignationId { get; set; }
-
-    [Required]
     [MaxLength(30)]
     public string UserName { get; set; } = null!;
     [Required]
@@ -38,8 +35,8 @@ public class User : EntityBase
     [DefaultValue("0")]
     public bool IsAccountLocked { get; set; }
 
-    [ForeignKey("DesignationId")]
-    public virtual Designation Designation { get; set; } = null!;
+    //[ForeignKey("DesignationId")]
+    //public virtual Designation Designation { get; set; } = null!;
     //Navigation properties
     public virtual ICollection<UserCountry> UserCountries { get; set; } = null!;
     //public virtual ICollection<Role> UserRoles { get; set; } = null!;

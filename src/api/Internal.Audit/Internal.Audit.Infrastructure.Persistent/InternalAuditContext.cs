@@ -28,6 +28,8 @@ public class InternalAuditContext: DbContext
     public DbSet<Feature> Feature { get; set; }
     public DbSet<Domain.Entities.Common.Action> Action { get; set; }
     public DbSet<RiskProfile> RiskProfiles { get; set; }
+    public DbSet<Employee> Employees { get; set; }
+    public DbSet<UserRole> UserRoles { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

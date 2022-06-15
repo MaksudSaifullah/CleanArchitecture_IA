@@ -7,6 +7,7 @@ using Microsoft.EntityFrameworkCore;
 using System.ComponentModel;
 using System.Reflection;
 using Internal.Audit.Domain.Entities.Common;
+using Internal.Audit.Domain.Entities.Config;
 
 namespace Internal.Audit.Infrastructure.Persistent;
 
@@ -27,6 +28,7 @@ public class InternalAuditContext: DbContext
     public DbSet<Domain.Entities.Common.Module> Module { get; set; }
     public DbSet<Feature> Feature { get; set; }
     public DbSet<Domain.Entities.Common.Action> Action { get; set; }
+    public DbSet<CommonValueAndType> CommonValueAndTypes { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

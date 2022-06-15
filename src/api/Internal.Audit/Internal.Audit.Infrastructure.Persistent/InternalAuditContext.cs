@@ -7,6 +7,7 @@ using Microsoft.EntityFrameworkCore;
 using System.ComponentModel;
 using System.Reflection;
 using Internal.Audit.Domain.Entities.Common;
+using Internal.Audit.Domain.Entities.Config;
 
 namespace Internal.Audit.Infrastructure.Persistent;
 
@@ -30,6 +31,7 @@ public class InternalAuditContext: DbContext
     public DbSet<RiskProfile> RiskProfiles { get; set; }
     public DbSet<Employee> Employees { get; set; }
     public DbSet<UserRole> UserRoles { get; set; }
+    public DbSet<CommonValueAndType> CommonValueAndTypes { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

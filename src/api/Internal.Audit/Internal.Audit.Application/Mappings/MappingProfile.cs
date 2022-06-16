@@ -25,9 +25,40 @@ using Internal.Audit.Domain.Entities.security;
 using Internal.Audit.Application.Features.AccessPrivilege.Commands.AddAccessPrivilege;
 using Internal.Audit.Application.Features.AccessPrivilege.Commands.UpdateAccessPrivilege;
 using Internal.Audit.Application.Features.AccessPrivilege.Queries.GetAccessPrivilege;
+using Internal.Audit.Domain.Entities.Common;
+using Internal.Audit.Application.Features.Module.Queries.GetModuleList;
+using Internal.Audit.Application.Features.Feature.Queries.GetFeatureList;
+using Internal.Audit.Application.Features.Action.Queries.GetActionList;
+using Internal.Audit.Application.Features.RiskProfiles.Commands.AddRiskProfile;
+using Internal.Audit.Application.Features.RiskProfiles.Commands.UpdateRiskProfile;
+using Internal.Audit.Application.Features.RiskProfiles.Commands.DeleteRiskProfile;
+using Internal.Audit.Application.Features.RiskProfiles.Queries.GetRiskProfileList;
+using Internal.Audit.Application.Features.RiskProfiles.Queries.GetRiskProfileById;
+using Internal.Audit.Application.Features.Dashboards.Queries.GetDashboardList;
+using Internal.Audit.Application.Features.Dashboards.Queries.GetDashboardById;
+using Internal.Audit.Application.Features.Dashboards.Commands.AddDashboard;
+using Internal.Audit.Application.Features.Dashboards.Commands.UpdateDashboard;
+using Internal.Audit.Application.Features.Dashboards.Commands.DeleteDashboard;
 using Internal.Audit.Domain.CompositeEntities;
 using Internal.Audit.Application.Features.UserList.Queries.GetUserList;
 using Internal.Audit.Application.Features.UserList.Commands.UpdateUser;
+
+using Internal.Audit.Application.Features.CommonValueAndTypes.Queries.GetAuditConducted;
+using Internal.Audit.Application.Features.CommonValueAndTypes.Queries.GetControlFrequency;
+using Internal.Audit.Application.Features.CommonValueAndTypes.Queries.GetDetestConclusion;
+using Internal.Audit.Application.Features.CommonValueAndTypes.Queries.GetEmailType;
+using Internal.Audit.Application.Features.CommonValueAndTypes.Queries.GetIssueStatus;
+using Internal.Audit.Application.Features.CommonValueAndTypes.Queries.GetLevelOfImpact;
+using Internal.Audit.Application.Features.CommonValueAndTypes.Queries.GetLevelOfLikelihood;
+using Internal.Audit.Application.Features.CommonValueAndTypes.Queries.GetLOProductivity;
+using Internal.Audit.Application.Features.CommonValueAndTypes.Queries.GetNatureOfControlActivity;
+using Internal.Audit.Application.Features.CommonValueAndTypes.Queries.GetRiskRating;
+using Internal.Audit.Application.Features.CommonValueAndTypes.Queries.GetRiskRatingName;
+using Internal.Audit.Application.Features.CommonValueAndTypes.Queries.GetSampledMonth;
+using Internal.Audit.Application.Features.CommonValueAndTypes.Queries.GetSampleSelectionMethod;
+using Internal.Audit.Application.Features.CommonValueAndTypes.Queries.GetYear;
+using Internal.Audit.Application.Features.CommonValueAndTypes.Queries.GetYesNo;
+using Internal.Audit.Domain.Entities.Config;
 
 namespace Internal.Audit.Application.Mappings;
 
@@ -46,6 +77,25 @@ public class MappingProfile: Profile
         CreateMap<Country, UpdateCountryCommand>().ReverseMap();
         CreateMap<Country, DeleteCountryResponseDTO>().ReverseMap();
         CreateMap<Country, DeleteCountryCommand>().ReverseMap();
+
+        CreateMap<RiskProfile, RiskProfileDTO>().ReverseMap();
+        CreateMap<RiskProfile, RiskProfileByIdDTO>().ReverseMap();
+        CreateMap<RiskProfile, AddRiskProfileResponseDTO>().ReverseMap();
+        CreateMap<RiskProfile, AddRiskProfileCommand>().ReverseMap();
+        CreateMap<RiskProfile, UpdateRiskProfileResponseDTO>().ReverseMap();
+        CreateMap<RiskProfile, UpdateRiskProfileCommand>().ReverseMap();
+        CreateMap<RiskProfile, DeleteRiskProfileResponseDTO>().ReverseMap();
+        CreateMap<RiskProfile, DeleteRiskProfileCommand>().ReverseMap();
+
+        CreateMap<DashBoardBase, DashboardDTO>().ReverseMap();
+        CreateMap<DashBoardBase, DashboardByIdDTO>().ReverseMap();
+        CreateMap<DashBoardBase, AddDashboardResponseDTO>().ReverseMap();
+        CreateMap<DashBoardBase, AddDashboardCommand>().ReverseMap();
+        CreateMap<DashBoardBase, UpdateDashboardResponseDTO>().ReverseMap();
+        CreateMap<DashBoardBase, UpdateDashboardCommand>().ReverseMap();
+        CreateMap<DashBoardBase, DeleteDashboardResponseDTO>().ReverseMap();
+        CreateMap<DashBoardBase, DeleteDashboardCommand>().ReverseMap();
+
         CreateMap<Designation, AddDesignationResponseDTO>().ReverseMap();
         CreateMap<Designation, AddDesignationCommand>().ReverseMap();
         CreateMap<Role, RoleDTO>().ReverseMap();
@@ -78,6 +128,28 @@ public class MappingProfile: Profile
         CreateMap<SessionPolicy, UpdateSessionPolicyCommandDTO>().ReverseMap();
         CreateMap<UserLockingPolicy, UpdateAccessPrivilegeResponseDTO>().ReverseMap();
         CreateMap<UserLockingPolicy, UpdateUserLockingPolicyCommandDTO>().ReverseMap();
+
+
+        CreateMap<AuditModule, GetModuleListResponseDTO>().ReverseMap();
+        CreateMap<AuditFeature, GetFeatureListResponseDTO>().ReverseMap();
+        CreateMap<AuditAction, GetActionListResponseDTO>().ReverseMap();
+
+        CreateMap<CommonValueAndType, AuditConductedDTO>().ReverseMap();
+        //CreateMap<CommonValueAndType, AuditConductedDTO>().ReverseMap();
+        CreateMap<CommonValueAndType, ControlFrequencyDTO>().ReverseMap();
+        CreateMap<CommonValueAndType, DetestConclusionDTO>().ReverseMap();
+        CreateMap<CommonValueAndType, EmailTypeDTO>().ReverseMap();
+        CreateMap<CommonValueAndType, IssueStatusDTO>().ReverseMap();
+        CreateMap<CommonValueAndType, LevelOfImpactDTO>().ReverseMap();
+        CreateMap<CommonValueAndType, LevelOfLikelihoodDTO>().ReverseMap();
+        CreateMap<CommonValueAndType, LOProductivityDTO>().ReverseMap();
+        CreateMap<CommonValueAndType, NatureOfControlActivityDTO>().ReverseMap();
+        CreateMap<CommonValueAndType, RiskRatingDTO>().ReverseMap();
+        CreateMap<CommonValueAndType, RiskRatingNameDTO>().ReverseMap();
+        CreateMap<CommonValueAndType, SampledMonthDTO>().ReverseMap();
+        CreateMap<CommonValueAndType, SampleSelectionMethodDTO>().ReverseMap();
+        CreateMap<CommonValueAndType, YearDTO>().ReverseMap();
+        CreateMap<CommonValueAndType, YesNoDTO>().ReverseMap();
         CreateMap<CompositeUser, GetUserListResponseDTO>().ReverseMap();
         CreateMap<Employee, UpdateEmployeeCommandDTO>().ReverseMap();
         CreateMap<UserRole, UpdateUserRoleCommandDTO>().ReverseMap();

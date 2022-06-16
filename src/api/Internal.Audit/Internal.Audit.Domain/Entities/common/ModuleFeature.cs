@@ -21,8 +21,8 @@ public class ModuleFeature : EntityBase
 
 
     [ForeignKey("ModuleId")]
-    public virtual Module Module { get; set; } = null!;
+    public virtual AuditModule Module { get; set; } = null!;
 
     [ForeignKey("FeatureId")]
-    public virtual Feature Feature { get; set; } = null!;
+    public virtual AuditFeature Feature { get; set; } = null!;
 }

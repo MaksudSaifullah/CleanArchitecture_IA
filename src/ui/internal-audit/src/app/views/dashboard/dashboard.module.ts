@@ -13,7 +13,7 @@ import {
   ProgressModule,
   TableModule,
   TabsModule
-} from '@coreui/angular';
+} from '@coreui/angular-pro';
 import { IconModule } from '@coreui/icons-angular';
 import { ChartjsModule } from '@coreui/angular-chartjs';
 
@@ -23,22 +23,22 @@ import { DashboardComponent } from './dashboard.component';
 
 @NgModule({
   imports: [
-    DashboardRoutingModule,
-    CardModule,
-    NavModule,
-    IconModule,
-    TabsModule,
-    CommonModule,
-    GridModule,
-    ProgressModule,
-    ReactiveFormsModule,
-    ButtonModule,
-    FormModule,
-    ButtonModule,
-    ButtonGroupModule,
-    ChartjsModule,
-    AvatarModule,
-    TableModule,
+     DashboardRoutingModule,
+     CardModule,
+     NavModule,
+     IconModule,
+     TabsModule,
+     CommonModule,
+     GridModule,
+     ProgressModule,
+     ReactiveFormsModule,
+     ButtonModule,
+     FormModule,
+     ButtonModule,
+     ButtonGroupModule,
+     ChartjsModule,
+     AvatarModule,
+     TableModule,
   ],
   declarations: [DashboardComponent]
 })

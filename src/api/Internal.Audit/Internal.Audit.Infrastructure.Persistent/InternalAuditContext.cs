@@ -6,6 +6,8 @@ using Internal.Audit.Domain.Entities.Security;
 using Microsoft.EntityFrameworkCore;
 using System.ComponentModel;
 using System.Reflection;
+using Internal.Audit.Domain.Entities.Common;
+using Internal.Audit.Domain.Entities.Config;
 
 namespace Internal.Audit.Infrastructure.Persistent;
 
@@ -23,6 +25,14 @@ public class InternalAuditContext: DbContext
     public DbSet<PasswordPolicy> PasswordPolicies { get; set; }
     public DbSet<SessionPolicy> SessionPolicies { get; set; }
     public DbSet<UserLockingPolicy> UserLockingPolicies { get; set; }
+    public DbSet<AuditModule> Module { get; set; }
+    public DbSet<AuditFeature> Feature { get; set; }
+    public DbSet<AuditAction> Action { get; set; }
+    public DbSet<RiskProfile> RiskProfiles { get; set; }
+    public DbSet<Employee> Employees { get; set; }
+    public DbSet<UserRole> UserRoles { get; set; }
+    public DbSet<CommonValueAndType> CommonValueAndTypes { get; set; }
+    public DbSet<DashBoardBase> Dashboards { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

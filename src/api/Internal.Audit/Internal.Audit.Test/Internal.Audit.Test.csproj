@@ -8,6 +8,18 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Systems\NewFolder1\**" />
+    <Compile Remove="Systems\NewFolder2\**" />
+    <Compile Remove="Systems\NewFolder\**" />
+    <EmbeddedResource Remove="Systems\NewFolder1\**" />
+    <EmbeddedResource Remove="Systems\NewFolder2\**" />
+    <EmbeddedResource Remove="Systems\NewFolder\**" />
+    <None Remove="Systems\NewFolder1\**" />
+    <None Remove="Systems\NewFolder2\**" />
+    <None Remove="Systems\NewFolder\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="coverlet.msbuild" Version="3.1.2">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>

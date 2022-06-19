@@ -8,7 +8,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Action = Internal.Audit.Domain.Entities.Common.Action;
+using AuditAction = Internal.Audit.Domain.Entities.Common.AuditAction;
 
 namespace Internal.Audit.Domain.Entities.Security;
 
@@ -25,6 +25,6 @@ public class RoleAction : EntityBase
     public virtual Role Role { get; set; } = null!;
 
     [ForeignKey("ActionId")]
-    public virtual Action Action { get; set; } = null!;
+    public virtual AuditAction Action { get; set; } = null!;
 }
 

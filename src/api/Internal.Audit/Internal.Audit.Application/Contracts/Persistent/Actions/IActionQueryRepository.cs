@@ -2,8 +2,8 @@
 
 namespace Internal.Audit.Application.Contracts.Persistent.Actions;
 
-public interface IActionQueryRepository : IAsyncQueryRepository<Domain.Entities.Common.Action>
+public interface IActionQueryRepository : IAsyncQueryRepository<AuditAction>
 {
-    Task<IEnumerable<Domain.Entities.Common.Action>> GetAll();
+    Task<IEnumerable<AuditAction>> GetAll();
     //Task<Module> GetById(Guid id);
 }

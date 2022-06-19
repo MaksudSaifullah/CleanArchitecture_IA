@@ -37,7 +37,7 @@ export class HttpService {
       )
   }
 
-  post<T>(endpoint:string,item: T): Observable<T> {
+  post<T>(endpoint:string,item: any): Observable<T> {
     return this.httpClient.post<T>(`${this.hostName}/${endpoint}`, JSON.stringify(item), this.httpOptions)
       .pipe(
         retry(2),

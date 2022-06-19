@@ -7,7 +7,8 @@ import { ButtonModule, CardModule, FormModule, GridModule } from '@coreui/angula
 import { IconModule } from '@coreui/icons-angular';
 import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
-
+import { RECAPTCHA_V3_SITE_KEY, RecaptchaV3Module, RecaptchaFormsModule, RecaptchaModule } from "ng-recaptcha";
+import { environment } from 'src/environments/environment';
 
 @NgModule({
   declarations: [
@@ -16,6 +17,7 @@ import { HttpClientModule } from '@angular/common/http';
   ],
   imports: [
     CommonModule,
+    FormModule,
     PublicRoutingModule,
     CardModule,
     ButtonModule,
@@ -24,6 +26,9 @@ import { HttpClientModule } from '@angular/common/http';
     FormModule,
     ReactiveFormsModule,
     HttpClientModule,
+    RecaptchaFormsModule,
+    RecaptchaModule,
   ],
+  providers:[{ provide: RECAPTCHA_V3_SITE_KEY, useValue: environment.captcha_public_key }]
 })
 export class PublicModule { }

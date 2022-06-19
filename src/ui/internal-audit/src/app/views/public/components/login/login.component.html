@@ -43,7 +43,12 @@
                   />
 
                 </c-input-group>
-
+                <!-- <c-row>
+                  <re-captcha id="recaptcha"  name="recaptcha" #recaptcha (ngModel)="token" required [class.is-invalid]="recaptcha.invalid && (recaptcha.dirty || recaptcha.touched)"></re-captcha>
+                  <div *ngIf="recaptcha.invalid && (recaptcha.dirty || recaptcha.touched)" class="invalid-feedback">
+                    <div *ngIf="recaptcha.errors?.['required']">This field is required.</div>
+                  </div>
+                </c-row> -->
                 <c-row *ngIf="loginForm.get('password')?.invalid &&
                 loginForm.get('password')?.errors &&
                       (loginForm.get('password')?.dirty || loginForm.get('password')?.touched)">

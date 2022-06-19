@@ -2,8 +2,9 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { AuthService } from './auth/auth.service';
 import { HttpService } from './services/http.service';
-import { HttpClient, HttpClientModule } from '@angular/common/http';
-
+import { RoutingService } from './services/routing.service';
+import { HttpClient, HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import {RequestInterceptor} from './interceptors/request.interceptor'
 
 
 @NgModule({
@@ -13,7 +14,7 @@ import { HttpClient, HttpClientModule } from '@angular/common/http';
     HttpClientModule
   ],
   providers:[
-     AuthService,HttpService
+     AuthService,HttpService,RoutingService,{ provide: HTTP_INTERCEPTORS, useClass: RequestInterceptor, multi: true }
   ],
 
 })

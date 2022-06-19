@@ -2,8 +2,8 @@
 
 namespace Internal.Audit.Application.Contracts.Persistent.Features;
 
-public interface IFeatureQueryRepository : IAsyncQueryRepository<Feature>
+public interface IFeatureQueryRepository : IAsyncQueryRepository<AuditFeature>
 {
-    Task<IEnumerable<Feature>> GetAll();
+    Task<IEnumerable<AuditFeature>> GetAll();
     //Task<Module> GetById(Guid id);
 }

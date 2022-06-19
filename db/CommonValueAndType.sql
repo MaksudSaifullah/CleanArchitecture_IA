@@ -344,7 +344,7 @@ END
 IF NOT EXISTS (SELECT * FROM CommonValueAndType WHERE [Type] ='AUDITCONDUCTED' AND [Value]= 1 )
 BEGIN
   INSERT INTO CommonValueAndType(CreatedBy,CreatedOn,[Type],SubType,[Value],[Text],SortOrder) 
-  VALUES('admin', GETDATE(),'AUDITCONDUCTED ',NULL,1,'Quarter-1',10)
+  VALUES('admin', GETDATE(),'AUDITCONDUCTED',NULL,1,'Quarter-1',10)
 END
 IF NOT EXISTS (SELECT * FROM CommonValueAndType WHERE [Type] ='AUDITCONDUCTED' AND [Value]= 2 )
 BEGIN
@@ -367,7 +367,7 @@ END
 IF NOT EXISTS (SELECT * FROM CommonValueAndType WHERE [Type] ='DETESTCONCLUSION' AND [Value]= 1 )
 BEGIN
   INSERT INTO CommonValueAndType(CreatedBy,CreatedOn,[Type],SubType,[Value],[Text],SortOrder) 
-  VALUES('admin', GETDATE(),'DETESTCONCLUSION ',NULL,1,'Pass',10)
+  VALUES('admin', GETDATE(),'DETESTCONCLUSION',NULL,1,'Pass',10)
 END
 IF NOT EXISTS (SELECT * FROM CommonValueAndType WHERE [Type] ='DETESTCONCLUSION' AND [Value]= 2 )
 BEGIN
@@ -381,7 +381,7 @@ END
 IF NOT EXISTS (SELECT * FROM CommonValueAndType WHERE [Type] ='YESNO' AND [Value]= 1 )
 BEGIN
   INSERT INTO CommonValueAndType(CreatedBy,CreatedOn,[Type],SubType,[Value],[Text],SortOrder) 
-  VALUES('admin', GETDATE(),'YESNO ',NULL,1,'Yes',10)
+  VALUES('admin', GETDATE(),'YESNO',NULL,1,'Yes',10)
 END
 IF NOT EXISTS (SELECT * FROM CommonValueAndType WHERE [Type] ='YESNO' AND [Value]= 2 )
 BEGIN

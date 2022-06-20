@@ -4,13 +4,14 @@ namespace Internal.Audit.Application.Features.UserRegistration.Commands.AddUserR
 {
     public class AddUserRegistrationCommand:IRequest<AddUserRegistrationResponseDTO>
     {
-        public AddUserCommand User { get; set; }
+        public AddUserNewCommand User { get; set; }
         public AddEmployeeCommand Employee { get; set; }
         public List<AddUserRoleCommand> UserRole { get; set; }
         public List<AddUserCountryCommand> UserCountry { get; set; }
     }
-    public record AddUserCommand
+    public record AddUserNewCommand
     {
+        public Guid Id { get; set; }
         public string UserName { get; set; }   
         public string Password { get; set; }       
         public bool IsEnabled { get; set; }       
@@ -39,5 +40,6 @@ namespace Internal.Audit.Application.Features.UserRegistration.Commands.AddUserR
         public Guid CountryId { get; set; }
 
         public Guid UserId { get; set; }
+        public bool IsActive { get; set; } = true;
     }
 }

@@ -26,17 +26,27 @@ namespace Internal.Audit.Application.Features.UserRegistration.Commands.AddUserR
         }
         public async Task<AddUserRegistrationResponseDTO> Handle(AddUserRegistrationCommand request, CancellationToken cancellationToken)
         {
+            var gid = Guid.NewGuid();
+            request.User.Id = gid;
             var user = _mapper.Map<User>(request.User);
             await _userRepository.Add(user);
 
+            request.Employee.UserId= gid;
             var employee = _mapper.Map<Employee>(request.Employee);
             await _employeeRepository.Add(employee);
 
-            var userCountry = _mapper.Map<UserCountry>(request.UserCountry);
+            foreach (var item in request.UserCountry)
+            {
+                item.UserId = gid;
+            }
+            var userCountry = _mapper.Map<List<UserCountry>>(request.UserCountry);
             await _userCountryRepository.Add(userCountry);
 
-
-            var userRole = _mapper.Map<UserRole>(request.UserRole);
+            foreach (var item in request.UserRole)
+            {
+                item.UserId = gid;
+            }
+            var userRole = _mapper.Map<List<UserRole>>(request.UserRole);
             await _userRole.Add(userRole);
 
             var rowsAffected = await _unitOfWork.CommitAsync();

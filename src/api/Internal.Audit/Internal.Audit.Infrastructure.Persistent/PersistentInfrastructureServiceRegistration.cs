@@ -46,7 +46,7 @@ public static class PersistentInfrastructureServiceRegistration
         services.AddScoped(typeof(IAsyncCommandRepository<>), typeof(CommandRepositoryBase<>));
         services.AddScoped(typeof(IAsyncQueryRepository<>), typeof(QueryRepositoryBase<>));
         //services.AddScoped<IUserCommandRepository, UserCommandRepository>();
-        services.AddScoped<IUserQueryRepository>(s => new UserQueryRepository(configuration.GetConnectionString("InternalAuditDb")));
+        //services.AddScoped<IUserQueryRepository>(s => new UserQueryRepository(configuration.GetConnectionString("InternalAuditDb")));
         services.AddScoped<ICountryCommandRepository, CountryCommandRepository>();
         services.AddScoped<ICountryQueryRepository>(s => new CountryQueryRepository(configuration.GetConnectionString("InternalAuditDb")));
         services.AddScoped<IDesignationCommandRepository, DesignationCommandRepository>();

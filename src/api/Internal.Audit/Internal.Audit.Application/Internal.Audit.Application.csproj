@@ -7,6 +7,20 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Features\UserCountries\**" />
+    <Compile Remove="Features\Users\**" />
+    <EmbeddedResource Remove="Features\UserCountries\**" />
+    <EmbeddedResource Remove="Features\Users\**" />
+    <None Remove="Features\UserCountries\**" />
+    <None Remove="Features\Users\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Remove="Contracts\Persistent\IUserCommandRepository.cs" />
+    <Compile Remove="Contracts\Persistent\IUserQueryRepository.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\Internal.Audit.Domain\Internal.Audit.Domain.csproj" />
   </ItemGroup>
 
@@ -22,7 +36,6 @@
 
   <ItemGroup>
     <Folder Include="Features\Designation\Queries\GetDesignationById\" />
-    <Folder Include="Features\UserCountries\Quiries\" />
   </ItemGroup>
 
 </Project>

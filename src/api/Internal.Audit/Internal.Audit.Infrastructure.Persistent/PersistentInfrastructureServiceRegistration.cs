@@ -59,9 +59,9 @@ public static class PersistentInfrastructureServiceRegistration
         services.AddScoped<IPasswordPolicyQueryRepository>(s => new PasswordPolicyQueryRepository(configuration.GetConnectionString("InternalAuditDb")));
         services.AddScoped<IUserLockingPolicyQueryRepository>(s => new UserLockingPolicyQueryRepository(configuration.GetConnectionString("InternalAuditDb")));
         services.AddScoped<ISessionPolicyQueryRepository>(s => new SessionPolicyQueryRepository(configuration.GetConnectionString("InternalAuditDb")));
-        services.AddScoped<IModuleQueryRepository>(s => new ModuleQueryRepository(configuration.GetConnectionString("InternalAuditDb")));
-        services.AddScoped<IFeatureQueryRepository>(s => new FeatureQueryRepository(configuration.GetConnectionString("InternalAuditDb")));
-        services.AddScoped<IActionQueryRepository>(s => new ActionQueryRepository(configuration.GetConnectionString("InternalAuditDb")));
+        services.AddScoped<IAuditModuleQueryRepository>(s => new ModuleQueryRepository(configuration.GetConnectionString("InternalAuditDb")));
+        services.AddScoped<IAuditFeatureQueryRepository>(s => new FeatureQueryRepository(configuration.GetConnectionString("InternalAuditDb")));
+        services.AddScoped<IAuditActionQueryRepository>(s => new ActionQueryRepository(configuration.GetConnectionString("InternalAuditDb")));
         services.AddScoped<IRiskProfileCommandRepository, RiskProfileCommandRepository>();
         services.AddScoped<IRiskProfileQueryRepository>(s => new RiskProfileQueryRepository(configuration.GetConnectionString("InternalAuditDb")));
         services.AddScoped<ICommonValueAndTypeQueryRepository>(s => new CommonValueAndTypeQueryRepository(configuration.GetConnectionString("InternalAuditDb")));

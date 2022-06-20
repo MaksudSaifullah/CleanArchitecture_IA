@@ -2,7 +2,7 @@
 using Internal.Audit.Domain.Entities.Common;
 
 namespace Internal.Audit.Infrastructure.Persistent.Repositories.Modules;
-public class ModuleQueryRepository : QueryRepositoryBase<AuditModule>, IModuleQueryRepository
+public class ModuleQueryRepository : QueryRepositoryBase<AuditModule>, IAuditModuleQueryRepository
 {
     public ModuleQueryRepository(string _connectionString) : base(_connectionString)
     {

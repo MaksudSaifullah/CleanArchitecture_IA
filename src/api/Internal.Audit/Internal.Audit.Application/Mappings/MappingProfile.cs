@@ -127,9 +127,9 @@ public class MappingProfile: Profile
         CreateMap<UserLockingPolicy, UpdateUserLockingPolicyCommandDTO>().ReverseMap();
 
 
-        CreateMap<AuditModule, GetModuleListResponseDTO>().ReverseMap();
-        CreateMap<AuditFeature, GetFeatureListResponseDTO>().ReverseMap();
-        CreateMap<AuditAction, GetActionListResponseDTO>().ReverseMap();
+        CreateMap<AuditModule, GetActionModuleListResponseDTO>().ReverseMap();
+        CreateMap<AuditFeature, GetAuditFeatureListResponseDTO>().ReverseMap();
+        CreateMap<AuditAction, GetAuditActionListResponseDTO>().ReverseMap();
 
         CreateMap<CommonValueAndType, AuditConductedDTO>().ReverseMap();
         //CreateMap<CommonValueAndType, AuditConductedDTO>().ReverseMap();

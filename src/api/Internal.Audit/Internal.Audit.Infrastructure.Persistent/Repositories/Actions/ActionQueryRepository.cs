@@ -2,7 +2,7 @@
 using Internal.Audit.Domain.Entities.Common;
 
 namespace Internal.Audit.Infrastructure.Persistent.Repositories.Actions;
-public class ActionQueryRepository : QueryRepositoryBase<Domain.Entities.Common.AuditAction>, IActionQueryRepository
+public class ActionQueryRepository : QueryRepositoryBase<Domain.Entities.Common.AuditAction>, IAuditActionQueryRepository
 {
     public ActionQueryRepository(string _connectionString) : base(_connectionString)
     {

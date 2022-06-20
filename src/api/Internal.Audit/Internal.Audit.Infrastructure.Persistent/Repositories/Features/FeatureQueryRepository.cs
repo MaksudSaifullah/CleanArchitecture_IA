@@ -2,7 +2,7 @@
 using Internal.Audit.Domain.Entities.Common;
 
 namespace Internal.Audit.Infrastructure.Persistent.Repositories.Features;
-public class FeatureQueryRepository : QueryRepositoryBase<AuditFeature>, IFeatureQueryRepository
+public class FeatureQueryRepository : QueryRepositoryBase<AuditFeature>, IAuditFeatureQueryRepository
 {
     public FeatureQueryRepository(string _connectionString) : base(_connectionString)
     {

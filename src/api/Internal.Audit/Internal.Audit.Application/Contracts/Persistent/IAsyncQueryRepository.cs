@@ -9,7 +9,9 @@ public interface IAsyncQueryRepository<TEntity> where TEntity : EntityBase
     Task<IEnumerable<TEntity>> Get(string query, Dictionary<string, object> parameters, bool isProcedure = false);
     Task<TEntity> Single(string query, bool isProcedure = false);
     Task<TEntity> Single(string query, Dictionary<string, object> parameters, bool isProcedure = false);
-    
+    Task<(long, IEnumerable<TEntity>)> GetWithPagingInfo(string query, Dictionary<string, object> parameters, bool isProcedure = false);
+  
+
     Task<IEnumerable<TEntity>> Get<TFirst, TSecond, TEntity>(string sql, Func<TFirst, TSecond, TEntity> map, Dictionary<string, object> parameters, string splitters, bool isProcedure = false)
             where TFirst : class
             where TSecond : class

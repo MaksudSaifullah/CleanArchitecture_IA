@@ -23,6 +23,19 @@ public class QueryRepositoryBase<TEntity> : IAsyncQueryRepository<TEntity> where
 
     }
 
+    public async Task<(long, IEnumerable<TEntity>)> GetWithPagingInfo(string query, Dictionary<string, object> parameters, bool isProcedure = false)
+    {
+        var dynamicParameters = new DynamicParameters();
+        foreach (var param in parameters) dynamicParameters.Add(param.Key, param.Value);
+
+        using var connection = new SqlConnection(_connectionString);
+        connection.Open();
+        var grid = await connection.QueryMultipleAsync(query, dynamicParameters, commandType: isProcedure ? System.Data.CommandType.StoredProcedure : System.Data.CommandType.Text);
+        var result = (await grid.ReadAsync<TEntity>()).ToList();
+        var count = (await grid.ReadAsync<long>()).First();
+        return (count, result);
+    }
+
     public async Task<IEnumerable<TEntity>> Get(string query, Dictionary<string, object> parameters, bool isProcedure = false)
     {
         var dynamicParameters = new DynamicParameters();

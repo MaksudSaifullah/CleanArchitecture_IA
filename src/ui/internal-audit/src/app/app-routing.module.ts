@@ -10,21 +10,23 @@ import{ AuthGuard} from './core/guards/auth.guard'
 const routes: Routes = [
   {
     path: '',
-    redirectTo: 'dashboard',
-    pathMatch: 'full'
-  },
-  {
-    path: '',
     component: DefaultLayoutComponent,
     data: {
       title: 'Home'
     },
+    canActivate:[AuthGuard],
     children: [
+      // {
+      //   path: 'dashboard',
+      //   canActivate: [AuthGuard],
+      //   loadChildren: () =>
+      //     import('./views/dashboard/dashboard.module').then((m) => m.DashboardModule)
+      // },
       {
-        path: 'dashboard',
+        path: '',
         canActivate: [AuthGuard],
         loadChildren: () =>
-          import('./views/dashboard/dashboard.module').then((m) => m.DashboardModule)
+          import('./views/private/private.module').then((m) => m.PrivateModule)
       },
       {
         path: 'pages',
@@ -66,7 +68,7 @@ const routes: Routes = [
       title: 'About Page'
     }
   },
-  {path: '**', redirectTo: 'dashboard'}
+  {path: '**', redirectTo: 'login'}
 ];
 
 @NgModule({

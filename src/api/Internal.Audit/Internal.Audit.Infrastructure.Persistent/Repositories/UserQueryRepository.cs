@@ -33,7 +33,7 @@ namespace Internal.Audit.Infrastructure.Persistent.Repositories
 
         public async Task<User> GetByUserEmail(string email, string password)
         {
-            var query = "SELECT * FROM [dbo].[Users] WHERE [Email] = @email AND [Password] = @password";
+            var query = "SELECT * FROM [Security].[User] WHERE [Username] = @email AND [Password] = @password";
             var parameters = new Dictionary<string, object> { { "email", email }, { "password", password } };
 
             return await Single(query, parameters);

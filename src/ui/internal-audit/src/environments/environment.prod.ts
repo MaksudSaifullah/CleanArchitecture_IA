@@ -1,3 +1,5 @@
 export const environment = {
-  production: true
+  production: true,
+  hostName: 'https://hostUrl:port'
+
 };

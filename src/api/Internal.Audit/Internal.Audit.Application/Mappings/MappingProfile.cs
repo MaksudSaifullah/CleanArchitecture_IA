@@ -27,8 +27,8 @@ using Internal.Audit.Application.Features.AccessPrivilege.Commands.UpdateAccessP
 using Internal.Audit.Application.Features.AccessPrivilege.Queries.GetAccessPrivilege;
 using Internal.Audit.Domain.Entities.Common;
 using Internal.Audit.Application.Features.Module.Queries.GetModuleList;
-using Internal.Audit.Application.Features.Feature.Queries.GetFeatureList;
-using Internal.Audit.Application.Features.Action.Queries.GetActionList;
+using Internal.Audit.Application.Features.AuditFeature.Queries.GetFeatureList;
+using Internal.Audit.Application.Features.AuditAction.Queries.GetActionList;
 using Internal.Audit.Application.Features.RiskProfiles.Commands.AddRiskProfile;
 using Internal.Audit.Application.Features.RiskProfiles.Commands.UpdateRiskProfile;
 using Internal.Audit.Application.Features.RiskProfiles.Commands.DeleteRiskProfile;
@@ -130,9 +130,9 @@ public class MappingProfile: Profile
         CreateMap<UserLockingPolicy, UpdateUserLockingPolicyCommandDTO>().ReverseMap();
 
 
-        CreateMap<AuditModule, GetModuleListResponseDTO>().ReverseMap();
-        CreateMap<AuditFeature, GetFeatureListResponseDTO>().ReverseMap();
-        CreateMap<AuditAction, GetActionListResponseDTO>().ReverseMap();
+        CreateMap<AuditModule, GetActionModuleListResponseDTO>().ReverseMap();
+        CreateMap<AuditFeature, GetAuditFeatureListResponseDTO>().ReverseMap();
+        CreateMap<AuditAction, GetAuditActionListResponseDTO>().ReverseMap();
 
         CreateMap<CommonValueAndType, AuditConductedDTO>().ReverseMap();
         //CreateMap<CommonValueAndType, AuditConductedDTO>().ReverseMap();

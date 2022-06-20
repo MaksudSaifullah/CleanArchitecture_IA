@@ -53,7 +53,7 @@ namespace Internal.Audit.Test.Systems.Country.Commands
 
 
         [Fact]
-        public async Task UpdateLoanOfficer()
+        public async Task UpdateCountry()
         {
             ///arrange
             var handler = new UpdateCountryCommandHandler(_mockRepo.Object, _mapper, _unitOfWork);

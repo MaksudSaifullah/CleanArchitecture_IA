@@ -12,7 +12,6 @@ namespace Internal.Audit.Test.MockDatas
         public static List<DashBoardBase> dashboardList = new List<DashBoardBase>();
 
         public static List<DashBoardBase> updatedashboardList = new List<DashBoardBase>();
-        public static List<DashBoardBase> deletedashboardList = new List<DashBoardBase>();
 
         public static List<DashBoardBase> GetDashBoardsData()
         {
@@ -21,10 +20,6 @@ namespace Internal.Audit.Test.MockDatas
         public static List<DashBoardBase> updateDashBoardsData()
         {
             return updatedashboardList;
-        }
-        public static List<DashBoardBase> deleteDashBoardsData()
-        {
-            return deletedashboardList;
         }
 
         public static void AddDashboardStatic()
@@ -85,57 +80,7 @@ namespace Internal.Audit.Test.MockDatas
             }
 
         }
-        public static void deleteAddDashboardStatic()
-        {
-            deletedashboardList.Add(new DashBoardBase
-            {
-                Id = new Guid("791D35FF-9EA2-4C7B-AA3A-840F50DC59C4"),
-                CreatedBy = "Admin",
-                CreatedOn = DateTime.Now,
-                UpdatedBy = "",
-                UpdatedOn = null,
-                ReviewedBy = "",
-                ReviewedOn = null,
-                ApprovedBy = "",
-                ApprovedOn = null,
-                IsDeleted = false,
-
-                Name = "Country Dashboard",
-                Status = true
-            });
-            deletedashboardList.Add(new DashBoardBase
-            {
-                Id = new Guid("0AD5E105-81EC-EC11-B3B0-00155D610B18"),
-                CreatedBy = "Admin",
-                CreatedOn = DateTime.Now,
-                UpdatedBy = "",
-                UpdatedOn = null,
-                ReviewedBy = "",
-                ReviewedOn = null,
-                ApprovedBy = "",
-                ApprovedOn = null,
-                IsDeleted = false,
-
-                Name = "My Dashboard",
-                Status = true
-            });
-            deletedashboardList.Add(new DashBoardBase
-            {
-                Id = new Guid("9703592C-81EC-EC11-B3B0-00155D610B18"),
-                CreatedBy = "Admin",
-                CreatedOn = DateTime.Now,
-                UpdatedBy = "",
-                UpdatedOn = null,
-                ReviewedBy = "",
-                ReviewedOn = null,
-                ApprovedBy = "",
-                ApprovedOn = null,
-                IsDeleted = false,
-
-                Name = "Your Dashboard",
-                Status = true
-            });
-        }
+      
         public static void updateAddDashboardStatic()
         {
             updatedashboardList.Add(new DashBoardBase

@@ -10,13 +10,10 @@
   <ItemGroup>
     <Compile Remove="Systems\NewFolder1\**" />
     <Compile Remove="Systems\NewFolder2\**" />
-    <Compile Remove="Systems\NewFolder\**" />
     <EmbeddedResource Remove="Systems\NewFolder1\**" />
     <EmbeddedResource Remove="Systems\NewFolder2\**" />
-    <EmbeddedResource Remove="Systems\NewFolder\**" />
     <None Remove="Systems\NewFolder1\**" />
     <None Remove="Systems\NewFolder2\**" />
-    <None Remove="Systems\NewFolder\**" />
   </ItemGroup>
 
   <ItemGroup>

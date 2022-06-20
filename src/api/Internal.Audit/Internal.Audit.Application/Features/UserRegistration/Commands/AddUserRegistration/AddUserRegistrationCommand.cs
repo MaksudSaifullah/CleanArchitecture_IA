@@ -6,8 +6,8 @@ namespace Internal.Audit.Application.Features.UserRegistration.Commands.AddUserR
     {
         public AddUserCommand User { get; set; }
         public AddEmployeeCommand Employee { get; set; }
-        public AddUserRoleCommand UserRole { get; set; }
-        public AddUserCountryCommand UserCountry { get; set; }
+        public List<AddUserRoleCommand> UserRole { get; set; }
+        public List<AddUserCountryCommand> UserCountry { get; set; }
     }
     public record AddUserCommand
     {

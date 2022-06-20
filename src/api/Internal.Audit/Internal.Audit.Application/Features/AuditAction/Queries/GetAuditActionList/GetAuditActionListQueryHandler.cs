@@ -1,8 +1,8 @@
 ﻿using AutoMapper;
-using Internal.Audit.Application.Contracts.Persistent.Actions;
+using Internal.Audit.Application.Contracts.Persistent.AuditActions;
 using MediatR;
 
-namespace Internal.Audit.Application.Features.Action.Queries.GetActionList;
+namespace Internal.Audit.Application.Features.AuditAction.Queries.GetActionList;
 public class GetAuditActionListQueryHandler : IRequestHandler<GetAuditActionListQuery, List<GetAuditActionListResponseDTO>>
 {
     //private readonly IDesignationQueryRepository _designationRepository;

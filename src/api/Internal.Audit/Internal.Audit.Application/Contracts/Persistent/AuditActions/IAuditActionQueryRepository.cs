@@ -1,6 +1,6 @@
 ﻿using Internal.Audit.Domain.Entities.Common;
 
-namespace Internal.Audit.Application.Contracts.Persistent.Actions;
+namespace Internal.Audit.Application.Contracts.Persistent.AuditActions;
 
 public interface IAuditActionQueryRepository : IAsyncQueryRepository<AuditAction>
 {

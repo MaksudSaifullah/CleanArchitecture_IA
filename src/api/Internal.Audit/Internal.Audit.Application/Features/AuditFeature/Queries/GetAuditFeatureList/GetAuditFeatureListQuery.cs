@@ -1,6 +1,6 @@
 ﻿using MediatR;
 
-namespace Internal.Audit.Application.Features.Feature.Queries.GetFeatureList;
+namespace Internal.Audit.Application.Features.AuditFeature.Queries.GetFeatureList;
 public class GetAuditFeatureListQuery : IRequest<List<GetAuditFeatureListResponseDTO>>
 {
 }

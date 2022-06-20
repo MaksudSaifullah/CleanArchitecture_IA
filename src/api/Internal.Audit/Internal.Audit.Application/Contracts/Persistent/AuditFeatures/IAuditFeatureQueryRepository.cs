@@ -1,6 +1,6 @@
 ﻿using Internal.Audit.Domain.Entities.Common;
 
-namespace Internal.Audit.Application.Contracts.Persistent.Features;
+namespace Internal.Audit.Application.Contracts.Persistent.AuditFeatures;
 
 public interface IAuditFeatureQueryRepository : IAsyncQueryRepository<AuditFeature>
 {

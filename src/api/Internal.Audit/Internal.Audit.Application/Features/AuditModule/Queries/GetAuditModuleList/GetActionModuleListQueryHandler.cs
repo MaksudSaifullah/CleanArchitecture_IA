@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using Internal.Audit.Application.Contracts.Persistent.Modules;
+using Internal.Audit.Application.Contracts.Persistent.AuditModules;
 using MediatR;
 
 

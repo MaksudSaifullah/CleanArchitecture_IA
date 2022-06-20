@@ -16,13 +16,13 @@ using Internal.Audit.Infrastructure.Persistent.Repositories.UserCountries;
 using Internal.Audit.Application.Contracts.Persistent.AccessPrivilege;
 using Internal.Audit.Infrastructure.Persistent.Repositories.AccessPrivilege;
 
-using Internal.Audit.Application.Contracts.Persistent.Modules;
+using Internal.Audit.Application.Contracts.Persistent.AuditModules;
 using Internal.Audit.Infrastructure.Persistent.Repositories.Modules;
 
-using Internal.Audit.Application.Contracts.Persistent.Features;
+using Internal.Audit.Application.Contracts.Persistent.AuditFeatures;
 using Internal.Audit.Infrastructure.Persistent.Repositories.Features;
 
-using Internal.Audit.Application.Contracts.Persistent.Actions;
+using Internal.Audit.Application.Contracts.Persistent.AuditActions;
 using Internal.Audit.Infrastructure.Persistent.Repositories.Actions;
 using Internal.Audit.Application.Contracts.Persistent.RiskProfiles;
 using Internal.Audit.Infrastructure.Persistent.Repositories.RiskProfiles;
@@ -59,9 +59,9 @@ public static class PersistentInfrastructureServiceRegistration
         services.AddScoped<IPasswordPolicyQueryRepository>(s => new PasswordPolicyQueryRepository(configuration.GetConnectionString("InternalAuditDb")));
         services.AddScoped<IUserLockingPolicyQueryRepository>(s => new UserLockingPolicyQueryRepository(configuration.GetConnectionString("InternalAuditDb")));
         services.AddScoped<ISessionPolicyQueryRepository>(s => new SessionPolicyQueryRepository(configuration.GetConnectionString("InternalAuditDb")));
-        services.AddScoped<IAuditModuleQueryRepository>(s => new ModuleQueryRepository(configuration.GetConnectionString("InternalAuditDb")));
-        services.AddScoped<IAuditFeatureQueryRepository>(s => new FeatureQueryRepository(configuration.GetConnectionString("InternalAuditDb")));
-        services.AddScoped<IAuditActionQueryRepository>(s => new ActionQueryRepository(configuration.GetConnectionString("InternalAuditDb")));
+        services.AddScoped<IAuditModuleQueryRepository>(s => new AuditModuleQueryRepository(configuration.GetConnectionString("InternalAuditDb")));
+        services.AddScoped<IAuditFeatureQueryRepository>(s => new AuditFeatureQueryRepository(configuration.GetConnectionString("InternalAuditDb")));
+        services.AddScoped<IAuditActionQueryRepository>(s => new AuditActionQueryRepository(configuration.GetConnectionString("InternalAuditDb")));
         services.AddScoped<IRiskProfileCommandRepository, RiskProfileCommandRepository>();
         services.AddScoped<IRiskProfileQueryRepository>(s => new RiskProfileQueryRepository(configuration.GetConnectionString("InternalAuditDb")));
         services.AddScoped<ICommonValueAndTypeQueryRepository>(s => new CommonValueAndTypeQueryRepository(configuration.GetConnectionString("InternalAuditDb")));

@@ -1,4 +1,4 @@
-﻿namespace Internal.Audit.Application.Features.Action.Queries.GetActionList;
+﻿namespace Internal.Audit.Application.Features.AuditAction.Queries.GetActionList;
 public record GetAuditActionListResponseDTO
 {
     public Guid Id { get; set; }

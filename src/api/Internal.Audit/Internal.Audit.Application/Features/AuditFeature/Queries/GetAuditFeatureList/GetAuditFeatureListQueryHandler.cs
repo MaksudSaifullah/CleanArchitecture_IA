@@ -1,8 +1,8 @@
 ﻿using AutoMapper;
-using Internal.Audit.Application.Contracts.Persistent.Features;
+using Internal.Audit.Application.Contracts.Persistent.AuditFeatures;
 using MediatR;
 
-namespace Internal.Audit.Application.Features.Feature.Queries.GetFeatureList;
+namespace Internal.Audit.Application.Features.AuditFeature.Queries.GetFeatureList;
 public class GetAuditFeatureListQueryHandler : IRequestHandler<GetAuditFeatureListQuery, List<GetAuditFeatureListResponseDTO>>
 {
     private readonly IAuditFeatureQueryRepository _featureRepository;

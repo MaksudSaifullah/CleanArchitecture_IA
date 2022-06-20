@@ -1,4 +1,4 @@
-﻿using Internal.Audit.Application.Features.Feature.Queries.GetFeatureList;
+﻿using Internal.Audit.Application.Features.AuditFeature.Queries.GetFeatureList;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 

@@ -1,4 +1,4 @@
-﻿using Internal.Audit.Application.Features.Action.Queries.GetActionList;
+﻿using Internal.Audit.Application.Features.AuditAction.Queries.GetActionList;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 

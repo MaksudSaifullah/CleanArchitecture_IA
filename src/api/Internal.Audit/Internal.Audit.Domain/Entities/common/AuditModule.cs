@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace Internal.Audit.Domain.Entities.Common;
 
-[Table("Module", Schema = "Common")]
+[Table("AuditModule", Schema = "Common")]
 public class AuditModule : EntityBase
 {
     [Required]

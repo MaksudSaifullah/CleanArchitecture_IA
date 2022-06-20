@@ -16,21 +16,10 @@ public class UserListQueryRepository : QueryRepositoryBase<CompositeUser>, IUser
     {
 
     }
-    public async Task<IEnumerable<CompositeUser>> GetAll(string userName, string employeeName, string userRole)
+    public async Task<(long,IEnumerable<CompositeUser>)> GetAll(string userName, string employeeName, string userRole,int pageSize,int pageNumber)
     {
-        var query = "EXEC [dbo].[GetUserListProcedure] @userName,@employeeName,@userRole";
-        var parameters = new Dictionary<string, object> { { "@userName", userName },{ "@employeeName", employeeName },{ "@userRole", userRole } };
-        return await Get(query, parameters);
-    }
-
-    public async Task<CompositeUser> GetById(Guid id)
-    {
-        var query = "SELECT [DesignationId],[UserName],[Password],[IsEnabled],[IsAccountExpired],[IsPasswordExpired]," +
-            "[IsAccountLocked] FROM [security].[User] WHERE DesignationId=@id AND [IsDeleted] = 0";
-        var parameters = new Dictionary<string, object> { { "id", id } };
-
-        return await Single(query, parameters);
-    }
-
-    
+        var query = "EXEC [dbo].[GetUserListProcedure] @userName,@employeeName,@userRole,@pageSize,@pageNumber";
+        var parameters = new Dictionary<string, object> { { "@userName", userName },{ "@employeeName", employeeName },{ "@userRole", userRole }, { "@pageSize", pageSize }, { "@pageNumber", pageNumber } };
+        return await GetWithPagingInfo(query, parameters,false);
+    }    
 }

@@ -10,7 +10,6 @@ namespace Internal.Audit.Application.Contracts.Persistent.UserList
 {
     public interface IUserListQueryRepository:IAsyncQueryRepository<CompositeUser>
     {
-        Task<IEnumerable<CompositeUser>> GetAll(string userName, string employeeName, string userRole);
-        Task<CompositeUser> GetById(Guid id);
+        Task<(long, IEnumerable<CompositeUser>)> GetAll(string userName, string employeeName, string userRole,int pageSize,int pageNumber);
     }
 }

@@ -68,7 +68,7 @@ public class MappingProfile: Profile
     {
         CreateMap<User, UserDTO>().ReverseMap();
         CreateMap<User, AddUserCommand>().ReverseMap();
-        CreateMap<User, UpdateUserCommand>().ReverseMap();
+        CreateMap<User, Features.Users.Commands.UpdateUser.UpdateUserCommand>().ReverseMap();
         CreateMap<Country, CountryDTO>().ReverseMap();
         CreateMap<Country, CountryByIdDTO>().ReverseMap();
         CreateMap<Country, AddCountryResponseDTO>().ReverseMap();
@@ -154,5 +154,6 @@ public class MappingProfile: Profile
         CreateMap<Employee, UpdateEmployeeCommandDTO>().ReverseMap();
         CreateMap<UserRole, UpdateUserRoleCommandDTO>().ReverseMap();
         CreateMap<UserCountry, UpdateUserCountryCommandDTO>().ReverseMap();
+        CreateMap<User, Features.UserList.Commands.UpdateUser.UpdateUserCommand>().ReverseMap();
     }
 }

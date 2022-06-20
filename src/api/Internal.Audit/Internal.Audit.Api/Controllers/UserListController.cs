@@ -15,31 +15,35 @@ namespace Internal.Audit.Api.Controllers
         {
             _mediator = mediator ?? throw new ArgumentNullException(nameof(mediator));
         }
-       // [HttpGet("all")]
-       [HttpGet("{userName}/{employeeName}/{userRole}")]
-        public async Task<ActionResult<IEnumerable<GetUserListResponseDTO>>> GetList(string userName,string employeeName,string userRole)
+        [HttpGet()]
+        public async Task<ActionResult<UserListWithPagingInfoDTO>> GetList(int pageSize, int pageNumber, string? userName=null,string? employeeName=null,string? userRole=null)
         {
-            var query = new GetUserListQuery(userName,employeeName,userRole);
-            var users = await _mediator.Send(query);
-            return Ok(users);
+            var query = new GetUserListQuery(userName,employeeName,userRole,pageSize,pageNumber);
+            var userListWithPagingInfo = await _mediator.Send(query);
+            return Ok(userListWithPagingInfo);
         }
 
-        [HttpPut()]
+        [HttpPut("UpdateUser")]
         public async Task<ActionResult<UpdateUserListResponseDTO>> Update(UpdateUserListCommand command)
         {
             var result = await _mediator.Send(command);
             return Ok(result);
         }
 
-        //[HttpGet("{Id}/")]
-        //public async Task<ActionResult<GetUserListResponseDTO>> GetById(Guid Id)
-        //{
-        //    //var query = new GetCountryQuery(Id);
-        //    //var users = await _mediator.Send(query);
-        //    //return Ok(0);
+        [HttpGet("{Id}")]
+        public async Task<ActionResult<GetUserListResponseDTO>> Get(Guid Id)
+        {
+            var query = new GetUserQuery(Id);
+            var users = await _mediator.Send(query);
+            return Ok(users);
 
-        //}
-
-
+        }
+       
+        [HttpPut("BlockUser")]
+        public async Task<ActionResult<UpdateUserResponseDTO>> BlockUser(UpdateUserCommand command)
+        {
+            var result = await _mediator.Send(command);
+            return Ok(result);
+        }
     }
 }

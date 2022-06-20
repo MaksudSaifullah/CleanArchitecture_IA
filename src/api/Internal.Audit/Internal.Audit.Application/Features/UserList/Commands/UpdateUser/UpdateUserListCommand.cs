@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 namespace Internal.Audit.Application.Features.UserList.Commands.UpdateUser;
 public class UpdateUserListCommand: IRequest<UpdateUserListResponseDTO>
 {
+    public UpdateUserCommandDTO User { get; set; }
     public UpdateEmployeeCommandDTO UserEmployee { get; set; } = null!;
     public UpdateUserRoleCommandDTO UserRole { get; set; } = null!;
     public UpdateUserCountryCommandDTO UserCountry { get; set; } = null!;

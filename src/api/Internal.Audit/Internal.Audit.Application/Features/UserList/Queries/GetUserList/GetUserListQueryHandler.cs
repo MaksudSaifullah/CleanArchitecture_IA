@@ -9,7 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace Internal.Audit.Application.Features.UserList.Queries.GetUserList;
-public class GetUserListQueryHandler : IRequestHandler<GetUserListQuery, List<GetUserListResponseDTO>>
+public class GetUserListQueryHandler : IRequestHandler<GetUserListQuery, UserListWithPagingInfoDTO>
 {
     private readonly IUserListQueryRepository _userListRepository;
     
@@ -20,9 +20,12 @@ public class GetUserListQueryHandler : IRequestHandler<GetUserListQuery, List<Ge
         _userListRepository=userListRepository;
         _mapper =mapper;
     }
-    public async Task<List<GetUserListResponseDTO>> Handle(GetUserListQuery request, CancellationToken cancellationToken)
+    public async Task<UserListWithPagingInfoDTO> Handle(GetUserListQuery request, CancellationToken cancellationToken)
     {
-         var users = await _userListRepository.GetAll(request.userName, request. employeeName, request.userRole);
-         return  _mapper.Map<IEnumerable<CompositeUser>, IEnumerable<GetUserListResponseDTO>>(users).ToList(); 
+         var (count, result) = await _userListRepository.GetAll(request.userName, request. employeeName, request.userRole, request.pageSize,request.pageNumber);
+
+         var userList =  _mapper.Map<IEnumerable<CompositeUser>, IEnumerable<GetUserListResponseDTO>>(result).ToList();
+
+        return new UserListWithPagingInfoDTO { UserList = userList , TotalCount = count};
     }
 }

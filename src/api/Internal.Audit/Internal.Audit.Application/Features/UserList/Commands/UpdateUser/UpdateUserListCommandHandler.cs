@@ -13,16 +13,16 @@ namespace Internal.Audit.Application.Features.UserList.Commands.UpdateUser;
 public class UpdateUserListCommandHandler : IRequestHandler<UpdateUserListCommand, UpdateUserListResponseDTO>
 {
     private readonly IUnitOfWork _unitOfWork;
-    private readonly IUserListCommandRepository _userListRepository;
+    private readonly IUserCommandRepository _userRepository;
     private readonly IUpdateEmployeeCommandRepository _employeeRepository;
     private readonly IUpdateUserCountryCommandRepository _userCountryRepository;
     private readonly IUpdateUserRoleCommandRepository _userRoleRepository;
     
 
     private readonly IMapper _mapper;
-    public UpdateUserListCommandHandler(IUserListCommandRepository userListRepository, IUpdateEmployeeCommandRepository employeeRepository, IUpdateUserCountryCommandRepository userCountryRepository, IUpdateUserRoleCommandRepository userRoleRepository,  IMapper mapper, IUnitOfWork unitOfWork)
+    public UpdateUserListCommandHandler(IUserCommandRepository userRepository, IUpdateEmployeeCommandRepository employeeRepository, IUpdateUserCountryCommandRepository userCountryRepository, IUpdateUserRoleCommandRepository userRoleRepository,  IMapper mapper, IUnitOfWork unitOfWork)
     {
-        _userListRepository=userListRepository;
+        _userRepository = userRepository;
         _employeeRepository=employeeRepository;
         _userCountryRepository=userCountryRepository;
         _userRoleRepository=userRoleRepository;
@@ -31,6 +31,13 @@ public class UpdateUserListCommandHandler : IRequestHandler<UpdateUserListComman
     }
     public async Task<UpdateUserListResponseDTO> Handle(UpdateUserListCommand request, CancellationToken cancellationToken)
     {
+        var user = (await _userRepository.Get(x => x.Id == request.User.Id)).FirstOrDefault();
+        if (user == null)
+            return new UpdateUserListResponseDTO(request.User.Id, false, "Invalid User Id");
+        user = _mapper.Map(request.User, user);
+        await _userRepository.Update(user);
+
+
         var employee = (await _employeeRepository.Get(x=>x.UserId == request.UserEmployee.UserId)).FirstOrDefault();
         if (employee == null)
             return new UpdateUserListResponseDTO(request.UserEmployee.EmployeeId, false, "Invalid Employee Id");
@@ -50,10 +57,6 @@ public class UpdateUserListCommandHandler : IRequestHandler<UpdateUserListComman
         userRole = _mapper.Map(request.UserRole, userRole);
         await _userRoleRepository.Update(userRole);
 
-
-
-        //var user = _mapper.Map<User>(request);
-        //var modifiedUser = await _userListRepository.Update(user);
         var rowsAffected = await _unitOfWork.CommitAsync();
         return new UpdateUserListResponseDTO(request.UserCountry.UserId, rowsAffected > 0, rowsAffected > 0 ? "User Updated Successfully!" : "Error while updating user!");
     }

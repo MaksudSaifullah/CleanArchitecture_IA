@@ -70,10 +70,12 @@ public static class PersistentInfrastructureServiceRegistration
         services.AddScoped<IDashboardCommandRepository, DashboardCommandRepository>();
         services.AddScoped<IDashboardQueryRepository>(s => new DashboardQueryRepository(configuration.GetConnectionString("InternalAuditDb")));
 
-        services.AddScoped<IUserListCommandRepository, UserListCommandRepository>(); services.AddScoped<IUserListQueryRepository>(s => new UserListQueryRepository(configuration.GetConnectionString("InternalAuditDb")));
+        services.AddScoped<IUserListCommandRepository, UserListCommandRepository>(); 
+        services.AddScoped<IUserListQueryRepository>(s => new UserListQueryRepository(configuration.GetConnectionString("InternalAuditDb")));
         services.AddScoped<IUpdateEmployeeCommandRepository, UpdateEmployeeCommandRepository>();
         services.AddScoped<IUpdateUserCountryCommandRepository, UpdateUserCountryCommandRepository>();
         services.AddScoped<IUpdateUserRoleCommandRepository, UpdateUserRoleCommandRepository>();
+        services.AddScoped<Application.Contracts.Persistent.UserList.IUserQueryRepository>(s => new Repositories.UserList.UserQueryRepository(configuration.GetConnectionString("InternalAuditDb")));
 
 
         return services;

@@ -11,8 +11,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Internal.Audit.Application.Contracts.Persistent.Roles;
 
 using Internal.Audit.Infrastructure.Persistent.Repositories.Roles;
-using Internal.Audit.Application.Contracts.Persistent.UserCountries;
-using Internal.Audit.Infrastructure.Persistent.Repositories.UserCountries;
+//using Internal.Audit.Application.Contracts.Persistent.UserCountries;
+//using Internal.Audit.Infrastructure.Persistent.Repositories.UserCountries;
 using Internal.Audit.Application.Contracts.Persistent.AccessPrivilege;
 using Internal.Audit.Infrastructure.Persistent.Repositories.AccessPrivilege;
 
@@ -30,6 +30,8 @@ using Internal.Audit.Infrastructure.Persistent.Repositories.CommonValueAndTypes;
 using Internal.Audit.Application.Contracts.Persistent.CommonValueAndTypes;
 using Internal.Audit.Application.Contracts.Persistent.Dashboards;
 using Internal.Audit.Infrastructure.Persistent.Repositories.Dashboards;
+using Internal.Audit.Application.Contracts.Persistent.UserRegistration;
+using Internal.Audit.Infrastructure.Persistent.Repositories.UserRegistration;
 
 namespace Internal.Audit.Infrastructure.Persistent;
 
@@ -43,7 +45,7 @@ public static class PersistentInfrastructureServiceRegistration
         services.AddScoped<IUnitOfWork, UnitOfWork>();
         services.AddScoped(typeof(IAsyncCommandRepository<>), typeof(CommandRepositoryBase<>));
         services.AddScoped(typeof(IAsyncQueryRepository<>), typeof(QueryRepositoryBase<>));
-        services.AddScoped<IUserCommandRepository, UserCommandRepository>();
+        //services.AddScoped<IUserCommandRepository, UserCommandRepository>();
         services.AddScoped<IUserQueryRepository>(s => new UserQueryRepository(configuration.GetConnectionString("InternalAuditDb")));
         services.AddScoped<ICountryCommandRepository, CountryCommandRepository>();
         services.AddScoped<ICountryQueryRepository>(s => new CountryQueryRepository(configuration.GetConnectionString("InternalAuditDb")));
@@ -51,8 +53,8 @@ public static class PersistentInfrastructureServiceRegistration
         services.AddScoped<IDesignationQueryRepository>(s => new DesignationQueryRepository(configuration.GetConnectionString("InternalAuditDb")));
         services.AddScoped<IRoleCommandRepository, RoleCommandRepository>();
         services.AddScoped<IRoleQueryRepository>(s => new RoleQueryRepository(configuration.GetConnectionString("InternalAuditDb")));
-        services.AddScoped<IUserCountryCommandRepository, UserCountryCommandRepository>();
-        services.AddScoped<IUserCountryQueryRepository>(s => new UserCountryQueryRepository(configuration.GetConnectionString("InternalAuditDb")));
+        //services.AddScoped<IUserCountryCommandRepository, UserCountryCommandRepository>();
+        //services.AddScoped<IUserCountryQueryRepository>(s => new UserCountryQueryRepository(configuration.GetConnectionString("InternalAuditDb")));
         services.AddScoped<IPasswordPolicyCommandRepository, PasswordPolicyCommandRepository>();
         services.AddScoped<IUserLockingPolicyCommandRepository, UserLockingPolicyCommandRepository>();
         services.AddScoped<ISessionPolicyCommandRepository, SessionPolicyCommandRepository>();
@@ -68,6 +70,10 @@ public static class PersistentInfrastructureServiceRegistration
         services.AddScoped<IDashboardCommandRepository, DashboardCommandRepository>();
         services.AddScoped<IDashboardQueryRepository>(s => new DashboardQueryRepository(configuration.GetConnectionString("InternalAuditDb")));
 
+        services.AddScoped<IUserCountryCommandRepository, UserCountryCommandRepository>();
+        services.AddScoped<IUserRoleCommandRepository, UserRoleCommandRepository>();
+        services.AddScoped<IEmployeeCommandRepository, EmployeeCommandRepository>();
+        services.AddScoped<Application.Contracts.Persistent.UserRegistration.IUserCommandRepository, Repositories.UserRegistration.UserCommandRepository>();
         return services;
     }
 }

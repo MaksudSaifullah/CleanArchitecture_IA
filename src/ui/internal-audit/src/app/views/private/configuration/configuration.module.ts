@@ -5,6 +5,7 @@ import { ConfigurationRoutingModule } from './configuration-routing.module';
 import { CountryComponent } from './country/country.component';
 import { HttpClientModule } from '@angular/common/http';
 import { DataTablesModule } from "angular-datatables";
+import { ButtonModule, FormModule, ModalModule } from '@coreui/angular-pro';
 
 @NgModule({
   declarations: [
@@ -14,7 +15,11 @@ import { DataTablesModule } from "angular-datatables";
     CommonModule,
     ConfigurationRoutingModule,
     HttpClientModule,
-    DataTablesModule
+    DataTablesModule,
+    ModalModule,
+    ButtonModule,
+    FormModule
+    
   ]
 })
 export class ConfigurationModule { }

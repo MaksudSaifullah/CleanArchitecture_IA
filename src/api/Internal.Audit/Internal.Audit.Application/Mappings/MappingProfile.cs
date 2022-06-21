@@ -60,6 +60,7 @@ using Internal.Audit.Application.Features.CommonValueAndTypes.Queries.GetYear;
 using Internal.Audit.Application.Features.CommonValueAndTypes.Queries.GetYesNo;
 using Internal.Audit.Domain.Entities.Config;
 using Internal.Audit.Application.Features.UserRegistration.Commands.AddUserRegistration;
+using Internal.Audit.Application.Features.UserRegistration.Queries.GetAllUserList;
 
 namespace Internal.Audit.Application.Mappings;
 
@@ -151,7 +152,7 @@ public class MappingProfile: Profile
         CreateMap<CommonValueAndType, SampleSelectionMethodDTO>().ReverseMap();
         CreateMap<CommonValueAndType, YearDTO>().ReverseMap();
         CreateMap<CommonValueAndType, YesNoDTO>().ReverseMap();
-        CreateMap<CompositeUser, GetUserListResponseDTO>().ReverseMap();
+        CreateMap<CompositeUser, Features.UserList.Queries.GetUserList.GetUserListResponseDTO>().ReverseMap();
         CreateMap<Employee, UpdateEmployeeCommandDTO>().ReverseMap();
         CreateMap<UserRole, UpdateUserRoleCommandDTO>().ReverseMap();
         CreateMap<UserCountry, UpdateUserCountryCommandDTO>().ReverseMap();
@@ -161,6 +162,7 @@ public class MappingProfile: Profile
         CreateMap<UserCountry, AddUserCountryCommand>().ReverseMap();
         CreateMap<UserRole, AddUserRoleCommand>().ReverseMap();
         CreateMap<Employee, AddEmployeeCommand>().ReverseMap();
+        CreateMap<User, Features.UserRegistration.Queries.GetAllUserList.GetUserListResponseDTO>().ReverseMap();
 
     }
 }

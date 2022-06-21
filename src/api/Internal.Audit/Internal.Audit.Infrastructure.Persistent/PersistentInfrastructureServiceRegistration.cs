@@ -83,7 +83,8 @@ public static class PersistentInfrastructureServiceRegistration
         services.AddScoped<IUserCountryCommandRepository, UserCountryCommandRepository>();
         services.AddScoped<IUserRoleCommandRepository, UserRoleCommandRepository>();
         services.AddScoped<IEmployeeCommandRepository, EmployeeCommandRepository>();
-        services.AddScoped<Application.Contracts.Persistent.UserRegistration.IUserCommandRepository, Repositories.UserRegistration.UserCommandRepository>();
+        services.AddScoped<IUserCommandRepository, UserCommandRepository>();
+        services.AddScoped<Application.Contracts.Persistent.UserRegistration.IUserQueryRepository>(s => new Repositories.UserRegistration.UserQueryRepository(configuration.GetConnectionString("InternalAuditDb")));
         return services;
     }
 }

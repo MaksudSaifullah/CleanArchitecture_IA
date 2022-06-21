@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
-using Internal.Audit.Application.Contracts.Persistent.Features;
-using Internal.Audit.Application.Features.Feature.Queries.GetFeatureList;
+using Internal.Audit.Application.Contracts.Persistent.AuditFeatures;
+using Internal.Audit.Application.Features.AuditFeature.Queries.GetFeatureList;
 using Internal.Audit.Application.Mappings;
 using Internal.Audit.Test.MockDatas;
 using Internal.Audit.Test.MockRepositories;

@@ -22,7 +22,7 @@ public class DeleteDesignationCommandHandler : IRequestHandler<DeleteDesignation
         designation.IsDeleted = true;
         designation.IsActive = false;
         designation = _mapper.Map(request, designation);
-        designation = await _designationRepository.Update(designation);
+        await _designationRepository.Update(designation);
         var rowsAffected = await _unitOfWork.CommitAsync();
         return new DeleteDesignationResponseDTO(designation.Id, rowsAffected > 0, rowsAffected > 0 ? "Designation Deleted Successfully!" : "Error while deleting designation!");
     }

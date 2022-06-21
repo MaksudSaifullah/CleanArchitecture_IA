@@ -6,6 +6,8 @@ using Internal.Audit.Application.Mappings;
 using Internal.Audit.Test.MockDatas;
 using Internal.Audit.Test.MockRepositories;
 using Moq;
+using Shouldly;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Xunit;
@@ -43,22 +45,20 @@ public class AddDesignationCommandHandlerTest
     [Fact]
     public async Task AddDesignation()
     {
-        ///arrange
+        //arrange
         var handler = new AddDesignationCommandHandler(_mockRepo.Object, _mapper, _unitOfWork);
-        ///act
+        //act
         var result = await handler.Handle(_designationCommandDTO, CancellationToken.None);
 
         DesignationMockData.ResetDesignationStatic();
         DesignationMockData.AddDesignationStatic();
-        DesignationMockData.designationList.Add(new Internal.Audit.Domain.Entities.common.Designation
-        {
-            Name = "Personal",
-            Description = ""
-        });
-
-        ///assert
-        //result.ShouldBeOfType<AddDesignationCommand>();
-
-//        DashboardMockData.dashboardList.Count().ShouldBe(4);
+        //DesignationMockData.designationList.Add(new Internal.Audit.Domain.Entities.common.Designation
+        //{
+        //    Name = "SQA",
+        //    Description = "Software Quality Assuarance"
+        //});
+        // assert
+        result.ShouldBeOfType<AddDesignationResponseDTO>();
+        //DesignationMockData.designationList.Count().ShouldBe(4);
     }
 }

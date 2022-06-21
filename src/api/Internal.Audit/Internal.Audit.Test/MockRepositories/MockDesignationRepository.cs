@@ -35,6 +35,7 @@ public class MockDesignationRepository
         var designation = DesignationMockData.GetDesignationList().Where(x => x.Id == new Guid("791D35FF-9EA2-4C7B-AA3A-840F50DC59C4")).FirstOrDefault();
         var mockRepo = new Mock<IDesignationCommandRepository>();
         mockRepo.Setup(x => x.Get(new Guid("791D35FF-9EA2-4C7B-AA3A-840F50DC59C4"))).ReturnsAsync(designation);
+        //mockRepo.Setup(x => x.Update(designation)).ReturnsAsync(designation);
         return mockRepo;
     }
 

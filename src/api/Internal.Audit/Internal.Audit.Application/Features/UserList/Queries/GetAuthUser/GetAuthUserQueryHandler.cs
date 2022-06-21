@@ -1,5 +1,6 @@
 ﻿using Internal.Audit.Application.Contracts.Auth;
 using Internal.Audit.Application.Contracts.Persistent;
+using Internal.Audit.Application.Contracts.Persistent.UserRegistration;
 using System;
 using System.Collections.Generic;
 using System.Linq;

@@ -69,7 +69,7 @@ public class MappingProfile: Profile
     {
         //CreateMap<User, UserDTO>().ReverseMap();
         //CreateMap<User, AddUserCommand>().ReverseMap();
-        CreateMap<User, Features.Users.Commands.UpdateUser.UpdateUserCommand>().ReverseMap();
+        //CreateMap<User, Features.Users.Commands.UpdateUser.UpdateUserCommand>().ReverseMap();
         CreateMap<Country, CountryDTO>().ReverseMap();
         CreateMap<Country, CountryByIdDTO>().ReverseMap();
         CreateMap<Country, AddCountryResponseDTO>().ReverseMap();

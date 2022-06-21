@@ -41,7 +41,6 @@
               <table datatable [dtOptions]="dtOptions" class="table table-bordered row-border hover">
                 <thead>
                   <tr>
-                    <th>ID</th>
                     <th>Name</th>
                     <th>Code</th>
                     <th>created on</th>
@@ -50,10 +49,9 @@
                 </thead>
                 <tbody *ngIf="persons?.length != 0">
                   <tr *ngFor="let person of persons">
-                    <td>{{ person.id }}</td>
                     <td>{{ person.name }}</td>
                     <td>{{ person.code }}</td>
-                    <td>{{ person.createdOn }}</td>
+                    <td>{{ person.createdOn | date:'medium' }}</td>
                     <td>{{ person.remarks }}</td>
                   </tr>
                 </tbody>

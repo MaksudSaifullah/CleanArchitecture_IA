@@ -27,8 +27,8 @@ using Internal.Audit.Application.Features.AccessPrivilege.Commands.UpdateAccessP
 using Internal.Audit.Application.Features.AccessPrivilege.Queries.GetAccessPrivilege;
 using Internal.Audit.Domain.Entities.Common;
 using Internal.Audit.Application.Features.Module.Queries.GetModuleList;
-using Internal.Audit.Application.Features.Feature.Queries.GetFeatureList;
-using Internal.Audit.Application.Features.Action.Queries.GetActionList;
+using Internal.Audit.Application.Features.AuditFeature.Queries.GetFeatureList;
+using Internal.Audit.Application.Features.AuditAction.Queries.GetActionList;
 using Internal.Audit.Application.Features.RiskProfiles.Commands.AddRiskProfile;
 using Internal.Audit.Application.Features.RiskProfiles.Commands.UpdateRiskProfile;
 using Internal.Audit.Application.Features.RiskProfiles.Commands.DeleteRiskProfile;
@@ -39,6 +39,9 @@ using Internal.Audit.Application.Features.Dashboards.Queries.GetDashboardById;
 using Internal.Audit.Application.Features.Dashboards.Commands.AddDashboard;
 using Internal.Audit.Application.Features.Dashboards.Commands.UpdateDashboard;
 using Internal.Audit.Application.Features.Dashboards.Commands.DeleteDashboard;
+using Internal.Audit.Domain.CompositeEntities;
+using Internal.Audit.Application.Features.UserList.Queries.GetUserList;
+using Internal.Audit.Application.Features.UserList.Commands.UpdateUser;
 
 using Internal.Audit.Application.Features.CommonValueAndTypes.Queries.GetAuditConducted;
 using Internal.Audit.Application.Features.CommonValueAndTypes.Queries.GetControlFrequency;
@@ -66,7 +69,7 @@ public class MappingProfile: Profile
     {
         //CreateMap<User, UserDTO>().ReverseMap();
         //CreateMap<User, AddUserCommand>().ReverseMap();
-        //CreateMap<User, UpdateUserCommand>().ReverseMap();
+        CreateMap<User, Features.Users.Commands.UpdateUser.UpdateUserCommand>().ReverseMap();
         CreateMap<Country, CountryDTO>().ReverseMap();
         CreateMap<Country, CountryByIdDTO>().ReverseMap();
         CreateMap<Country, AddCountryResponseDTO>().ReverseMap();
@@ -128,9 +131,9 @@ public class MappingProfile: Profile
         CreateMap<UserLockingPolicy, UpdateUserLockingPolicyCommandDTO>().ReverseMap();
 
 
-        CreateMap<AuditModule, GetModuleListResponseDTO>().ReverseMap();
-        CreateMap<AuditFeature, GetFeatureListResponseDTO>().ReverseMap();
-        CreateMap<AuditAction, GetActionListResponseDTO>().ReverseMap();
+        CreateMap<AuditModule, GetActionModuleListResponseDTO>().ReverseMap();
+        CreateMap<AuditFeature, GetAuditFeatureListResponseDTO>().ReverseMap();
+        CreateMap<AuditAction, GetAuditActionListResponseDTO>().ReverseMap();
 
         CreateMap<CommonValueAndType, AuditConductedDTO>().ReverseMap();
         //CreateMap<CommonValueAndType, AuditConductedDTO>().ReverseMap();
@@ -148,6 +151,11 @@ public class MappingProfile: Profile
         CreateMap<CommonValueAndType, SampleSelectionMethodDTO>().ReverseMap();
         CreateMap<CommonValueAndType, YearDTO>().ReverseMap();
         CreateMap<CommonValueAndType, YesNoDTO>().ReverseMap();
+        CreateMap<CompositeUser, GetUserListResponseDTO>().ReverseMap();
+        CreateMap<Employee, UpdateEmployeeCommandDTO>().ReverseMap();
+        CreateMap<UserRole, UpdateUserRoleCommandDTO>().ReverseMap();
+        CreateMap<UserCountry, UpdateUserCountryCommandDTO>().ReverseMap();
+        CreateMap<User, Features.UserList.Commands.UpdateUser.UpdateUserCommand>().ReverseMap();
 
         CreateMap<User, AddUserNewCommand>().ReverseMap();
         CreateMap<UserCountry, AddUserCountryCommand>().ReverseMap();

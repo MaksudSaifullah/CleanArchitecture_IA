@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Internal.Audit.Application.Contracts.Persistent;
+using Internal.Audit.Application.Contracts.Persistent.UserRegistration;
 using MediatR;
 using System;
 using System.Collections.Generic;

@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Internal.Audit.Application.Contracts.Persistent;
 using Internal.Audit.Application.Contracts.Persistent.UserList;
+using Internal.Audit.Application.Contracts.Persistent.UserRegistration;
 using Internal.Audit.Domain.Entities.Security;
 using MediatR;
 using System;

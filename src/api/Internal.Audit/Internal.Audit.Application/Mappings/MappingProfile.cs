@@ -9,9 +9,9 @@ using Internal.Audit.Application.Features.Designation.Commands.AddDesignation;
 using Internal.Audit.Application.Features.Designation.Commands.DeleteDesignation;
 using Internal.Audit.Application.Features.Designation.Commands.UpdateDesignation;
 using Internal.Audit.Application.Features.Designation.Queries.GetDesignationList;
-using Internal.Audit.Application.Features.Users.Commands.AddUser;
-using Internal.Audit.Application.Features.Users.Commands.UpdateUser;
-using Internal.Audit.Application.Features.Users.Queries.GetUserList;
+//using Internal.Audit.Application.Features.Users.Commands.AddUser;
+//using Internal.Audit.Application.Features.Users.Commands.UpdateUser;
+//using Internal.Audit.Application.Features.Users.Queries.GetUserList;
 using Internal.Audit.Application.Features.Roles.Commands.AddRole;
 using Internal.Audit.Application.Features.Roles.Commands.DeleteRole;
 using Internal.Audit.Application.Features.Roles.Commands.UpdateRole;
@@ -20,7 +20,7 @@ using Internal.Audit.Application.Features.Roles.Queries.GetRolesList;
 using Internal.Audit.Domain.Entities;
 using Internal.Audit.Domain.Entities.common;
 using Internal.Audit.Domain.Entities.Security;
-using Internal.Audit.Application.Features.UserCountries.Commands.AddUserCountry;
+//using Internal.Audit.Application.Features.UserCountries.Commands.AddUserCountry;
 using Internal.Audit.Domain.Entities.security;
 using Internal.Audit.Application.Features.AccessPrivilege.Commands.AddAccessPrivilege;
 using Internal.Audit.Application.Features.AccessPrivilege.Commands.UpdateAccessPrivilege;
@@ -59,6 +59,7 @@ using Internal.Audit.Application.Features.CommonValueAndTypes.Queries.GetSampleS
 using Internal.Audit.Application.Features.CommonValueAndTypes.Queries.GetYear;
 using Internal.Audit.Application.Features.CommonValueAndTypes.Queries.GetYesNo;
 using Internal.Audit.Domain.Entities.Config;
+using Internal.Audit.Application.Features.UserRegistration.Commands.AddUserRegistration;
 
 namespace Internal.Audit.Application.Mappings;
 
@@ -66,9 +67,9 @@ public class MappingProfile: Profile
 {
     public MappingProfile()
     {
-        CreateMap<User, UserDTO>().ReverseMap();
-        CreateMap<User, AddUserCommand>().ReverseMap();
-        CreateMap<User, Features.Users.Commands.UpdateUser.UpdateUserCommand>().ReverseMap();
+        //CreateMap<User, UserDTO>().ReverseMap();
+        //CreateMap<User, AddUserCommand>().ReverseMap();
+        //CreateMap<User, Features.Users.Commands.UpdateUser.UpdateUserCommand>().ReverseMap();
         CreateMap<Country, CountryDTO>().ReverseMap();
         CreateMap<Country, CountryByIdDTO>().ReverseMap();
         CreateMap<Country, AddCountryResponseDTO>().ReverseMap();
@@ -111,7 +112,7 @@ public class MappingProfile: Profile
         CreateMap<Designation, DeleteDesignationResponseDTO>().ReverseMap();
         CreateMap<Designation, DeleteDesignationCommand>().ReverseMap();
         CreateMap<Designation, GetDesignationListResponseDTO>().ReverseMap();
-        CreateMap<UserCountry, AddUserCountryCommand>().ReverseMap();
+        //CreateMap<UserCountry, AddUserCountryCommand>().ReverseMap();
 
         CreateMap<PasswordPolicy, GetPasswordPolicyDTO>().ReverseMap();
         CreateMap<UserLockingPolicy, GetUserLockingPolicyDTO>().ReverseMap();
@@ -155,5 +156,11 @@ public class MappingProfile: Profile
         CreateMap<UserRole, UpdateUserRoleCommandDTO>().ReverseMap();
         CreateMap<UserCountry, UpdateUserCountryCommandDTO>().ReverseMap();
         CreateMap<User, Features.UserList.Commands.UpdateUser.UpdateUserCommand>().ReverseMap();
+
+        CreateMap<User, AddUserNewCommand>().ReverseMap();
+        CreateMap<UserCountry, AddUserCountryCommand>().ReverseMap();
+        CreateMap<UserRole, AddUserRoleCommand>().ReverseMap();
+        CreateMap<Employee, AddEmployeeCommand>().ReverseMap();
+
     }
 }

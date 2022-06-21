@@ -7,9 +7,11 @@ using System.Threading.Tasks;
 
 namespace Internal.Audit.Application.Contracts.Persistent.UserRegistration
 {
-    public interface IUserCommandRepository:IAsyncCommandRepository<User>
+    public interface IUserQueryRepository : IAsyncQueryRepository<User>
     {
-        Task<IReadOnlyList<User>> Get(bool activeOnly);
+        Task<IEnumerable<User>> GetAll(bool activeOnly);
+        Task<User> Get(long id);
+        Task<User> GetByUserEmail(string email, string password);
 
     }
 }

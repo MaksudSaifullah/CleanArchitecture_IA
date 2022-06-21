@@ -13,5 +13,9 @@ namespace Internal.Audit.Infrastructure.Persistent.Repositories.UserRegistration
         public UserCommandRepository(InternalAuditContext dbContext) : base(dbContext)
         {
         }
+        public Task<IReadOnlyList<User>> Get(bool activeOnly)
+        {
+            return Get(u => u.IsEnabled, u => u.OrderByDescending(x => x.CreatedOn));
+        }
     }
 }

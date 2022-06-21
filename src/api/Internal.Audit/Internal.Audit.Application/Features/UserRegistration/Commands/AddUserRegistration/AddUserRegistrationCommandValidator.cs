@@ -19,8 +19,8 @@ namespace Internal.Audit.Application.Features.UserRegistration.Commands.AddUserR
                 .NotEmpty().WithMessage("Name cannot be empty");
             RuleFor(u => u.Employee.PhotoId)
                 .NotEmpty().WithMessage("PhotoId cannot be empty");
-            RuleFor(u => u.Employee.UserId)
-               .NotEmpty().WithMessage("UserId cannot be empty");
+            //RuleFor(u => u.Employee.UserId)
+            //   .NotEmpty().WithMessage("UserId cannot be empty");
 
             RuleFor(u => u.User.UserName)
               .NotEmpty().WithMessage("UserName cannot be empty");

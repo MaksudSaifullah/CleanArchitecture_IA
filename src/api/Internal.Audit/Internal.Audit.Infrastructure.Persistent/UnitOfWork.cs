@@ -24,7 +24,7 @@ public class UnitOfWork : IUnitOfWork, IDisposable
         catch (Exception ex)
         {
             await transaction.RollbackAsync();
-            throw;
+            throw ex.InnerException;
         }
         finally
         {

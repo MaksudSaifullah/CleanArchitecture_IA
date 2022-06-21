@@ -1,5 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { ModalComponent } from '@coreui/angular-pro';
 import { Subject } from 'rxjs';
 import { country } from '../../../../core/interfaces/configuration/country.interface';
 import { HttpService } from '../../../../core/services/http.service';
@@ -79,14 +80,15 @@ export class CountryComponent implements OnInit {
     //     event.event.preventDefault();
     //   }
     // }
-    onSubmit():void{
+    onSubmit(modalId:any):void{
+      const localmodalId = modalId;
         if(this.countryForm.valid){
           console.log(this.countryForm.value);
           this.http.post('api/v1/country',this.countryForm.value).subscribe(x=>{
-            console.log("success");
-           
-            console.log(x);
-
+            debugger;
+            localmodalId.visible = false;
+            this.dtTrigger.unsubscribe();
+            this.LoadData();
           });
         }
     }

@@ -70,7 +70,7 @@
     </div>
   </div>
 </div>
-<form [formGroup]="countryForm" (ngSubmit)="onSubmit()" novalidate>
+<form [formGroup]="countryForm" (ngSubmit)="onSubmit(verticallyCenteredModal)" novalidate>
 <c-modal #verticallyCenteredModal alignment="center" id="verticallyCenteredModal">
   <c-modal-header>
     <h5 cModalTitle>Create Country</h5>
@@ -97,7 +97,7 @@
     <button [cModalToggle]="verticallyCenteredModal.id" cButton color="secondary">
       Close
     </button>
-    <button cButton color="primary" (click)="onSubmit()">Save</button>
+    <button cButton color="primary" (click)="onSubmit(verticallyCenteredModal)">Save</button>
   </c-modal-footer>
 </c-modal>
 </form>

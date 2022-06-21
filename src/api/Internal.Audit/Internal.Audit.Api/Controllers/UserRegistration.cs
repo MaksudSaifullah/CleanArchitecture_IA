@@ -1,5 +1,6 @@
 ﻿using Internal.Audit.Application.Features.UserRegistration.Commands.AddUserRegistration;
 using Internal.Audit.Application.Features.UserRegistration.Queries.GetAllUserList;
+using Internal.Audit.Application.Features.UserRegistration.Queries.GetALlUserListById;
 using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -23,10 +24,18 @@ namespace Internal.Audit.Api.Controllers
             return Ok(result);
         }
 
-        [HttpGet("{Id}")]
-        public async Task<ActionResult<GetUserListResponseDTO>> Get(Guid Id)
+        [HttpGet]
+        public async Task<ActionResult<GetUserListResponseDTO>> Get()
         {
-            var query = new GetUserListQuery(Id);
+            var query = new GetUserListQuery();
+            var result = await _mediator.Send(query);
+            return Ok(result);
+        }
+
+        [HttpGet("Id")]
+        public async Task<ActionResult<GetUserListResponseDTO>> Get(Guid userId)
+        {
+            var query = new GetAllUserListByIdQuery(userId);
             var result = await _mediator.Send(query);
             return Ok(result);
         }

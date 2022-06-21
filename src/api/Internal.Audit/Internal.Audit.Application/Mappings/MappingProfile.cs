@@ -61,6 +61,7 @@ using Internal.Audit.Application.Features.CommonValueAndTypes.Queries.GetYesNo;
 using Internal.Audit.Domain.Entities.Config;
 using Internal.Audit.Application.Features.UserRegistration.Commands.AddUserRegistration;
 using Internal.Audit.Application.Features.UserRegistration.Queries.GetAllUserList;
+using Internal.Audit.Application.Features.UserRegistration.Queries.GetALlUserListById;
 
 namespace Internal.Audit.Application.Mappings;
 
@@ -163,6 +164,7 @@ public class MappingProfile: Profile
         CreateMap<UserRole, AddUserRoleCommand>().ReverseMap();
         CreateMap<Employee, AddEmployeeCommand>().ReverseMap();
         CreateMap<User, Features.UserRegistration.Queries.GetAllUserList.GetUserListResponseDTO>().ReverseMap();
+        CreateMap<User, GetALlUserListByIdResponseDTO>().ReverseMap();
 
     }
 }

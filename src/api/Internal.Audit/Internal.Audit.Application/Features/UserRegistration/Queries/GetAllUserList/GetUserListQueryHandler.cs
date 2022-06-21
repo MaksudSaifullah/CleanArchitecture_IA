@@ -21,7 +21,7 @@ namespace Internal.Audit.Application.Features.UserRegistration.Queries.GetAllUse
         }
         public async Task<IEnumerable<GetUserListResponseDTO>> Handle(GetUserListQuery request, CancellationToken cancellationToken)
         {
-            var userList =await  _userQueryRepository.GetAllUserList(request.userId);
+            var userList =await  _userQueryRepository.GetAllUserList();
             return _mapper.Map<IEnumerable<GetUserListResponseDTO>>(userList);
         }
     }

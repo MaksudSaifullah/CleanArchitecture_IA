@@ -8,6 +8,6 @@ using System.Threading.Tasks;
 
 namespace Internal.Audit.Application.Features.UserRegistration.Queries.GetAllUserList
 {
-    public record GetUserListQuery(Guid userId):IRequest<IEnumerable<GetUserListResponseDTO>>;
+    public record GetUserListQuery :IRequest<IEnumerable<GetUserListResponseDTO>>;
     
 }

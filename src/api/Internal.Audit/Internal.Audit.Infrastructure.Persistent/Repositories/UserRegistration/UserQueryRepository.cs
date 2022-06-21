@@ -31,16 +31,17 @@ namespace Internal.Audit.Infrastructure.Persistent.Repositories.UserRegistration
             return await Get(query, parameters);
         }
 
-        public async Task<IEnumerable<User>> GetAllUserList(Guid userId)
+        public async Task<IEnumerable<User>> GetAllUserList()
         {
             var query = @"select * from [security].[User] usr  inner JOIN [security].[UserCountry] usercountry
                           on usr.Id=usercountry.UserId
                           INNER join  [security].[UserRole] userole
                           on userole.UserId=usercountry.UserId
                           INNER join [security].[Employee] emp
-                          on emp.UserId=usercountry.UserId";
+                          on emp.UserId=usercountry.UserId
+                          Where  usr.[IsDeleted]=0";
             string splitters = "Id, Id, Id";
-            var parameters = new Dictionary<string, object> { { "userId", userId } };
+            var parameters = new Dictionary<string, object> {  };
             var orderDictionary = new Dictionary<Guid, User>();
             var countryDictionary = new Dictionary<Guid, UserCountry>();
             var roleDictionary = new Dictionary<Guid, UserRole>();
@@ -75,6 +76,54 @@ namespace Internal.Audit.Infrastructure.Persistent.Repositories.UserRegistration
             }, parameters, splitters, false);
 
             return data.Distinct();
+        }
+
+        public async Task<User> GetAllUserListById(Guid userId)
+        {
+            var query = @"select * from [security].[User] usr  inner JOIN [security].[UserCountry] usercountry
+                          on usr.Id=usercountry.UserId
+                          INNER join  [security].[UserRole] userole
+                          on userole.UserId=usercountry.UserId
+                          INNER join [security].[Employee] emp
+                          on emp.UserId=usercountry.UserId
+                          where  usr.Id =@userId and usr.[IsDeleted]=0";
+            string splitters = "Id, Id, Id";
+            var parameters = new Dictionary<string, object> { { "userId", userId } };
+            var orderDictionary = new Dictionary<Guid, User>();
+            var countryDictionary = new Dictionary<Guid, UserCountry>();
+            var roleDictionary = new Dictionary<Guid, UserRole>();
+            var data = await Get<User, UserCountry, UserRole, Employee, User>(query, (user, userCountry, role, employee) =>
+            {
+
+                User u;
+                if (!orderDictionary.ContainsKey(user.Id))
+                {
+                    orderDictionary.Add(user.Id, user);
+                    u = user;
+                    u.UserCountries = new List<UserCountry>();
+                    u.UserRoles = new List<UserRole>();
+                }
+                else
+                {
+                    u = orderDictionary[user.Id];
+                }
+                u.Employee = employee;
+                if (!countryDictionary.ContainsKey(userCountry.Id))
+                {
+                    countryDictionary.Add(userCountry.Id, userCountry);
+                    u.UserCountries.Add(userCountry);
+                }
+                if (!roleDictionary.ContainsKey(role.Id))
+                {
+                    roleDictionary.Add(role.Id, role);
+                    u.UserRoles.Add(role);
+                }
+
+                return u;
+            }, parameters, splitters, false);
+
+            User? user = data.Distinct().FirstOrDefault();
+            return user;
         }
 
         public async Task<User> GetByUserEmail(string email, string password)

@@ -34,18 +34,12 @@ namespace Internal.Audit.Application.Features.UserRegistration.Commands.AddUserR
             request.Employee.UserId= gid;
             var employee = _mapper.Map<Employee>(request.Employee);
             await _employeeRepository.Add(employee);
-
-            foreach (var item in request.UserCountry)
-            {
-                item.UserId = gid;
-            }
+            
+            request.UserCountry.ForEach(i => i.UserId = gid);           
             var userCountry = _mapper.Map<List<UserCountry>>(request.UserCountry);
             await _userCountryRepository.Add(userCountry);
 
-            foreach (var item in request.UserRole)
-            {
-                item.UserId = gid;
-            }
+            request.UserRole.ForEach(i => i.UserId = gid);
             var userRole = _mapper.Map<List<UserRole>>(request.UserRole);
             await _userRole.Add(userRole);
 

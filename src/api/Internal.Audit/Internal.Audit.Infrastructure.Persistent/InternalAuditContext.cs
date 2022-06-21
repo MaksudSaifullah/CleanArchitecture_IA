@@ -25,9 +25,9 @@ public class InternalAuditContext: DbContext
     public DbSet<PasswordPolicy> PasswordPolicies { get; set; }
     public DbSet<SessionPolicy> SessionPolicies { get; set; }
     public DbSet<UserLockingPolicy> UserLockingPolicies { get; set; }
-    public DbSet<AuditModule> Module { get; set; }
-    public DbSet<AuditFeature> Feature { get; set; }
-    public DbSet<AuditAction> Action { get; set; }
+    public DbSet<AuditModule> AuditModule { get; set; }
+    public DbSet<AuditFeature> AuditFeature { get; set; }
+    public DbSet<AuditAction> AuditAction { get; set; }
     public DbSet<RiskProfile> RiskProfiles { get; set; }
     public DbSet<Employee> Employees { get; set; }
     public DbSet<UserRole> UserRoles { get; set; }
@@ -48,6 +48,9 @@ public class InternalAuditContext: DbContext
                 property.SetDefaultValueSql(defaultValue.Value.ToString());
             }
         }
+        base.OnModelCreating(modelBuilder);
+        modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
+
         base.OnModelCreating(modelBuilder);
     }
 

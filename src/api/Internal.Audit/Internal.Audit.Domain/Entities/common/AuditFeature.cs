@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace Internal.Audit.Domain.Entities.Common;
 
-[Table("Feature", Schema = "Common")]
+[Table("AuditFeature", Schema = "Common")]
 public class AuditFeature : EntityBase
 {
     [Required]

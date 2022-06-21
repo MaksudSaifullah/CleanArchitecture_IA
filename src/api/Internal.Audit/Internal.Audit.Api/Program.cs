@@ -69,7 +69,7 @@ builder.Services.AddSwaggerGen(c => {
         Name = "Authorization",
         Type = SecuritySchemeType.ApiKey
     });
-
+    
     c.AddSecurityRequirement(new OpenApiSecurityRequirement {
     {
          new OpenApiSecurityScheme
@@ -82,9 +82,14 @@ builder.Services.AddSwaggerGen(c => {
           },
          new string[] { }
     }
-  });
+        
 });
-
+    
+});
+builder.Services.ConfigureSwaggerGen(options =>
+{
+    options.CustomSchemaIds(x => x.FullName);
+});
 builder.Services.AddMvc().ConfigureApiBehaviorOptions(options =>
 {
     options.InvalidModelStateResponseFactory = c =>

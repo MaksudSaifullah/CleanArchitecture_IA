@@ -78,15 +78,6 @@
   </c-modal-header>
   <c-modal-body>
     <div class="col-md-12">
-      <!-- <c-input-group class="mb-3">
-        <span cInputGroupText id="basic-addon1">Name</span>
-        <input aria-describedby="basic-addon1"
-              aria-label="Name"
-              cFormControl
-              placeholder="Name"
-        />
-      </c-input-group> -->
-
         <div class="form-floating mb-3">
           <input type="text" class="form-control" formControlName="name" id="name" placeholder="Name">
           <label for="floatingInput">Name</label>
@@ -106,7 +97,7 @@
     <button [cModalToggle]="verticallyCenteredModal.id" cButton color="secondary">
       Close
     </button>
-    <button type="submit" cButton color="primary">Save</button>
+    <button cButton color="primary" (click)="onSubmit()">Save</button>
   </c-modal-footer>
 </c-modal>
 </form>

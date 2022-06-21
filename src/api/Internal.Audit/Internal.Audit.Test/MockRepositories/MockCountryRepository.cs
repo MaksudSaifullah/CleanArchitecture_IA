@@ -5,8 +5,6 @@ using Moq;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Internal.Audit.Test.MockRepositories
 {
@@ -50,7 +48,6 @@ namespace Internal.Audit.Test.MockRepositories
 
         public static Mock<ICountryCommandRepository> CreateCountries()
         {
-            var country = CountryMockData.GetCountriesData();
             var mockRepoCreate = new Mock<ICountryCommandRepository>();
             mockRepoCreate.Setup(r => r.Add(It.IsAny<Country>())).ReturnsAsync((Country country) =>
             {
@@ -75,7 +72,6 @@ namespace Internal.Audit.Test.MockRepositories
             mockRepo.Setup(x => x.Update(country)).ReturnsAsync(country);
             return mockRepo;
         }
-
 
     }
 }

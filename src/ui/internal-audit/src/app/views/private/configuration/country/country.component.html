@@ -1,21 +1,91 @@
-<table datatable [dtOptions]="dtOptions" class="row-border hover">
-  <thead>
-    <tr>
-      <th>ID</th>
-      <th>First name</th>
-      <th>Last name</th>
-    </tr>
-  </thead>
-  <tbody *ngIf="persons?.length != 0">
-    <tr *ngFor="let person of persons">
-      <td>{{ person.id }}</td>
-      <td>{{ person.firstName }}</td>
-      <td>{{ person.lastName }}</td>
-    </tr>
-  </tbody>
-  <tbody *ngIf="persons?.length == 0">
-    <tr>
-      <td colspan="3" class="no-data-available">No data!</td>
-    </tr>
-  </tbody>
-</table>
+<div class="animated fadeIn">
+  <div class="row">
+    <div class="col-lg-12">
+      <div class="card">
+        <div class="card-header">
+          <i class="fa fa-align-justify"></i> Country List
+        </div>
+        <div class="card-body">
+          <div class="row">
+            <div class="col-sm-7 mb-2">
+              <button type="button" class="btn btn-secondary mr-1" data-toggle="modal" >
+                Create New Country
+              </button>
+            </div>
+            <div class="col-sm-5 mb-2">
+              <div class="row">
+                <div class="col-8">
+                  <!-- <input type="text" [(ngModel)]="searchText" class="form-control pull-right" placeholder="Search by Code"/> -->
+                  <input type="text" class="form-control pull-right" placeholder="Search by Name"/>
+                </div>
+                <div class="col-2">
+                  <!-- <button type="button" class="btn btn-secondary mr-1 pull-right btn-block" data-toggle="modal" (click)="search()" >
+                      <i class="fa fa-search" aria-hidden="true"></i>
+                  </button> -->
+                  <button type="button" class="btn btn-secondary mr-1 pull-right btn-block" data-toggle="modal" >
+                    Search
+                </button>
+                </div>
+                <div class="col-2">
+                  <!-- <button type="button" class="btn btn-secondary mr-1 pull-right btn-block" data-toggle="modal" (click)="clearSearch()" >
+                      <i [ngClass]="searchText ? 'fa fa-times' : 'fa fa-refresh'" aria-hidden="true"></i>
+                  </button> -->
+                  <button type="button" class="btn btn-secondary mr-1 pull-right btn-block" data-toggle="modal"  >
+                    Reset
+                </button> 
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row overflow-auto">
+            
+              <table datatable [dtOptions]="dtOptions" class="table table-bordered row-border hover">
+                <thead>
+                  <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Code</th>
+                    <th>created on</th>
+                    <th>Remarks</th>
+                  </tr>
+                </thead>
+                <tbody *ngIf="persons?.length != 0">
+                  <tr *ngFor="let person of persons">
+                    <td>{{ person.id }}</td>
+                    <td>{{ person.name }}</td>
+                    <td>{{ person.code }}</td>
+                    <td>{{ person.createdOn }}</td>
+                    <td>{{ person.remarks }}</td>
+                  </tr>
+                </tbody>
+                <tbody *ngIf="persons?.length == 0">
+                  <tr>
+                    <td colspan="3" class="no-data-available">No data!</td>
+                  </tr>
+                </tbody>
+              </table>
+
+          </div>
+          
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<button [cModalToggle]="verticallyCenteredModal.id" cButton>Centered modal</button>
+<c-modal #verticallyCenteredModal alignment="center" id="verticallyCenteredModal">
+  <c-modal-header>
+    <h5 cModalTitle>Modal title</h5>
+    <button [cModalToggle]="verticallyCenteredModal.id" cButtonClose></button>
+  </c-modal-header>
+  <c-modal-body>
+    Woohoo, you are reading this text in a modal!
+  </c-modal-body>
+  <c-modal-footer>
+    <button [cModalToggle]="verticallyCenteredModal.id" cButton color="secondary">
+      Close
+    </button>
+    <button cButton color="primary">Understood</button>
+  </c-modal-footer>
+</c-modal>

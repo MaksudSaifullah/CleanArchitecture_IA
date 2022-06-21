@@ -1,5 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
+import { Subject } from 'rxjs';
+import { country } from '../../../../core/interfaces/configuration/country.interface';
+import { HttpService } from '../../../../core/services/http.service';
 
 @Component({
   selector: 'app-country',
@@ -9,34 +12,42 @@ import { Component, OnInit } from '@angular/core';
 export class CountryComponent implements OnInit {
 
   dtOptions: DataTables.Settings = {};
-  persons: any;
+  persons: country[] = [];
 
-  constructor(private http: HttpClient) {}
+  // We use this trigger because fetching the list of persons can be quite long,
+  // thus we ensure the data is fetched before rendering
+  dtTrigger: Subject<any> = new Subject<any>();
 
+  constructor(private http: HttpService ) {}
+  ngOnDestroy(): void {
+    // Do not forget to unsubscribe the event
+    this.dtTrigger.unsubscribe();
+  }
   ngOnInit(): void {
     const that = this;
-
     this.dtOptions = {
       pagingType: 'full_numbers',
-      pageLength: 2,
+      pageLength: 10,
       serverSide: true,
       processing: true,
+      searching:false,
       ajax: (dataTablesParameters: any, callback) => {
-        that.http
-          .post<any>(
-            'https://angular-datatables-demo-server.herokuapp.com/',
-            dataTablesParameters, {}
-          ).subscribe(resp => {
-            that.persons = resp.data;
-
-            callback({
-              recordsTotal: resp.recordsTotal,
-              recordsFiltered: resp.recordsFiltered,
-              data: []
-            });
+        this.http
+        .get(
+          'api/v1/country/all'
+        ).subscribe(resp => {
+          that.persons = resp as country[];
+          this.dtTrigger.next(that.persons);
+          callback({
+            recordsTotal: that.persons.length,
+            recordsFiltered: that.persons.length,
+            data: []
           });
+        });
       },
-      columns: [{ data: 'id' }, { data: 'firstName' }, { data: 'lastName' }]
+    
+    };
+   
     };
   }
-}
+

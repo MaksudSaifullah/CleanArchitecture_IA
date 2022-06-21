@@ -26,9 +26,9 @@ public class RiskProfile : EntityBase
     public bool IsActive { get; set; }
 
     [ForeignKey("LikelihoodTypeId")]
-    public virtual LikelihoodType LikelihoodType { get; set; } = null!;
+    public virtual CommonValueAndType CommonValueLikelihoodType { get; set; } = null!;
     [ForeignKey("ImpactTypeId")]
-    public virtual ImpactType ImpactType { get; set; } = null!;
+    public virtual CommonValueAndType CommonValueImpactType { get; set; } = null!;
     [ForeignKey("RatingTypeId")]
-    public virtual RatingType RatingType { get; set; } = null!;    
+    public virtual CommonValueAndType CommonValueRatingType { get; set; } = null!;    
 }

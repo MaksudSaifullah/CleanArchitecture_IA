@@ -21,6 +21,12 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Remove="Features\Designation\Queries\GetDesignationById\**" />
+    <EmbeddedResource Remove="Features\Designation\Queries\GetDesignationById\**" />
+    <None Remove="Features\Designation\Queries\GetDesignationById\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\Internal.Audit.Domain\Internal.Audit.Domain.csproj" />
   </ItemGroup>
 
@@ -37,6 +43,7 @@
   <ItemGroup>
     <Folder Include="Features\Designation\Queries\GetDesignationById\" />
     <Folder Include="Features\UserRegistration\Commands\UpdateUserRegistration\" />
+    <Folder Include="Features\UserCountries\Quiries\" />
   </ItemGroup>
 
 </Project>

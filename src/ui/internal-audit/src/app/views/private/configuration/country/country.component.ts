@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Subject } from 'rxjs';
 import { country } from '../../../../core/interfaces/configuration/country.interface';
 import { HttpService } from '../../../../core/services/http.service';
@@ -15,23 +15,30 @@ export class CountryComponent implements OnInit {
   dtOptions: DataTables.Settings = {};
   persons: country[] = [];
 
-  countryForm: FormGroup | undefined;
+  countryForm: FormGroup;
 
-  initializeForm(country?: country) {
-    this.countryForm = new FormGroup({
-      operatorId: new FormControl(country?.id || 0),
-      operatorCode: new FormControl(country?.name),
-      operatorName: new FormControl(country?.code),
-      mobile: new FormControl(country?.remarks)
-    });
-  }
+
+  // initializeForm(country?: country) {
+  //   this.countryForm = new FormGroup({
+  //     operatorId: new FormControl(country?.id || 0),
+  //     operatorCode: new FormControl(country?.name),
+  //     operatorName: new FormControl(country?.code),
+  //     mobile: new FormControl(country?.remarks)
+  //   });
+  // }
 
 
   // We use this trigger because fetching the list of persons can be quite long,
   // thus we ensure the data is fetched before rendering
   dtTrigger: Subject<any> = new Subject<any>();
 
-  constructor(private http: HttpService ) {}
+  constructor(private http: HttpService , private fb: FormBuilder) {
+    this.countryForm = this.fb.group({
+      name: ['',[Validators.required,Validators.maxLength(20),Validators.minLength(5)]],
+      code: ['',[Validators.required,Validators.maxLength(3),Validators.minLength(3)]],
+      remarks: [''],
+    })
+  }
   ngOnDestroy(): void {
     // Do not forget to unsubscribe the event
     this.dtTrigger.unsubscribe();
@@ -77,7 +84,14 @@ export class CountryComponent implements OnInit {
     //     event.event.preventDefault();
     //   }
     // }
+    onSubmit():void{
+        if(this.countryForm.valid){
+          console.log(this.countryForm.value);
+          this.http.post('/api/country/add',this.countryForm.value).subscribe(x=>{
 
+          });
+        }
+    }
 
 
 

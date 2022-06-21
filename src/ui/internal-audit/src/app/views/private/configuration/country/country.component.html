@@ -8,7 +8,7 @@
         <div class="card-body">
           <div class="row">
             <div class="col-sm-7 mb-2">
-              
+
                 <button [cModalToggle]="verticallyCenteredModal.id" cButton >Create Country</button>
 
             </div>
@@ -32,7 +32,7 @@
                   </button> -->
                   <button type="button" class="btn btn-secondary mr-1 pull-right btn-block" data-toggle="modal"  >
                     Reset
-                </button> 
+                </button>
                 </div>
               </div>
             </div>
@@ -70,14 +70,13 @@
     </div>
   </div>
 </div>
-
+<form [formGroup]="countryForm" (ngSubmit)="onSubmit()" novalidate>
 <c-modal #verticallyCenteredModal alignment="center" id="verticallyCenteredModal">
   <c-modal-header>
     <h5 cModalTitle>Create Country</h5>
     <button [cModalToggle]="verticallyCenteredModal.id" cButtonClose></button>
   </c-modal-header>
   <c-modal-body>
-      <form [formGroup]="countryForm" >
     <div class="col-md-12">
       <!-- <c-input-group class="mb-3">
         <span cInputGroupText id="basic-addon1">Name</span>
@@ -88,25 +87,26 @@
         />
       </c-input-group> -->
 
-      <div class="form-floating mb-3">
-        <input type="text" class="form-control" id="name" placeholder="Name">
-        <label for="floatingInput">Name</label>
-      </div>
-      <div class="form-floating mb-3">
-        <input type="text" class="form-control" id="code" placeholder="Code">
-        <label for="floatingInput">Code</label>
-      </div>
-      <div class="form-floating">
-        <textarea class="form-control" placeholder="Remarks" id="remarks"></textarea>
-        <label for="floatingTextarea">Remarks</label>
-      </div>
+        <div class="form-floating mb-3">
+          <input type="text" class="form-control" formControlName="name" id="name" placeholder="Name">
+          <label for="floatingInput">Name</label>
+        </div>
+        <div class="form-floating mb-3">
+          <input type="text" class="form-control" formControlName="code" id="code" placeholder="Code">
+          <label for="floatingInput">Code</label>
+        </div>
+        <div class="form-floating">
+          <textarea class="form-control" placeholder="Remarks" formControlName="remarks" id="remarks"></textarea>
+          <label for="floatingTextarea">Remarks</label>
+        </div>
+
     </div>
-  </form>
   </c-modal-body>
   <c-modal-footer>
     <button [cModalToggle]="verticallyCenteredModal.id" cButton color="secondary">
       Close
     </button>
-    <button cButton color="primary" (onClick)="save($event)">Save</button>
+    <button type="submit" cButton color="primary">Save</button>
   </c-modal-footer>
 </c-modal>
+</form>

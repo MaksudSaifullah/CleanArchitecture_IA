@@ -6,6 +6,7 @@ import { CountryComponent } from './country/country.component';
 import { HttpClientModule } from '@angular/common/http';
 import { DataTablesModule } from "angular-datatables";
 import { ButtonModule, FormModule, ModalModule } from '@coreui/angular-pro';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -18,8 +19,8 @@ import { ButtonModule, FormModule, ModalModule } from '@coreui/angular-pro';
     DataTablesModule,
     ModalModule,
     ButtonModule,
-    FormModule
-    
+    FormModule,
+    ReactiveFormsModule
   ]
 })
 export class ConfigurationModule { }

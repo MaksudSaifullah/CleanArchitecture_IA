@@ -5,6 +5,7 @@ import { DataTableDirective } from 'angular-datatables';
 import { Subject } from 'rxjs';
 import { country } from '../../../../core/interfaces/configuration/country.interface';
 import { HttpService } from '../../../../core/services/http.service';
+import Swal from 'sweetalert2'
 @Component({
   selector: 'app-country',
   templateUrl: './country.component.html',
@@ -93,7 +94,48 @@ export class CountryComponent implements OnInit {
         });
         localmodalId.visible = true;
     }
-
+    delete(id:string){
+      const that = this;
+      const swalWithBootstrapButtons = Swal.mixin({
+        customClass: {
+          confirmButton: 'btn btn-success',
+          cancelButton: 'btn btn-danger'
+        },
+        buttonsStyling: false
+      });
+      
+      swalWithBootstrapButtons.fire({
+        title: 'Are you sure?',
+        text: "You won't be able to revert this!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonText: 'Yes, delete it!',
+        cancelButtonText: 'No, cancel!',
+        reverseButtons: true
+      }).then((result) => {
+        if (result.isConfirmed) {
+          this.http.delete('api/v1/country/'+ id ,{}).subscribe(res=>{
+            swalWithBootstrapButtons.fire(
+              'Deleted!',
+              'Your file has been deleted.',
+              'success'
+            );
+            that.datatableElement?.dtInstance.then((dtInstance: DataTables.Api) => {
+              dtInstance.draw();
+            });
+          })
+        } else if (
+          /* Read more about handling dismissals below */
+          result.dismiss === Swal.DismissReason.cancel
+        ) {
+          swalWithBootstrapButtons.fire(
+            'Cancelled',
+            'Your imaginary file is safe :)',
+            'error'
+          )
+        }
+      });
+    }
     reset(){
       this.countryForm.reset();
     }

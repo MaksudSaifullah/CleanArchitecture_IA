@@ -9,7 +9,7 @@
         <div class="card-body">
           <div class="row">
             <div class="col-sm-7 mb-2">
-                <button [cModalToggle]="verticallyCenteredModal.id" (click)="reset()" cButton>Create Country</button>
+                <button (click)="showCreateModal()" cButton>Create Country</button>
 
             </div>
             <div class="col-sm-5 mb-2">
@@ -56,10 +56,10 @@
                     <td>{{ person.remarks }}</td>
                     <td>
                       <div class="btn-group" role="group" aria-label="Basic example">
-                        <button type="button" class="btn btn-secondary" (click)="edit(verticallyCenteredModal,person)">
+                        <button type="button" class="btn btn-secondary" (click)="edit(person)">
                          Edit
                         </button>
-                        <button type="button" class="btn btn-danger" >
+                        <button type="button" class="btn btn-danger" (click)="delete(person)">
                           Delete
                         </button>
                       </div>
@@ -79,16 +79,27 @@
     </div>
   </div>
 </div>
-<form [formGroup]="countryForm" (ngSubmit)="onSubmit(verticallyCenteredModal)" novalidate>
-<c-modal #verticallyCenteredModal alignment="center" id="verticallyCenteredModal">
-  <c-modal-header>
-    <h5 cModalTitle *ngIf="!isEdit()">Create Country</h5>
-    <h5 cModalTitle *ngIf="isEdit()">Update Country</h5>
-    <button [cModalToggle]="verticallyCenteredModal.id" cButtonClose></button>
-  </c-modal-header>
-  <c-modal-body>
-    <div class="col-md-12" >
-      <input type="hidden" formControlName="id"/>
+
+<div bsModal #largeModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true"
+[config]="{ backdrop: 'static' }">
+<div class="modal-dialog modal-lg" role="document">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h4 class="modal-title" [hidden]="isEdit">Create New Country</h4>
+      <h4 class="modal-title" [hidden]="!isEdit">Update Country</h4>
+      <button type="button" class="close" (click)="largeModal.hide()" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="col-md-12">
+      <form [formGroup]="countryForm" (ngSubmit)="onSubmit()" novalidate>
+
+      
+        
+        <div class="form-floating mb-3"  [hidden]="!isEdit">
+          <input type="hidden" formControlName="id"/>
+        </div>
+
         <div class="form-floating mb-3">
           <input type="text" class="form-control" formControlName="name" id="name" placeholder="Name">
           <label for="floatingInput">Name</label>
@@ -102,13 +113,47 @@
           <label for="floatingTextarea">Remarks</label>
         </div>
 
+
+
+        <div class="dx-fieldset">
+          <button cButton color="secondary" (click)="close()">
+            Close
+          </button>
+          <button cButton color="primary" (click)="onSubmit()">Save</button>
+        </div>
+      </form>
     </div>
-  </c-modal-body>
-  <c-modal-footer>
-    <button [cModalToggle]="verticallyCenteredModal.id" cButton color="secondary">
-      Close
-    </button>
-    <button cButton color="primary" (click)="onSubmit(verticallyCenteredModal)">Save</button>
-  </c-modal-footer>
-</c-modal>
-</form>
+  </div>
+</div>
+
+</div>
+
+
+<div bsModal #deleteModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true"
+[config]="{ backdrop: 'static' }">
+<div class="modal-dialog modal-lg" role="document">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h4 class="modal-title"> Delete Country </h4>
+      <button type="button" class="close" (click)="deleteModal.hide()" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <div class="row">
+        <div class="col-sm-12">
+          Are You Sure To Delete "{{countryForm.value['name']}}" ?
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-secondary" (click)="close()">
+        Close
+      </button>
+      <button type="button" class="btn btn-danger" (click)="remove()">
+        Delete
+      </button>
+    </div>
+  </div>
+</div>
+</div>

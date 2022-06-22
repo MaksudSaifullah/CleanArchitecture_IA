@@ -5,18 +5,23 @@ import { DataTableDirective } from 'angular-datatables';
 import { Subject } from 'rxjs';
 import { country } from '../../../../core/interfaces/configuration/country.interface';
 import { HttpService } from '../../../../core/services/http.service';
+import { ModalDirective }  from 'ngx-bootstrap/modal'
 @Component({
   selector: 'app-country',
   templateUrl: './country.component.html',
   styleUrls: ['./country.component.scss']
 })
 export class CountryComponent implements OnInit {
+  @ViewChild('largeModal') public largeModal: ModalDirective | undefined;
+  @ViewChild('deleteModal') public deleteModal: ModalDirective | undefined;
   @ViewChild(DataTableDirective, {static: false})
   private datatableElement: DataTableDirective | undefined;
+  isEdit: boolean = false;
   dtOptions: DataTables.Settings = {};
   persons: country[] = [];
   countryForm: FormGroup;
   dtTrigger: Subject<any> = new Subject<any>();
+
 
   constructor(private http: HttpService , private fb: FormBuilder) {
     this.countryForm = this.fb.group({
@@ -58,32 +63,27 @@ export class CountryComponent implements OnInit {
 
   }
 
-    onSubmit(modalId:any):void{
+    onSubmit():void{
       this.persons = [];
-      const localmodalId = modalId;
         if(this.countryForm.valid){
           console.log(this.countryForm.value);
-          if(this.isEdit()){
+          if(this.isEdit== true){
             this.http.put('api/v1/country',this.countryForm.value,null).subscribe(x=>{
-              localmodalId.visible = false;
+             // localmodalId.visible = false;
+             this.largeModal?.hide();
               this.LoadData();
             });
           }
-          this.http.post('api/v1/country',this.countryForm.value).subscribe(x=>{
-            localmodalId.visible = false;
-            this.rerender();
-          });
+          else{
+            this.http.post('api/v1/country',this.countryForm.value).subscribe(x=>{
+              this.largeModal?.hide();
+              this.rerender();
+            });
+          }
+          
         }
     }
-    isEdit(){
-      const id = this.countryForm.get('id') as FormControl;
-      if(id.value == null || id.value == ''){
-          return false;
-      }
-      return true;
-    }
-    edit(modalId:any, person:any):void {
-      const localmodalId = modalId;
+    edit(person:any):void {
       console.log(person.id)
       this.http
         .getById('api/v1/country',person.id)
@@ -91,7 +91,8 @@ export class CountryComponent implements OnInit {
             const countryResponse = res as country;
             this.countryForm.setValue({id : countryResponse.id, name : countryResponse.name, remarks: countryResponse.remarks, code: countryResponse.code});
         });
-        localmodalId.visible = true;
+        this.largeModal?.show();
+        this.isEdit = true;
     }
 
     reset(){
@@ -102,6 +103,36 @@ export class CountryComponent implements OnInit {
         dtInstance.draw();
       });
     }
+  showCreateModal() {
+    this.isEdit = false;
+     this.countryForm.reset();
+    this.largeModal?.show();
+  }
+
+  close() {
+    this.largeModal?.hide();
+    this.isEdit = false;
+    this.LoadData();
+  }
+
+  remove() {
+
+    this.http.delete('api/v1/country',this.countryForm.value)
+    .subscribe(() => {
+      this.LoadData();
+    });
+    this.deleteModal?.hide();
+  }
+
+  delete(person:any):void {
+    this.http
+     .getById('api/v1/country',person.id)
+      .subscribe(res => {
+        const countryResponse = res as country;
+        this.countryForm.setValue({id : countryResponse.id, name : countryResponse.name});
+      });
+    this.deleteModal?.show();
+  }
 
   }
 

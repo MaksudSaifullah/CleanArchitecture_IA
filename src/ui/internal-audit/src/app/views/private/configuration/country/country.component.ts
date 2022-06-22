@@ -15,7 +15,7 @@ export class CountryComponent implements OnInit {
 
   dtOptions: DataTables.Settings = {};
   persons: country[] = [];
-
+  isEdit: boolean = false;
   countryForm: FormGroup;
 
   // We use this trigger because fetching the list of persons can be quite long,
@@ -85,15 +85,26 @@ export class CountryComponent implements OnInit {
         if(this.countryForm.valid){
           console.log(this.countryForm.value);
           this.http.post('api/v1/country',this.countryForm.value).subscribe(x=>{
-            debugger;
+            console.log("Hello");
             localmodalId.visible = false;
-            this.dtTrigger.unsubscribe();
+            //this.dtTrigger.unsubscribe();
             this.LoadData();
           });
         }
     }
 
-
+    edit(modalId:any, person:any):void {
+      this.isEdit = true;
+      const localmodalId = modalId;
+      console.log(person.id)
+      this.http
+        .getById('api/v1/country',person.id)
+        .subscribe(res => {
+          
+        });
+        localmodalId.visible = true;
+    }
+  
 
   }
 

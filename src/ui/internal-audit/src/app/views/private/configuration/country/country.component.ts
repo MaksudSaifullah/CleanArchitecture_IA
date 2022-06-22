@@ -10,21 +10,13 @@ import { HttpService } from '../../../../core/services/http.service';
   templateUrl: './country.component.html',
   styleUrls: ['./country.component.scss']
 })
-export class CountryComponent implements AfterViewInit, OnDestroy, OnInit {
-  //@ViewChild(DataTableDirective, {static: false})
-  //dtElement: DataTableDirective;
-
+export class CountryComponent implements OnInit {
+  @ViewChild(DataTableDirective, {static: false})
+  private datatableElement: DataTableDirective | undefined;
   dtOptions: DataTables.Settings = {};
   persons: country[] = [];
-  //isEdit: boolean = false;
   countryForm: FormGroup;
-  @ViewChild(DataTableDirective, {static: false})
-  datatableElement: DataTableDirective | undefined;
-  // We use this trigger because fetching the list of persons can be quite long,
-  // thus we ensure the data is fetched before rendering
   dtTrigger: Subject<any> = new Subject<any>();
-
-  //@ViewChild('verticallyCenteredModal') public verticallyCenteredModal: ModalToggleDirective ;
 
   constructor(private http: HttpService , private fb: FormBuilder) {
     this.countryForm = this.fb.group({
@@ -35,28 +27,26 @@ export class CountryComponent implements AfterViewInit, OnDestroy, OnInit {
     })
   }
   ngOnDestroy(): void {
-    // Do not forget to unsubscribe the event
-    this.dtTrigger.unsubscribe();
+
   }
   ngOnInit(): void {
     this.LoadData();
     };
-
   LoadData() {
     const that = this;
+
     this.dtOptions = {
       pagingType: 'full_numbers',
       pageLength: 10,
       serverSide: true,
       processing: true,
       searching: false,
-      destroy:true,
       ajax: (dataTablesParameters: any, callback) => {
         this.http
           .get(
             'api/v1/country/all'
           ).subscribe(resp => {
-            that.persons = resp as country[];
+            that.persons = (resp as country[]);
             callback({
               recordsTotal: that.persons.length,
               recordsFiltered: that.persons.length,
@@ -65,46 +55,25 @@ export class CountryComponent implements AfterViewInit, OnDestroy, OnInit {
           });
       },
     };
+
   }
 
-    // save(event) {
-    //   const result = event.validationGroup.validate();
-    //   if (result.isValid) {
-    //     this.http.post(this.countryForm.value, 'Operator/Save').pipe(untilDestroyed(this), loader$)
-    //     .subscribe(() => {
-    //       this.loadIndicatorVisible = false;
-    //       this.loadData('');
-    //       this.largeModal.hide();
-    //     },
-    //     (error) => {
-    //       this.loadIndicatorVisible = false;
-    //     });
-    //   } else {
-    //     event.event.preventDefault();
-    //   }
-    // }
     onSubmit(modalId:any):void{
-     // this.rerender();
       this.persons = [];
-     //rerender()
-      // const localmodalId = modalId;
-      //   if(this.countryForm.valid){
-      //     console.log(this.countryForm.value);
-      //     if(this.isEdit()){
-      //       this.http.put('api/v1/country',this.countryForm.value,null).subscribe(x=>{
-      //         //console.log("Hello");
-      //         localmodalId.visible = false;
-      //         //this.dtTrigger.unsubscribe();
-      //         this.LoadData();
-      //       });
-      //     }
-      //     this.http.post('api/v1/country',this.countryForm.value).subscribe(x=>{
-      //       console.log("Hello");
-      //       localmodalId.visible = false;
-      //       //this.dtTrigger.unsubscribe();
-      //       this.LoadData();
-      //     });
-      //   }
+      const localmodalId = modalId;
+        if(this.countryForm.valid){
+          console.log(this.countryForm.value);
+          if(this.isEdit()){
+            this.http.put('api/v1/country',this.countryForm.value,null).subscribe(x=>{
+              localmodalId.visible = false;
+              this.LoadData();
+            });
+          }
+          this.http.post('api/v1/country',this.countryForm.value).subscribe(x=>{
+            localmodalId.visible = false;
+            this.rerender();
+          });
+        }
     }
     isEdit(){
       const id = this.countryForm.get('id') as FormControl;
@@ -114,7 +83,6 @@ export class CountryComponent implements AfterViewInit, OnDestroy, OnInit {
       return true;
     }
     edit(modalId:any, person:any):void {
-      //this.isEdit = true;
       const localmodalId = modalId;
       console.log(person.id)
       this.http
@@ -126,29 +94,13 @@ export class CountryComponent implements AfterViewInit, OnDestroy, OnInit {
         localmodalId.visible = true;
     }
 
-    ngAfterViewInit(): void {
-      this.dtTrigger.next({});
-    }
-
-    OnDestroy(): void {
-      // Do not forget to unsubscribe the event
-      this.dtTrigger.unsubscribe();
-    }
     reset(){
       this.countryForm.reset();
     }
-    rerender(): void {
-      //debugger;
-      //this.dtOptions
+    rerender() {
       this.datatableElement?.dtInstance.then((dtInstance: DataTables.Api) => {
         dtInstance.draw();
       });
-      // this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
-      //   // Destroy the table first
-      //   dtInstance.destroy();
-      //   // Call the dtTrigger to rerender again
-      //   this.dtTrigger.next({});
-      // });
     }
 
   }

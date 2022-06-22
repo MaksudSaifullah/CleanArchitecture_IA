@@ -42,7 +42,6 @@
 
   <ItemGroup>
     <Folder Include="Features\Designation\Queries\GetDesignationById\" />
-    <Folder Include="Features\UserRegistration\Commands\UpdateUserRegistration\" />
     <Folder Include="Features\UserCountries\Quiries\" />
   </ItemGroup>
 

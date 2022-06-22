@@ -62,6 +62,8 @@ using Internal.Audit.Domain.Entities.Config;
 using Internal.Audit.Application.Features.UserRegistration.Commands.AddUserRegistration;
 using Internal.Audit.Application.Features.UserRegistration.Queries.GetAllUserList;
 using Internal.Audit.Application.Features.UserRegistration.Queries.GetALlUserListById;
+using Internal.Audit.Application.Features.UserRegistration.Commands.UpdateUserRegistration;
+using Internal.Audit.Application.Features.UserRegistration.Commands.DeleteUserRegistration;
 
 namespace Internal.Audit.Application.Mappings;
 
@@ -166,5 +168,11 @@ public class MappingProfile: Profile
         CreateMap<User, Features.UserRegistration.Queries.GetAllUserList.GetUserListResponseDTO>().ReverseMap();
         CreateMap<User, GetALlUserListByIdResponseDTO>().ReverseMap();
 
+        CreateMap<User, AddUserUpdateCommand>().ReverseMap();
+        CreateMap<UserCountry, AddUserCountryUpdateCommand>().ReverseMap();
+        CreateMap<UserRole, AddUserRoleUpdateCommand>().ReverseMap();
+        CreateMap<Employee, AddEmployeeUpdateCommand>().ReverseMap();
+        CreateMap<User, DeleteUserRegistrationCommand>().ReverseMap();
+        CreateMap<User, DeleteUserRegistrationResponseDTO>().ReverseMap();
     }
 }

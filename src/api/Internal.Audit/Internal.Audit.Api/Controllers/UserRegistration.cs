@@ -1,4 +1,6 @@
 ﻿using Internal.Audit.Application.Features.UserRegistration.Commands.AddUserRegistration;
+using Internal.Audit.Application.Features.UserRegistration.Commands.DeleteUserRegistration;
+using Internal.Audit.Application.Features.UserRegistration.Commands.UpdateUserRegistration;
 using Internal.Audit.Application.Features.UserRegistration.Queries.GetAllUserList;
 using Internal.Audit.Application.Features.UserRegistration.Queries.GetALlUserListById;
 using MediatR;
@@ -36,6 +38,20 @@ namespace Internal.Audit.Api.Controllers
         public async Task<ActionResult<GetUserListResponseDTO>> Get(Guid userId)
         {
             var query = new GetAllUserListByIdQuery(userId);
+            var result = await _mediator.Send(query);
+            return Ok(result);
+        }
+
+        [HttpPut]
+        public async Task<ActionResult<UpdateUserRegistrationResponseDTO>> Update(UpdateUserRegistrationCommand command)
+        {
+            var result = await _mediator.Send(command);
+            return Ok(result);
+        }
+        [HttpDelete]
+        public async Task<ActionResult<DeleteUserRegistrationResponseDTO>> Delete(Guid userId)
+        {
+            var query = new DeleteUserRegistrationCommand(userId);
             var result = await _mediator.Send(query);
             return Ok(result);
         }

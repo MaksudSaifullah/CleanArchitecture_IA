@@ -9,5 +9,6 @@ namespace Internal.Audit.Application.Contracts.Persistent.UserCountries
 {
     public interface IUserCountryQueryRepository:IAsyncQueryRepository<UserCountry>
     {
+
     }
 }

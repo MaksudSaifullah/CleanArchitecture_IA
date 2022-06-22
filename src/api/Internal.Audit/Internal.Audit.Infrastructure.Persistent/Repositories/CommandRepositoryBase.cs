@@ -87,4 +87,13 @@ public class CommandRepositoryBase<TEntity> : IAsyncCommandRepository<TEntity> w
         await Task.CompletedTask;
         return entity;
     }
+
+    public async Task<bool> Delete(IEnumerable<TEntity> entity)
+    {
+        if (entity == null)
+            throw new ArgumentNullException(nameof(entity));
+        _dbContext.RemoveRange(entity);
+        await Task.CompletedTask;
+        return true;
+    }
 }

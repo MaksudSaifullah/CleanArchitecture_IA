@@ -7,8 +7,8 @@ using System.Threading.Tasks;
 
 namespace Internal.Audit.Application.Contracts.Persistent.UserRegistration
 {
-    public interface IEmployeeCommandRepository : IAsyncCommandRepository<Employee>
+    public interface IUserCountryQueryRepository:IAsyncQueryRepository<UserCountry>
     {
-      
+        Task<IEnumerable<UserCountry>> GetAllUserCountryListByUserId(Guid userId);
     }
 }

@@ -10,12 +10,12 @@ namespace Internal.Audit.Application.Features.UserRegistration.Commands.AddUserR
     public class AddUserRegistrationCommandHandler : IRequestHandler<AddUserRegistrationCommand, AddUserRegistrationResponseDTO>
     {
         private readonly IUnitOfWork _unitOfWork;
-        private readonly Contracts.Persistent.UserRegistration.IUserCommandRepository _userRepository;
+        private readonly IUserCommandRepository _userRepository;
         private readonly IUserCountryCommandRepository _userCountryRepository;
         private readonly IEmployeeCommandRepository _employeeRepository;
         private readonly IUserRoleCommandRepository _userRole;
         private readonly IMapper _mapper;
-        public AddUserRegistrationCommandHandler(IUnitOfWork unitOfWork, Contracts.Persistent.UserRegistration.IUserCommandRepository userRepository, IUserCountryCommandRepository userCountryRepository, IEmployeeCommandRepository employeeRepository, IMapper mapper, IUserRoleCommandRepository userRole)
+        public AddUserRegistrationCommandHandler(IUnitOfWork unitOfWork, IUserCommandRepository userRepository, IUserCountryCommandRepository userCountryRepository, IEmployeeCommandRepository employeeRepository, IMapper mapper, IUserRoleCommandRepository userRole)
         {
             _mapper = mapper;
             _unitOfWork = unitOfWork;

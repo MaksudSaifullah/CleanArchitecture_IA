@@ -8,9 +8,8 @@
         <div class="card-body">
           <div class="row">
             <div class="col-sm-7 mb-2">
-
-                <button [cModalToggle]="verticallyCenteredModal.id" cButton  [hidden]="isEdit">Create Country</button>
-                <button [cModalToggle]="verticallyCenteredModal.id" cButton  [hidden]="!isEdit">Update Country</button>
+                <button (click)="reset()">Click</button>
+                <!-- <button [cModalToggle]="verticallyCenteredModal.id" (click)="reset()" cButton>Create Country</button> -->
 
             </div>
             <div class="col-sm-5 mb-2">
@@ -39,7 +38,7 @@
             </div>
           </div>
           <div class="row overflow-auto">
-              <table datatable [dtOptions]="dtOptions" class="table table-bordered row-border hover">
+              <table datatable [dtOptions]="dtOptions" class="table table-bordered row-border hover" >
                 <thead>
                   <tr>
                     <th>Name</th>
@@ -69,7 +68,7 @@
                 </tbody>
                 <tbody *ngIf="persons?.length == 0">
                   <tr>
-                    <td colspan="3" class="no-data-available">No data!</td>
+                    <td colspan="5" class="no-data-available">No data!</td>
                   </tr>
                 </tbody>
               </table>
@@ -83,11 +82,13 @@
 <form [formGroup]="countryForm" (ngSubmit)="onSubmit(verticallyCenteredModal)" novalidate>
 <c-modal #verticallyCenteredModal alignment="center" id="verticallyCenteredModal">
   <c-modal-header>
-    <h5 cModalTitle>Create Country</h5>
+    <h5 cModalTitle *ngIf="!isEdit()">Create Country</h5>
+    <h5 cModalTitle *ngIf="isEdit()">Update Country</h5>
     <button [cModalToggle]="verticallyCenteredModal.id" cButtonClose></button>
   </c-modal-header>
   <c-modal-body>
-    <div class="col-md-12"  [hidden]="!isEdit">
+    <div class="col-md-12" >
+      <input type="hidden" formControlName="id"/>
         <div class="form-floating mb-3">
           <input type="text" class="form-control" formControlName="name" id="name" placeholder="Name">
           <label for="floatingInput">Name</label>

@@ -20,7 +20,7 @@ import { ReactiveFormsModule } from '@angular/forms';
     ModalModule,
     ButtonModule,
     FormModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
   ]
 })
 export class ConfigurationModule { }

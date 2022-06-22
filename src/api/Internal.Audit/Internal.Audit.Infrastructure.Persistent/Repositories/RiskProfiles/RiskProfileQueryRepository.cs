@@ -25,9 +25,9 @@ namespace Internal.Audit.Infrastructure.Persistent.Repositories.RiskProfiles
                           ,rp.[CreatedBy]
                           ,rp.[CreatedOn]
                         FROM [common].[RiskProfile] as rp
-                        INNER JOIN [dbo].[CommonValueAndType] as cvtlt on cvtlt.Id = rp.LikelihoodTypeId
-                        INNER JOIN [dbo].[CommonValueAndType] as cvtit on cvtit.Id = rp.ImpactTypeId
-                        INNER JOIN [dbo].[CommonValueAndType] as cvtrt on cvtrt.Id = rp.RatingTypeId
+                        INNER JOIN [config].[CommonValueAndType] as cvtlt on cvtlt.Id = rp.LikelihoodTypeId
+                        INNER JOIN [config].[CommonValueAndType] as cvtit on cvtit.Id = rp.ImpactTypeId
+                        INNER JOIN [config].[CommonValueAndType] as cvtrt on cvtrt.Id = rp.RatingTypeId
                         WHERE rp.IsActive = 1 AND rp.IsDeleted = 0 ";
             return await Get(query);
         }
@@ -43,9 +43,9 @@ namespace Internal.Audit.Infrastructure.Persistent.Repositories.RiskProfiles
                         ,rp.[CreatedBy]
                         ,rp.[CreatedOn]
                     FROM [common].[RiskProfile] as rp
-                    INNER JOIN [dbo].[CommonValueAndType] as cvtlt on cvtlt.Id = rp.LikelihoodTypeId
-                    INNER JOIN [dbo].[CommonValueAndType] as cvtit on cvtit.Id = rp.ImpactTypeId
-                    INNER JOIN [dbo].[CommonValueAndType] as cvtrt on cvtrt.Id = rp.RatingTypeId
+                    INNER JOIN [config].[CommonValueAndType] as cvtlt on cvtlt.Id = rp.LikelihoodTypeId
+                    INNER JOIN [config].[CommonValueAndType] as cvtit on cvtit.Id = rp.ImpactTypeId
+                    INNER JOIN [config].[CommonValueAndType] as cvtrt on cvtrt.Id = rp.RatingTypeId
                     WHERE  Id = @id AND rp.IsActive = 1 AND rp.IsDeleted = 0 ";
             var parameters = new Dictionary<string, object> { { "id", id } };
 

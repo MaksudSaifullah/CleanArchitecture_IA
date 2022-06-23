@@ -84,9 +84,7 @@ export class CountryComponent implements OnInit {
           }
         }
     }
-    isEdit(){
 
-    }
     edit(modalId:any, person:any):void {
       const localmodalId = modalId;
       console.log(person.id)

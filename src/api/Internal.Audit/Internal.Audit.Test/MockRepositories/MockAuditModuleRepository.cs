@@ -1,4 +1,4 @@
-﻿using Internal.Audit.Application.Contracts.Persistent.Modules;
+﻿using Internal.Audit.Application.Contracts.Persistent.AuditModules;
 using Internal.Audit.Domain.Entities.Common;
 using Internal.Audit.Test.MockDatas;
 using Moq;

@@ -1,4 +1,4 @@
-﻿using Internal.Audit.Application.Features.Users.Queries.GetAuthUser;
+﻿//using Internal.Audit.Application.Features.Users.Queries.GetAuthUser;
 using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -16,11 +16,11 @@ namespace Internal.Audit.Api.Controllers
             _mediator = mediator ?? throw new ArgumentNullException(nameof(mediator));
         }
 
-        [HttpPost]
-        public async Task<ActionResult<AuthUserDTO>> Get(GetAuthUserQeury query)
-        {
-            var result = await _mediator.Send(query);
-            return Ok(result);
-        }
+        //[HttpPost]
+        //public async Task<ActionResult<AuthUserDTO>> Get(GetAuthUserQeury query)
+        //{
+        //    var result = await _mediator.Send(query);
+        //    return Ok(result);
+        //}
     }
 }

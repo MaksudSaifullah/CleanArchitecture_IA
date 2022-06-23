@@ -1,5 +1,6 @@
 ﻿using Internal.Audit.Domain.Common;
 using Internal.Audit.Domain.Entities.common;
+using Internal.Audit.Domain.Entities.security;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -39,7 +40,8 @@ public class User : EntityBase
     //public virtual Designation Designation { get; set; } = null!;
     //Navigation properties
     public virtual ICollection<UserCountry> UserCountries { get; set; } = null!;
-    //public virtual ICollection<Role> UserRoles { get; set; } = null!;
+    public virtual ICollection<UserRole> UserRoles { get; set; } = null!;
+    public virtual Employee Employee { get; set; }
 
 }
 

@@ -22,9 +22,9 @@ public class UpdateDesignationCommandHandler : IRequestHandler<UpdateDesignation
 
         var designation = await _designationRepository.Get(request.Id);
         designation = _mapper.Map(request, designation);
-        var updatedDesignation = await _designationRepository.Update(designation);
+        await _designationRepository.Update(designation);
         var rowsAffected = await _unitOfWork.CommitAsync();
-        return new UpdateDesignationResponseDTO(updatedDesignation.Id, rowsAffected > 0, rowsAffected > 0 ? "Designation Updated Successfully!" : "Error while updating Designation!");
+        return new UpdateDesignationResponseDTO(designation.Id, rowsAffected > 0, rowsAffected > 0 ? "Designation Updated Successfully!" : "Error while updating Designation!");
 
     }
 }

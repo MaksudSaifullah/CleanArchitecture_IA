@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using Internal.Audit.Application.Contracts.Persistent.Modules;
+using Internal.Audit.Application.Contracts.Persistent.AuditModules;
 using Internal.Audit.Application.Features.Module.Queries.GetModuleList;
 using Internal.Audit.Application.Mappings;
 using Internal.Audit.Test.MockDatas;

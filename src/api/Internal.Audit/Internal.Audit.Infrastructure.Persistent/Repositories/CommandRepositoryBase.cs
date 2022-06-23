@@ -72,4 +72,19 @@ public class CommandRepositoryBase<TEntity> : IAsyncCommandRepository<TEntity> w
         await Task.CompletedTask;
         return entity;
     }
+    public async Task<IEnumerable<TEntity>> Add(IEnumerable<TEntity> entity)
+    {
+        if (entity == null)
+            throw new ArgumentNullException(nameof(entity));
+        await _dbContext.AddRangeAsync(entity);
+        return entity;
+    }
+    public async Task<IEnumerable<TEntity>> Update(IEnumerable<TEntity> entity)
+    {
+        if (entity == null)
+            throw new ArgumentNullException(nameof(entity));
+        _dbContext.UpdateRange(entity);
+        await Task.CompletedTask;
+        return entity;
+    }
 }

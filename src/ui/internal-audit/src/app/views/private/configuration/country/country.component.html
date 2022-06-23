@@ -89,14 +89,53 @@
   <c-modal-body>
     <div class="col-md-12" >
       <input type="hidden" formControlName="id"/>
+
         <div class="form-floating mb-3">
           <input type="text" class="form-control" formControlName="name" id="name" placeholder="Name">
           <label for="floatingInput">Name</label>
         </div>
+
+
+        <div cRow *ngIf="countryForm.get('name')?.invalid &&
+        countryForm.get('name')?.errors &&
+              (countryForm.get('name')?.dirty || countryForm.get('name')?.touched)">
+          <small class="text-danger"
+              *ngIf="countryForm.get('name').hasError('required')">
+              This field is required.
+          </small>
+          <small class="text-danger"
+              *ngIf="countryForm.get('name').hasError('minlength')">
+              The minimum length for this field is {{countryForm.get('name').errors.minlength.requiredLength}} characters.
+          </small>
+          <small class="text-danger"
+              *ngIf="countryForm.get('name').hasError('maxlength')">
+              The maximum length for this field is {{countryForm.get('name').errors.maxlength.requiredLength}} characters.
+          </small>
+      </div>
+
         <div class="form-floating mb-3">
           <input type="text" class="form-control" formControlName="code" id="code" placeholder="Code">
           <label for="floatingInput">Code</label>
         </div>
+
+        <div cRow *ngIf="countryForm.get('code')?.invalid &&
+        countryForm.get('code')?.errors &&
+              (countryForm.get('code')?.dirty || countryForm.get('code')?.touched)">
+          <small class="text-danger"
+              *ngIf="countryForm.get('code').hasError('required')">
+              This field is required.
+          </small>
+          <small class="text-danger"
+              *ngIf="countryForm.get('code').hasError('minlength')">
+              The minimum length for this field is {{countryForm.get('code').errors.minlength.requiredLength}} characters.
+          </small>
+          <small class="text-danger"
+              *ngIf="countryForm.get('code').hasError('maxlength')">
+              The maximum length for this field is {{countryForm.get('code').errors.maxlength.requiredLength}} characters.
+          </small>
+      </div>
+        
+
         <div class="form-floating">
           <textarea class="form-control" placeholder="Remarks" formControlName="remarks" id="remarks"></textarea>
           <label for="floatingTextarea">Remarks</label>

@@ -15,7 +15,7 @@ export class CountryComponent implements OnInit {
   @ViewChild(DataTableDirective, {static: false})
   private datatableElement: DataTableDirective | undefined;
   dtOptions: DataTables.Settings = {};
-  persons: country[] = [];
+  countries: country[] = [];
   countryForm: FormGroup;
   dtTrigger: Subject<any> = new Subject<any>();
 
@@ -47,10 +47,10 @@ export class CountryComponent implements OnInit {
           .get(
             'api/v1/country/all'
           ).subscribe(resp => {
-            that.persons = (resp as country[]);
+            that.countries = (resp as country[]);
             callback({
-              recordsTotal: that.persons.length,
-              recordsFiltered: that.persons.length,
+              recordsTotal: that.countries.length,
+              recordsFiltered: that.countries.length,
               data: []
             });
           });
@@ -60,7 +60,7 @@ export class CountryComponent implements OnInit {
   }
 
     onSubmit(modalId:any):void{
-      this.persons = [];
+      this.countries = [];
       const localmodalId = modalId;
         if(this.countryForm.valid){
           console.log(this.countryForm.value);

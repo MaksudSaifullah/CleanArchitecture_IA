@@ -48,25 +48,25 @@
                     <th>Action</th>
                   </tr>
                 </thead>
-                <tbody *ngIf="persons?.length != 0">
-                  <tr *ngFor="let person of persons">
-                    <td>{{ person.name }}</td>
-                    <td>{{ person.code }}</td>
-                    <td>{{ person.createdOn | date:'medium' }}</td>
-                    <td>{{ person.remarks }}</td>
+                <tbody *ngIf="countries?.length != 0">
+                  <tr *ngFor="let country of countries">
+                    <td>{{ country.name }}</td>
+                    <td>{{ country.code }}</td>
+                    <td>{{ country.createdOn | date:'medium' }}</td>
+                    <td>{{ country.remarks }}</td>
                     <td>
                       <div class="btn-group" role="group" aria-label="Basic example">
-                        <button type="button" class="btn btn-secondary" (click)="edit(verticallyCenteredModal,person)">
+                        <button type="button" class="btn btn-secondary" (click)="edit(verticallyCenteredModal,country)">
                          Edit
                         </button>
-                        <button type="button" class="btn btn-danger" (click)="delete(person.id)">
+                        <button type="button" class="btn btn-danger" (click)="delete(country.id)">
                           Delete
                         </button>
                       </div>
                     </td>
                   </tr>
                 </tbody>
-                <tbody *ngIf="persons?.length == 0">
+                <tbody *ngIf="countries?.length == 0">
                   <tr>
                     <td colspan="5" class="no-data-available">No data!</td>
                   </tr>

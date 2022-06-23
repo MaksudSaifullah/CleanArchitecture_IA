@@ -7,6 +7,8 @@ import { country } from '../../../../core/interfaces/configuration/country.inter
 import { HttpService } from '../../../../core/services/http.service';
 import Swal from 'sweetalert2';
 import {FormService} from '../../../../core/services/form.service';
+import {DatatableService} from '../../../../core/services/datatable.service';
+import {AlertService} from '../../../../core/services/alert.service';
 @Component({
   selector: 'app-country',
   templateUrl: './country.component.html',
@@ -14,14 +16,15 @@ import {FormService} from '../../../../core/services/form.service';
 })
 export class CountryComponent implements OnInit {
   @ViewChild(DataTableDirective, {static: false})
-  private datatableElement: DataTableDirective | undefined;
+  datatableElement: DataTableDirective | undefined;
   dtOptions: DataTables.Settings = {};
   countries: country[] = [];
   countryForm: FormGroup;
   formService: FormService = new FormService();
+  dataTableService: DatatableService = new DatatableService();
   dtTrigger: Subject<any> = new Subject<any>();
 
-  constructor(private http: HttpService , private fb: FormBuilder) {
+  constructor(private http: HttpService , private fb: FormBuilder, private AlertService: AlertService) {
     this.countryForm = this.fb.group({
       id: [''],
       name: ['',[Validators.required,Validators.maxLength(20),Validators.minLength(5)]],
@@ -67,13 +70,18 @@ export class CountryComponent implements OnInit {
           if(this.formService.isEdit(this.countryForm.get('id') as FormControl)){
             this.http.put('api/v1/country',this.countryForm.value,null).subscribe(x=>{
               localmodalId.visible = false;
-              this.rerender();
+              this.dataTableService.redraw(this.datatableElement);
+              this.AlertService.success('Country Saved Successful');
+
             });
           }
-          this.http.post('api/v1/country',this.countryForm.value).subscribe(x=>{
-            localmodalId.visible = false;
-            this.rerender();
-          });
+          else{
+            this.http.post('api/v1/country',this.countryForm.value).subscribe(x=>{
+              localmodalId.visible = false;
+              this.dataTableService.redraw(this.datatableElement);
+              this.AlertService.success('Country Saved Successful');
+            });
+          }
         }
     }
     isEdit(){
@@ -92,54 +100,17 @@ export class CountryComponent implements OnInit {
     }
     delete(id:string){
       const that = this;
-      const swalWithBootstrapButtons = Swal.mixin({
-        customClass: {
-          confirmButton: 'btn btn-success',
-          cancelButton: 'btn btn-danger'
-        },
-        buttonsStyling: false
-      });
-
-      swalWithBootstrapButtons.fire({
-        title: 'Are you sure?',
-        text: "You won't be able to revert this!",
-        icon: 'warning',
-        showCancelButton: true,
-        confirmButtonText: 'Yes, delete it!',
-        cancelButtonText: 'No, cancel!',
-        reverseButtons: true
-      }).then((result) => {
-        if (result.isConfirmed) {
-          this.http.delete('api/v1/country/'+ id ,{}).subscribe(res=>{
-            swalWithBootstrapButtons.fire(
-              'Deleted!',
-              'Your file has been deleted.',
-              'success'
-            );
-            that.datatableElement?.dtInstance.then((dtInstance: DataTables.Api) => {
-              dtInstance.draw();
-            });
+      this.AlertService.confirmDialog().then(res =>{
+        if(res.isConfirmed){
+            this.http.delete('api/v1/country/'+ id ,{}).subscribe(response=>{
+            this.AlertService.successDialog('Deleted','Country deleted successfully.');
+            this.dataTableService.redraw(that.datatableElement);
           })
-        } else if (
-          /* Read more about handling dismissals below */
-          result.dismiss === Swal.DismissReason.cancel
-        ) {
-          swalWithBootstrapButtons.fire(
-            'Cancelled',
-            'Your imaginary file is safe :)',
-            'error'
-          )
         }
       });
     }
     reset(){
       this.countryForm.reset();
     }
-    rerender() {
-      this.datatableElement?.dtInstance.then((dtInstance: DataTables.Api) => {
-        dtInstance.draw();
-      });
-    }
-
   }
 

@@ -82,8 +82,8 @@
 <form [formGroup]="countryForm" (ngSubmit)="onSubmit(verticallyCenteredModal)" novalidate>
 <c-modal #verticallyCenteredModal alignment="center" id="verticallyCenteredModal">
   <c-modal-header>
-    <h5 cModalTitle *ngIf="!isEdit()">Create Country</h5>
-    <h5 cModalTitle *ngIf="isEdit()">Update Country</h5>
+    <h5 cModalTitle *ngIf="!formService.isEdit(this.countryForm.get('id'))">Create Country</h5>
+    <h5 cModalTitle *ngIf="formService.isEdit(this.countryForm.get('id'))">Update Country</h5>
     <button [cModalToggle]="verticallyCenteredModal.id" cButtonClose></button>
   </c-modal-header>
   <c-modal-body>
@@ -134,7 +134,7 @@
               The maximum length for this field is {{countryForm.get('code').errors.maxlength.requiredLength}} characters.
           </small>
       </div>
-        
+
 
         <div class="form-floating">
           <textarea class="form-control" placeholder="Remarks" formControlName="remarks" id="remarks"></textarea>

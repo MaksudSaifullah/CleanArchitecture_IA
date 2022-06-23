@@ -5,7 +5,8 @@ import { DataTableDirective } from 'angular-datatables';
 import { Subject } from 'rxjs';
 import { country } from '../../../../core/interfaces/configuration/country.interface';
 import { HttpService } from '../../../../core/services/http.service';
-import Swal from 'sweetalert2'
+import Swal from 'sweetalert2';
+import {FormService} from '../../../../core/services/form.service';
 @Component({
   selector: 'app-country',
   templateUrl: './country.component.html',
@@ -17,6 +18,7 @@ export class CountryComponent implements OnInit {
   dtOptions: DataTables.Settings = {};
   countries: country[] = [];
   countryForm: FormGroup;
+  formService: FormService = new FormService();
   dtTrigger: Subject<any> = new Subject<any>();
 
   constructor(private http: HttpService , private fb: FormBuilder) {
@@ -60,14 +62,12 @@ export class CountryComponent implements OnInit {
   }
 
     onSubmit(modalId:any):void{
-      this.countries = [];
       const localmodalId = modalId;
         if(this.countryForm.valid){
-          console.log(this.countryForm.value);
-          if(this.isEdit()){
+          if(this.formService.isEdit(this.countryForm.get('id') as FormControl)){
             this.http.put('api/v1/country',this.countryForm.value,null).subscribe(x=>{
               localmodalId.visible = false;
-              this.LoadData();
+              this.rerender();
             });
           }
           this.http.post('api/v1/country',this.countryForm.value).subscribe(x=>{
@@ -77,11 +77,7 @@ export class CountryComponent implements OnInit {
         }
     }
     isEdit(){
-      const id = this.countryForm.get('id') as FormControl;
-      if(id.value == null || id.value == ''){
-          return false;
-      }
-      return true;
+
     }
     edit(modalId:any, person:any):void {
       const localmodalId = modalId;
@@ -103,7 +99,7 @@ export class CountryComponent implements OnInit {
         },
         buttonsStyling: false
       });
-      
+
       swalWithBootstrapButtons.fire({
         title: 'Are you sure?',
         text: "You won't be able to revert this!",

@@ -36,8 +36,8 @@ public class DeleteUserRegistrationCommandHandler : IRequestHandler<DeleteUserRe
     }
     public async Task<DeleteUserRegistrationResponseDTO> Handle(DeleteUserRegistrationCommand request, CancellationToken cancellationToken)
     {
-        var user = await _userRepository.Get(request.userId);
-        if (user == null)
+        //var user = await _userRepository.Get(request.userId);
+        //if (user == null)
             return new DeleteUserRegistrationResponseDTO(request.userId, false, "Invalid User Id");
         //user.IsDeleted = true;
         //await _userRepository.Update(user);
@@ -66,7 +66,7 @@ public class DeleteUserRegistrationCommandHandler : IRequestHandler<DeleteUserRe
         //await _userRole.Update(userRoleList);
         //var rowsAffected = await _unitOfWork.CommitAsync();
         var rowsAffected = 0;
-        return new DeleteUserRegistrationResponseDTO(user.Id, rowsAffected > 0, rowsAffected > 0 ? "User Deleted successfully!" : "Error while deleteing User!");
+        return new DeleteUserRegistrationResponseDTO(request.userId, rowsAffected > 0, rowsAffected > 0 ? "User Deleted successfully!" : "Error while deleteing User!");
     }
 }
 

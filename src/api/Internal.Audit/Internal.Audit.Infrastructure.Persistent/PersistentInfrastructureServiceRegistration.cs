@@ -87,7 +87,7 @@ public static class PersistentInfrastructureServiceRegistration
         services.AddScoped<Application.Contracts.Persistent.UserRegistration.IUserQueryRepository>(s => new Repositories.UserRegistration.UserQueryRepository(configuration.GetConnectionString("InternalAuditDb")));
         services.AddScoped<IUserRoleQueryRepository>(s => new UserRoleQueryRepository(configuration.GetConnectionString("InternalAuditDb")));
         services.AddScoped<IUserCountryQueryRepository>(s => new UserCountryQueryRepository(configuration.GetConnectionString("InternalAuditDb")));
-        services.AddScoped<IUserCountryCommandRepository, UserCountryCommandRepository>();
+       
 
         return services;
     }

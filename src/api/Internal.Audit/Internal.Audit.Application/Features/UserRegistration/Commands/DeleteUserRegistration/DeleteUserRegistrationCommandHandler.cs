@@ -39,6 +39,11 @@ public class DeleteUserRegistrationCommandHandler : IRequestHandler<DeleteUserRe
         var user = await _userRepository.Get(request.userId);
         if (user == null)
             return new DeleteUserRegistrationResponseDTO(request.userId, false, "Invalid User Id");
+        if (user.IsDeleted)
+        {
+            return new DeleteUserRegistrationResponseDTO(request.userId, false, "User already Deleted!");
+
+        }
         user.IsDeleted = true;
         await _userRepository.Update(user);
 

@@ -36,36 +36,35 @@ public class DeleteUserRegistrationCommandHandler : IRequestHandler<DeleteUserRe
     }
     public async Task<DeleteUserRegistrationResponseDTO> Handle(DeleteUserRegistrationCommand request, CancellationToken cancellationToken)
     {
-        //var user = await _userRepository.Get(request.userId);
-        //if (user == null)
+        var user = await _userRepository.Get(request.userId);
+        if (user == null)
             return new DeleteUserRegistrationResponseDTO(request.userId, false, "Invalid User Id");
-        //user.IsDeleted = true;
-        //await _userRepository.Update(user);
+        user.IsDeleted = true;
+        await _userRepository.Update(user);
 
-        //var employee = await _employeeQueryRepository.GetAllUserListByUserId(request.userId);
-        //if (employee == null)
-        //    return new DeleteUserRegistrationResponseDTO(request.userId, false, "Doesn't have Employee Id for given user");
-        //foreach (var item in employee)
-        //{
-        //    item.IsDeleted = true;
-        //}
-        //await _employeeRepository.Update(employee);
+        var employee = await _employeeQueryRepository.GetAllUserListByUserId(request.userId);
+        if (employee == null)
+            return new DeleteUserRegistrationResponseDTO(request.userId, false, "Doesn't have Employee Id for given user");
+        foreach (var item in employee)
+        {
+            item.IsDeleted = true;
+        }
+        await _employeeRepository.Update(employee);
 
-        //var userCountryList = await _userCountryQueryRepository.GetAllUserCountryListByUserId(request.userId);         
-        //foreach (var item in userCountryList)
-        //{
-        //    item.IsDeleted = true;
-        //}
-        //await _userCountryRepository.Update(userCountryList);
+        var userCountryList = await _userCountryQueryRepository.GetAllUserCountryListByUserId(request.userId);
+        foreach (var item in userCountryList)
+        {
+            item.IsDeleted = true;
+        }
+        await _userCountryRepository.Update(userCountryList);
 
-        //var userRoleList = await _userRoleQueryRepository.GetAllUserRoleListByUserId(request.userId);
-        //foreach (var item in userRoleList)
-        //{
-        //    item.IsDeleted = true;
-        //}
-        //await _userRole.Update(userRoleList);
-        //var rowsAffected = await _unitOfWork.CommitAsync();
-        var rowsAffected = 0;
+        var userRoleList = await _userRoleQueryRepository.GetAllUserRoleListByUserId(request.userId);
+        foreach (var item in userRoleList)
+        {
+            item.IsDeleted = true;
+        }
+        await _userRole.Update(userRoleList);
+        var rowsAffected = await _unitOfWork.CommitAsync();       
         return new DeleteUserRegistrationResponseDTO(request.userId, rowsAffected > 0, rowsAffected > 0 ? "User Deleted successfully!" : "Error while deleteing User!");
     }
 }

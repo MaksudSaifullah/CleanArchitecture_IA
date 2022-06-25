@@ -49,6 +49,7 @@ import { IconModule, IconSetService } from '@coreui/icons-angular';
 import { HttpClientModule } from '@angular/common/http';
 import { AuthService } from './core/auth/auth.service';
 import { HttpService } from './core/services/http.service';
+import { HotToastModule } from '@ngneat/hot-toast';
 
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
   suppressScrollX: true,
@@ -92,7 +93,8 @@ const APP_CONTAINERS = [
     ListGroupModule,
     CardModule,
     CoreModule,
-    HttpClientModule
+    HttpClientModule,
+    HotToastModule.forRoot()
   ],
   providers: [
     {

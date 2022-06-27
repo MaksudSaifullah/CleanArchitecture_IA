@@ -4,7 +4,7 @@ using MediatR;
 
 namespace Internal.Audit.Application.Features.Countries.Queries.GetCountryList
 {
-    public class GetCountryListQueryHandler : IRequestHandler<GetCountryListQuery, List<CountryDTO>>
+    public class GetCountryListQueryHandler : IRequestHandler<GetCountryListQuery, CountryListPagingDTO>
     {
         private readonly ICountryQueryRepository _countryRepository;
         private readonly IMapper _mapper;

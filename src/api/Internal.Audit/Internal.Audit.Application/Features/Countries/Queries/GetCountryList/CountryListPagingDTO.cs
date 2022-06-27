@@ -8,7 +8,7 @@ namespace Internal.Audit.Application.Features.Countries.Queries.GetCountryList
 {
     public record CountryListPagingDTO
     {
-        public IEnumerable<CountryDTO> CountryList { get; set; } = null!;
+        public IEnumerable<CountryDTO> Items { get; set; } = null!;
         public long TotalCount { get; set; }
     }
 }

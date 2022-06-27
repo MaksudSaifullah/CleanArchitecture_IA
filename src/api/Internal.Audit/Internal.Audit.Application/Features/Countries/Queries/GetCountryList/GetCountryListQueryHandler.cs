@@ -21,7 +21,7 @@ namespace Internal.Audit.Application.Features.Countries.Queries.GetCountryList
 
             var countryList = _mapper.Map<IEnumerable<CountryDTO>>(result).ToList();
 
-            return new CountryListPagingDTO { CountryList = countryList, TotalCount = count };
+            return new CountryListPagingDTO { Items = countryList, TotalCount = count };
         }
     }
 }

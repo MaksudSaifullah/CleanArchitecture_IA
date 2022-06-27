@@ -19,11 +19,11 @@ namespace Internal.Audit.Api.Controllers
             _mediator = madiator ?? throw new ArgumentNullException(nameof(madiator));
         }
 
-        [HttpGet()]
-        public async Task<ActionResult<CountryListPagingDTO>> GetList(int pageSize, int pageNumber)
+        [HttpPost("paginated")]
+        public async Task<ActionResult<CountryListPagingDTO>> GetList(GetCountryListQuery getCountryListQuery)
         {
-            var query = new GetCountryListQuery(pageSize, pageNumber);
-            var countries = await _mediator.Send(query);
+            //var query = new GetCountryListQuery(pageSize, pageNumber);
+            var countries = await _mediator.Send(getCountryListQuery);
             return Ok(countries);
 
         }

@@ -3,6 +3,7 @@ import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http
 import { Observable, throwError } from 'rxjs';
 import { retry, catchError } from 'rxjs/operators';
 import { environment } from '../../../environments/environment';
+import {paginatedModelInterface} from './../interfaces/paginated.interface'
 @Injectable({
   providedIn: 'root',
 })
@@ -16,6 +17,19 @@ export class HttpService {
 
   httpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' })
+  }
+
+  paginatedPost<T>(endpoint:string,_pageSize:number,_pageNumber:number,_searchItem: any): Observable<T> {
+    let requestObject : paginatedModelInterface = {
+      pageNumber:_pageNumber,
+      pagesize:_pageSize,
+      searchTerm:_searchItem
+    }
+    return this.httpClient.post<T>(`${this.hostName}/${endpoint}`, JSON.stringify(requestObject), this.httpOptions)
+      .pipe(
+        retry(2),
+        catchError(this.handleError)
+      )
   }
 
   //#region [ Public ]

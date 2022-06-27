@@ -4,9 +4,11 @@ import { CommonModule } from '@angular/common';
 import { PrivateRoutingModule } from './private-routing.module';
 import {DashboardComponent} from './dashboard/dashboard.component';
 import { DataTablesModule } from "angular-datatables";
+import { UserRegistrationComponent } from './security/user-registration/user-registration.component';
 @NgModule({
   declarations: [
-    DashboardComponent
+    DashboardComponent,
+    UserRegistrationComponent
   ],
   imports: [
     CommonModule,

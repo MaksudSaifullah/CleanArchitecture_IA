@@ -37,16 +37,6 @@ namespace Internal.Audit.Api.Controllers
 
         }
 
-
-        [HttpGet("{id}")]
-        public async Task<ActionResult<CountryByIdDTO>> GetById(Guid Id)
-        {
-            var query = new GetCountryQuery(Id);
-            var users = await _mediator.Send(query);
-            return Ok(users);
-
-        }
-
         [HttpPost]
         public async Task<ActionResult<AddCountryResponseDTO>> Add(AddCountryCommand command)
         {

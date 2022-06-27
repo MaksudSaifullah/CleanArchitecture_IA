@@ -1,1 +1,56 @@
-<p>user-registration works!</p>
+<!-- 
+ <div class="header">
+    <h3>User Registration</h3>
+</div>
+<div class="checkbox-container" style="display: flex;">
+   
+        <input cFormCheckInput id="checkOne" type="checkbox" />
+        <label cFormCheckLabel for="checkOne">Default checkbox</label>
+   
+   
+        <input [checked]="true" cFormCheckInput id="checkTwo" type="checkbox" />
+        <label cFormCheckLabel for="checkTwo">Checked checkbox</label>
+  
+</div> -->
+
+<c-col xs="12">
+    <c-card class="mb-4">
+      <c-card-header>
+        <strong>User Registration</strong> </c-card-header>
+      <c-card-body>       
+     
+          <div formGroupName="flexCheckGroupDisabled">
+              <c-row>
+                <c-col md="4"  *ngFor="let country of countryList">
+                    <c-form-check>
+                        <input cFormCheckInput formControlName="checkThree" id="checkThree" type="checkbox" />
+                        <label cFormCheckLabel for="checkThree">Disabled checkbox</label>
+                      </c-form-check>
+                </c-col>              
+
+              </c-row>
+           
+           
+          </div>
+        <!-- </app-docs-example> -->
+      </c-card-body>
+    </c-card>
+  </c-col>
+
+  <c-container>
+    <c-row class="align-items-start">
+      <c-col>One of three columns</c-col>
+      <c-col>One of three columns</c-col>
+      <c-col>One of three columns</c-col>
+    </c-row>
+    <c-row class="align-items-center">
+      <c-col>One of three columns</c-col>
+      <c-col>One of three columns</c-col>
+      <c-col>One of three columns</c-col>
+    </c-row>
+    <c-row class="align-items-end">
+      <c-col>One of three columns</c-col>
+      <c-col>One of three columns</c-col>
+      <c-col>One of three columns</c-col>
+    </c-row>
+  </c-container>

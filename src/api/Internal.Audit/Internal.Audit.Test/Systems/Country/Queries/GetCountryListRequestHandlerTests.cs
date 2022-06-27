@@ -55,7 +55,7 @@ namespace Internal.Audit.Test.Systems.Country.Queries
             ///assert
             result.ShouldBeOfType<CountryListPagingDTO>();
 
-            result.CountryList.Count().ShouldBe(4);
+            result.Items.Count().ShouldBe(4);
         }
 
         [Fact]

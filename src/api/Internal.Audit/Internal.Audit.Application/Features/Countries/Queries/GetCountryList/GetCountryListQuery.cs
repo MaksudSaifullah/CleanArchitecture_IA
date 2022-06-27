@@ -1,4 +1,9 @@
 ﻿using MediatR;
 
 namespace Internal.Audit.Application.Features.Countries.Queries.GetCountryList;
-public record GetCountryListQuery(int pageSize, int pageNumber) : IRequest<CountryListPagingDTO>;
+public class GetCountryListQuery : IRequest<CountryListPagingDTO>
+{
+    public int pageSize { get; set; }
+    public int pageNumber { get; set; }
+    public dynamic searchTerm { get; set; }
+}

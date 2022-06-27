@@ -9,6 +9,7 @@ import Swal from 'sweetalert2';
 import {FormService} from '../../../../core/services/form.service';
 import {DatatableService} from '../../../../core/services/datatable.service';
 import {AlertService} from '../../../../core/services/alert.service';
+import { paginatedResponseInterface } from 'src/app/core/interfaces/paginated.interface';
 @Component({
   selector: 'app-country',
   templateUrl: './country.component.html',
@@ -49,13 +50,15 @@ export class CountryComponent implements OnInit {
       searching: false,
       ajax: (dataTablesParameters: any, callback) => {
         this.http
-          .get(
-            'api/v1/country/all'
+          .paginatedPost(
+            'api/v1/country/paginated',dataTablesParameters.length,((dataTablesParameters.start/dataTablesParameters.length)+1),{}
           ).subscribe(resp => {
-            that.countries = (resp as country[]);
+            let convertedResp = resp as paginatedResponseInterface<country>;
+            that.countries = convertedResp.items;
             callback({
-              recordsTotal: that.countries.length,
-              recordsFiltered: that.countries.length,
+              recordsTotal: convertedResp.totalCount,
+              recordsFiltered: convertedResp.totalCount,
+
               data: []
             });
           });

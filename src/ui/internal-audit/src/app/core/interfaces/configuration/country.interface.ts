@@ -5,3 +5,4 @@ export interface country {
     remarks: string;
     createdOn: Date;
 }
+

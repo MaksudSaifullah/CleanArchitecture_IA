@@ -1,6 +1,7 @@
 ﻿using Internal.Audit.Application.Contracts.Auth;
 using Internal.Audit.Application.Contracts.Persistent;
 using Internal.Audit.Application.Contracts.Persistent.UserRegistration;
+using MediatR;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,7 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace Internal.Audit.Application.Features.UserList.Queries.GetAuthUser;
-public class GetAuthUserQueryHandler
+public class GetAuthUserQueryHandler : IRequestHandler<GetAuthUserQuery, AuthUserDTO>
 {
     private readonly IUserQueryRepository _userRepository;
     private readonly IJwtTokenService _jwtTokenService;

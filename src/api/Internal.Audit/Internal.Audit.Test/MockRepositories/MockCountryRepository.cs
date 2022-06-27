@@ -19,7 +19,7 @@ namespace Internal.Audit.Test.MockRepositories
         {
             var countries = CountryMockData.GetCountriesData();
             var mockRepo = new Mock<ICountryQueryRepository>();
-            mockRepo.Setup(x => x.GetAll()).ReturnsAsync(countries);
+            mockRepo.Setup(x => x.GetAll(10, 1)).ReturnsAsync((1, countries));
             return mockRepo;
         }
 

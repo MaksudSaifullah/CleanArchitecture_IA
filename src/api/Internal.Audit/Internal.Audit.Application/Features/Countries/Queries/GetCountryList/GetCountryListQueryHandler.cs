@@ -15,11 +15,14 @@ namespace Internal.Audit.Application.Features.Countries.Queries.GetCountryList
             _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
         }
 
-        public async Task<List<CountryDTO>> Handle(GetCountryListQuery request, CancellationToken cancellationToken)
+        public async Task<CountryListPagingDTO> Handle(GetCountryListQuery request, CancellationToken cancellationToken)
         {
-            var countries = await _countryRepository.GetAll();
-            return _mapper.Map<List<CountryDTO>>(countries);
-        }        
+            var (count, result) = await _countryRepository.GetAll(request.pageSize, request.pageNumber);
+
+            var countryList = _mapper.Map<IEnumerable<CountryDTO>>(result).ToList();
+
+            return new CountryListPagingDTO { CountryList = countryList, TotalCount = count };
+        }
     }
 }
 

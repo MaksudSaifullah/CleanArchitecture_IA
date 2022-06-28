@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 
 import { SecurityRoutingModule } from './security-routing.module';
 import { UserRegistrationComponent } from './user-registration/user-registration.component';
+import { ButtonModule, CardModule, FormModule, GridModule,MultiSelectModule} from '@coreui/angular-pro';
 
 
 @NgModule({
@@ -11,7 +12,12 @@ import { UserRegistrationComponent } from './user-registration/user-registration
   ],
   imports: [
     CommonModule,
-    SecurityRoutingModule
+    SecurityRoutingModule,
+    GridModule,
+    CardModule,
+    FormModule,
+    MultiSelectModule
+   
   ]
 })
 export class SecurityModule { }

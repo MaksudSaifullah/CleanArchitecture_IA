@@ -1,1 +1,102 @@
-<p>user-registration works!</p>
+
+<c-col xs="12">
+  <c-card class="mb-4">
+    <c-card-header>
+      <strong>User Registration</strong>
+    </c-card-header>
+    <c-card-body>
+
+      <div formGroupName="flexCheckGroupDisabled">
+        <c-row>
+          <c-col md="4" *ngFor="let country of countries">
+            <c-form-check>
+              <input cFormCheckInput formControlName="checkThree" [id]="country.id" type="checkbox" />
+              <label cFormCheckLabel for="checkThree">{{country.name}}</label>
+            </c-form-check>
+          </c-col>
+        </c-row>
+      </div>
+
+      <br>
+
+      <c-col xs="12">
+        <c-card class="mb-4">
+          <c-card-header>
+            <strong>User Information</strong>
+          </c-card-header>
+          <c-card-body>
+            <p class="text-medium-emphasis small">
+              Please give all the relevant employee information below :
+            </p>
+            <c-row [gutter]="{g: 2}">
+              <c-col md>
+                <div cFormFloating>
+                  <input cFormControl id="floatingInputGrid" placeholder="Give Name" type="text" value="" />
+                  <label cLabel for="floatingInputGrid">Employee Name</label>
+                </div>
+              </c-col>
+              <c-col md>
+                <div cFormFloating>
+                  <input cFormControl id="floatingInputGrid" placeholder="abc@example.com" type="email" value="" />
+                  <label cLabel for="floatingInputGrid">Email address</label>
+                </div>
+              </c-col>
+              <c-col md>
+                <div cFormFloating>
+                  <select aria-label="Floating label select example" cSelect id="floatingSelectGrid">
+                    <option>Select Designation</option>
+                    <option *ngFor="let designation of designations" [value]="designation.id">
+                      {{designation.name}}
+                    </option>
+                  </select>
+                </div>
+              </c-col>
+            </c-row>
+            <br>
+            <c-row [gutter]="{g: 2}">
+              <c-col md>
+                <div cFormFloating>
+                  <input cFormControl id="floatingInputGrid" placeholder="Give Name" type="text" value="" />
+                  <label cLabel for="floatingInputGrid">User Name</label>
+                </div>
+              </c-col>
+              <c-col md>
+                <div cFormFloating>
+                  <input cFormControl id="floatingInputGrid" placeholder="Password" type="password" value="" />
+                  <label cLabel for="floatingInputGrid">Password</label>
+                </div>
+              </c-col>
+              <c-col md>
+                <div cFormFloating>
+                  <input cFormControl id="floatingInputGrid" placeholder="Confirm Password" type="password" value="" />
+                  <label cLabel for="floatingInputGrid">Confirm Password</label>
+                </div>
+              </c-col>
+            </c-row>
+          </c-card-body>
+        </c-card>
+      </c-col>
+
+      <br>
+
+      <c-col xs="12">
+        <c-card class="mb-4">
+          <c-card-header>
+            <strong>User Role Mapping</strong>
+          </c-card-header>
+          <c-card-body>
+            <c-row [gutter]="{g: 2}">
+              <c-col md>
+                <c-multi-select multiple>
+                  <c-multi-select-option *ngFor="let role of roles" [value]="role.id">{{role.name}}
+                  </c-multi-select-option>
+                </c-multi-select>
+              </c-col>
+            </c-row>
+          </c-card-body>
+        </c-card>
+      </c-col>
+
+    </c-card-body>
+  </c-card>
+</c-col>

@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 
 import { SecurityRoutingModule } from './security-routing.module';
 import { UserRegistrationComponent } from './user-registration/user-registration.component';
+import { ButtonModule, CardModule, FormModule, GridModule,MultiSelectModule} from '@coreui/angular-pro';
 import { ButtonModule, CardModule, FormModule, GridModule} from '@coreui/angular-pro';
 import { DesignationComponent } from './designation/designation.component';
 
@@ -17,7 +18,8 @@ import { DesignationComponent } from './designation/designation.component';
     SecurityRoutingModule,
     GridModule,
     CardModule,
-    FormModule
+    FormModule,
+    MultiSelectModule
    
   ]
 })

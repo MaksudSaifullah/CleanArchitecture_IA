@@ -1,4 +1,4 @@
-export interface UserRegistration {
+export interface role {
     id: string;
     name: string;
 }

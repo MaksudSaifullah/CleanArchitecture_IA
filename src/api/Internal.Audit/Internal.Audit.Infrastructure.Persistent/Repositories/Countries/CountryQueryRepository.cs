@@ -13,10 +13,13 @@ namespace Internal.Audit.Infrastructure.Persistent.Repositories.Countries
         public CountryQueryRepository(string _connectionString) : base(_connectionString)
         {
         }
-        public async Task<IEnumerable<Country>> GetAll()
+        public async Task<(long, IEnumerable<Country>)> GetAll(int pageSize, int pageNumber)
         {
-            var query = @"SELECT [Id],[Name],[Code],[Remarks],[CreatedOn] FROM [common].[Country] WHERE [IsDeleted] = 0";
-            return await Get(query);
+
+            var query = "EXEC [dbo].[GetCountryListProcedure] @pageSize,@pageNumber";
+            var parameters = new Dictionary<string, object> { { "@pageSize", pageSize }, { "@pageNumber", pageNumber } };
+            return await GetWithPagingInfo(query, parameters, false);
+
         }
         public async Task<Country> GetById(Guid id)
         {

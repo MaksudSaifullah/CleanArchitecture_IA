@@ -19,21 +19,21 @@ namespace Internal.Audit.Api.Controllers
             _mediator = madiator ?? throw new ArgumentNullException(nameof(madiator));
         }
 
-        [HttpGet("all")]
-        public async Task<ActionResult<IEnumerable<CountryDTO>>> GetList()
+        [HttpPost("paginated")]
+        public async Task<ActionResult<CountryListPagingDTO>> GetList(GetCountryListQuery getCountryListQuery)
         {
-            var query = new GetCountryListQuery();
-            var users = await _mediator.Send(query);
-            return Ok(users);
+            //var query = new GetCountryListQuery(pageSize, pageNumber);
+            var countries = await _mediator.Send(getCountryListQuery);
+            return Ok(countries);
 
         }
 
-        [HttpGet("{Id}")]
+        [HttpGet("{id}")]
         public async Task<ActionResult<CountryByIdDTO>> GetById(Guid Id)
         {
             var query = new GetCountryQuery(Id);
-            var users = await _mediator.Send(query);
-            return Ok(users);
+            var countries = await _mediator.Send(query);
+            return Ok(countries);
 
         }
 
@@ -51,7 +51,7 @@ namespace Internal.Audit.Api.Controllers
             return Ok(result);
         }
 
-        [HttpDelete("{Id}")]
+        [HttpDelete("{id}")]
         public async Task<ActionResult<DeleteCountryResponseDTO>> Delete(Guid Id)
         {
             var command = new DeleteCountryCommand(Id);

@@ -5,6 +5,7 @@ import { designation } from '../../../../core/interfaces/common/designation.inte
 import { role } from '../../../../core/interfaces/security/role.interface';
 import { FormService } from '../../../../core/services/form.service';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { paginatedResponseInterface } from 'src/app/core/interfaces/paginated.interface';
 
 @Component({
   selector: 'app-user-registration',
@@ -37,8 +38,10 @@ export class UserRegistrationComponent implements OnInit {
 
 
   LoadCountry() {
-    this.http.get('country/all').subscribe(resp => {
-      this.countries = (resp as country[]);
+    this.http.paginatedPost('country/paginated',20,1,{}).subscribe(resp => {
+      let convertedResp = resp as paginatedResponseInterface<country>;
+      this.countries = convertedResp.items;
+     
       console.log(this.countries);
     })
   }

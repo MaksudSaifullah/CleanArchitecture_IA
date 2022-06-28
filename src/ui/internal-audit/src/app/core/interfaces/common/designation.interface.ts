@@ -1,4 +1,4 @@
-export interface UserRegistration {
+export interface designation {
     id: string;
     name: string;
 }

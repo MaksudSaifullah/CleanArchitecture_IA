@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { paginatedModelInterface, paginatedResponseInterface } from 'src/app/core/interfaces/paginated.interface';
 import { HttpService } from 'src/app/core/services/http.service';
 import {compositeUser} from '../../../core/interfaces/configuration/compositeUser.interface'
 
@@ -10,6 +11,10 @@ import {compositeUser} from '../../../core/interfaces/configuration/compositeUse
 export class UserlistComponent implements OnInit {
   dtOptions: DataTables.Settings = {};
   compositeUsers: compositeUser [] = [];
+
+  userName: string= "";
+  employeeName:string= "";
+  userRole:string ="";
 
   constructor(private http: HttpService ) { }
 
@@ -29,13 +34,14 @@ export class UserlistComponent implements OnInit {
       searching: false,
       ajax: (dataTablesParameters: any, callback) => {
         this.http
-          .get(
-            'api/v1/userlist/GetList'
+          .paginatedPost(
+            'userlist/Paginated',dataTablesParameters.length,((dataTablesParameters.start/dataTablesParameters.length)+1),{"userName": this.userName,"employeeName": this.employeeName,"userRole": this.userRole}
           ).subscribe(resp => {
-            that.compositeUsers = (resp as compositeUser[]);
+            var convertedResponse = resp as paginatedResponseInterface<compositeUser>;
+            that.compositeUsers = convertedResponse.items;
             callback({
-              recordsTotal: that.compositeUsers.length,
-              recordsFiltered: that.compositeUsers.length,
+              recordsTotal: convertedResponse.totalCount,
+              recordsFiltered: convertedResponse.totalCount,
               data: []
             });
           });

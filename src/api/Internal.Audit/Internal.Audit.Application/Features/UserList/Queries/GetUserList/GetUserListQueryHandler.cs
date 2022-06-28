@@ -22,10 +22,10 @@ public class GetUserListQueryHandler : IRequestHandler<GetUserListQuery, UserLis
     }
     public async Task<UserListWithPagingInfoDTO> Handle(GetUserListQuery request, CancellationToken cancellationToken)
     {
-         var (count, result) = await _userListRepository.GetAll(request.userName, request. employeeName, request.userRole, request.pageSize,request.pageNumber);
+         var (count, result) = await _userListRepository.GetAll(request.searchTerm.Username, request.searchTerm.EmployeeName, request.searchTerm.UserRole, request.pageSize,request.pageNumber);
 
          var userList =  _mapper.Map<IEnumerable<CompositeUser>, IEnumerable<GetUserListResponseDTO>>(result).ToList();
 
-        return new UserListWithPagingInfoDTO { UserList = userList , TotalCount = count};
+        return new UserListWithPagingInfoDTO { Items = userList , TotalCount = count};
     }
 }

@@ -8,7 +8,7 @@ namespace Internal.Audit.Application.Features.UserList.Queries.GetUserList
 {
     public record UserListWithPagingInfoDTO
     {
-        public IEnumerable<GetUserListResponseDTO> UserList { get; set; } = null!;
+        public IEnumerable<GetUserListResponseDTO> Items { get; set; } = null!;
         public long TotalCount { get; set; }
     }
 }

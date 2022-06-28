@@ -6,6 +6,7 @@ import {DashboardComponent} from './dashboard/dashboard.component';
 import { DataTablesModule } from "angular-datatables";
 import { ButtonModule, CardModule, FormModule,MultiSelectModule  } from '@coreui/angular-pro';
 import { UserlistComponent } from './userlist/userlist.component';
+import { FormsModule } from '@angular/forms';
 @NgModule({
   declarations: [
     DashboardComponent,
@@ -18,6 +19,7 @@ import { UserlistComponent } from './userlist/userlist.component';
     ButtonModule,
     CardModule,
     FormModule,
+    FormsModule,
     MultiSelectModule 
   ]
 })

@@ -11,13 +11,13 @@
               <div class="col-lg-12">
                 <div class="row">
                   <div class="col-3">
-                    <input type="text" class="form-control pull-right" placeholder="User Name"/>
+                    <input type="text" [(ngModel)]="userName" class="form-control pull-right" placeholder="User Name"/>
                   </div>
                   <div class="col-3">
-                    <input type="text" class="form-control pull-right" placeholder="Employee Name"/>
+                    <input type="text" [(ngModel)]="employeeName" class="form-control pull-right" placeholder="Employee Name"/>
                   </div>
                   <div class="col-3">
-                    <input type="text" class="form-control pull-right" placeholder="User Role"/>
+                    <input type="text"  [(ngModel)]="userRole" class="form-control pull-right" placeholder="User Role"/>
                   </div>
                   <div class="col-3">
                     <button type="button" class="btn btn-secondary mr-1 pull-right btn-block" data-toggle="modal" >
@@ -45,14 +45,14 @@
                   </thead>
                   <tbody *ngIf="compositeUsers?.length != 0">
                     <tr *ngFor="let user of compositeUsers">
-                      <td>{{ user.UserName }}</td>
-                      <td>{{ user.Entity }}</td>
-                      <td>{{ user.EmployeeName }}</td>
-                      <td>{{ user.UserRole }}</td>
-                      <td>{{ user.IsEnabled }}</td>
-                      <td>{{ user.IsAccountLocked }}</td>
-                      <td>{{ user.IsAccountExpired }}</td>
-                      <td>{{ user.IsPasswordExpired }}</td>
+                      <td>{{ user.userName }}</td>
+                      <td>{{ user.entity }}</td>
+                      <td>{{ user.employeeName }}</td>
+                      <td>{{ user.userRole }}</td>
+                      <td>{{ user.isEnabled }}</td>
+                      <td>{{ user.isAccountLocked }}</td>
+                      <td>{{ user.isAccountExpired }}</td>
+                      <td>{{ user.isPasswordExpired }}</td>
                       <td>
                         <div class="btn-group" role="group" aria-label="Basic example">
                           <button type="button" class="btn btn-secondary" (click)="edit(verticallyCenteredModal,user)">

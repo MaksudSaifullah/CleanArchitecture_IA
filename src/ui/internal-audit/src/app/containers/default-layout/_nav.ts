@@ -52,4 +52,15 @@ export const navItems: INavData[] = [
       },
     ]
   },
+  {
+    name: 'Configuration',
+    url: '/configuration',
+    iconComponent: { name: 'cilSettings' },
+    children: [
+      {
+        name: 'Country',
+        url: '/configuration/country',
+      },
+    ]
+  },
 ];

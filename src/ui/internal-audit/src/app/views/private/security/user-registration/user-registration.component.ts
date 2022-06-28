@@ -37,21 +37,21 @@ export class UserRegistrationComponent implements OnInit {
 
 
   LoadCountry() {
-    this.http.get('api/v1/country/all').subscribe(resp => {
+    this.http.get('country/all').subscribe(resp => {
       this.countries = (resp as country[]);
       console.log(this.countries);
     })
   }
 
   LoadDesignation() {
-    this.http.get('api/v1/designation/all').subscribe(resp => {
+    this.http.get('designation/all').subscribe(resp => {
       this.designations = (resp as designation[]);
       console.log(this.designations);
     })
   }
 
   LoadRole() {
-    this.http.get('api/v1/role/all').subscribe(resp => {
+    this.http.get('role/all').subscribe(resp => {
       this.roles = (resp as role[]);
       console.log(this.roles);
     })

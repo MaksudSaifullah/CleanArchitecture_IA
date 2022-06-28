@@ -6,6 +6,7 @@ import { role } from '../../../../core/interfaces/security/role.interface';
 import { FormService } from '../../../../core/services/form.service';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { paginatedResponseInterface } from 'src/app/core/interfaces/paginated.interface';
+import {CutomvalidatorService} from'src/app/core/services/cutomvalidator.service'
 
 @Component({
   selector: 'app-user-registration',
@@ -19,30 +20,40 @@ export class UserRegistrationComponent implements OnInit {
   countryForm: FormGroup;
   formService: FormService = new FormService();
 
-  constructor(private http: HttpService, private fb: FormBuilder) {
+
+  constructor(private http: HttpService, private fb: FormBuilder,  private customValidator: CutomvalidatorService) {
     this.LoadDropDownValues();
 
     this.countryForm = this.fb.group({
       id: [''],
       empName: ['', [Validators.required, Validators.maxLength(20), Validators.minLength(4)]],
-      empEmai: ['', [Validators.required, Validators.maxLength(30), Validators.minLength(7)]],
-      empDesignation: ['',[Validators.required]],
+      empEmail: ['', [Validators.required, Validators.maxLength(30), Validators.minLength(7)]],
+      empDesignation: ['0',[Validators.required]],
+      userName: ['',[Validators.required]],
+      userPassword: ['',[Validators.required]],
+      userConfirmPassword: ['',[Validators.required]],
+      roleList:[''],
       countryListSelected:['']
-    })
+    },
+    {
+      validator: this.customValidator.MatchPassword('userPassword', 'userConfirmPassword'),     
+    }
+    )
+
 
   }
 
   ngOnInit(): void {
 
   }
-
+  get countryFormControl() {
+    return this.countryForm.controls;
+  }
 
   LoadCountry() {
     this.http.paginatedPost('country/paginated',20,1,{}).subscribe(resp => {
       let convertedResp = resp as paginatedResponseInterface<country>;
-      this.countries = convertedResp.items;
-     
-      console.log(this.countries);
+      this.countries = convertedResp.items;     
     })
   }
 
@@ -72,6 +83,7 @@ export class UserRegistrationComponent implements OnInit {
         else{
           
         }
-      }  
+      } 
+       
 
 }

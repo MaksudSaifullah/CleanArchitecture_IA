@@ -5,6 +5,102 @@
       <strong>User Registration</strong>
     </c-card-header>
     <c-card-body>
+      <form [formGroup]="countryForm" (ngSubmit)="onSubmit()" novalidate>
+        <div>
+          <input type="hidden" formControlName="id"/>
+          <c-row>
+            <c-col md="4" *ngFor="let country of countries">
+              <c-form-check>
+                <input  formControlName="countryListSelected" [id]="country.id" type="checkbox" />
+                <label  for="checkThree" class="m-1"> {{country.name}}</label>
+              </c-form-check>
+            </c-col>
+          </c-row>
+        </div>
+        <br>
+        
+        <c-col xs="12">
+          <c-card class="mb-4">
+            <c-card-header>
+              <strong>User Information</strong>
+            </c-card-header>
+            <c-card-body>
+              <p class="text-medium-emphasis small">
+                Please give all the relevant employee information below :
+              </p>
+
+              <c-row [gutter]="{g: 2}">               
+                <c-col md>
+                  <div cFormFloating>                 
+                    <input type="text" class="form-control" formControlName="empName" name="empName" id="empName" placeholder="Name">
+                    <label cLabel for="empName">Employee Name</label>
+                  </div>
+                </c-col>
+                <c-col md>
+                  <div cFormFloating> 
+                    <input cFormControl formControlName="empEmai" name="empEmai" id="empEmai" placeholder="abc@example.com" type="email" autocomplete="false"/>
+                    <label cLabel for="empEmai">Email address</label>
+                  </div>
+                </c-col>
+                <c-col md>
+                  <div cFormFloating>
+                    <select aria-label="Floating label select example" cSelect id="empDesignation">
+                      <option selected>Select Designation</option>
+                      <option *ngFor="let designation of designations" [value]="designation.id">
+                        {{designation.name}}
+                      </option>
+                    </select>
+                  </div>
+                </c-col>
+              </c-row>
+              <br>
+
+              <c-row [gutter]="{g: 2}">
+                <c-col md>
+                  <div cFormFloating>
+                    <input cFormControl id="floatingInputGrid" placeholder="Give Name" type="text" value="" />
+                    <label cLabel for="floatingInputGrid">User Name</label>
+                  </div>
+                </c-col>
+                <c-col md>
+                  <div cFormFloating>
+                    <input cFormControl id="floatingInputGrid" placeholder="Password" type="password" value="" />
+                    <label cLabel for="floatingInputGrid">Password</label>
+                  </div>
+                </c-col>
+                <c-col md>
+                  <div cFormFloating>
+                    <input cFormControl id="floatingInputGrid" placeholder="Confirm Password" type="password" value="" />
+                    <label cLabel for="floatingInputGrid">Confirm Password</label>
+                  </div>
+                </c-col>
+              </c-row>
+            </c-card-body>
+          </c-card>
+        </c-col>
+
+        <c-col xs="12">
+          <c-col md>
+            <button cButton class="btn btn-primary btnSaveColor me-1" (click)="onSubmit()">Save</button>
+            <button cButton class="btn btn-danger btnCancelColor me-1" onclick=" window.location.reload();">Cancel</button>
+  
+          </c-col>
+        </c-col>
+      </form>
+
+    
+     
+    </c-card-body>
+    </c-card>
+</c-col>
+
+<!-- 
+<c-col xs="12">
+  <c-card class="mb-4">
+    <c-card-header>
+      <strong>User Registration</strong>
+    </c-card-header>
+    <c-card-body>
 
       <div formGroupName="flexCheckGroupDisabled">
         <c-row>
@@ -29,21 +125,22 @@
               Please give all the relevant employee information below :
             </p>
             <c-row [gutter]="{g: 2}">
+              <input type="hidden" formControlName="id"/>
               <c-col md>
-                <div cFormFloating>
-                  <input cFormControl id="floatingInputGrid" placeholder="Give Name" type="text" value="" />
-                  <label cLabel for="floatingInputGrid">Employee Name</label>
+                <div cFormFloating>                 
+                  <input type="text" class="form-control" formControlName="empName" name="empName" id="empName" placeholder="Name">
+                  <label cLabel for="empName">Employee Name</label>
+                </div>
+              </c-col>
+              <c-col md>
+                <div cFormFloating> 
+                  <input cFormControl id="empEmai" placeholder="abc@example.com" type="email"/>
+                  <label cLabel for="empEmai">Email address</label>
                 </div>
               </c-col>
               <c-col md>
                 <div cFormFloating>
-                  <input cFormControl id="floatingInputGrid" placeholder="abc@example.com" type="email" value="" />
-                  <label cLabel for="floatingInputGrid">Email address</label>
-                </div>
-              </c-col>
-              <c-col md>
-                <div cFormFloating>
-                  <select aria-label="Floating label select example" cSelect id="floatingSelectGrid">
+                  <select aria-label="Floating label select example" cSelect id="empDesignation">
                     <option>Select Designation</option>
                     <option *ngFor="let designation of designations" [value]="designation.id">
                       {{designation.name}}
@@ -97,6 +194,14 @@
         </c-card>
       </c-col>
 
+      <c-col xs="12">
+        <c-col md>
+          <button cButton class="btn btn-primary btnSaveColor me-1" (click)="onSubmit()">Save</button>
+          <button cButton class="btn btn-danger btnCancelColor me-1" onclick=" window.location.reload();">Cancel</button>
+
+        </c-col>
+      </c-col>
+
     </c-card-body>
   </c-card>
-</c-col>
+</c-col>  -->

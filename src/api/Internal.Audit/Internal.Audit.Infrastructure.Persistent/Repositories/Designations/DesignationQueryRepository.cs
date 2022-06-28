@@ -7,6 +7,13 @@ public class DesignationQueryRepository : QueryRepositoryBase<Designation>, IDes
     public DesignationQueryRepository(string _connectionString) : base(_connectionString)
     {
     }
+
+    public async Task<(long, IEnumerable<Designation>)> GetAll(int pageSize, int pageNumber)
+    {
+        var query = "EXEC [dbo].[GetDesignationListProcedure] @pageSize,@pageNumber";
+        var parameters = new Dictionary<string, object> { { "@pageSize", pageSize }, { "@pageNumber", pageNumber } };
+        return await GetWithPagingInfo(query, parameters, false);
+    }
     public async Task<IEnumerable<Designation>> GetAll()
     {
         var query = "SELECT [Id],[Name],[Description],[IsActive] FROM [common].[Designation] WHERE [IsDeleted] = 0";

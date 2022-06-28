@@ -3,9 +3,11 @@ import { CommonModule } from '@angular/common';
 
 import { SecurityRoutingModule } from './security-routing.module';
 import { UserRegistrationComponent } from './user-registration/user-registration.component';
-import { ButtonModule, CardModule, FormModule, GridModule,MultiSelectModule} from '@coreui/angular-pro';
-import { ButtonModule, CardModule, FormModule, GridModule} from '@coreui/angular-pro';
+import { ButtonModule, CardModule, FormModule, GridModule,ModalModule,MultiSelectModule} from '@coreui/angular-pro';
+//import { ButtonModule, CardModule, FormModule, GridModule} from '@coreui/angular-pro';
 import { DesignationComponent } from './designation/designation.component';
+import { ReactiveFormsModule } from '@angular/forms';
+import { DataTablesModule } from 'angular-datatables';
 
 
 @NgModule({
@@ -19,7 +21,11 @@ import { DesignationComponent } from './designation/designation.component';
     GridModule,
     CardModule,
     FormModule,
-    MultiSelectModule
+    MultiSelectModule,
+    ModalModule,
+    ButtonModule,
+    ReactiveFormsModule,
+    DataTablesModule
    
   ]
 })

@@ -17,14 +17,14 @@ namespace Internal.Audit.Api.Controllers
             _mediator = madiator ?? throw new ArgumentNullException(nameof(madiator));
         }
 
-        [HttpGet("all")]
-        public async Task<ActionResult<IEnumerable<GetDesignationListResponseDTO>>> GetList()
-        {
-            var query = new GetDesignationListQuery();
-            var users = await _mediator.Send(query);
-            return Ok(users);
+        [HttpPost("paginated")]
+        public async Task<ActionResult<GetDesignationListPagingDTO>> GetList(GetDesignationListQuery getDesignationListQuery)
+        {           
+            var designations = await _mediator.Send(getDesignationListQuery);
+            return Ok(designations);
 
         }
+
 
         //[HttpGet("{Id}")]
         //public async Task<ActionResult<CountryByIdDTO>> GetById(Guid Id)

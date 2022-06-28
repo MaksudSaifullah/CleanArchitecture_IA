@@ -42,10 +42,11 @@
                   <thead>
                     <tr>
                       <th>Designation</th>
-                      <th>Description</th>                      
+                      <th>Description</th>   
+                      <th>Action</th>                      
                     </tr>
                   </thead>
-                  <tbody *ngIf="designation?.length != 0">
+                  <tbody *ngIf="designations?.length != 0">
                     <tr *ngFor="let designation of designations">
                       <td>{{ designation.name }}</td>
                       <td>{{ designation.description }}</td>                      
@@ -61,7 +62,7 @@
                       </td>
                     </tr>
                   </tbody>
-                  <tbody *ngIf="designation?.length == 0">
+                  <tbody *ngIf="designations?.length == 0">
                     <tr>
                       <td colspan="5" class="no-data-available">No data!</td>
                     </tr>
@@ -74,4 +75,55 @@
       </div>
     </div>
   </div>
+
+  <form [formGroup]="designationForm" (ngSubmit)="onSubmit(verticallyCenteredModal)" novalidate>
+    <c-modal #verticallyCenteredModal alignment="center" id="verticallyCenteredModal">
+      <c-modal-header>
+        <h5 cModalTitle *ngIf="!formService.isEdit(this.designationForm.get('id'))">Create Designation</h5>
+        <h5 cModalTitle *ngIf="formService.isEdit(this.designationForm.get('id'))">Update Designation</h5>
+        <button [cModalToggle]="verticallyCenteredModal.id" cButtonClose></button>
+      </c-modal-header>
+      <c-modal-body>
+        <div class="col-md-12" >
+          <input type="hidden" formControlName="id"/>
+    
+            <div class="form-floating mb-3">
+              <input type="text" class="form-control" formControlName="name" id="name" placeholder="Name">
+              <label for="floatingInput">Name</label>
+            </div>
+    
+    
+            <div cRow *ngIf="designationForm.get('name')?.invalid &&
+            designationForm.get('name')?.errors &&
+                  (designationForm.get('name')?.dirty || designationForm.get('name')?.touched)">
+              <small class="text-danger"
+                  *ngIf="designationForm.get('name').hasError('required')">
+                  This field is required.
+              </small>
+              <small class="text-danger"
+                  *ngIf="designationForm.get('name').hasError('minlength')">
+                  The minimum length for this field is {{designationForm.get('name').errors.minlength.requiredLength}} characters.
+              </small>
+              <small class="text-danger"
+                  *ngIf="designationForm.get('name').hasError('maxlength')">
+                  The maximum length for this field is {{designationForm.get('name').errors.maxlength.requiredLength}} characters.
+              </small>
+          </div>            
+    
+            <div class="form-floating">
+              <textarea class="form-control" placeholder="Description" formControlName="description" id="description"></textarea>
+              <label for="floatingTextarea">Description</label>
+            </div>
+    
+        </div>
+      </c-modal-body>
+      <c-modal-footer>
+        <button [cModalToggle]="verticallyCenteredModal.id" cButton color="secondary">
+          Close
+        </button>
+        <button cButton color="primary" (click)="onSubmit(verticallyCenteredModal)">Save</button>
+      </c-modal-footer>
+    </c-modal>
+    </form>
+    
   

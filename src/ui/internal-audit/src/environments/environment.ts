@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  hostName: 'https://localhost:7049',
+  hostName: 'https://localhost:7049/api/v1',
   captcha_public_key:'6Lfmr4AgAAAAAKy7KpD1F6qGRQ5ahAQEAP7nVLrq'
 };
 

@@ -9,6 +9,7 @@ import Swal from 'sweetalert2';
 import {FormService} from '../../../../core/services/form.service';
 import {DatatableService} from '../../../../core/services/datatable.service';
 import {AlertService} from '../../../../core/services/alert.service';
+import { paginatedResponseInterface } from 'src/app/core/interfaces/paginated.interface';
 @Component({
   selector: 'app-country',
   templateUrl: './country.component.html',
@@ -49,13 +50,15 @@ export class CountryComponent implements OnInit {
       searching: false,
       ajax: (dataTablesParameters: any, callback) => {
         this.http
-          .get(
-            'api/v1/country/all'
+          .paginatedPost(
+            'country/paginated',dataTablesParameters.length,((dataTablesParameters.start/dataTablesParameters.length)+1),{}
           ).subscribe(resp => {
-            that.countries = (resp as country[]);
+            let convertedResp = resp as paginatedResponseInterface<country>;
+            that.countries = convertedResp.items;
             callback({
-              recordsTotal: that.countries.length,
-              recordsFiltered: that.countries.length,
+              recordsTotal: convertedResp.totalCount,
+              recordsFiltered: convertedResp.totalCount,
+
               data: []
             });
           });
@@ -68,7 +71,7 @@ export class CountryComponent implements OnInit {
       const localmodalId = modalId;
         if(this.countryForm.valid){
           if(this.formService.isEdit(this.countryForm.get('id') as FormControl)){
-            this.http.put('api/v1/country',this.countryForm.value,null).subscribe(x=>{
+            this.http.put('country',this.countryForm.value,null).subscribe(x=>{
               localmodalId.visible = false;
               this.dataTableService.redraw(this.datatableElement);
               this.AlertService.success('Country Saved Successful');
@@ -76,7 +79,7 @@ export class CountryComponent implements OnInit {
             });
           }
           else{
-            this.http.post('api/v1/country',this.countryForm.value).subscribe(x=>{
+            this.http.post('country',this.countryForm.value).subscribe(x=>{
               localmodalId.visible = false;
               this.dataTableService.redraw(this.datatableElement);
               this.AlertService.success('Country Saved Successful');
@@ -89,7 +92,7 @@ export class CountryComponent implements OnInit {
       const localmodalId = modalId;
       console.log(person.id)
       this.http
-        .getById('api/v1/country',person.id)
+        .getById('country',person.id)
         .subscribe(res => {
             const countryResponse = res as country;
             this.countryForm.setValue({id : countryResponse.id, name : countryResponse.name, remarks: countryResponse.remarks, code: countryResponse.code});
@@ -100,7 +103,7 @@ export class CountryComponent implements OnInit {
       const that = this;
       this.AlertService.confirmDialog().then(res =>{
         if(res.isConfirmed){
-            this.http.delete('api/v1/country/'+ id ,{}).subscribe(response=>{
+            this.http.delete('country/'+ id ,{}).subscribe(response=>{
             this.AlertService.successDialog('Deleted','Country deleted successfully.');
             this.dataTableService.redraw(that.datatableElement);
           })

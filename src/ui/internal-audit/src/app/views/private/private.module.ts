@@ -4,6 +4,7 @@ import { CommonModule } from '@angular/common';
 import { PrivateRoutingModule } from './private-routing.module';
 import {DashboardComponent} from './dashboard/dashboard.component';
 import { DataTablesModule } from "angular-datatables";
+import { ButtonModule, CardModule, FormModule,MultiSelectModule  } from '@coreui/angular-pro';
 import { UserlistComponent } from './userlist/userlist.component';
 @NgModule({
   declarations: [
@@ -13,7 +14,11 @@ import { UserlistComponent } from './userlist/userlist.component';
   imports: [
     CommonModule,
     PrivateRoutingModule,
-    DataTablesModule
+    DataTablesModule,
+    ButtonModule,
+    CardModule,
+    FormModule,
+    MultiSelectModule 
   ]
 })
 export class PrivateModule { }

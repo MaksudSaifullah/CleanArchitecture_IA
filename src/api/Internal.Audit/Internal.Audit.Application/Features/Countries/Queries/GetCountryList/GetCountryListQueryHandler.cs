@@ -4,7 +4,7 @@ using MediatR;
 
 namespace Internal.Audit.Application.Features.Countries.Queries.GetCountryList
 {
-    public class GetCountryListQueryHandler : IRequestHandler<GetCountryListQuery, List<CountryDTO>>
+    public class GetCountryListQueryHandler : IRequestHandler<GetCountryListQuery, CountryListPagingDTO>
     {
         private readonly ICountryQueryRepository _countryRepository;
         private readonly IMapper _mapper;
@@ -15,11 +15,14 @@ namespace Internal.Audit.Application.Features.Countries.Queries.GetCountryList
             _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
         }
 
-        public async Task<List<CountryDTO>> Handle(GetCountryListQuery request, CancellationToken cancellationToken)
+        public async Task<CountryListPagingDTO> Handle(GetCountryListQuery request, CancellationToken cancellationToken)
         {
-            var countries = await _countryRepository.GetAll();
-            return _mapper.Map<List<CountryDTO>>(countries);
-        }        
+            var (count, result) = await _countryRepository.GetAll(request.pageSize, request.pageNumber);
+
+            var countryList = _mapper.Map<IEnumerable<CountryDTO>>(result).ToList();
+
+            return new CountryListPagingDTO { Items = countryList, TotalCount = count };
+        }
     }
 }
 

@@ -13,8 +13,9 @@ const routes: Routes = [{
     import('./configuration/configuration.module').then((m) => m.ConfigurationModule)
 },
 {
-  path:'userlist',
-  component:UserlistComponent,
+  path: 'security',
+  loadChildren: () =>
+    import('./security/security.module').then((m) => m.SecurityModule)
 },
 ];
 

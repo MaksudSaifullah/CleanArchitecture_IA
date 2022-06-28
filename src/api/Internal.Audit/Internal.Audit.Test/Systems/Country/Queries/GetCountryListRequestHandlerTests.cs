@@ -35,6 +35,8 @@ namespace Internal.Audit.Test.Systems.Country.Queries
                 c.AddProfile<MappingProfile>();
             });
 
+            _countryListRequest = new GetCountryListQuery(10, 1);
+
             _mapper = mapperConfig.CreateMapper();
 
             _countryRequest = new GetCountryQuery(new Guid("791D35FF-9EA2-4C7B-AA3A-840F50DC59C4"));
@@ -51,9 +53,9 @@ namespace Internal.Audit.Test.Systems.Country.Queries
             var result = await handler.Handle(_countryListRequest, CancellationToken.None);
 
             ///assert
-            result.ShouldBeOfType<List<CountryDTO>>();
+            result.ShouldBeOfType<CountryListPagingDTO>();
 
-            result.Count().ShouldBe(4);
+            result.Items.Count().ShouldBe(4);
         }
 
         [Fact]

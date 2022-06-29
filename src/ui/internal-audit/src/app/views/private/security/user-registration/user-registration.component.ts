@@ -7,6 +7,7 @@ import { FormService } from '../../../../core/services/form.service';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { paginatedResponseInterface } from 'src/app/core/interfaces/paginated.interface';
 import {CutomvalidatorService} from'src/app/core/services/cutomvalidator.service'
+import {userRegistrationRequestData} from 'src/app/core/interfaces/security/user-registration.interface'
 
 @Component({
   selector: 'app-user-registration',
@@ -19,11 +20,12 @@ export class UserRegistrationComponent implements OnInit {
   roles: role[] = [];
   countryForm: FormGroup;
   formService: FormService = new FormService();
+  userRequestModel :any ;
 
 
   constructor(private http: HttpService, private fb: FormBuilder,  private customValidator: CutomvalidatorService) {
     this.LoadDropDownValues();
-
+    
     this.countryForm = this.fb.group({
       id: [''],
       empName: ['', [Validators.required, Validators.maxLength(20), Validators.minLength(4)]],
@@ -80,7 +82,8 @@ export class UserRegistrationComponent implements OnInit {
     console.log(this.countryForm.value);
  
       if(this.countryForm.valid){
-        
+       // this.userRequestModel ={"id":21,"cck":121};
+        //this.userRequestModel=this.userRequestModel as userRegistrationRequestData;
         }
         else{
           this.countryForm.markAllAsTouched();

@@ -52,16 +52,7 @@ export class CountryComponent implements OnInit {
         this.http
           .paginatedPost(
             'country/paginated',dataTablesParameters.length,((dataTablesParameters.start/dataTablesParameters.length)+1),{}
-          ).subscribe(resp => {
-            let convertedResp = resp as paginatedResponseInterface<country>;
-            that.countries = convertedResp.items;
-            callback({
-              recordsTotal: convertedResp.totalCount,
-              recordsFiltered: convertedResp.totalCount,
-
-              data: []
-            });
-          });
+          ).subscribe(resp => that.countries = this.dataTableService.datatableMap(resp,callback));
       },
     };
 

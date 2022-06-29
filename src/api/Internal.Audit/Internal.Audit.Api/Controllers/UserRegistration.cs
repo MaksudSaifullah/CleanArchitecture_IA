@@ -1,4 +1,5 @@
 ﻿using Internal.Audit.Application.Features.UserRegistration.Commands.AddUserRegistration;
+using Internal.Audit.Application.Features.UserRegistration.Commands.ChangeUserPassword;
 using Internal.Audit.Application.Features.UserRegistration.Commands.DeleteUserRegistration;
 using Internal.Audit.Application.Features.UserRegistration.Commands.UpdateUserRegistration;
 using Internal.Audit.Application.Features.UserRegistration.Queries.GetAllUserList;
@@ -18,7 +19,9 @@ namespace Internal.Audit.Api.Controllers
         {
             _mediator = madiator ?? throw new ArgumentNullException(nameof(madiator));
         }
-
+        [HttpPost("ChangePassword")]
+        public async Task<ActionResult<Tuple<bool, string>>> ChangePassword(ChangeUserPasswordCommand command) => Ok(await _mediator.Send(command));
+        
         [HttpPost]
         public async Task<ActionResult<AddUserRegistrationResponseDTO>> Add(AddUserRegistrationCommand command)
         {

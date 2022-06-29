@@ -8,11 +8,13 @@ import { ButtonModule, CardModule, FormModule, GridModule,ModalModule,MultiSelec
 //import { ButtonModule, CardModule, FormModule, GridModule} from '@coreui/angular-pro';
 import { DesignationComponent } from './designation/designation.component';
 import { DataTablesModule } from 'angular-datatables';
+import { AccessPrivilegeComponent } from './access-privilege/access-privilege.component';
 
 @NgModule({
   declarations: [
     UserRegistrationComponent,
-    DesignationComponent
+    DesignationComponent,
+    AccessPrivilegeComponent
   ],
   imports: [
     CommonModule,

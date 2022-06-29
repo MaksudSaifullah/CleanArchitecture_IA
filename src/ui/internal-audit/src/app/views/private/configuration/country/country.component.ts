@@ -52,16 +52,7 @@ export class CountryComponent implements OnInit {
         this.http
           .paginatedPost(
             'country/paginated',dataTablesParameters.length,((dataTablesParameters.start/dataTablesParameters.length)+1),{}
-          ).subscribe(resp => {
-            let convertedResp = resp as paginatedResponseInterface<country>;
-            that.countries = convertedResp.items;
-            callback({
-              recordsTotal: convertedResp.totalCount,
-              recordsFiltered: convertedResp.totalCount,
-
-              data: []
-            });
-          });
+          ).subscribe(resp => that.countries = this.dataTableService.datatableMap(resp,callback));
       },
     };
 
@@ -88,11 +79,11 @@ export class CountryComponent implements OnInit {
         }
     }
 
-    edit(modalId:any, person:any):void {
+    edit(modalId:any, country:any):void {
       const localmodalId = modalId;
-      console.log(person.id)
+      console.log(country.id)
       this.http
-        .getById('country',person.id)
+        .getById('country',country.id)
         .subscribe(res => {
             const countryResponse = res as country;
             this.countryForm.setValue({id : countryResponse.id, name : countryResponse.name, remarks: countryResponse.remarks, code: countryResponse.code});

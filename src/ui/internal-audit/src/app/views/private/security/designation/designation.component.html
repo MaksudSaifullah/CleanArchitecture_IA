@@ -4,12 +4,12 @@
       <div class="col-lg-12">
         <div class="card">
           <div class="card-header">
-            <i class="fa fa-align-justify" ></i> Designation List
+            <i class="fa fa-align-justify" ></i><strong>Designation List</strong>
           </div>
           <div class="card-body">
             <div class="row">
               <div class="col-sm-7 mb-2">
-                  <button [cModalToggle]="verticallyCenteredModal.id" (click)="reset()" cButton>Create Designation</button>
+                  <button [cModalToggle]="verticallyCenteredModal.id" class="btnCreateColor" (click)="reset()" cButton>Create Designation</button>
   
               </div>
               <div class="col-sm-5 mb-2">
@@ -52,10 +52,10 @@
                       <td>{{ designation.description }}</td>                      
                       <td>
                         <div class="btn-group" role="group" aria-label="Basic example">
-                          <button type="button" class="btn btn-secondary" (click)="edit(verticallyCenteredModal,designation)">
+                          <button type="button" class="btn btn-info btnSaveColor" (click)="edit(verticallyCenteredModal,designation)">
                            Edit
                           </button>
-                          <button type="button" class="btn btn-danger" (click)="delete(designation.id)">
+                          <button type="button" class="btn btn-danger btnDeleteColor" (click)="delete(designation.id)">
                             Delete
                           </button>
                         </div>
@@ -118,12 +118,10 @@
         </div>
       </c-modal-body>
       <c-modal-footer>
-        <button [cModalToggle]="verticallyCenteredModal.id" cButton color="secondary">
+        <button cButton class="btn btn-primary btnSaveColor me-1" (click)="onSubmit(verticallyCenteredModal)">Save</button>
+        <button [cModalToggle]="verticallyCenteredModal.id" cButton class="btn btn-danger btnCancelColor me-1">
           Close
-        </button>
-        <button cButton color="primary" (click)="onSubmit(verticallyCenteredModal)">Save</button>
+        </button>        
       </c-modal-footer>
     </c-modal>
     </form>
-    
-  

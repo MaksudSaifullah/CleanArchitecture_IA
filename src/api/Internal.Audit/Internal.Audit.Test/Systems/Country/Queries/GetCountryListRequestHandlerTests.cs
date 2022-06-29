@@ -35,7 +35,12 @@ namespace Internal.Audit.Test.Systems.Country.Queries
                 c.AddProfile<MappingProfile>();
             });
 
-            _countryListRequest = new GetCountryListQuery(10, 1);
+            _countryListRequest = new GetCountryListQuery
+            {
+                pageSize = 10,
+                pageNumber = 1,
+                searchTerm = null
+            };
 
             _mapper = mapperConfig.CreateMapper();
 

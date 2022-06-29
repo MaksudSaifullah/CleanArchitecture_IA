@@ -25,6 +25,24 @@ export class AlertService {
       },
     });
   }
+  
+  error(message: string){
+    this._toastrService.error(message,{
+      style: {
+        border: '1px solid #ddd',
+        padding: '16px',
+        color: '#eb4039',
+        background: '#ffc2b3',
+
+      },
+      position:'top-right',
+      iconTheme: {
+        primary: '#eb4039',
+        secondary: '#FFFAEE',
+
+      },
+    });
+  }
   confirmDialog():Promise<SweetAlertResult<any>>{
     return Swal.fire({
       title: 'Are you sure?',

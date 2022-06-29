@@ -6,6 +6,7 @@ import { role } from '../../../../core/interfaces/security/role.interface';
 import { FormService } from '../../../../core/services/form.service';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { paginatedResponseInterface } from 'src/app/core/interfaces/paginated.interface';
+import {CutomvalidatorService} from'src/app/core/services/cutomvalidator.service'
 
 @Component({
   selector: 'app-user-registration',
@@ -19,37 +20,47 @@ export class UserRegistrationComponent implements OnInit {
   countryForm: FormGroup;
   formService: FormService = new FormService();
 
-  constructor(private http: HttpService, private fb: FormBuilder) {
+
+  constructor(private http: HttpService, private fb: FormBuilder,  private customValidator: CutomvalidatorService) {
     this.LoadDropDownValues();
 
     this.countryForm = this.fb.group({
       id: [''],
       empName: ['', [Validators.required, Validators.maxLength(20), Validators.minLength(4)]],
-      empEmai: ['', [Validators.required, Validators.maxLength(30), Validators.minLength(7)]],
-      empDesignation: ['',[Validators.required]],
-      countryListSelected:['']
-    })
+      empEmail: ['', [Validators.required,Validators.pattern(/^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/)]],
+      empDesignation: [null,[Validators.required]],
+      userName: ['',[Validators.required]],
+      userPassword: ['',[Validators.required]],
+      userConfirmPassword: ['',[Validators.required]],
+      roleList:['',[Validators.required]],
+      countryListSelected:['',[Validators.required]]
+    },
+    {
+      validator: this.customValidator.MatchPassword('userPassword', 'userConfirmPassword'),           
+    }
+    )
+
 
   }
 
   ngOnInit(): void {
 
   }
-
+  get countryFormControl() {
+    return this.countryForm.controls;
+  }
 
   LoadCountry() {
     this.http.paginatedPost('country/paginated',20,1,{}).subscribe(resp => {
       let convertedResp = resp as paginatedResponseInterface<country>;
-      this.countries = convertedResp.items;
-     
-      console.log(this.countries);
+      this.countries = convertedResp.items;     
     })
   }
 
   LoadDesignation() {
-    this.http.get('designation/all').subscribe(resp => {
-      this.designations = (resp as designation[]);
-      console.log(this.designations);
+      this.http.paginatedPost('designation/paginated',100,1,{}).subscribe(resp => {
+      let convertedResp = resp as paginatedResponseInterface<designation>;
+      this.designations = convertedResp.items;     
     })
   }
 
@@ -64,14 +75,18 @@ export class UserRegistrationComponent implements OnInit {
     this.LoadDesignation();
     this.LoadRole();
   }
+  
   onSubmit():void{
     console.log(this.countryForm.value);
+ 
       if(this.countryForm.valid){
         
         }
         else{
-          
+          this.countryForm.markAllAsTouched();
+          return;
         }
-      }  
+      } 
+       
 
 }

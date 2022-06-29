@@ -9,13 +9,14 @@ export class DatatableService {
       dtInstance.draw();
     });
   }
+
   datatableMap<T>(resp:any, callback:any){
-            let convertedResp = resp as paginatedResponseInterface<T>;
-            callback({
-              recordsTotal: convertedResp.totalCount,
-              recordsFiltered: convertedResp.totalCount,
-              data: []
-            });
-            return convertedResp.items;
+    let convertedResp = resp as paginatedResponseInterface<T>;
+    callback({
+      recordsTotal: convertedResp.totalCount,
+      recordsFiltered: convertedResp.totalCount,
+      data: []
+    });
+    return convertedResp.items;
   }
 }

@@ -17,10 +17,14 @@
                     <input type="text" [(ngModel)]="employeeName" class="form-control pull-right" placeholder="Employee Name"/>
                   </div>
                   <div class="col-3">
-                    <input type="text"  [(ngModel)]="userRole" class="form-control pull-right" placeholder="User Role"/>
+                    <!-- <input type="text"  [(ngModel)]="userRole" class="form-control pull-right" placeholder="User Role"/> -->
+                    <select class="form-control" [(ngModel)]="userRole">  
+                      <option selected [value]=" ">Select Role</option>
+                      <option *ngFor="let role of roles" [value]="role.name"> {{role.name}}</option>
+                    </select>  
                   </div>
                   <div class="col-3">
-                    <button type="button" class="btn btn-secondary mr-1 pull-right btn-block" data-toggle="modal" >
+                    <button type="button" class="btn btn-secondary mr-1 pull-right btn-block"  (click)="search()" >
                       Search
                   </button>
                   </div>
@@ -55,11 +59,15 @@
                       <td>{{ user.isPasswordExpired }}</td>
                       <td>
                         <div class="btn-group" role="group" aria-label="Basic example">
-                          <button type="button" class="btn btn-secondary" (click)="edit(verticallyCenteredModal,user)">
+                          <button type="button" class="btn btn-secondary" (click)="edit(user.id)">
                            Edit
+                          </button>
+                          <button type="button" class="btn btn-danger" (click)="lockUser(user.id)">
+                            Lock User
                           </button>
                         </div>
                       </td>
+                      
                     </tr>
                   </tbody>
                   <tbody *ngIf="compositeUsers?.length == 0">

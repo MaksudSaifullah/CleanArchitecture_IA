@@ -38,8 +38,8 @@ namespace Internal.Audit.Api.Controllers
 
         }
        
-        [HttpPut("BlockUser")]
-        public async Task<ActionResult<UpdateUserResponseDTO>> BlockUser(UpdateUserCommand command)
+        [HttpPost("LockUser")]
+        public async Task<ActionResult<UpdateUserResponseDTO>> LockUser(UpdateUserCommand command)
         {
             var result = await _mediator.Send(command);
             return Ok(result);

@@ -36,32 +36,7 @@ export class DesignationComponent implements OnInit {
   ngOnInit(): void {
     this.LoadData();
   }
-  // LoadData() 
-  // {
-  //   const that = this;
-
-  //   this.dtOptions = {
-  //     pagingType: 'full_numbers',
-  //     pageLength: 10,
-  //     serverSide: true,
-  //     processing: true,
-  //     searching: false,
-  //     ajax: (dataTablesParameters: any, callback) => {
-  //       this.http
-  //         .get(
-  //           'designation/all'
-  //         ).subscribe(resp => {
-  //           that.designations = (resp as designation[]);
-  //           callback({
-  //             recordsTotal: that.designations.length,
-  //             recordsFiltered: that.designations.length,
-  //             data: []
-  //           });
-  //         });
-  //     },
-  //   };
-
-  // }
+  
   LoadData() {
     const that = this;
 
@@ -92,8 +67,7 @@ export class DesignationComponent implements OnInit {
   onSubmit(modalId:any):void 
   {
     const localmodalId = modalId;
-      if(this.designationForm.valid){
-        debugger;
+      if(this.designationForm.valid){        
         if(this.formService.isEdit(this.designationForm.get('id') as FormControl)){
           this.http.put('designation',this.designationForm.value,null).subscribe(x=>{
             localmodalId.visible = false;
@@ -109,6 +83,9 @@ export class DesignationComponent implements OnInit {
             this.AlertService.success('Designation Saved Successful');
           });
         }
+      }
+      else{
+        this.AlertService.error('Invalid Information');
       }
   }
   edit(modalId:any, designation:any):void 

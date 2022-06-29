@@ -27,16 +27,16 @@ export class UserRegistrationComponent implements OnInit {
     this.countryForm = this.fb.group({
       id: [''],
       empName: ['', [Validators.required, Validators.maxLength(20), Validators.minLength(4)]],
-      empEmail: ['', [Validators.required, Validators.maxLength(30), Validators.minLength(7)]],
-      empDesignation: ['0',[Validators.required]],
+      empEmail: ['', [Validators.required,Validators.pattern(/^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/)]],
+      empDesignation: [null,[Validators.required]],
       userName: ['',[Validators.required]],
       userPassword: ['',[Validators.required]],
       userConfirmPassword: ['',[Validators.required]],
-      roleList:[''],
-      countryListSelected:['']
+      roleList:['',[Validators.required]],
+      countryListSelected:['',[Validators.required]]
     },
     {
-      validator: this.customValidator.MatchPassword('userPassword', 'userConfirmPassword'),     
+      validator: this.customValidator.MatchPassword('userPassword', 'userConfirmPassword'),           
     }
     )
 
@@ -58,9 +58,9 @@ export class UserRegistrationComponent implements OnInit {
   }
 
   LoadDesignation() {
-    this.http.get('designation/all').subscribe(resp => {
-      this.designations = (resp as designation[]);
-      console.log(this.designations);
+      this.http.paginatedPost('designation/paginated',100,1,{}).subscribe(resp => {
+      let convertedResp = resp as paginatedResponseInterface<designation>;
+      this.designations = convertedResp.items;     
     })
   }
 
@@ -75,13 +75,16 @@ export class UserRegistrationComponent implements OnInit {
     this.LoadDesignation();
     this.LoadRole();
   }
+  
   onSubmit():void{
     console.log(this.countryForm.value);
+ 
       if(this.countryForm.valid){
         
         }
         else{
-          
+          this.countryForm.markAllAsTouched();
+          return;
         }
       } 
        

@@ -27,20 +27,6 @@ export class CutomvalidatorService {
       return null;
     }
   }
-  CheckDropDownValue(val:string){
-    return (formGroup: FormGroup) => {
-      const dropDownvalueControl = formGroup.controls[val];     
 
-      if (!dropDownvalueControl || !dropDownvalueControl) {
-        return null;
-      }
-      if (dropDownvalueControl.value === "0") {
-        dropDownvalueControl.setErrors({ val:true });
-      }
-      
-      return null;
-    }
-   
-  }
 
 }

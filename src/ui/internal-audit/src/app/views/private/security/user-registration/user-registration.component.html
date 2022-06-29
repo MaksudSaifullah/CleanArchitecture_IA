@@ -14,6 +14,13 @@
                 <label for="checkThree" class="m-1"> {{country.name}}</label>
               </c-form-check>
             </c-col>
+            <div cRow *ngIf="countryForm.get('countryListSelected')?.invalid &&
+            countryForm.get('countryListSelected')?.errors &&
+                  (countryForm.get('countryListSelected')?.dirty || countryForm.get('countryListSelected')?.touched)">
+              <small class="text-danger" *ngIf="countryForm.get('countryListSelected').hasError('required')">
+               Please select at least one country
+              </small>                   
+            </div>
           </c-row>
         </div>
         <br>
@@ -55,7 +62,7 @@
                 <c-col md>
                   <div cFormFloating>
                     <input cFormControl formControlName="empEmail" name="empEmai" id="empEmail"
-                      placeholder="abc@example.com" type="email" autocomplete="false" />
+                      placeholder="abc@example.com" type="email" autocomplete="false"/>
                     <label cLabel for="empEmail">Email address</label>
                   </div>
 
@@ -63,23 +70,16 @@
                   countryForm.get('empEmail')?.errors &&
                         (countryForm.get('empEmail')?.dirty || countryForm.get('empEmail')?.touched)">
                     <small class="text-danger" *ngIf="countryForm.get('empName').hasError('required')">
-                      This field is required.
+                      This field is requires proper email address
                     </small>
-                    <small class="text-danger" *ngIf="countryForm.get('empEmail').hasError('minlength')">
-                      The minimum length for this field is
-                      {{countryForm.get('empEmail').errors.minlength.requiredLength}} characters.
-                    </small>
-                    <small class="text-danger" *ngIf="countryForm.get('empEmail').hasError('maxlength')">
-                      The maximum length for this field is
-                      {{countryForm.get('empEmail').errors.maxlength.requiredLength}} characters.
-                    </small>
+                  
                   </div>
                 </c-col>
                 <c-col md>
                   <div cFormFloating>
                     <select aria-label="Floating label select example" cSelect id="empDesignation"
                       formControlName="empDesignation" name="empDesignation">
-                      <option value="0">Select Designation</option>
+                      <option value="null">Select Designation</option>
                       <option *ngFor="let designation of designations" [value]="designation.id">
                         {{designation.name}}
                       </option>
@@ -92,13 +92,8 @@
                     <small class="text-danger" *ngIf="countryForm.get('empDesignation').hasError('required')">
                       This field is required.
                     </small>
-                    <small class="text-danger" *ngIf="countryForm.get('empDesignation').value('required')">
-                      This field is required.
-                    </small>
-                    <small class="text-danger" *ngIf="countryForm.get('empDesignation').value('0')">
-                      This field is required.
-                    </small>
-
+                                
+                    
                   </div>
                 </c-col>
               </c-row>
@@ -110,6 +105,22 @@
                     <input cFormControl id="floatingInputGrid" placeholder="Give Name" type="text" value=""
                       formControlName="userName" name="userName" />
                     <label cLabel for="floatingInputGrid">User Name</label>
+                  </div>
+                  
+                  <div cRow *ngIf="countryForm.get('userName')?.invalid &&
+                  countryForm.get('userName')?.errors &&
+                        (countryForm.get('userName')?.dirty || countryForm.get('userName')?.touched)">
+                    <small class="text-danger" *ngIf="countryForm.get('userName').hasError('required')">
+                      This field is required.
+                    </small>
+                    <small class="text-danger" *ngIf="countryForm.get('userName').hasError('minlength')">
+                      The minimum length for this field is
+                      {{countryForm.get('userName').errors.minlength.requiredLength}} characters.
+                    </small>
+                    <small class="text-danger" *ngIf="countryForm.get('userName').hasError('maxlength')">
+                      The maximum length for this field is
+                      {{countryForm.get('userName').errors.maxlength.requiredLength}} characters.
+                    </small>
                   </div>
                 </c-col>
                 <c-col md>
@@ -161,10 +172,17 @@
             <c-card-body>
               <c-row [gutter]="{g: 2}">
                 <c-col md>
-                  <c-multi-select multiple formControlName="roleList" name="roleList">
+                  <c-multi-select multiple formControlName="roleList" name="roleList" required>
                     <c-multi-select-option *ngFor="let role of roles" [value]="role.id">{{role.name}}
                     </c-multi-select-option>
                   </c-multi-select>
+                  <div cRow *ngIf="countryForm.get('roleList')?.invalid &&
+                  countryForm.get('roleList')?.errors &&
+                        (countryForm.get('roleList')?.dirty || countryForm.get('roleList')?.touched)">
+                    <small class="text-danger" *ngIf="countryForm.get('roleList').hasError('required')">
+                      This field is required.
+                    </small>                   
+                  </div>
                 </c-col>
               </c-row>
             </c-card-body>

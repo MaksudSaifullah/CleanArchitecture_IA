@@ -9,32 +9,34 @@
             
             <c-col xs="12">
                 <c-card class="mb-4">
-                  <c-card-header>
+                  <c-card-header style="color: #3b6998d7;" ><strong>
                     Password Parameters
-                  </c-card-header>
+                  </strong></c-card-header>
                   <c-card-body >
-                    <c-col xs="12">
+                   
                         <c-card class="mb-4">
-                            <c-card-header><strong>
+                            <c-card-header>
                                 Password Length
-                            </strong></c-card-header>
+                            </c-card-header>
                             <c-card-body class="form-inline">
-                                <label for="minLength">Minimum Length:</label>
+                                <label for="minLength">Minimum Length :</label>
                                 <input id="minLength" name="minLength">
-                                <label for="maxLength">Maximum Length:</label>
+                                <label for="maxLength">Maximum Length :</label>
                                 <input id="maxLength" name="maxLength">
                             </c-card-body>
                         </c-card>
-                    </c-col>
+                    
                     <c-col xs="12">
                         <c-card class="mb-4">
-                            <c-card-header><strong>
+                            <c-card-header>
                                 Combination Of Password
-                            </strong></c-card-header>
+                            </c-card-header>
                             <c-card-body >
                               <c-row><c-form-check>
-                                <input type="checkbox" name="alphabet" value="alphabet"/>
-                                <label for="alphabet" class="m-1">Alphabet</label><br>
+
+                                <!-- <span class="form-inline"> -->
+                                <input type="checkbox" name="alphabet" value="alphabet" onclick="onCheckAlphabet"/>                              
+                                <label for="alphabet" class="m-1">Alphabet</label> <br>                                                                     
                                 <input type="checkbox" name="numeric" value="numeric">
                                 <label for="numeric" class="m-1"> Numeric</label><br>
                                 <input type="checkbox" name="specialChar" value="specialChar">
@@ -43,53 +45,82 @@
                             </c-card-body>
                         </c-card>
                     </c-col>
-                    <br>
+                    
                   </c-card-body>
                 </c-card>
             </c-col>
-            <br>
+           
             <c-col xs="12">
                 <c-card class="mb-4">
-                  <c-card-header><strong>
+                  <c-card-header style="color: #3b6998d7;"><strong>
                     Temporary User Locked For
                   </strong></c-card-header>
                   <c-card-body >
                     <c-row><c-form-check>
-                      <input type="checkbox" name="alphabet" value="alphabet"/>
-                      <label for="alphabet" class="m-1">No login for 
-                        <input id="noLoginDays" name="noLoginDays">
+                      <div >
+                      <input type="checkbox" name="noLogin" value="noLogin"/>
+                      <label for="noLogin" class="m-1">No login for 
+                        <input id="noLoginDays" name="noLoginDays" class="inline-textbox">
                         days (for this case account will be unlocked through authorized person)</label><br>
-                      <input type="checkbox" name="numeric" value="numeric">
-                      <label for="numeric" class="m-1" > <p>Failed Login for 
-                        <input id="failedLoginDays" name="failedLoginDays">days</p>
-                        
-                        </label><br>                      
-                    </c-form-check></c-row>            
+                      </div>
+                      <input type="checkbox" name="failedLogin" value="failedLogin" >
+                      <label for="failedLogin" class="m-1" >
+                        Failed Login for 
+                        <input id="numberOfFailedLoginAttempts" name="numberOfFailedLoginAttempts" class="inline-textbox">
+                        times within
+                        <input id="failedLoginAttemptsDuration" name="failedLoginAttemptsDuration" class="inline-textbox">
+                        minutes. Later user will be locked for next
+                        <input id="failedLoginLockedDuration" name="failedLoginLockedDuration" class="inline-textbox">
+                        hour.                      
+                      </label><br>
+                      <input type="checkbox" name="unlocking" value="unlocking"/>
+                      <label for="unlocking" class="m-1"> 
+                        Unlock Account
+                        <input id="unlockedByAdminDuration" name="unlockedByAdminDuration" class="inline-textbox">
+                        minutes later (only applicable when user failed to login within configured time by configured number of attempt)
+                      </label>
+                    </c-form-check></c-row>
+                  </c-card-body>
+                </c-card>
+            </c-col>
+            
+            <c-col xs="12">
+                <c-card class="mb-4">
+                  <c-card-header style="color: #3b6998d7;"><strong>
+                    Forced Password Changed On
+                  </strong></c-card-header>
+                  <c-card-body >
+                    <c-row><c-form-check name="forcePasswordChange">
+                     
+                      <input type="checkbox" name="firstLogin" value="firstLogin"/>
+                      <label for="firstLogin" class="m-1">First Time Login </label><br>
+                     
+                      <input type="checkbox" name="forceReset" value="forceReset" >
+                      <label for="forceReset" class="m-1" >
+                        Force Reset After
+                        <input id="numberOfFailedLoginAttempts" name="numberOfFailedLoginAttempts" class="inline-textbox">
+                        days. Notify user prior
+                        <input id="notifyPasswordResetDays" name="notifyPasswordResetDays" class="inline-textbox">
+                        days.                                          
+                      </label><br>                      
+                    </c-form-check></c-row>
+                  </c-card-body>
+                </c-card>
+            </c-col>
+           
+            <c-col xs="12">
+                <c-card class="mb-4">
+                  <c-card-header style="color: #3b6998d7;"><strong>
+                    User Session Timeout
+                  </strong></c-card-header>
+                  <c-card-body>
+                    <label for="sessionDuration" class="m-1">Duration </label>
+                    <input id="sessionDuration" name="sessionDuration" class="inline-textbox">
+                    minutes.
                   </c-card-body>
                 </c-card>
             </c-col>
             <br>
-            <c-col xs="12">
-                <c-card class="mb-4">
-                  <c-card-header>
-                    Forced Password Changed On
-                  </c-card-header>
-                </c-card>
-            </c-col>
-
-            <br>
-
-            <c-col xs="12">
-                <c-card class="mb-4">
-                  <c-card-header>
-                    User Session Timeout
-                  </c-card-header>
-
-                </c-card>
-            </c-col>
-
-            <br>
-
             <c-col xs="12">
                 <c-col md>
                   <button cButton class="btn btn-primary btnSaveColor me-1" (click)="onSubmit()">Save</button>

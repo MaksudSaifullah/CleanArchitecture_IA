@@ -9,12 +9,19 @@
      color: white;
      min-width: 80px;
   }
-
+.inline-textbox {
+    width: 50px;
+    box-sizing: border-box;
+    text-align: center;
+    border: none;
+    border-bottom: 1px solid #3b6998d7;
+  }
   
 .form-inline {  
     display: flex;
     flex-flow: row wrap;
     align-items: center;
+    height: fit-content;
   }
   
   .form-inline label {
@@ -23,7 +30,9 @@
   
   .form-inline input {
     vertical-align: middle;
-    margin: 1px 5px 1px 0;
+    height: 30px;
+    width: 60px;
+    margin: 5px 10px 5px 0;
     padding: 10px;
     background-color: #fff;
     border: 1px solid #ddd;

@@ -36,5 +36,14 @@ export class AccessPrivilegeComponent implements OnInit {
         this.AlertService.error('Invalid Information');
       }
   }
+  // onCheckAlphabet():void{
+  //   var checkBox = document.getElementById("alphabet");
+  //   var maxAlphabet = document.getElementById("maxAlphabet");
+  //   if (checkBox.chec == true){
+  //     maxAlphabet.style.display = "block";
+  //   } else {
+  //     maxAlphabet.style.display = "none";
+  //   }
+  // }
 
 }

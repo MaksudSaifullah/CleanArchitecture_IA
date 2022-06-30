@@ -9,7 +9,7 @@
         <div class="card-body">
           <div class="row">
             <div class="col-sm-7 mb-2">
-                <button [cModalToggle]="verticallyCenteredModal.id" (click)="reset()" cButton>Create Country</button>
+                <button [cModalToggle]="verticallyCenteredModal.id" class="btnCreateColor" (click)="reset()" cButton>Create Country</button>
 
             </div>
             <div class="col-sm-5 mb-2">
@@ -56,10 +56,10 @@
                     <td>{{ country.remarks }}</td>
                     <td>
                       <div class="btn-group" role="group" aria-label="Basic example">
-                        <button type="button" class="btn btn-secondary" (click)="edit(verticallyCenteredModal,country)">
+                        <button type="button" class="btn btn-secondary btnSaveColor" (click)="edit(verticallyCenteredModal,country)">
                          Edit
                         </button>
-                        <button type="button" class="btn btn-danger" (click)="delete(country.id)">
+                        <button type="button" class="btn btn-danger btnDeleteColor" (click)="delete(country.id)">
                           Delete
                         </button>
                       </div>
@@ -144,10 +144,10 @@
     </div>
   </c-modal-body>
   <c-modal-footer>
-    <button [cModalToggle]="verticallyCenteredModal.id" cButton color="secondary">
-      Close
+    <button cButton class="btn btn-primary btnSaveColor me-1" (click)="onSubmit(verticallyCenteredModal)">Save</button>
+        <button [cModalToggle]="verticallyCenteredModal.id" cButton class="btn btn-danger btnCancelColor me-1">
+          Close
     </button>
-    <button cButton color="primary" (click)="onSubmit(verticallyCenteredModal)">Save</button>
   </c-modal-footer>
 </c-modal>
 </form>

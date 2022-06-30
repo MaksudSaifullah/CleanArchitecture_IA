@@ -38,9 +38,9 @@ namespace Internal.Audit.Api.Controllers
         }
 
         [HttpGet("Id")]
-        public async Task<ActionResult<GetUserListResponseDTO>> Get(Guid userId)
+        public async Task<ActionResult<GetUserListResponseDTO>> Get(Guid Id)
         {
-            var query = new GetAllUserListByIdQuery(userId);
+            var query = new GetAllUserListByIdQuery(Id);
             var result = await _mediator.Send(query);
             return Ok(result);
         }

@@ -9,7 +9,7 @@ import { paginatedResponseInterface } from 'src/app/core/interfaces/paginated.in
 import { ActivatedRoute } from '@angular/router';
 import { CutomvalidatorService } from 'src/app/core/services/cutomvalidator.service'
 import { userRegistrationRequestData, UserCountry, UserRole } from 'src/app/core/interfaces/security/user-registration.interface'
-
+import {AlertService} from '../../../../core/services/alert.service';
 
 @Component({
   selector: 'app-user-registration',
@@ -23,8 +23,9 @@ export class UserRegistrationComponent implements OnInit {
   countryForm: FormGroup;
   formService: FormService = new FormService();
   userRequestModel: any;
+  userCountry: UserCountry[]=[];
 
-  constructor(private http: HttpService, private fb: FormBuilder,private activateRoute:ActivatedRoute,private customValidator:CutomvalidatorService) {
+  constructor(private http: HttpService, private fb: FormBuilder, private activateRoute: ActivatedRoute, private customValidator: CutomvalidatorService,private AlertService: AlertService) {
     this.LoadDropDownValues();
 
     this.countryForm = this.fb.group({
@@ -49,7 +50,7 @@ export class UserRegistrationComponent implements OnInit {
   ngOnInit(): void {
     let id = this.activateRoute.snapshot.params['id'];
     //console.log(`route id ${id}`);
-    if(id !=null || id!=""){
+    if (id != null || id != "") {
       this.LoadUserById(id);
       console.log(id)
     }
@@ -71,11 +72,11 @@ export class UserRegistrationComponent implements OnInit {
       this.designations = convertedResp.items;
     })
   }
-  LoadUserById(Id:string) {
+  LoadUserById(Id: string) {
     this.http.getById('UserRegistration', Id).subscribe(resp => {
-     // this.designations = (resp as designation[]);
+      // this.designations = (resp as designation[]);
 
-    
+
 
       console.log(resp);
     })
@@ -94,40 +95,49 @@ export class UserRegistrationComponent implements OnInit {
   }
 
   onSubmit(): void {
-    console.log(this.countryForm.value);
-    let useca: UserRole[] = this.countryForm.value.roleList as UserRole[];
-    useca.forEach((element: any) => {
-      console.log(element);
-    });
-    console.log(useca);
+    console.log(this.countryForm.value.countryListSelected);
+    let userList: UserRole[] = [];
 
-    if (this.countryForm.valid) {
-      let useca: UserCountry[] = [{ countryId: "", isActive: true, userId: "" }];
+    if (this.countryForm.valid) {     
 
+      let useca: UserRole[] = this.countryForm.value.roleList as UserRole[];
 
-      let registrationModel: userRegistrationRequestData = {
-        employee:
-        {
-          email: "",
-          designationId: "",
-          userId: "",
-          photoId: "",
+      if (Array.isArray(useca)) {
+        useca.forEach(function (value) {
+          let urole: UserRole = { roleId: value.toString() }
+        userList.push(urole);
+        }); 
+        
+      }
+   
+      const RequestModel = {
+        employee: {
+          email: this.countryForm.value.empEmail,
+          designationId: this.countryForm.value.empDesignation,         
+          photoId: "3fa85f64-5717-4562-b3fc-2c963f66afa6",
           isActive: true,
-          name: ""
+          name: this.countryForm.value.empName
         },
-        user:
-        {
-          id: "",
+        user: {         
           isAccountExpired: false,
           isAccountLocked: false,
           isEnabled: true,
           isPasswordExpired: false,
-          password: "",
-          userName: ""
+          password:this.countryForm.value.userPassword,
+          userName: this.countryForm.value.userName
         },
-        userCountry: [{ countryId: "", isActive: true, userId: "" }],
-        userRole: [{ roleId: "", userId: "" }]
+        userCountry: this.userCountry,
+        userRole: userList
       };
+      //let registrationModel: userRegistrationRequestData = RequestModel;
+      console.log('requesat model')
+      console.log(JSON.stringify(RequestModel));
+
+      this.http.post('UserRegistration',RequestModel).subscribe(x=>{    
+        this.AlertService.success('Country Saved Successful');
+        window.location.reload();
+      })
+
 
     }
     else {
@@ -135,6 +145,16 @@ export class UserRegistrationComponent implements OnInit {
       return;
     }
   }
-
+  eventCheck(e:any) {  
+    console.log(this.userCountry);
+    let exists = this.userCountry.includes(e.target.id.toString());   
+    if (e.target.checked) {    
+      let country: UserCountry = { countryId: e.target.id.toString() ,isActive:true}
+      this.userCountry.push(country);
+    } else {      
+       const index =  this.userCountry.findIndex(x=>x.countryId == e.target.id);
+       this.userCountry.splice(index, 1);
+    }
+  }
 
 }

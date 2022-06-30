@@ -69,10 +69,12 @@
                   <div cRow *ngIf="countryForm.get('empEmail')?.invalid &&
                   countryForm.get('empEmail')?.errors &&
                         (countryForm.get('empEmail')?.dirty || countryForm.get('empEmail')?.touched)">
-                    <small class="text-danger" *ngIf="countryForm.get('empName').hasError('required')">
-                      This field is requires proper email address
+                    <small class="text-danger" *ngIf="countryForm.get('empEmail').hasError('required')">
+                      This field is required
                     </small>
-                  
+                    <small class="text-danger" *ngIf="countryForm.get('empEmail').errors?.pattern">
+                      Give proper email address
+                    </small>
                   </div>
                 </c-col>
                 <c-col md>

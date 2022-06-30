@@ -9,13 +9,15 @@ import { DataTablesModule } from 'angular-datatables';
 import { UserlistComponent } from './userlist/userlist.component';
 import { ButtonModule, CardModule, FormModule, GridModule,MultiSelectModule,ModalModule} from '@coreui/angular-pro';
 import { ReactiveFormsModule,FormsModule } from '@angular/forms';
+import { AccessPrivilegeComponent } from './access-privilege/access-privilege.component';
 
 
 @NgModule({
   declarations: [
     UserRegistrationComponent,
     DesignationComponent,
-    UserlistComponent
+    UserlistComponent,    
+    AccessPrivilegeComponent
   ],
   imports: [
     CommonModule,

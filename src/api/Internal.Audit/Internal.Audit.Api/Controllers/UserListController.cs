@@ -15,11 +15,10 @@ namespace Internal.Audit.Api.Controllers
         {
             _mediator = mediator ?? throw new ArgumentNullException(nameof(mediator));
         }
-        [HttpGet()]
-        public async Task<ActionResult<UserListWithPagingInfoDTO>> GetList(int pageSize, int pageNumber, string? userName=null,string? employeeName=null,string? userRole=null)
+        [HttpPost("Paginated")]
+        public async Task<ActionResult<UserListWithPagingInfoDTO>> GetList(GetUserListQuery getUserListQuery)
         {
-            var query = new GetUserListQuery(userName,employeeName,userRole,pageSize,pageNumber);
-            var userListWithPagingInfo = await _mediator.Send(query);
+            var userListWithPagingInfo = await _mediator.Send(getUserListQuery);
             return Ok(userListWithPagingInfo);
         }
 
@@ -39,8 +38,8 @@ namespace Internal.Audit.Api.Controllers
 
         }
        
-        [HttpPut("BlockUser")]
-        public async Task<ActionResult<UpdateUserResponseDTO>> BlockUser(UpdateUserCommand command)
+        [HttpPost("LockUser")]
+        public async Task<ActionResult<UpdateUserResponseDTO>> LockUser(UpdateUserCommand command)
         {
             var result = await _mediator.Send(command);
             return Ok(result);

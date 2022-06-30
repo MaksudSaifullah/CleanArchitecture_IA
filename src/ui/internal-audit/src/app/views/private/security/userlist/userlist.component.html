@@ -18,7 +18,7 @@
                   </div>
                   <div class="col-3">
                     <!-- <input type="text"  [(ngModel)]="userRole" class="form-control pull-right" placeholder="User Role"/> -->
-                    <select class="form-control" [(ngModel)]="userRole">  
+                    <select class="form-control" [(ngModel)]="userRole" >  
                       <option selected [value]=" ">Select Role</option>
                       <option *ngFor="let role of roles" [value]="role.name"> {{role.name}}</option>
                     </select>  
@@ -32,6 +32,7 @@
                 </div>
               </div>
             </div>
+            <br>
             <div class="row overflow-auto">
                 <table datatable [dtOptions]="dtOptions" class="table table-bordered row-border hover" >
                   <thead>
@@ -59,7 +60,7 @@
                       <td>{{ user.isPasswordExpired }}</td>
                       <td>
                         <div class="btn-group" role="group" aria-label="Basic example">
-                          <button type="button" class="btn btn-secondary" (click)="edit(user.id)">
+                          <button type="button" class="btn btn-secondary" [routerLink]="['/security/userRegistration',user.id]">
                            Edit
                           </button>
                           <button type="button" class="btn btn-danger" (click)="lockUser(user.id)">

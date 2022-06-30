@@ -6,6 +6,8 @@ import { role } from '../../../../core/interfaces/security/role.interface';
 import { FormService } from '../../../../core/services/form.service';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { paginatedResponseInterface } from 'src/app/core/interfaces/paginated.interface';
+import { ActivatedRoute } from '@angular/router';
+
 
 @Component({
   selector: 'app-user-registration',
@@ -19,7 +21,7 @@ export class UserRegistrationComponent implements OnInit {
   countryForm: FormGroup;
   formService: FormService = new FormService();
 
-  constructor(private http: HttpService, private fb: FormBuilder) {
+  constructor(private http: HttpService, private fb: FormBuilder,private activateRoute:ActivatedRoute) {
     this.LoadDropDownValues();
 
     this.countryForm = this.fb.group({
@@ -33,7 +35,12 @@ export class UserRegistrationComponent implements OnInit {
   }
 
   ngOnInit(): void {
-
+    let id = this.activateRoute.snapshot.params['id'];
+    //console.log(`route id ${id}`);
+    if(id !=null || id!=""){
+      this.LoadUserById(id);
+      console.log(id)
+    }
   }
 
 
@@ -50,6 +57,15 @@ export class UserRegistrationComponent implements OnInit {
     this.http.get('designation/all').subscribe(resp => {
       this.designations = (resp as designation[]);
       console.log(this.designations);
+    })
+  }
+  LoadUserById(Id:string) {
+    this.http.getById('UserRegistration', Id).subscribe(resp => {
+     // this.designations = (resp as designation[]);
+
+    
+
+      console.log(resp);
     })
   }
 

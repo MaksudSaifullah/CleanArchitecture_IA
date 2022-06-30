@@ -1,12 +1,11 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { paginatedModelInterface, paginatedResponseInterface } from 'src/app/core/interfaces/paginated.interface';
 import { HttpService } from 'src/app/core/services/http.service';
-import {compositeUser} from '../../../core/interfaces/configuration/compositeUser.interface'
-import { role } from '../../../../app/core/interfaces/security/role.interface';
-import {AlertService} from '../../../../app/core/services/alert.service';
+import {compositeUser} from '../../../../core/interfaces/configuration/compositeUser.interface'
+import { role } from '../../../../core/interfaces/security/role.interface';
+import {AlertService} from '../../../../core/services/alert.service';
 import { DataTableDirective } from 'angular-datatables';
 import { DatatableService } from 'src/app/core/services/datatable.service';
-import {PrivateRoutingModule} from '../private-routing.module'
 import { Router } from '@angular/router';
 
 
@@ -85,12 +84,7 @@ export class UserlistComponent implements OnInit {
   }
 
   edit(id:string){
-    this.router.navigateByUrl('/user-registration')
-   
-    // this.http.delete('Id/'+ id ,{}).subscribe(response=>{
-    //   this.AlertService.successDialog('Deleted','Country deleted successfully.');
-
-    // })
+    this.router.navigate(['security/userRegistration'], {queryParams: {id: id}});
   }
 
 

@@ -10,7 +10,7 @@ import { HttpService } from 'src/app/core/services/http.service';
   styleUrls: ['./access-privilege.component.scss']
 })
 export class AccessPrivilegeComponent implements OnInit {
-  accessPrivilegeConfig: accessPrivilegeConfig[] = [];
+  accessPrivilegeConfig: any ;
   accessPrivilegeForm: FormGroup;
   formService: FormService = new FormService();
 
@@ -22,9 +22,13 @@ export class AccessPrivilegeComponent implements OnInit {
       description: ['',[Validators.required]]      
     })
   }
+  ngOnDestroy(): void {
 
-  ngOnInit(): void {
   }
+  ngOnInit(): void {
+    this.LoadData();
+  };
+
   onSubmit():void 
   {
     //const localmodalId = modalId;
@@ -35,6 +39,12 @@ export class AccessPrivilegeComponent implements OnInit {
       else{
         this.AlertService.error('Invalid Information');
       }
+  }
+  LoadData() {
+    this.http.get('accessPrivilege').subscribe(resp => {
+      let convertedResp = resp as unknown as accessPrivilegeConfig;
+      this.accessPrivilegeConfig = convertedResp;
+    })
   }
   // onCheckAlphabet():void{
   //   var checkBox = document.getElementById("alphabet");

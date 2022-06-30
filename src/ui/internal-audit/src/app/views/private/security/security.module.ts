@@ -7,17 +7,20 @@ import { UserRegistrationComponent } from './user-registration/user-registration
 import { DesignationComponent } from './designation/designation.component';
 import { DataTablesModule } from 'angular-datatables';
 import { UserlistComponent } from './userlist/userlist.component';
-import { ButtonModule, CardModule, FormModule, GridModule,MultiSelectModule,ModalModule} from '@coreui/angular-pro';
+import { ButtonModule, CardModule, FormModule, GridModule,MultiSelectModule,ModalModule, NavModule, TabsModule} from '@coreui/angular-pro';
 import { ReactiveFormsModule,FormsModule } from '@angular/forms';
 import { AccessPrivilegeComponent } from './access-privilege/access-privilege.component';
+import { UserRoleComponent } from './user-role/user-role.component';
 
 
 @NgModule({
   declarations: [
     UserRegistrationComponent,
     DesignationComponent,
-    UserlistComponent,    
-    AccessPrivilegeComponent
+    UserlistComponent,
+    AccessPrivilegeComponent,
+    UserRoleComponent
+
   ],
   imports: [
     CommonModule,
@@ -30,7 +33,9 @@ import { AccessPrivilegeComponent } from './access-privilege/access-privilege.co
     ButtonModule,
     ReactiveFormsModule,
     DataTablesModule,
-    FormsModule
+    FormsModule,
+    NavModule, 
+    TabsModule
    
   ]
 })

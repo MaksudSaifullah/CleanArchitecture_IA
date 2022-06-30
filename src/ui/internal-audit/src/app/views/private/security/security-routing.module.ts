@@ -3,6 +3,8 @@ import { RouterModule, Routes } from '@angular/router';
 import { AccessPrivilegeComponent } from './access-privilege/access-privilege.component';
 import { DesignationComponent } from './designation/designation.component';
 import{UserRegistrationComponent} from './user-registration/user-registration.component'
+import { UserRoleComponent } from './user-role/user-role.component';
+import { UserlistComponent } from './userlist/userlist.component';
 
 
 const routes: Routes = [
@@ -23,8 +25,6 @@ const routes: Routes = [
   {
     path: 'access-privilege',
     component: AccessPrivilegeComponent
-    path:'designation',
-    component:DesignationComponent
   },
   {
     path:'userrole',

@@ -7,6 +7,8 @@ import { FormService } from '../../../../core/services/form.service';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { paginatedResponseInterface } from 'src/app/core/interfaces/paginated.interface';
 import { ActivatedRoute } from '@angular/router';
+import { CutomvalidatorService } from 'src/app/core/services/cutomvalidator.service'
+import { userRegistrationRequestData, UserCountry, UserRole } from 'src/app/core/interfaces/security/user-registration.interface'
 
 
 @Component({
@@ -20,6 +22,7 @@ export class UserRegistrationComponent implements OnInit {
   roles: role[] = [];
   countryForm: FormGroup;
   formService: FormService = new FormService();
+  userRequestModel: any;
 
   constructor(private http: HttpService, private fb: FormBuilder,private activateRoute:ActivatedRoute) {
     this.LoadDropDownValues();
@@ -27,10 +30,19 @@ export class UserRegistrationComponent implements OnInit {
     this.countryForm = this.fb.group({
       id: [''],
       empName: ['', [Validators.required, Validators.maxLength(20), Validators.minLength(4)]],
-      empEmai: ['', [Validators.required, Validators.maxLength(30), Validators.minLength(7)]],
-      empDesignation: ['',[Validators.required]],
-      countryListSelected:['']
-    })
+      empEmail: ['', [Validators.required, Validators.pattern("^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$")]],
+      empDesignation: [null, [Validators.required]],
+      userName: ['', [Validators.required]],
+      userPassword: ['', [Validators.required]],
+      userConfirmPassword: ['', [Validators.required]],
+      roleList: ['', [Validators.required]],
+      countryListSelected: ['', [Validators.required]]
+    },
+      {
+        validator: this.customValidator.MatchPassword('userPassword', 'userConfirmPassword'),
+      }
+    )
+
 
   }
 
@@ -42,21 +54,21 @@ export class UserRegistrationComponent implements OnInit {
       console.log(id)
     }
   }
-
+  get countryFormControl() {
+    return this.countryForm.controls;
+  }
 
   LoadCountry() {
-    this.http.paginatedPost('country/paginated',20,1,{}).subscribe(resp => {
+    this.http.paginatedPost('country/paginated', 20, 1, {}).subscribe(resp => {
       let convertedResp = resp as paginatedResponseInterface<country>;
       this.countries = convertedResp.items;
-     
-      console.log(this.countries);
     })
   }
 
   LoadDesignation() {
-    this.http.get('designation/all').subscribe(resp => {
-      this.designations = (resp as designation[]);
-      console.log(this.designations);
+    this.http.paginatedPost('designation/paginated', 100, 1, {}).subscribe(resp => {
+      let convertedResp = resp as paginatedResponseInterface<designation>;
+      this.designations = convertedResp.items;
     })
   }
   LoadUserById(Id:string) {
@@ -80,14 +92,49 @@ export class UserRegistrationComponent implements OnInit {
     this.LoadDesignation();
     this.LoadRole();
   }
-  onSubmit():void{
+
+  onSubmit(): void {
     console.log(this.countryForm.value);
-      if(this.countryForm.valid){
-        
-        }
-        else{
-          
-        }
-      }  
+    let useca: UserRole[] = this.countryForm.value.roleList as UserRole[];
+    useca.forEach((element: any) => {
+      console.log(element);
+    });
+    console.log(useca);
+
+    if (this.countryForm.valid) {
+      let useca: UserCountry[] = [{ countryId: "", isActive: true, userId: "" }];
+
+
+      let registrationModel: userRegistrationRequestData = {
+        employee:
+        {
+          email: "",
+          designationId: "",
+          userId: "",
+          photoId: "",
+          isActive: true,
+          name: ""
+        },
+        user:
+        {
+          id: "",
+          isAccountExpired: false,
+          isAccountLocked: false,
+          isEnabled: true,
+          isPasswordExpired: false,
+          password: "",
+          userName: ""
+        },
+        userCountry: [{ countryId: "", isActive: true, userId: "" }],
+        userRole: [{ roleId: "", userId: "" }]
+      };
+
+    }
+    else {
+      this.countryForm.markAllAsTouched();
+      return;
+    }
+  }
+
 
 }

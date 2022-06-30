@@ -1,6 +1,7 @@
 ﻿using Internal.Audit.Application.Features.Designation.Commands.AddDesignation;
 using Internal.Audit.Application.Features.Designation.Commands.DeleteDesignation;
 using Internal.Audit.Application.Features.Designation.Commands.UpdateDesignation;
+using Internal.Audit.Application.Features.Designation.Queries.GetDesignationById;
 using Internal.Audit.Application.Features.Designation.Queries.GetDesignationList;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -17,23 +18,23 @@ namespace Internal.Audit.Api.Controllers
             _mediator = madiator ?? throw new ArgumentNullException(nameof(madiator));
         }
 
-        [HttpGet("all")]
-        public async Task<ActionResult<IEnumerable<GetDesignationListResponseDTO>>> GetList()
-        {
-            var query = new GetDesignationListQuery();
-            var users = await _mediator.Send(query);
-            return Ok(users);
+        [HttpPost("paginated")]
+        public async Task<ActionResult<GetDesignationListPagingDTO>> GetList(GetDesignationListQuery getDesignationListQuery)
+        {           
+            var designations = await _mediator.Send(getDesignationListQuery);
+            return Ok(designations);
 
         }
 
-        //[HttpGet("{Id}")]
-        //public async Task<ActionResult<CountryByIdDTO>> GetById(Guid Id)
-        //{
-        //    var query = new GetCountryQuery(Id);
-        //    var users = await _mediator.Send(query);
-        //    return Ok(users);
 
-        //}
+        [HttpGet("{Id}")]
+        public async Task<ActionResult<GetDesignationByIdDTO>> GetById(Guid Id)
+        {
+            var query = new GetDesignationByIdQuery(Id);
+            var designation = await _mediator.Send(query);
+            return Ok(designation);
+
+        }
 
         [HttpPost]
         public async Task<ActionResult<AddDesignationResponseDTO>> Add(AddDesignationCommand command)

@@ -27,6 +27,12 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Include="Features\Designation\Queries\GetDesignationById\GetDesignationByIdDTO.cs" />
+    <Compile Include="Features\Designation\Queries\GetDesignationById\GetDesignationByIdQuery.cs" />
+    <Compile Include="Features\Designation\Queries\GetDesignationById\GetDesignationByIdQueryHandler.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\Internal.Audit.Domain\Internal.Audit.Domain.csproj" />
   </ItemGroup>
 
@@ -41,7 +47,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Features\Designation\Queries\GetDesignationById\" />
     <Folder Include="Features\UserCountries\Quiries\" />
   </ItemGroup>
 

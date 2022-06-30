@@ -64,6 +64,7 @@ using Internal.Audit.Application.Features.UserRegistration.Queries.GetAllUserLis
 using Internal.Audit.Application.Features.UserRegistration.Queries.GetALlUserListById;
 using Internal.Audit.Application.Features.UserRegistration.Commands.UpdateUserRegistration;
 using Internal.Audit.Application.Features.UserRegistration.Commands.DeleteUserRegistration;
+using Internal.Audit.Application.Features.Designation.Queries.GetDesignationById;
 
 namespace Internal.Audit.Application.Mappings;
 
@@ -116,7 +117,7 @@ public class MappingProfile: Profile
         CreateMap<Designation, DeleteDesignationResponseDTO>().ReverseMap();
         CreateMap<Designation, DeleteDesignationCommand>().ReverseMap();
         CreateMap<Designation, GetDesignationListResponseDTO>().ReverseMap();
-        //CreateMap<UserCountry, AddUserCountryCommand>().ReverseMap();
+        CreateMap<Designation, GetDesignationByIdDTO>().ReverseMap();
 
         CreateMap<PasswordPolicy, GetPasswordPolicyDTO>().ReverseMap();
         CreateMap<UserLockingPolicy, GetUserLockingPolicyDTO>().ReverseMap();

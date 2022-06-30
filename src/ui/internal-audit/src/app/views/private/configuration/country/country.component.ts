@@ -52,16 +52,7 @@ export class CountryComponent implements OnInit {
         this.http
           .paginatedPost(
             'country/paginated',dataTablesParameters.length,((dataTablesParameters.start/dataTablesParameters.length)+1),{}
-          ).subscribe(resp => {
-            let convertedResp = resp as paginatedResponseInterface<country>;
-            that.countries = convertedResp.items;
-            callback({
-              recordsTotal: convertedResp.totalCount,
-              recordsFiltered: convertedResp.totalCount,
-
-              data: []
-            });
-          });
+          ).subscribe(resp => that.countries = this.dataTableService.datatableMap(resp,callback));
       },
     };
 
@@ -72,27 +63,25 @@ export class CountryComponent implements OnInit {
         if(this.countryForm.valid){
           if(this.formService.isEdit(this.countryForm.get('id') as FormControl)){
             this.http.put('country',this.countryForm.value,null).subscribe(x=>{
-              localmodalId.visible = false;
-              this.dataTableService.redraw(this.datatableElement);
+              this.formService.onSaveSuccess(localmodalId,this.datatableElement);
               this.AlertService.success('Country Saved Successful');
 
             });
           }
           else{
             this.http.post('country',this.countryForm.value).subscribe(x=>{
-              localmodalId.visible = false;
-              this.dataTableService.redraw(this.datatableElement);
+              this.formService.onSaveSuccess(localmodalId,this.datatableElement);
               this.AlertService.success('Country Saved Successful');
             });
           }
         }
     }
 
-    edit(modalId:any, person:any):void {
+    edit(modalId:any, country:any):void {
       const localmodalId = modalId;
-      console.log(person.id)
+      console.log(country.id)
       this.http
-        .getById('country',person.id)
+        .getById('country',country.id)
         .subscribe(res => {
             const countryResponse = res as country;
             this.countryForm.setValue({id : countryResponse.id, name : countryResponse.name, remarks: countryResponse.remarks, code: countryResponse.code});

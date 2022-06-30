@@ -17,7 +17,6 @@ namespace Internal.Audit.Domain.Entities
         [MaxLength(10)]
         public string Code { get; set; } = null!;
 
-        [Required]
         [MaxLength(200)]        
         public string Remarks { get; set; } = null!;
 

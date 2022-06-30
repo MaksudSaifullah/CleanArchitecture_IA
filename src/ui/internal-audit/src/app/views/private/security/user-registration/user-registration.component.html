@@ -1,4 +1,3 @@
-
 <c-col xs="12">
   <c-card class="mb-4">
     <c-card-header>
@@ -7,18 +6,25 @@
     <c-card-body>
       <form [formGroup]="countryForm" (ngSubmit)="onSubmit()" novalidate>
         <div>
-          <input type="hidden" formControlName="id"/>
+          <input type="hidden" formControlName="id" />
           <c-row>
             <c-col md="4" *ngFor="let country of countries">
               <c-form-check>
-                <input  formControlName="countryListSelected" [id]="country.id" type="checkbox" />
-                <label  for="checkThree" class="m-1"> {{country.name}}</label>
+                <input formControlName="countryListSelected" [id]="country.id" type="checkbox" />
+                <label for="checkThree" class="m-1"> {{country.name}}</label>
               </c-form-check>
             </c-col>
+            <div cRow *ngIf="countryForm.get('countryListSelected')?.invalid &&
+            countryForm.get('countryListSelected')?.errors &&
+                  (countryForm.get('countryListSelected')?.dirty || countryForm.get('countryListSelected')?.touched)">
+              <small class="text-danger" *ngIf="countryForm.get('countryListSelected').hasError('required')">
+               Please select at least one country
+              </small>                   
+            </div>
           </c-row>
         </div>
         <br>
-        
+
         <c-col xs="12">
           <c-card class="mb-4">
             <c-card-header>
@@ -29,27 +35,67 @@
                 Please give all the relevant employee information below :
               </p>
 
-              <c-row [gutter]="{g: 2}">               
+              <c-row [gutter]="{g: 2}">
                 <c-col md>
-                  <div cFormFloating>                 
-                    <input type="text" class="form-control" formControlName="empName" name="empName" id="empName" placeholder="Name">
+                  <div cFormFloating>
+                    <input type="text" class="form-control" formControlName="empName" name="empName" id="empName"
+                      placeholder="Name">
                     <label cLabel for="empName">Employee Name</label>
                   </div>
-                </c-col>
-                <c-col md>
-                  <div cFormFloating> 
-                    <input cFormControl formControlName="empEmai" name="empEmai" id="empEmai" placeholder="abc@example.com" type="email" autocomplete="false"/>
-                    <label cLabel for="empEmai">Email address</label>
+
+                  <div cRow *ngIf="countryForm.get('empName')?.invalid &&
+                  countryForm.get('empName')?.errors &&
+                        (countryForm.get('empName')?.dirty || countryForm.get('empName')?.touched)">
+                    <small class="text-danger" *ngIf="countryForm.get('empName').hasError('required')">
+                      This field is required.
+                    </small>
+                    <small class="text-danger" *ngIf="countryForm.get('empName').hasError('minlength')">
+                      The minimum length for this field is
+                      {{countryForm.get('empName').errors.minlength.requiredLength}} characters.
+                    </small>
+                    <small class="text-danger" *ngIf="countryForm.get('empName').hasError('maxlength')">
+                      The maximum length for this field is
+                      {{countryForm.get('empName').errors.maxlength.requiredLength}} characters.
+                    </small>
                   </div>
                 </c-col>
                 <c-col md>
                   <div cFormFloating>
-                    <select aria-label="Floating label select example" cSelect id="empDesignation">
-                      <option selected>Select Designation</option>
+                    <input cFormControl formControlName="empEmail" name="empEmai" id="empEmail"
+                      placeholder="abc@example.com" type="email" autocomplete="false"/>
+                    <label cLabel for="empEmail">Email address</label>
+                  </div>
+
+                  <div cRow *ngIf="countryForm.get('empEmail')?.invalid &&
+                  countryForm.get('empEmail')?.errors &&
+                        (countryForm.get('empEmail')?.dirty || countryForm.get('empEmail')?.touched)">
+                    <small class="text-danger" *ngIf="countryForm.get('empEmail').hasError('required')">
+                      This field is required
+                    </small>
+                    <small class="text-danger" *ngIf="countryForm.get('empEmail').errors?.pattern">
+                      Give proper email address
+                    </small>
+                  </div>
+                </c-col>
+                <c-col md>
+                  <div cFormFloating>
+                    <select aria-label="Floating label select example" cSelect id="empDesignation"
+                      formControlName="empDesignation" name="empDesignation">
+                      <option value="null">Select Designation</option>
                       <option *ngFor="let designation of designations" [value]="designation.id">
                         {{designation.name}}
                       </option>
                     </select>
+                  </div>
+
+                  <div cRow *ngIf="countryForm.get('empDesignation')?.invalid &&
+                  countryForm.get('empDesignation')?.errors &&
+                        (countryForm.get('empDesignation')?.dirty || countryForm.get('empDesignation')?.touched)">
+                    <small class="text-danger" *ngIf="countryForm.get('empDesignation').hasError('required')">
+                      This field is required.
+                    </small>
+                                
+                    
                   </div>
                 </c-col>
               </c-row>
@@ -58,20 +104,86 @@
               <c-row [gutter]="{g: 2}">
                 <c-col md>
                   <div cFormFloating>
-                    <input cFormControl id="floatingInputGrid" placeholder="Give Name" type="text" value="" />
+                    <input cFormControl id="floatingInputGrid" placeholder="Give Name" type="text" value=""
+                      formControlName="userName" name="userName" />
                     <label cLabel for="floatingInputGrid">User Name</label>
                   </div>
-                </c-col>
-                <c-col md>
-                  <div cFormFloating>
-                    <input cFormControl id="floatingInputGrid" placeholder="Password" type="password" value="" />
-                    <label cLabel for="floatingInputGrid">Password</label>
+                  
+                  <div cRow *ngIf="countryForm.get('userName')?.invalid &&
+                  countryForm.get('userName')?.errors &&
+                        (countryForm.get('userName')?.dirty || countryForm.get('userName')?.touched)">
+                    <small class="text-danger" *ngIf="countryForm.get('userName').hasError('required')">
+                      This field is required.
+                    </small>
+                    <small class="text-danger" *ngIf="countryForm.get('userName').hasError('minlength')">
+                      The minimum length for this field is
+                      {{countryForm.get('userName').errors.minlength.requiredLength}} characters.
+                    </small>
+                    <small class="text-danger" *ngIf="countryForm.get('userName').hasError('maxlength')">
+                      The maximum length for this field is
+                      {{countryForm.get('userName').errors.maxlength.requiredLength}} characters.
+                    </small>
                   </div>
                 </c-col>
                 <c-col md>
                   <div cFormFloating>
-                    <input cFormControl id="floatingInputGrid" placeholder="Confirm Password" type="password" value="" />
+                    <input cFormControl id="floatingInputGrid" placeholder="Password" type="password" value=""
+                      formControlName="userPassword" name="userPassword" />
+                    <label cLabel for="floatingInputGrid">Password</label>
+                  </div>
+                  <div cRow *ngIf="countryForm.get('userPassword')?.invalid &&
+                countryForm.get('userPassword')?.errors &&
+                      (countryForm.get('userPassword')?.dirty || countryForm.get('userPassword')?.touched)">
+                    <small class="text-danger" *ngIf="countryForm.get('userPassword').hasError('required')">
+                      This field is required.
+                    </small>
+                  </div>
+                </c-col>
+                <c-col md>
+                  <div cFormFloating>
+                    <input cFormControl id="floatingInputGrid" placeholder="Confirm Password" type="password"
+                      formControlName="userConfirmPassword" name="userConfirmPassword" />
                     <label cLabel for="floatingInputGrid">Confirm Password</label>
+                  </div>
+                  <div cRow
+                    *ngIf="countryForm.get('userConfirmPassword')?.invalid &&
+                  countryForm.get('userConfirmPassword')?.errors &&
+                        (countryForm.get('userConfirmPassword')?.dirty || countryForm.get('userConfirmPassword')?.touched)">
+                    <small class="text-danger" *ngIf="countryForm.get('userConfirmPassword').hasError('required')">
+                      This field is required.
+                    </small>
+                    <small class="text-danger"
+                      *ngIf="countryFormControl.userConfirmPassword.touched && countryFormControl.userConfirmPassword.errors?.passwordMismatch">
+                      Passwords does not match
+                    </small>
+                  </div>
+                </c-col>
+              </c-row>
+            </c-card-body>
+          </c-card>
+        </c-col>
+
+
+        <br>
+
+        <c-col xs="12">
+          <c-card class="mb-4">
+            <c-card-header>
+              <strong>User Role Mapping</strong>
+            </c-card-header>
+            <c-card-body>
+              <c-row [gutter]="{g: 2}">
+                <c-col md>
+                  <c-multi-select multiple formControlName="roleList" name="roleList" required>
+                    <c-multi-select-option *ngFor="let role of roles" [value]="role.id">{{role.name}}
+                    </c-multi-select-option>
+                  </c-multi-select>
+                  <div cRow *ngIf="countryForm.get('roleList')?.invalid &&
+                  countryForm.get('roleList')?.errors &&
+                        (countryForm.get('roleList')?.dirty || countryForm.get('roleList')?.touched)">
+                    <small class="text-danger" *ngIf="countryForm.get('roleList').hasError('required')">
+                      This field is required.
+                    </small>                   
                   </div>
                 </c-col>
               </c-row>
@@ -82,16 +194,17 @@
         <c-col xs="12">
           <c-col md>
             <button cButton class="btn btn-primary btnSaveColor me-1" (click)="onSubmit()">Save</button>
-            <button cButton class="btn btn-danger btnCancelColor me-1" onclick=" window.location.reload();">Cancel</button>
-  
+            <button cButton class="btn btn-danger btnCancelColor me-1"
+              onclick=" window.location.reload();">Cancel</button>
+
           </c-col>
         </c-col>
       </form>
 
-    
-     
+
+
     </c-card-body>
-    </c-card>
+  </c-card>
 </c-col>
 
 <!-- 

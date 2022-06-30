@@ -6,8 +6,8 @@ import { role } from '../../../../core/interfaces/security/role.interface';
 import { FormService } from '../../../../core/services/form.service';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { paginatedResponseInterface } from 'src/app/core/interfaces/paginated.interface';
-import {CutomvalidatorService} from'src/app/core/services/cutomvalidator.service'
-import {userRegistrationRequestData} from 'src/app/core/interfaces/security/user-registration.interface'
+import { CutomvalidatorService } from 'src/app/core/services/cutomvalidator.service'
+import { userRegistrationRequestData, UserCountry, UserRole } from 'src/app/core/interfaces/security/user-registration.interface'
 
 @Component({
   selector: 'app-user-registration',
@@ -20,26 +20,26 @@ export class UserRegistrationComponent implements OnInit {
   roles: role[] = [];
   countryForm: FormGroup;
   formService: FormService = new FormService();
-  userRequestModel :any ;
+  userRequestModel: any;
 
 
-  constructor(private http: HttpService, private fb: FormBuilder,  private customValidator: CutomvalidatorService) {
+  constructor(private http: HttpService, private fb: FormBuilder, private customValidator: CutomvalidatorService) {
     this.LoadDropDownValues();
-    
+
     this.countryForm = this.fb.group({
       id: [''],
       empName: ['', [Validators.required, Validators.maxLength(20), Validators.minLength(4)]],
-      empEmail: ['', [Validators.required,Validators.pattern(/^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/)]],
-      empDesignation: [null,[Validators.required]],
-      userName: ['',[Validators.required]],
-      userPassword: ['',[Validators.required]],
-      userConfirmPassword: ['',[Validators.required]],
-      roleList:['',[Validators.required]],
-      countryListSelected:['',[Validators.required]]
+      empEmail: ['', [Validators.required, Validators.pattern("^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$")]],
+      empDesignation: [null, [Validators.required]],
+      userName: ['', [Validators.required]],
+      userPassword: ['', [Validators.required]],
+      userConfirmPassword: ['', [Validators.required]],
+      roleList: ['', [Validators.required]],
+      countryListSelected: ['', [Validators.required]]
     },
-    {
-      validator: this.customValidator.MatchPassword('userPassword', 'userConfirmPassword'),           
-    }
+      {
+        validator: this.customValidator.MatchPassword('userPassword', 'userConfirmPassword'),
+      }
     )
 
 
@@ -53,16 +53,16 @@ export class UserRegistrationComponent implements OnInit {
   }
 
   LoadCountry() {
-    this.http.paginatedPost('country/paginated',20,1,{}).subscribe(resp => {
+    this.http.paginatedPost('country/paginated', 20, 1, {}).subscribe(resp => {
       let convertedResp = resp as paginatedResponseInterface<country>;
-      this.countries = convertedResp.items;     
+      this.countries = convertedResp.items;
     })
   }
 
   LoadDesignation() {
-      this.http.paginatedPost('designation/paginated',100,1,{}).subscribe(resp => {
+    this.http.paginatedPost('designation/paginated', 100, 1, {}).subscribe(resp => {
       let convertedResp = resp as paginatedResponseInterface<designation>;
-      this.designations = convertedResp.items;     
+      this.designations = convertedResp.items;
     })
   }
 
@@ -77,19 +77,49 @@ export class UserRegistrationComponent implements OnInit {
     this.LoadDesignation();
     this.LoadRole();
   }
-  
-  onSubmit():void{
+
+  onSubmit(): void {
     console.log(this.countryForm.value);
- 
-      if(this.countryForm.valid){
-       // this.userRequestModel ={"id":21,"cck":121};
-        //this.userRequestModel=this.userRequestModel as userRegistrationRequestData;
-        }
-        else{
-          this.countryForm.markAllAsTouched();
-          return;
-        }
-      } 
-       
+    let useca: UserRole[] = this.countryForm.value.roleList as UserRole[];
+    useca.forEach((element: any) => {
+      console.log(element);
+    });
+    console.log(useca);
+
+    if (this.countryForm.valid) {
+      let useca: UserCountry[] = [{ countryId: "", isActive: true, userId: "" }];
+
+
+      let registrationModel: userRegistrationRequestData = {
+        employee:
+        {
+          email: "",
+          designationId: "",
+          userId: "",
+          photoId: "",
+          isActive: true,
+          name: ""
+        },
+        user:
+        {
+          id: "",
+          isAccountExpired: false,
+          isAccountLocked: false,
+          isEnabled: true,
+          isPasswordExpired: false,
+          password: "",
+          userName: ""
+        },
+        userCountry: [{ countryId: "", isActive: true, userId: "" }],
+        userRole: [{ roleId: "", userId: "" }]
+      };
+
+    }
+    else {
+      this.countryForm.markAllAsTouched();
+      return;
+    }
+  }
+
 
 }

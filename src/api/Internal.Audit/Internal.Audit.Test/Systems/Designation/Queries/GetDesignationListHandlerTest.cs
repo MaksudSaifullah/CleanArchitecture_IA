@@ -28,6 +28,13 @@ public class GetDesignationListHandlerTest
             c.AddProfile<MappingProfile>();
         });
 
+        _designationListQuery = new GetDesignationListQuery
+        {
+            pageSize = 10,
+            pageNumber = 1,
+            searchTerm = null
+        };
+
         _mapper = mapperConfig.CreateMapper();
     }
 
@@ -39,8 +46,8 @@ public class GetDesignationListHandlerTest
         ///act
         var result = await handler.Handle(_designationListQuery, CancellationToken.None);
         ///assert
-        result.ShouldBeOfType<List<GetDesignationListResponseDTO>>();
+        result.ShouldBeOfType<GetDesignationListPagingDTO>();
 
-        result.Count().ShouldBe(3);
+        result.Items.Count().ShouldBe(3);
     }
 }

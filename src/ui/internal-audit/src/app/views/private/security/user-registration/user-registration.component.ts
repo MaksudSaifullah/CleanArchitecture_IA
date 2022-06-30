@@ -24,7 +24,7 @@ export class UserRegistrationComponent implements OnInit {
   formService: FormService = new FormService();
   userRequestModel: any;
 
-  constructor(private http: HttpService, private fb: FormBuilder,private activateRoute:ActivatedRoute) {
+  constructor(private http: HttpService, private fb: FormBuilder,private activateRoute:ActivatedRoute,private customValidator:CutomvalidatorService) {
     this.LoadDropDownValues();
 
     this.countryForm = this.fb.group({

@@ -4,7 +4,7 @@ using MediatR;
 
 namespace Internal.Audit.Application.Features.Roles.Queries.GetRolesList
 {
-    public class GetRoleListQueryHandler : IRequestHandler<GetRoleListQuery, List<RoleDTO>>
+    public class GetRoleListQueryHandler : IRequestHandler<GetRoleListQuery, RoleListPagingDTO>
     {
         private readonly IRoleQueryRepository _roleRepository;
         private readonly IMapper _mapper;
@@ -15,10 +15,13 @@ namespace Internal.Audit.Application.Features.Roles.Queries.GetRolesList
             _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
         }
 
-        public async Task<List<RoleDTO>> Handle(GetRoleListQuery request, CancellationToken cancellationToken)
+        public async Task<RoleListPagingDTO> Handle(GetRoleListQuery request, CancellationToken cancellationToken)
         {
-            var roles = await _roleRepository.GetAll();
-            return _mapper.Map<List<RoleDTO>>(roles);
+            var (count, result) = await _roleRepository.GetAll(request.pageSize, request.pageNumber);
+
+            var countryList = _mapper.Map<IEnumerable<RoleDTO>>(result).ToList();
+
+            return new RoleListPagingDTO { Items = countryList, TotalCount = count };
 
         }
     }

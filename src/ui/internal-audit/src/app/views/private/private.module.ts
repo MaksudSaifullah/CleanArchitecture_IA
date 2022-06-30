@@ -16,9 +16,7 @@ import { ButtonModule, CardModule, FormModule,MultiSelectModule  } from '@coreui
     ButtonModule,
     CardModule,
     FormModule,
-    MultiSelectModule 
-  
-  
+    MultiSelectModule
   ]
 })
 export class PrivateModule { }

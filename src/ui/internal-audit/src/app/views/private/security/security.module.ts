@@ -16,8 +16,7 @@ import { AccessPrivilegeComponent } from './access-privilege/access-privilege.co
   declarations: [
     UserRegistrationComponent,
     DesignationComponent,
-    UserlistComponent
-    DesignationComponent,
+    UserlistComponent,    
     AccessPrivilegeComponent
   ],
   imports: [

@@ -32,12 +32,12 @@ export interface User {
 
 export interface UserCountry {
     countryId: string;
-    userId: string;
+    userId?: string;
     isActive: boolean;
 }
 
 export interface UserRole {
-    userId: string;
+    userId?: string;
     roleId: string;
 }
 

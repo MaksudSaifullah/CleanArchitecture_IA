@@ -1,0 +1,164 @@
+<c-nav variant="tabs">
+    <a [active]="true" [cTabContent]="tabContent" [routerLink] [tabPaneIdx]="0" cNavLink>User Role</a>
+    <a [cTabContent]="tabContent" [routerLink] [tabPaneIdx]="1" cNavLink>Access Privilege</a>
+  </c-nav>
+  <c-tab-content #tabContent="cTabContent">
+    <c-tab-pane class="p-3">
+        
+      <div class="animated fadeIn">
+        <div class="row">
+          <div class="col-lg-12">
+            <div class="card">
+              <div class="card-header">
+                <i class="fa fa-align-justify" ></i> Role List
+              </div>
+              <div class="card-body">
+                <div class="row">
+                  <div class="col-sm-7 mb-2">
+                      <button [cModalToggle]="verticallyCenteredModal.id" class="btnCreateColor" (click)="reset()" cButton>Create Role</button>
+
+                  </div>
+                  <div class="col-sm-5 mb-2">
+                    <div class="row">
+                      <div class="col-8">
+                        <input type="text" class="form-control pull-right" placeholder="Search by Name"/>
+                      </div>
+                      <div class="col-2">
+                        <button type="button" class="btn btn-secondary mr-1 pull-right btn-block" data-toggle="modal" >
+                          Search
+                      </button>
+                      </div>
+                      <div class="col-2">
+                        <button type="button" class="btn btn-secondary mr-1 pull-right btn-block" data-toggle="modal"  >
+                          Reset
+                      </button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="row overflow-auto">
+                    <table datatable [dtOptions]="dtOptions" class="table table-bordered row-border hover" >
+                      <thead>
+                        <tr>
+                          <th>Name</th>
+                          <th>Description</th>
+                          <th>Active</th>
+                          <th>Action</th>
+                        </tr>
+                      </thead>
+                      <tbody *ngIf="roles?.length != 0">
+                        <tr *ngFor="let role of roles">
+                          <td>{{ role.name }}</td>
+                          <td>{{ role.description }}</td>
+                          <td>{{ role.isActive }}</td>
+                          <td>
+                            <div class="btn-group" role="group" aria-label="Basic example">
+                              <button type="button" class="btn btn-secondary btnSaveColor" (click)="edit(verticallyCenteredModal,role)">
+                                Edit
+                              </button>
+                              <button type="button" class="btn btn-danger btnDeleteColor" (click)="delete(role.id)">
+                                Delete
+                              </button>
+                            </div>
+                          </td>
+                        </tr>
+                      </tbody>
+                      <tbody *ngIf="roles?.length == 0">
+                        <tr>
+                          <td colspan="5" class="no-data-available">No data!</td>
+                        </tr>
+                      </tbody>
+                    </table>
+
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+
+<form [formGroup]="roleForm" (ngSubmit)="onSubmit(verticallyCenteredModal)" novalidate>
+    <c-modal #verticallyCenteredModal alignment="center" id="verticallyCenteredModal">
+      <c-modal-header>
+        <h5 cModalTitle *ngIf="!formService.isEdit(this.roleForm.get('id'))">Create User Role</h5>
+        <h5 cModalTitle *ngIf="formService.isEdit(this.roleForm.get('id'))">Update User Role</h5>
+        <button [cModalToggle]="verticallyCenteredModal.id" cButtonClose></button>
+      </c-modal-header>
+      <c-modal-body>
+        <div class="col-md-12" >
+          <input type="hidden" formControlName="id"/>
+
+            <div class="form-floating mb-3">
+              <input type="text" class="form-control" formControlName="name" id="name" placeholder="Name">
+              <label for="floatingInput">Name</label>
+            </div>
+
+
+            <div cRow *ngIf="roleForm.get('name')?.invalid &&
+            roleForm.get('name')?.errors &&
+                  (roleForm.get('name')?.dirty || roleForm.get('name')?.touched)">
+              <small class="text-danger"
+                  *ngIf="roleForm.get('name').hasError('required')">
+                  This field is required.
+              </small>
+              <small class="text-danger"
+                  *ngIf="roleForm.get('name').hasError('minlength')">
+                  The minimum length for this field is {{roleForm.get('name').errors.minlength.requiredLength}} characters.
+              </small>
+              <small class="text-danger"
+                  *ngIf="roleForm.get('name').hasError('maxlength')">
+                  The maximum length for this field is {{roleForm.get('name').errors.maxlength.requiredLength}} characters.
+              </small>
+          </div>
+
+            <div class="form-floating mb-3">
+              <input type="text" class="form-control" formControlName="description" id="description" placeholder="description">
+              <label for="floatingInput">Description</label>
+            </div>
+
+            <div cRow *ngIf="roleForm.get('description')?.invalid &&
+            roleForm.get('description')?.errors &&
+                  (roleForm.get('description')?.dirty || roleForm.get('description')?.touched)">
+              <small class="text-danger"
+                  *ngIf="roleForm.get('description').hasError('required')">
+                  This field is required.
+              </small>
+              <small class="text-danger"
+                  *ngIf="roleForm.get('description').hasError('minlength')">
+                  The minimum length for this field is {{roleForm.get('description').errors.minlength.requiredLength}} characters.
+              </small>
+              <small class="text-danger"
+                  *ngIf="roleForm.get('description').hasError('maxlength')">
+                  The maximum length for this field is {{roleForm.get('description').errors.maxlength.requiredLength}} characters.
+              </small>
+          </div>
+
+          <c-form-check sizing="xl" switch>
+            <input cFormCheckInput checked type="checkbox" formControlName="isActive" id="isActive" checked />
+            <label cFormCheckLabel>Active Status</label>
+          </c-form-check>
+
+          
+
+        </div>
+      </c-modal-body>
+      <c-modal-footer>
+        <button cButton class="btn btn-primary btnSaveColor me-1" (click)="onSubmit(verticallyCenteredModal)">Save</button>
+            <button [cModalToggle]="verticallyCenteredModal.id" cButton class="btn btn-danger btnCancelColor me-1">
+              Close
+        </button>
+      </c-modal-footer>
+    </c-modal>
+    </form>
+
+
+
+    </c-tab-pane>
+    <c-tab-pane class="p-3">
+      This is some placeholder content the <strong>Profile</strong> tab's associated content. Clicking another
+      tab will toggle the visibility of this one for the next. The tab JavaScript swaps classes to control the
+      content visibility and styling. You can use it with tabs, pills, and any other .nav-powered navigation.
+    </c-tab-pane>
+  </c-tab-content>

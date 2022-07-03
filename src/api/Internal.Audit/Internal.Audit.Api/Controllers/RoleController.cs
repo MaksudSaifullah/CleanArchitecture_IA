@@ -18,12 +18,11 @@ namespace Internal.Audit.Api.Controllers
             _mediator = madiator ?? throw new ArgumentNullException(nameof(madiator));
         }
 
-        [HttpGet("all")]
-        public async Task<ActionResult<IEnumerable<RoleDTO>>> GetList()
+        [HttpPost("paginated")]
+        public async Task<ActionResult<RoleListPagingDTO>> GetList(GetRoleListQuery getRoleListQuery)
         {
-            var query = new GetRoleListQuery();
-            var users = await _mediator.Send(query);
-            return Ok(users);
+            var roles = await _mediator.Send(getRoleListQuery);
+            return Ok(roles);
 
         }
 

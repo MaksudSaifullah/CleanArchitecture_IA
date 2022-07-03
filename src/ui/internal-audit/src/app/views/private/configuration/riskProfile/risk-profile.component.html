@@ -8,7 +8,7 @@
           <div class="card-body">
             <div class="row">
               <div class="col-sm-7 mb-2">
-                  <button [cModalToggle]="verticallyCenteredModal.id" class="btnCreateColor" (click)="reset()" cButton>Create Risk Profile</button>
+                  <!-- <button [cModalToggle]="verticallyCenteredModal.id" class="btnCreateColor" (click)="reset()" cButton>Create Risk Profile</button> -->
   
               </div>
               <div class="col-sm-5 mb-2">
@@ -43,22 +43,23 @@
                       <th>Level of Likelihood</th>
                       <th>Level of impact</th>
                       <th>Risk Rating</th>
-                      <th>Description</th>                     
+                      <th>Description</th>  
+                      <th>Action</th>                   
                     </tr>
                   </thead>
                   <tbody *ngIf="riskProfiles?.length != 0">
                     <tr *ngFor="let riskProfile of riskProfiles">
-                      <td>{{ riskProfile.LikelihoodTypeId }}</td>
-                      <td>{{ riskProfile.ImpactTypeId }}</td>
-                      <td>{{ riskProfile.RatingTypeId }}</td>
-                      <td>{{ riskProfile.EffectiveFrom | date:'medium' }}</td>
-                      <td>{{ riskProfile.EffectiveTo | date:'medium' }}</td>
-                      <td>{{ riskProfile.Description }}</td>
+                      <td>{{ riskProfile.likelihoodTypeId }}</td>
+                      <td>{{ riskProfile.impactTypeId }}</td>
+                      <td>{{ riskProfile.ratingTypeId }}</td>
+                      <!-- <td>{{ riskProfile.effectiveFrom | date:'medium' }}</td>
+                      <td>{{ riskProfile.effectiveTo | date:'medium' }}</td> -->
+                      <td>{{ riskProfile.description }}</td>
                       <td>
                         <div class="btn-group" role="group" aria-label="Basic example">
-                          <button type="button" class="btn btn-secondary btnSaveColor" (click)="edit(verticallyCenteredModal,riskProfile)">
+                          <!-- <button type="button" class="btn btn-secondary btnSaveColor" (click)="edit(verticallyCenteredModal,riskProfile)">
                            Edit
-                          </button>
+                          </button> -->
                           <button type="button" class="btn btn-danger btnDeleteColor" (click)="delete(riskProfile.id)">
                             Delete
                           </button>
@@ -79,14 +80,14 @@
       </div>
     </div>
   </div>
-  <form [formGroup]="riskProfileForm" (ngSubmit)="onSubmit(verticallyCenteredModal)" novalidate>
+  <!-- <form [formGroup]="riskProfileForm" (ngSubmit)="onSubmit(verticallyCenteredModal)" novalidate>
   <c-modal #verticallyCenteredModal alignment="center" id="verticallyCenteredModal">
     <c-modal-header>
       <h5 cModalTitle *ngIf="!formService.isEdit(this.riskProfileForm.get('id'))">Create Risk Profile</h5>
       <h5 cModalTitle *ngIf="formService.isEdit(this.riskProfileForm.get('id'))">Update Risk Profile</h5>
-      <button [cModalToggle]="verticallyCenteredModal.id" cButtonClose></button>
-    </c-modal-header>
-    <c-modal-body>
+      <button [cModalToggle]="verticallyCenteredModal.id" cButtonClose></button> 
+    </c-modal-header>-->
+    <!-- <c-modal-body>
       <div class="col-md-12" >
         <input type="hidden" formControlName="id"/>
   
@@ -95,7 +96,24 @@
             <label for="floatingInput">Name</label>
           </div>
   
-  
+          <div cFormFloating>
+            <select aria-label="Floating label select example" cSelect id="likelihoodLevel"
+              formControlName="likelihoodLevel" name="likelihoodLevel">
+              <option value="null">Select Likelihood/option>
+              <option *ngFor="let commonValueAndType of likelihoodType" [value]="commonValueAndType.id">
+                {{commonValueAndType.name}}
+              </option>
+            </select>
+          </div>
+
+          <div cRow *ngIf="riskProfileForm.get('likelihoodLevel')?.invalid &&
+          riskProfileForm.get('likelihoodLevel')?.errors &&
+                (riskProfileForm.get('likelihoodLevel')?.dirty || riskProfileForm.get('likelihoodLevel')?.touched)">
+            <small class="text-danger" *ngIf="riskProfileForm.get('likelihoodLevel').hasError('required')">
+              This field is required.
+            </small>
+                                 
+          </div> -->
           <!-- <div cRow *ngIf="riskProfileForm.get('LikelihoodTypeId')?.invalid &&
           riskProfileForm.get('LikelihoodTypeId')?.errors &&
                 (riskProfileForm.get('LikelihoodTypeId')?.dirty || riskProfileForm.get('LikelihoodTypeId')?.touched)">
@@ -136,19 +154,19 @@
         </div> -->
   
   
-          <div class="form-floating">
+          <!-- <div class="form-floating">
             <textarea class="form-control" placeholder="Description" formControlName="Description" id="Description"></textarea>
             <label for="floatingTextarea">Description</label>
           </div>
   
       </div>
-    </c-modal-body>
-    <c-modal-footer>
+    </c-modal-body> -->
+    <!-- <c-modal-footer>
       <button cButton class="btn btn-primary btnSaveColor me-1" (click)="onSubmit(verticallyCenteredModal)">Save</button>
-          <button [cModalToggle]="verticallyCenteredModal.id" cButton class="btn btn-danger btnCancelColor me-1">
+           <button [cModalToggle]="verticallyCenteredModal.id" cButton class="btn btn-danger btnCancelColor me-1"> 
             Close
-      </button>
-    </c-modal-footer>
+       </button> 
+    </c-modal-footer> 
   </c-modal>
   </form>
-  
+   -->

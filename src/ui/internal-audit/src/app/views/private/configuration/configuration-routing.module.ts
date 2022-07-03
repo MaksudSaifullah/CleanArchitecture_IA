@@ -9,7 +9,7 @@ const routes: Routes = [
     component:CountryComponent
   },
   {
-    path:'riskProfile',component:RiskProfileComponent
+    path:'risk-profile',component:RiskProfileComponent
   }
 
 ];

@@ -13,16 +13,20 @@ import {AlertService} from '../../../../core/services/alert.service';
 import { paginatedResponseInterface } from 'src/app/core/interfaces/paginated.interface';
 @Component({
   selector: 'app-riskProfile',
-  templateUrl: './riskProfile.component.html',
-  styleUrls: ['./riskProfile.component.scss']
+  templateUrl: './risk-profile.component.html',
+  styleUrls: ['./risk-profile.component.scss']
 })
 export class RiskProfileComponent implements OnInit {
     // ngOnInit(): void {
     //     throw new Error('Method not implemented.');
     // }
+   // ImpactType: commonValueAndType[] = [],
   @ViewChild(DataTableDirective, {static: false})
   datatableElement: DataTableDirective | undefined;
   dtOptions: DataTables.Settings = {};
+  likelihoodType: commonValueAndType[] = [];
+  impactType: commonValueAndType[] = [];
+  ratingType: commonValueAndType[] = [];
   riskProfiles: riskProfile[] = [];
   riskProfileForm: FormGroup;
   formService: FormService = new FormService();
@@ -30,62 +34,62 @@ export class RiskProfileComponent implements OnInit {
   dtTrigger: Subject<any> = new Subject<any>();
 
   constructor(private http: HttpService , private fb: FormBuilder, private AlertService: AlertService) {
+    this.LoadDropDownValues();
     this.riskProfileForm = this.fb.group({
-      ImpactTypeId: commonValueAndType[] = [],
-      LikelihoodTypeId: commonValueAndType[] = [],
-     // id: [''],
-     // LikelihoodTypeId: [''],
-     // ImpactTypeId: [''],
-      RatingTypeId: [''],
-      EffectiveFrom: Date,
-      EffectiveTo: Date,
+      id: [''],
+      likelihoodLevel:[null,[Validators.required]],
+      impactLevel: [null,[Validators.required]],
+      riskLevel: [null,[Validators.required]],
       Description: ['',[Validators.required,Validators.maxLength(20),Validators.minLength(5)]],
-      
+      EffectiveFrom: Date,
+      EffectiveTo: Date    
     })
   }
   ngOnDestroy(): void {
 
   }
   ngOnInit(): void {
+   // debugger;
     this.LoadData();
     };
-  // LoadData() {
-  //   const that = this;
 
-  //   this.dtOptions = {
-  //     pagingType: 'full_numbers',
-  //     pageLength: 10,
-  //     serverSide: true,
-  //     processing: true,
-  //     searching: false,
-  //     ajax: (dataTablesParameters: any, callback) => {
-  //       this.http
-  //         .paginatedPost(
-  //           'riskProfile/paginated',dataTablesParameters.length,((dataTablesParameters.start/dataTablesParameters.length)+1),{}
-  //         ).subscribe(resp => that.riskProfiles = this.dataTableService.datatableMap(resp,callback));
-  //     },
-  //   };
+  LoadData() {
+    const that = this;
 
-  // }
+    this.dtOptions = {
+      pagingType: 'full_numbers',
+      pageLength: 10,
+      serverSide: true,
+      processing: true,
+      searching: false,
+      ajax: (dataTablesParameters: any, callback) => {
+        this.http
+          .paginatedPost(
+            'riskProfile/paginated',dataTablesParameters.length,((dataTablesParameters.start/dataTablesParameters.length)+1),{}
+          ).subscribe(resp => that.riskProfiles = this.dataTableService.datatableMap(resp,callback));
+      },
+    };
+
+  }
 
   LoadLikelihoodLevel() {
     this.http.paginatedPost('commonValueAndType/paginated', 20, 1, {}).subscribe(resp => {
       let convertedResp = resp as paginatedResponseInterface<commonValueAndType>;
-      this.LikelihoodTypeId = convertedResp.items;
+      this.likelihoodType = convertedResp.items;
     })
   }
 
   LoadImpactLevel() {
     this.http.paginatedPost('commonValueAndType/paginated', 100, 1, {}).subscribe(resp => {
       let convertedResp = resp as paginatedResponseInterface<commonValueAndType>;
-      this.ImpactTypeId = convertedResp.items;
+      this.impactType = convertedResp.items;
     })
   }
 
   LoadRiskRating() {
     this.http.paginatedPost('commonValueAndType/paginated', 100, 1, {}).subscribe(resp => {
       let convertedResp = resp as paginatedResponseInterface<commonValueAndType>;
-      this.RatingTypeId = convertedResp.items;
+      this.ratingType = convertedResp.items;
     })
   }
 
@@ -121,11 +125,11 @@ export class RiskProfileComponent implements OnInit {
         .getById('riskProfile',riskProfile.id)
         .subscribe(res => {
             const riskProfileResponse = res as riskProfile;
-            this.riskProfileForm.setValue({id : riskProfileResponse.id, LikelihoodTypeId : riskProfileResponse.LikelihoodTypeId, ImpactTypeId: riskProfileResponse.ImpactTypeId,
-                 RatingTypeId: riskProfileResponse.RatingTypeId,
-                 EffectiveFrom: riskProfileResponse.EffectiveFrom,
-                 EffectiveTo: riskProfileResponse.EffectiveTo,
-                 Description: riskProfileResponse.Description
+            this.riskProfileForm.setValue({id : riskProfileResponse.id, LikelihoodTypeId : riskProfileResponse.likelihoodTypeId, ImpactTypeId: riskProfileResponse.impactTypeId,
+                 RatingTypeId: riskProfileResponse.ratingTypeId,
+                 EffectiveFrom: riskProfileResponse.effectiveFrom,
+                 EffectiveTo: riskProfileResponse.effectiveTo,
+                 Description: riskProfileResponse.description
                 });
         });
         localmodalId.visible = true;

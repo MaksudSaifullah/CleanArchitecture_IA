@@ -10,7 +10,7 @@
           <c-row>
             <c-col md="4" *ngFor="let country of countries">
               <c-form-check>
-                <input formControlName="countryListSelected" [id]="country.id" type="checkbox" />
+                <input formControlName="countryListSelected" [id]="country.id" type="checkbox"  (change)="eventCheck($event)"/>
                 <label for="checkThree" class="m-1"> {{country.name}}</label>
               </c-form-check>
             </c-col>

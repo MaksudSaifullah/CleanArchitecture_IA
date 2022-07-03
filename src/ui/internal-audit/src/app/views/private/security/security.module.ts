@@ -8,8 +8,10 @@ import { DesignationComponent } from './designation/designation.component';
 import { DataTablesModule } from 'angular-datatables';
 import { ChangePasswordComponent } from './change-password/change-password.component';
 import { UserlistComponent } from './userlist/userlist.component';
-import { ButtonModule, CardModule, FormModule, GridModule,MultiSelectModule,ModalModule} from '@coreui/angular-pro';
+import { ButtonModule, CardModule, FormModule, GridModule,MultiSelectModule,ModalModule, NavModule, TabsModule} from '@coreui/angular-pro';
 import { ReactiveFormsModule,FormsModule } from '@angular/forms';
+import { AccessPrivilegeComponent } from './access-privilege/access-privilege.component';
+import { UserRoleComponent } from './user-role/user-role.component';
 
 
 @NgModule({
@@ -17,7 +19,10 @@ import { ReactiveFormsModule,FormsModule } from '@angular/forms';
     UserRegistrationComponent,
     DesignationComponent,
     ChangePasswordComponent,
-    UserlistComponent
+    UserlistComponent,
+    AccessPrivilegeComponent,
+    UserRoleComponent
+
   ],
   imports: [
     CommonModule,
@@ -30,8 +35,9 @@ import { ReactiveFormsModule,FormsModule } from '@angular/forms';
     ButtonModule,
     ReactiveFormsModule,
     DataTablesModule,
-    FormsModule
-
+    FormsModule,
+    TabsModule,
+    NavModule
   ]
 })
 export class SecurityModule { }

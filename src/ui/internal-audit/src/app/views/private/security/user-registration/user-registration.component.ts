@@ -33,12 +33,12 @@ export class UserRegistrationComponent implements OnInit {
       id: [''],
       empName: ['', [Validators.required, Validators.maxLength(20), Validators.minLength(4)]],
       empEmail: ['', [Validators.required, Validators.pattern("^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$")]],
-      empDesignation: [null],
-      userName: [''],
-      userPassword: [''],
-      userConfirmPassword: [''],
-      roleList: [''],
-      countryListSelected: ['']
+      empDesignation: [null,[Validators.required]],
+      userName: ['',[Validators.required]],
+      userPassword: ['',[Validators.required]],
+      userConfirmPassword: ['',[Validators.required]],
+      roleList: ['',[Validators.required]],
+      countryListSelected: ['',[Validators.required]]
     },
       {
         validator: this.customValidator.MatchPassword('userPassword', 'userConfirmPassword'),

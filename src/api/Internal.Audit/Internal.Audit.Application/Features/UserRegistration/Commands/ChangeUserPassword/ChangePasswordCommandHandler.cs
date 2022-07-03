@@ -1,4 +1,5 @@
-﻿using Internal.Audit.Application.Contracts.Auth;
+﻿using Internal.Audit.Application.Common.Security;
+using Internal.Audit.Application.Contracts.Auth;
 using Internal.Audit.Application.Contracts.Persistent.UserRegistration;
 using MediatR;
 
@@ -19,13 +20,20 @@ namespace Internal.Audit.Application.Features.UserRegistration.Commands.ChangeUs
 
         public async Task<Tuple<bool, string>> Handle(ChangeUserPasswordCommand request, CancellationToken cancellationToken)
         {
-            var user = await _userQueryRepository.GetByUserEmail(_currentAuthService.Email, request.CurrentPassword);
-            if (user == null)
+            try
             {
-                throw new Exception("User not Found");
+                var user = await _userQueryRepository.GetByUserEmail(_currentAuthService.Email, request.CurrentPassword);
+                if (user == null)
+                {
+                    throw new Exception("User not Found");
+                }
+                await _userCommandRepository.UpdateUserPassword(request.ConfirmPassword, user.Id);
+                return new Tuple<bool, string>(true, "Password changed successfully");
             }
-            await _userCommandRepository.UpdateUserPassword(request.ConfirmPassword, user.Id);
-            throw new NotImplementedException();
+            catch (Exception ex)
+            {
+                return new Tuple<bool, string>(false, ex.Message);
+            }
         }
     }
 }

@@ -8,7 +8,7 @@ import {
 import { Observable } from 'rxjs';
 import { LoginUserInterface } from '../interfaces/login-user.interface';
 
-@Injectable()
+@Injectable({providedIn: 'root'})
 export class RequestInterceptor implements HttpInterceptor {
 
   constructor() {}
@@ -17,7 +17,9 @@ export class RequestInterceptor implements HttpInterceptor {
     var localStorageAuthenticatedUser = localStorage.getItem('authenticatedUser');
     if(localStorageAuthenticatedUser != null){
       var user = JSON.parse(localStorage.getItem('authenticatedUser') || '') as LoginUserInterface;
+      debugger;
       if(user?.success == true){
+
         request.headers.append('Authorization','Bearer '+ user.token )
       }
     }

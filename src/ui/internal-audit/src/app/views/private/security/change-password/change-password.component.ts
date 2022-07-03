@@ -25,8 +25,12 @@ export class ChangePasswordComponent implements OnInit {
   ngOnInit(): void {
   }
   submit(){
+    debugger;
     if(this.changePasswordForm.valid && this.passwordMatchError()){
-      //this.http.post('')
+      this.http.post('userregistration/ChangePassword',this.changePasswordForm.value).subscribe(x=>{
+        debugger;
+        console.log(x);
+      });
       //console.log(this.changePasswordForm.value);
     }
   }

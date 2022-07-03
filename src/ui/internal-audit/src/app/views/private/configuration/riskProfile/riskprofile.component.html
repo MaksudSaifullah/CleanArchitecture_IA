@@ -96,11 +96,11 @@
           </div>
   
   
-          <div cRow *ngIf="riskProfileForm.get('name')?.invalid &&
-          riskProfileForm.get('name')?.errors &&
-                (riskProfileForm.get('name')?.dirty || riskProfileForm.get('name')?.touched)">
+          <!-- <div cRow *ngIf="riskProfileForm.get('LikelihoodTypeId')?.invalid &&
+          riskProfileForm.get('LikelihoodTypeId')?.errors &&
+                (riskProfileForm.get('LikelihoodTypeId')?.dirty || riskProfileForm.get('LikelihoodTypeId')?.touched)">
             <small class="text-danger"
-                *ngIf="riskProfileForm.get('name').hasError('required')">
+                *ngIf="riskProfileForm.get('LikelihoodTypeId').hasError('required')">
                 This field is required.
             </small>
             <small class="text-danger"
@@ -116,9 +116,9 @@
           <div class="form-floating mb-3">
             <input type="text" class="form-control" formControlName="code" id="code" placeholder="Code">
             <label for="floatingInput">Code</label>
-          </div>
+          </div> -->
   
-          <div cRow *ngIf="countryForm.get('code')?.invalid &&
+          <!-- <div cRow *ngIf="countryForm.get('code')?.invalid &&
           countryForm.get('code')?.errors &&
                 (countryForm.get('code')?.dirty || countryForm.get('code')?.touched)">
             <small class="text-danger"
@@ -133,12 +133,12 @@
                 *ngIf="countryForm.get('code').hasError('maxlength')">
                 The maximum length for this field is {{countryForm.get('code').errors.maxlength.requiredLength}} characters.
             </small>
-        </div>
+        </div> -->
   
   
           <div class="form-floating">
-            <textarea class="form-control" placeholder="Remarks" formControlName="remarks" id="remarks"></textarea>
-            <label for="floatingTextarea">Remarks</label>
+            <textarea class="form-control" placeholder="Description" formControlName="Description" id="Description"></textarea>
+            <label for="floatingTextarea">Description</label>
           </div>
   
       </div>

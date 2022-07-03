@@ -4,6 +4,7 @@ import { ModalComponent } from '@coreui/angular-pro';
 import { DataTableDirective } from 'angular-datatables';
 import { Subject } from 'rxjs';
 import { riskProfile } from '../../../../core/interfaces/common/riskProfile.interface';
+import { commonValueAndType } from '../../../../core/interfaces/configuration/commonValueAndType.interface';
 import { HttpService } from '../../../../core/services/http.service';
 import Swal from 'sweetalert2';
 import {FormService} from '../../../../core/services/form.service';
@@ -30,9 +31,11 @@ export class RiskProfileComponent implements OnInit {
 
   constructor(private http: HttpService , private fb: FormBuilder, private AlertService: AlertService) {
     this.riskProfileForm = this.fb.group({
-      id: [''],
-      LikelihoodTypeId: [''],
-      ImpactTypeId: [''],
+      ImpactTypeId: commonValueAndType[] = [],
+      LikelihoodTypeId: commonValueAndType[] = [],
+     // id: [''],
+     // LikelihoodTypeId: [''],
+     // ImpactTypeId: [''],
       RatingTypeId: [''],
       EffectiveFrom: Date,
       EffectiveTo: Date,
@@ -46,23 +49,50 @@ export class RiskProfileComponent implements OnInit {
   ngOnInit(): void {
     this.LoadData();
     };
-  LoadData() {
-    const that = this;
+  // LoadData() {
+  //   const that = this;
 
-    this.dtOptions = {
-      pagingType: 'full_numbers',
-      pageLength: 10,
-      serverSide: true,
-      processing: true,
-      searching: false,
-      ajax: (dataTablesParameters: any, callback) => {
-        this.http
-          .paginatedPost(
-            'riskProfile/paginated',dataTablesParameters.length,((dataTablesParameters.start/dataTablesParameters.length)+1),{}
-          ).subscribe(resp => that.riskProfiles = this.dataTableService.datatableMap(resp,callback));
-      },
-    };
+  //   this.dtOptions = {
+  //     pagingType: 'full_numbers',
+  //     pageLength: 10,
+  //     serverSide: true,
+  //     processing: true,
+  //     searching: false,
+  //     ajax: (dataTablesParameters: any, callback) => {
+  //       this.http
+  //         .paginatedPost(
+  //           'riskProfile/paginated',dataTablesParameters.length,((dataTablesParameters.start/dataTablesParameters.length)+1),{}
+  //         ).subscribe(resp => that.riskProfiles = this.dataTableService.datatableMap(resp,callback));
+  //     },
+  //   };
 
+  // }
+
+  LoadLikelihoodLevel() {
+    this.http.paginatedPost('commonValueAndType/paginated', 20, 1, {}).subscribe(resp => {
+      let convertedResp = resp as paginatedResponseInterface<commonValueAndType>;
+      this.LikelihoodTypeId = convertedResp.items;
+    })
+  }
+
+  LoadImpactLevel() {
+    this.http.paginatedPost('commonValueAndType/paginated', 100, 1, {}).subscribe(resp => {
+      let convertedResp = resp as paginatedResponseInterface<commonValueAndType>;
+      this.ImpactTypeId = convertedResp.items;
+    })
+  }
+
+  LoadRiskRating() {
+    this.http.paginatedPost('commonValueAndType/paginated', 100, 1, {}).subscribe(resp => {
+      let convertedResp = resp as paginatedResponseInterface<commonValueAndType>;
+      this.RatingTypeId = convertedResp.items;
+    })
+  }
+
+  LoadDropDownValues() {
+    this.LoadLikelihoodLevel();
+    this.LoadImpactLevel();
+    this.LoadRiskRating();
   }
 
     onSubmit(modalId:any):void{
@@ -105,7 +135,7 @@ export class RiskProfileComponent implements OnInit {
       this.AlertService.confirmDialog().then(res =>{
         if(res.isConfirmed){
             this.http.delete('riskProfile/'+ id ,{}).subscribe(response=>{
-            this.AlertService.successDialog('Deleted','Country deleted successfully.');
+            this.AlertService.successDialog('Deleted','Risk Profile deleted successfully.');
             this.dataTableService.redraw(that.datatableElement);
           })
         }

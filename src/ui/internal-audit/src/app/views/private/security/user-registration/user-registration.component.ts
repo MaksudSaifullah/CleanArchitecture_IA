@@ -9,7 +9,6 @@ import { paginatedResponseInterface } from 'src/app/core/interfaces/paginated.in
 import { ActivatedRoute } from '@angular/router';
 import { CutomvalidatorService } from 'src/app/core/services/cutomvalidator.service'
 import { userRegistrationRequestData, UserCountry, UserRole, UserResponse } from 'src/app/core/interfaces/security/user-registration.interface'
-import { userRegistrationRequestData, UserCountry, UserRole, UserResponse } from 'src/app/core/interfaces/security/user-registration.interface'
 import {AlertService} from '../../../../core/services/alert.service';
 
 @Component({
@@ -88,9 +87,9 @@ export class UserRegistrationComponent implements OnInit {
   }
 
   LoadRole() {
-    this.http.get('role/all').subscribe(resp => {
-      this.roles = (resp as role[]);
-      //console.log(this.roles);
+    this.http.paginatedPost('role/paginated', 100, 1, {}).subscribe(resp => {
+      let convertedResp = resp as paginatedResponseInterface<role>;
+      this.roles = convertedResp.items;
     })
   }
   LoadDropDownValues() {

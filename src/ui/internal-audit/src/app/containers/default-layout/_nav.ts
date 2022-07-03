@@ -63,4 +63,15 @@ export const navItems: INavData[] = [
       },
     ]
   },
+  {
+    name: 'Security',
+    url: '/security',
+    iconComponent: { name: 'cilMenu' },
+    children: [
+      {
+        name: 'Role',
+        url: '/security/userrole',
+      },
+    ]
+  },
 ];

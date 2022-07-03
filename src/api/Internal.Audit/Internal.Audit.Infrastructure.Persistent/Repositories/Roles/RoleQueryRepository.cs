@@ -14,14 +14,17 @@ namespace Internal.Audit.Infrastructure.Persistent.Repositories.Roles
         public RoleQueryRepository(string _connectionString) : base(_connectionString)
         {
         }
-        public async Task<IEnumerable<Role>> GetAll()
+        public async Task<(long, IEnumerable<Role>)> GetAll(int pageSize, int pageNumber)
         {
-            var query = @"SELECT [Id],[Name],[Description] FROM [Security].[Role] WHERE [IsDeleted] = 0";
-            return await Get(query);
+
+            var query = "EXEC [dbo].[GetRoleListProcedure] @pageSize,@pageNumber";
+            var parameters = new Dictionary<string, object> { { "@pageSize", pageSize }, { "@pageNumber", pageNumber } };
+            return await GetWithPagingInfo(query, parameters, false);
+
         }
         public async Task<Role> GetById(Guid id)
         {
-            var query = "SELECT [Id],[Name],[Description] FROM [Security].[Role] WHERE Id = @id AND [IsDeleted] = 0";
+            var query = "SELECT [Id],[Name],[Description],[IsActive] FROM [Security].[Role] WHERE Id = @id AND [IsDeleted] = 0";
             var parameters = new Dictionary<string, object> { { "id", id } };
 
             return await Single(query, parameters);

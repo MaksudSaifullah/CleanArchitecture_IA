@@ -87,6 +87,6 @@ export class UserlistComponent implements OnInit {
     this.router.navigate(['security/userRegistration'], {queryParams: {id: id}});
   }
 
-
+  
 
 }

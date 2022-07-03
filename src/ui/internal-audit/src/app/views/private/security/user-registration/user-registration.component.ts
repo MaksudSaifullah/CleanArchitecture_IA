@@ -8,7 +8,7 @@ import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms'
 import { paginatedResponseInterface } from 'src/app/core/interfaces/paginated.interface';
 import { ActivatedRoute } from '@angular/router';
 import { CutomvalidatorService } from 'src/app/core/services/cutomvalidator.service'
-import { userRegistrationRequestData, UserCountry, UserRole } from 'src/app/core/interfaces/security/user-registration.interface'
+import { userRegistrationRequestData, UserCountry, UserRole, UserResponse } from 'src/app/core/interfaces/security/user-registration.interface'
 
 
 @Component({
@@ -23,6 +23,7 @@ export class UserRegistrationComponent implements OnInit {
   countryForm: FormGroup;
   formService: FormService = new FormService();
   userRequestModel: any;
+  userResponse:UserResponse | undefined;
 
   constructor(private http: HttpService, private fb: FormBuilder,private activateRoute:ActivatedRoute,private customValidator:CutomvalidatorService) {
     this.LoadDropDownValues();
@@ -31,26 +32,27 @@ export class UserRegistrationComponent implements OnInit {
       id: [''],
       empName: ['', [Validators.required, Validators.maxLength(20), Validators.minLength(4)]],
       empEmail: ['', [Validators.required, Validators.pattern("^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$")]],
-      empDesignation: [null, [Validators.required]],
-      userName: ['', [Validators.required]],
-      userPassword: ['', [Validators.required]],
-      userConfirmPassword: ['', [Validators.required]],
-      roleList: ['', [Validators.required]],
-      countryListSelected: ['', [Validators.required]]
+      empDesignation: [null],
+      userName: [''],
+      userPassword: [''],
+      userConfirmPassword: [''],
+      roleList: [''],
+      countryListSelected: ['']
     },
       {
         validator: this.customValidator.MatchPassword('userPassword', 'userConfirmPassword'),
       }
+      
     )
 
-
-  }
-
-  ngOnInit(): void {
     let Id = this.activateRoute.snapshot.params['id'];
     if(Id !=null || Id!=""){
       this.LoadUserById(Id);
     }
+  }
+
+  ngOnInit(): void {
+    
   }
   get countryFormControl() {
     return this.countryForm.controls;
@@ -70,14 +72,15 @@ export class UserRegistrationComponent implements OnInit {
     })
   }
   LoadUserById(Id:any):void {
+   // debugger
     this.http
       .getById('UserRegistration','Id?Id='+Id)
       .subscribe(res => {
-           const userData = res as userRegistrationRequestData;
-           this.countryForm.setValue({id : userData.user.id, userName : userData.user.userName, empEmail:userData.employee.email, empName: userData.employee.name, userPassword: userData.user.password,empDesignation:userData.employee.designationId});
-        // console.log(userData.user.id)
-        // console.log(userData.user.userName)
-        // console.log(userData.employee.name)
+       // console.log(res)
+           const userData = res as UserResponse;
+           console.log(userData.id)
+           this.countryForm.setValue({id: userData.id,  empEmail:userData.employee?.email, empName: userData.employee?.name,empDesignation:userData.employee?.designationId,userName:userData.userName,userPassword:userData.password,userConfirmPassword:userData.password,roleList:'',countryListSelected:''});
+    
       });
       
   }

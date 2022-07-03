@@ -47,11 +47,9 @@ export class UserRegistrationComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    let id = this.activateRoute.snapshot.params['id'];
-    //console.log(`route id ${id}`);
-    if(id !=null || id!=""){
-      this.LoadUserById(id);
-      console.log(id)
+    let Id = this.activateRoute.snapshot.params['id'];
+    if(Id !=null || Id!=""){
+      this.LoadUserById(Id);
     }
   }
   get countryFormControl() {
@@ -71,20 +69,23 @@ export class UserRegistrationComponent implements OnInit {
       this.designations = convertedResp.items;
     })
   }
-  LoadUserById(Id:string) {
-    this.http.getById('UserRegistration', Id).subscribe(resp => {
-     // this.designations = (resp as designation[]);
-
-    
-
-      console.log(resp);
-    })
+  LoadUserById(Id:any):void {
+    this.http
+      .getById('UserRegistration','Id?Id='+Id)
+      .subscribe(res => {
+           const userData = res as userRegistrationRequestData;
+           this.countryForm.setValue({id : userData.user.id, userName : userData.user.userName, empEmail:userData.employee.email, empName: userData.employee.name, userPassword: userData.user.password,empDesignation:userData.employee.designationId});
+        // console.log(userData.user.id)
+        // console.log(userData.user.userName)
+        // console.log(userData.employee.name)
+      });
+      
   }
 
   LoadRole() {
     this.http.get('role/all').subscribe(resp => {
       this.roles = (resp as role[]);
-      console.log(this.roles);
+      //console.log(this.roles);
     })
   }
   LoadDropDownValues() {

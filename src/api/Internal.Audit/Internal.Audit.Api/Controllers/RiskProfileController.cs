@@ -18,14 +18,23 @@ namespace Internal.Audit.Api.Controllers
             _mediator = madiator ?? throw new ArgumentNullException(nameof(madiator));
         }
 
-        [HttpGet("all")]
-        public async Task<ActionResult<IEnumerable<RiskProfileDTO>>> GetList()
+        [HttpPost("paginated")]
+        public async Task<ActionResult<RiskProfileListPagingDTO>> GetList(GetRiskProfileListQuery getRiskProfileListQuery)
         {
-            var query = new GetRiskProfileListQuery();
-            var riskprofiles = await _mediator.Send(query);
+            //var query = new GetRiskProfileListQuery();
+            var riskprofiles = await _mediator.Send(getRiskProfileListQuery);
             return Ok(riskprofiles);
 
         }
+
+        //[HttpGet("all")]
+        //public async Task<ActionResult<IEnumerable<RiskProfileDTO>>> GetList()
+        //{
+        //    var query = new GetRiskProfileListQuery();
+        //    var riskprofiles = await _mediator.Send(query);
+        //    return Ok(riskprofiles);
+
+        //}
 
         [HttpGet("{Id}")]
         public async Task<ActionResult<RiskProfileByIdDTO>> GetById(Guid Id)

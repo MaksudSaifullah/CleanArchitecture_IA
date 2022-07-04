@@ -8,7 +8,7 @@
           <div class="card-body">
             <div class="row">
               <div class="col-sm-7 mb-2">
-                  <!-- <button [cModalToggle]="verticallyCenteredModal.id" class="btnCreateColor" (click)="reset()" cButton>Create Risk Profile</button> -->
+                  <button [cModalToggle]="verticallyCenteredModal.id" class="btnCreateColor" (click)="reset()" cButton>Create Risk Profile</button> 
   
               </div>
               <div class="col-sm-5 mb-2">
@@ -80,28 +80,26 @@
       </div>
     </div>
   </div>
-  <!-- <form [formGroup]="riskProfileForm" (ngSubmit)="onSubmit(verticallyCenteredModal)" novalidate>
+
+  <form [formGroup]="riskProfileForm" (ngSubmit)="onSubmit(verticallyCenteredModal)" novalidate>
   <c-modal #verticallyCenteredModal alignment="center" id="verticallyCenteredModal">
     <c-modal-header>
       <h5 cModalTitle *ngIf="!formService.isEdit(this.riskProfileForm.get('id'))">Create Risk Profile</h5>
       <h5 cModalTitle *ngIf="formService.isEdit(this.riskProfileForm.get('id'))">Update Risk Profile</h5>
       <button [cModalToggle]="verticallyCenteredModal.id" cButtonClose></button> 
-    </c-modal-header>-->
-    <!-- <c-modal-body>
+    </c-modal-header>
+
+     <c-modal-body>
       <div class="col-md-12" >
         <input type="hidden" formControlName="id"/>
+
   
-          <div class="form-floating mb-3">
-            <input type="text" class="form-control" formControlName="name" id="name" placeholder="Name">
-            <label for="floatingInput">Name</label>
-          </div>
-  
-          <div cFormFloating>
+          <div form-floating>
             <select aria-label="Floating label select example" cSelect id="likelihoodLevel"
               formControlName="likelihoodLevel" name="likelihoodLevel">
-              <option value="null">Select Likelihood/option>
+              <option value="null">Select Likelihood Level</option>
               <option *ngFor="let commonValueAndType of likelihoodType" [value]="commonValueAndType.id">
-                {{commonValueAndType.name}}
+                {{commonValueAndType.text}}
               </option>
             </select>
           </div>
@@ -111,57 +109,67 @@
                 (riskProfileForm.get('likelihoodLevel')?.dirty || riskProfileForm.get('likelihoodLevel')?.touched)">
             <small class="text-danger" *ngIf="riskProfileForm.get('likelihoodLevel').hasError('required')">
               This field is required.
-            </small>
-                                 
-          </div> -->
-          <!-- <div cRow *ngIf="riskProfileForm.get('LikelihoodTypeId')?.invalid &&
-          riskProfileForm.get('LikelihoodTypeId')?.errors &&
-                (riskProfileForm.get('LikelihoodTypeId')?.dirty || riskProfileForm.get('LikelihoodTypeId')?.touched)">
-            <small class="text-danger"
-                *ngIf="riskProfileForm.get('LikelihoodTypeId').hasError('required')">
-                This field is required.
-            </small>
-            <small class="text-danger"
-                *ngIf="riskProfileForm.get('name').hasError('minlength')">
-                The minimum length for this field is {{riskProfileForm.get('name').errors.minlength.requiredLength}} characters.
-            </small>
-            <small class="text-danger"
-                *ngIf="riskProfileForm.get('name').hasError('maxlength')">
-                The maximum length for this field is {{countryForm.get('name').errors.maxlength.requiredLength}} characters.
-            </small>
-        </div>
-  
-          <div class="form-floating mb-3">
-            <input type="text" class="form-control" formControlName="code" id="code" placeholder="Code">
-            <label for="floatingInput">Code</label>
-          </div> -->
-  
-          <!-- <div cRow *ngIf="countryForm.get('code')?.invalid &&
-          countryForm.get('code')?.errors &&
-                (countryForm.get('code')?.dirty || countryForm.get('code')?.touched)">
-            <small class="text-danger"
-                *ngIf="countryForm.get('code').hasError('required')">
-                This field is required.
-            </small>
-            <small class="text-danger"
-                *ngIf="countryForm.get('code').hasError('minlength')">
-                The minimum length for this field is {{countryForm.get('code').errors.minlength.requiredLength}} characters.
-            </small>
-            <small class="text-danger"
-                *ngIf="countryForm.get('code').hasError('maxlength')">
-                The maximum length for this field is {{countryForm.get('code').errors.maxlength.requiredLength}} characters.
-            </small>
-        </div> -->
-  
-  
+            </small>                                 
+          </div> 
+          <br>
+
+          <div form-floating>
+            <select aria-label="Floating label select example" cSelect id="impactLevel"
+              formControlName="impactLevel" name="impactLevel">
+              <option value="null">Select Impact Level</option>
+              <option *ngFor="let commonValueAndType of impactType" [value]="commonValueAndType.id">
+                {{commonValueAndType.text}}
+              </option>
+            </select>
+          </div>
+
+          <div cRow *ngIf="riskProfileForm.get('impactLevel')?.invalid &&
+          riskProfileForm.get('impactLevel')?.errors &&
+                (riskProfileForm.get('impactLevel')?.dirty || riskProfileForm.get('impactLevel')?.touched)">
+            <small class="text-danger" *ngIf="riskProfileForm.get('impactLevel').hasError('required')">
+              This field is required.
+            </small>                                 
+          </div> 
+
+          <div form-floating>
+            <select aria-label="Floating label select example" cSelect id="riskLevel"
+              formControlName="riskLevel" name="riskLevel">
+              <option value="null">Select Risk Rating</option>
+              <option *ngFor="let commonValueAndType of ratingType" [value]="commonValueAndType.id">
+                {{commonValueAndType.text}}
+              </option>
+            </select>
+          </div>
+
+          <div cRow *ngIf="riskProfileForm.get('riskLevel')?.invalid &&
+          riskProfileForm.get('riskLevel')?.errors &&
+                (riskProfileForm.get('riskLevel')?.dirty || riskProfileForm.get('riskLevel')?.touched)">
+            <small class="text-danger" *ngIf="riskProfileForm.get('riskLevel').hasError('required')">
+              This field is required.
+            </small>                                 
+          </div> 
+
           <!-- <div class="form-floating">
             <textarea class="form-control" placeholder="Description" formControlName="Description" id="Description"></textarea>
             <label for="floatingTextarea">Description</label>
+          </div> -->
+
+          <div class="form-floating">
+            <input class="form-control" placeholder="Description" formControlName="Description" id="Description" type="datetime">
+            <label for="Description">Effective from</label>
           </div>
+
+          <!-- <mat-form-field appearance="fill">
+            <mat-label>Choose a date</mat-label>
+            <input matInput [matDatepicker]="picker">
+            <mat-hint>MM/DD/YYYY</mat-hint>
+            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker startView="year" [startAt]="startDate"></mat-datepicker>
+          </mat-form-field> -->
   
       </div>
-    </c-modal-body> -->
-    <!-- <c-modal-footer>
+    </c-modal-body> 
+     <c-modal-footer>
       <button cButton class="btn btn-primary btnSaveColor me-1" (click)="onSubmit(verticallyCenteredModal)">Save</button>
            <button [cModalToggle]="verticallyCenteredModal.id" cButton class="btn btn-danger btnCancelColor me-1"> 
             Close
@@ -169,4 +177,4 @@
     </c-modal-footer> 
   </c-modal>
   </form>
-   -->
+  

@@ -11,16 +11,14 @@ import {FormService} from '../../../../core/services/form.service';
 import {DatatableService} from '../../../../core/services/datatable.service';
 import {AlertService} from '../../../../core/services/alert.service';
 import { paginatedResponseInterface } from 'src/app/core/interfaces/paginated.interface';
+//import {MatDatepickerModule} from '@angular/material/datepicker';
+
 @Component({
   selector: 'app-riskProfile',
   templateUrl: './risk-profile.component.html',
   styleUrls: ['./risk-profile.component.scss']
 })
 export class RiskProfileComponent implements OnInit {
-    // ngOnInit(): void {
-    //     throw new Error('Method not implemented.');
-    // }
-   // ImpactType: commonValueAndType[] = [],
   @ViewChild(DataTableDirective, {static: false})
   datatableElement: DataTableDirective | undefined;
   dtOptions: DataTables.Settings = {};
@@ -40,7 +38,7 @@ export class RiskProfileComponent implements OnInit {
       likelihoodLevel:[null,[Validators.required]],
       impactLevel: [null,[Validators.required]],
       riskLevel: [null,[Validators.required]],
-      Description: ['',[Validators.required,Validators.maxLength(20),Validators.minLength(5)]],
+      Description: ['',[Validators.maxLength(20),Validators.minLength(5)]],
       EffectiveFrom: Date,
       EffectiveTo: Date    
     })
@@ -65,7 +63,7 @@ export class RiskProfileComponent implements OnInit {
       ajax: (dataTablesParameters: any, callback) => {
         this.http
           .paginatedPost(
-            'riskProfile/paginated',dataTablesParameters.length,((dataTablesParameters.start/dataTablesParameters.length)+1),{}
+            'riskprofile/paginated',dataTablesParameters.length,((dataTablesParameters.start/dataTablesParameters.length)+1),{}
           ).subscribe(resp => that.riskProfiles = this.dataTableService.datatableMap(resp,callback));
       },
     };
@@ -73,23 +71,24 @@ export class RiskProfileComponent implements OnInit {
   }
 
   LoadLikelihoodLevel() {
-    this.http.paginatedPost('commonValueAndType/paginated', 20, 1, {}).subscribe(resp => {
-      let convertedResp = resp as paginatedResponseInterface<commonValueAndType>;
-      this.likelihoodType = convertedResp.items;
+    this.http.get('commonValueAndType/leveloflikelihood').subscribe(resp => {
+      let convertedResp = resp as commonValueAndType[];
+      this.likelihoodType = convertedResp;
+      //console.log(this.likelihoodType);
     })
   }
 
   LoadImpactLevel() {
-    this.http.paginatedPost('commonValueAndType/paginated', 100, 1, {}).subscribe(resp => {
-      let convertedResp = resp as paginatedResponseInterface<commonValueAndType>;
-      this.impactType = convertedResp.items;
+    this.http.get('commonValueAndType/levelofimpact').subscribe(resp => {
+      let convertedResp = resp as commonValueAndType[];
+      this.impactType = convertedResp;
     })
   }
 
   LoadRiskRating() {
-    this.http.paginatedPost('commonValueAndType/paginated', 100, 1, {}).subscribe(resp => {
-      let convertedResp = resp as paginatedResponseInterface<commonValueAndType>;
-      this.ratingType = convertedResp.items;
+    this.http.get('commonValueAndType/riskrating').subscribe(resp => {
+      let convertedResp = resp as commonValueAndType[];
+      this.ratingType = convertedResp;
     })
   }
 
@@ -101,39 +100,39 @@ export class RiskProfileComponent implements OnInit {
 
     onSubmit(modalId:any):void{
       const localmodalId = modalId;
-        if(this.riskProfileForm.valid){
-          if(this.formService.isEdit(this.riskProfileForm.get('id') as FormControl)){
-            this.http.put('riskProfile',this.riskProfileForm.value,null).subscribe(x=>{
-              this.formService.onSaveSuccess(localmodalId,this.datatableElement);
-              this.AlertService.success('Country Saved Successful');
+        // if(this.riskProfileForm.valid){
+        //   if(this.formService.isEdit(this.riskProfileForm.get('id') as FormControl)){
+        //     this.http.put('riskProfile',this.riskProfileForm.value,null).subscribe(x=>{
+        //       this.formService.onSaveSuccess(localmodalId,this.datatableElement);
+        //       this.AlertService.success('Risk Profile Saved successfully');
 
-            });
-          }
-          else{
+        //     });
+        //   }
+        //   else{
             this.http.post('riskProfile',this.riskProfileForm.value).subscribe(x=>{
               this.formService.onSaveSuccess(localmodalId,this.datatableElement);
-              this.AlertService.success('Country Saved Successful');
+              this.AlertService.success('Risk Profile Saved successfully');
             });
-          }
-        }
+         // }
+       // }
     }
 
-    edit(modalId:any, riskProfile:any):void {
-      const localmodalId = modalId;
-      console.log(riskProfile.id)
-      this.http
-        .getById('riskProfile',riskProfile.id)
-        .subscribe(res => {
-            const riskProfileResponse = res as riskProfile;
-            this.riskProfileForm.setValue({id : riskProfileResponse.id, LikelihoodTypeId : riskProfileResponse.likelihoodTypeId, ImpactTypeId: riskProfileResponse.impactTypeId,
-                 RatingTypeId: riskProfileResponse.ratingTypeId,
-                 EffectiveFrom: riskProfileResponse.effectiveFrom,
-                 EffectiveTo: riskProfileResponse.effectiveTo,
-                 Description: riskProfileResponse.description
-                });
-        });
-        localmodalId.visible = true;
-    }
+    // edit(modalId:any, riskProfile:any):void {
+    //   const localmodalId = modalId;
+    //   console.log(riskProfile.id)
+    //   this.http
+    //     .getById('riskProfile',riskProfile.id)
+    //     .subscribe(res => {
+    //         const riskProfileResponse = res as riskProfile;
+    //         this.riskProfileForm.setValue({id : riskProfileResponse.id, LikelihoodTypeId : riskProfileResponse.likelihoodTypeId, ImpactTypeId: riskProfileResponse.impactTypeId,
+    //              RatingTypeId: riskProfileResponse.ratingTypeId,
+    //              EffectiveFrom: riskProfileResponse.effectiveFrom,
+    //              EffectiveTo: riskProfileResponse.effectiveTo,
+    //              Description: riskProfileResponse.description
+    //             });
+    //     });
+    //     localmodalId.visible = true;
+    // }
     delete(id:string){
       const that = this;
       this.AlertService.confirmDialog().then(res =>{

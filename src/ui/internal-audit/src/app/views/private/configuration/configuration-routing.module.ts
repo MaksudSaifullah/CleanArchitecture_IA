@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { CountryComponent } from './country/country.component';
-import { RiskProfileComponent } from './riskProfile/riskprofile.component';
+import { RiskProfileComponent } from './riskProfile/risk-profile.component';
 
 const routes: Routes = [
   {
@@ -9,7 +9,8 @@ const routes: Routes = [
     component:CountryComponent
   },
   {
-    path:'risk-profile',component:RiskProfileComponent
+    path:'risk-profile',
+    component:RiskProfileComponent
   }
 
 ];

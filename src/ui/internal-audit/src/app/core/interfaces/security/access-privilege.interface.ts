@@ -5,23 +5,25 @@ export interface accessPrivilegeConfig {
 }
 
 export interface PasswordPolicy {
+    id:                                 string;
     minLength:                          number;
     maxLength:                          number;
     isAlphabetMandatory:                boolean;
-    alphabetLength:                     number;
+    alphabetLength?:                     number;
     isNumberMandatory:                  boolean;
-    numericLength:                      number;
+    numericLength?:                      number;
     isSpecialCharsMandatory:            boolean;
-    specialCharsLength:                 number;
+    specialCharsLength?:                 number;
     isPasswordChangeForcedOnFirstLogin: boolean;
     isPasswordResetForcedPeriodically:  boolean;
-    forcePasswordResetDays:             number;
-    notifyPasswordResetDays:            number;
-    effectiveFrom:                      Date;
-    effectiveTo:                        Date;
+    forcePasswordResetDays?:             number;
+    notifyPasswordResetDays?:            number;
+    effectiveFrom?:                      Date;
+    effectiveTo?:                        Date;
 }
 
 export interface SessionPolicy {
+    id:            string;
     isEnabled:     boolean;
     duration:      number;
     effectiveFrom: Date;
@@ -29,6 +31,7 @@ export interface SessionPolicy {
 }
 
 export interface UserLockingPolicy {
+    id:                          string;
     isLockedOnNoLoginActivity:   boolean;
     noLoginActivityDays:         number;
     lockedOnFailedLoginAttempts: boolean;

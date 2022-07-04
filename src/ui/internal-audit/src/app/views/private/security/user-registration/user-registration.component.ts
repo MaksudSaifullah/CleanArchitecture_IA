@@ -8,7 +8,7 @@ import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms'
 import { paginatedResponseInterface } from 'src/app/core/interfaces/paginated.interface';
 import { ActivatedRoute } from '@angular/router';
 import { CutomvalidatorService } from 'src/app/core/services/cutomvalidator.service'
-import { userRegistrationRequestData, UserCountry, UserRole } from 'src/app/core/interfaces/security/user-registration.interface'
+import { userRegistrationRequestData, UserCountry, UserRole, UserResponse } from 'src/app/core/interfaces/security/user-registration.interface'
 import {AlertService} from '../../../../core/services/alert.service';
 
 @Component({
@@ -23,6 +23,7 @@ export class UserRegistrationComponent implements OnInit {
   countryForm: FormGroup;
   formService: FormService = new FormService();
   userRequestModel: any;
+  userResponse:UserResponse | undefined;
   userCountry: UserCountry[]=[];
 
   constructor(private http: HttpService, private fb: FormBuilder, private activateRoute: ActivatedRoute, private customValidator: CutomvalidatorService,private AlertService: AlertService) {
@@ -32,28 +33,27 @@ export class UserRegistrationComponent implements OnInit {
       id: [''],
       empName: ['', [Validators.required, Validators.maxLength(20), Validators.minLength(4)]],
       empEmail: ['', [Validators.required, Validators.pattern("^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$")]],
-      empDesignation: [null, [Validators.required]],
-      userName: ['', [Validators.required]],
-      userPassword: ['', [Validators.required]],
-      userConfirmPassword: ['', [Validators.required]],
-      roleList: ['', [Validators.required]],
-      countryListSelected: ['', [Validators.required]]
+      empDesignation: [null,[Validators.required]],
+      userName: ['',[Validators.required]],
+      userPassword: ['',[Validators.required]],
+      userConfirmPassword: ['',[Validators.required]],
+      roleList: ['',[Validators.required]],
+      countryListSelected: ['',[Validators.required]]
     },
       {
         validator: this.customValidator.MatchPassword('userPassword', 'userConfirmPassword'),
       }
+      
     )
 
-
+    let Id = this.activateRoute.snapshot.params['id'];
+    if(Id !=null || Id!=""){
+      this.LoadUserById(Id);
+    }
   }
 
   ngOnInit(): void {
-    let id = this.activateRoute.snapshot.params['id'];
-    //console.log(`route id ${id}`);
-    if (id != null || id != "") {
-      this.LoadUserById(id);
-      console.log(id)
-    }
+    
   }
   get countryFormControl() {
     return this.countryForm.controls;
@@ -72,20 +72,24 @@ export class UserRegistrationComponent implements OnInit {
       this.designations = convertedResp.items;
     })
   }
-  LoadUserById(Id: string) {
-    this.http.getById('UserRegistration', Id).subscribe(resp => {
-      // this.designations = (resp as designation[]);
-
-
-
-      console.log(resp);
-    })
+  LoadUserById(Id:any):void {
+   // debugger
+    this.http
+      .getById('UserRegistration','Id?Id='+Id)
+      .subscribe(res => {
+       // console.log(res)
+           const userData = res as UserResponse;
+           console.log(userData.id)
+           this.countryForm.setValue({id: userData.id,  empEmail:userData.employee?.email, empName: userData.employee?.name,empDesignation:userData.employee?.designationId,userName:userData.userName,userPassword:userData.password,userConfirmPassword:userData.password,roleList:'',countryListSelected:''});
+    
+      });
+      
   }
 
   LoadRole() {
-    this.http.get('role/all').subscribe(resp => {
-      this.roles = (resp as role[]);
-      console.log(this.roles);
+    this.http.paginatedPost('role/paginated', 100, 1, {}).subscribe(resp => {
+      let convertedResp = resp as paginatedResponseInterface<role>;
+      this.roles = convertedResp.items;
     })
   }
   LoadDropDownValues() {

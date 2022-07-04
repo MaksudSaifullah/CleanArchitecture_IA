@@ -122,6 +122,7 @@
               </option>
             </select>
           </div>
+         
 
           <div cRow *ngIf="riskProfileForm.get('impactLevel')?.invalid &&
           riskProfileForm.get('impactLevel')?.errors &&
@@ -130,6 +131,7 @@
               This field is required.
             </small>                                 
           </div> 
+          <br>
 
           <div form-floating>
             <select aria-label="Floating label select example" cSelect id="riskLevel"
@@ -148,24 +150,26 @@
               This field is required.
             </small>                                 
           </div> 
-
-          <!-- <div class="form-floating">
-            <textarea class="form-control" placeholder="Description" formControlName="Description" id="Description"></textarea>
-            <label for="floatingTextarea">Description</label>
-          </div> -->
+          <br>
+ 
 
           <div class="form-floating">
-            <input class="form-control" placeholder="Description" formControlName="Description" id="Description" type="datetime">
-            <label for="Description">Effective from</label>
+            <textarea class="form-control" placeholder="Description" formControlName="Description" id="Description"></textarea>
+            <label for="floatingTextarea">Description</label>
           </div>
+          <br>
+          
+          <div class="form-floating">
+            <input class="form-control" placeholder="EffectiveFrom" formControlName="EffectiveFrom" id="EffectiveFrom" type="date">
+            <label for="EffectiveFrom">Effective From</label>
+          </div>
+          <br>
 
-          <!-- <mat-form-field appearance="fill">
-            <mat-label>Choose a date</mat-label>
-            <input matInput [matDatepicker]="picker">
-            <mat-hint>MM/DD/YYYY</mat-hint>
-            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-            <mat-datepicker #picker startView="year" [startAt]="startDate"></mat-datepicker>
-          </mat-form-field> -->
+          <div class="form-floating">
+            <input class="form-control" placeholder="effectiveTo" formControlName="effectiveTo" id="effectiveTo" type="date">
+            <label for="effectiveTo">Effective To</label>
+          </div>
+          <br>
   
       </div>
     </c-modal-body> 

@@ -38,7 +38,7 @@ export class RiskProfileComponent implements OnInit {
       likelihoodLevel:[null,[Validators.required]],
       impactLevel: [null,[Validators.required]],
       riskLevel: [null,[Validators.required]],
-      Description: ['',[Validators.maxLength(20),Validators.minLength(5)]],
+      Description: ['',[Validators.maxLength(200),Validators.minLength(2)]],
       EffectiveFrom: Date,
       EffectiveTo: Date    
     })
@@ -99,22 +99,23 @@ export class RiskProfileComponent implements OnInit {
   }
 
     onSubmit(modalId:any):void{
+      debugger;
       const localmodalId = modalId;
-        // if(this.riskProfileForm.valid){
-        //   if(this.formService.isEdit(this.riskProfileForm.get('id') as FormControl)){
-        //     this.http.put('riskProfile',this.riskProfileForm.value,null).subscribe(x=>{
-        //       this.formService.onSaveSuccess(localmodalId,this.datatableElement);
-        //       this.AlertService.success('Risk Profile Saved successfully');
+        if(this.riskProfileForm.valid){
+          if(this.formService.isEdit(this.riskProfileForm.get('id') as FormControl)){
+            this.http.put('riskProfile',this.riskProfileForm.value,null).subscribe(x=>{
+              this.formService.onSaveSuccess(localmodalId,this.datatableElement);
+              this.AlertService.success('Risk Profile Saved successfully');
 
-        //     });
-        //   }
-        //   else{
+            });
+          }
+          else{
             this.http.post('riskProfile',this.riskProfileForm.value).subscribe(x=>{
               this.formService.onSaveSuccess(localmodalId,this.datatableElement);
               this.AlertService.success('Risk Profile Saved successfully');
             });
-         // }
-       // }
+         }
+       }
     }
 
     // edit(modalId:any, riskProfile:any):void {

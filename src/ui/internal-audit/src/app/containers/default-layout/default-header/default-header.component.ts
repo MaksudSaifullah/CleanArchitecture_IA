@@ -30,7 +30,7 @@ export class DefaultHeaderComponent extends HeaderComponent {
   }
   logout(){
     localStorage.removeItem('authenticatedUser');
-    this.route.navigate('/');
+    this.route.navigate('/login');
 
   }
 }

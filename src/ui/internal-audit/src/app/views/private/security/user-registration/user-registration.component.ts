@@ -4,7 +4,7 @@ import { country } from '../../../../core/interfaces/configuration/country.inter
 import { designation } from '../../../../core/interfaces/common/designation.interface';
 import { role } from '../../../../core/interfaces/security/role.interface';
 import { FormService } from '../../../../core/services/form.service';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { paginatedResponseInterface } from 'src/app/core/interfaces/paginated.interface';
 import { ActivatedRoute } from '@angular/router';
 import { CutomvalidatorService } from 'src/app/core/services/cutomvalidator.service'
@@ -23,11 +23,42 @@ export class UserRegistrationComponent implements OnInit {
   countryForm: FormGroup;
   formService: FormService = new FormService();
   userRequestModel: any;
-  userResponse:UserResponse | undefined;
+  userResponse:UserResponse []=[]; //| undefined;
   userCountry: UserCountry[]=[];
+  displayUserStatus = false;
+  notifyBackAlertOptions = [
+    { name: 'Option 1', id: '1' },
+    { name: 'Option 2', id: '2' },
+    { name: 'Option 3', id: '3' },
+    { name: 'Option 4', id: '4' }
+  ];
 
   constructor(private http: HttpService, private fb: FormBuilder, private activateRoute: ActivatedRoute, private customValidator: CutomvalidatorService,private AlertService: AlertService) {
-    this.LoadDropDownValues();
+    
+    let paramId = this.activateRoute.snapshot.params['id'];
+    //console.log(paramId)
+    if(paramId === undefined){
+      console.log("user add method called")
+      console.log('hh')
+   // console.log(this.checkArray)
+   // this.LoadDropDownValues();
+    }
+    else{
+      this.displayUserStatus = true;
+     this.LoadUserById(paramId);
+      console.log('hh')
+  //  console.log(this.checkArray)
+  // this.LoadDropDownValues();
+    }
+    
+    const notifyBackOptions=['1','2'];
+    const notificationControls = this.notifyBackAlertOptions.map(
+      x => new FormControl(notifyBackOptions.includes(x.id))
+    );
+
+
+
+    // this.LoadDropDownValues();
 
     this.countryForm = this.fb.group({
       id: [''],
@@ -38,21 +69,37 @@ export class UserRegistrationComponent implements OnInit {
       userPassword: ['',[Validators.required]],
       userConfirmPassword: ['',[Validators.required]],
       roleList: ['',[Validators.required]],
-      countryListSelected: ['',[Validators.required]]
+      notifyBackOptions: this.fb.array(notificationControls),
+      isEnabled: [''],
+      accountExpired:[''],
+      passwordExpired:[''],
+      accountLocked:['']
     },
       {
         validator: this.customValidator.MatchPassword('userPassword', 'userConfirmPassword'),
       }
       
     )
-
-    let Id = this.activateRoute.snapshot.params['id'];
-    if(Id !=null || Id!=""){
-      this.LoadUserById(Id);
-    }
   }
-
+  get notifyBackOptionsArr(): FormArray {
+    return this.countryForm.get('notifyBackOptions') as FormArray;
+  }
   ngOnInit(): void {
+  //   let paramId = this.activateRoute.snapshot.params['id'];
+  //   //console.log(paramId)
+  //   if(paramId === undefined){
+  //     console.log("user add method called")
+  //     console.log('hh')
+  //  // console.log(this.checkArray)
+  //  // this.LoadDropDownValues();
+  //   }
+  //   else{
+  //     this.displayUserStatus = true;
+  //    this.LoadUserById(paramId);
+  //     console.log('hh')
+  // //  console.log(this.checkArray)
+  // // this.LoadDropDownValues();
+  //   }
     
   }
   get countryFormControl() {
@@ -63,6 +110,10 @@ export class UserRegistrationComponent implements OnInit {
     this.http.paginatedPost('country/paginated', 20, 1, {}).subscribe(resp => {
       let convertedResp = resp as paginatedResponseInterface<country>;
       this.countries = convertedResp.items;
+      // for(let country of this.countries) {
+      //   this.checkarray.push(country.id);
+
+      // }
     })
   }
 
@@ -72,20 +123,6 @@ export class UserRegistrationComponent implements OnInit {
       this.designations = convertedResp.items;
     })
   }
-  LoadUserById(Id:any):void {
-   // debugger
-    this.http
-      .getById('UserRegistration','Id?Id='+Id)
-      .subscribe(res => {
-       // console.log(res)
-           const userData = res as UserResponse;
-           console.log(userData.id)
-           this.countryForm.setValue({id: userData.id,  empEmail:userData.employee?.email, empName: userData.employee?.name,empDesignation:userData.employee?.designationId,userName:userData.userName,userPassword:userData.password,userConfirmPassword:userData.password,roleList:'',countryListSelected:''});
-    
-      });
-      
-  }
-
   LoadRole() {
     this.http.paginatedPost('role/paginated', 100, 1, {}).subscribe(resp => {
       let convertedResp = resp as paginatedResponseInterface<role>;
@@ -93,9 +130,59 @@ export class UserRegistrationComponent implements OnInit {
     })
   }
   LoadDropDownValues() {
-    this.LoadCountry();
+   this.LoadCountry();
     this.LoadDesignation();
     this.LoadRole();
+  }
+
+  LoadUserById(Id:any):void {
+    this.http
+      .getById('UserRegistration','Id?Id='+Id)
+      .subscribe(res => {
+           const userData = res as UserResponse;
+          // this.countries = userData.userCountries
+          console.log(userData.userCountries)
+         // this.checkArray=userData.userCountries?.countryId;
+          // console.log('sadasdsda')
+          // console.log(this.countryListSelected)
+           this.countryForm.setValue({id: userData.id,  empEmail:userData.employee?.email, empName: userData.employee?.name,empDesignation:userData.employee?.designationId,userName:userData.userName,userPassword:userData.password,userConfirmPassword:userData.password,
+            roleList:userData.userRoles,countryListSelected:'',isEnabled:userData.isEnabled, accountExpired:userData.isAccountExpired, passwordExpired:userData.isPasswordExpired, accountLocked:userData.isAccountLocked});
+          
+          //  for(let i=0; i < userData.userRoles?.length; i++){
+          //   this.countryForm.setValue({roleList:{
+          //     options:[
+          //       {
+          //         value: userData.userRoles?.
+          //         text: userData.userRoles.
+          //       }
+          //     ]
+          //   }})
+          //  }
+          // for(let country of userData.userCountries) {
+          //   this.notifyBackOptions.push(country.countryId);
+
+          // }
+          console.log('checking loop')
+         // console.log(this.notifyBackOptions)
+          this.countryForm.get('countryListSelected')?.reset();
+          this.LoadCountry();
+        // for(let country of this.countries) {
+        //   if(userData.userCountries?.find(x=>x.countryId==country.id)){
+        //     console.log('result')
+        //     console.log( country.id)
+        //     //console.log(this.countryForm.get('countryListSelected')?.value)
+        //     console.log(this.countryForm.value.countryListSelected.value)
+        //     this.countryForm.value.countryListSelected.id ==true;
+
+        //     // this.countryForm.setValue({
+        //     //   "countryListSelected":true
+        //     // })
+
+        //   }
+        // }
+
+      });
+      
   }
 
   onSubmit(): void {
@@ -123,10 +210,10 @@ export class UserRegistrationComponent implements OnInit {
           name: this.countryForm.value.empName
         },
         user: {         
-          isAccountExpired: false,
-          isAccountLocked: false,
-          isEnabled: true,
-          isPasswordExpired: false,
+          isAccountExpired: this.displayUserStatus == false ? false : this.countryForm.value.accountExpired,
+          isAccountLocked: this.displayUserStatus == false ? false : this.countryForm.value.accountLocked,
+          isEnabled: this.displayUserStatus == false ? true : this.countryForm.value.isEnabled,
+          isPasswordExpired: this.displayUserStatus == false ? false : this.countryForm.value.passwordExpired,
           password:this.countryForm.value.userPassword,
           userName: this.countryForm.value.userName
         },
@@ -160,5 +247,9 @@ export class UserRegistrationComponent implements OnInit {
        this.userCountry.splice(index, 1);
     }
   }
+
+
+
+
 
 }

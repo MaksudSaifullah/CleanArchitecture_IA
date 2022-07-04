@@ -63,12 +63,19 @@ export class UserlistComponent implements OnInit {
 
   }
 
+  // LoadRole() {
+  //   this.http.get('role/all').subscribe(resp => {
+  //     this.roles = (resp as role[]);
+  //     console.log(this.roles);
+  //   })
+  // }
   LoadRole() {
-    this.http.get('role/all').subscribe(resp => {
-      this.roles = (resp as role[]);
-      console.log(this.roles);
+    this.http.paginatedPost('role/paginated', 100, 1, {}).subscribe(resp => {
+      let convertedResp = resp as paginatedResponseInterface<role>;
+      this.roles = convertedResp.items;
     })
   }
+
 
   lockUser(id:string){
     const that = this;

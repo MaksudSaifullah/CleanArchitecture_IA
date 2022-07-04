@@ -8,10 +8,21 @@
         <div>
           <input type="hidden" formControlName="id" />
           <c-row>
-            <c-col md="4" *ngFor="let country of countries">
+
+            <!-- <div class="form-group" formArrayName="notifyBackOptions">
+              <div *ngFor="let option of notifyBackOptionsArr.controls; let i=index">
+                <input [formControlName]="i" type="checkbox" class="form-check-input" />
+                <label> {{notifyBackAlertOptions[i].name}} </label>
+              </div>
+            </div> -->
+
+
+
+
+            <c-col md="4" *ngFor="let country of notifyBackOptionsArr.controls; let i = index" formArrayName="notifyBackOptions">
               <c-form-check>
-                <input formControlName="countryListSelected" [id]="country.id" type="checkbox"  (change)="eventCheck($event)"/>
-                <label for="checkThree" class="m-1"> {{country.name}}</label>
+                <input [formControlName]="i"   type="checkbox"  (change)="eventCheck($event)"/>
+                <label for="checkThree" class="m-1"> {{notifyBackAlertOptions[i].name}}</label>
               </c-form-check>
             </c-col>
             <div cRow *ngIf="countryForm.get('countryListSelected')?.invalid &&
@@ -163,6 +174,27 @@
           </c-card>
         </c-col>
 
+
+        <br>
+
+        <div  *ngIf="true" class="form-control m-2">
+          <c-form-check>
+            <input formControlName="isEnabled" id="isEnabled" type="checkbox"/>
+            <label for="isEnabled" class="m-3"> Enabled</label>
+          </c-form-check>
+          <c-form-check>
+            <input formControlName="accountExpired" id="accountExpired" type="checkbox"/>
+            <label for="accountExpired" class="m-3"> Account Expired</label>
+          </c-form-check>
+          <c-form-check>
+            <input formControlName="passwordExpired" id="passwordExpired" type="checkbox"/>
+            <label for="passwordExpired" class="m-3"> Password Expired</label>
+          </c-form-check>
+          <c-form-check>
+            <input formControlName="accountLocked" id="accountLocked" type="checkbox"/>
+            <label for="accountLocked" class="m-3"> Account Locked</label>
+          </c-form-check>
+        </div>
 
         <br>
 

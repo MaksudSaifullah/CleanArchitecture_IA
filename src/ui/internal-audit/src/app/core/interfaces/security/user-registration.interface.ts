@@ -53,7 +53,7 @@ export interface UserResponse {
     isAccountExpired?:  boolean;
     isPasswordExpired?: boolean;
     isAccountLocked?:   boolean;
-    userCountries?:     UserCountry[];
+    userCountries:     UserCountry[];
     userRoles?:         UserRole[];
     employee?:          Employee;
 }

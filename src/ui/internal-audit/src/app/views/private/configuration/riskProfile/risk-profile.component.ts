@@ -99,24 +99,31 @@ export class RiskProfileComponent implements OnInit {
   }
 
     onSubmit(modalId:any):void{
-      debugger;
       const localmodalId = modalId;
-        if(this.riskProfileForm.valid){
-          if(this.formService.isEdit(this.riskProfileForm.get('id') as FormControl)){
-            this.http.put('riskProfile',this.riskProfileForm.value,null).subscribe(x=>{
-              this.formService.onSaveSuccess(localmodalId,this.datatableElement);
-              this.AlertService.success('Risk Profile Saved successfully');
-
-            });
-          }
-          else{
-            this.http.post('riskProfile',this.riskProfileForm.value).subscribe(x=>{
-              this.formService.onSaveSuccess(localmodalId,this.datatableElement);
-              this.AlertService.success('Risk Profile Saved successfully');
-            });
-         }
-       }
+      this.http.post('riskProfile',this.riskProfileForm.value).subscribe(x=>{
+        this.formService.onSaveSuccess(localmodalId,this.datatableElement);
+        this.AlertService.success('Risk Profile Saved successfully');
+      
+      });
     }
+    //   debugger;
+    //   const localmodalId = modalId;
+    //     if(this.riskProfileForm.valid){
+    //       if(this.formService.isEdit(this.riskProfileForm.get('id') as FormControl)){
+    //         this.http.put('riskProfile',this.riskProfileForm.value,null).subscribe(x=>{
+    //           this.formService.onSaveSuccess(localmodalId,this.datatableElement);
+    //           this.AlertService.success('Risk Profile Saved successfully');
+
+    //         });
+    //       }
+    //       else{
+    //         this.http.post('riskProfile',this.riskProfileForm.value).subscribe(x=>{
+    //           this.formService.onSaveSuccess(localmodalId,this.datatableElement);
+    //           this.AlertService.success('Risk Profile Saved successfully');
+    //         });
+    //      }
+    //    }
+    // }
 
     // edit(modalId:any, riskProfile:any):void {
     //   const localmodalId = modalId;

@@ -2,6 +2,7 @@ import { Component, Input } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 
 import { ClassToggleService, HeaderComponent } from '@coreui/angular-pro';
+import { RoutingService } from 'src/app/core/services/routing.service';
 
 @Component({
   selector: 'app-default-header',
@@ -19,12 +20,17 @@ export class DefaultHeaderComponent extends HeaderComponent {
     themeSwitchRadio: new FormControl('light'),
   });
 
-  constructor(private classToggler: ClassToggleService) {
+  constructor(private classToggler: ClassToggleService,private route : RoutingService) {
     super();
   }
 
   setTheme(value: string): void {
     this.themeSwitch.setValue({ themeSwitchRadio: value });
     this.classToggler.toggle('body', 'dark-theme');
+  }
+  logout(){
+    localStorage.removeItem('authenticatedUser');
+    this.route.navigate('/login');
+
   }
 }

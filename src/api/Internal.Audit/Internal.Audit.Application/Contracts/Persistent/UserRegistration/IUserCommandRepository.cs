@@ -10,6 +10,7 @@ namespace Internal.Audit.Application.Contracts.Persistent.UserRegistration
     public interface IUserCommandRepository:IAsyncCommandRepository<User>
     {
         Task<IReadOnlyList<User>> Get(bool activeOnly);
+        Task UpdateUserPassword(string password, Guid userId);
 
     }
 }

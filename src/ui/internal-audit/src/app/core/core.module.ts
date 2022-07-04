@@ -18,7 +18,8 @@ import { DataTablesModule } from 'angular-datatables';
     DataTablesModule
   ],
   providers:[
-     AuthService,HttpService,RoutingService,{ provide: HTTP_INTERCEPTORS, useClass: RequestInterceptor, multi: true }
+    { provide: HTTP_INTERCEPTORS, useClass: RequestInterceptor, multi: true },
+    AuthService,HttpService,RoutingService,
   ],
 
 })

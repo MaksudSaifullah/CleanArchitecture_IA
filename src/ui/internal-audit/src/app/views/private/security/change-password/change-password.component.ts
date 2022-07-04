@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, MaxLengthValidator, Validators } from '@angular/forms';
+import { AlertService } from 'src/app/core/services/alert.service';
 import { CutomvalidatorService } from 'src/app/core/services/cutomvalidator.service';
 import { FormService } from 'src/app/core/services/form.service';
+import { TupleInterface } from 'src/app/core/interfaces/tuple.interface';
 import { HttpService } from 'src/app/core/services/http.service';
 
 @Component({
@@ -12,7 +14,7 @@ import { HttpService } from 'src/app/core/services/http.service';
 export class ChangePasswordComponent implements OnInit {
   changePasswordForm : FormGroup;
   public formService: FormService;
-  constructor(private fb: FormBuilder, private cutomvalidatorService: CutomvalidatorService,private _formService : FormService,private http: HttpService) {
+  constructor(private fb: FormBuilder, private cutomvalidatorService: CutomvalidatorService,private _formService : FormService,private http: HttpService, private alertService:AlertService) {
     this.formService = _formService;
     this.changePasswordForm = fb.group({
         currentPassword: ['',[Validators.required,Validators.minLength(5)]],
@@ -29,9 +31,15 @@ export class ChangePasswordComponent implements OnInit {
     if(this.changePasswordForm.valid && this.passwordMatchError()){
       this.http.post('userregistration/ChangePassword',this.changePasswordForm.value).subscribe(x=>{
         debugger;
-        console.log(x);
+        let convertedResponse = x as TupleInterface<boolean,string>;
+        if(convertedResponse.item1){
+          this.alertService.success(convertedResponse.item2);
+          this.changePasswordForm.reset();
+        }
+        else{
+          this.alertService.error(convertedResponse.item2);
+        }
       });
-      //console.log(this.changePasswordForm.value);
     }
   }
 

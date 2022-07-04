@@ -8,19 +8,19 @@ import {
 import { Observable } from 'rxjs';
 import { LoginUserInterface } from '../interfaces/login-user.interface';
 
-@Injectable({providedIn: 'root'})
+// @Injectable({providedIn: 'root'})
 export class RequestInterceptor implements HttpInterceptor {
 
   constructor() {}
 
-  intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
+  intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     var localStorageAuthenticatedUser = localStorage.getItem('authenticatedUser');
     if(localStorageAuthenticatedUser != null){
-      var user = JSON.parse(localStorage.getItem('authenticatedUser') || '') as LoginUserInterface;
-      debugger;
+      var user = JSON.parse(localStorageAuthenticatedUser) as LoginUserInterface;
       if(user?.success == true){
-
-        request.headers.append('Authorization','Bearer '+ user.token )
+        return next.handle(request.clone({
+          headers: request.headers.append('Authorization','Bearer '+ user.token)
+        }));
       }
     }
     return next.handle(request);

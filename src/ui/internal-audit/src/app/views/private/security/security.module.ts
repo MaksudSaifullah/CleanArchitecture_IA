@@ -12,6 +12,8 @@ import { ButtonModule, CardModule, FormModule, GridModule,MultiSelectModule,Moda
 import { ReactiveFormsModule,FormsModule } from '@angular/forms';
 import { AccessPrivilegeComponent } from './access-privilege/access-privilege.component';
 import { UserRoleComponent } from './user-role/user-role.component';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { RequestInterceptor } from 'src/app/core/interceptors/request.interceptor';
 
 
 @NgModule({
@@ -37,7 +39,10 @@ import { UserRoleComponent } from './user-role/user-role.component';
     DataTablesModule,
     FormsModule,
     TabsModule,
-    NavModule
+    NavModule,
+    HttpClientModule
+  ],
+  providers:[
   ]
 })
 export class SecurityModule { }

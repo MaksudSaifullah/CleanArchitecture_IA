@@ -26,7 +26,7 @@ namespace Internal.Audit.Infrastructure.Persistent.Repositories.RiskProfiles
             var query = @"SELECT rp.[Id]
 	                    ,cvtlt.Text AS LikelihoodType
 	                    ,cvtit.Text AS ImpactType
-	                    ,cvtit.Text AS RatingType
+	                    ,cvtrt.Text AS RatingType
                         ,rp.[EffectiveFrom]
                         ,rp.[EffectiveTo]
                         ,rp.[Description]

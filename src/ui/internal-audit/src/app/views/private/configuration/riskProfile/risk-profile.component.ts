@@ -11,7 +11,6 @@ import {FormService} from '../../../../core/services/form.service';
 import {DatatableService} from '../../../../core/services/datatable.service';
 import {AlertService} from '../../../../core/services/alert.service';
 import { paginatedResponseInterface } from 'src/app/core/interfaces/paginated.interface';
-//import {MatDatepickerModule} from '@angular/material/datepicker';
 
 @Component({
   selector: 'app-riskProfile',
@@ -35,10 +34,10 @@ export class RiskProfileComponent implements OnInit {
     this.LoadDropDownValues();
     this.riskProfileForm = this.fb.group({
       id: [''],
-      likelihoodLevel:[null,[Validators.required]],
-      impactLevel: [null,[Validators.required]],
-      riskLevel: [null,[Validators.required]],
-      Description: ['',[Validators.maxLength(200),Validators.minLength(2)]],
+      likelihoodTypeId:[null,[Validators.required]],
+      impactTypeId: [null,[Validators.required]],
+      ratingTypeId: [null,[Validators.required]],
+      description: [''],
       EffectiveFrom: Date,
       EffectiveTo: Date    
     })
@@ -106,41 +105,8 @@ export class RiskProfileComponent implements OnInit {
       
       });
     }
-    //   debugger;
-    //   const localmodalId = modalId;
-    //     if(this.riskProfileForm.valid){
-    //       if(this.formService.isEdit(this.riskProfileForm.get('id') as FormControl)){
-    //         this.http.put('riskProfile',this.riskProfileForm.value,null).subscribe(x=>{
-    //           this.formService.onSaveSuccess(localmodalId,this.datatableElement);
-    //           this.AlertService.success('Risk Profile Saved successfully');
 
-    //         });
-    //       }
-    //       else{
-    //         this.http.post('riskProfile',this.riskProfileForm.value).subscribe(x=>{
-    //           this.formService.onSaveSuccess(localmodalId,this.datatableElement);
-    //           this.AlertService.success('Risk Profile Saved successfully');
-    //         });
-    //      }
-    //    }
-    // }
 
-    // edit(modalId:any, riskProfile:any):void {
-    //   const localmodalId = modalId;
-    //   console.log(riskProfile.id)
-    //   this.http
-    //     .getById('riskProfile',riskProfile.id)
-    //     .subscribe(res => {
-    //         const riskProfileResponse = res as riskProfile;
-    //         this.riskProfileForm.setValue({id : riskProfileResponse.id, LikelihoodTypeId : riskProfileResponse.likelihoodTypeId, ImpactTypeId: riskProfileResponse.impactTypeId,
-    //              RatingTypeId: riskProfileResponse.ratingTypeId,
-    //              EffectiveFrom: riskProfileResponse.effectiveFrom,
-    //              EffectiveTo: riskProfileResponse.effectiveTo,
-    //              Description: riskProfileResponse.description
-    //             });
-    //     });
-    //     localmodalId.visible = true;
-    // }
     delete(id:string){
       const that = this;
       this.AlertService.confirmDialog().then(res =>{

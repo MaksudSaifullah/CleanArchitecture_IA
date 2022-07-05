@@ -41,6 +41,7 @@ import {
   ProgressModule,
   SharedModule,
   SidebarModule,
+  SpinnerModule,
   TabsModule,
   UtilitiesModule,
 } from '@coreui/angular-pro';
@@ -50,6 +51,7 @@ import { HttpClient, HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common
 import { AuthService } from './core/auth/auth.service';
 import { HttpService } from './core/services/http.service';
 import { HotToastModule } from '@ngneat/hot-toast';
+import { NgxUiLoaderModule, NgxUiLoaderRouterModule } from "ngx-ui-loader";
 import { RequestInterceptor } from './core/interceptors/request.interceptor';
 
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
@@ -94,8 +96,10 @@ const APP_CONTAINERS = [
     ListGroupModule,
     CardModule,
     CoreModule,
+    HttpClientModule,
     HotToastModule.forRoot(),
-    HttpClientModule
+    SpinnerModule,
+    NgxUiLoaderModule,
   ],
   providers: [
     {

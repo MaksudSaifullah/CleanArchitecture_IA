@@ -95,8 +95,8 @@
 
   
           <div form-floating>
-            <select aria-label="Floating label select example" cSelect id="likelihoodLevel"
-              formControlName="likelihoodLevel" name="likelihoodLevel">
+            <select aria-label="Floating label select example" cSelect id="likelihoodTypeId"
+              formControlName="likelihoodTypeId" name="likelihoodTypeId">
               <option value="null">Select Likelihood Level</option>
               <option *ngFor="let commonValueAndType of likelihoodType" [value]="commonValueAndType.id">
                 {{commonValueAndType.text}}
@@ -104,18 +104,18 @@
             </select>
           </div>
 
-          <div cRow *ngIf="riskProfileForm.get('likelihoodLevel')?.invalid &&
-          riskProfileForm.get('likelihoodLevel')?.errors &&
-                (riskProfileForm.get('likelihoodLevel')?.dirty || riskProfileForm.get('likelihoodLevel')?.touched)">
-            <small class="text-danger" *ngIf="riskProfileForm.get('likelihoodLevel').hasError('required')">
+          <div cRow *ngIf="riskProfileForm.get('likelihoodTypeId')?.invalid &&
+          riskProfileForm.get('likelihoodTypeId')?.errors &&
+                (riskProfileForm.get('likelihoodTypeId')?.dirty || riskProfileForm.get('likelihoodTypeId')?.touched)">
+            <small class="text-danger" *ngIf="riskProfileForm.get('likelihoodTypeId').hasError('required')">
               This field is required.
             </small>                                 
           </div> 
           <br>
 
           <div form-floating>
-            <select aria-label="Floating label select example" cSelect id="impactLevel"
-              formControlName="impactLevel" name="impactLevel">
+            <select aria-label="Floating label select example" cSelect id="impactTypeId"
+              formControlName="impactTypeId" name="impactTypeId">
               <option value="null">Select Impact Level</option>
               <option *ngFor="let commonValueAndType of impactType" [value]="commonValueAndType.id">
                 {{commonValueAndType.text}}
@@ -124,18 +124,18 @@
           </div>
          
 
-          <div cRow *ngIf="riskProfileForm.get('impactLevel')?.invalid &&
-          riskProfileForm.get('impactLevel')?.errors &&
-                (riskProfileForm.get('impactLevel')?.dirty || riskProfileForm.get('impactLevel')?.touched)">
-            <small class="text-danger" *ngIf="riskProfileForm.get('impactLevel').hasError('required')">
+          <div cRow *ngIf="riskProfileForm.get('impactTypeId')?.invalid &&
+          riskProfileForm.get('impactTypeId')?.errors &&
+                (riskProfileForm.get('impactTypeId')?.dirty || riskProfileForm.get('impactTypeId')?.touched)">
+            <small class="text-danger" *ngIf="riskProfileForm.get('impactTypeId').hasError('required')">
               This field is required.
             </small>                                 
           </div> 
           <br>
 
           <div form-floating>
-            <select aria-label="Floating label select example" cSelect id="riskLevel"
-              formControlName="riskLevel" name="riskLevel">
+            <select aria-label="Floating label select example" cSelect id="ratingTypeId"
+              formControlName="ratingTypeId" name="ratingTypeId">
               <option value="null">Select Risk Rating</option>
               <option *ngFor="let commonValueAndType of ratingType" [value]="commonValueAndType.id">
                 {{commonValueAndType.text}}
@@ -143,10 +143,10 @@
             </select>
           </div>
 
-          <div cRow *ngIf="riskProfileForm.get('riskLevel')?.invalid &&
+          <div cRow *ngIf="riskProfileForm.get('ratingTypeId')?.invalid &&
           riskProfileForm.get('riskLevel')?.errors &&
-                (riskProfileForm.get('riskLevel')?.dirty || riskProfileForm.get('riskLevel')?.touched)">
-            <small class="text-danger" *ngIf="riskProfileForm.get('riskLevel').hasError('required')">
+                (riskProfileForm.get('ratingTypeId')?.dirty || riskProfileForm.get('ratingTypeId')?.touched)">
+            <small class="text-danger" *ngIf="riskProfileForm.get('ratingTypeId').hasError('required')">
               This field is required.
             </small>                                 
           </div> 
@@ -154,7 +154,7 @@
  
 
           <div class="form-floating">
-            <textarea class="form-control" placeholder="Description" formControlName="Description" id="Description"></textarea>
+            <textarea class="form-control" placeholder="description" formControlName="description" id="description"></textarea>
             <label for="floatingTextarea">Description</label>
           </div>
           <br>
@@ -166,8 +166,8 @@
           <br>
 
           <div class="form-floating">
-            <input class="form-control" placeholder="effectiveTo" formControlName="effectiveTo" id="effectiveTo" type="date">
-            <label for="effectiveTo">Effective To</label>
+            <input class="form-control" placeholder="EffectiveTo" formControlName="EffectiveTo" id="EffectiveTo" type="date">
+            <label for="EffectiveTo">Effective To</label>
           </div>
           <br>
   

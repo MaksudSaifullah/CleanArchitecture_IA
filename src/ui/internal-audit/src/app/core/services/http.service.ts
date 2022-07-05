@@ -27,7 +27,7 @@ export class HttpService {
     }
     return this.httpClient.post<T>(`${this.hostName}/${endpoint}`, JSON.stringify(requestObject), this.httpOptions)
       .pipe(
-        retry(2),
+        retry(0),
         catchError(this.handleError)
       )
   }
@@ -37,7 +37,7 @@ export class HttpService {
     return this.httpClient
       .get<T[]>(`${this.hostName}/${endpoint}`)
       .pipe(
-        retry(2),
+        retry(0),
         catchError(this.handleError)
       )
   }
@@ -46,7 +46,7 @@ export class HttpService {
     return this.httpClient
       .get<T>(`${this.hostName}/${endpoint}/${id}`)
       .pipe(
-        retry(2),
+        retry(0),
         catchError(this.handleError)
       )
   }
@@ -54,7 +54,7 @@ export class HttpService {
   post<T>(endpoint:string,item: any): Observable<T> {
     return this.httpClient.post<T>(`${this.hostName}/${endpoint}`, JSON.stringify(item), this.httpOptions)
       .pipe(
-        retry(2),
+        retry(0),
         catchError(this.handleError)
       )
   }
@@ -62,7 +62,7 @@ export class HttpService {
   put<T>(endpoint:string,item: T,id:any): Observable<T> {
     return this.httpClient.put<T>(`${this.hostName}/${endpoint}`, JSON.stringify(item), this.httpOptions)
       .pipe(
-        retry(2),
+        retry(0),
         catchError(this.handleError)
       )
   }
@@ -70,7 +70,7 @@ export class HttpService {
   delete<T>(endpoint:string,item: T) {
     return this.httpClient.delete<T>(`${this.hostName}/${endpoint}`, this.httpOptions)
       .pipe(
-        retry(2),
+        retry(0),
         catchError(this.handleError)
       )
   }

@@ -1,10 +1,12 @@
 ﻿using Internal.Audit.Application.Features.UserRegistration.Commands.AddUserRegistration;
+using Internal.Audit.Application.Features.UserRegistration.Commands.ChangeUserPassword;
 using Internal.Audit.Application.Features.UserRegistration.Commands.DeleteUserRegistration;
 using Internal.Audit.Application.Features.UserRegistration.Commands.UpdateUserRegistration;
 using Internal.Audit.Application.Features.UserRegistration.Queries.GetAllUserList;
 using Internal.Audit.Application.Features.UserRegistration.Queries.GetALlUserListById;
 using MediatR;
-using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Internal.Audit.Api.Controllers
@@ -18,6 +20,9 @@ namespace Internal.Audit.Api.Controllers
         {
             _mediator = madiator ?? throw new ArgumentNullException(nameof(madiator));
         }
+        [Authorize]
+        [HttpPost("ChangePassword")]
+        public async Task<ActionResult<Tuple<bool, string>>> ChangePassword(ChangeUserPasswordCommand command) => Ok(await _mediator.Send(command));
 
         [HttpPost]
         public async Task<ActionResult<AddUserRegistrationResponseDTO>> Add(AddUserRegistrationCommand command)

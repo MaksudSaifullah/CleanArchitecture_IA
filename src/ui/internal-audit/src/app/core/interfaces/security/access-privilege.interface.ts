@@ -25,21 +25,21 @@ export interface PasswordPolicy {
 export interface SessionPolicy {
     id:            string;
     isEnabled:     boolean;
-    duration:      number;
-    effectiveFrom: Date;
-    effectiveTo:   Date;
+    duration?:      number;
+    effectiveFrom?: Date;
+    effectiveTo?:   Date;
 }
 
 export interface UserLockingPolicy {
     id:                          string;
     isLockedOnNoLoginActivity:   boolean;
-    noLoginActivityDays:         number;
+    noLoginActivityDays?:         number;
     lockedOnFailedLoginAttempts: boolean;
-    numberOfFailedLoginAttempts: number;
-    failedLoginAttemptsDuration: number;
-    failedLoginLockedDuration:   number;
+    numberOfFailedLoginAttempts?: number;
+    failedLoginAttemptsDuration?: number;
+    failedLoginLockedDuration?:   number;
     unlockedOnByAdmin:           boolean;
-    unlockedOnByAdminDuration:   number;
-    effectiveFrom:               Date;
-    effectiveTo:                 Date;
+    unlockedOnByAdminDuration?:   number;
+    effectiveFrom?:               Date;
+    effectiveTo?:                 Date;
 }

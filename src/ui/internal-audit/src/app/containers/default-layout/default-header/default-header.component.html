@@ -95,7 +95,7 @@
         </a>
       </li>
       <li>
-        <a [routerLink]="[]" cDropdownItem>
+        <a [routerLink]="['/security/changepassword']" cDropdownItem>
           <svg cIcon class="me-2" name="cilSettings"></svg>
           Change Password
         </a>
@@ -104,10 +104,11 @@
       <li>
         <hr cDropdownDivider/>
       </li>
+
       <li>
-        <a [routerLink]="[]" cDropdownItem>
-          <svg cIcon class="me-2" name="cilLockLocked"></svg>
-          Lock Account
+        <a (click)="logout()" cDropdownItem>
+          <svg cIcon class="me-2" name="cilSettings"></svg>
+          Logout
         </a>
       </li>
       <li></li>

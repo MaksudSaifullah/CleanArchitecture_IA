@@ -1,13 +1,8 @@
 ﻿using Internal.Audit.Domain.Common;
 using Internal.Audit.Domain.Entities.Common;
 using Internal.Audit.Domain.Entities.Security;
-using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Internal.Audit.Domain.Entities.security
 {
@@ -25,10 +20,10 @@ namespace Internal.Audit.Domain.Entities.security
         public bool IsEdit { get; set; }
         public bool IsDelete { get; set; }
         [ForeignKey("AuditModuleId")]
-        public AuditModule AuditModule { get; set; }
+        public virtual AuditModule AuditModule { get; set; }
         [ForeignKey("AuditFeatureId")]
-        public AuditFeature AuditFeature { get; set; }
+        public virtual AuditFeature AuditFeature { get; set; }
         [ForeignKey("RoleId")]
-        public Role Role { get; set; }
+        public virtual Role Role { get; set; }
     }
 }

@@ -14,11 +14,10 @@ export class AccessPrivilegeComponent implements OnInit {
   accessPrivilegeForm: FormGroup;
   formService: FormService = new FormService();
  
-
   
   constructor(private http: HttpService , private fb: FormBuilder, private AlertService: AlertService) {
     this.accessPrivilegeForm = this.fb.group({
-      //passwordPolicy_id: [''],
+      passwordPolicy_id: [''],
       minLength: ['', [Validators.required]],
       maxLength: ['', [Validators.required]],
       isAlphabetMandatory: ['', [Validators.required]],
@@ -32,7 +31,7 @@ export class AccessPrivilegeComponent implements OnInit {
       forcePasswordResetDays: ['', [Validators.required]],
       notifyPasswordResetDays: ['', [Validators.required]],
 
-     // userLockingPolicy_id : [''],
+      userLockingPolicy_id : [''],
       isLockedOnNoLoginActivity : ['', [Validators.required]],
       noLoginActivityDays : [''],
       isLockedOnFailedLoginAttempts : ['', [Validators.required]],
@@ -42,7 +41,8 @@ export class AccessPrivilegeComponent implements OnInit {
       isUnlockedOnByAdmin : ['', Validators.required],
       unlockedOnByAdminDuration : ['', Validators.required],
 
-     // sessionPolicy_id: [''],
+      sessionPolicy_id: [''],
+      sessionPolicy_isEnabled: [''],
       sessionPolicy_duration: ['', [Validators.required]]
     })
   }
@@ -55,53 +55,52 @@ export class AccessPrivilegeComponent implements OnInit {
 
   onSubmit():void 
   {
-    // const RequestModel = {
-    //   passwordPolicy: {
-    //     id:                                this.accessPrivilegeForm.value.passwordPolicy_id,
-    //     minLength:                         this.accessPrivilegeForm.value.minLength,
-    //     maxLength:                         this.accessPrivilegeForm.value.maxLength,
-    //     isAlphabetMandatory:               this.accessPrivilegeForm.value.isAlphabetMandatory,
-    //     alphabetLength:                    this.accessPrivilegeForm.value.alphabetLength,
-    //     isNumberMandatory:                 this.accessPrivilegeForm.value.isNumberMandatory,
-    //     numericLength:                     this.accessPrivilegeForm.value.numericLength,
-    //     isSpecialCharsMandatory:           this.accessPrivilegeForm.value.isSpecialCharsMandatory,
-    //     specialCharsLength:                this.accessPrivilegeForm.value.specialCharsLength,
-    //     isPasswordChangeForcedOnFirstLogin:this.accessPrivilegeForm.value.isPasswordChangeForcedOnFirstLogin,
-    //     isPasswordResetForcedPeriodically: this.accessPrivilegeForm.value.isPasswordResetForcedPeriodically,
-    //     forcePasswordResetDays:            this.accessPrivilegeForm.value.forcePasswordResetDays,
-    //     notifyPasswordResetDays:           this.accessPrivilegeForm.value.notifyPasswordResetDays,
-    //     effectiveFrom:                     this.accessPrivilegeForm.value.effectiveFrom,
-    //     effectiveTo:                       this.accessPrivilegeForm.value.effectiveTo,
-    //   },
-    //   userLockingPolicy: {         
-    //     id:                          this.accessPrivilegeForm.value.userLockingPolicy_id,
-    //     isLockedOnNoLoginActivity:   boolean;
-    //     noLoginActivityDays:         number;
-    //     lockedOnFailedLoginAttempts: boolean;
-    //     numberOfFailedLoginAttempts: number;
-    //     failedLoginAttemptsDuration: number;
-    //     failedLoginLockedDuration:   number;
-    //     unlockedOnByAdmin:           boolean;
-    //     unlockedOnByAdminDuration:   number;
-    //     effectiveFrom:               Date;
-    //     effectiveTo:                 Date;
-    //   },
-    //   sessionPolicy: {
-    //     email: this.countryForm.value.empEmail,
-    //     designationId: this.countryForm.value.empDesignation,         
-    //     photoId: "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-    //     isActive: true,
-    //     name: this.countryForm.value.empName
-    //   }
-    // };
+      const RequestModel = {
+        passwordPolicy: {
+          id:                                this.accessPrivilegeForm.value.passwordPolicy_id,
+          minLength:                         this.accessPrivilegeForm.value.minLength,
+          maxLength:                         this.accessPrivilegeForm.value.maxLength,
+          isAlphabetMandatory:               this.accessPrivilegeForm.value.isAlphabetMandatory,
+          alphabetLength:                    this.accessPrivilegeForm.value.alphabetLength,
+          isNumberMandatory:                 this.accessPrivilegeForm.value.isNumberMandatory,
+          numericLength:                     this.accessPrivilegeForm.value.numericLength,
+          isSpecialCharsMandatory:           this.accessPrivilegeForm.value.isSpecialCharsMandatory,
+          specialCharsLength:                this.accessPrivilegeForm.value.specialCharsLength,
+          isPasswordChangeForcedOnFirstLogin:this.accessPrivilegeForm.value.isPasswordChangeForcedOnFirstLogin,
+          isPasswordResetForcedPeriodically: this.accessPrivilegeForm.value.isPasswordResetForcedPeriodically,
+          forcePasswordResetDays:            this.accessPrivilegeForm.value.forcePasswordResetDays,
+          notifyPasswordResetDays:           this.accessPrivilegeForm.value.notifyPasswordResetDays,
+          effectiveFrom:                     this.accessPrivilegeForm.value.effectiveFrom,
+          effectiveTo:                       this.accessPrivilegeForm.value.effectiveTo,
+        },
+        userLockingPolicy: {         
+          id:                          this.accessPrivilegeForm.value.userLockingPolicy_id,
+          isLockedOnNoLoginActivity:   this.accessPrivilegeForm.value.isLockedOnNoLoginActivity,
+          noLoginActivityDays:         this.accessPrivilegeForm.value.noLoginActivityDays,
+          lockedOnFailedLoginAttempts: this.accessPrivilegeForm.value.isLockedOnFailedLoginAttempts,
+          numberOfFailedLoginAttempts: this.accessPrivilegeForm.value.numberOfFailedLoginAttempts,
+          failedLoginAttemptsDuration: this.accessPrivilegeForm.value.failedLoginAttemptsDuration,
+          failedLoginLockedDuration:   this.accessPrivilegeForm.value.failedLoginLockedDuration,
+          unlockedOnByAdmin:           this.accessPrivilegeForm.value.unlockedOnByAdmin,
+          unlockedOnByAdminDuration:   this.accessPrivilegeForm.value.unlockedOnByAdminDuration,
+          effectiveFrom:               this.accessPrivilegeForm.value.effectiveFrom,
+          effectiveTo:                 this.accessPrivilegeForm.value.effectiveTo,
+        },
+        sessionPolicy: {
+          id:        this.accessPrivilegeForm.value.sessionPolicy_id,
+          IsEnabled: this.accessPrivilegeForm.value.sessionPolicy_isEnabled,
+          Duration:  this.accessPrivilegeForm.value.sessionPolicy_duration,          
+        }
+      };
    
     
       if(this.accessPrivilegeForm.valid){    
         console.log(this.accessPrivilegeForm.value);    
-        this.http.put('accessPrivilege',this.accessPrivilegeForm.value,null).subscribe(x=>{
-         // console.log(x);
-          //this.formService.onSaveSuccess(localmodalId,this.datatableElement);
-          this.AlertService.success('Country Saved Successful');
+        this.http.put('accessPrivilege', RequestModel, null).subscribe(x=>{        
+          //window.location.reload();
+          this.AlertService.success('Access Privilege Config Saved Successfully');
+          //setTimeout(()=>{}, 500) 
+        
         });
       }
       else{
@@ -111,15 +110,14 @@ export class AccessPrivilegeComponent implements OnInit {
   
 
   loadData():void {
-    //const localmodalId = modalId;
-    //console.log(country.id)
-
     this.http
       .get('accessPrivilege')
       .subscribe(res => {
           const response = res as unknown as accessPrivilegeConfig;
           //console.log(response.passwordPolicy.minLength);
-          this.accessPrivilegeForm.setValue({minLength : response.passwordPolicy.minLength, 
+          this.accessPrivilegeForm.setValue({
+            passwordPolicy_id : response.passwordPolicy.id,
+            minLength : response.passwordPolicy.minLength, 
             maxLength : response.passwordPolicy.maxLength,
             isAlphabetMandatory : response.passwordPolicy.isAlphabetMandatory,
             alphabetLength : response.passwordPolicy.alphabetLength,
@@ -132,6 +130,7 @@ export class AccessPrivilegeComponent implements OnInit {
             forcePasswordResetDays : response.passwordPolicy.forcePasswordResetDays,
             notifyPasswordResetDays : response.passwordPolicy.notifyPasswordResetDays,
 
+            userLockingPolicy_id : response.userLockingPolicy.id,
             isLockedOnNoLoginActivity : response.userLockingPolicy.isLockedOnNoLoginActivity,
             noLoginActivityDays : response.userLockingPolicy.noLoginActivityDays,
             isLockedOnFailedLoginAttempts : response.userLockingPolicy.lockedOnFailedLoginAttempts,
@@ -141,6 +140,8 @@ export class AccessPrivilegeComponent implements OnInit {
             isUnlockedOnByAdmin : response.userLockingPolicy.unlockedOnByAdmin,
             unlockedOnByAdminDuration: response.userLockingPolicy.unlockedOnByAdminDuration,
 
+            sessionPolicy_id : response.sessionPolicy.id,
+            sessionPolicy_isEnabled : response.sessionPolicy.isEnabled,
             sessionPolicy_duration : response.sessionPolicy.duration,
           });
       });    

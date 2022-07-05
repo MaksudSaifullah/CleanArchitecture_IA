@@ -114,7 +114,8 @@
                     User Session Timeout
                   </strong></c-card-header>
                   <c-card-body>
-                    <label for="sessionDuration" class="m-1">Duration </label>
+                    <input type="checkbox" id="sessionPolicy_isEnabled" name="sessionPolicy_isEnabled" formControlName="sessionPolicy_isEnabled">
+                    <label for="sessionPolicy_isEnabled" class="m-1">Duration </label>
                     <input type="number" id="sessionDuration" name="sessionDuration" class="inline-textbox" formControlName="sessionPolicy_duration" name="sessionPolicy_duration">
                     minutes.
                   </c-card-body>

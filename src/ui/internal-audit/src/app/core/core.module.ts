@@ -23,7 +23,8 @@ import {GlobalInterceptor} from './interceptors/global.interceptor'
   providers:[
      AuthService,HttpService,RoutingService,
      { provide: HTTP_INTERCEPTORS, useClass: RequestInterceptor, multi: true },
-     { provide: HTTP_INTERCEPTORS, useClass: GlobalInterceptor, multi: true }
+     { provide: HTTP_INTERCEPTORS, useClass: GlobalInterceptor, multi: true },
+    AuthService,HttpService,RoutingService,
   ],
 
 })

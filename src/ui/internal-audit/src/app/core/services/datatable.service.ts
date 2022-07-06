@@ -10,14 +10,27 @@ export class DatatableService {
     });
   }
 
-  datatableMap<T>(resp:any, callback:any){
-    let convertedResp = resp as paginatedResponseInterface<T>;
-    console.log(convertedResp);
-    callback({
-      recordsTotal: convertedResp.totalCount,
-      recordsFiltered: convertedResp.totalCount,
-      data: []
-    });
-    return convertedResp.items;
+  datatableMap<T>(resp:any, callback:any,count:any=0){
+    if(count === 0){
+      let convertedResp = resp as paginatedResponseInterface<T>;
+      console.log(convertedResp);
+      callback({
+        recordsTotal: convertedResp.totalCount,
+        recordsFiltered: convertedResp.totalCount,
+        data: []
+      });
+      return convertedResp.items;
+    }else{
+      let convertedResp = resp ;
+      console.log(convertedResp);
+      callback({
+        recordsTotal: 0,
+        recordsFiltered: 0,
+        data: []
+      });
+      return convertedResp;
+    }
+   
   }
+  
 }

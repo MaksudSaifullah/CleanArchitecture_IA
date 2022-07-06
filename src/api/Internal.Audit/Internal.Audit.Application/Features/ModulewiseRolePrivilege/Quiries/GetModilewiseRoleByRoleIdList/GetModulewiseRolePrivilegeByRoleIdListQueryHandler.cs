@@ -22,9 +22,17 @@ namespace Internal.Audit.Application.Features.ModulewiseRolePrivilege.Quiries.Ge
 
         public async Task<GetModulewiseRolePrivilegeByRoleIdListPagingDTO> Handle(GetModulewiseRolePrivilegeByRoleIdListQuery request, CancellationToken cancellationToken)
         {
-            var (count, result) = await _modulewiseRolePrivilegeRepository.GetAllByRoleId(request.pageSize, request.pageNumber,request.roleId);
+
+            if(request.roleId != null)
+            {
+                var (count1, result1) = await _modulewiseRolePrivilegeRepository.GetAllByRoleId(request.pageSize, request.pageNumber, request.roleId);
+                var modulewiseRoleList1 = _mapper.Map<List<GetModulewiseRolePrivilegeByRoleIdListResponseDTO>>(result1);
+                return new GetModulewiseRolePrivilegeByRoleIdListPagingDTO { Items = modulewiseRoleList1, TotalCount = count1 };
+            }
+            var (count, result) = await _modulewiseRolePrivilegeRepository.GetAll(request.pageSize, request.pageNumber);
             var modulewiseRoleList = _mapper.Map<List<GetModulewiseRolePrivilegeByRoleIdListResponseDTO>>(result);
             return new GetModulewiseRolePrivilegeByRoleIdListPagingDTO { Items = modulewiseRoleList, TotalCount = count };
+
         }
     }
 }

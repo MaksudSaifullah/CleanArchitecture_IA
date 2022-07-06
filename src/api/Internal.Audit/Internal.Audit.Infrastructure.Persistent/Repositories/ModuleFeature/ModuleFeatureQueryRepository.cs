@@ -1,4 +1,5 @@
 ﻿using Internal.Audit.Application.Contracts.Persistent.ModuleFeature;
+using Internal.Audit.Domain.Entities.Common;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -37,5 +38,16 @@ public class ModuleFeatureQueryRepository : QueryRepositoryBase<Domain.Entities.
             return modulefeaturelist;
         }, parameters, splitters, false);
         return data.Distinct();
+    }
+
+    public async Task<IEnumerable<AuditModule>> GetOnlyModuleList()
+    {
+        var query = @"SELECT [Id]
+                    ,[Name]
+                    ,[DisplayName]      
+                     FROM [common].[AuditModule]
+                     where IsDeleted=0";        
+
+        return (IEnumerable<AuditModule>)await Get(query);
     }
 }

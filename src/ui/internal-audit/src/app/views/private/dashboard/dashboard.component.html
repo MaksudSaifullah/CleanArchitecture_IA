@@ -1,1 +1,86 @@
-<p>dashboard works!</p>
+
+
+
+
+<c-col xs="12">
+    <c-card class="mb-4">
+        <c-card-header>
+            <strong>Dashboard</strong>
+        </c-card-header>
+        <c-card-body> 
+            <c-multi-select multiple>
+                <c-multi-select-option>Bangladesh</c-multi-select-option>
+                <c-multi-select-option>India</c-multi-select-option>
+                <c-multi-select-option>Pakistan</c-multi-select-option>
+                <c-multi-select-option>Japan</c-multi-select-option>
+                <c-multi-select-option>Philipine</c-multi-select-option>
+              </c-multi-select>
+        </c-card-body>
+
+
+
+
+
+        <c-col xs="12">
+            <c-card>
+                <c-card-header>
+                    <strong>Country: Bangladesh</strong>
+                </c-card-header>
+            </c-card>
+            <c-card-body>
+              <c-row>
+                <c-col md>
+                    <c-card class="mb-4" style="margin-left: 5%;">
+                        <c-card-header>
+                            <c-icon name="cilChartPie"></c-icon> <strong><span> Schedule </span></strong>
+                        </c-card-header>
+                        <c-card-body>
+                            <select aria-label="Default select example" cSelect>
+                                <option>Select Year</option>
+                                <option value="1">2022</option>
+                                <option value="2">2021</option>
+                                <option value="3">2020</option>
+                              </select>
+                            <c-chart type="pie" [data]="chartPieData"></c-chart>
+                          </c-card-body>
+                    </c-card>
+                </c-col>
+                <c-col md>
+                    <c-card class="mb-4">
+                        <c-card-header>
+                            <c-icon name="cilChart"></c-icon> <strong><span> Issue Rating </span></strong>
+                        </c-card-header>
+                        <c-card-body>
+                            <select aria-label="Default select example" cSelect>
+                                <option>Select Year</option>
+                                <option value="1">2022</option>
+                                <option value="2">2021</option>
+                                <option value="3">2020</option>
+                              </select>
+                            <!-- <span style="writing-mode: vertical-rl;
+                            text-orientation: upright;">Level of Likelihood</span> -->
+                            <div class="chart-box" style="height: 20% !important;">
+                                <c-chart [data]="data" type="bar"></c-chart>
+                            </div>
+                            
+                            <span class="d-flex justify-content-center">Level of Likelihood</span>
+                        </c-card-body>
+                    </c-card>
+                </c-col>
+                <c-col md>
+                    <c-card class="mb-4"  style="margin-right: 5%;">
+                        <c-card-header>
+                            <c-icon name="cilFile"></c-icon> <strong><span> Documents </span></strong>
+                        </c-card-header>
+                        <c-card-body> 
+                           <span> NO DATA FOUND</span>
+                        </c-card-body>
+                    </c-card>
+                </c-col>
+              </c-row>
+            </c-card-body>
+        </c-col>
+
+
+    </c-card>
+</c-col>`

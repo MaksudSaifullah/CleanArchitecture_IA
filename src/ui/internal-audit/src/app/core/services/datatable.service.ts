@@ -11,6 +11,8 @@ export class DatatableService {
   }
 
   datatableMap<T>(resp:any, callback:any,count:any=0){
+    console.log('resp for dt');
+    console.log(resp);
     if(count === 0){
       let convertedResp = resp as paginatedResponseInterface<T>;
       console.log(convertedResp);
@@ -22,6 +24,7 @@ export class DatatableService {
       return convertedResp.items;
     }else{
       let convertedResp = resp ;
+      console.log('tmi ami');
       console.log(convertedResp);
       callback({
         recordsTotal: 0,

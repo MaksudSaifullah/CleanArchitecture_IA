@@ -14,7 +14,7 @@ public class ModuleFeatureQueryRepository : QueryRepositoryBase<Domain.Entities.
     {
     }
 
-    public async Task<IEnumerable<Domain.Entities.Common.ModuleFeature>> GetAllModuleFeatureList()
+    public async Task<IEnumerable<Domain.Entities.Common.ModuleFeature>> GetAllModuleFeatureList(Guid featureId)
     {
         var query = @"SELECT *
                     FROM [common].[ModuleFeature] modulefeature
@@ -24,6 +24,10 @@ public class ModuleFeatureQueryRepository : QueryRepositoryBase<Domain.Entities.
                     on modulefeature.ModuleId=auditmodule.Id
                     where modulefeature.IsDeleted=0 and auditfeature.IsDeleted=0
                     and auditmodule.IsDeleted=0";
+        if(featureId != Guid.Empty)
+        {
+            query += " and modulefeature.FeatureId='" + featureId+"'";
+        }
         string splitters = "Id, Id";
         var parameters = new Dictionary<string, object> { };
         var moduleDictionary = new Dictionary<Guid, Domain.Entities.Common.ModuleFeature>();

@@ -17,7 +17,7 @@ public class GetAllModuleListQueryHandler : IRequestHandler<GetAllModuleListQuer
 
     public async Task<IEnumerable<GetAllModuleListResponseDTO>> Handle(GetAllModuleListQuery request, CancellationToken cancellationToken)
     {
-        var moduleFeatureList = await _moduleFeatureRepository.GetAllModuleFeatureList();
+        var moduleFeatureList = await _moduleFeatureRepository.GetAllModuleFeatureList(request.featureId);
         return _mapper.Map<IEnumerable<GetAllModuleListResponseDTO>>(moduleFeatureList);
 
     }

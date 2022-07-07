@@ -30,6 +30,7 @@ privilegeForm: FormGroup;
 formService: FormService = new FormService();
 dataTableService: DatatableService = new DatatableService();
 dtTrigger: Subject<any> = new Subject<any>();
+featureId:any='00000000-0000-0000-0000-000000000000';
 
 constructor(private http: HttpService , private fb: FormBuilder, private AlertService: AlertService) {
   this.loadDropDownValues();
@@ -75,7 +76,7 @@ LoadData() {
 
 LoadDataAccessprivilege(){
   const that = this;
-
+  console.log(this.featureId);
   this.dtOptionsAccessPrivilege = {
     pagingType: 'full_numbers',
     pageLength: 10,
@@ -84,11 +85,9 @@ LoadDataAccessprivilege(){
     searching: false,
     ajax: (dataTablesParameters: any, callback) => {
       this.http
-      .get('ModuleFeature').subscribe(resp => that.userPrivilegeList = this.dataTableService.datatableMap(resp,callback,1));
+      .get('ModuleFeature?featureId='+this.featureId).subscribe(resp => that.userPrivilegeList = this.dataTableService.datatableMap(resp,callback,1));
   },
   };
-
-
 }
   onSubmit(modalId:any):void{
     const localmodalId = modalId;
@@ -154,5 +153,9 @@ LoadDataAccessprivilege(){
   }
   onChangRole(e:any){
     console.log(e.value)
+    this.featureId=e.value;
+    console.log(this.featureId);
+    //this.LoadDataAccessprivilege()
+   this.dataTableService.redraw(this.datatableElement);
   }
 }

@@ -34,12 +34,12 @@ export class RiskProfileComponent implements OnInit {
     this.LoadDropDownValues();
     this.riskProfileForm = this.fb.group({
       id: [''],
-      likelihoodTypeId:[null,[Validators.required]],
-      impactTypeId: [null,[Validators.required]],
-      ratingTypeId: [null,[Validators.required]],
+      likelihoodTypeId:[null,[Validators.required, Validators.pattern("^(?!null$).*$")]],
+      impactTypeId: [null,[Validators.required, Validators.pattern("^(?!null$).*$")]],
+      ratingTypeId: [null,[Validators.required, Validators.pattern("^(?!null$).*$")]],
       description: [''],
-      EffectiveFrom: Date,
-      EffectiveTo: Date    
+      effectiveFrom: [Date,[Validators.required]],
+      effectiveTo: [Date, [Validators.required]]
     })
   }
   ngOnDestroy(): void {
@@ -95,13 +95,21 @@ export class RiskProfileComponent implements OnInit {
   }
 
   onSubmit(modalId:any):void{
-    const localmodalId = modalId;
-    console.log(this.riskProfileForm.value);
-    this.http.post('riskProfile',this.riskProfileForm.value).subscribe(x=>{
-      this.formService.onSaveSuccess(localmodalId,this.datatableElement);
-      this.AlertService.success('Risk Profile Saved successfully');
-    
-    });
+    debugger;
+    if (this.riskProfileForm.valid ){
+      const localmodalId = modalId;
+      console.log(this.riskProfileForm.value);
+      this.http.post('riskProfile',this.riskProfileForm.value).subscribe(x=>{
+        this.formService.onSaveSuccess(localmodalId,this.datatableElement);
+        this.AlertService.success('Risk Profile Saved successfully');
+        debugger;
+      });
+    }
+    else {
+      debugger;
+      this.riskProfileForm.markAllAsTouched();
+      return;
+    }    
   }
 
 

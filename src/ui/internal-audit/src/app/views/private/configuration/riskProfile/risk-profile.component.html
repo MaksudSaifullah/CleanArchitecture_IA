@@ -3,7 +3,7 @@
       <div class="col-lg-12">
         <div class="card">
           <div class="card-header">
-            <strong class="fa fa-align-justify" >Risk Profile List</strong> 
+            <div class="fa fa-align-justify" >Risk Profile List</div> 
           </div>
           <div class="card-body">
             <div class="row">
@@ -43,7 +43,9 @@
                       <th>Level of Likelihood</th>
                       <th>Level of impact</th>
                       <th>Risk Rating</th>
-                      <th>Description</th>  
+                      <th>Description</th>
+                      <th>Effective From</th>
+                      <th>Effective To</th>  
                       <th>Action</th>                   
                     </tr>
                   </thead>
@@ -52,14 +54,14 @@
                       <td>{{ riskProfile.likelihoodType }}</td>
                       <td>{{ riskProfile.impactType }}</td>
                       <td>{{ riskProfile.ratingType }}</td>
-                      <!-- <td>{{ riskProfile.effectiveFrom | date:'medium' }}</td>
-                      <td>{{ riskProfile.effectiveTo | date:'medium' }}</td> -->
                       <td>{{ riskProfile.description }}</td>
+                      <td>{{ riskProfile.effectiveFrom | date:'medium' }}</td>
+                      <td>{{ riskProfile.effectiveTo | date:'medium' }}</td>
                       <td>
                         <div class="btn-group" role="group" aria-label="Basic example">
-                          <!-- <button type="button" class="btn btn-secondary btnSaveColor" (click)="edit(verticallyCenteredModal,riskProfile)">
+                          <button type="button" class="btn btn-secondary btnSaveColor" (click)="edit(verticallyCenteredModal,riskProfile)">
                            Edit
-                          </button> -->
+                          </button>
                           <button type="button" class="btn btn-danger btnDeleteColor" (click)="delete(riskProfile.id)">
                             Delete
                           </button>
@@ -73,7 +75,6 @@
                     </tr>
                   </tbody>
                 </table>
-  
             </div>
           </div>
         </div>
@@ -88,54 +89,48 @@
       <h5 cModalTitle *ngIf="formService.isEdit(this.riskProfileForm.get('id'))">Update Risk Profile</h5>
       <button [cModalToggle]="verticallyCenteredModal.id" cButtonClose></button> 
     </c-modal-header>
-
      <c-modal-body>
       <div class="col-md-12" >
-        <input type="hidden" formControlName="id"/>
-
-  
+        <input type="hidden" formControlName="id"/>  
           <div form-floating>
-            <select aria-label="Floating label select example" cSelect id="likelihoodType"
-              formControlName="likelihoodTypeId" name="likelihoodType">
-              <option value="null">Select Likelihood Level</option>
+            <select aria-label="Floating label select example" cSelect id="likelihoodTypeId"
+              formControlName="likelihoodTypeId" name="likelihoodTypeId">
+              <option value=null>Select Likelihood Level</option>
               <option *ngFor="let commonValueAndType of likelihoodType" [value]="commonValueAndType.id">
                 {{commonValueAndType.text}}
               </option>
             </select>
           </div>
 
-          <div cRow *ngIf="riskProfileForm.get('likelihoodTypeId')?.invalid &&
-          riskProfileForm.get('likelihoodTypeId')?.errors &&
-                (riskProfileForm.get('likelihoodType')?.dirty || riskProfileForm.get('likelihoodType')?.touched)">
-            <small class="text-danger" *ngIf="riskProfileForm.get('likelihoodType').hasError('required')">
+          <div cRow *ngIf="(riskProfileForm.get('likelihoodTypeId')?.invalid && riskProfileForm.get('likelihoodTypeId')?.errors) &&         
+            (riskProfileForm.get('likelihoodTypeId')?.dirty || riskProfileForm.get('likelihoodTypeId')?.touched)">
+            <small class="text-danger">
               This field is required.
             </small>                                 
           </div> 
           <br>
 
           <div form-floating>
-            <select aria-label="Floating label select example" cSelect id="impactType"
-              formControlName="impactTypeId" name="impactType">
+            <select aria-label="Floating label select example" cSelect id="impactTypeId"
+              formControlName="impactTypeId" name="impactTypeId">
               <option value="null">Select Impact Level</option>
               <option *ngFor="let commonValueAndType of impactType" [value]="commonValueAndType.id">
                 {{commonValueAndType.text}}
               </option>
             </select>
           </div>
-         
 
-          <div cRow *ngIf="riskProfileForm.get('impactType')?.invalid &&
-          riskProfileForm.get('impactType')?.errors &&
-                (riskProfileForm.get('impactType')?.dirty || riskProfileForm.get('impactType')?.touched)">
-            <small class="text-danger" *ngIf="riskProfileForm.get('impactType').hasError('required')">
+          <div cRow *ngIf="((riskProfileForm.get('impactTypeId')?.invalid && riskProfileForm.get('impactTypeId')?.errors)) &&
+            (riskProfileForm.get('impactTypeId')?.dirty || riskProfileForm.get('impactTypeId')?.touched)">
+            <small class="text-danger">
               This field is required.
             </small>                                 
           </div> 
           <br>
 
           <div form-floating>
-            <select aria-label="Floating label select example" cSelect id="ratingType"
-              formControlName="ratingTypeId" name="ratingType">
+            <select aria-label="Floating label select example" cSelect id="ratingTypeId"
+              formControlName="ratingTypeId" name="ratingTypeId">
               <option value="null">Select Risk Rating</option>
               <option *ngFor="let commonValueAndType of ratingType" [value]="commonValueAndType.id">
                 {{commonValueAndType.text}}
@@ -143,31 +138,45 @@
             </select>
           </div>
 
-          <div cRow *ngIf="riskProfileForm.get('ratingType')?.invalid &&
-          riskProfileForm.get('riskLevel')?.errors &&
-                (riskProfileForm.get('ratingType')?.dirty || riskProfileForm.get('ratingType')?.touched)">
-            <small class="text-danger" *ngIf="riskProfileForm.get('ratingType').hasError('required')">
+          <div cRow *ngIf="((riskProfileForm.get('ratingTypeId')?.invalid && riskProfileForm.get('ratingTypeId')?.errors)) &&
+            (riskProfileForm.get('ratingTypeId')?.dirty || riskProfileForm.get('ratingTypeId')?.touched)">
+            <small class="text-danger">
               This field is required.
             </small>                                 
           </div> 
           <br>
- 
 
           <div class="form-floating">
             <textarea class="form-control" placeholder="description" formControlName="description" id="description"></textarea>
             <label for="floatingTextarea">Description</label>
           </div>
+          <!-- <small class="text-danger"
+                    *ngIf="riskProfileForm.get('description')?length && riskProfileForm.get('description').hasError('maxlength')">
+                    The maximum length for this field is {{riskProfileForm.get('description').errors.maxlength.requiredLength}} characters.
+          </small> -->
           <br>
           
           <div class="form-floating">
-            <input class="form-control" placeholder="EffectiveFrom" formControlName="EffectiveFrom" id="EffectiveFrom" type="date">
-            <label for="EffectiveFrom">Effective From</label>
+            <input class="form-control" placeholder="effectiveFrom" formControlName="effectiveFrom" id="effectiveFrom" type="date">
+            <label for="effectiveFrom">Effective From</label>
+          </div>
+          <div cRow *ngIf="riskProfileForm.get('effectiveFrom')?.invalid && riskProfileForm.get('effectiveFrom')?.errors &&
+                (riskProfileForm.get('effectiveFrom')?.dirty || riskProfileForm.get('effectiveFrom')?.touched)">
+            <small class="text-danger" *ngIf="riskProfileForm.get('effectiveFrom').hasError('required')">
+              This field is required.
+            </small>                                 
           </div>
           <br>
 
           <div class="form-floating">
-            <input class="form-control" placeholder="EffectiveTo" formControlName="EffectiveTo" id="EffectiveTo" type="date">
-            <label for="EffectiveTo">Effective To</label>
+            <input class="form-control" placeholder="effectiveTo" formControlName="effectiveTo" id="effectiveTo" type="date">
+            <label for="effectiveTo">Effective To</label>
+          </div>
+          <div cRow *ngIf="riskProfileForm.get('effectiveTo')?.invalid && riskProfileForm.get('effectiveTo')?.errors &&
+                (riskProfileForm.get('effectiveTo')?.dirty || riskProfileForm.get('effectiveTo')?.touched)">
+            <small class="text-danger" *ngIf="riskProfileForm.get('effectiveTo').hasError('required')">
+              This field is required.
+            </small>                                 
           </div>
           <br>
   

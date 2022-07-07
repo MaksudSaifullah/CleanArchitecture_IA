@@ -5,7 +5,7 @@ export interface riskProfile {
     ratingType:       string;
     effectiveFrom:    Date;
     effectiveTo:      Date;
-    description:      string;
+    description?:      string;
     isActive:         boolean;
 
 }

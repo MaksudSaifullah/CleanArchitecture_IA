@@ -34,7 +34,7 @@ export class UserRegistrationComponent implements OnInit {
   selectedUserRole: UserRole[]=[];
   employeeId:string='';
   paramId:string ='';
-
+  Data: Array<any> = [];
   constructor(private http: HttpService, private router : Router, private fb: FormBuilder, private activateRoute: ActivatedRoute, private customValidator: CutomvalidatorService,private AlertService: AlertService) {
     
     this.LoadDropDownValues();
@@ -47,7 +47,7 @@ export class UserRegistrationComponent implements OnInit {
       userPassword: ['',[Validators.required]],
       userConfirmPassword: ['',[Validators.required]],
       roleList: ['',[Validators.required]],
-      countryListSelected: [false,[Validators.required]],
+      checkArray: this.fb.array([], [Validators.required]),
       isEnabled: [''],
       accountExpired:[''],
       passwordExpired:[''],
@@ -82,6 +82,7 @@ export class UserRegistrationComponent implements OnInit {
     this.http.paginatedPost('country/paginated', 100, 1, {}).subscribe(resp => {
       let convertedResp = resp as paginatedResponseInterface<country>;
       this.countries = convertedResp.items;
+      this.Data=convertedResp.items;
       //console.log(this.countries)
     })
   }
@@ -152,7 +153,7 @@ export class UserRegistrationComponent implements OnInit {
 
 
   onSubmit(): void {
-
+    console.log(this.countryForm)
     const that=this;
     let userList: UserRole[] = [];
 
@@ -167,7 +168,7 @@ export class UserRegistrationComponent implements OnInit {
         }); 
         
       }
-   
+     
       const RequestModel = {
         employee: {
           userId: this.displayUserStatus == false ? null : this.countryForm.value.id,
@@ -223,6 +224,7 @@ export class UserRegistrationComponent implements OnInit {
 
     }
     else {
+      console.log('immmm111111111')
       this.countryForm.markAllAsTouched();
       return;
     }
@@ -230,13 +232,19 @@ export class UserRegistrationComponent implements OnInit {
   eventCheck(e:any) { 
    // debugger; 
     const that=this;
-    console.log(that.userCountry);
-    //console.log(e.target);
+    console.log('ggg');
+    console.log(e.target);
+    console.log('ccc');
+    console.log(this.userCountry);
     let exists = this.userCountry.includes(e.target.id.toString());   
     if (e.target.checked) {    
+    
       let country: UserCountry = { countryId: e.target.id.toString() ,isActive:true,userId:that.paramId==undefined?'':that.paramId}
+      console.log('pushing'+country.countryId)
       this.userCountry.push(country);
-    } else {      
+    } else {
+      console.log('rmd')
+
        const index =  this.userCountry.findIndex(x=>x.countryId == e.target.id);
        this.userCountry.splice(index, 1);
     }

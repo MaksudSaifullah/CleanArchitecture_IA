@@ -8,19 +8,19 @@
         <div>
           <input type="hidden" formControlName="id" />
           <c-row>
-            <c-col md="4" *ngFor="let country of countries">
+            <c-col md="4" *ngFor="let data of Data; let i=index">
               <c-form-check>
-                <input formControlName="countryListSelected" type="checkbox" [checked]="isChecked(country.id)" [id]="country.id" (change)="eventCheck($event)"/>
-                <label for="checkThree" class="m-1"> {{country.name}}</label>
+                <input type="checkbox" [id]="data.id" [checked]="isChecked(data.id)" (change)="eventCheck($event)"/>
+                <label for="checkThree" class="m-1"> {{data.name}}</label>
               </c-form-check>
             </c-col>
-            <div cRow *ngIf="countryForm.get('countryListSelected')?.invalid &&
+            <!-- <div cRow *ngIf="countryForm.get('countryListSelected')?.invalid &&
             countryForm.get('countryListSelected')?.errors &&
                   (countryForm.get('countryListSelected')?.dirty || countryForm.get('countryListSelected')?.touched)">
               <small class="text-danger" *ngIf="countryForm.get('countryListSelected').hasError('required')">
                Please select at least one country
               </small>                   
-            </div>
+            </div> -->
 
             <!-- <c-col md="4" *ngFor="let control of countriesArray.controls;let i=index;">
               <c-form-check>

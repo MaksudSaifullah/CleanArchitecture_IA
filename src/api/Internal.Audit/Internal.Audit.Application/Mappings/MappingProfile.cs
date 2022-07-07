@@ -88,6 +88,7 @@ public class MappingProfile: Profile
         CreateMap<Country, DeleteCountryCommand>().ReverseMap();
 
         CreateMap<RiskProfile, RiskProfileDTO>().ReverseMap();
+        CreateMap<CompositeRiskProfile, RiskProfileDTO>().ReverseMap();
         CreateMap<RiskProfile, RiskProfileByIdDTO>().ReverseMap();
         CreateMap<RiskProfile, AddRiskProfileResponseDTO>().ReverseMap();
         CreateMap<RiskProfile, AddRiskProfileCommand>().ReverseMap();

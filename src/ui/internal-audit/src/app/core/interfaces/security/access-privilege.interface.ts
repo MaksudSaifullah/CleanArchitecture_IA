@@ -5,38 +5,41 @@ export interface accessPrivilegeConfig {
 }
 
 export interface PasswordPolicy {
+    id:                                 string;
     minLength:                          number;
     maxLength:                          number;
     isAlphabetMandatory:                boolean;
-    alphabetLength:                     number;
+    alphabetLength?:                     number;
     isNumberMandatory:                  boolean;
-    numericLength:                      number;
+    numericLength?:                      number;
     isSpecialCharsMandatory:            boolean;
-    specialCharsLength:                 number;
+    specialCharsLength?:                 number;
     isPasswordChangeForcedOnFirstLogin: boolean;
     isPasswordResetForcedPeriodically:  boolean;
-    forcePasswordResetDays:             number;
-    notifyPasswordResetDays:            number;
-    effectiveFrom:                      Date;
-    effectiveTo:                        Date;
+    forcePasswordResetDays?:             number;
+    notifyPasswordResetDays?:            number;
+    effectiveFrom?:                      Date;
+    effectiveTo?:                        Date;
 }
 
 export interface SessionPolicy {
+    id:            string;
     isEnabled:     boolean;
-    duration:      number;
-    effectiveFrom: Date;
-    effectiveTo:   Date;
+    duration?:      number;
+    effectiveFrom?: Date;
+    effectiveTo?:   Date;
 }
 
 export interface UserLockingPolicy {
+    id:                          string;
     isLockedOnNoLoginActivity:   boolean;
-    noLoginActivityDays:         number;
+    noLoginActivityDays?:         number;
     lockedOnFailedLoginAttempts: boolean;
-    numberOfFailedLoginAttempts: number;
-    failedLoginAttemptsDuration: number;
-    failedLoginLockedDuration:   number;
+    numberOfFailedLoginAttempts?: number;
+    failedLoginAttemptsDuration?: number;
+    failedLoginLockedDuration?:   number;
     unlockedOnByAdmin:           boolean;
-    unlockedOnByAdminDuration:   number;
-    effectiveFrom:               Date;
-    effectiveTo:                 Date;
+    unlockedOnByAdminDuration?:   number;
+    effectiveFrom?:               Date;
+    effectiveTo?:                 Date;
 }

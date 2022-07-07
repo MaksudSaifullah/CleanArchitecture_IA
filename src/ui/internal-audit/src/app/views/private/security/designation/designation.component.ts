@@ -85,6 +85,7 @@ export class DesignationComponent implements OnInit {
         }
       }
       else{
+        this.designationForm.markAllAsTouched();
         this.AlertService.error('Invalid Information');
       }
   }

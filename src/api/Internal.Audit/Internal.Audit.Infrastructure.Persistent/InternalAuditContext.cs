@@ -33,6 +33,8 @@ public class InternalAuditContext: DbContext
     public DbSet<UserRole> UserRoles { get; set; }
     public DbSet<CommonValueAndType> CommonValueAndTypes { get; set; }
     public DbSet<DashBoardBase> Dashboards { get; set; }
+    public DbSet<ModulewiseRolePriviliege> ModulewiseRolePrivilieges { get; set; }
+    public DbSet<ModuleFeature> ModuleFeatures { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

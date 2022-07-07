@@ -72,6 +72,10 @@ export const navItems: INavData[] = [
         name: 'Role',
         url: '/security/userrole',
       },
+      {
+        name: 'Access Privilege Config',
+        url: '/security/access-privilege',
+      },
     ]
   },
 ];

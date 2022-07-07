@@ -42,23 +42,23 @@ namespace Internal.Audit.Infrastructure.Persistent.Repositories.UserRegistration
                           Where  usr.[IsDeleted]=0";
             string splitters = "Id, Id, Id";
             var parameters = new Dictionary<string, object> {  };
-            var orderDictionary = new Dictionary<Guid, User>();
+            var userDictionary = new Dictionary<Guid, User>();
             var countryDictionary = new Dictionary<Guid, UserCountry>();
             var roleDictionary = new Dictionary<Guid, UserRole>();
             var data = await Get<User, UserCountry, UserRole, Employee, User>(query,(user, userCountry, role, employee) =>
             {
 
                 User u;
-                if (!orderDictionary.ContainsKey(user.Id))
+                if (!userDictionary.ContainsKey(user.Id))
                 {
-                    orderDictionary.Add(user.Id, user);
+                    userDictionary.Add(user.Id, user);
                     u = user;
                     u.UserCountries = new List<UserCountry>();
                     u.UserRoles = new List<UserRole>();
                 }
                 else
                 {
-                    u=orderDictionary[user.Id];
+                    u= userDictionary[user.Id];
                 }
                 u.Employee=employee;
                 if(!countryDictionary.ContainsKey(userCountry.Id))

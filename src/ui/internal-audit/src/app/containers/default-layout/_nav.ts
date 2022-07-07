@@ -61,6 +61,10 @@ export const navItems: INavData[] = [
         name: 'Country',
         url: '/configuration/country',
       },
+      {
+        name: 'Risk Profile',
+        url: '/configuration/risk-profile',
+      },
     ]
   },
   {
@@ -76,6 +80,12 @@ export const navItems: INavData[] = [
         name: 'Access Privilege Config',
         url: '/security/access-privilege',
       },
+      {
+        name: 'Designation',
+        url: '/security/designation',
+      },
+      
     ]
   },
+  
 ];

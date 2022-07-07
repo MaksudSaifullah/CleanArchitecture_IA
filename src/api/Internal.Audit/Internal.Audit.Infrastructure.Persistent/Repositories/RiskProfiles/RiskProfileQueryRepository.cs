@@ -1,4 +1,5 @@
 ﻿using Internal.Audit.Application.Contracts.Persistent.RiskProfiles;
+using Internal.Audit.Domain.CompositeEntities;
 using Internal.Audit.Domain.Entities.Common;
 using System;
 using System.Collections.Generic;
@@ -8,20 +9,21 @@ using System.Threading.Tasks;
 
 namespace Internal.Audit.Infrastructure.Persistent.Repositories.RiskProfiles
 {
-    public class RiskProfileQueryRepository : QueryRepositoryBase<RiskProfile>, IRiskProfileQueryRepository
+    public class RiskProfileQueryRepository : QueryRepositoryBase<CompositeRiskProfile>, IRiskProfileQueryRepository
     {
         public RiskProfileQueryRepository(string _connectionString) : base(_connectionString)
         {
         }
 
-        public async Task<(long, IEnumerable<RiskProfile>)> GetAll(int pageSize, int pageNumber)
+        public async Task<(long, IEnumerable<CompositeRiskProfile>)> GetAll(int pageSize, int pageNumber)
         {
             var query = "EXEC [dbo].[GetRiskProfileListProcedure] @pageSize,@pageNumber";
             var parameters = new Dictionary<string, object> { { "@pageSize", pageSize }, { "@pageNumber", pageNumber } };
+           // var (count, result) = await GetWithPagingInfo(query, parameters, false);
             //return await Get(query);
             return await GetWithPagingInfo(query, parameters, false);
         }
-        public async Task<RiskProfile> GetById(Guid id)
+        public async Task<CompositeRiskProfile> GetById(Guid id)
         {
             var query = @"SELECT rp.[Id]
 	                    ,cvtlt.Text AS LikelihoodType

@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { country } from 'src/app/core/interfaces/configuration/country.interface';
+import { DatatableService } from 'src/app/core/services/datatable.service';
+import { HttpService } from 'src/app/core/services/http.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -7,9 +10,33 @@ import { Component, OnInit } from '@angular/core';
 })
 export class DashboardComponent implements OnInit {
 
-  constructor() { }
+  dtOptions: DataTables.Settings = {};
+  countries: country[] = [];
+  dataTableService: DatatableService = new DatatableService();
+  constructor(private http: HttpService ) { }
 
   ngOnInit(): void {
+    this.LoadData();
+    };
+  LoadData() {
+    const that = this;
+
+    this.dtOptions = {
+      pagingType: 'full_numbers',
+      pageLength: 5,
+      serverSide: true,
+      processing: true,
+      searching: false,
+      lengthChange: false,
+      info: false,
+      ajax: (dataTablesParameters: any, callback) => {
+        this.http
+          .paginatedPost(
+            'country/paginated',dataTablesParameters.length,((dataTablesParameters.start/dataTablesParameters.length)+1),{}
+          ).subscribe(resp => that.countries = this.dataTableService.datatableMap(resp,callback));
+      },
+    };
+
   }
   
   data = {
@@ -62,5 +89,6 @@ export class DashboardComponent implements OnInit {
       }
     ]
   };
+
 
 }

@@ -8,21 +8,10 @@
         <div>
           <input type="hidden" formControlName="id" />
           <c-row>
-
-            <!-- <div class="form-group" formArrayName="notifyBackOptions">
-              <div *ngFor="let option of notifyBackOptionsArr.controls; let i=index">
-                <input [formControlName]="i" type="checkbox" class="form-check-input" />
-                <label> {{notifyBackAlertOptions[i].name}} </label>
-              </div>
-            </div> -->
-
-
-
-
-            <c-col md="4" *ngFor="let country of notifyBackOptionsArr.controls; let i = index" formArrayName="notifyBackOptions">
+            <c-col md="4" *ngFor="let country of countries">
               <c-form-check>
-                <input [formControlName]="i"   type="checkbox"  (change)="eventCheck($event)"/>
-                <label for="checkThree" class="m-1"> {{notifyBackAlertOptions[i].name}}</label>
+                <input formControlName="countryListSelected" type="checkbox" [checked]="isChecked(country.id)" [id]="country.id" (change)="eventCheck($event)"/>
+                <label for="checkThree" class="m-1"> {{country.name}}</label>
               </c-form-check>
             </c-col>
             <div cRow *ngIf="countryForm.get('countryListSelected')?.invalid &&
@@ -32,6 +21,21 @@
                Please select at least one country
               </small>                   
             </div>
+
+            <!-- <c-col md="4" *ngFor="let control of countriesArray.controls;let i=index;">
+              <c-form-check>
+                <input   type="checkbox" [checked]="country[i].check" (change)="getSelectedCountryValue()"/>
+                <label for="inlineCheckbox{{i}}" class="m-1"> {{country[i].name}}</label>
+              </c-form-check>
+            </c-col> -->
+
+            <!-- <div>
+              <small class="text-danger" *ngIf="countryError ">
+               Please select at least one country
+              </small>                   
+            </div> -->
+
+            
           </c-row>
         </div>
         <br>
@@ -177,7 +181,7 @@
 
         <br>
 
-        <div  *ngIf="true" class="form-control m-2">
+        <div  *ngIf="displayUserStatus" class="form-control m-2">
           <c-form-check>
             <input formControlName="isEnabled" id="isEnabled" type="checkbox"/>
             <label for="isEnabled" class="m-3"> Enabled</label>
@@ -207,7 +211,7 @@
               <c-row [gutter]="{g: 2}">
                 <c-col md>
                   <c-multi-select multiple formControlName="roleList" name="roleList" required>
-                    <c-multi-select-option *ngFor="let role of roles" [value]="role.id">{{role.name}}
+                    <c-multi-select-option *ngFor="let role of roles" [value]="role.id" [selected]="isSelected(role.id)" >{{role.name}}
                     </c-multi-select-option>
                   </c-multi-select>
                   <div cRow *ngIf="countryForm.get('roleList')?.invalid &&
@@ -222,6 +226,13 @@
             </c-card-body>
           </c-card>
         </c-col>
+
+
+        <!-- <c-multi-select multiple formControlName="userRoleList">
+          <c-multi-select-option   *ngFor="let role of roles" [value]="role.id" selected="true">{{role.name}}
+          </c-multi-select-option>
+        </c-multi-select> -->
+
 
         <c-col xs="12">
           <c-col md>

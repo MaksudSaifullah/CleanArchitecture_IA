@@ -6,7 +6,7 @@ import { role } from '../../../../core/interfaces/security/role.interface';
 import {AlertService} from '../../../../core/services/alert.service';
 import { DataTableDirective } from 'angular-datatables';
 import { DatatableService } from 'src/app/core/services/datatable.service';
-import { Router } from '@angular/router';
+import {ActivatedRoute, Router } from '@angular/router';
 
 
 @Component({
@@ -26,9 +26,18 @@ export class UserlistComponent implements OnInit {
   employeeName:string= "";
   userRole:string ="";
 
-  constructor(private http: HttpService ,private AlertService: AlertService,private router: Router) { }
+  constructor(private http: HttpService , private activateRoute:ActivatedRoute, private AlertService: AlertService,private router: Router) { }
 
   ngOnInit(): void {
+    let paramId = this.activateRoute.snapshot.params['id'];
+
+    if(paramId === 'inserted'){
+      this.AlertService.successDialog('Added','User Added successfully.');
+    }
+    else if(paramId === 'updated'){
+      this.AlertService.successDialog('Update','User Updated successfully.');
+    }
+
     this.LoadRole()
     this.LoadData();
   }

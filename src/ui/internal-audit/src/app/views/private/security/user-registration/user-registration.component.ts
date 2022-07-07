@@ -4,12 +4,15 @@ import { country } from '../../../../core/interfaces/configuration/country.inter
 import { designation } from '../../../../core/interfaces/common/designation.interface';
 import { role } from '../../../../core/interfaces/security/role.interface';
 import { FormService } from '../../../../core/services/form.service';
-import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, Validators, FormArray } from '@angular/forms';
 import { paginatedResponseInterface } from 'src/app/core/interfaces/paginated.interface';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute,Router } from '@angular/router';
 import { CutomvalidatorService } from 'src/app/core/services/cutomvalidator.service'
 import { userRegistrationRequestData, UserCountry, UserRole, UserResponse } from 'src/app/core/interfaces/security/user-registration.interface'
 import {AlertService} from '../../../../core/services/alert.service';
+import { param } from 'jquery';
+import { cibToshiba } from '@coreui/icons';
+
 
 @Component({
   selector: 'app-user-registration',
@@ -17,6 +20,7 @@ import {AlertService} from '../../../../core/services/alert.service';
   styleUrls: ['./user-registration.component.scss']
 })
 export class UserRegistrationComponent implements OnInit {
+  
   countries: country[] = [];
   designations: designation[] = [];
   roles: role[] = [];
@@ -26,40 +30,14 @@ export class UserRegistrationComponent implements OnInit {
   userResponse:UserResponse []=[]; //| undefined;
   userCountry: UserCountry[]=[];
   displayUserStatus = false;
-  notifyBackAlertOptions = [
-    { name: 'Option 1', id: '1' },
-    { name: 'Option 2', id: '2' },
-    { name: 'Option 3', id: '3' },
-    { name: 'Option 4', id: '4' }
-  ];
+  selectedUserCountry: UserCountry []=[];
+  selectedUserRole: UserRole[]=[];
+  employeeId:string='';
+  paramId:string ='';
 
-  constructor(private http: HttpService, private fb: FormBuilder, private activateRoute: ActivatedRoute, private customValidator: CutomvalidatorService,private AlertService: AlertService) {
+  constructor(private http: HttpService, private router : Router, private fb: FormBuilder, private activateRoute: ActivatedRoute, private customValidator: CutomvalidatorService,private AlertService: AlertService) {
     
-    let paramId = this.activateRoute.snapshot.params['id'];
-    //console.log(paramId)
-    if(paramId === undefined){
-      console.log("user add method called")
-      console.log('hh')
-   // console.log(this.checkArray)
-   // this.LoadDropDownValues();
-    }
-    else{
-      this.displayUserStatus = true;
-     this.LoadUserById(paramId);
-      console.log('hh')
-  //  console.log(this.checkArray)
-  // this.LoadDropDownValues();
-    }
-    
-    const notifyBackOptions=['1','2'];
-    const notificationControls = this.notifyBackAlertOptions.map(
-      x => new FormControl(notifyBackOptions.includes(x.id))
-    );
-
-
-
-    // this.LoadDropDownValues();
-
+    this.LoadDropDownValues();
     this.countryForm = this.fb.group({
       id: [''],
       empName: ['', [Validators.required, Validators.maxLength(20), Validators.minLength(4)]],
@@ -69,11 +47,12 @@ export class UserRegistrationComponent implements OnInit {
       userPassword: ['',[Validators.required]],
       userConfirmPassword: ['',[Validators.required]],
       roleList: ['',[Validators.required]],
-      notifyBackOptions: this.fb.array(notificationControls),
+      countryListSelected: [false,[Validators.required]],
       isEnabled: [''],
       accountExpired:[''],
       passwordExpired:[''],
-      accountLocked:['']
+      accountLocked:[''],
+      //userRoleList:[this.selectedUserRole]
     },
       {
         validator: this.customValidator.MatchPassword('userPassword', 'userConfirmPassword'),
@@ -81,39 +60,29 @@ export class UserRegistrationComponent implements OnInit {
       
     )
   }
-  get notifyBackOptionsArr(): FormArray {
-    return this.countryForm.get('notifyBackOptions') as FormArray;
-  }
+ 
+ 
   ngOnInit(): void {
-  //   let paramId = this.activateRoute.snapshot.params['id'];
-  //   //console.log(paramId)
-  //   if(paramId === undefined){
-  //     console.log("user add method called")
-  //     console.log('hh')
-  //  // console.log(this.checkArray)
-  //  // this.LoadDropDownValues();
-  //   }
-  //   else{
-  //     this.displayUserStatus = true;
-  //    this.LoadUserById(paramId);
-  //     console.log('hh')
-  // //  console.log(this.checkArray)
-  // // this.LoadDropDownValues();
-  //   }
-    
+
+   this.paramId = this.activateRoute.snapshot.params['id'];
+    //console.log(paramId)
+    if(this.paramId === undefined){
+      console.log("user add method called")
+    }
+    else{
+      this.displayUserStatus = true;
+      this.LoadUserById(this.paramId);
+    }
   }
   get countryFormControl() {
     return this.countryForm.controls;
   }
 
   LoadCountry() {
-    this.http.paginatedPost('country/paginated', 20, 1, {}).subscribe(resp => {
+    this.http.paginatedPost('country/paginated', 100, 1, {}).subscribe(resp => {
       let convertedResp = resp as paginatedResponseInterface<country>;
       this.countries = convertedResp.items;
-      // for(let country of this.countries) {
-      //   this.checkarray.push(country.id);
-
-      // }
+      //console.log(this.countries)
     })
   }
 
@@ -130,7 +99,7 @@ export class UserRegistrationComponent implements OnInit {
     })
   }
   LoadDropDownValues() {
-   this.LoadCountry();
+    this.LoadCountry();
     this.LoadDesignation();
     this.LoadRole();
   }
@@ -140,53 +109,51 @@ export class UserRegistrationComponent implements OnInit {
       .getById('UserRegistration','Id?Id='+Id)
       .subscribe(res => {
            const userData = res as UserResponse;
-          // this.countries = userData.userCountries
-          console.log(userData.userCountries)
-         // this.checkArray=userData.userCountries?.countryId;
-          // console.log('sadasdsda')
-          // console.log(this.countryListSelected)
-           this.countryForm.setValue({id: userData.id,  empEmail:userData.employee?.email, empName: userData.employee?.name,empDesignation:userData.employee?.designationId,userName:userData.userName,userPassword:userData.password,userConfirmPassword:userData.password,
-            roleList:userData.userRoles,countryListSelected:'',isEnabled:userData.isEnabled, accountExpired:userData.isAccountExpired, passwordExpired:userData.isPasswordExpired, accountLocked:userData.isAccountLocked});
-          
-          //  for(let i=0; i < userData.userRoles?.length; i++){
-          //   this.countryForm.setValue({roleList:{
-          //     options:[
-          //       {
-          //         value: userData.userRoles?.
-          //         text: userData.userRoles.
-          //       }
-          //     ]
-          //   }})
-          //  }
-          // for(let country of userData.userCountries) {
-          //   this.notifyBackOptions.push(country.countryId);
+           this.employeeId=userData.employee.id;
 
-          // }
-          console.log('checking loop')
-         // console.log(this.notifyBackOptions)
-          this.countryForm.get('countryListSelected')?.reset();
-          this.LoadCountry();
-        // for(let country of this.countries) {
-        //   if(userData.userCountries?.find(x=>x.countryId==country.id)){
-        //     console.log('result')
-        //     console.log( country.id)
-        //     //console.log(this.countryForm.get('countryListSelected')?.value)
-        //     console.log(this.countryForm.value.countryListSelected.value)
-        //     this.countryForm.value.countryListSelected.id ==true;
-
-        //     // this.countryForm.setValue({
-        //     //   "countryListSelected":true
-        //     // })
-
-        //   }
-        // }
-
+           this.selectedUserCountry = userData.userCountries;
+           this.selectedUserRole = userData.userRoles;
+           console.log('user country')
+            console.log( this.selectedUserCountry)
+          //  console.log(this.selectedUserRole)
+           this.countryForm.patchValue({id: userData.id,  empEmail:userData.employee?.email, empName: userData.employee?.name,empDesignation:userData.employee?.designationId,userName:userData.userName,userPassword:userData.password,userConfirmPassword:userData.password,
+           roleList:userData.userRoles,countryListSelected:'', isEnabled:userData.isEnabled, accountExpired:userData.isAccountExpired, passwordExpired:userData.isPasswordExpired, accountLocked:userData.isAccountLocked});
       });
       
   }
 
+  isChecked(id:any){
+   // debugger;
+  //  console.log('inner user country')
+  //  console.log( this.selectedUserCountry)
+     const that=this;
+    for (let country of that.selectedUserCountry){
+      if(country.countryId == id){
+       // console.log('sldsdfsdf')
+        let country: UserCountry = { countryId: id.toString() ,isActive:true,userId:this.paramId===undefined?'':this.paramId}
+        const index =  this.userCountry.findIndex(x=>x.countryId == id);
+        this.userCountry.splice(index, 1);
+        this.userCountry.push(country);
+        return true;
+      }
+     }
+     return false;
+  }
+  isSelected(id:any){
+    //debugger;
+    for (let role of this.selectedUserRole){
+      if(role.roleId==id){
+        return true;
+      }
+     }
+     return false;
+  }
+
+
+
   onSubmit(): void {
-    console.log(this.countryForm.value.countryListSelected);
+
+    const that=this;
     let userList: UserRole[] = [];
 
     if (this.countryForm.valid) {     
@@ -195,7 +162,7 @@ export class UserRegistrationComponent implements OnInit {
 
       if (Array.isArray(useca)) {
         useca.forEach(function (value) {
-          let urole: UserRole = { roleId: value.toString() }
+          let urole: UserRole = { roleId: value.toString(),userId: that.paramId===undefined?'':that.paramId}
         userList.push(urole);
         }); 
         
@@ -203,13 +170,16 @@ export class UserRegistrationComponent implements OnInit {
    
       const RequestModel = {
         employee: {
+          userId: this.displayUserStatus == false ? null : this.countryForm.value.id,
+          id: this.displayUserStatus == false ? null : this.employeeId,
           email: this.countryForm.value.empEmail,
           designationId: this.countryForm.value.empDesignation,         
           photoId: "3fa85f64-5717-4562-b3fc-2c963f66afa6",
           isActive: true,
           name: this.countryForm.value.empName
         },
-        user: {         
+        user: { 
+          id: this.displayUserStatus == false ? null : this.countryForm.value.id,
           isAccountExpired: this.displayUserStatus == false ? false : this.countryForm.value.accountExpired,
           isAccountLocked: this.displayUserStatus == false ? false : this.countryForm.value.accountLocked,
           isEnabled: this.displayUserStatus == false ? true : this.countryForm.value.isEnabled,
@@ -224,10 +194,31 @@ export class UserRegistrationComponent implements OnInit {
       console.log('requesat model')
       console.log(JSON.stringify(RequestModel));
 
-      this.http.post('UserRegistration',RequestModel).subscribe(x=>{    
-        this.AlertService.success('Country Saved Successful');
-        window.location.reload();
-      })
+      //console.log(paramId)
+      if(this.paramId === undefined){
+        console.log('add')
+        this.http.post('UserRegistration',RequestModel).subscribe(x=>{    
+          this.AlertService.success('User Saved Successful');
+          this.router.navigate(['security/userlist'], {
+            queryParams: {
+              myParam: 'inserted', 
+            },
+          });
+        })
+      }
+      else{
+        console.log('edit')
+        this.http.put('UserRegistration',RequestModel,this.paramId).subscribe(x=>{    
+          this.AlertService.success('User Updated Successful');
+          this.router.navigate(['security/userlist'], {
+            queryParams: {
+              myParam: 'updated', 
+            },
+          });
+        })
+      }
+
+      
 
 
     }
@@ -236,19 +227,23 @@ export class UserRegistrationComponent implements OnInit {
       return;
     }
   }
-  eventCheck(e:any) {  
-    console.log(this.userCountry);
+  eventCheck(e:any) { 
+   // debugger; 
+    const that=this;
+    console.log(that.userCountry);
+    //console.log(e.target);
     let exists = this.userCountry.includes(e.target.id.toString());   
     if (e.target.checked) {    
-      let country: UserCountry = { countryId: e.target.id.toString() ,isActive:true}
+      let country: UserCountry = { countryId: e.target.id.toString() ,isActive:true,userId:that.paramId==undefined?'':that.paramId}
       this.userCountry.push(country);
     } else {      
        const index =  this.userCountry.findIndex(x=>x.countryId == e.target.id);
        this.userCountry.splice(index, 1);
     }
+    console.log(that.userCountry);
   }
 
-
+ 
 
 
 

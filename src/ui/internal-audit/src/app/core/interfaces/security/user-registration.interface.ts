@@ -54,8 +54,8 @@ export interface UserResponse {
     isPasswordExpired?: boolean;
     isAccountLocked?:   boolean;
     userCountries:     UserCountry[];
-    userRoles?:         UserRole[];
-    employee?:          Employee;
+    userRoles:         UserRole[];
+    employee:          EmployeeResponse;
 }
 
 export interface EmployeeResponse {
@@ -67,7 +67,7 @@ export interface EmployeeResponse {
     isActive?:      boolean;
     user?:          null;
     designation?:   null;
-    id?:            string;
+    id:            string;
     createdBy?:     string;
     createdOn?:     Date;
     updatedBy?:     null;

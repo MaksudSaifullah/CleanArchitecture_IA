@@ -9,10 +9,10 @@ namespace Internal.Audit.Api.Controllers
 {
     [Route("api/v{version:apiVersion}/ModulewiseRolePrivilege")]
     [ApiController]
-    public class ModulewiseRolePrivilege : ControllerBase
+    public class ModulewiseRolePrivilegeController : ControllerBase
     {
         private readonly IMediator _mediator;
-        public ModulewiseRolePrivilege(IMediator madiator)
+        public ModulewiseRolePrivilegeController(IMediator madiator)
         {
             _mediator = madiator ?? throw new ArgumentNullException(nameof(madiator));
         }

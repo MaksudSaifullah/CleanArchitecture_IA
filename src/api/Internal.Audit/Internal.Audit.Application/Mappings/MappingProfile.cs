@@ -68,6 +68,7 @@ using Internal.Audit.Application.Features.Designation.Queries.GetDesignationById
 using Internal.Audit.Application.Features.ModulewiseRolePrivilege.Commands.AddModulewiseRolePrivilege;
 using Internal.Audit.Application.Features.ModulewiseRolePrivilege.Commands.UpdateModulewisePrivilege;
 using Internal.Audit.Application.Features.ModulewiseRolePrivilege.Quiries.GetModilewiseRoleByRoleIdList;
+using Internal.Audit.Application.Features.ModuleFeature.Quiries.GetAllModuleList;
 
 namespace Internal.Audit.Application.Mappings;
 
@@ -183,5 +184,7 @@ public class MappingProfile: Profile
         CreateMap<ModulewiseRolePriviliege, AddModulewiseRolePrivilegeCommand>().ReverseMap();
         CreateMap<ModulewiseRolePriviliege, UpdateModulewiseRolePrivilegeCommand>().ReverseMap();
         CreateMap<ModulewiseRolePriviliege, GetModulewiseRolePrivilegeByRoleIdListResponseDTO>().ReverseMap();
+
+        CreateMap<ModuleFeature, GetAllModuleListResponseDTO>().ReverseMap();
     }
 }

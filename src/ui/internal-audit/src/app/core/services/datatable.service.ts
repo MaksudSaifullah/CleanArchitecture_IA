@@ -6,7 +6,7 @@ import { paginatedResponseInterface } from '../interfaces/paginated.interface';
 export class DatatableService {
   redraw(datatable : DataTableDirective | undefined){
     datatable?.dtInstance.then((dtInstance: DataTables.Api) => {
-      dtInstance.draw();
+       dtInstance.draw();
     });
   }
 

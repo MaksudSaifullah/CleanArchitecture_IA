@@ -1,4 +1,4 @@
-import { Component, OnInit, QueryList, ViewChild } from '@angular/core';
+import { Component, Input, OnInit, QueryList, ViewChild, ViewChildren } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { DataTableDirective } from 'angular-datatables';
 import { Subject } from 'rxjs';
@@ -16,10 +16,13 @@ import {AlertService} from '../../../../core/services/alert.service';
   styleUrls: ['./user-role.component.scss']
 })
 export class UserRoleComponent implements OnInit {
+
+  @Input('tabPaneIdx')
+  tabIndex!: string;
   
-@ViewChild(DataTableDirective, {static: false})
+@ViewChildren(DataTableDirective)
 dtElements: QueryList<DataTableDirective> | undefined;
-datatableElement: DataTableDirective | undefined;
+// datatableElement: DataTableDirective | undefined;
 dtOptions: DataTables.Settings[]= [];
 roles: role[] = [];
 userPrivilegeList: UserRoleAccessPrivilege[] = [];
@@ -54,7 +57,7 @@ ngOnDestroy(): void {
 }
 ngOnInit(): void {
   this.LoadData();
-  this.LoadDataAccessprivilege();
+ this.LoadDataAccessprivilege();
   };
 LoadData() {
   const that = this;
@@ -73,11 +76,8 @@ LoadData() {
     },
   };
 
-}
-
-LoadDataAccessprivilege(){
   console.log('i cameredraw')
-  const that = this;
+  // const that = this;
   console.log(this.featureId);
   this.dtOptions[0] = {
     pagingType: 'full_numbers',
@@ -91,19 +91,25 @@ LoadDataAccessprivilege(){
   },
   };
 }
+
+LoadDataAccessprivilege(){
+ 
+
+ 
+}
   onSubmit(modalId:any):void{
     const localmodalId = modalId;
       if(this.roleForm.valid){
         if(this.formService.isEdit(this.roleForm.get('id') as FormControl)){
           this.http.put('role',this.roleForm.value,null).subscribe(x=>{
-            this.formService.onSaveSuccess(localmodalId,this.datatableElement);
+            this.formService.onSaveSuccess(localmodalId,this.ReloadAllDataTable());
             this.AlertService.success('User Role Updated Successful');
 
           });
         }
         else{
           this.http.post('role',this.roleForm.value).subscribe(x=>{
-            this.formService.onSaveSuccess(localmodalId,this.datatableElement);
+           this.formService.onSaveSuccess(localmodalId,this.ReloadAllDataTable());
             this.AlertService.success('User Role Saved Successful');
           });
         }
@@ -127,7 +133,7 @@ LoadDataAccessprivilege(){
       if(res.isConfirmed){
           this.http.delete('role/'+ id ,{}).subscribe(response=>{
           this.AlertService.successDialog('Deleted','Role deleted successfully.');
-          this.dataTableService.redraw(that.datatableElement);
+          this.ReloadAllDataTable();
         })
       }
     });
@@ -158,20 +164,21 @@ LoadDataAccessprivilege(){
     console.log('here')
     this.featureId=e.value;
     console.log(this.featureId);
-    this.LoadDataAccessprivilege()
-    this.dataTableService.redraw(this.datatableElement);
+    //this.LoadDataAccessprivilege()
+    // this.datatableElement?.forEach(x=> {
+    //   this.dataTableService.redraw(x);
+    // })
 
-  // this.dtElements?.forEach((dtElement: DataTableDirective, index: number) => {
-  //   dtElement.dtInstance.then((dtInstance: any) => {
-  //     console.log(`The DataTable ${index} instance ID is: ${dtInstance.table().node().id}`);
-  //   });
-  // });
+    
+   
+    this.dataTableService.redraw(this.dtElements?.get(1));
+  //this.ReloadAllDataTable();
 
-  //  this.datatableElement?.dtInstance.then((dtInstance: DataTables.Api) => {
-  //  // dtInstance.destroy();
-  //   // Call the dtTrigger to rerender again
-  //   console.log('dsd')
-  //   dtInstance.ajax.reload()
-  // });
+  }
+
+  private ReloadAllDataTable() {
+    this.dtElements?.forEach((dtElement: DataTableDirective, index: number) => {
+      this.dataTableService.redraw(dtElement);
+    });
   }
 }

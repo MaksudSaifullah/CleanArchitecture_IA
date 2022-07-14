@@ -29,12 +29,14 @@ export class UserRegistrationComponent implements OnInit {
   userRequestModel: any;
   userResponse:UserResponse []=[]; //| undefined;
   userCountry: UserCountry[]=[];
+  userSelectedCountry: UserCountry[]=[];
   displayUserStatus = false;
   selectedUserCountry: UserCountry []=[];
   selectedUserRole: UserRole[]=[];
   employeeId:string='';
   paramId:string ='';
   Data: Array<any> = [];
+  formArray: FormArray | undefined;
   constructor(private http: HttpService, private router : Router, private fb: FormBuilder, private activateRoute: ActivatedRoute, private customValidator: CutomvalidatorService,private AlertService: AlertService) {
     
     this.LoadDropDownValues();
@@ -47,7 +49,7 @@ export class UserRegistrationComponent implements OnInit {
       userPassword: ['',[Validators.required]],
       userConfirmPassword: ['',[Validators.required]],
       roleList: ['',[Validators.required]],
-      checkArray: this.fb.array([], [Validators.required]),
+      checkArray: this.fb.array([]),
       isEnabled: [''],
       accountExpired:[''],
       passwordExpired:[''],
@@ -59,9 +61,31 @@ export class UserRegistrationComponent implements OnInit {
       }
       
     )
+    this.formArray = this.countryForm.get('checkArray') as FormArray;
   }
  
- 
+  onCheckChange(event:any) {
+    this.formArray = this.countryForm.get('checkArray') as FormArray;
+    console.log(event.target);
+    /* Selected */
+    if(event.target.checked){      
+      this.formArray.push(new FormControl(event.target.id));     
+    }
+    /* unselected */
+    else{   
+      
+      let i: number = 0;   
+      this.formArray.controls.forEach((ctrl: any) => {       
+        if(ctrl.value == event.target.id) {        
+          this.formArray?.removeAt(i);
+          return;
+        }  
+        i++;
+      });
+    }
+    console.log( this.formArray.value);
+  }
+
   ngOnInit(): void {
 
    this.paramId = this.activateRoute.snapshot.params['id'];
@@ -83,7 +107,7 @@ export class UserRegistrationComponent implements OnInit {
       let convertedResp = resp as paginatedResponseInterface<country>;
       this.countries = convertedResp.items;
       this.Data=convertedResp.items;
-      //console.log(this.countries)
+     
     })
   }
 
@@ -114,12 +138,25 @@ export class UserRegistrationComponent implements OnInit {
 
            this.selectedUserCountry = userData.userCountries;
            this.selectedUserRole = userData.userRoles;
-           console.log('user country')
-            console.log( this.selectedUserCountry)
+          
           //  console.log(this.selectedUserRole)
            this.countryForm.patchValue({id: userData.id,  empEmail:userData.employee?.email, empName: userData.employee?.name,empDesignation:userData.employee?.designationId,userName:userData.userName,userPassword:userData.password,userConfirmPassword:userData.password,
            roleList:userData.userRoles,countryListSelected:'', isEnabled:userData.isEnabled, accountExpired:userData.isAccountExpired, passwordExpired:userData.isPasswordExpired, accountLocked:userData.isAccountLocked});
+
+           this.selectedUserCountry.forEach((ctrl: any) => {    
+           
+            this.formArray?.push(new FormControl(ctrl.countryId));    
+            
+          });
+          console.log(this.formArray);
       });
+
+
+     
+
+
+
+     
       
   }
 
@@ -129,12 +166,7 @@ export class UserRegistrationComponent implements OnInit {
   //  console.log( this.selectedUserCountry)
      const that=this;
     for (let country of that.selectedUserCountry){
-      if(country.countryId == id){
-       // console.log('sldsdfsdf')
-        let country: UserCountry = { countryId: id.toString() ,isActive:true,userId:this.paramId===undefined?'':this.paramId}
-        const index =  this.userCountry.findIndex(x=>x.countryId == id);
-        this.userCountry.splice(index, 1);
-        this.userCountry.push(country);
+      if(country.countryId == id){    
         return true;
       }
      }
@@ -163,11 +195,23 @@ export class UserRegistrationComponent implements OnInit {
 
       if (Array.isArray(useca)) {
         useca.forEach(function (value) {
-          let urole: UserRole = { roleId: value.toString(),userId: that.paramId===undefined?'':that.paramId}
+          let urole: UserRole = { roleId: value.toString(),userId: that.paramId===undefined?null:that.paramId}
         userList.push(urole);
         }); 
         
       }
+      this.userSelectedCountry=[];
+      this.formArray?.value.forEach((ctrl: any) => {    
+        let country: UserCountry = { countryId: ctrl.toString() ,isActive:true,userId:that.paramId==undefined?null:that.paramId}
+        this.userSelectedCountry.push(country);
+
+        //this.formArray?.push(new FormControl(ctrl.countryId));    
+        
+      });
+
+
+
+
      
       const RequestModel = {
         employee: {
@@ -188,7 +232,7 @@ export class UserRegistrationComponent implements OnInit {
           password:this.countryForm.value.userPassword,
           userName: this.countryForm.value.userName
         },
-        userCountry: this.userCountry,
+        userCountry: this.userSelectedCountry,
         userRole: userList
       };
       //let registrationModel: userRegistrationRequestData = RequestModel;
@@ -229,27 +273,24 @@ export class UserRegistrationComponent implements OnInit {
       return;
     }
   }
-  eventCheck(e:any) { 
-   // debugger; 
-    const that=this;
-    console.log('ggg');
-    console.log(e.target);
-    console.log('ccc');
-    console.log(this.userCountry);
-    let exists = this.userCountry.includes(e.target.id.toString());   
-    if (e.target.checked) {    
+  // eventCheck(e:any) { 
+  //  // debugger; 
+  //   const that=this;
+   
+  //   let exists = this.userCountry.includes(e.target.id.toString());   
+  //   if (e.target.checked) {    
     
-      let country: UserCountry = { countryId: e.target.id.toString() ,isActive:true,userId:that.paramId==undefined?'':that.paramId}
-      console.log('pushing'+country.countryId)
-      this.userCountry.push(country);
-    } else {
-      console.log('rmd')
+  //     let country: UserCountry = { countryId: e.target.id.toString() ,isActive:true,userId:that.paramId==undefined?'':that.paramId}
+  //     console.log('pushing'+country.countryId)
+  //     this.userCountry.push(country);
+  //   } else {
+  //     console.log('rmd')
 
-       const index =  this.userCountry.findIndex(x=>x.countryId == e.target.id);
-       this.userCountry.splice(index, 1);
-    }
-    console.log(that.userCountry);
-  }
+  //      const index =  this.userCountry.findIndex(x=>x.countryId == e.target.id);
+  //      this.userCountry.splice(index, 1);
+  //   }
+  //   console.log(that.userCountry);
+  // }
 
  
 

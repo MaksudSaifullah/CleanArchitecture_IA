@@ -14,6 +14,7 @@ export class DatatableService {
     console.log('resp for dt');
     console.log(resp);
     if(count === 0){
+      console.log('onlyyyyyyyyy ami');
       let convertedResp = resp as paginatedResponseInterface<T>;
       console.log(convertedResp);
       callback({

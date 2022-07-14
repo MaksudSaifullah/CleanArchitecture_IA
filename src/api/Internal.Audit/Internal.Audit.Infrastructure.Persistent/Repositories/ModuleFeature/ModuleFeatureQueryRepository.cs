@@ -26,7 +26,7 @@ public class ModuleFeatureQueryRepository : QueryRepositoryBase<Domain.Entities.
                     and auditmodule.IsDeleted=0";
         if(featureId != Guid.Empty)
         {
-            query += " and modulefeature.FeatureId='" + featureId+"'";
+            query += " and auditmodule.Id='" + featureId+"'";
         }
         string splitters = "Id, Id";
         var parameters = new Dictionary<string, object> { };

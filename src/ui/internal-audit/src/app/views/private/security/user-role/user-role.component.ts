@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, QueryList, ViewChild } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { DataTableDirective } from 'angular-datatables';
 import { Subject } from 'rxjs';
@@ -18,9 +18,9 @@ import {AlertService} from '../../../../core/services/alert.service';
 export class UserRoleComponent implements OnInit {
   
 @ViewChild(DataTableDirective, {static: false})
+dtElements: QueryList<DataTableDirective> | undefined;
 datatableElement: DataTableDirective | undefined;
-dtOptions: DataTables.Settings = {};
-dtOptionsAccessPrivilege: DataTables.Settings = {};
+dtOptions: DataTables.Settings[]= [];
 roles: role[] = [];
 userPrivilegeList: UserRoleAccessPrivilege[] = [];
 rolesDropdown: role[] = [];
@@ -30,7 +30,8 @@ privilegeForm: FormGroup;
 formService: FormService = new FormService();
 dataTableService: DatatableService = new DatatableService();
 dtTrigger: Subject<any> = new Subject<any>();
-featureId:any='00000000-0000-0000-0000-000000000000';
+ featureId:any='00000000-0000-0000-0000-000000000000';
+//featureId:any='684852df-0deb-ec11-b3b0-00155d610b18';
 
 constructor(private http: HttpService , private fb: FormBuilder, private AlertService: AlertService) {
   this.loadDropDownValues();
@@ -58,7 +59,7 @@ ngOnInit(): void {
 LoadData() {
   const that = this;
 
-  this.dtOptions = {
+  this.dtOptions[1] = {
     pagingType: 'full_numbers',
     pageLength: 10,
     serverSide: true,
@@ -75,9 +76,10 @@ LoadData() {
 }
 
 LoadDataAccessprivilege(){
+  console.log('i cameredraw')
   const that = this;
   console.log(this.featureId);
-  this.dtOptionsAccessPrivilege = {
+  this.dtOptions[0] = {
     pagingType: 'full_numbers',
     pageLength: 10,
     serverSide: true,
@@ -153,9 +155,23 @@ LoadDataAccessprivilege(){
   }
   onChangRole(e:any){
     console.log(e.value)
+    console.log('here')
     this.featureId=e.value;
     console.log(this.featureId);
-    //this.LoadDataAccessprivilege()
-   this.dataTableService.redraw(this.datatableElement);
+    this.LoadDataAccessprivilege()
+    this.dataTableService.redraw(this.datatableElement);
+
+  // this.dtElements?.forEach((dtElement: DataTableDirective, index: number) => {
+  //   dtElement.dtInstance.then((dtInstance: any) => {
+  //     console.log(`The DataTable ${index} instance ID is: ${dtInstance.table().node().id}`);
+  //   });
+  // });
+
+  //  this.datatableElement?.dtInstance.then((dtInstance: DataTables.Api) => {
+  //  // dtInstance.destroy();
+  //   // Call the dtTrigger to rerender again
+  //   console.log('dsd')
+  //   dtInstance.ajax.reload()
+  // });
   }
 }

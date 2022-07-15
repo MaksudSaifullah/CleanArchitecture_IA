@@ -231,7 +231,7 @@
                         <th>Action</th>
                       </tr>
                     </thead>
-                    <tbody *ngIf="roles?.length != 0">
+                    <tbody *ngIf="userPrivilegeList?.length != 0">
                       <tr *ngFor="let privilege of userPrivilegeList">
                         <td>{{ privilege.module.displayName }}</td>
                         <td>{{ privilege.feature.displayName }}</td>
@@ -248,7 +248,7 @@
                         </td>
                       </tr>
                     </tbody>
-                    <tbody *ngIf="roles?.length == 0">
+                    <tbody *ngIf="userPrivilegeList?.length == 0">
                       <tr>
                         <td colspan="5" class="no-data-available">No data!</td>
                       </tr>

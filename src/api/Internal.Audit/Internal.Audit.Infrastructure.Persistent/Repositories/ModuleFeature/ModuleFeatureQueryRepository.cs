@@ -1,4 +1,5 @@
 ﻿using Internal.Audit.Application.Contracts.Persistent.ModuleFeature;
+using Internal.Audit.Domain.CompositeEntities;
 using Internal.Audit.Domain.Entities.Common;
 using System;
 using System.Collections.Generic;
@@ -16,7 +17,23 @@ public class ModuleFeatureQueryRepository : QueryRepositoryBase<Domain.Entities.
 
     public async Task<IEnumerable<Domain.Entities.Common.ModuleFeature>> GetAllModuleFeatureList(Guid featureId)
     {
-        var query = @"SELECT *
+        var totalQuery = @"
+					declare @totalcount bigint					
+					select @totalcount=count(*) from [common].[ModuleFeature] modulefeature
+                    inner join [common].[AuditFeature] auditfeature
+                    on modulefeature.FeatureId=auditfeature.Id
+                    inner join [common].[AuditModule] auditmodule
+                    on modulefeature.ModuleId=auditmodule.Id
+                    where modulefeature.IsDeleted=0 and auditfeature.IsDeleted=0
+                    and auditmodule.IsDeleted=0 ";
+        if (featureId != Guid.Empty)
+        {
+            totalQuery += " and auditmodule.Id='" + featureId + "' ";
+        }
+
+
+
+        var query = totalQuery+ @" SELECT *,@totalcount as Tc
                     FROM [common].[ModuleFeature] modulefeature
                     inner join [common].[AuditFeature] auditfeature
                     on modulefeature.FeatureId=auditfeature.Id
@@ -28,16 +45,20 @@ public class ModuleFeatureQueryRepository : QueryRepositoryBase<Domain.Entities.
         {
             query += " and auditmodule.Id='" + featureId+"'";
         }
-        string splitters = "Id, Id";
+
+
+
+        string splitters = "Id, Id, Tc";
         var parameters = new Dictionary<string, object> { };
         var moduleDictionary = new Dictionary<Guid, Domain.Entities.Common.ModuleFeature>();
-        var data = await Get<Domain.Entities.Common.ModuleFeature, Domain.Entities.Common.AuditFeature, Domain.Entities.Common.AuditModule, Domain.Entities.Common.ModuleFeature>(query, (modulefeature, auditfeature, auditmodule) =>
+        var data = await Get<Domain.Entities.Common.ModuleFeature, AuditFeature, AuditModule, EfTotalCount, Domain.Entities.Common.ModuleFeature>(query, (modulefeature, auditfeature, auditmodule,eftotalcount) =>
         {
 
             Domain.Entities.Common.ModuleFeature modulefeaturelist;
             modulefeaturelist = modulefeature;
             modulefeaturelist.Feature = auditfeature;
-            modulefeaturelist.Module=auditmodule;           
+            modulefeaturelist.Module=auditmodule;
+            modulefeaturelist.TotalCount = eftotalcount;
 
             return modulefeaturelist;
         }, parameters, splitters, false);

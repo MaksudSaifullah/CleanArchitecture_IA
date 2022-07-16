@@ -232,21 +232,43 @@
                       </tr>
                     </thead>
                     <tbody *ngIf="userPrivilegeList?.length != 0">
-                      <tr *ngFor="let privilege of userPrivilegeList">
-                        <td>{{ privilege.module.displayName }}</td>
-                        <td>{{ privilege.feature.displayName }}</td>
-                       
-                        <td>
-                          <div class="btn-group" role="group" aria-label="Basic example">
-                            <button type="button" class="btn btn-secondary btnSaveColor" (click)="edit(verticallyCenteredModal,privilege)">
-                              Edit
-                            </button>
-                            <button type="button" class="btn btn-danger btnDeleteColor" (click)="delete(privilege.id)">
-                              Delete
-                            </button>
-                          </div>
-                        </td>
-                      </tr>
+                      <ng-container *ngFor="let privilege of userPrivilegeList">
+                        
+                        <tr *ngIf="privilege.rowSpan == 2 || privilege.rowSpan == 1">                       
+                          <td [attr.rowspan]="privilege.rowSpan">{{ privilege.module.displayName }}</td>                      
+                          <td>{{ privilege.feature.displayName }}</td>                         
+                          <td>
+                            <div class="btn-group" role="group" aria-label="Basic example">
+                              <button type="button" class="btn btn-secondary btnSaveColor" (click)="edit(verticallyCenteredModal,privilege)">
+                                Edit
+                              </button>
+                              <button type="button" class="btn btn-danger btnDeleteColor" (click)="delete(privilege.id)">
+                                Delete
+                              </button>
+                            </div>
+                          </td>
+                        </tr>                        
+
+                        <tr *ngIf="privilege.rowSpan == -1">
+                           <td>{{ privilege.feature.displayName }}</td>                         
+                          <td>
+                            <div class="btn-group" role="group" aria-label="Basic example">
+                              <button type="button" class="btn btn-secondary btnSaveColor" (click)="edit(verticallyCenteredModal,privilege)">
+                                Edit
+                              </button>
+                              <button type="button" class="btn btn-danger btnDeleteColor" (click)="delete(privilege.id)">
+                                Delete
+                              </button>
+                            </div>
+                          </td>
+                        </tr>
+
+
+
+
+
+                      </ng-container>
+                    
                     </tbody>
                     <tbody *ngIf="userPrivilegeList?.length == 0">
                       <tr>

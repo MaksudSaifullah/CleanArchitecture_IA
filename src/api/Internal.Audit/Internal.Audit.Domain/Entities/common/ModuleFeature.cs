@@ -28,4 +28,6 @@ public class ModuleFeature : EntityBase
     public virtual AuditFeature Feature { get; set; } = null!;
     [NotMapped]
     public virtual EfTotalCount TotalCount { get; set; }
+    [NotMapped]
+    public int RowSpan { get; set; }
 }

@@ -16,5 +16,6 @@ namespace Internal.Audit.Application.Features.ModuleFeature.Quiries.GetAllModule
         public virtual AuditModule Module { get; set; } = null!;       
         public virtual Domain.Entities.Common.AuditFeature Feature { get; set; } = null!;
         public virtual EfTotalCount TotalCount { get; set; } = null!;
+        public int RowSpan { get; set; }
     }
 }

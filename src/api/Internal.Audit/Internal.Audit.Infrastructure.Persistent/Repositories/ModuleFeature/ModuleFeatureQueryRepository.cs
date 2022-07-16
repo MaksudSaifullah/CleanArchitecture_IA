@@ -33,14 +33,75 @@ public class ModuleFeatureQueryRepository : QueryRepositoryBase<Domain.Entities.
 
 
 
-        var query = totalQuery+ @" SELECT *,@totalcount as Tc
-                    FROM [common].[ModuleFeature] modulefeature
+        var query = totalQuery+ @" 	select x.Id,x.ModuleId,x.FeatureId,x.CreatedBy,x.CreatedOn,x.UpdatedBy,x.UpdatedOn,x.ReviewedBy,x.ReviewedOn,x.ApprovedBy,x.ApprovedOn,x.IsDeleted,case when x.POST>x.PRE then x.POST 
+					when  x.POST=x.PRE then 1
+					else -1 end as RowSpan
+					,x.auditfeatureid as Id
+					,x.auditfeatureName as [Name]
+					,x.auditfeatureDisplayName as [DisplayName]
+					,x.auditfeatureIsActive as [IsActive]
+					,x.auditfeatureCreatedBy as [CreatedBy]
+					,x.auditfeatureCreatedOn as [CreatedOn]
+					,x.auditfeatureUpdatedBy as [UpdatedBy]
+					,x.auditfeatureUpdatedOn as [UpdatedOn]
+					,x.auditfeatureReviewedBy as [ReviewedBy]
+					,x.auditfeatureReviewedOn as [ReviewedOn]					
+					,x.auditfeatureApprovedBy as [ApprovedBy]
+					,x.auditfeatureApprovedOn as [ApprovedOn]
+					,x.auditfeatureIsDeleted as [IsDeleted]
+					,x.auditmoduleid as Id
+					,x.auditmoduleName as [Name]
+					,x.auditmoduleDisplayName as [DisplayName]
+					,x.auditmoduleIsActive as [IsActive]
+					,x.auditmoduleCreatedBy as [CreatedBy]
+					,x.auditmoduleCreatedOn as [CreatedOn]
+					,x.auditmoduleUpdatedBy as [UpdatedBy]
+					,x.auditmoduleUpdatedOn as [UpdatedOn]
+					,x.auditmoduleReviewedBy as [ReviewedBy]
+					,x.auditmoduleReviewedOn as [ReviewedOn]					
+					,x.auditmoduleApprovedBy as [ApprovedBy]
+					,x.auditmoduleApprovedOn as [ApprovedOn]
+					,x.auditmoduleIsDeleted as [IsDeleted]
+					,@totalcount as Tc
+					from(
+						select *,isnull(lag(RN)over (partition by x.auditmoduleid order by auditmoduleid),0)PRE ,isnull(lead(RN)over (partition by x.auditmoduleid order by auditmoduleid),0)POST  from(
+						SELECT modulefeature.*,ROW_NUMBER()over(partition by auditmodule.id order by auditmodule.id)RN
+					,auditfeature.[Id]			auditfeatureid
+					,auditfeature.[Name]		auditfeatureName
+					,auditfeature.[DisplayName]	auditfeatureDisplayName
+					,auditfeature.[IsActive]    auditfeatureIsActive   
+					,auditfeature.[CreatedBy]	auditfeatureCreatedBy 
+					,auditfeature.[CreatedOn]	auditfeatureCreatedOn 
+					,auditfeature.[UpdatedBy]	auditfeatureUpdatedBy 
+					,auditfeature.[UpdatedOn]	auditfeatureUpdatedOn 
+					,auditfeature.[ReviewedBy]	auditfeatureReviewedBy 
+					,auditfeature.[ReviewedOn]	auditfeatureReviewedOn 
+					,auditfeature.[ApprovedBy]	auditfeatureApprovedBy 
+					,auditfeature.[ApprovedOn]	auditfeatureApprovedOn 
+					,auditfeature.[IsDeleted]	auditfeatureIsDeleted
+					,auditmodule.[Id]			auditmoduleid
+					,auditmodule.[Name]			auditmoduleName
+					,auditmodule.[DisplayName]  auditmoduleDisplayName
+					,auditmodule.[IsActive]		auditmoduleIsActive
+					,auditmodule.[CreatedBy]	auditmoduleCreatedBy
+					,auditmodule.[CreatedOn]	auditmoduleCreatedOn
+					,auditmodule.[UpdatedBy]	auditmoduleUpdatedBy
+					,auditmodule.[UpdatedOn]	auditmoduleUpdatedOn
+					,auditmodule.[ReviewedBy]	auditmoduleReviewedBy
+					,auditmodule.[ReviewedOn]	auditmoduleReviewedOn
+					,auditmodule.[ApprovedBy]	auditmoduleApprovedBy
+					,auditmodule.[ApprovedOn]	auditmoduleApprovedOn
+					,auditmodule.[IsDeleted]	auditmoduleIsDeleted
+					FROM [common].[ModuleFeature] modulefeature
                     inner join [common].[AuditFeature] auditfeature
                     on modulefeature.FeatureId=auditfeature.Id
                     inner join [common].[AuditModule] auditmodule
                     on modulefeature.ModuleId=auditmodule.Id
                     where modulefeature.IsDeleted=0 and auditfeature.IsDeleted=0
-                    and auditmodule.IsDeleted=0";
+                    and auditmodule.IsDeleted=0
+					)x
+					)x
+";
         if(featureId != Guid.Empty)
         {
             query += " and auditmodule.Id='" + featureId+"'";

@@ -34,6 +34,7 @@ export class UserRegistrationComponent implements OnInit {
   selectedUserRole: UserRole[]=[];
   employeeId:string='';
   paramId:string ='';
+  pageName:string = '';
 
   constructor(private http: HttpService, private router : Router, private fb: FormBuilder, private activateRoute: ActivatedRoute, private customValidator: CutomvalidatorService,private AlertService: AlertService) {
     
@@ -67,9 +68,11 @@ export class UserRegistrationComponent implements OnInit {
    this.paramId = this.activateRoute.snapshot.params['id'];
     //console.log(paramId)
     if(this.paramId === undefined){
+      this.pageName='Registration';
       console.log("user add method called")
     }
     else{
+      this.pageName='Edit';
       this.displayUserStatus = true;
       this.LoadUserById(this.paramId);
     }

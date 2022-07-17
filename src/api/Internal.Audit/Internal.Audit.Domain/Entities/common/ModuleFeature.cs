@@ -1,4 +1,5 @@
 ﻿using Internal.Audit.Domain.Common;
+using Internal.Audit.Domain.CompositeEntities;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -25,4 +26,8 @@ public class ModuleFeature : EntityBase
 
     [ForeignKey("FeatureId")]
     public virtual AuditFeature Feature { get; set; } = null!;
+    [NotMapped]
+    public virtual EfTotalCount TotalCount { get; set; }
+    [NotMapped]
+    public int RowSpan { get; set; }
 }

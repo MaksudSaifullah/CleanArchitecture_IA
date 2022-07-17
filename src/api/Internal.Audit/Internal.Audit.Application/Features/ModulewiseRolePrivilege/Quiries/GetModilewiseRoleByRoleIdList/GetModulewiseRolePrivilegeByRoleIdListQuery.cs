@@ -11,7 +11,7 @@ namespace Internal.Audit.Application.Features.ModulewiseRolePrivilege.Quiries.Ge
     {
         public int pageSize { get; set; }
         public int pageNumber { get; set; }
-        public Guid roleId { get; set; }
+        public Guid? roleId { get; set; } = null;
         public dynamic searchTerm { get; set; }
     }
 

@@ -15,9 +15,9 @@ public class ModuleFeatureController : ControllerBase
         _mediator = madiator ?? throw new ArgumentNullException(nameof(madiator));
     }
     [HttpGet]
-    public async Task<ActionResult<GetAllModuleListResponseDTO>> Get()
+    public async Task<ActionResult<GetAllModuleListResponseDTO>> Get(Guid featureId)
     {
-        var query = new GetAllModuleListQuery();
+        var query = new GetAllModuleListQuery(featureId);
         var result = await _mediator.Send(query);
         return Ok(result);
     }

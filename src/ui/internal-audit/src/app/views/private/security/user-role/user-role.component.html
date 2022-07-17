@@ -175,9 +175,9 @@
                 <c-col md>
                   <div cFormFloating>
                     <select aria-label="Floating label select example" cSelect id="role"
-                      formControlName="role" name="role">
+                      formControlName="role" name="role" (change)="onChangRole($event.target)">
                       <option value="null">Select Role</option>
-                      <option value="1">All</option>
+                      <!-- <option value="1">All</option> -->
                       <option *ngFor="let role of rolesDropdown" [value]="role.id">
                         {{role.name}}
                       </option>
@@ -199,8 +199,8 @@
   
                 <c-col md>
                   <div cFormFloating>
-                    <select aria-label="Floating label select example" cSelect id="role"
-                      formControlName="module" name="module" (change)="onChangRole($event.target)">
+                    <select aria-label="Floating label select example" cSelect id="module"
+                      formControlName="module" name="module" (change)="onChangModule($event.target)">
                       <option value="null">Select Module</option>
                       <option value="00000000-0000-0000-0000-000000000000">All</option>
                       <option *ngFor="let module of modules" [value]="module.id">
@@ -223,7 +223,7 @@
               </c-row>
               <c-row>
 
-                <div class="row overflow-auto mt-4">
+                <div class="row overflow-auto mt-4" *ngIf="roleSelected">
                   <table datatable id="DataTables_Table_0" [dtOptions]="dtOptions[0]" class="table table-bordered row-border hover" style="width: 100% !important" >
                     <thead>
                       <tr>
@@ -241,17 +241,17 @@
                           <td>
                             <div>                              
                               <label class = "checkbox-inline" style="margin-left: 10%;"  >
-                                <input type = "checkbox" value = "" [checked]="isChecked()">View
+                                <input type = "checkbox" value = "" [checked]="isChecked('view',privilege.module.id,privilege.feature.id)">View
                              </label>
                              <label class = "checkbox-inline"  style="margin-left: 10%;">
-                                <input type="checkbox" value="">Create
-                             </label>
-                             <label class = "checkbox-inline"  style="margin-left: 10%;">
-                                <input type = "checkbox" value = "">Edit
-                             </label>
-                             <label class = "checkbox-inline"  style="margin-left: 10%;">
-                              <input type = "checkbox" value = "">Delete
+                              <input type="checkbox" value="" [checked]="isChecked('create',privilege.module.id,privilege.feature.id)">Create
                            </label>
+                           <label class = "checkbox-inline"  style="margin-left: 10%;">
+                              <input type = "checkbox" value = "" [checked]="isChecked('edit',privilege.module.id,privilege.feature.id)">Edit
+                           </label>
+                           <label class = "checkbox-inline"  style="margin-left: 10%;">
+                            <input type = "checkbox" value = "" [checked]="isChecked('delete',privilege.module.id,privilege.feature.id)">Delete
+                         </label>
                             </div>
                           </td>
                         </tr>                        
@@ -260,17 +260,17 @@
                            <td>{{ privilege.feature.displayName }}</td>                         
                           <td>
                             <div>                            
-                              <label class = "checkbox-inline" style="margin-left: 10%;" [checked]=true>
-                                <input type = "checkbox" value = "">View
+                              <label class = "checkbox-inline" style="margin-left: 10%;">
+                                <input type = "checkbox" value = "" [checked]="isChecked('view',privilege.module.id,privilege.feature.id)">View
                              </label>
                              <label class = "checkbox-inline"  style="margin-left: 10%;">
-                                <input type="checkbox" value="">Create
+                                <input type="checkbox" value="" [checked]="isChecked('create',privilege.module.id,privilege.feature.id)">Create
                              </label>
                              <label class = "checkbox-inline"  style="margin-left: 10%;">
-                                <input type = "checkbox" value = "">Edit
+                                <input type = "checkbox" value = "" [checked]="isChecked('edit',privilege.module.id,privilege.feature.id)">Edit
                              </label>
                              <label class = "checkbox-inline"  style="margin-left: 10%;">
-                              <input type = "checkbox" value = "">Delete
+                              <input type = "checkbox" value = "" [checked]="isChecked('delete',privilege.module.id,privilege.feature.id)">Delete
                            </label>
                             </div>
                           </td>
@@ -289,9 +289,17 @@
                       </tr>
                     </tbody>
                   </table>
-
+                  <div>
+                    <button cButton class="btn btn-primary btnSaveColor me-1">Save</button>
+                    <button [cModalToggle]="verticallyCenteredModal.id" cButton class="btn btn-danger btnCancelColor me-1">
+                      Cancel
+                 </button>
+                  </div>
               </div>
 
+              </c-row>
+              <c-row>
+             
               </c-row>
               </form>
 

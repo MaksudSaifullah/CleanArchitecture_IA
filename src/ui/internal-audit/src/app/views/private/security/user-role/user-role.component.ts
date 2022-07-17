@@ -4,7 +4,7 @@ import { DataTableDirective } from 'angular-datatables';
 import { Subject } from 'rxjs';
 import { paginatedResponseInterface } from 'src/app/core/interfaces/paginated.interface';
 import { role } from 'src/app/core/interfaces/security/role.interface';
-import { ModuleList, UserRoleAccessPrivilege } from 'src/app/core/interfaces/security/user-role-accessprivilege.interface';
+import { ModuleList, RoleBody, RoleSelectedList, RoleSelectedListResponse, UserRoleAccessPrivilege } from 'src/app/core/interfaces/security/user-role-accessprivilege.interface';
 import { DatatableService } from 'src/app/core/services/datatable.service';
 import { FormService } from 'src/app/core/services/form.service';
 import { HttpService } from 'src/app/core/services/http.service';
@@ -35,6 +35,9 @@ export class UserRoleComponent implements OnInit {
   dtTrigger: Subject<any> = new Subject<any>();
   featureId: any = '00000000-0000-0000-0000-000000000000';
   //featureId:any='684852df-0deb-ec11-b3b0-00155d610b18';
+  roleSelected: boolean = false;
+  rolewisePrivilegelist:RoleSelectedListResponse={};
+  roleUserSelectionMaster:RoleBody[]=[];
 
   constructor(private http: HttpService, private fb: FormBuilder, private AlertService: AlertService) {
     this.loadDropDownValues();
@@ -94,11 +97,6 @@ export class UserRoleComponent implements OnInit {
           .get('ModuleFeature?featureId=' + this.featureId).subscribe(resp => that.userPrivilegeList = this.dataTableService.datatableMap(resp, callback, 'ef'));
       },
     };
-    console.log('userPrivilegeList');
-    console.log(this.userPrivilegeList);
-    console.log('userPrivilegeListeeeeeeeeeeeeeeee');
-
-
   }
   onSubmit(modalId: any): void {
     const localmodalId = modalId;
@@ -163,14 +161,82 @@ export class UserRoleComponent implements OnInit {
     this.loadModule();
   }
   onChangRole(e: any) {
-    this.featureId = e.value;
-    this.dataTableService.redraw(this.dtElements?.get(1));
-
-
-
+    e.value.length > 30 ? this.roleSelected = true : this.roleSelected = false;
+    if (this.roleSelected && (this.privilegeForm?.value.module == null ||this.privilegeForm?.value.module == 'null'  )) {     
+      this.privilegeForm.patchValue({module:'00000000-0000-0000-0000-000000000000'}); 
+      this.dataTableService.redraw(this.dtElements?.get(1));   
+    }
+    if(this.roleSelected){
+      this.loadCheckboxList(this.privilegeForm?.value.role);
+    }
   }
-  isChecked(){
-    return true;
+  onChangModule(e: any) {   
+    console.log('checking items'); 
+    console.log(this.roleUserSelectionMaster); 
+    console.log('checking endddddddddddddddddddddd'); 
+    if(e.value != 'null' && (this.privilegeForm?.value.role != 'null')){    
+      this.roleSelected = true;  
+      this.featureId = e.value;     
+      this.dataTableService.redraw(this.dtElements?.get(1));
+      this.loadCheckboxList(this.privilegeForm?.value.role);
+    }else{
+      this.roleSelected = false;
+    }
+  }
+  loadCheckboxList(roleid:any) {
+    let requestModel:RoleSelectedList={pageNumber:1,pageSize:1000,roleId:roleid,searchTerm:''};  
+    this.http.post('ModulewiseRolePrivilege/paginatedByRoleId',requestModel).subscribe(resp => {
+      let convertedResp = resp as RoleSelectedListResponse;
+      this.rolewisePrivilegelist = convertedResp;     
+    });
+  }
+
+  isChecked(type:any,moduleId:any,featureId:any) {
+    let dataFiltered = this.rolewisePrivilegelist.items?.find(x=>x.auditFeatureId?.toUpperCase()==featureId.toUpperCase() && x.auditModuleId?.toUpperCase()==moduleId.toUpperCase());
+    let result=false;
+    let isview=false;
+    let iscreate=false;
+    let isedit=false;
+    let isDelete=false;
+    let roleid=this.privilegeForm.value?.role;
+   if(type == 'view'){
+    result= dataFiltered?.isView == undefined ? false:true;   
+    isview=true;
+   }
+   else if(type =='create'){
+    result= dataFiltered?.isCreate == undefined ? false:true;    
+    iscreate=true;
+   }else if(type == 'edit'){
+    let result= dataFiltered?.isEdit == undefined ? false:true;
+    isedit=true;
+   }else{
+    let result= dataFiltered?.isDelete == undefined ? false:true;
+    isDelete=true;
+   }
+   
+   if(result){
+    let userselection:RoleBody ={auditFeatureId:featureId,auditModuleId:moduleId,roleId:roleid,isView:isview,isCreate:iscreate,isDelete:isDelete,isEdit:isedit};
+    let ifFound = this.roleUserSelectionMaster.find(x=>x.auditFeatureId?.toUpperCase()==featureId.toUpperCase() && x.auditModuleId?.toUpperCase() ==moduleId.toUpperCase() && x.roleId?.toUpperCase()==roleid.toUpperCase());
+    if(ifFound){
+      let index = this.roleUserSelectionMaster.indexOf(ifFound);
+     if(isDelete){
+      this.roleUserSelectionMaster[index].isDelete=isDelete;
+     }
+     else if(iscreate){
+      this.roleUserSelectionMaster[index].isCreate=iscreate;
+     }
+     else if(isview){
+      this.roleUserSelectionMaster[index].isEdit=isedit;
+     }
+     else {
+      this.roleUserSelectionMaster[index].isDelete=isDelete;
+     }
+     
+    }else{
+      this.roleUserSelectionMaster.push(userselection);
+    }
+   }
+    return result;
   }
   private ReloadAllDataTable() {
     this.dtElements?.forEach((dtElement: DataTableDirective, index: number) => {
@@ -178,3 +244,5 @@ export class UserRoleComponent implements OnInit {
     });
   }
 }
+
+

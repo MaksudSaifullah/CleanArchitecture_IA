@@ -90,6 +90,7 @@ public class MappingProfile: Profile
 
         CreateMap<RiskProfile, RiskProfileDTO>().ReverseMap();
         CreateMap<CompositeRiskProfile, RiskProfileDTO>().ReverseMap();
+        CreateMap<CompositeRiskProfile, RiskProfileByIdDTO>().ReverseMap();
         CreateMap<RiskProfile, RiskProfileByIdDTO>().ReverseMap();
         CreateMap<RiskProfile, AddRiskProfileResponseDTO>().ReverseMap();
         CreateMap<RiskProfile, AddRiskProfileCommand>().ReverseMap();

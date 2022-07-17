@@ -11,6 +11,7 @@ import {FormService} from '../../../../core/services/form.service';
 import {DatatableService} from '../../../../core/services/datatable.service';
 import {AlertService} from '../../../../core/services/alert.service';
 import { paginatedResponseInterface } from 'src/app/core/interfaces/paginated.interface';
+import { formatDate } from '@angular/common';
 
 @Component({
   selector: 'app-riskProfile',
@@ -29,6 +30,7 @@ export class RiskProfileComponent implements OnInit {
   formService: FormService = new FormService();
   dataTableService: DatatableService = new DatatableService();
   dtTrigger: Subject<any> = new Subject<any>();
+  effectiveFrom: any;
 
   constructor(private http: HttpService , private fb: FormBuilder, private AlertService: AlertService) {
     this.LoadDropDownValues();
@@ -39,7 +41,9 @@ export class RiskProfileComponent implements OnInit {
       ratingTypeId: [null,[Validators.required, Validators.pattern("^(?!null$).*$")]],
       description: [''],
       effectiveFrom: [Date,[Validators.required]],
-      effectiveTo: [Date, [Validators.required]]
+      effectiveTo: [Date, [Validators.required]],
+      isActive: []
+      
     })
   }
   ngOnDestroy(): void {
@@ -95,37 +99,62 @@ export class RiskProfileComponent implements OnInit {
   }
 
   onSubmit(modalId:any):void{
-    debugger;
+    const localmodalId = modalId;
     if (this.riskProfileForm.valid ){
-      const localmodalId = modalId;
-      console.log(this.riskProfileForm.value);
-      this.http.post('riskProfile',this.riskProfileForm.value).subscribe(x=>{
-        this.formService.onSaveSuccess(localmodalId,this.datatableElement);
-        this.AlertService.success('Risk Profile Saved successfully');
-        debugger;
-      });
+      if(this.formService.isEdit(this.riskProfileForm.get('id') as FormControl)){
+        this.http.put('riskProfile',this.riskProfileForm.value,null).subscribe(x=>{
+            localmodalId.visible = false;
+            this.dataTableService.redraw(this.datatableElement);
+            this.AlertService.success('Risk Profile Saved Successful');
+          });
+      }
+      else {
+       // console.log(this.riskProfileForm.value);
+        this.http.post('riskProfile',this.riskProfileForm.value).subscribe(x=>{
+          this.formService.onSaveSuccess(localmodalId,this.datatableElement);
+          this.AlertService.success('Risk Profile Saved successfully');
+        });
+      }      
     }
-    else {
-      debugger;
+    else {     
       this.riskProfileForm.markAllAsTouched();
       return;
     }    
   }
 
-
-    delete(id:string){
-      const that = this;
-      this.AlertService.confirmDialog().then(res =>{
-        if(res.isConfirmed){
-            this.http.delete('riskProfile/'+ id ,{}).subscribe(response=>{
-            this.AlertService.successDialog('Deleted','Risk Profile deleted successfully.');
-            this.dataTableService.redraw(that.datatableElement);
-          })
-        }
+  edit(modalId:any, riskProfile:any):void {
+    const localmodalId = modalId;
+    //console.log('hello');
+    this.http
+      .getById('riskProfile', riskProfile.id)
+      .subscribe(res => {
+          const riskProfileResponse = res as riskProfile;
+          this.effectiveFrom = riskProfileResponse.effectiveFrom;
+          //console.log(riskProfileResponse);
+          this.riskProfileForm.setValue({id : riskProfileResponse.id, likelihoodTypeId : riskProfileResponse.likelihoodTypeId, 
+            impactTypeId: riskProfileResponse.impactTypeId, ratingTypeId: riskProfileResponse.ratingTypeId, 
+            effectiveFrom: formatDate(riskProfileResponse.effectiveFrom, 'yyyy-MM-dd', 'en'), effectiveTo: formatDate(riskProfileResponse.effectiveTo, 'yyyy-MM-dd', 'en'),
+            description: riskProfileResponse.description, isActive: riskProfileResponse.isActive
+          });
       });
-    }
-    reset(){
-      this.riskProfileForm.reset();
-    }
+      localmodalId.visible = true;
+      
   }
+
+  delete(id:string){
+    const that = this;
+    this.AlertService.confirmDialog().then(res =>{
+      if(res.isConfirmed){
+          this.http.delete('riskProfile/'+ id ,{}).subscribe(response=>{
+          this.AlertService.successDialog('Deleted','Risk Profile deleted successfully.');
+          this.dataTableService.redraw(that.datatableElement);
+        })
+      }
+    });
+  }
+  reset(){
+    this.riskProfileForm.reset();
+  }
+
+}
 

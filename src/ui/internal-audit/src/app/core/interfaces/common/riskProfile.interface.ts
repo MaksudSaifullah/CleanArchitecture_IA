@@ -1,11 +1,11 @@
 export interface riskProfile {
     id:               string;
-    likelihoodTypeId: string;
-    impactTypeId:     string;
-    ratingTypeId:     string;
+    likelihoodType:   string;
+    impactType:       string;
+    ratingType:       string;
     effectiveFrom:    Date;
     effectiveTo:      Date;
-    description:      string;
+    description?:      string;
     isActive:         boolean;
 
 }

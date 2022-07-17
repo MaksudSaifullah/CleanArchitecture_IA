@@ -34,25 +34,23 @@ export class RiskProfileComponent implements OnInit {
     this.LoadDropDownValues();
     this.riskProfileForm = this.fb.group({
       id: [''],
-      likelihoodTypeId:[null,[Validators.required]],
-      impactTypeId: [null,[Validators.required]],
-      ratingTypeId: [null,[Validators.required]],
+      likelihoodTypeId:[null,[Validators.required, Validators.pattern("^(?!null$).*$")]],
+      impactTypeId: [null,[Validators.required, Validators.pattern("^(?!null$).*$")]],
+      ratingTypeId: [null,[Validators.required, Validators.pattern("^(?!null$).*$")]],
       description: [''],
-      EffectiveFrom: Date,
-      EffectiveTo: Date    
+      effectiveFrom: [Date,[Validators.required]],
+      effectiveTo: [Date, [Validators.required]]
     })
   }
   ngOnDestroy(): void {
 
   }
-  ngOnInit(): void {
-   // debugger;
+  ngOnInit(): void {   
     this.LoadData();
-    };
+  };
 
   LoadData() {
     const that = this;
-
     this.dtOptions = {
       pagingType: 'full_numbers',
       pageLength: 10,
@@ -73,7 +71,6 @@ export class RiskProfileComponent implements OnInit {
     this.http.get('commonValueAndType/leveloflikelihood').subscribe(resp => {
       let convertedResp = resp as commonValueAndType[];
       this.likelihoodType = convertedResp;
-      //console.log(this.likelihoodType);
     })
   }
 
@@ -97,14 +94,23 @@ export class RiskProfileComponent implements OnInit {
     this.LoadRiskRating();
   }
 
-    onSubmit(modalId:any):void{
+  onSubmit(modalId:any):void{
+    debugger;
+    if (this.riskProfileForm.valid ){
       const localmodalId = modalId;
+      console.log(this.riskProfileForm.value);
       this.http.post('riskProfile',this.riskProfileForm.value).subscribe(x=>{
         this.formService.onSaveSuccess(localmodalId,this.datatableElement);
         this.AlertService.success('Risk Profile Saved successfully');
-      
+        debugger;
       });
     }
+    else {
+      debugger;
+      this.riskProfileForm.markAllAsTouched();
+      return;
+    }    
+  }
 
 
     delete(id:string){

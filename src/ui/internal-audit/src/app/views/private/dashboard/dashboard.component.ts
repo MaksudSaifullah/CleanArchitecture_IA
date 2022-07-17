@@ -87,7 +87,14 @@ export class DashboardComponent implements OnInit {
         backgroundColor: ['#FF6384','#05ed3f', '#FFCE56', '#36A2EB'],
         hoverBackgroundColor: ['#FF6384','#05ed3f', '#FFCE56','#36A2EB']
       }
-    ]
+    ],
+  
+   
+  };
+
+  chartPieOptions = {
+    responsive: false,
+    aspectRatio: 0.5
   };
 
 

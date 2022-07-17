@@ -104,7 +104,7 @@ public class ModuleFeatureQueryRepository : QueryRepositoryBase<Domain.Entities.
 ";
         if(featureId != Guid.Empty)
         {
-            query += " and auditmodule.Id='" + featureId+"'";
+            query += "  where ModuleId='" + featureId+"'";
         }
 
 

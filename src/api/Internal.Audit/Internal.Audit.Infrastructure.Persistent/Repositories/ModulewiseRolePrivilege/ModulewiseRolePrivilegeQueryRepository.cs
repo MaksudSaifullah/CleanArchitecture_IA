@@ -21,7 +21,7 @@ namespace Internal.Audit.Infrastructure.Persistent.Repositories.ModulewiseRolePr
             return await GetWithPagingInfo(query, parameters, false);
         }
 
-        public async Task<(long, IEnumerable<ModulewiseRolePriviliege>)> GetAllByRoleId(int pageSize, int pageNumber, Guid roleId)
+        public async Task<(long, IEnumerable<ModulewiseRolePriviliege>)> GetAllByRoleId(int pageSize, int pageNumber, Guid? roleId)
         {
             var query = "EXEC [dbo].[GetModulewiseRolePriviliegeByRoleIdListProcedure] @pageSize,@pageNumber,@roleId";
             var parameters = new Dictionary<string, object> { { "@pageSize", pageSize }, { "@pageNumber", pageNumber }, { "@roleId", roleId } };

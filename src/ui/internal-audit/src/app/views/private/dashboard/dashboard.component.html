@@ -1,1 +1,257 @@
-<p>dashboard works!</p>
+
+
+
+
+<c-col xs="12">
+    <c-card class="mb-4">
+        <c-card-header>
+            <strong>Dashboard</strong>
+        </c-card-header>
+        <c-card-body> 
+            <c-multi-select multiple>
+                <c-multi-select-option>Bangladesh</c-multi-select-option>
+                <c-multi-select-option>India</c-multi-select-option>
+                <c-multi-select-option>Pakistan</c-multi-select-option>
+                <c-multi-select-option>Japan</c-multi-select-option>
+                <c-multi-select-option>Philipine</c-multi-select-option>
+              </c-multi-select>
+        </c-card-body>
+
+
+
+
+
+        <c-col xs="12">
+            <c-card>
+                <c-card-header>
+                    <strong>Country: <span class="Country_Title"> BANGLADESH </span></strong>
+                </c-card-header>
+            </c-card>
+            <c-card-body>
+              <c-row>
+                <c-col md>
+                    <c-card class="mb-4" style="margin-left: 2%;">
+                        <c-card-header class="Header_Title">
+                            <c-icon name="cilChartPie"></c-icon> <strong><span> Schedule </span></strong>
+                        </c-card-header>
+                        <c-card-body>
+                            <select aria-label="Default select example" cSelect>
+                                <option>Select Year</option>
+                                <option value="1">2022</option>
+                                <option value="2">2021</option>
+                                <option value="3">2020</option>
+                              </select>
+                              <!-- <div style="position: relative; height:20vh; width:20vw">
+                               
+                              </div> -->
+                                   <c-chart type="pie" [data]="chartPieData"></c-chart>
+                          </c-card-body>
+                    </c-card>
+                </c-col>
+                <c-col md>
+                    <c-card class="mb-4" style="margin-left: 1%; margin-right: 1%;">
+                        <c-card-header class="Header_Title">
+                            <c-icon name="cilChart"></c-icon> <strong><span> Issue Rating </span></strong>
+                        </c-card-header>
+                        <c-card-body>
+                            <select aria-label="Default select example" cSelect>
+                                <option>Select Year</option>
+                                <option value="1">2022</option>
+                                <option value="2">2021</option>
+                                <option value="3">2020</option>
+                              </select>
+                            <div class="chart-box" style="height: 20% !important;">
+                                <c-chart [data]="data" type="bar"></c-chart>
+                            </div>
+                            <span class="d-flex justify-content-center">Level of Likelihood</span>
+                        </c-card-body>
+                    </c-card>
+                </c-col>
+                <c-col md>
+                    <c-card class="mb-4"  style="margin-right: 2%;">
+                        <c-card-header class="Header_Title">
+                            <c-icon name="cilFile"></c-icon> <strong><span> Documents </span></strong>
+                        </c-card-header>
+                        <c-card-body> 
+                          <div class="row overflow-auto">
+                            <table datatable [dtOptions]="dtOptions" class="table table-bordered row-border hover" >
+                              <thead>
+                                <tr>
+                                  <th>Name</th>
+                                  <th>Code</th>
+                                  <th>Remarks</th>
+                                </tr>
+                              </thead>
+                              <tbody *ngIf="countries?.length != 0">
+                                <tr *ngFor="let country of countries">
+                                  <td>{{ country.name }}</td>
+                                  <td>{{ country.code }}</td>
+                                  <td>{{ country.remarks }}</td>
+                                  
+                                </tr>
+                              </tbody>
+                              <tbody *ngIf="countries?.length == 0">
+                                <tr>
+                                  <td colspan="5" class="no-data-available">No data!</td>
+                                </tr>
+                              </tbody>
+                            </table>
+              
+                        </div>
+                        </c-card-body>
+                    </c-card>
+                </c-col>
+              </c-row>
+              <c-row>
+                <c-col md>
+                    <c-card class="mb-4" style="margin-left: 2%;">
+                        <c-card-header class="Header_Title">
+                            <c-icon name="cilShareBoxed"></c-icon> <strong><span> My Audit </span></strong>
+                        </c-card-header>
+                        <c-card-body> 
+                            <select aria-label="Default select example" cSelect>
+                                <option>Select Audit Type</option>
+                                <option value="1">All</option>
+                                <option value="2">Process and Controll Audit</option>
+                                <option value="3">Branch Audit</option>
+                            </select>
+                            <div class="row overflow-auto">
+                              <table datatable [dtOptions]="dtOptions" class="table table-bordered row-border hover" >
+                                <thead>
+                                  <tr>
+                                    <th>Name</th>
+                                    <th>Code</th>
+                                    <th>Remarks</th>
+                                  </tr>
+                                </thead>
+                                <tbody *ngIf="countries?.length != 0">
+                                  <tr *ngFor="let country of countries">
+                                    <td>{{ country.name }}</td>
+                                    <td>{{ country.code }}</td>
+                                    <td>{{ country.remarks }}</td>
+                                    
+                                  </tr>
+                                </tbody>
+                                <tbody *ngIf="countries?.length == 0">
+                                  <tr>
+                                    <td colspan="5" class="no-data-available">No data!</td>
+                                  </tr>
+                                </tbody>
+                              </table>
+                
+                          </div>
+                        </c-card-body>
+                    </c-card>
+                </c-col>
+                <c-col md>
+                    <c-card class="mb-4"  style="margin-left: 1%; margin-right: 1%;">
+                        <c-card-header class="Header_Title">
+                            <c-icon name="cilSettings"></c-icon> <strong><span> Action To Be Taken </span></strong>
+                        </c-card-header>
+                        <c-card-body>
+                            <c-row>
+                                <c-col md> 
+                                    <select aria-label="Default select example" cSelect>
+                                        <option>Select Audit Type</option>
+                                        <option value="1">All</option>
+                                        <option value="2">Process and Controll Audit</option>
+                                        <option value="3">Branch Audit</option>
+                                    </select>
+                                </c-col>
+                                <c-col md> 
+                                    <select aria-label="Default select example" cSelect>
+                                        <option>Select Action Owner</option>
+                                        <option value="1">Najir Hossain</option>
+                                        <option value="2">Ishita Apan</option>
+                                        <option value="3">Sahidul Islam</option>
+                                    </select>
+                                </c-col>
+                            </c-row>
+                            <div class="row overflow-auto">
+                              <table datatable [dtOptions]="dtOptions" class="table table-bordered row-border hover" >
+                                <thead>
+                                  <tr>
+                                    <th>Name</th>
+                                    <th>Code</th>
+                                    <th>Remarks</th>
+                                  </tr>
+                                </thead>
+                                <tbody *ngIf="countries?.length != 0">
+                                  <tr *ngFor="let country of countries">
+                                    <td>{{ country.name }}</td>
+                                    <td>{{ country.code }}</td>
+                                    <td>{{ country.remarks }}</td>
+                                    
+                                  </tr>
+                                </tbody>
+                                <tbody *ngIf="countries?.length == 0">
+                                  <tr>
+                                    <td colspan="5" class="no-data-available">No data!</td>
+                                  </tr>
+                                </tbody>
+                              </table>
+                
+                          </div>
+                        </c-card-body>
+                    </c-card>
+                </c-col>
+                <c-col md>
+                    <c-card class="mb-4"  style="margin-right: 2%;">
+                        <c-card-header class="Header_Title">
+                            <c-icon name="cilOptions"></c-icon> <strong><span> Issue Status </span></strong>
+                        </c-card-header>
+                        <c-card-body>
+                            <c-row>
+                                <c-col md> 
+                                    <select aria-label="Default select example" cSelect>
+                                        <option>Select Audit Type</option>
+                                        <option value="1">All</option>
+                                        <option value="2">Process and Controll Audit</option>
+                                        <option value="3">Branch Audit</option>
+                                    </select>
+                                </c-col>
+                                <c-col md> 
+                                    <select aria-label="Default select example" cSelect>
+                                        <option>Select Issue Status</option>
+                                        <option value="1">Open</option>
+                                        <option value="2">Closed</option>
+                                        <option value="3">Pending Validation</option>
+                                        <option value="4">Closed and Validated</option>
+                                    </select>
+                                </c-col>
+                            </c-row>
+                            <div class="row overflow-auto">
+                              <table datatable [dtOptions]="dtOptions" class="table table-bordered row-border hover" >
+                                <thead>
+                                  <tr>
+                                    <th>Name</th>
+                                    <th>Code</th>
+                                    <th>Remarks</th>
+                                  </tr>
+                                </thead>
+                                <tbody *ngIf="countries?.length != 0">
+                                  <tr *ngFor="let country of countries">
+                                    <td>{{ country.name }}</td>
+                                    <td>{{ country.code }}</td>
+                                    <td>{{ country.remarks }}</td>
+                                    
+                                  </tr>
+                                </tbody>
+                                <tbody *ngIf="countries?.length == 0">
+                                  <tr>
+                                    <td colspan="5" class="no-data-available">No data!</td>
+                                  </tr>
+                                </tbody>
+                              </table>
+                
+                          </div>
+                        </c-card-body>
+                    </c-card>
+                </c-col>
+              </c-row>
+            </c-card-body>
+        </c-col>
+
+
+    </c-card>
+</c-col>`

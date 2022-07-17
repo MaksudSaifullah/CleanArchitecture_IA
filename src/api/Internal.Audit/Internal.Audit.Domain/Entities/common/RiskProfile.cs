@@ -19,8 +19,8 @@ public class RiskProfile : EntityBase
     public DateTime EffectiveFrom { get; set; }
     [Required]
     public DateTime EffectiveTo { get; set; }
-    [Required]
-    public string Description { get; set; } = null!;
+    [MaxLength(200)]
+    public string? Description { get; set; } = null!;
     [Required]
     [DefaultValue("1")]
     public bool IsActive { get; set; }

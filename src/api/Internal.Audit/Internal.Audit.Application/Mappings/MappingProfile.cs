@@ -69,6 +69,7 @@ using Internal.Audit.Application.Features.ModulewiseRolePrivilege.Commands.AddMo
 using Internal.Audit.Application.Features.ModulewiseRolePrivilege.Commands.UpdateModulewisePrivilege;
 using Internal.Audit.Application.Features.ModulewiseRolePrivilege.Quiries.GetModilewiseRoleByRoleIdList;
 using Internal.Audit.Application.Features.ModuleFeature.Quiries.GetAllModuleList;
+using Internal.Audit.Application.Features.ModuleFeature.Quiries.GetOnlyModuleList;
 using Internal.Audit.Domain.Entities.config;
 using Internal.Audit.Application.Features.EmailConfig.Queries.GetEmailConfigList;
 using Internal.Audit.Application.Features.EmailConfig.Queries.GetEmailConfigById;
@@ -198,5 +199,6 @@ public class MappingProfile: Profile
         CreateMap<EmailConfiguration, AddEmailConfigCommand>().ReverseMap();
         CreateMap<EmailConfiguration, DeleteEmailConfigCommand>().ReverseMap();
         CreateMap<EmailConfiguration, DeleteEmailConfigResponseDTO>().ReverseMap();
+        CreateMap<AuditModule, GetOnlyModuleListResponseDTO>().ReverseMap();
     }
 }

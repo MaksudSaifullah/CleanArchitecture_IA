@@ -41,7 +41,7 @@
                   </div>
                 </div>
                 <div class="row overflow-auto">
-                    <table datatable [dtOptions]="dtOptions" class="table table-bordered row-border hover" >
+                    <table datatable [dtOptions]="dtOptions[1]" id="DataTables_Table_1"  class="table table-bordered row-border hover" >
                       <thead>
                         <tr>
                           <th>Name</th>
@@ -161,9 +161,145 @@
 
     </c-tab-pane>
     <c-tab-pane class="p-3">
-      This is some placeholder content the <strong>Profile</strong> tab's associated content. Clicking another
-      tab will toggle the visibility of this one for the next. The tab JavaScript swaps classes to control the
-      content visibility and styling. You can use it with tabs, pills, and any other .nav-powered navigation.
+      <c-col xs="12"> 
+        <c-card class="mb-4">
+          <c-card-header>
+            <strong>User Role wise Access Privilege</strong>
+          </c-card-header>
+          <c-card-body>
+
+            <form [formGroup]="privilegeForm">
+
+              <c-row [gutter]="{g: 2}">
+              
+                <c-col md>
+                  <div cFormFloating>
+                    <select aria-label="Floating label select example" cSelect id="role"
+                      formControlName="role" name="role">
+                      <option value="null">Select Role</option>
+                      <option value="1">All</option>
+                      <option *ngFor="let role of rolesDropdown" [value]="role.id">
+                        {{role.name}}
+                      </option>
+                    </select>
+                  </div>
+  
+                  <!-- <div cRow *ngIf="privilegeForm.get('role')?.invalid &&
+                  privilegeForm.get('role')?.errors &&
+                        (privilegeForm.get('role')?.dirty || privilegeForm.get('role')?.touched)">
+                    <small class="text-danger" *ngIf="countryForm.get('role').hasError('required')">
+                      This field is required.
+                    </small>
+                                
+                    
+                  </div> -->
+                </c-col>
+  
+  
+  
+                <c-col md>
+                  <div cFormFloating>
+                    <select aria-label="Floating label select example" cSelect id="role"
+                      formControlName="module" name="module" (change)="onChangRole($event.target)">
+                      <option value="null">Select Module</option>
+                      <option *ngFor="let module of modules" [value]="module.id">
+                        {{module.displayName}}
+                      </option>
+                    </select>
+                  </div>
+  
+                  <!-- <div cRow *ngIf="privilegeForm.get('module')?.invalid &&
+                  privilegeForm.get('module')?.errors &&
+                        (privilegeForm.get('module')?.dirty || privilegeForm.get('module')?.touched)">
+                    <small class="text-danger" *ngIf="countryForm.get('module').hasError('required')">
+                      This field is required.
+                    </small>
+                                
+                    
+                  </div> -->
+                </c-col>
+  
+              </c-row>
+              <c-row>
+
+                <div class="row overflow-auto mt-4">
+                  <table datatable id="DataTables_Table_0" [dtOptions]="dtOptions[0]" class="table table-bordered row-border hover" style="width: 100% !important" >
+                    <thead>
+                      <tr>
+                        <th>Module</th>
+                        <th>Feature</th>                        
+                        <th>Action</th>
+                      </tr>
+                    </thead>
+                    <tbody *ngIf="userPrivilegeList?.length != 0">
+                      <ng-container *ngFor="let privilege of userPrivilegeList">
+
+                        <tr *ngIf="privilege.rowSpan == 2 || privilege.rowSpan == 1">                       
+                          <td [attr.rowspan]="privilege.rowSpan">{{ privilege.module.displayName }}</td>                      
+                          <td>{{ privilege.feature.displayName }}</td>                         
+                          <td>
+                            <div>                              
+                              <label class = "checkbox-inline" style="margin-left: 10%;">
+                                <input type = "checkbox" value = "">View
+                             </label>
+                             <label class = "checkbox-inline"  style="margin-left: 10%;">
+                                <input type="checkbox" value="">Create
+                             </label>
+                             <label class = "checkbox-inline"  style="margin-left: 10%;">
+                                <input type = "checkbox" value = "">Update
+                             </label>
+                             <label class = "checkbox-inline"  style="margin-left: 10%;">
+                              <input type = "checkbox" value = "">Delete
+                           </label>
+                            </div>
+                          </td>
+                        </tr>                        
+
+                        <tr *ngIf="privilege.rowSpan == -1">
+                           <td>{{ privilege.feature.displayName }}</td>                         
+                          <td>
+                            <div>                            
+                              <label class = "checkbox-inline" style="margin-left: 10%;">
+                                <input type = "checkbox" value = "">View
+                             </label>
+                             <label class = "checkbox-inline"  style="margin-left: 10%;">
+                                <input type="checkbox" value="">Create
+                             </label>
+                             <label class = "checkbox-inline"  style="margin-left: 10%;">
+                                <input type = "checkbox" value = "">Update
+                             </label>
+                             <label class = "checkbox-inline"  style="margin-left: 10%;">
+                              <input type = "checkbox" value = "">Delete
+                           </label>
+                            </div>
+                          </td>
+                        </tr>
+
+
+
+
+
+                      </ng-container>
+                    
+                    </tbody>
+                    <tbody *ngIf="userPrivilegeList?.length == 0">
+                      <tr>
+                        <td colspan="5" class="no-data-available">No data!</td>
+                      </tr>
+                    </tbody>
+                  </table>
+
+              </div>
+
+              </c-row>
+              </form>
+
+
+
+           
+          </c-card-body>
+        </c-card>
+      </c-col>
     </c-tab-pane>
   </c-tab-content>
 </c-card>

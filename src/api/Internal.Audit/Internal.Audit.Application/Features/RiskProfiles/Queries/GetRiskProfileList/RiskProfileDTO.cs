@@ -8,9 +8,9 @@ namespace Internal.Audit.Application.Features.RiskProfiles.Queries.GetRiskProfil
 public record RiskProfileDTO
 {
     public Guid Id { get; set; }
-    public Guid LikelihoodTypeId { get; set; }
-    public Guid ImpactTypeId { get; set; }
-    public Guid RatingTypeId { get; set; }
+    public string LikelihoodType { get; set; }
+    public string ImpactType { get; set; }
+    public string RatingType { get; set; }
     public DateTime EffectiveFrom { get; set; }
     public DateTime EffectiveTo { get; set; }
     public string Description { get; set; } = null!;

@@ -34,6 +34,10 @@ using Internal.Audit.Application.Contracts.Persistent.Dashboards;
 using Internal.Audit.Infrastructure.Persistent.Repositories.Dashboards;
 using Internal.Audit.Application.Contracts.Persistent.UserRegistration;
 using Internal.Audit.Infrastructure.Persistent.Repositories.UserRegistration;
+using Internal.Audit.Application.Contracts.Persistent.ModulewiseRolePrivilege;
+using Internal.Audit.Infrastructure.Persistent.Repositories.ModulewiseRolePrivilege;
+using Internal.Audit.Application.Contracts.Persistent.ModuleFeature;
+using Internal.Audit.Infrastructure.Persistent.Repositories.ModuleFeature;
 
 namespace Internal.Audit.Infrastructure.Persistent;
 
@@ -88,7 +92,12 @@ public static class PersistentInfrastructureServiceRegistration
         services.AddScoped<IUserRoleQueryRepository>(s => new UserRoleQueryRepository(configuration.GetConnectionString("InternalAuditDb")));
         services.AddScoped<IUserCountryQueryRepository>(s => new UserCountryQueryRepository(configuration.GetConnectionString("InternalAuditDb")));
         services.AddScoped<IEmployeeQueryRepository>(s => new EmployeeQueryRepository(configuration.GetConnectionString("InternalAuditDb")));
-       
+
+        services.AddScoped<IModulewiseRolePrivilegeCommandRepository, ModulewiseRolePrivilegeCommandRepository>();
+        services.AddScoped<IModulewiseRoleQueryRepository>(s => new ModulewiseRolePrivilegeQueryRepository(configuration.GetConnectionString("InternalAuditDb")));
+
+        services.AddScoped<IModuleFeatureCommandRepository, ModuleFeatureCommandRepository>();
+        services.AddScoped<IModuleFeatureQueryRepository>(s => new ModuleFeatureQueryRepository(configuration.GetConnectionString("InternalAuditDb")));
 
         return services;
     }

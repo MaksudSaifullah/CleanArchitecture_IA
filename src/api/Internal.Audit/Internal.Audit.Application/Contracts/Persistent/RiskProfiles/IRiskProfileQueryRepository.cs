@@ -1,14 +1,11 @@
-﻿using Internal.Audit.Domain.Entities.Common;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Internal.Audit.Domain.CompositeEntities;
+using Internal.Audit.Domain.Entities.Common;
+
 
 namespace Internal.Audit.Application.Contracts.Persistent.RiskProfiles;
 
-public interface IRiskProfileQueryRepository : IAsyncQueryRepository<RiskProfile>
+public interface IRiskProfileQueryRepository : IAsyncQueryRepository<CompositeRiskProfile>
 {
-    Task<IEnumerable<RiskProfile>> GetAll();
-    Task<RiskProfile> GetById(Guid id);
+    Task<(long, IEnumerable<CompositeRiskProfile>)> GetAll(int pageSize, int pageNumber);
+    Task<CompositeRiskProfile> GetById(Guid id);
 }

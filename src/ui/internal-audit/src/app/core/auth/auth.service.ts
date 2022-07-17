@@ -11,6 +11,6 @@ export class AuthService {
   constructor(private http:HttpService) { }
 
    authenticate(username:string,password:string){
-    return this.http.post('api/v1/authentication',{email:username,password:password});
+    return this.http.post('authentication',{email:username,password:password});
   }
 }

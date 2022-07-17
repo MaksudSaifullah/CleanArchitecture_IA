@@ -65,6 +65,11 @@ using Internal.Audit.Application.Features.UserRegistration.Queries.GetALlUserLis
 using Internal.Audit.Application.Features.UserRegistration.Commands.UpdateUserRegistration;
 using Internal.Audit.Application.Features.UserRegistration.Commands.DeleteUserRegistration;
 using Internal.Audit.Application.Features.Designation.Queries.GetDesignationById;
+using Internal.Audit.Application.Features.ModulewiseRolePrivilege.Commands.AddModulewiseRolePrivilege;
+using Internal.Audit.Application.Features.ModulewiseRolePrivilege.Commands.UpdateModulewisePrivilege;
+using Internal.Audit.Application.Features.ModulewiseRolePrivilege.Quiries.GetModilewiseRoleByRoleIdList;
+using Internal.Audit.Application.Features.ModuleFeature.Quiries.GetAllModuleList;
+using Internal.Audit.Application.Features.ModuleFeature.Quiries.GetOnlyModuleList;
 
 namespace Internal.Audit.Application.Mappings;
 
@@ -85,6 +90,7 @@ public class MappingProfile: Profile
         CreateMap<Country, DeleteCountryCommand>().ReverseMap();
 
         CreateMap<RiskProfile, RiskProfileDTO>().ReverseMap();
+        CreateMap<CompositeRiskProfile, RiskProfileDTO>().ReverseMap();
         CreateMap<RiskProfile, RiskProfileByIdDTO>().ReverseMap();
         CreateMap<RiskProfile, AddRiskProfileResponseDTO>().ReverseMap();
         CreateMap<RiskProfile, AddRiskProfileCommand>().ReverseMap();
@@ -175,5 +181,12 @@ public class MappingProfile: Profile
         CreateMap<Employee, AddEmployeeUpdateCommand>().ReverseMap();
         CreateMap<User, DeleteUserRegistrationCommand>().ReverseMap();
         CreateMap<User, DeleteUserRegistrationResponseDTO>().ReverseMap();
+
+        CreateMap<ModulewiseRolePriviliege, AddModulewiseRolePrivilegeCommand>().ReverseMap();
+        CreateMap<ModulewiseRolePriviliege, UpdateModulewiseRolePrivilegeCommand>().ReverseMap();
+        CreateMap<ModulewiseRolePriviliege, GetModulewiseRolePrivilegeByRoleIdListResponseDTO>().ReverseMap();
+
+        CreateMap<ModuleFeature, GetAllModuleListResponseDTO>().ReverseMap();
+        CreateMap<AuditModule, GetOnlyModuleListResponseDTO>().ReverseMap();
     }
 }

@@ -8,7 +8,7 @@ import { Title } from '@angular/platform-browser';
 @Component({
   // tslint:disable-next-line:component-selector
   selector: 'body',
-  template: '<router-outlet></router-outlet>',
+  templateUrl: './app.component.html',
 })
 export class AppComponent implements OnInit {
   title = 'Internal-Audit';
@@ -17,7 +17,9 @@ export class AppComponent implements OnInit {
     private router: Router,
     private titleService: Title,
     private iconSetService: IconSetService
+
   ) {
+
     titleService.setTitle(this.title);
     // iconSet singleton
     iconSetService.icons = { ...iconSubset };
@@ -29,5 +31,6 @@ export class AppComponent implements OnInit {
         return;
       }
     });
+
   }
 }

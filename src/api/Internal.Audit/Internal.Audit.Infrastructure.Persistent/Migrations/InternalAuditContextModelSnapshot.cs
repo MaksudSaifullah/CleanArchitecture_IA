@@ -473,8 +473,8 @@ namespace Internal.Audit.Infrastructure.Persistent.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Description")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
 
                     b.Property<DateTime>("EffectiveFrom")
                         .HasColumnType("datetime2");
@@ -740,6 +740,80 @@ namespace Internal.Audit.Infrastructure.Persistent.Migrations
                         .IsUnique();
 
                     b.ToTable("Employee", "Security");
+                });
+
+            modelBuilder.Entity("Internal.Audit.Domain.Entities.security.ModulewiseRolePriviliege", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier")
+                        .HasColumnName("Id")
+                        .HasDefaultValueSql("newsequentialid()");
+
+                    b.Property<string>("ApprovedBy")
+                        .HasMaxLength(10)
+                        .HasColumnType("nvarchar(10)");
+
+                    b.Property<DateTime?>("ApprovedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid>("AuditFeatureId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("AuditModuleId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("CreatedBy")
+                        .IsRequired()
+                        .HasMaxLength(10)
+                        .HasColumnType("nvarchar(10)");
+
+                    b.Property<DateTime>("CreatedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsCreate")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsDelete")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsDeleted")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bit")
+                        .HasDefaultValueSql("0");
+
+                    b.Property<bool>("IsEdit")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsView")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("ReviewedBy")
+                        .HasMaxLength(10)
+                        .HasColumnType("nvarchar(10)");
+
+                    b.Property<DateTime?>("ReviewedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid>("RoleId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("UpdatedBy")
+                        .HasMaxLength(10)
+                        .HasColumnType("nvarchar(10)");
+
+                    b.Property<DateTime?>("UpdatedOn")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AuditFeatureId");
+
+                    b.HasIndex("AuditModuleId");
+
+                    b.HasIndex("RoleId");
+
+                    b.ToTable("ModulewiseRolePriviliege", "Security");
                 });
 
             modelBuilder.Entity("Internal.Audit.Domain.Entities.security.PasswordPolicy", b =>
@@ -1491,6 +1565,33 @@ namespace Internal.Audit.Infrastructure.Persistent.Migrations
                     b.Navigation("Designation");
 
                     b.Navigation("User");
+                });
+
+            modelBuilder.Entity("Internal.Audit.Domain.Entities.security.ModulewiseRolePriviliege", b =>
+                {
+                    b.HasOne("Internal.Audit.Domain.Entities.Common.AuditFeature", "AuditFeature")
+                        .WithMany()
+                        .HasForeignKey("AuditFeatureId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Internal.Audit.Domain.Entities.Common.AuditModule", "AuditModule")
+                        .WithMany()
+                        .HasForeignKey("AuditModuleId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Internal.Audit.Domain.Entities.Security.Role", "Role")
+                        .WithMany()
+                        .HasForeignKey("RoleId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("AuditFeature");
+
+                    b.Navigation("AuditModule");
+
+                    b.Navigation("Role");
                 });
 
             modelBuilder.Entity("Internal.Audit.Domain.Entities.Security.RoleAction", b =>

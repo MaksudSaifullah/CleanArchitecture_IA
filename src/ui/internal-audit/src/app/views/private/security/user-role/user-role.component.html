@@ -1,7 +1,7 @@
 
 <c-nav variant="tabs">
-    <a [active]="true" [cTabContent]="tabContent" [routerLink] [tabPaneIdx]="0" cNavLink>User Role</a>
-    <a [cTabContent]="tabContent" [routerLink] [tabPaneIdx]="1" cNavLink>Access Privilege</a>
+    <a  [cTabContent]="tabContent" [routerLink] [tabPaneIdx]="0" cNavLink>User Role</a>
+    <a [active]="true" [cTabContent]="tabContent" [routerLink] [tabPaneIdx]="1" cNavLink>Access Privilege</a>
   </c-nav>
   <c-col xs="12">
     <c-card class="mb-4"> 
@@ -202,6 +202,7 @@
                     <select aria-label="Floating label select example" cSelect id="role"
                       formControlName="module" name="module" (change)="onChangRole($event.target)">
                       <option value="null">Select Module</option>
+                      <option value="00000000-0000-0000-0000-000000000000">All</option>
                       <option *ngFor="let module of modules" [value]="module.id">
                         {{module.displayName}}
                       </option>
@@ -239,14 +240,14 @@
                           <td>{{ privilege.feature.displayName }}</td>                         
                           <td>
                             <div>                              
-                              <label class = "checkbox-inline" style="margin-left: 10%;">
-                                <input type = "checkbox" value = "">View
+                              <label class = "checkbox-inline" style="margin-left: 10%;"  >
+                                <input type = "checkbox" value = "" [checked]="isChecked()">View
                              </label>
                              <label class = "checkbox-inline"  style="margin-left: 10%;">
                                 <input type="checkbox" value="">Create
                              </label>
                              <label class = "checkbox-inline"  style="margin-left: 10%;">
-                                <input type = "checkbox" value = "">Update
+                                <input type = "checkbox" value = "">Edit
                              </label>
                              <label class = "checkbox-inline"  style="margin-left: 10%;">
                               <input type = "checkbox" value = "">Delete
@@ -259,14 +260,14 @@
                            <td>{{ privilege.feature.displayName }}</td>                         
                           <td>
                             <div>                            
-                              <label class = "checkbox-inline" style="margin-left: 10%;">
+                              <label class = "checkbox-inline" style="margin-left: 10%;" [checked]=true>
                                 <input type = "checkbox" value = "">View
                              </label>
                              <label class = "checkbox-inline"  style="margin-left: 10%;">
                                 <input type="checkbox" value="">Create
                              </label>
                              <label class = "checkbox-inline"  style="margin-left: 10%;">
-                                <input type = "checkbox" value = "">Update
+                                <input type = "checkbox" value = "">Edit
                              </label>
                              <label class = "checkbox-inline"  style="margin-left: 10%;">
                               <input type = "checkbox" value = "">Delete

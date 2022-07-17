@@ -169,7 +169,9 @@ export class UserRoleComponent implements OnInit {
 
 
   }
-
+  isChecked(){
+    return true;
+  }
   private ReloadAllDataTable() {
     this.dtElements?.forEach((dtElement: DataTableDirective, index: number) => {
       this.dataTableService.redraw(dtElement);

@@ -9,8 +9,12 @@ namespace Internal.Audit.Application.Features.ModulewiseRolePrivilege.Commands.A
 {
     public class AddModulewiseRolePrivilegeCommand:IRequest<AddModulewiseRolePrivilegeResponseDTO>
     {
-        public Guid AuditModuleId { get; set; }      
-        public Guid AuditFeatureId { get; set; }   
+        public List<AddModulewiseRolePrivilege> AddModulewiseRolePrivilegeList { get; set; }
+    }
+    public class AddModulewiseRolePrivilege
+    {
+        public Guid AuditModuleId { get; set; }
+        public Guid AuditFeatureId { get; set; }
         public Guid RoleId { get; set; }
         public bool IsView { get; set; }
         public bool IsCreate { get; set; }

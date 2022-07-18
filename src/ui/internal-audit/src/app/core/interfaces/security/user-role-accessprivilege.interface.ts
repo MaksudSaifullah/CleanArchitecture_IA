@@ -45,4 +45,7 @@ export interface RoleBody {
     isEdit?:         boolean;
     isDelete?:       boolean;
 }
+export interface RoleRequest {
+    addModulewiseRolePrivilegeList?: RoleBody[];
+}
 

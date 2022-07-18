@@ -188,5 +188,6 @@ public class MappingProfile: Profile
 
         CreateMap<ModuleFeature, GetAllModuleListResponseDTO>().ReverseMap();
         CreateMap<AuditModule, GetOnlyModuleListResponseDTO>().ReverseMap();
+        CreateMap<AddModulewiseRolePrivilege, ModulewiseRolePriviliege>().ReverseMap();
     }
 }

@@ -1,7 +1,7 @@
 
 <c-nav variant="tabs">
-    <a  [cTabContent]="tabContent" [routerLink] [tabPaneIdx]="0" cNavLink>User Role</a>
-    <a [active]="true" [cTabContent]="tabContent" [routerLink] [tabPaneIdx]="1" cNavLink>Access Privilege</a>
+    <a [active]="true" [cTabContent]="tabContent" [routerLink] [tabPaneIdx]="0" cNavLink>User Role</a>
+    <a  [cTabContent]="tabContent" [routerLink] [tabPaneIdx]="1" cNavLink>Access Privilege</a>
   </c-nav>
   <c-col xs="12">
     <c-card class="mb-4"> 
@@ -241,16 +241,16 @@
                           <td>
                             <div>                              
                               <label class = "checkbox-inline" style="margin-left: 10%;"  >
-                                <input type = "checkbox" value = "" [checked]="isChecked('view',privilege.module.id,privilege.feature.id)">View
+                                <input type = "checkbox" value = "" [checked]="isChecked('view',privilege.module.id,privilege.feature.id)" (change)="onCheckChange($event,'view',privilege.module.id,privilege.feature.id)">View
                              </label>
                              <label class = "checkbox-inline"  style="margin-left: 10%;">
-                              <input type="checkbox" value="" [checked]="isChecked('create',privilege.module.id,privilege.feature.id)">Create
+                              <input type="checkbox" value="" [checked]="isChecked('create',privilege.module.id,privilege.feature.id)" (change)="onCheckChange($event,'create',privilege.module.id,privilege.feature.id)">Create
                            </label>
                            <label class = "checkbox-inline"  style="margin-left: 10%;">
-                              <input type = "checkbox" value = "" [checked]="isChecked('edit',privilege.module.id,privilege.feature.id)">Edit
+                              <input type = "checkbox" value = "" [checked]="isChecked('edit',privilege.module.id,privilege.feature.id)" (change)="onCheckChange($event,'edit',privilege.module.id,privilege.feature.id)">Edit
                            </label>
                            <label class = "checkbox-inline"  style="margin-left: 10%;">
-                            <input type = "checkbox" value = "" [checked]="isChecked('delete',privilege.module.id,privilege.feature.id)">Delete
+                            <input type = "checkbox" value = "" [checked]="isChecked('delete',privilege.module.id,privilege.feature.id)" (change)="onCheckChange($event,'delete',privilege.module.id,privilege.feature.id)">Delete
                          </label>
                             </div>
                           </td>
@@ -260,18 +260,18 @@
                            <td>{{ privilege.feature.displayName }}</td>                         
                           <td>
                             <div>                            
-                              <label class = "checkbox-inline" style="margin-left: 10%;">
-                                <input type = "checkbox" value = "" [checked]="isChecked('view',privilege.module.id,privilege.feature.id)">View
+                              <label class = "checkbox-inline" style="margin-left: 10%;"  >
+                                <input type = "checkbox" value = "" [checked]="isChecked('view',privilege.module.id,privilege.feature.id)" (change)="onCheckChange($event,'view',privilege.module.id,privilege.feature.id)">View
                              </label>
                              <label class = "checkbox-inline"  style="margin-left: 10%;">
-                                <input type="checkbox" value="" [checked]="isChecked('create',privilege.module.id,privilege.feature.id)">Create
-                             </label>
-                             <label class = "checkbox-inline"  style="margin-left: 10%;">
-                                <input type = "checkbox" value = "" [checked]="isChecked('edit',privilege.module.id,privilege.feature.id)">Edit
-                             </label>
-                             <label class = "checkbox-inline"  style="margin-left: 10%;">
-                              <input type = "checkbox" value = "" [checked]="isChecked('delete',privilege.module.id,privilege.feature.id)">Delete
+                              <input type="checkbox" value="" [checked]="isChecked('create',privilege.module.id,privilege.feature.id)" (change)="onCheckChange($event,'create',privilege.module.id,privilege.feature.id)">Create
                            </label>
+                           <label class = "checkbox-inline"  style="margin-left: 10%;">
+                              <input type = "checkbox" value = "" [checked]="isChecked('edit',privilege.module.id,privilege.feature.id)" (change)="onCheckChange($event,'edit',privilege.module.id,privilege.feature.id)">Edit
+                           </label>
+                           <label class = "checkbox-inline"  style="margin-left: 10%;">
+                            <input type = "checkbox" value = "" [checked]="isChecked('delete',privilege.module.id,privilege.feature.id)" (change)="onCheckChange($event,'delete',privilege.module.id,privilege.feature.id)">Delete
+                         </label>
                             </div>
                           </td>
                         </tr>
@@ -290,8 +290,8 @@
                     </tbody>
                   </table>
                   <div>
-                    <button cButton class="btn btn-primary btnSaveColor me-1">Save</button>
-                    <button [cModalToggle]="verticallyCenteredModal.id" cButton class="btn btn-danger btnCancelColor me-1">
+                    <button cButton class="btn btn-primary btnSaveColor me-1" (click)="onAccessPrivilegeSubmit()">Save</button>
+                    <button cButton class="btn btn-danger btnCancelColor me-1" (click)="refreshCheckboxSelect()">
                       Cancel
                  </button>
                   </div>

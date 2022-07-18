@@ -44,6 +44,6 @@ namespace Internal.Audit.Domain.Entities.BranchAudit
         public virtual AuditType AuditType { get; set; } = null!;
 
         [ForeignKey("RiskAssesmentId")]
-        public virtual RiskAssesment RiskAssesment { get; set; } = null!;
+        public virtual RiskAssessment RiskAssesment { get; set; } = null!;
     }
 }

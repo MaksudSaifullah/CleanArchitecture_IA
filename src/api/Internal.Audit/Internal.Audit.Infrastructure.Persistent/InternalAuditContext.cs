@@ -39,6 +39,7 @@ public class InternalAuditContext: DbContext
     public DbSet<ModuleFeature> ModuleFeatures { get; set; }
     public DbSet<EmailConfiguration> EmailConfigurations { get; set; }
     public DbSet<TopicHead> TopicHeads { get; set; }
+    public DbSet<RiskAssessment> RiskAssessments { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

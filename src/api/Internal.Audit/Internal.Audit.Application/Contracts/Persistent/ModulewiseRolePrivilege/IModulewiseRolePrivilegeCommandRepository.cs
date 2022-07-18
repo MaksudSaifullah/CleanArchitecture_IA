@@ -9,5 +9,6 @@ namespace Internal.Audit.Application.Contracts.Persistent.ModulewiseRolePrivileg
 {
     public interface IModulewiseRolePrivilegeCommandRepository : IAsyncCommandRepository<ModulewiseRolePriviliege>
     {
+        Task<IReadOnlyList<ModulewiseRolePriviliege>> GetByRoleAuditFeatureId(Guid roleId,Guid featureId,Guid moduleId);
     }
 }

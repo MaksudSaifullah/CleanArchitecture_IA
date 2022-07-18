@@ -37,6 +37,7 @@ public class InternalAuditContext: DbContext
     public DbSet<ModulewiseRolePriviliege> ModulewiseRolePrivilieges { get; set; }
     public DbSet<ModuleFeature> ModuleFeatures { get; set; }
     public DbSet<EmailConfiguration> EmailConfigurations { get; set; }
+    public DbSet<TopicHead> TopicHeads { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

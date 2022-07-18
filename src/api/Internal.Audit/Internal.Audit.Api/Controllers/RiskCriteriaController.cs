@@ -19,7 +19,7 @@ namespace Internal.Audit.Api.Controllers
         }
 
         [HttpPost("paginated")]
-        public async Task<ActionResult<RiskCriteriaListPagingDTO>> GetList(GetRiskCriteriaListQueryHandler getRiskCriteriaListQuery)
+        public async Task<ActionResult<RiskCriteriaListPagingDTO>> GetList(GetRiskCriteriaListQuery getRiskCriteriaListQuery)
         {
             var riskCriteria = await _mediator.Send(getRiskCriteriaListQuery);
             return Ok(riskCriteria);

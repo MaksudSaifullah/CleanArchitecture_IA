@@ -54,30 +54,20 @@ export class UserlistComponent implements OnInit {
       serverSide: true,
       processing: true,
       searching: false,
+
       ajax: (dataTablesParameters: any, callback) => {
         this.http
           .paginatedPost(
             'userlist/Paginated',dataTablesParameters.length,((dataTablesParameters.start/dataTablesParameters.length)+1),{"userName": this.userName,"employeeName": this.employeeName,"userRole": this.userRole}
-          ).subscribe(resp => {
-            var convertedResponse = resp as paginatedResponseInterface<compositeUser>;
-            that.compositeUsers = convertedResponse.items;
-            callback({
-              recordsTotal: convertedResponse.totalCount,
-              recordsFiltered: convertedResponse.totalCount,
-              data: []
-            });
-          });
+          ).subscribe(resp => that.compositeUsers = this.dataTableService.datatableMap(resp,callback));
       },
+
+      
+
     };
 
   }
 
-  // LoadRole() {
-  //   this.http.get('role/all').subscribe(resp => {
-  //     this.roles = (resp as role[]);
-  //     console.log(this.roles);
-  //   })
-  // }
   LoadRole() {
     this.http.paginatedPost('role/paginated', 100, 1, {}).subscribe(resp => {
       let convertedResp = resp as paginatedResponseInterface<role>;

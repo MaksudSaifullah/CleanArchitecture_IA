@@ -38,6 +38,8 @@ using Internal.Audit.Application.Contracts.Persistent.ModulewiseRolePrivilege;
 using Internal.Audit.Infrastructure.Persistent.Repositories.ModulewiseRolePrivilege;
 using Internal.Audit.Application.Contracts.Persistent.ModuleFeature;
 using Internal.Audit.Infrastructure.Persistent.Repositories.ModuleFeature;
+using Internal.Audit.Application.Contracts.Persistent.EmailConfigs;
+using Internal.Audit.Infrastructure.Persistent.Repositories.EmailConfig;
 
 namespace Internal.Audit.Infrastructure.Persistent;
 
@@ -98,6 +100,9 @@ public static class PersistentInfrastructureServiceRegistration
 
         services.AddScoped<IModuleFeatureCommandRepository, ModuleFeatureCommandRepository>();
         services.AddScoped<IModuleFeatureQueryRepository>(s => new ModuleFeatureQueryRepository(configuration.GetConnectionString("InternalAuditDb")));
+
+        services.AddScoped<IEmailConfigCommandRepository, EmailConfigCommandRepository>();
+        services.AddScoped<IEmailConfigQueryRepository>(s => new EmailConfigQueryRepository(configuration.GetConnectionString("InternalAuditDb")));
 
         return services;
     }

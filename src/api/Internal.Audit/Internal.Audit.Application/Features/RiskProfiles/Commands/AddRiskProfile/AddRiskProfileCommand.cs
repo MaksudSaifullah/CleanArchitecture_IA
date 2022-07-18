@@ -15,5 +15,5 @@ public class AddRiskProfileCommand : IRequest<AddRiskProfileResponseDTO>
     public DateTime EffectiveFrom { get; set; }
     public DateTime EffectiveTo { get; set; }
     public string? Description { get; set; } = null;
-    public bool IsActive { get; set; }
+    public bool? IsActive { get; set; }
 }

@@ -8,7 +8,7 @@ using System.ComponentModel;
 using System.Reflection;
 using Internal.Audit.Domain.Entities.Common;
 using Internal.Audit.Domain.Entities.Config;
-using Internal.Audit.Domain.Entities.BranchAudit;
+
 
 namespace Internal.Audit.Infrastructure.Persistent;
 
@@ -37,7 +37,7 @@ public class InternalAuditContext: DbContext
     public DbSet<ModulewiseRolePriviliege> ModulewiseRolePrivilieges { get; set; }
     public DbSet<ModuleFeature> ModuleFeatures { get; set; }
 
-    public DbSet<RiskCriteria> RiskCriterias { get; set; }
+
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

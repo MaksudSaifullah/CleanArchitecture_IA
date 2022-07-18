@@ -38,8 +38,6 @@ using Internal.Audit.Application.Contracts.Persistent.ModulewiseRolePrivilege;
 using Internal.Audit.Infrastructure.Persistent.Repositories.ModulewiseRolePrivilege;
 using Internal.Audit.Application.Contracts.Persistent.ModuleFeature;
 using Internal.Audit.Infrastructure.Persistent.Repositories.ModuleFeature;
-using Internal.Audit.Application.Contracts.Persistent.RiskCriterias;
-using Internal.Audit.Infrastructure.Persistent.Repositories.RiskCriterias;
 
 namespace Internal.Audit.Infrastructure.Persistent;
 
@@ -102,8 +100,6 @@ public static class PersistentInfrastructureServiceRegistration
         services.AddScoped<IModuleFeatureQueryRepository>(s => new ModuleFeatureQueryRepository(configuration.GetConnectionString("InternalAuditDb")));
 
 
-        services.AddScoped<IRiskCriteriaCommandRepository, RiskCriteriaCommandRepository>();
-        services.AddScoped<IRiskCriteriaQueryRepository>(s => new RiskCriteriaQueryRepository(configuration.GetConnectionString("InternalAuditDb")));
 
         return services;
     }

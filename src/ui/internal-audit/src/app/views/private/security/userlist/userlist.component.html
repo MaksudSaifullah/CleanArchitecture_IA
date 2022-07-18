@@ -60,10 +60,10 @@
                       <td>{{ user.isPasswordExpired }}</td>
                       <td>
                         <div class="btn-group" role="group" aria-label="Basic example">
-                          <button type="button" class="btn btn-secondary" [routerLink]="['/security/userRegistration',user.id]">
+                          <button type="button" class="btn btn-secondary btnSaveColor" [routerLink]="['/security/userRegistration',user.id]">
                            Edit
                           </button>
-                          <button type="button" class="btn btn-danger" (click)="lockUser(user.id)">
+                          <button type="button" class="btn btn-danger btnDeleteColor" (click)="lockUser(user.id)">
                             Lock User
                           </button>
                         </div>

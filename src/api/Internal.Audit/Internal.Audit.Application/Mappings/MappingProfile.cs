@@ -75,6 +75,11 @@ using Internal.Audit.Application.Features.EmailConfig.Queries.GetEmailConfigList
 using Internal.Audit.Application.Features.EmailConfig.Queries.GetEmailConfigById;
 using Internal.Audit.Application.Features.EmailConfig.Commands.AddEmailConfig;
 using Internal.Audit.Application.Features.EmailConfig.Commands.DeleteEmailConfig;
+using Internal.Audit.Application.Features.TopicHeads.Queries.GetTopicHeadList;
+using Internal.Audit.Domain.Entities.BranchAudit;
+using Internal.Audit.Application.Features.TopicHeads.Queries.GetTopicHeadById;
+using Internal.Audit.Application.Features.TopicHeads.Commands.AddTopicHead;
+using Internal.Audit.Application.Features.TopicHeads.Commands.UpdateTopicHead;
 
 namespace Internal.Audit.Application.Mappings;
 
@@ -201,5 +206,10 @@ public class MappingProfile: Profile
         CreateMap<EmailConfiguration, DeleteEmailConfigCommand>().ReverseMap();
         CreateMap<EmailConfiguration, DeleteEmailConfigResponseDTO>().ReverseMap();
         CreateMap<AuditModule, GetOnlyModuleListResponseDTO>().ReverseMap();
+
+        CreateMap<TopicHead, TopicHeadDTO>().ReverseMap();
+        CreateMap<TopicHead, TopicHeadByIdDTO>().ReverseMap();
+        CreateMap<TopicHead, AddTopicHeadCommand>().ReverseMap();
+        CreateMap<TopicHead, UpdateTopicHeadCommand>().ReverseMap();
     }
 }

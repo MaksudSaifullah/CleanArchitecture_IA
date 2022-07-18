@@ -32,7 +32,7 @@ END"
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.Sql(@"DROP PROCEDURE dbo.GetCountryListProcedure }");
+            migrationBuilder.Sql(@"DROP PROCEDURE dbo.GetCountryListProcedure");
         }
     }
 }

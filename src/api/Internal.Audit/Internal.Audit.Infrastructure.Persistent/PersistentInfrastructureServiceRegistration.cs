@@ -40,6 +40,8 @@ using Internal.Audit.Application.Contracts.Persistent.ModuleFeature;
 using Internal.Audit.Infrastructure.Persistent.Repositories.ModuleFeature;
 using Internal.Audit.Application.Contracts.Persistent.EmailConfigs;
 using Internal.Audit.Infrastructure.Persistent.Repositories.EmailConfig;
+using Internal.Audit.Application.Contracts.Persistent.RiskAssessments;
+using Internal.Audit.Infrastructure.Persistent.Repositories.RiskAssessments;
 
 namespace Internal.Audit.Infrastructure.Persistent;
 
@@ -103,6 +105,9 @@ public static class PersistentInfrastructureServiceRegistration
 
         services.AddScoped<IEmailConfigCommandRepository, EmailConfigCommandRepository>();
         services.AddScoped<IEmailConfigQueryRepository>(s => new EmailConfigQueryRepository(configuration.GetConnectionString("InternalAuditDb")));
+
+        services.AddScoped<IRiskAssessmentCommandRepository, RiskAssessmentCommandRepository>();
+        services.AddScoped<IRiskAssessmentQueryRepository>(s => new RiskAssessmentQueryRepository(configuration.GetConnectionString("InternalAuditDb")));
 
         return services;
     }

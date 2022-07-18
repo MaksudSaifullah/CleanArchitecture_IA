@@ -81,6 +81,10 @@ using Internal.Audit.Application.Features.RiskCriterias.Queries.GetRiskCriteriaB
 using Internal.Audit.Application.Features.RiskCriterias.Commands.AddRiskCriteria;
 using Internal.Audit.Application.Features.RiskCriterias.Commands.UpdateRiskCriteria;
 using Internal.Audit.Application.Features.RiskCriterias.Commands.DeleteRiskCriteria;
+using Internal.Audit.Application.Features.TopicHeads.Queries.GetTopicHeadList;
+using Internal.Audit.Application.Features.TopicHeads.Queries.GetTopicHeadById;
+using Internal.Audit.Application.Features.TopicHeads.Commands.AddTopicHead;
+using Internal.Audit.Application.Features.TopicHeads.Commands.UpdateTopicHead;
 
 namespace Internal.Audit.Application.Mappings;
 
@@ -219,5 +223,10 @@ public class MappingProfile : Profile
         CreateMap<RiskCriteria, UpdateRiskCriteriaCommand>().ReverseMap();
         CreateMap<RiskCriteria, DeleteRiskCriteriaResponseDTO>().ReverseMap();
         CreateMap<RiskCriteria, DeleteRiskCriteriaCommand>().ReverseMap();
+
+        CreateMap<TopicHead, TopicHeadDTO>().ReverseMap();
+        CreateMap<TopicHead, TopicHeadByIdDTO>().ReverseMap();
+        CreateMap<TopicHead, AddTopicHeadCommand>().ReverseMap();
+        CreateMap<TopicHead, UpdateTopicHeadCommand>().ReverseMap();
     }
 }

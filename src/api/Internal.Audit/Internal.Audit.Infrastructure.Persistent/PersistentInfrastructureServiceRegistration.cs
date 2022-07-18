@@ -42,6 +42,8 @@ using Internal.Audit.Application.Contracts.Persistent.EmailConfigs;
 using Internal.Audit.Infrastructure.Persistent.Repositories.EmailConfig;
 using Internal.Audit.Application.Contracts.Persistent.RiskCriterias;
 using Internal.Audit.Infrastructure.Persistent.Repositories.RiskCriterias;
+using Internal.Audit.Application.Contracts.Persistent.TopicHeads;
+using Internal.Audit.Infrastructure.Persistent.Repositories.TopicHeads;
 
 namespace Internal.Audit.Infrastructure.Persistent;
 
@@ -109,6 +111,8 @@ public static class PersistentInfrastructureServiceRegistration
         services.AddScoped<IRiskCriteriaCommandRepository, RiskCriteriaCommandRepository>();
         services.AddScoped<IRiskCriteriaQueryRepository>(s => new RiskCriteriaQueryRepository(configuration.GetConnectionString("InternalAuditDb")));
 
+        services.AddScoped<ITopicHeadCommandRepository, TopicHeadCommandRepository>();
+        services.AddScoped<ITopicHeadQueryRepository>(s => new TopicHeadQueryRepository(configuration.GetConnectionString("InternalAuditDb")));
         return services;
     }
 }

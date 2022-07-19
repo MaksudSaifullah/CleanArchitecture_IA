@@ -107,6 +107,7 @@ public static class PersistentInfrastructureServiceRegistration
 
         services.AddScoped<IEmailConfigCommandRepository, EmailConfigCommandRepository>();
         services.AddScoped<IEmailConfigQueryRepository>(s => new EmailConfigQueryRepository(configuration.GetConnectionString("InternalAuditDb")));
+        services.AddScoped<IEmailTypeQueryRepository>(s => new EmailTypeQueryRepository(configuration.GetConnectionString("InternalAuditDb")));
 
         services.AddScoped<IRiskCriteriaCommandRepository, RiskCriteriaCommandRepository>();
         services.AddScoped<IRiskCriteriaQueryRepository>(s => new RiskCriteriaQueryRepository(configuration.GetConnectionString("InternalAuditDb")));

@@ -8,12 +8,14 @@ import { DataTablesModule } from "angular-datatables";
 import { ButtonModule, FormModule, ModalModule } from '@coreui/angular-pro';
 import { ReactiveFormsModule } from '@angular/forms';
 import { RiskProfileComponent } from './riskProfile/risk-profile.component';
+import { EmailConfigComponent } from './emailConfig/emailConfig.component';
 
 
 @NgModule({
   declarations: [
     CountryComponent,
-    RiskProfileComponent
+    RiskProfileComponent,
+    EmailConfigComponent
   ],
   imports: [
     CommonModule,

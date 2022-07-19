@@ -1,4 +1,5 @@
-﻿using Internal.Audit.Domain.Entities.config;
+﻿using Internal.Audit.Domain.CompositeEntities;
+using Internal.Audit.Domain.Entities.config;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,9 +8,8 @@ using System.Threading.Tasks;
 
 namespace Internal.Audit.Application.Contracts.Persistent.EmailConfigs
 {
-    public interface IEmailConfigQueryRepository : IAsyncQueryRepository<EmailConfiguration>
+    public interface IEmailConfigQueryRepository : IAsyncQueryRepository<CompositEmailConfig>
     {
-        Task<(long, IEnumerable<EmailConfiguration>)> GetAll(int pageSize, int pageNumber);
-        Task<EmailConfiguration> GetById(Guid id);
+        Task<(long, IEnumerable<CompositEmailConfig>)> GetAll(string searchTerm, int pageSize, int pageNumber);
     }
 }

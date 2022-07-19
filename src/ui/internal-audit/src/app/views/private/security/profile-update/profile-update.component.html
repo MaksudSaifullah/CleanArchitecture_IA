@@ -1,0 +1,22 @@
+<div class="col-lg-4 m-auto">
+
+<c-card>
+  <c-card-header>Update Your Profile</c-card-header>
+  <c-card-body>
+    <form [formGroup]="profileUpdateForm">
+        <div (click)="clickFileControl('profileImage')" class="w-50 m-auto profile-image-div">
+          <img *ngIf="imageUrl == ''" src="assets/img/avatars/1.jpg" class="profile-image">
+          <img *ngIf="imageUrl != ''" src="{{imageUrl}}" class="profile-image">
+        </div>
+        <div cRow>
+          <div class="mt-2">
+            <input type="text" placeholder="Full Name" class="form-control" formControlName="fullName" (tap)="clickFileControl('profileImage')">
+          </div>
+          <input type="file" class="d-none" formControlName="profileImage" id="profileImage" (change)="onFileChange($event)">
+        </div>
+        <button cButton class="mt-4" (click)="submit()">Update Profile</button>
+    </form>
+  </c-card-body>
+</c-card>
+</div>
+

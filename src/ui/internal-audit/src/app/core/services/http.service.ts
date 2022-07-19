@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
-import { Observable, throwError } from 'rxjs';
+import {Observable, pipe, throwError} from 'rxjs';
 import { retry, catchError } from 'rxjs/operators';
 import { environment } from '../../../environments/environment';
 import {paginatedModelInterface} from './../interfaces/paginated.interface'
@@ -73,6 +73,18 @@ export class HttpService {
         retry(0),
         catchError(this.handleError)
       )
+  }
+
+  postwithFiles(endpoint:string,item:any, files:any[]): Observable<any>{
+    let formData:FormData = new FormData();
+    for (let file in files){
+      formData.append('uploadFile', file);
+    }
+
+    formData.append('data', JSON.stringify(item));
+    this.httpOptions.headers.append('Content-Type', 'multipart/form-data');
+    this.httpOptions.headers.append('Accept', 'application/json');
+    return this.httpClient.post(`${`${this.hostName}/${endpoint}`}`, formData,this.httpOptions).pipe(retry(0),catchError(this.handleError));
   }
   //#endregion
 

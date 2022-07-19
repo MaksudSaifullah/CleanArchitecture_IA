@@ -21,11 +21,6 @@ namespace Internal.Audit.Infrastructure.Persistent.EFConfiguration
                   .HasForeignKey(b => b.RiskCriteriaTypeId)
                   .OnDelete(DeleteBehavior.NoAction);
 
-            //builder.HasOne<CommonValueAndType>(b => b.CommonValueImpactType)
-            //     .WithMany()
-            //     .HasForeignKey(b => b.ImpactTypeId)
-            //     .OnDelete(DeleteBehavior.NoAction);
-
 
             builder.HasOne<CommonValueAndType>(b => b.CommonValueRatingType)
                  .WithMany()

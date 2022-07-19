@@ -18,7 +18,7 @@ public class TopicHead : EntityBase
 
     [Required]
     [MaxLength(100)]
-    public string Name { get; set; }    
+    public string Name { get; set; } = null!;
 
     [Required]
     public DateTime EffectiveFrom { get; set; }
@@ -32,6 +32,8 @@ public class TopicHead : EntityBase
     [Required]
     [DefaultValue("1")]
     public bool IsActive { get; set; }
+    [NotMapped]
+    public string CountryName { get; set; } = null!;
 
     //Navigation properties
     [ForeignKey("CountryId")]

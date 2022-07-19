@@ -26,6 +26,7 @@ namespace Internal.Audit.Infrastructure.Persistent.Repositories.RiskCriterias
         public async Task<CompositeRiskCriteria> GetById(Guid id)
         {
             var query = @"SELECT rc.[Id]
+                        ,cntr.Id AS CountryId
 	                    ,cvtct.Text AS RiskCriteriaType
 		                ,rc.[MinimumValue]
 		                ,rc.[MaximumValue]
@@ -37,7 +38,7 @@ namespace Internal.Audit.Infrastructure.Persistent.Repositories.RiskCriterias
                         ,rc.[CreatedBy]
                         ,rc.[CreatedOn]		
                          FROM[BranchAudit].[RiskCriteria] as rc
-	                INNER JOIN [common].Country as cn on cn.Id = rc.CountryId 
+	                INNER JOIN [common].[Country] as cntr on cntr.Id = rc.CountryId  
 	                INNER JOIN [config].[CommonValueAndType] as cvtct on cvtct.Id = rc.RiskCriteriaTypeId      
                     INNER JOIN [config].[CommonValueAndType] as cvtrt on cvtrt.Id = rc.RatingTypeId
                     WHERE  Id = @id  AND rc.IsDeleted = 0 ";

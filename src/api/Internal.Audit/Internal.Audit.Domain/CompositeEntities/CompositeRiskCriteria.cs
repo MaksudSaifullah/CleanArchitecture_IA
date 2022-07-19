@@ -10,11 +10,14 @@ public class CompositeRiskCriteria : EntityBase
 
 {
     public Guid Id { get; set; }
-    public string CountryId { get; set; }
-    public string RiskCriteriaTypeId { get; set; }
+    public Guid CountryId { get; set; }
+
+    public Guid RiskCriteriaTypeId { get; set; }
+    public string RiskCriteriaType { get; set; } = null!;
     public decimal MinimumValue { get; set; }
     public decimal MaximumValue { get; set; }
-    public string RatingTypeId { get; set; }
+    public Guid RatingTypeId { get; set; }
+    public string RatingType { get; set; } = null!;
     public decimal Score { get; set; }
     public DateTime EffectiveFrom { get; set; }
     public DateTime EffectiveTo { get; set; }

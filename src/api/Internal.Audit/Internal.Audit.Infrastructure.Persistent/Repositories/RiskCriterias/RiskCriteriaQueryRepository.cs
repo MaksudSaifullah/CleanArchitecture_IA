@@ -41,7 +41,7 @@ namespace Internal.Audit.Infrastructure.Persistent.Repositories.RiskCriterias
 	                INNER JOIN [common].[Country] as cntr on cntr.Id = rc.CountryId  
 	                INNER JOIN [config].[CommonValueAndType] as cvtct on cvtct.Id = rc.RiskCriteriaTypeId      
                     INNER JOIN [config].[CommonValueAndType] as cvtrt on cvtrt.Id = rc.RatingTypeId
-                    WHERE  Id = @id  AND rc.IsDeleted = 0 ";
+                    WHERE  rc.[Id] = @id  AND rc.IsDeleted = 0 ";
             var parameters = new Dictionary<string, object> { { "id", id } };
 
             return await Single(query, parameters);

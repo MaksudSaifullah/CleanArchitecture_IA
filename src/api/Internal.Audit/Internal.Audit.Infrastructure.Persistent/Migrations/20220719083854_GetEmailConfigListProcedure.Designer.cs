@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Internal.Audit.Infrastructure.Persistent.Migrations
 {
     [DbContext(typeof(InternalAuditContext))]
-    [Migration("20220717101325_GetEmailConfigListProcedure")]
+    [Migration("20220719083854_GetEmailConfigListProcedure")]
     partial class GetEmailConfigListProcedure
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -475,8 +475,8 @@ namespace Internal.Audit.Infrastructure.Persistent.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Description")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
 
                     b.Property<DateTime>("EffectiveFrom")
                         .HasColumnType("datetime2");

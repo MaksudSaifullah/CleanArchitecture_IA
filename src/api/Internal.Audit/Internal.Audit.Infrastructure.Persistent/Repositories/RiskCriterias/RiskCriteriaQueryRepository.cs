@@ -27,10 +27,10 @@ namespace Internal.Audit.Infrastructure.Persistent.Repositories.RiskCriterias
         {
             var query = @"SELECT rc.[Id]
                         ,cntr.Id AS CountryId
-	                    ,cvtct.Text AS RiskCriteriaType
+	                    ,cvtct.Id AS RiskCriteriaTypeId
 		                ,rc.[MinimumValue]
 		                ,rc.[MaximumValue]
-	                    ,cvtrt.Text AS RatingType
+	                    ,cvtrt.Id AS RatingTypeId
 		                ,rc.[Score]
                         ,rc.[EffectiveFrom]
                         ,rc.[EffectiveTo]

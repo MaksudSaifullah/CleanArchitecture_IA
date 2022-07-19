@@ -33,10 +33,10 @@ export class EmailConfigComponent implements OnInit {
   constructor(private http: HttpService, private fb: FormBuilder, private AlertService: AlertService) { 
     this.emailConfigForm = this.fb.group({
       id: [''],
-      emailTypeId: [null],
-      countryId: [null],
-      templateSubject: [''],
-      templateBody: [''],
+      emailTypeId: [null,[Validators.required]],
+      countryId: [null,[Validators.required]],
+      templateSubject: ['',[Validators.required]],
+      templateBody: ['',[Validators.required]],
       
     })
 

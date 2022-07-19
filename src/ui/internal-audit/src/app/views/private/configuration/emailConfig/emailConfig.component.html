@@ -126,19 +126,28 @@
         <textarea class="form-control" placeholder="Template Subject" formControlName="templateSubject" id="templateSubject"></textarea>
         <label for="floatingTextarea">Template Subject</label>
       </div>
+      <div cRow *ngIf="(emailConfigForm.get('templateSubject')?.invalid && emailConfigForm.get('templateSubject')?.errors) &&         
+          (emailConfigForm.get('templateSubject')?.dirty || emailConfigForm.get('templateSubject')?.touched)">
+          <small class="text-danger">
+            This field is required.
+          </small>                                 
+      </div> 
       <br>
       <div class="form-floating">
         <textarea class="form-control" placeholder="Template Body" formControlName="templateBody" id="templateBody"></textarea>
         <label for="floatingTextarea">Template Body</label>
       </div>
-
+      <div cRow *ngIf="(emailConfigForm.get('templateBody')?.invalid && emailConfigForm.get('templateBody')?.errors) &&         
+          (emailConfigForm.get('templateBody')?.dirty || emailConfigForm.get('templateBody')?.touched)">
+          <small class="text-danger">
+            This field is required.
+          </small>                                 
+      </div> 
       </div>
     </c-modal-body>
     <c-modal-footer>
-      <button cButton class="btn btn-primary btnSaveColor me-1" (click)="onSubmit(verticallyCenteredModal)">Save</button>
-          <button [cModalToggle]="verticallyCenteredModal.id" cButton class="btn btn-danger btnCancelColor me-1">
-            Close
-      </button>
+      <button cButton class="btn btn-primary btnSaveColor me-1" [disabled]="!emailConfigForm.valid" (click)="onSubmit(verticallyCenteredModal)">Save</button>
+      <button [cModalToggle]="verticallyCenteredModal.id" cButton class="btn btn-danger btnCancelColor me-1">Close</button>
     </c-modal-footer>
   </c-modal>
   </form>

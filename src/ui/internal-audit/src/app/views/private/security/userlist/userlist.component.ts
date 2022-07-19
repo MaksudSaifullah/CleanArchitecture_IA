@@ -53,6 +53,12 @@ export class UserlistComponent implements OnInit {
     //console.log(this.userListForm.value.userRole)
     this.dataTableService.redraw(this.datatableElement);
   }
+  clearSearch(){
+    console.log(';sldjfls')
+    this.userListForm.setValue({userName:'',employeeName:'',userRole:''})
+    this.dataTableService.redraw(this.datatableElement);
+  }
+
   LoadData() {
     const that = this;
 

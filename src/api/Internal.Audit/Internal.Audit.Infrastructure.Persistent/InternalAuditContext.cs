@@ -43,8 +43,8 @@ public class InternalAuditContext: DbContext
     public DbSet<RiskAssessment> RiskAssessments { get; set; }
 
     public DbSet<RiskCriteria> RiskCriterias { get; set; }
-    //public DbSet<DocumentSource> DocumentSources { get; set; }
-    //public DbSet<Document> Documents { get; set; }
+    public DbSet<DocumentSource> DocumentSources { get; set; }
+    public DbSet<Document> Documents { get; set; }
 
 
 

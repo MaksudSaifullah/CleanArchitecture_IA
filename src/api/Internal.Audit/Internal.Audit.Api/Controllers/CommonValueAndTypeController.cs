@@ -147,5 +147,13 @@ namespace Internal.Audit.Api.Controllers
             var yesno = await _mediator.Send(query);
             return Ok(yesno);
         }
+
+        [HttpGet("audittype")]
+        public async Task<ActionResult<IEnumerable<LevelOfImpactDTO>>> GetAllLevelOfImpact()
+        {
+            var query = new GetLevelOfImpactQuery();
+            var levelofimpact = await _mediator.Send(query);
+            return Ok(levelofimpact);
+        }
     }
 }

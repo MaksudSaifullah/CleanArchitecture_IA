@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { DataTableDirective } from 'angular-datatables';
 import { Subject } from 'rxjs';
 import { commonValueAndType } from 'src/app/core/interfaces/configuration/commonValueAndType.interface';
@@ -9,6 +9,7 @@ import { DatatableService } from 'src/app/core/services/datatable.service';
 import { FormService } from 'src/app/core/services/form.service';
 import { HttpService } from 'src/app/core/services/http.service';
 import {AlertService} from '../../../../core/services/alert.service';
+import { formatDate } from '@angular/common';
 
 @Component({
   selector: 'app-risk-assessment',
@@ -30,7 +31,7 @@ export class RiskAssessmentComponent implements OnInit {
 
   constructor(private http: HttpService , private fb: FormBuilder, private AlertService: AlertService) { 
 
-    this.LoadDropDownValues();
+    //this.LoadDropDownValues();
     this.riskAssessmentForm = this.fb.group({
       id: [''],
       countryId:[null,[Validators.required, Validators.pattern("^(?!null$).*$")]],
@@ -49,5 +50,78 @@ export class RiskAssessmentComponent implements OnInit {
   ngOnInit(): void {   
     this.LoadData();
   };
+
+  LoadData() {
+    const that = this;
+    this.dtOptions = {
+      pagingType: 'full_numbers',
+      pageLength: 10,
+      serverSide: true,
+      processing: true,
+      searching: false,
+      ajax: (dataTablesParameters: any, callback) => {
+        this.http
+          .paginatedPost(
+            'riskassessment/paginated',dataTablesParameters.length,((dataTablesParameters.start/dataTablesParameters.length)+1),{}
+          ).subscribe(resp => that.riskAssessments = this.dataTableService.datatableMap(resp,callback));
+      },
+    };
+
+  }
+
+  onSubmit(modalId:any):void{
+    const localmodalId = modalId;
+    if (this.riskAssessmentForm.valid ){
+      if(this.formService.isEdit(this.riskAssessmentForm.get('id') as FormControl)){
+        this.http.put('riskAssessment',this.riskAssessmentForm.value,null).subscribe(x=>{
+            localmodalId.visible = false;
+            this.dataTableService.redraw(this.datatableElement);
+            this.AlertService.success('Risk Assessment Saved Successful');
+          });
+      }
+      else {
+        this.http.post('riskAssessment',this.riskAssessmentForm.value).subscribe(x=>{
+          this.formService.onSaveSuccess(localmodalId,this.datatableElement);
+          this.AlertService.success('Risk Assessment Saved successfully');
+        });
+      }      
+    }
+    else {     
+      this.riskAssessmentForm.markAllAsTouched();
+      return;
+    }    
+  }
+
+  edit(modalId:any, riskAssessment:any):void {
+    const localmodalId = modalId;
+    this.http
+      .getById('riskAssessment', riskAssessment.id)
+      .subscribe(res => {
+          const riskAssessmentResponse = res as riskAssessment;
+          this.effectiveFrom = riskAssessmentResponse.effectiveFrom;
+          this.riskAssessmentForm.setValue({id : riskAssessmentResponse.id, countryId : riskAssessmentResponse.countryId, 
+            auditTypeId: riskAssessmentResponse.auditTypeId,
+            effectiveFrom: formatDate(riskAssessmentResponse.effectiveFrom, 'yyyy-MM-dd', 'en'), effectiveTo: formatDate(riskAssessmentResponse.effectiveTo, 'yyyy-MM-dd', 'en')
+          });
+      });
+      localmodalId.visible = true;
+      
+  }
+
+  delete(id:string){
+    const that = this;
+    this.AlertService.confirmDialog().then(res =>{
+      if(res.isConfirmed){
+          this.http.delete('riskAssessment/'+ id ,{}).subscribe(response=>{
+          this.AlertService.successDialog('Deleted','Risk Profile deleted successfully.');
+          this.dataTableService.redraw(that.datatableElement);
+        })
+      }
+    });
+  }
+  reset(){
+    this.riskAssessmentForm.reset();
+  }
+
 
 }

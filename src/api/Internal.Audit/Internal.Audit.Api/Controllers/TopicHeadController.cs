@@ -1,4 +1,5 @@
 ﻿using Internal.Audit.Application.Features.TopicHeads.Commands.AddTopicHead;
+using Internal.Audit.Application.Features.TopicHeads.Commands.DeleteTopicHead;
 using Internal.Audit.Application.Features.TopicHeads.Commands.UpdateTopicHead;
 using Internal.Audit.Application.Features.TopicHeads.Queries.GetTopicHeadById;
 using Internal.Audit.Application.Features.TopicHeads.Queries.GetTopicHeadList;
@@ -46,13 +47,13 @@ namespace Internal.Audit.Api.Controllers
             return Ok(result);
         }
 
-        //[HttpDelete("{id}")]
-        //public async Task<ActionResult<DeleteCountryResponseDTO>> Delete(Guid Id)
-        //{
-        //    var command = new DeleteCountryCommand(Id);
-        //    var result = await _mediator.Send(command);
-        //    return Ok(result);
-        //}
+        [HttpDelete("id")]
+        public async Task<ActionResult<DeleteTopicHeadResponseDTO>> Delete(Guid Id)
+        {
+            var command = new DeleteTopicHeadCommand(Id);
+            var result = await _mediator.Send(command);
+            return Ok(result);
+        }
 
     }
 

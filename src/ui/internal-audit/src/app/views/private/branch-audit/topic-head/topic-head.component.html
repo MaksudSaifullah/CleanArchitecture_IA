@@ -52,10 +52,10 @@
                     <td>{{ topichead.description }}</td>
                     <td>
                       <div class="btn-group" role="group" aria-label="Basic example">
-                        <button type="button" class="btn btn-secondary btnSaveColor" (click)="edit(verticallyCenteredModal,role)">
+                        <button type="button" class="btn btn-secondary btnSaveColor" (click)="edit(verticallyCenteredModal,topichead)">
                           Edit
                         </button>
-                        <button type="button" class="btn btn-danger btnDeleteColor" (click)="delete(role.id)">
+                        <button type="button" class="btn btn-danger btnDeleteColor" (click)="delete(topichead.id)">
                           Delete
                         </button>
                       </div>
@@ -85,6 +85,22 @@
         <c-modal-body>
           <div class="col-md-12" >
             <input type="hidden" formControlName="id"/>
+              <div class="form-floating mb-3">
+                <select aria-label="Floating label select example" cSelect id="countryId"
+                  formControlName="countryId" name="countryId">
+                  <option value="null">Select Country</option>
+                  <option *ngFor="let country of countries" [value]="country.id">
+                    {{country.name}}
+                  </option>
+                </select>            
+    
+                <div cRow *ngIf="((topicHeadForm.get('countryId')?.invalid && topicHeadForm.get('countryId')?.errors)) &&
+                  (topicHeadForm.get('countryId')?.dirty || topicHeadForm.get('countryId')?.touched)">
+                  <small class="text-danger">
+                    This field is required.
+                  </small>                                 
+                </div>
+              </div>
   
               <div class="form-floating mb-3">
                 <input type="text" class="form-control" formControlName="name" id="name" placeholder="Name">

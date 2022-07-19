@@ -87,5 +87,16 @@ export const navItems: INavData[] = [
       
     ]
   },
+  {
+    name: 'Branch Audit',
+    url: '/branch-audit',
+    iconComponent: { name: 'cil-star' },
+    children: [
+      {
+        name: 'Topic Head',
+        url: '/branch-audit/topichead'
+      },
+    ]
+  },
   
 ];

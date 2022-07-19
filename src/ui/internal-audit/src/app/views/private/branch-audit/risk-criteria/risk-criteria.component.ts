@@ -12,6 +12,7 @@ import {DatatableService} from '../../../../core/services/datatable.service';
 import {AlertService} from '../../../../core/services/alert.service';
 import { paginatedResponseInterface } from 'src/app/core/interfaces/paginated.interface';
 import { formatDate } from '@angular/common';
+import { country } from 'src/app/core/interfaces/configuration/country.interface';
 
 
 @Component({
@@ -26,6 +27,7 @@ export class RiskCriteriaComponent implements OnInit {
   riskCriteriaType: commonValueAndType[] = [];
   ratingType: commonValueAndType[] = [];
   riskCriterias: riskCriteria[] = [];
+  countries: country[] = [];
   riskCriteriaForm: FormGroup;
   formService: FormService = new FormService();
   dataTableService: DatatableService = new DatatableService();
@@ -80,6 +82,13 @@ export class RiskCriteriaComponent implements OnInit {
   //   })
   // }
 
+  LoadCountry() {
+    this.http.paginatedPost('country/paginated', 100, 1, {}).subscribe(resp => {
+      let convertedResp = resp as paginatedResponseInterface<country>;
+      this.countries = convertedResp.items;    
+    })
+  }
+
   LoadRiskCriteriaName() {
     this.http.get('commonValueAndType/riskratingname').subscribe(resp => {
       let convertedResp = resp as commonValueAndType[];
@@ -96,6 +105,7 @@ export class RiskCriteriaComponent implements OnInit {
 
   LoadDropDownValues() {
    // this.LoadLikelihoodLevel();
+    this.LoadCountry();
     this.LoadRiskCriteriaName();
     this.LoadRiskRating();
   }

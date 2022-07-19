@@ -101,23 +101,23 @@
        <!-- <c-modal-body> -->
         <div class="col-md-12" >
           <input type="hidden" formControlName="id"/>  
-            <!-- <div form-floating>
-              <select aria-label="Floating label select example" cSelect id="likelihoodTypeId"
-                formControlName="likelihoodTypeId" name="likelihoodTypeId">
-                <option value=null>Select Likelihood Level</option>
-                <option *ngFor="let commonValueAndType of likelihoodType" [value]="commonValueAndType.id">
-                  {{commonValueAndType.text}}
+           
+            <div form-floating>
+              <select aria-label="Floating label select example" cSelect id="countryId"
+                formControlName="countryId" name="countryId">
+                <option value=null>Select Country</option>
+                <option *ngFor="let country of countries" [value]="country.id">
+                  {{country.name}}
                 </option>
               </select>
             </div>
-  
-            <div cRow *ngIf="(riskProfileForm.get('likelihoodTypeId')?.invalid && riskProfileForm.get('likelihoodTypeId')?.errors) &&         
-              (riskProfileForm.get('likelihoodTypeId')?.dirty || riskProfileForm.get('likelihoodTypeId')?.touched)">
-              <small class="text-danger">
-                This field is required.
-              </small>                                 
-            </div> 
-            <br> -->
+            <div cRow *ngIf="(riskCriteriaForm.get('countryId')?.invalid && riskCriteriaForm.get('countryId')?.errors) &&         
+            (riskCriteriaForm.get('countryId')?.dirty || riskCriteriaForm.get('countryId')?.touched)">
+            <small class="text-danger">
+              This field is required.
+            </small>                                 
+          </div> 
+          <br>
   
             <div form-floating>
               <select aria-label="Floating label select example" cSelect id="riskCriteriaTypeId"

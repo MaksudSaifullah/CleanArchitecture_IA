@@ -9,11 +9,13 @@ import { DataTablesModule } from 'angular-datatables';
 import { HttpClientModule } from '@angular/common/http';
 import { CdkAccordionModule } from '@angular/cdk/accordion';
 import { SecurityRoutingModule } from '../security/security-routing.module';
+import { RiskCriteriaComponent } from './risk-criteria/risk-criteria.component';
 
 
 @NgModule({
   declarations: [
-    TopicHeadComponent
+    TopicHeadComponent,
+    RiskCriteriaComponent
   ],
   imports: [
     CommonModule,

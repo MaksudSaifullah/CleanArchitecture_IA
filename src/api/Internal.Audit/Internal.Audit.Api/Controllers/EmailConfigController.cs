@@ -2,6 +2,7 @@
 using Internal.Audit.Application.Features.EmailConfig.Commands.DeleteEmailConfig;
 using Internal.Audit.Application.Features.EmailConfig.Queries.GetEmailConfigById;
 using Internal.Audit.Application.Features.EmailConfig.Queries.GetEmailConfigList;
+using Internal.Audit.Application.Features.EmailConfig.Queries.GetEmailTypeList;
 using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -22,8 +23,15 @@ namespace Internal.Audit.Api.Controllers
         [HttpPost("paginated")]
         public async Task<ActionResult<EmailConfigListPagingDTO>> GetList(GetEmailConfigListQuery getEmailConfigListQuery)
         {
-            var countries = await _mediator.Send(getEmailConfigListQuery);
-            return Ok(countries);
+            var emailConfigs = await _mediator.Send(getEmailConfigListQuery);
+            return Ok(emailConfigs);
+
+        }
+        [HttpPost("paginatedEmailType")]
+        public async Task<ActionResult<EmailTypePagingDTO>> GetEmailTypeList(GetEmailTypeListQuery getEmailTypeListQuery)
+        {
+            var emailTypes = await _mediator.Send(getEmailTypeListQuery);
+            return Ok(emailTypes);
 
         }
         [HttpGet("{Id}")]
@@ -40,10 +48,10 @@ namespace Internal.Audit.Api.Controllers
             return Ok(result);
         }
 
-        [HttpDelete("{Id}")]
-        public async Task<ActionResult<DeleteEmailConfigResponseDTO>> Delete(Guid Id)
+        [HttpDelete("{id}")]
+        public async Task<ActionResult<DeleteEmailConfigResponseDTO>> Delete(Guid id)
         {
-            var command = new DeleteEmailConfigCommand(Id);
+            var command = new DeleteEmailConfigCommand(id);
             var result = await _mediator.Send(command);
             return Ok(result);
         }

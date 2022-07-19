@@ -10,5 +10,9 @@ public class GetEmailConfigListQuery : IRequest<EmailConfigListPagingDTO>
 {
     public int pageSize { get; set; }
     public int pageNumber { get; set; }
-    public dynamic searchTerm { get; set; }
+    public CountrySearchTerm searchTerm { get; set; }
+}
+public class CountrySearchTerm
+{
+    public string countryName { get; set; }
 }

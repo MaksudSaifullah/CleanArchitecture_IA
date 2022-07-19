@@ -17,18 +17,23 @@ public class TopicHead : EntityBase
     public Guid CountryId { get; set; }
 
     [Required]
-    [DefaultValue("1")]
-    public bool IsActive { get; set; }
+    [MaxLength(100)]
+    public string Name { get; set; } = null!;
 
     [Required]
     public DateTime EffectiveFrom { get; set; }
 
     [Required]
     public DateTime EffectiveTo { get; set; }
+    
+    [MaxLength(300)]
+    public string Description { get; set; } = null!;
 
     [Required]
-    [MaxLength(200)]
-    public string Description { get; set; } = null!;
+    [DefaultValue("1")]
+    public bool IsActive { get; set; }
+    [NotMapped]
+    public string CountryName { get; set; } = null!;
 
     //Navigation properties
     [ForeignKey("CountryId")]

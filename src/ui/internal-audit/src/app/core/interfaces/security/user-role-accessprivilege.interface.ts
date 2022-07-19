@@ -22,3 +22,30 @@ export interface ModuleList {
     name?:  string;
    
 }
+
+export interface RoleSelectedList {
+    pageSize?:   number;
+    pageNumber?: number;
+    roleId?:     string;
+    searchTerm?: string;
+}
+
+export interface RoleSelectedListResponse {
+    items?:      RoleBody[];
+    totalCount?: number;
+}
+
+export interface RoleBody {
+    id?:             string;
+    auditModuleId?:  string;
+    auditFeatureId?: string;
+    roleId?:         string;
+    isView?:         boolean;
+    isCreate?:       boolean;
+    isEdit?:         boolean;
+    isDelete?:       boolean;
+}
+export interface RoleRequest {
+    addModulewiseRolePrivilegeList?: RoleBody[];
+}
+

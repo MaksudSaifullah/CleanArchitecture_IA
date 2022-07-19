@@ -1,4 +1,5 @@
 ﻿using Internal.Audit.Domain.Common;
+using Internal.Audit.Domain.Entities.BranchAudit;
 using Internal.Audit.Domain.Entities.Common;
 using System;
 using System.Collections.Generic;
@@ -35,5 +36,8 @@ public class CommonValueAndType : EntityBase
     [Required]
     public int SortOrder { get; set; }
     public ICollection<RiskProfile> RiskProfile { get; set; }
+
+    public ICollection<RiskCriteria> RiskCriteria { get; set; }
+
 }
 

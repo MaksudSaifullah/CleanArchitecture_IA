@@ -1,6 +1,7 @@
 ﻿using Internal.Audit.Domain.Common;
 using Internal.Audit.Domain.Entities.Config;
 using System;
+using System.ComponentModel;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -15,6 +16,7 @@ namespace Internal.Audit.Domain.Entities.BranchAudit;
 public class RiskCriteria : EntityBase
 {
     [Required]
+
     public Guid CountryId { get; set; }
 
     [Required]
@@ -22,15 +24,6 @@ public class RiskCriteria : EntityBase
 
     [Required]
     public Guid RiskCriteriaTypeId { get; set; }
-
-    [Required]
-    public Guid AuditTypeId { get; set; }
-
-    [Required]
-    public string Name { get; set; }
-
-    [Required]
-    public decimal Weight { get; set; }
 
     [Required]
     public DateTime EffectiveFrom { get; set; }
@@ -52,15 +45,13 @@ public class RiskCriteria : EntityBase
     [MaxLength(300)]
     public string Description { get; set; }
 
+    public string CountryName { get; set; } = null!;
+
     [ForeignKey("CountryId")]
     public virtual Country Country { get; set; } = null!;
+   
+    public virtual CommonValueAndType CommonValueRatingType { get; set; }
+    public virtual CommonValueAndType CommonValueRiskCriteriaType { get; set; }
 
-    [ForeignKey("RatingTypeId")]
-    public virtual RatingType RatingType { get; set; } = null!;
-
-    [ForeignKey("RiskCriteriaTypeId")]
-    public virtual RiskCriteriaType RiskCriteriaType { get; set; } = null!;
-
-/*    [ForeignKey("AuditTypeId")]
-    public virtual AuditType AuditType { get; set; } = null!;*/
+  
 }

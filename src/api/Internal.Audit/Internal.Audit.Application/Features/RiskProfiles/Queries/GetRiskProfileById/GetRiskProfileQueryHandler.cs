@@ -21,7 +21,7 @@ public class GetRiskProfileQueryHandler : IRequestHandler<GetRiskProfileQuery, R
 
     public async Task<RiskProfileByIdDTO> Handle(GetRiskProfileQuery request, CancellationToken cancellationToken)
     {
-        var country = await _riskProfileRepository.GetById(request.Id);
-        return _mapper.Map<RiskProfileByIdDTO>(country);
+        var riskProfile = await _riskProfileRepository.GetById(request.Id);
+        return _mapper.Map<RiskProfileByIdDTO>(riskProfile);
     }
 }

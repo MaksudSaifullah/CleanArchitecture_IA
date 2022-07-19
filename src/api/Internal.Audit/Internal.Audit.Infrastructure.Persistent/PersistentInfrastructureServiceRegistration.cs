@@ -40,6 +40,10 @@ using Internal.Audit.Application.Contracts.Persistent.ModuleFeature;
 using Internal.Audit.Infrastructure.Persistent.Repositories.ModuleFeature;
 using Internal.Audit.Application.Contracts.Persistent.EmailConfigs;
 using Internal.Audit.Infrastructure.Persistent.Repositories.EmailConfig;
+using Internal.Audit.Application.Contracts.Persistent.RiskCriterias;
+using Internal.Audit.Infrastructure.Persistent.Repositories.RiskCriterias;
+using Internal.Audit.Application.Contracts.Persistent.TopicHeads;
+using Internal.Audit.Infrastructure.Persistent.Repositories.TopicHeads;
 
 namespace Internal.Audit.Infrastructure.Persistent;
 
@@ -105,6 +109,11 @@ public static class PersistentInfrastructureServiceRegistration
         services.AddScoped<IEmailConfigQueryRepository>(s => new EmailConfigQueryRepository(configuration.GetConnectionString("InternalAuditDb")));
         services.AddScoped<IEmailTypeQueryRepository>(s => new EmailTypeQueryRepository(configuration.GetConnectionString("InternalAuditDb")));
 
+        services.AddScoped<IRiskCriteriaCommandRepository, RiskCriteriaCommandRepository>();
+        services.AddScoped<IRiskCriteriaQueryRepository>(s => new RiskCriteriaQueryRepository(configuration.GetConnectionString("InternalAuditDb")));
+
+        services.AddScoped<ITopicHeadCommandRepository, TopicHeadCommandRepository>();
+        services.AddScoped<ITopicHeadQueryRepository>(s => new TopicHeadQueryRepository(configuration.GetConnectionString("InternalAuditDb")));
         return services;
     }
 }

@@ -157,7 +157,7 @@
           <br>
           
           <div class="form-floating">
-            <input class="form-control" placeholder="effectiveFrom" formControlName="effectiveFrom" id="effectiveFrom" type="date">
+            <input class="form-control" placeholder="effectiveFrom" formControlName="effectiveFrom" id="effectiveFrom" type="date" >
             <label for="effectiveFrom">Effective From</label>
           </div>
           <div cRow *ngIf="riskProfileForm.get('effectiveFrom')?.invalid && riskProfileForm.get('effectiveFrom')?.errors &&
@@ -169,7 +169,7 @@
           <br>
 
           <div class="form-floating">
-            <input class="form-control" placeholder="effectiveTo" formControlName="effectiveTo" id="effectiveTo" type="date">
+            <input class="form-control" placeholder="effectiveTo" formControlName="effectiveTo" id="effectiveTo" type="date" >
             <label for="effectiveTo">Effective To</label>
           </div>
           <div cRow *ngIf="riskProfileForm.get('effectiveTo')?.invalid && riskProfileForm.get('effectiveTo')?.errors &&
@@ -178,7 +178,7 @@
               This field is required.
             </small>                                 
           </div>
-          <br>
+          <br>          
   
       </div>
     </c-modal-body> 

@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 namespace Internal.Audit.Domain.Entities.BranchAudit;
 
 [Table("RiskAssesment", Schema = "BranchAudit")]
-public class RiskAssesment : EntityBase
+public class RiskAssessment : EntityBase
 {
     [Required]
     public Guid CountryId { get; set; }

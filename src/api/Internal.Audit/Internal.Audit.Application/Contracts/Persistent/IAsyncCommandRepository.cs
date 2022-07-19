@@ -19,4 +19,5 @@ public interface IAsyncCommandRepository<TEntity> where TEntity : EntityBase
     Task<IEnumerable<TEntity>> Update(IEnumerable<TEntity> entity);
     Task<bool> Delete(IEnumerable<TEntity> entity);
 
+
 }

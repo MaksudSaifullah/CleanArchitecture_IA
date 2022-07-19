@@ -47,6 +47,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Features\Documents\Commands\DeleteDocumentCommand\" />
+    <Folder Include="Features\Documents\Commands\UpdateDocumentCommand\" />
+    <Folder Include="Features\Documents\Queries\" />
     <Folder Include="Features\UserCountries\Quiries\" />
   </ItemGroup>
 

@@ -44,6 +44,8 @@ using Internal.Audit.Application.Contracts.Persistent.RiskCriterias;
 using Internal.Audit.Infrastructure.Persistent.Repositories.RiskCriterias;
 using Internal.Audit.Application.Contracts.Persistent.TopicHeads;
 using Internal.Audit.Infrastructure.Persistent.Repositories.TopicHeads;
+using Internal.Audit.Application.Contracts.Persistent.DocumentSources;
+using Internal.Audit.Infrastructure.Persistent.Repositories.DocumentSources;
 
 namespace Internal.Audit.Infrastructure.Persistent;
 
@@ -113,6 +115,8 @@ public static class PersistentInfrastructureServiceRegistration
 
         services.AddScoped<ITopicHeadCommandRepository, TopicHeadCommandRepository>();
         services.AddScoped<ITopicHeadQueryRepository>(s => new TopicHeadQueryRepository(configuration.GetConnectionString("InternalAuditDb")));
+
+        services.AddScoped<IDocumentSourceQueryRepository>(s => new DocumentSourceQueryRepository(configuration.GetConnectionString("InternalAuditDb")));
         return services;
     }
 }

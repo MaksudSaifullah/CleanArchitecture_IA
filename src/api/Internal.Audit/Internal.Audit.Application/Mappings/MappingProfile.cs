@@ -86,6 +86,7 @@ using Internal.Audit.Application.Features.TopicHeads.Queries.GetTopicHeadById;
 using Internal.Audit.Application.Features.TopicHeads.Commands.AddTopicHead;
 using Internal.Audit.Application.Features.TopicHeads.Commands.UpdateTopicHead;
 using Internal.Audit.Application.Features.TopicHeads.Commands.DeleteTopicHead;
+using Internal.Audit.Application.Features.DocumentSources.Queries.GetAllDocumentSource;
 
 namespace Internal.Audit.Application.Mappings;
 
@@ -230,5 +231,7 @@ public class MappingProfile : Profile
         CreateMap<TopicHead, AddTopicHeadCommand>().ReverseMap();
         CreateMap<TopicHead, UpdateTopicHeadCommand>().ReverseMap();
         CreateMap<TopicHead, DeleteTopicHeadCommand>().ReverseMap();
+
+        CreateMap<DocumentSource, GetAllDocumentSourceDTO>().ReverseMap();
     }
 }

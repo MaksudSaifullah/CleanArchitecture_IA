@@ -33,6 +33,6 @@ public class RiskAssessment : EntityBase
     public virtual Country Country { get; set; } = null!;
 
     [ForeignKey("AuditTypeId")]
-    public virtual AuditType AuditType { get; set; } = null!;
+    public virtual CommonValueAndType CommonValueAuditType { get; set; }
 }
 

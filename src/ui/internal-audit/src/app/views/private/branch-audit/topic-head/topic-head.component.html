@@ -1,1 +1,182 @@
-<p>topic-head works!</p>
+<c-nav variant="tabs">
+  <a [active]="true" [cTabContent]="tabContent" [routerLink] [tabPaneIdx]="0" cNavLink>Topic Head</a>
+  <a [cTabContent]="tabContent" [routerLink] [tabPaneIdx]="1" cNavLink>Questionnaires</a>
+  <a [cTabContent]="tabContent" [routerLink] [tabPaneIdx]="2" cNavLink>Test Steps</a>
+</c-nav>
+<c-tab-content #tabContent="cTabContent">
+  <c-tab-pane class="p-3">
+    <div class="animated fadeIn">
+     <div class="row">
+      <div class="col-lg-12">
+        <div class="card">
+          <div class="card-header"><i class="fa fa-align-justify" ></i> 
+            Topic Head List
+          </div>
+          <div class="card-body">
+            <div class="row">
+              <div class="col-sm-7 mb-2">
+                <button [cModalToggle]="verticallyCenteredModal.id" class="btnCreateColor" (click)="reset()" cButton>Create</button>
+              </div>
+              <div class="col-sm-5 mb-2">
+                <div class="row">
+                  <div class="col-8">
+                  <input type="text" class="form-control pull-right" placeholder="Search by Name"/>
+                  </div>
+                  <div class="col-2">
+                  <button type="button" class="btn btn-secondary mr-1 pull-right btn-block" data-toggle="modal" >
+                      Search
+                  </button>
+                  </div>
+                  <div class="col-2">
+                  <button type="button" class="btn btn-secondary mr-1 pull-right btn-block" data-toggle="modal"  >
+                      Reset
+                  </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="row overflow-auto">
+              <table datatable [dtOptions]="dtOptions[0]" id="DataTables_Table_1"  class="table table-bordered row-border hover" >
+                <thead>
+                  <tr>
+                    <th>Country</th>
+                    <th>Topic Head</th>
+                    <th>Description</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody *ngIf="topicheads?.length != 0">
+                  <tr *ngFor="let topichead of topicheads">
+                    <td>{{ topichead.countryName }}</td>
+                    <td>{{ topichead.name }}</td>
+                    <td>{{ topichead.description }}</td>
+                    <td>
+                      <div class="btn-group" role="group" aria-label="Basic example">
+                        <button type="button" class="btn btn-secondary btnSaveColor" (click)="edit(verticallyCenteredModal,role)">
+                          Edit
+                        </button>
+                        <button type="button" class="btn btn-danger btnDeleteColor" (click)="delete(role.id)">
+                          Delete
+                        </button>
+                      </div>
+                    </td>
+                  </tr>
+                </tbody>
+                <tbody *ngIf="topicheads?.length == 0">
+                  <tr>
+                    <td colspan="5" class="no-data-available">No data!</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+     </div>
+    </div>
+
+    <form [formGroup]="topicHeadForm" (ngSubmit)="onSubmit(verticallyCenteredModal)" novalidate>
+      <c-modal #verticallyCenteredModal alignment="center" id="verticallyCenteredModal">
+        <c-modal-header>
+          <h5 cModalTitle *ngIf="!formService.isEdit(this.topicHeadForm.get('id'))">Create Topic Head</h5>
+          <h5 cModalTitle *ngIf="formService.isEdit(this.topicHeadForm.get('id'))">Update Topic Head</h5>
+          <button [cModalToggle]="verticallyCenteredModal.id" cButtonClose></button>
+        </c-modal-header>
+        <c-modal-body>
+          <div class="col-md-12" >
+            <input type="hidden" formControlName="id"/>
+  
+              <div class="form-floating mb-3">
+                <input type="text" class="form-control" formControlName="name" id="name" placeholder="Name">
+                <label for="floatingInput">Topic Head</label>
+  
+                <div cRow *ngIf="topicHeadForm.get('name')?.invalid &&
+                topicHeadForm.get('name')?.errors &&
+                      (topicHeadForm.get('name')?.dirty || topicHeadForm.get('name')?.touched)">
+                  <small class="text-danger"
+                      *ngIf="topicHeadForm.get('name').hasError('required')">
+                      This field is required.
+                  </small>
+                  <small class="text-danger"
+                      *ngIf="topicHeadForm.get('name').hasError('minlength')">
+                      The minimum length for this field is {{topicHeadForm.get('name').errors.minlength.requiredLength}} characters.
+                  </small>
+                  <small class="text-danger"
+                      *ngIf="topicHeadForm.get('name').hasError('maxlength')">
+                      The maximum length for this field is {{topicHeadForm.get('name').errors.maxlength.requiredLength}} characters.
+                  </small>
+                </div>
+              </div>
+
+              <div class="form-floating mb-3">
+                <input class="form-control" placeholder="effectiveFrom" formControlName="effectiveFrom" id="effectiveFrom" type="date" >
+                <label for="effectiveFrom">Effective From</label>
+              
+                <div cRow *ngIf="topicHeadForm.get('effectiveFrom')?.invalid && topicHeadForm.get('effectiveFrom')?.errors &&
+                      (topicHeadForm.get('effectiveFrom')?.dirty || topicHeadForm.get('effectiveFrom')?.touched)">
+                  <small class="text-danger" *ngIf="topicHeadForm.get('effectiveFrom').hasError('required')">
+                    This field is required.
+                  </small>                                 
+                </div>
+              </div>
+              
+    
+              <div class="form-floating mb-3">
+                <input class="form-control" placeholder="effectiveTo" formControlName="effectiveTo" id="effectiveTo" type="date" >
+                <label for="effectiveTo">Effective To</label>
+              
+                <div cRow *ngIf="topicHeadForm.get('effectiveTo')?.invalid && topicHeadForm.get('effectiveTo')?.errors &&
+                      (topicHeadForm.get('effectiveTo')?.dirty || topicHeadForm.get('effectiveTo')?.touched)">
+                  <small class="text-danger" *ngIf="topicHeadForm.get('effectiveTo').hasError('required')">
+                    This field is required.
+                  </small>                                 
+                </div>
+              </div>
+  
+              <div class="form-floating mb-3">
+                <input type="text" class="form-control" formControlName="description" id="description" placeholder="description">
+                <label for="floatingInput">Description</label>
+              
+  
+                <div cRow *ngIf="topicHeadForm.get('description')?.invalid &&
+                topicHeadForm.get('description')?.errors &&
+                      (topicHeadForm.get('description')?.dirty || topicHeadForm.get('description')?.touched)">
+                  <small class="text-danger"
+                      *ngIf="topicHeadForm.get('description').hasError('required')">
+                      This field is required.
+                  </small>
+                  <small class="text-danger"
+                      *ngIf="topicHeadForm.get('description').hasError('minlength')">
+                      The minimum length for this field is {{topicHeadForm.get('description').errors.minlength.requiredLength}} characters.
+                  </small>
+                  <small class="text-danger"
+                      *ngIf="topicHeadForm.get('description').hasError('maxlength')">
+                      The maximum length for this field is {{topicHeadForm.get('description').errors.maxlength.requiredLength}} characters.
+                  </small>
+                </div>
+              </div>
+  
+            <c-form-check sizing="xl" switch>
+              <input cFormCheckInput checked type="checkbox" formControlName="isActive" id="isActive" checked />
+              <label cFormCheckLabel>Active Status</label>
+            </c-form-check>
+          </div>
+        </c-modal-body>
+        <c-modal-footer>
+          <button cButton class="btn btn-primary btnSaveColor me-1" (click)="onSubmit(verticallyCenteredModal)">Save</button>
+              <button [cModalToggle]="verticallyCenteredModal.id" cButton class="btn btn-danger btnCancelColor me-1">
+                Close
+          </button>
+        </c-modal-footer>
+      </c-modal>
+      </form>
+  
+  </c-tab-pane>
+  <c-tab-pane class="p-3">
+    Questionnaires
+  </c-tab-pane>
+  <c-tab-pane class="p-3">
+   Test Steps
+  </c-tab-pane>
+
+</c-tab-content>

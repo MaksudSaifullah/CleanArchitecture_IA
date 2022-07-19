@@ -20,7 +20,8 @@ public class GetEmailConfigQueryHandler : IRequestHandler<GetEmailConfigQuery, G
     }
     public async Task<GetEmailConfigByIdResponseDTO> Handle(GetEmailConfigQuery request, CancellationToken cancellationToken)
     {
-        var country = await _emailConfigQueryRepository.GetById(request.Id);
-        return _mapper.Map<GetEmailConfigByIdResponseDTO>(country);
+        //var country = await _emailConfigQueryRepository.GetById(request.Id);
+        //return _mapper.Map<GetEmailConfigByIdResponseDTO>(country);
+        return null;
     }
 }

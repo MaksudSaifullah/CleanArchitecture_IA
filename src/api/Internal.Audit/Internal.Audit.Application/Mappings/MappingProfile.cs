@@ -86,6 +86,7 @@ using Internal.Audit.Application.Features.TopicHeads.Queries.GetTopicHeadById;
 using Internal.Audit.Application.Features.TopicHeads.Commands.AddTopicHead;
 using Internal.Audit.Application.Features.TopicHeads.Commands.UpdateTopicHead;
 using Internal.Audit.Application.Features.TopicHeads.Commands.DeleteTopicHead;
+using Internal.Audit.Application.Features.EmailConfig.Queries.GetEmailTypeList;
 
 using Internal.Audit.Application.Features.RiskAssessments.Commands.AddRiskAssessment;
 using Internal.Audit.Application.Features.RiskAssessments.Commands.UpdateRiskAssessment;
@@ -213,7 +214,7 @@ public class MappingProfile : Profile
 
         CreateMap<ModuleFeature, GetAllModuleListResponseDTO>().ReverseMap();
 
-        CreateMap<EmailConfiguration, GetEmailConfigListResponseDTO>().ReverseMap();
+       // CreateMap<EmailConfiguration, GetEmailConfigListResponseDTO>().ReverseMap();
         CreateMap<EmailConfiguration, GetEmailConfigByIdResponseDTO>().ReverseMap();
         CreateMap<EmailConfiguration, AddEmailConfigResponseDTO>().ReverseMap();
         CreateMap<EmailConfiguration, AddEmailConfigCommand>().ReverseMap();
@@ -250,5 +251,7 @@ public class MappingProfile : Profile
         CreateMap<TopicHead, AddTopicHeadCommand>().ReverseMap();
         CreateMap<TopicHead, UpdateTopicHeadCommand>().ReverseMap();
         CreateMap<TopicHead, DeleteTopicHeadCommand>().ReverseMap();
+        CreateMap<CompositEmailConfig, GetEmailConfigListResponseDTO>().ReverseMap();
+        CreateMap<Domain.CompositeEntities.EmailType, GetEmailTypeListResponseDTO>().ReverseMap();
     }
 }

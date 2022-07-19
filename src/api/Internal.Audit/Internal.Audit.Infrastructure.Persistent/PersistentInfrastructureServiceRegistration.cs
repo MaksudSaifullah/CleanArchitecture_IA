@@ -44,6 +44,12 @@ using Internal.Audit.Application.Contracts.Persistent.RiskCriterias;
 using Internal.Audit.Infrastructure.Persistent.Repositories.RiskCriterias;
 using Internal.Audit.Application.Contracts.Persistent.TopicHeads;
 using Internal.Audit.Infrastructure.Persistent.Repositories.TopicHeads;
+using Internal.Audit.Application.Contracts.Persistent.DocumentSources;
+using Internal.Audit.Infrastructure.Persistent.Repositories.DocumentSources;
+using Internal.Audit.Application.Contracts.Persistent.Documents;
+using Internal.Audit.Infrastructure.Persistent.Repositories.Documents;
+using Internal.Audit.Application.Contracts.Persistent.RiskAssessments;
+using Internal.Audit.Infrastructure.Persistent.Repositories.RiskAssessments;
 
 namespace Internal.Audit.Infrastructure.Persistent;
 
@@ -114,6 +120,14 @@ public static class PersistentInfrastructureServiceRegistration
 
         services.AddScoped<ITopicHeadCommandRepository, TopicHeadCommandRepository>();
         services.AddScoped<ITopicHeadQueryRepository>(s => new TopicHeadQueryRepository(configuration.GetConnectionString("InternalAuditDb")));
+
+        services.AddScoped<IDocumentSourceQueryRepository>(s => new DocumentSourceQueryRepository(configuration.GetConnectionString("InternalAuditDb")));
+        services.AddScoped<IDocumentCommandRepository, DocumentCommandrepository>();
+        services.AddScoped<IDocumentQueryRepository>(s => new DocumentQueryRepository(configuration.GetConnectionString("InternalAuditDb")));
+
+        services.AddScoped<IRiskAssessmentCommandRepository, RiskAssessmentCommandRepository>();
+        services.AddScoped<IRiskAssessmentQueryRepository>(s => new RiskAssessmentQueryRepository(configuration.GetConnectionString("InternalAuditDb")));
+
         return services;
     }
 }

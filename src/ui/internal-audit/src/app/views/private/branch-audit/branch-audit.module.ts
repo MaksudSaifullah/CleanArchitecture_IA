@@ -3,11 +3,13 @@ import { CommonModule } from '@angular/common';
 
 import { BranchAuditRoutingModule } from './branch-audit-routing.module';
 import { TopicHeadComponent } from './topic-head/topic-head.component';
+import { RiskCriteriaComponent } from './risk-criteria/risk-criteria.component';
 
 
 @NgModule({
   declarations: [
-    TopicHeadComponent
+    TopicHeadComponent,
+    RiskCriteriaComponent
   ],
   imports: [
     CommonModule,

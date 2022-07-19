@@ -75,6 +75,17 @@ using Internal.Audit.Application.Features.EmailConfig.Queries.GetEmailConfigList
 using Internal.Audit.Application.Features.EmailConfig.Queries.GetEmailConfigById;
 using Internal.Audit.Application.Features.EmailConfig.Commands.AddEmailConfig;
 using Internal.Audit.Application.Features.EmailConfig.Commands.DeleteEmailConfig;
+using Internal.Audit.Domain.Entities.BranchAudit;
+using Internal.Audit.Application.Features.RiskCriterias.Queries.GetRiskCriteriaList;
+using Internal.Audit.Application.Features.RiskCriterias.Queries.GetRiskCriteriaById;
+using Internal.Audit.Application.Features.RiskCriterias.Commands.AddRiskCriteria;
+using Internal.Audit.Application.Features.RiskCriterias.Commands.UpdateRiskCriteria;
+using Internal.Audit.Application.Features.RiskCriterias.Commands.DeleteRiskCriteria;
+using Internal.Audit.Application.Features.TopicHeads.Queries.GetTopicHeadList;
+using Internal.Audit.Application.Features.TopicHeads.Queries.GetTopicHeadById;
+using Internal.Audit.Application.Features.TopicHeads.Commands.AddTopicHead;
+using Internal.Audit.Application.Features.TopicHeads.Commands.UpdateTopicHead;
+using Internal.Audit.Application.Features.TopicHeads.Commands.DeleteTopicHead;
 
 using Internal.Audit.Application.Features.RiskAssessments.Commands.AddRiskAssessment;
 using Internal.Audit.Application.Features.RiskAssessments.Commands.UpdateRiskAssessment;
@@ -86,7 +97,7 @@ using Internal.Audit.Domain.CompositeEntities.BranchAudit;
 
 namespace Internal.Audit.Application.Mappings;
 
-public class MappingProfile: Profile
+public class MappingProfile : Profile
 {
     public MappingProfile()
     {
@@ -221,5 +232,23 @@ public class MappingProfile: Profile
         CreateMap<RiskAssessment, UpdateRiskAssessmentCommand>().ReverseMap();
         CreateMap<RiskAssessment, DeleteRiskAssessmentResponseDTO>().ReverseMap();
         CreateMap<RiskAssessment, DeleteRiskAssessmentCommand>().ReverseMap();
+        CreateMap<AddModulewiseRolePrivilege, ModulewiseRolePriviliege>().ReverseMap();
+
+        CreateMap<RiskCriteria, RiskCriteriaDTO>().ReverseMap();
+        CreateMap<CompositeRiskCriteria, RiskCriteriaDTO>().ReverseMap();
+        CreateMap<CompositeRiskCriteria, RiskCriteriaByIdDTO>().ReverseMap();
+        CreateMap<RiskCriteria, RiskCriteriaByIdDTO>().ReverseMap();
+        CreateMap<RiskCriteria, AddRiskCriteriaResponseDTO>().ReverseMap();
+        CreateMap<RiskCriteria, AddRiskCriteriaCommand>().ReverseMap();
+        CreateMap<RiskCriteria, UpdateRiskCriteriaResponseDTO>().ReverseMap();
+        CreateMap<RiskCriteria, UpdateRiskCriteriaCommand>().ReverseMap();
+        CreateMap<RiskCriteria, DeleteRiskCriteriaResponseDTO>().ReverseMap();
+        CreateMap<RiskCriteria, DeleteRiskCriteriaCommand>().ReverseMap();
+
+        CreateMap<TopicHead, TopicHeadDTO>().ReverseMap();
+        CreateMap<TopicHead, TopicHeadByIdDTO>().ReverseMap();
+        CreateMap<TopicHead, AddTopicHeadCommand>().ReverseMap();
+        CreateMap<TopicHead, UpdateTopicHeadCommand>().ReverseMap();
+        CreateMap<TopicHead, DeleteTopicHeadCommand>().ReverseMap();
     }
 }

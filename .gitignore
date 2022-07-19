@@ -70,3 +70,4 @@ Logs/
 /src/app/.packages
 /src/app/.flutter-plugins-dependencies
 /src/web/capstone-web/package-lock.json
+/src/api/Internal.Audit/Internal.Audit.Api/UploadedFiles

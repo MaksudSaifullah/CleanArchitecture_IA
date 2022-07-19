@@ -25,6 +25,9 @@ export class HttpService {
       pagesize:_pageSize,
       searchTerm:_searchItem
     }
+    console.log('--------------------------------')
+    console.log(requestObject)
+    console.log('--------------------------------')
     return this.httpClient.post<T>(`${this.hostName}/${endpoint}`, JSON.stringify(requestObject), this.httpOptions)
       .pipe(
         retry(0),

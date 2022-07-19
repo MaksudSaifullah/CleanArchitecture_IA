@@ -7,6 +7,7 @@ import {AlertService} from '../../../../core/services/alert.service';
 import { DataTableDirective } from 'angular-datatables';
 import { DatatableService } from 'src/app/core/services/datatable.service';
 import {ActivatedRoute, Router } from '@angular/router';
+import { FormBuilder, FormGroup } from '@angular/forms';
 
 
 @Component({
@@ -21,12 +22,18 @@ export class UserlistComponent implements OnInit {
   @ViewChild(DataTableDirective, {static: false})
   datatableElement: DataTableDirective | undefined;
   dataTableService: DatatableService = new DatatableService();
-  
-  userName: string= "";
-  employeeName:string= "";
-  userRole:string ="";
+  userListForm: FormGroup;
+  // userName: string= "";
+  // employeeName:string= "";
+  // userRole:string ="";
 
-  constructor(private http: HttpService , private activateRoute:ActivatedRoute, private AlertService: AlertService,private router: Router) { }
+  constructor(private http: HttpService ,private fb: FormBuilder, private activateRoute:ActivatedRoute, private AlertService: AlertService,private router: Router) { 
+   this.userListForm=this.fb.group({
+    userName:[''],
+    employeeName:[''],
+    userRole:[''],
+   })
+  }
 
   ngOnInit(): void {
     let paramId = this.activateRoute.snapshot.params['id'];
@@ -43,8 +50,15 @@ export class UserlistComponent implements OnInit {
   }
 
   search(){
+    //console.log(this.userListForm.value.userRole)
     this.dataTableService.redraw(this.datatableElement);
   }
+  clearSearch(){
+    console.log(';sldjfls')
+    this.userListForm.setValue({userName:'',employeeName:'',userRole:''})
+    this.dataTableService.redraw(this.datatableElement);
+  }
+
   LoadData() {
     const that = this;
 
@@ -58,7 +72,7 @@ export class UserlistComponent implements OnInit {
       ajax: (dataTablesParameters: any, callback) => {
         this.http
           .paginatedPost(
-            'userlist/Paginated',dataTablesParameters.length,((dataTablesParameters.start/dataTablesParameters.length)+1),{"userName": this.userName,"employeeName": this.employeeName,"userRole": this.userRole}
+            'userlist/Paginated',dataTablesParameters.length,((dataTablesParameters.start/dataTablesParameters.length)+1),{"userName": this.userListForm.value.userName,"employeeName": this.userListForm.value.employeeName,"userRole": this.userListForm.value.userRole}
           ).subscribe(resp => that.compositeUsers = this.dataTableService.datatableMap(resp,callback));
       },
 

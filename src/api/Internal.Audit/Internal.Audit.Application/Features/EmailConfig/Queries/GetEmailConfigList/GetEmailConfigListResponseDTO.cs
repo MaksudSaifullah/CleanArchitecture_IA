@@ -9,12 +9,16 @@ using System.Threading.Tasks;
 namespace Internal.Audit.Application.Features.EmailConfig.Queries.GetEmailConfigList;
 public record GetEmailConfigListResponseDTO
 {
+    public Guid Id { get; set; }
     public Guid EmailTypeId { get; set; }
     public Guid CountryId { get; set; }
     public string TemplateSubject { get; set; }
     public string TemplateBody { get; set; }
+    public string EmailTypeName { get; set; }
+    public string CountryName { get; set; }
+    public DateTime CreatedOn { get; set; }
 
-    public virtual ICollection<EmailType> EmailTypes { get; set; } = null!;
+    //public virtual ICollection<EmailType> EmailTypes { get; set; } = null!;
 
-    public virtual ICollection<Country> Countries { get; set; } = null!;
+    //public virtual ICollection<Country> Countries { get; set; } = null!;
 }

@@ -17,6 +17,7 @@ public record RiskCriteriaDTO
     public DateTime EffectiveFrom { get; set; }
     public DateTime EffectiveTo { get; set; }
     public string? Description { get; set; } = null;
+    public string? CountryName { get; set; }
 
 
 }

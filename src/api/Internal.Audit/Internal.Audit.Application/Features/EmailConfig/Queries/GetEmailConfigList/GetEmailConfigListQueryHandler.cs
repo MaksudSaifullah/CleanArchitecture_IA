@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Internal.Audit.Application.Contracts.Persistent.EmailConfigs;
+using Internal.Audit.Domain.CompositeEntities;
 using MediatR;
 using System;
 using System.Collections.Generic;
@@ -21,9 +22,8 @@ namespace Internal.Audit.Application.Features.EmailConfig.Queries.GetEmailConfig
 
         public async Task<EmailConfigListPagingDTO> Handle(GetEmailConfigListQuery request, CancellationToken cancellationToken)
         {
-            var (count, result) = await _emailConfigQueryRepository.GetAll(request.pageSize, request.pageNumber);
-
-            var emailConfigList = _mapper.Map<IEnumerable<GetEmailConfigListResponseDTO>>(result).ToList();
+            var (count, result) = await _emailConfigQueryRepository.GetAll(request.searchTerm.countryName, request.pageSize, request.pageNumber);
+            var emailConfigList = _mapper.Map<IEnumerable<CompositEmailConfig>,IEnumerable<GetEmailConfigListResponseDTO>>(result).ToList();
 
             return new EmailConfigListPagingDTO { Items = emailConfigList, TotalCount = count };
         }

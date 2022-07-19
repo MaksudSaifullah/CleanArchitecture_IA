@@ -24,21 +24,20 @@ public class RiskProfileQueryRepository : QueryRepositoryBase<CompositeRiskProfi
     }
     public async Task<CompositeRiskProfile> GetById(Guid id)
     {
-        var query = @"SELECT rp.[Id]
-	                ,cvtlt.Id AS LikelihoodTypeId
-	                ,cvtit.Id AS ImpactTypeId
-	                ,cvtrt.Id AS RatingTypeId
-                    ,rp.[EffectiveFrom]
-                    ,rp.[EffectiveTo]
-                    ,rp.[Description]
-                    ,rp.[CreatedBy]
-                    ,rp.[CreatedOn]
-                    ,rp.[IsActive]
-                FROM [common].[RiskProfile] as rp
-                INNER JOIN [config].[CommonValueAndType] as cvtlt on cvtlt.Id = rp.LikelihoodTypeId
-                INNER JOIN [config].[CommonValueAndType] as cvtit on cvtit.Id = rp.ImpactTypeId
-                INNER JOIN [config].[CommonValueAndType] as cvtrt on cvtrt.Id = rp.RatingTypeId
-                WHERE  rp.[Id] = @id AND rp.IsActive = 1 AND rp.IsDeleted = 0 ";
+        var query = @"SELECT ra.[Id]
+					,ra.AssesmentCode
+	                ,cntr.Id AS CountryId
+	                ,cvtat.Id AS AuditTypeId
+	                ,cntr.Name AS CountryName
+	                ,cvtat.Text AS AuditTypeName
+                    ,ra.[EffectiveFrom]
+                    ,ra.[EffectiveTo]
+                    ,ra.[CreatedBy]
+                    ,ra.[CreatedOn]
+                FROM [BranchAudit].[RiskAssesment] as ra
+                INNER JOIN [common].[Country] as cntr on cntr.Id = ra.CountryId
+				INNER JOIN [config].[CommonValueAndType] as cvtat on cvtat.Id = ra.AuditTypeId
+				 WHERE ra.[Id] = @id AND ra.IsDeleted = 0 ";
         var parameters = new Dictionary<string, object> { { "id", id } };
 
         return await Single(query, parameters);

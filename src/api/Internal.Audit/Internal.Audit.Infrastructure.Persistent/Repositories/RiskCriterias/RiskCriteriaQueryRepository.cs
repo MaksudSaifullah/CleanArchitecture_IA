@@ -27,10 +27,10 @@ namespace Internal.Audit.Infrastructure.Persistent.Repositories.RiskCriterias
         {
             var query = @"SELECT rc.[Id]
                         ,cntr.Id AS CountryId
-	                    ,cvtct.Text AS RiskCriteriaType
+	                    ,cvtct.Id AS RiskCriteriaTypeId
 		                ,rc.[MinimumValue]
 		                ,rc.[MaximumValue]
-	                    ,cvtrt.Text AS RatingType
+	                    ,cvtrt.Id AS RatingTypeId
 		                ,rc.[Score]
                         ,rc.[EffectiveFrom]
                         ,rc.[EffectiveTo]
@@ -41,7 +41,7 @@ namespace Internal.Audit.Infrastructure.Persistent.Repositories.RiskCriterias
 	                INNER JOIN [common].[Country] as cntr on cntr.Id = rc.CountryId  
 	                INNER JOIN [config].[CommonValueAndType] as cvtct on cvtct.Id = rc.RiskCriteriaTypeId      
                     INNER JOIN [config].[CommonValueAndType] as cvtrt on cvtrt.Id = rc.RatingTypeId
-                    WHERE  Id = @id  AND rc.IsDeleted = 0 ";
+                    WHERE  rc.[Id] = @id  AND rc.IsDeleted = 0 ";
             var parameters = new Dictionary<string, object> { { "id", id } };
 
             return await Single(query, parameters);

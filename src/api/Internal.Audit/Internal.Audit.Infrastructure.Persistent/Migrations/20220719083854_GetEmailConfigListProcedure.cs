@@ -9,13 +9,18 @@ namespace Internal.Audit.Infrastructure.Persistent.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.Sql(@"CREATE PROCEDURE [dbo].[GetEmailConfigListProcedure]
-	                            @pageSize int,
-	                            @pageNumber int
+	                                 @pageSize int,
+	                                 @pageNumber int,
+	                                 @searchTerm nvarchar(50)
                                 AS
                                 BEGIN
 
-                                SELECT * FROM [Config].[EmailConfiguration] a
-                                ORDER BY a.EmailTypeId DESC
+                                SELECT a.Id,a.EmailTypeId,a.CountryId,b.Name[EmailTypeName],c.Name[CountryName],a.TemplateSubject,a.TemplateBody,a.CreatedOn
+                                FROM [Config].[EmailConfiguration] a
+                                INNER JOIN Config.EmailType b on a.EmailTypeId=b.Id
+                                INNER JOIN common.Country c on a.CountryId=c.Id
+                                WHERE a.IsDeleted=0 AND ((@searchTerm is null or @searchTerm = '') or c.[Name] like '%'+@searchTerm+'%')
+                                ORDER BY c.Name ASC
                                 OFFSET ((@pageNumber-1) * @pageSize) ROWS
                                 FETCH NEXT @pageSize ROWS ONLY;
 
@@ -26,7 +31,7 @@ namespace Internal.Audit.Infrastructure.Persistent.Migrations
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.Sql(@"DROP PROCEDURE dbo.[GetEmailConfigListProcedure] ");
+            migrationBuilder.Sql(@"DROP PROCEDURE [dbo].[GetEmailConfigListProcedure] ");
         }
     }
 }

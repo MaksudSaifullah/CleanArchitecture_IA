@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Internal.Audit.Domain.Entities.config;
 
-[Table("Document", Schema = "config")]
+[Table("DocumentSource", Schema = "config")]
 public class DocumentSource : EntityBase
 {
     [Required]

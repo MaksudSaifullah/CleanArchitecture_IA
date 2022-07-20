@@ -124,4 +124,15 @@ export class RiskAssessmentComponent implements OnInit {
   }
 
 
+
+  LoadAuditType() {
+    this.http.get('commonValueAndType/audittype').subscribe(resp => {
+      let convertedResp = resp as commonValueAndType[];
+      this.auditType = convertedResp;
+    })
+  }
+
+  LoadDropDownValues() {
+    this.LoadAuditType();
+  }
 }

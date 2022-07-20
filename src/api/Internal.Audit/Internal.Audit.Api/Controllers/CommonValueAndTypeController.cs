@@ -1,4 +1,5 @@
 ﻿using Internal.Audit.Application.Features.CommonValueAndTypes.Queries.GetAuditConducted;
+using Internal.Audit.Application.Features.CommonValueAndTypes.Queries.GetAuditType;
 using Internal.Audit.Application.Features.CommonValueAndTypes.Queries.GetControlFrequency;
 using Internal.Audit.Application.Features.CommonValueAndTypes.Queries.GetDetestConclusion;
 using Internal.Audit.Application.Features.CommonValueAndTypes.Queries.GetEmailType;
@@ -149,11 +150,11 @@ namespace Internal.Audit.Api.Controllers
         }
 
         [HttpGet("audittype")]
-        public async Task<ActionResult<IEnumerable<LevelOfImpactDTO>>> GetAllLevelOfImpact()
+        public async Task<ActionResult<IEnumerable<LevelOfImpactDTO>>> GetAllauditType()
         {
-            var query = new GetLevelOfImpactQuery();
-            var levelofimpact = await _mediator.Send(query);
-            return Ok(levelofimpact);
+            var query = new GetAuditTypeQuery();
+            var audittype = await _mediator.Send(query);
+            return Ok(audittype);
         }
     }
 }

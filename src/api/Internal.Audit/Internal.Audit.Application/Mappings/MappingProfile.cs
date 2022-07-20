@@ -95,6 +95,7 @@ using Internal.Audit.Application.Features.RiskAssessments.Queries.GetRiskAssessm
 using Internal.Audit.Application.Features.RiskAssessments.Queries.GetRiskAssessmentById;
 using Internal.Audit.Domain.Entities.BranchAudit;
 using Internal.Audit.Domain.CompositeEntities.BranchAudit;
+using Internal.Audit.Application.Features.CommonValueAndTypes.Queries.GetAuditType;
 
 namespace Internal.Audit.Application.Mappings;
 
@@ -253,5 +254,6 @@ public class MappingProfile : Profile
         CreateMap<TopicHead, DeleteTopicHeadCommand>().ReverseMap();
         CreateMap<CompositEmailConfig, GetEmailConfigListResponseDTO>().ReverseMap();
         CreateMap<Domain.CompositeEntities.EmailType, GetEmailTypeListResponseDTO>().ReverseMap();
+        CreateMap<CommonValueAndType, AuditTypeDTO>().ReverseMap();
     }
 }

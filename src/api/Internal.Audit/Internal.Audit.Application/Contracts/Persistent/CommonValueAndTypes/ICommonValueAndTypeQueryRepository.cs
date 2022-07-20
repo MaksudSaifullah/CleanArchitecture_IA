@@ -24,6 +24,7 @@ namespace Internal.Audit.Application.Contracts.Persistent.CommonValueAndTypes
         Task<IEnumerable<CommonValueAndType>> GetAllAuditConducted();
         Task<IEnumerable<CommonValueAndType>> GetAllDetestConclusion();
         Task<IEnumerable<CommonValueAndType>> GetAllYesNo();
+        Task<IEnumerable<CommonValueAndType>> GetAllAuditType();
 
     }
 }

@@ -21,9 +21,9 @@ public class DocumentQueryRepository : QueryRepositoryBase<Document>, IDocumentQ
                     FROM  [common].[Document]
                     inner join [Config].[DocumentSource]
                     on [common].[Document].[DocumentSourceId]=[Config].[DocumentSource].[Id]
-                    where  [common].[Document].isdeleted=0 and [Config].[DocumentSource].[IsActive]=1";
+                    where  [common].[Document].isdeleted=0 and [Config].[DocumentSource].[IsActive]=1 and [common].[Document].[Id]=@id";
         string splitters = "Id";
-        var parameters = new Dictionary<string, object> { };
+        var parameters = new Dictionary<string, object> { { "id", id } };
         var data = await Get<Document, DocumentSource, Document>(query, (document, documentsource) =>
         {
             Document doc;

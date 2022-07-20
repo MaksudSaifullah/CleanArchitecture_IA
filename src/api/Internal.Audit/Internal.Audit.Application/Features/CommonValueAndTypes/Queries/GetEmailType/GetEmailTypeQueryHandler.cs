@@ -21,7 +21,7 @@ public class GetEmailTypeQueryHandler : IRequestHandler<GetEmailTypeQuery, List<
 
     public async Task<List<EmailTypeDTO>> Handle(GetEmailTypeQuery request, CancellationToken cancellationToken)
     {
-        var commonValueAndTypes = await _commonValueAndTypesRepository.GetAllEMailType();
+        var commonValueAndTypes = await _commonValueAndTypesRepository.GetCommonValueType("EMAILTYPE");
         return _mapper.Map<List<EmailTypeDTO>>(commonValueAndTypes);
     }
 }

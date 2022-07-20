@@ -103,5 +103,10 @@ namespace Internal.Audit.Infrastructure.Persistent.Repositories.CommonValueAndTy
             return await Get(query);
         }
 
+        public async Task<IEnumerable<CommonValueAndType>> GetCommonValueType(string type)
+        {
+            var query = "SELECT [Id],[Type],[SubType],[Value],[Text],[IsActive],[SortOrder] FROM [Config].[CommonValueAndType] WHERE [Type] = '"+ type + "' AND [IsDeleted] = 0";
+            return await Get(query);
+        }
     }
 }

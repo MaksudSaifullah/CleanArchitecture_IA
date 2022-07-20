@@ -21,7 +21,7 @@ public class GetLOProductivityQueryHandler : IRequestHandler<GetLOProductivityQu
 
     public async Task<List<LOProductivityDTO>> Handle(GetLOProductivityQuery request, CancellationToken cancellationToken)
     {
-        var commonValueAndTypes = await _commonValueAndTypesRepository.GetAllLOProductivity();
+        var commonValueAndTypes = await _commonValueAndTypesRepository.GetCommonValueType("LOPRODUCTIVITY");
         return _mapper.Map<List<LOProductivityDTO>>(commonValueAndTypes);
     }
 }

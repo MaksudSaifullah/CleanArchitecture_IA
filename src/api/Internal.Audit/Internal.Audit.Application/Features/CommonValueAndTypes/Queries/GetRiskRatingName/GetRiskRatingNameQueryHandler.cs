@@ -21,7 +21,7 @@ public class GetRiskRatingNameQueryHandler : IRequestHandler<GetRiskRatingNameQu
 
     public async Task<List<RiskRatingNameDTO>> Handle(GetRiskRatingNameQuery request, CancellationToken cancellationToken)
     {
-        var commonValueAndTypes = await _commonValueAndTypesRepository.GetAllRiskRatingName();
+        var commonValueAndTypes = await _commonValueAndTypesRepository.GetCommonValueType("RISKRATINGNAME");
         return _mapper.Map< List<RiskRatingNameDTO>>(commonValueAndTypes);
     }
 }

@@ -21,7 +21,7 @@ public class GetAuditConductedQueryHandler : IRequestHandler<GetAuditConductedQu
 
     public async Task<List<AuditConductedDTO>> Handle(GetAuditConductedQuery request, CancellationToken cancellationToken)
     {
-        var commonValueAndType = await _commonValueAndTypeRepository.GetAllControlFrequency();
+        var commonValueAndType = await _commonValueAndTypeRepository.GetCommonValueType("CONTROLFREQUENCY");
         return _mapper.Map<List<AuditConductedDTO>>(commonValueAndType);
     }
 }

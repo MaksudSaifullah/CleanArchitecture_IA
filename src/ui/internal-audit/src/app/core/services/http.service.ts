@@ -19,6 +19,9 @@ export class HttpService {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' })
   }
 
+  filePostHttpOptions = {
+    headers: new HttpHeaders({'enctype': 'multipart/form-data'})
+  }
   paginatedPost<T>(endpoint:string,_pageSize:number,_pageNumber:number,_searchItem: any): Observable<T> {
     let requestObject : paginatedModelInterface = {
       pageNumber:_pageNumber,
@@ -78,16 +81,15 @@ export class HttpService {
       )
   }
 
-  postwithFiles(endpoint:string,item:any, files:any[]): Observable<any>{
+  postFile(documentSourceId:string,documentSourceName: string, name:string, file :any){
+    // appending form data
     let formData:FormData = new FormData();
-    for (let file in files){
-      formData.append('uploadFile', file);
-    }
-
-    formData.append('data', JSON.stringify(item));
-    this.httpOptions.headers.append('Content-Type', 'multipart/form-data');
-    this.httpOptions.headers.append('Accept', 'application/json');
-    return this.httpClient.post(`${`${this.hostName}/${endpoint}`}`, formData,this.httpOptions).pipe(retry(0),catchError(this.handleError));
+    formData.append('documentSourceId',documentSourceId);
+    formData.append('DocumentSourceName',documentSourceName);
+    formData.append('Name',name);
+    formData.append('file',file);
+    // appending form data end
+    return this.httpClient.post(`${`${this.hostName}/${environment.file_upload_url}`}`, formData,this.filePostHttpOptions).pipe(retry(0),catchError(this.handleError));
   }
   //#endregion
 

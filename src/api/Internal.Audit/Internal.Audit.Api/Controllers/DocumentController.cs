@@ -5,6 +5,7 @@ using Internal.Audit.Application.Features.Documents.Queries.GetByDocumentId;
 using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System.IO;
 
 namespace Internal.Audit.Api.Controllers
 {
@@ -44,6 +45,18 @@ namespace Internal.Audit.Api.Controllers
             var doc = await _mediator.Send(query);
             return Ok(doc);
 
+        }
+
+        [HttpGet("get-file-stream")]
+        public async Task<IActionResult> File(Guid Id)
+        {
+            var query = new GetByDocumentQuery(Id);
+            var doc = await _mediator.Send(query);
+            string contentType = "application/octet-stream";
+
+            var bytes = await System.IO.File.ReadAllBytesAsync(Path.Combine(doc.Path));
+            return File(bytes, contentType, Path.GetFileName(Path.Combine(doc.Path)));
+     
         }
     }
 }

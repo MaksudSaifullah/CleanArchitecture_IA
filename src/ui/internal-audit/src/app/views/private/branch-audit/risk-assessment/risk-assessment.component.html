@@ -33,10 +33,9 @@
                 <table datatable [dtOptions]="dtOptions" class="table table-bordered row-border hover" >
                   <thead>
                     <tr>
-                      <th>Level of Likelihood</th>
-                      <th>Level of impact</th>
-                      <th>Risk Rating</th>
-                      <th>Description</th>
+                      <th>Risk Assessment Code</th>
+                      <th>Country</th>
+                      <th>Audit Type</th>
                       <th>Effective From</th>
                       <th>Effective To</th>  
                       <th>Action</th>                   
@@ -44,10 +43,9 @@
                   </thead>
                   <tbody *ngIf="riskAssessments?.length != 0">
                     <tr *ngFor="let riskAssessment of riskAssessments">
-                      <td>{{ riskAssessment.likelihoodType }}</td>
-                      <td>{{ riskAssessment.impactType }}</td>
-                      <td>{{ riskAssessment.ratingType }}</td>
-                      <td>{{ riskAssessment.description }}</td>
+                      <td>{{ riskAssessment.assesmentCode }}</td>
+                      <td>{{ riskAssessment.countryId }}</td>
+                      <td>{{ riskAssessment.auditTypeId }}</td>
                       <td>{{ riskAssessment.effectiveFrom | date:'medium' }}</td>
                       <td>{{ riskAssessment.effectiveTo | date:'medium' }}</td>
                       <td>
@@ -85,66 +83,48 @@
      <c-modal-body>
       <div class="col-md-12" >
         <input type="hidden" formControlName="id"/>  
+
+        <div class="form-floating">
+          <textarea class="form-control" placeholder="assesmentCode" formControlName="assesmentCode" id="assesmentCode"></textarea>
+          <label for="floatingTextarea">Assesment Code</label>
+        </div>
+
+          <!-- <div form-floating>
+            <select aria-label="Floating label select example" cSelect id="countryId"
+              formControlName="countryId" name="countryId">
+              <option value=null>Select Country Level</option>
+              <option *ngFor="let country of countryId" [value]="country.id">
+                {{country.name}}
+              </option>
+            </select>
+          </div> -->
+
+          <!-- <div cRow *ngIf="(riskAssessmentForm.get('countryId')?.invalid && riskAssessmentForm.get('countryId')?.errors) &&         
+            (riskAssessmentForm.get('countryId')?.dirty || riskAssessmentForm.get('countryId')?.touched)">
+            <small class="text-danger">
+              This field is required.
+            </small>                                 
+          </div> 
+          <br> -->
+
           <div form-floating>
-            <select aria-label="Floating label select example" cSelect id="likelihoodTypeId"
-              formControlName="likelihoodTypeId" name="likelihoodTypeId">
-              <option value=null>Select Likelihood Level</option>
-              <option *ngFor="let commonValueAndType of likelihoodType" [value]="commonValueAndType.id">
+            <select aria-label="Floating label select example" cSelect id="auditTypeId"
+              formControlName="auditTypeId" name="auditTypeId">
+              <option value="null">Select Audit Type</option>
+              <option *ngFor="let commonValueAndType of auditType" [value]="commonValueAndType.id">
                 {{commonValueAndType.text}}
               </option>
             </select>
           </div>
 
-          <div cRow *ngIf="(riskAssessmentForm.get('likelihoodTypeId')?.invalid && riskAssessmentForm.get('likelihoodTypeId')?.errors) &&         
-            (riskAssessmentForm.get('likelihoodTypeId')?.dirty || riskAssessmentForm.get('likelihoodTypeId')?.touched)">
+          <div cRow *ngIf="((riskAssessmentForm.get('auditTypeId')?.invalid && riskAssessmentForm.get('auditTypeId')?.errors)) &&
+            (riskAssessmentForm.get('auditTypeId')?.dirty || riskAssessmentForm.get('auditTypeId')?.touched)">
             <small class="text-danger">
               This field is required.
             </small>                                 
           </div> 
           <br>
 
-          <div form-floating>
-            <select aria-label="Floating label select example" cSelect id="impactTypeId"
-              formControlName="impactTypeId" name="impactTypeId">
-              <option value="null">Select Impact Level</option>
-              <option *ngFor="let commonValueAndType of impactType" [value]="commonValueAndType.id">
-                {{commonValueAndType.text}}
-              </option>
-            </select>
-          </div>
-
-          <div cRow *ngIf="((riskAssessmentForm.get('impactTypeId')?.invalid && riskAssessmentForm.get('impactTypeId')?.errors)) &&
-            (riskAssessmentForm.get('impactTypeId')?.dirty || riskAssessmentForm.get('impactTypeId')?.touched)">
-            <small class="text-danger">
-              This field is required.
-            </small>                                 
-          </div> 
-          <br>
-
-          <div form-floating>
-            <select aria-label="Floating label select example" cSelect id="ratingTypeId"
-              formControlName="ratingTypeId" name="ratingTypeId">
-              <option value="null">Select Risk Rating</option>
-              <option *ngFor="let commonValueAndType of ratingType" [value]="commonValueAndType.id">
-                {{commonValueAndType.text}}
-              </option>
-            </select>
-          </div>
-
-          <div cRow *ngIf="((riskAssessmentForm.get('ratingTypeId')?.invalid && riskAssessmentForm.get('ratingTypeId')?.errors)) &&
-            (riskAssessmentForm.get('ratingTypeId')?.dirty || riskAssessmentForm.get('ratingTypeId')?.touched)">
-            <small class="text-danger">
-              This field is required.
-            </small>                                 
-          </div> 
-          <br>
-
-          <div class="form-floating">
-            <textarea class="form-control" placeholder="description" formControlName="description" id="description"></textarea>
-            <label for="floatingTextarea">Description</label>
-          </div>
-          <br>
-          
           <div class="form-floating">
             <input class="form-control" placeholder="effectiveFrom" formControlName="effectiveFrom" id="effectiveFrom" type="date" >
             <label for="effectiveFrom">Effective From</label>

@@ -1,10 +1,5 @@
 ﻿using Internal.Audit.Application.Contracts.Persistent.CommonValueAndTypes;
 using Internal.Audit.Domain.Entities.Config;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Internal.Audit.Infrastructure.Persistent.Repositories.CommonValueAndTypes
 {

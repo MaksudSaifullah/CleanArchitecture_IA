@@ -50,7 +50,7 @@
             </div>
             <br>
             <div class="row overflow-auto">
-                <table datatable [dtOptions]="dtOptions" class="table table-bordered row-border hover" >
+                <table datatable [dtOptions]="dtOptions" class="table table-bordered row-border hover datatableStyle" >
                   <thead>
                     <tr>
                       <th>User Name</th>
@@ -61,7 +61,7 @@
                       <th>Account Locked</th>
                       <th>Account Expired</th>
                       <th>Password Expired</th>
-                      <th>Action</th>
+                      <th class="col-1 text-center">Action</th>
                     </tr>
                   </thead>
                   <tbody *ngIf="compositeUsers?.length != 0">
@@ -74,13 +74,13 @@
                       <td>{{ user.isAccountLocked }}</td>
                       <td>{{ user.isAccountExpired }}</td>
                       <td>{{ user.isPasswordExpired }}</td>
-                      <td>
+                      <td class="text-center">
                         <div class="btn-group" role="group" aria-label="Basic example">
-                          <button type="button" class="btn btn-secondary btnSaveColor" [routerLink]="['/security/userRegistration',user.id]">
-                           Edit
+                          <button type="button" class="btn btn-secondary btnEditColor" [routerLink]="['/security/userRegistration',user.id]">
+                            <svg cIcon name="cilPencil" size="md" title="Edit Button icon"></svg>
                           </button>
                           <button type="button" class="btn btn-danger btnDeleteColor" (click)="lockUser(user.id)">
-                            Lock User
+                            <svg cIcon name="cilUserX" size="md" title="Delete Button Icon"></svg>
                           </button>
                         </div>
                       </td>

@@ -10,6 +10,7 @@ import { FormService } from 'src/app/core/services/form.service';
 import { HttpService } from 'src/app/core/services/http.service';
 import {AlertService} from '../../../../core/services/alert.service';
 import { formatDate } from '@angular/common';
+import { paginatedResponseInterface } from 'src/app/core/interfaces/paginated.interface';
 
 @Component({
   selector: 'app-risk-assessment',
@@ -21,17 +22,18 @@ export class RiskAssessmentComponent implements OnInit {
   datatableElement: DataTableDirective | undefined;
   dtOptions: DataTables.Settings = {};
   auditType: commonValueAndType[] = [];
-  country : country[] = [];
   riskAssessments: riskAssessment[] = [];
   riskAssessmentForm: FormGroup;
   formService: FormService = new FormService();
   dataTableService: DatatableService = new DatatableService();
   dtTrigger: Subject<any> = new Subject<any>();
   effectiveFrom: any;
+  countries: country[] = [];
+  Data: Array<any> = [];
 
   constructor(private http: HttpService , private fb: FormBuilder, private AlertService: AlertService) { 
 
-    //this.LoadDropDownValues();
+    this.LoadDropDownValues();
     this.riskAssessmentForm = this.fb.group({
       id: [''],
       countryId:[null,[Validators.required, Validators.pattern("^(?!null$).*$")]],
@@ -73,14 +75,15 @@ export class RiskAssessmentComponent implements OnInit {
     const localmodalId = modalId;
     if (this.riskAssessmentForm.valid ){
       if(this.formService.isEdit(this.riskAssessmentForm.get('id') as FormControl)){
-        this.http.put('riskAssessment',this.riskAssessmentForm.value,null).subscribe(x=>{
+        this.http.put('riskassessment',this.riskAssessmentForm.value,null).subscribe(x=>{
             localmodalId.visible = false;
             this.dataTableService.redraw(this.datatableElement);
             this.AlertService.success('Risk Assessment Saved Successful');
           });
       }
       else {
-        this.http.post('riskAssessment',this.riskAssessmentForm.value).subscribe(x=>{
+        console.log(JSON.stringify(this.riskAssessmentForm.value))
+        this.http.post('riskassessment',this.riskAssessmentForm.value).subscribe(x=>{ 
           this.formService.onSaveSuccess(localmodalId,this.datatableElement);
           this.AlertService.success('Risk Assessment Saved successfully');
         });
@@ -128,11 +131,23 @@ export class RiskAssessmentComponent implements OnInit {
   LoadAuditType() {
     this.http.get('commonValueAndType/audittype').subscribe(resp => {
       let convertedResp = resp as commonValueAndType[];
+      console.log("AuditType",convertedResp)
       this.auditType = convertedResp;
+    })
+  }
+
+  LoadCountry() {
+    this.http.paginatedPost('country/paginated', 100, 1, {}).subscribe(resp => {
+      let convertedResp = resp as paginatedResponseInterface<country>;
+      console.log("Country",convertedResp);
+      this.countries = convertedResp.items;
+      //this.Data=convertedResp.items;
+     
     })
   }
 
   LoadDropDownValues() {
     this.LoadAuditType();
+    this.LoadCountry();
   }
 }

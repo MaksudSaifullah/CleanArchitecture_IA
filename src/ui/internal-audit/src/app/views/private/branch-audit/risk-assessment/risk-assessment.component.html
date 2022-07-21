@@ -44,8 +44,8 @@
                   <tbody *ngIf="riskAssessments?.length != 0">
                     <tr *ngFor="let riskAssessment of riskAssessments">
                       <td>{{ riskAssessment.assesmentCode }}</td>
-                      <td>{{ riskAssessment.countryId }}</td>
-                      <td>{{ riskAssessment.auditTypeId }}</td>
+                      <td>{{ riskAssessment.countryName }}</td>
+                      <td>{{ riskAssessment.auditTypeName }}</td>
                       <td>{{ riskAssessment.effectiveFrom | date:'medium' }}</td>
                       <td>{{ riskAssessment.effectiveTo | date:'medium' }}</td>
                       <td>
@@ -84,10 +84,16 @@
       <div class="col-md-12" >
         <input type="hidden" formControlName="id"/>  
 
-        <div class="form-floating">
+        <!-- <div class="form-floating">
           <textarea class="form-control" placeholder="assesmentCode" formControlName="assesmentCode" id="assesmentCode"></textarea>
-          <label for="floatingTextarea">Assesment Code</label>
+          <label for="floatingTextarea">Assesment Code</label> 
+        </div> -->
+
+        <div class="form-floating mb-3">
+          <input type="text" class="form-control" formControlName="assesmentCode" id="assesmentCode" placeholder="assesmentCode">
+          <label for="floatingInput">Assesment Code</label>
         </div>
+
 
           <!-- <div form-floating>
             <select aria-label="Floating label select example" cSelect id="countryId"
@@ -97,15 +103,32 @@
                 {{country.name}}
               </option>
             </select>
-          </div> -->
+          </div>
 
-          <!-- <div cRow *ngIf="(riskAssessmentForm.get('countryId')?.invalid && riskAssessmentForm.get('countryId')?.errors) &&         
+          <div cRow *ngIf="(riskAssessmentForm.get('countryId')?.invalid && riskAssessmentForm.get('countryId')?.errors) &&         
             (riskAssessmentForm.get('countryId')?.dirty || riskAssessmentForm.get('countryId')?.touched)">
             <small class="text-danger">
               This field is required.
             </small>                                 
           </div> 
           <br> -->
+
+          <div form-floating>
+            <select aria-label="Floating label select example" cSelect id="countryId"
+              formControlName="countryId" name="countryId">
+              <option value=null>Select Country Level</option>
+              <option *ngFor="let country of countries" [value]="country.id">
+                {{country.name}}
+              </option>
+            </select>
+          </div>
+          <div cRow *ngIf="(riskAssessmentForm.get('countryId')?.invalid && riskAssessmentForm.get('countryId')?.errors) &&         
+          (riskAssessmentForm.get('countryId')?.dirty || riskAssessmentForm.get('countryId')?.touched)">
+          <small class="text-danger">
+            This field is required.
+          </small>                                 
+        </div> 
+        <br> 
 
           <div form-floating>
             <select aria-label="Floating label select example" cSelect id="auditTypeId"
@@ -116,6 +139,16 @@
               </option>
             </select>
           </div>
+            <!-- <c-multi-select multiple formControlName="auditTypeId" name="auditTypeId" required>
+              <c-multi-select-option *ngFor="let commonValueAndType of auditType" [value]="commonValueAndType.id" [selected]="isSelected(commonValueAndType.id)" >
+                {{commonValueAndType.text}}
+              </c-multi-select-option>
+            </c-multi-select>
+       
+
+ -->
+
+         
 
           <div cRow *ngIf="((riskAssessmentForm.get('auditTypeId')?.invalid && riskAssessmentForm.get('auditTypeId')?.errors)) &&
             (riskAssessmentForm.get('auditTypeId')?.dirty || riskAssessmentForm.get('auditTypeId')?.touched)">

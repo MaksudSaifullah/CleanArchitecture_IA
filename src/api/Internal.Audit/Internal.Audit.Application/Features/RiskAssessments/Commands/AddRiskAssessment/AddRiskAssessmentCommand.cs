@@ -9,7 +9,6 @@ namespace Internal.Audit.Application.Features.RiskAssessments.Commands.AddRiskAs
 
 public class AddRiskAssessmentCommand : IRequest<AddRiskAssessmentResponseDTO>
 {
-    public Guid Id { get; set; }
     public Guid CountryId { get; set; }
     public Guid AuditTypeId { get; set; }
     public string AssesmentCode { get; set; } = null!;

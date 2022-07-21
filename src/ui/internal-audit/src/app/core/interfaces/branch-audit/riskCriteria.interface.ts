@@ -12,6 +12,6 @@
         effectiveFrom: Date;
         effectiveTo: Date;
         description: string;
-        countryName: string;
+        countryName?: string;
     }
 

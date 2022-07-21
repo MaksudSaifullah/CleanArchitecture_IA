@@ -40,10 +40,10 @@ export class RiskCriteriaComponent implements OnInit {
       id: [''],
       countryId:[null,[Validators.required, Validators.pattern("^(?!null$).*$")]],
       riskCriteriaTypeId:[null,[Validators.required, Validators.pattern("^(?!null$).*$")]],
-      minimumValue: [''],
-      maximumValue: [''],
+      minimumValue: ['',[Validators.required,Validators.maxLength(10),Validators.minLength(1)]],
+      maximumValue: ['',[Validators.required,Validators.maxLength(10),Validators.minLength(1)]],
       ratingTypeId: [null,[Validators.required, Validators.pattern("^(?!null$).*$")]],
-      score: [''],
+      score: ['',[Validators.required,Validators.maxLength(10),Validators.minLength(1)]],
       effectiveFrom: [Date,[Validators.required]],
       effectiveTo: [Date, [Validators.required]],
       description: ['']
@@ -67,9 +67,9 @@ export class RiskCriteriaComponent implements OnInit {
       searching: false,
       ajax: (dataTablesParameters: any, callback) => {
         this.http
-          // .paginatedPost(
-          //   'riskprofile/paginated',dataTablesParameters.length,((dataTablesParameters.start/dataTablesParameters.length)+1),{}
-          // ).subscribe(resp => that.riskProfiles = this.dataTableService.datatableMap(resp,callback));
+          .paginatedPost(
+            'riskcriteria/paginated',dataTablesParameters.length,((dataTablesParameters.start/dataTablesParameters.length)+1),{}
+          ).subscribe(resp => that.riskCriterias = this.dataTableService.datatableMap(resp,callback));
       },
     };
 
@@ -96,15 +96,20 @@ export class RiskCriteriaComponent implements OnInit {
     })
   }
 
+  // LoadRiskRating() {
+  //   this.http.get('commonValueAndType/riskrating').subscribe(resp => {
+  //     let convertedResp = resp as commonValueAndType[];
+  //     this.ratingType = convertedResp;
+  //   })
+  // }
   LoadRiskRating() {
     this.http.get('commonValueAndType/riskrating').subscribe(resp => {
       let convertedResp = resp as commonValueAndType[];
       this.ratingType = convertedResp;
     })
   }
-
   LoadDropDownValues() {
-   // this.LoadLikelihoodLevel();
+
     this.LoadCountry();
     this.LoadRiskCriteriaName();
     this.LoadRiskRating();
@@ -117,7 +122,7 @@ export class RiskCriteriaComponent implements OnInit {
         this.http.put('riskCriteria',this.riskCriteriaForm.value,null).subscribe(x=>{
             localmodalId.visible = false;
             this.dataTableService.redraw(this.datatableElement);
-            this.AlertService.success('Risk Criteria Saved Successful');
+            this.AlertService.success('Risk Criteria Updated Successful');
           });
       }
       else {
@@ -143,7 +148,7 @@ export class RiskCriteriaComponent implements OnInit {
           const riskCriteriaResponse = res as riskCriteria;
           this.effectiveFrom = riskCriteriaResponse.effectiveFrom;
           //console.log(riskProfileResponse);
-          this.riskCriteriaForm.setValue({id : riskCriteriaResponse.id, riskCriteriaTypeId : riskCriteriaResponse.riskCriteriaTypeId, 
+          this.riskCriteriaForm.setValue({id : riskCriteriaResponse.id, countryId:riskCriteriaResponse.countryId, riskCriteriaTypeId : riskCriteriaResponse.riskCriteriaTypeId, 
             minimumValue: riskCriteriaResponse.minimumValue, maximumValue: riskCriteriaResponse.maximumValue, 
             ratingTypeId: riskCriteriaResponse.ratingTypeId, score: riskCriteriaResponse.score,
             effectiveFrom: formatDate(riskCriteriaResponse.effectiveFrom, 'yyyy-MM-dd', 'en'), effectiveTo: formatDate(riskCriteriaResponse.effectiveTo, 'yyyy-MM-dd', 'en'),

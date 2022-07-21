@@ -3,14 +3,14 @@
     background-color: #002e4d;//001a4d
     color: white;
 }
-.datatableStyle tr{
-    min-height: 2px;
-}
+// .datatableStyle tr{
+//    padding: auto;
+// }
 
 //  .datatableStyle tr:nth-child(even) {
 //     background-color: #f2f2f2; }
 .datatableStyle tr:hover{
-    background-color: #93bcd6;// #f7f7f8; //f2f2f2
+    background-color: #dbe2e6;// #f7f7f8; //f2f2f2
     color: white;
 }
 .btnCancelColor{

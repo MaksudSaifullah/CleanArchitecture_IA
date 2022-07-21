@@ -100,10 +100,10 @@ export const navItems: INavData[] = [
         name: 'Topic Head',
         url: '/branch-audit/topichead'
       },
-      {
-        name: 'Risk Criteria',
-        url: '/branch-audit/risk-criteria'
-      },
+      // {
+      //   name: 'Risk Criteria',
+      //   url: '/branch-audit/risk-criteria'
+      // },
     ]
   },
   

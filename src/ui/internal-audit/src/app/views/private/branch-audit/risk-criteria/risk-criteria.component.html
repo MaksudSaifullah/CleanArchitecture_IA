@@ -1,1 +1,265 @@
-<p>risk-criteria works!</p>
+<div class="animated fadeIn">
+    <div class="row">
+      <div class="col-lg-12">
+        <div class="card">
+          <div class="card-header">
+            <div class="fa fa-align-justify" >Risk Criteria List</div> 
+          </div>
+          <div class="card-body">
+            <div class="row">
+              <div class="col-sm-7 mb-2">
+                 <button [cModalToggle]="verticallyCenteredModal.id" class="btnCreateColor" (click)="reset()" cButton>Create</button> 
+              </div>
+              <div class="col-sm-5 mb-2">
+                <div class="row">
+                  <div class="col-8">
+                    <!-- <input type="text" [(ngModel)]="searchText" class="form-control pull-right" placeholder="Search by Code"/> -->
+                    <input type="text" class="form-control pull-right" placeholder="Search by Name"/>
+                  </div>
+                  <div class="col-2">
+                    <!-- <button type="button" class="btn btn-secondary mr-1 pull-right btn-block" data-toggle="modal" (click)="search()" >
+                        <i class="fa fa-search" aria-hidden="true"></i>
+                    </button> -->
+                    <button type="button" class="btn btn-secondary mr-1 pull-right btn-block" data-toggle="modal" >
+                      Search
+                  </button>
+                  </div>
+                  <div class="col-2">
+                    <!-- <button type="button" class="btn btn-secondary mr-1 pull-right btn-block" data-toggle="modal" (click)="clearSearch()" >
+                        <i [ngClass]="searchText ? 'fa fa-times' : 'fa fa-refresh'" aria-hidden="true"></i>
+                    </button> -->
+                    <button type="button" class="btn btn-secondary mr-1 pull-right btn-block" data-toggle="modal"  >
+                      Reset
+                  </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="row overflow-auto">
+                <table datatable [dtOptions]="dtOptions" class="table table-bordered row-border hover" >                    
+                  <thead>
+                    <tr>
+                       <th>Country</th>
+                      <th>Risk Criteria Name</th>
+                      <th>Minimum Value</th>
+                      <th>Maximum Value</th>
+                      <th>Rating</th>
+                      <th>Score</th>
+                      <th>Effective From</th>
+                      <th>Effective To</th>  
+                      <th>Description</th>   
+                      <th>Action</th>                 
+                    </tr>
+                  </thead>
+                    <tbody *ngIf="riskCriterias?.length != 0"> 
+                    <tr *ngFor="let riskCriteria of riskCriterias">
+
+                      <td>{{ riskCriteria.countryName }}</td>
+                      <td>{{ riskCriteria.riskCriteriaType }}</td>
+                      <td>{{ riskCriteria.minimumValue }}</td>
+                      <td>{{ riskCriteria.maximumValue }}</td>
+                      <td>{{ riskCriteria.ratingType }}</td>
+                      <td>{{ riskCriteria.score }}</td>
+                      <td>{{ riskCriteria.effectiveFrom | date:'medium' }}</td>
+                      <td>{{ riskCriteria.effectiveTo | date:'medium' }}</td>
+                      <td>{{ riskCriteria.description }}</td>
+                      <td>
+                        <div class="btn-group" role="group" aria-label="Basic example">
+                          <button type="button" class="btn btn-secondary btnSaveColor" (click)="edit(verticallyCenteredModal,riskCriteria)">
+                           Edit
+                          </button>
+                          <button type="button" class="btn btn-danger btnDeleteColor" (click)="delete(riskCriteria.id)">
+                            Delete
+                          </button>
+                        </div>
+                      </td>
+                    </tr>
+                  
+                   <tbody *ngIf="riskCriterias?.length == 0"> 
+                    <tr>
+                      <td colspan="5" class="no-data-available">No data!</td>
+                    </tr>
+                   </tbody>
+                </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <form>
+  <form [formGroup]="riskCriteriaForm" (ngSubmit)="onSubmit(verticallyCenteredModal)" novalidate>
+    <c-modal #verticallyCenteredModal alignment="center" id="verticallyCenteredModal">
+      <c-modal-header>
+        <h5 cModalTitle *ngIf="!formService.isEdit(this.riskCriteriaForm.get('id'))">Create Risk Criteria</h5>
+        <h5 cModalTitle *ngIf="formService.isEdit(this.riskCriteriaForm.get('id'))">Update Risk Criteria</h5>
+        <button [cModalToggle]="verticallyCenteredModal.id" cButtonClose></button> 
+      </c-modal-header> 
+       <c-modal-body>
+        <div class="col-md-12" >
+          <input type="hidden" formControlName="id"/>  
+           
+            <div form-floating>
+              <select aria-label="Floating label select example" cSelect id="countryId"
+                formControlName="countryId" name="countryId">
+                <option value=null>Select Country</option>
+                <option *ngFor="let country of countries" [value]="country.id">
+                  {{country.name}}
+                </option>
+              </select>
+            </div>
+            <div cRow *ngIf="(riskCriteriaForm.get('countryId')?.invalid && riskCriteriaForm.get('countryId')?.errors) &&         
+            (riskCriteriaForm.get('countryId')?.dirty || riskCriteriaForm.get('countryId')?.touched)">
+            <small class="text-danger">
+              This field is required.
+            </small>                                 
+          </div> 
+          <br>
+  
+            <div form-floating>
+              <select aria-label="Floating label select example" cSelect id="riskCriteriaTypeId"
+                formControlName="riskCriteriaTypeId" name="riskCriteriaTypeId">
+                <option value="null">Select Risk Criteria</option>
+                <option *ngFor="let commonValueAndType of riskCriteriaType" [value]="commonValueAndType.id">
+                  {{commonValueAndType.text}}
+                </option>
+              </select>
+            </div>
+
+            <div cRow *ngIf="((riskCriteriaForm.get('riskCriteriaTypeId')?.invalid && riskCriteriaForm.get('riskCriteriaTypeId')?.errors)) &&
+              (riskCriteriaForm.get('riskCriteriaTypeId')?.dirty || riskCriteriaForm.get('riskCriteriaTypeId')?.touched)">
+              <small class="text-danger">
+                This field is required.
+              </small>                                 
+            </div> 
+            <br>
+
+
+              <div class="form-floating mb-3">
+                <input type="text" class="form-control" formControlName="minimumValue" id="minimumValue" placeholder="Minimum Value">
+                <label for="floatingInput">Minimum Value</label>
+              </div>
+           
+              <div cRow *ngIf="riskCriteriaForm.get('minimumValue')?.invalid &&
+              riskCriteriaForm.get('minimumValue')?.errors &&
+                    (riskCriteriaForm.get('minimumValue')?.dirty || riskCriteriaForm.get('minimumValue')?.touched)">
+                <small class="text-danger"
+                    *ngIf="riskCriteriaForm.get('minimumValue').hasError('required')">
+                    This field is required.
+                </small>
+                <small class="text-danger"
+                    *ngIf="riskCriteriaForm.get('minimumValue').hasError('minlength')">
+                    The minimum length for this field is {{riskCriteriaForm.get('minimumValue').errors.minlength.requiredLength}} characters.
+                </small>
+                <small class="text-danger"
+                    *ngIf="countryForm.get('minimumValue').hasError('maxlength')">
+                    The maximum length for this field is {{riskCriteriaForm.get('minimumValue').errors.maxlength.requiredLength}} characters.
+                </small>
+            </div>
+      
+              <div class="form-floating mb-3">
+                <input type="text" class="form-control" formControlName="maximumValue" id="code" placeholder="Maximum Value">
+                <label for="floatingInput">Maximum Value</label>
+              </div>
+      
+              <div cRow *ngIf="riskCriteriaForm.get('maximumValue')?.invalid &&
+              riskCriteriaForm.get('maximumValue')?.errors &&
+                    (riskCriteriaForm.get('maximumValue')?.dirty || riskCriteriaForm.get('maximumValue')?.touched)">
+                <small class="text-danger"
+                    *ngIf="riskCriteriaForm.get('maximumValue').hasError('required')">
+                    This field is required.
+                </small>
+                <small class="text-danger"
+                    *ngIf="riskCriteriaForm.get('maximumValue').hasError('minlength')">
+                    The minimum length for this field is {{riskCriteriaForm.get('maximumValue').errors.minlength.requiredLength}} characters.
+                </small>
+                <small class="text-danger"
+                    *ngIf="countryForm.get('maximumValue').hasError('maxlength')">
+                    The maximum length for this field is {{riskCriteriaForm.get('maximumValue').errors.maxlength.requiredLength}} characters.
+                </small>
+            </div>
+            <br>
+      
+            <div form-floating>
+              <select aria-label="Floating label select example" cSelect id="ratingTypeId"
+                formControlName="ratingTypeId" name="ratingTypeId">
+                <option value="null">Select Risk Rating</option>
+                <option *ngFor="let commonValueAndType of ratingType" [value]="commonValueAndType.id">
+                  {{commonValueAndType.text}}
+                </option>
+              </select>
+            </div>
+  
+            <div cRow *ngIf="((riskCriteriaForm.get('ratingTypeId')?.invalid && riskCriteriaForm.get('ratingTypeId')?.errors)) &&
+              (riskCriteriaForm.get('ratingTypeId')?.dirty || riskCriteriaForm.get('ratingTypeId')?.touched)">
+              <small class="text-danger">
+                This field is required.
+              </small>                                 
+            </div> 
+            <br>
+
+            <div class="form-floating mb-3">
+              <input type="text" class="form-control" formControlName="score" id="score" placeholder="Score">
+              <label for="floatingInput">Score</label>
+            </div>
+    
+    
+            <div cRow *ngIf="riskCriteriaForm.get('score')?.invalid &&
+            riskCriteriaForm.get('score')?.errors &&
+                  (riskCriteriaForm.get('score')?.dirty || riskCriteriaForm.get('score')?.touched)">
+              <small class="text-danger"
+                  *ngIf="riskCriteriaForm.get('score').hasError('required')">
+                  This field is required.
+              </small>
+              <small class="text-danger"
+                  *ngIf="riskCriteriaForm.get('score').hasError('minlength')">
+                  The minimum length for this field is {{riskCriteriaForm.get('score').errors.minlength.requiredLength}} characters.
+              </small>
+              <small class="text-danger"
+                  *ngIf="countryForm.get('score').hasError('maxlength')">
+                  The maximum length for this field is {{riskCriteriaForm.get('score').errors.maxlength.requiredLength}} characters.
+              </small>
+          </div>
+  
+            <div class="form-floating">
+              <textarea class="form-control" placeholder="description" formControlName="description" id="description"></textarea>
+              <label for="floatingTextarea">Description</label>
+            </div>
+            <br>
+            
+            
+            <div class="form-floating">
+              <input class="form-control" placeholder="effectiveFrom" formControlName="effectiveFrom" id="effectiveFrom" type="date" >
+              <label for="effectiveFrom">Effective From</label>
+            </div>
+            <div cRow *ngIf="riskCriteriaForm.get('effectiveFrom')?.invalid && riskCriteriaForm.get('effectiveFrom')?.errors &&
+                  (riskCriteriaForm.get('effectiveFrom')?.dirty || riskCriteriaForm.get('effectiveFrom')?.touched)">
+              <small class="text-danger" *ngIf="riskCriteriaForm.get('effectiveFrom').hasError('required')">
+                This field is required.
+              </small>                                 
+            </div>
+            <br>
+  
+            <div class="form-floating">
+              <input class="form-control" placeholder="effectiveTo" formControlName="effectiveTo" id="effectiveTo" type="date" >
+              <label for="effectiveTo">Effective To</label>
+            </div>
+            <div cRow *ngIf="riskCriteriaForm.get('effectiveTo')?.invalid && riskCriteriaForm.get('effectiveTo')?.errors &&
+                  (riskCriteriaForm.get('effectiveTo')?.dirty || riskCriteriaForm.get('effectiveTo')?.touched)">
+              <small class="text-danger" *ngIf="riskCriteriaForm.get('effectiveTo').hasError('required')">
+                This field is required.
+              </small>                                 
+            </div>
+            <br>          
+    
+        </div>
+      </c-modal-body> 
+       <c-modal-footer>
+        <button cButton class="btn btn-primary btnSaveColor me-1" (click)="onSubmit(verticallyCenteredModal)">Save</button>
+             <button [cModalToggle]="verticallyCenteredModal.id" cButton class="btn btn-danger btnCancelColor me-1"> 
+              Close
+         </button> 
+      </c-modal-footer> 
+    </c-modal>
+    </form>

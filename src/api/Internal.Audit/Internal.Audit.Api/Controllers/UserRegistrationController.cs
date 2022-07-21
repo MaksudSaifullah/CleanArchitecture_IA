@@ -1,9 +1,11 @@
 ﻿using Internal.Audit.Application.Features.UserRegistration.Commands.AddUserRegistration;
 using Internal.Audit.Application.Features.UserRegistration.Commands.ChangeUserPassword;
 using Internal.Audit.Application.Features.UserRegistration.Commands.DeleteUserRegistration;
+using Internal.Audit.Application.Features.UserRegistration.Commands.UpdateUserProfile;
 using Internal.Audit.Application.Features.UserRegistration.Commands.UpdateUserRegistration;
 using Internal.Audit.Application.Features.UserRegistration.Queries.GetAllUserList;
 using Internal.Audit.Application.Features.UserRegistration.Queries.GetALlUserListById;
+using Internal.Audit.Application.Features.UserRegistration.Queries.GetUserProfile;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -58,5 +60,17 @@ public class UserRegistrationController : ControllerBase
         var query = new DeleteUserRegistrationCommand(userId);
         var result = await _mediator.Send(query);
         return Ok(result);
+    }
+    [Authorize]
+    [HttpGet("GetUserProfile")]
+    public async Task<ActionResult> GetUserProfile()
+    {
+        return Ok(await _mediator.Send(new UserProfileQuery()));
+    }
+    [Authorize]
+    [HttpPost("UpdateUserProfile")]
+    public async Task<ActionResult> UpdateUserProfile(UpdateUserProfileCommand command)
+    {
+        return Ok(await _mediator.Send(command));
     }
 }

@@ -6,6 +6,7 @@ import { DesignationComponent } from './designation/designation.component';
 import{UserRegistrationComponent} from './user-registration/user-registration.component'
 import { UserRoleComponent } from './user-role/user-role.component';
 import { UserlistComponent } from './userlist/userlist.component';
+import {ProfileUpdateComponent} from "./profile-update/profile-update.component";
 
 
 const routes: Routes = [
@@ -36,6 +37,10 @@ const routes: Routes = [
   {
     path:'userrole',
     component: UserRoleComponent
+  },
+  {
+    path:'profile-update',
+    component:ProfileUpdateComponent
   }
 ];
 

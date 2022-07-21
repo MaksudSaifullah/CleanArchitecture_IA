@@ -8,9 +8,6 @@ import { AlertService } from '../../../../core/services/alert.service';
 import { topicHead } from 'src/app/core/interfaces/branch-audit/topicHead.interface';
 import { country } from 'src/app/core/interfaces/configuration/country.interface';
 import { paginatedResponseInterface } from 'src/app/core/interfaces/paginated.interface';
-import { cilTrash, cilPencil, cilPlus, cilPlaylistAdd, flagSet } from '@coreui/icons';
-import { IconSetService } from '@coreui/icons-angular';
-import { iconSubset } from '../../../../icons/icon-subset';
 
 @Component({
   selector: 'app-topic-head',
@@ -31,7 +28,7 @@ export class TopicHeadComponent implements OnInit  {
   topicheads: topicHead[] = [];
   countries: country[] = [];
 
-  constructor(private http: HttpService, private fb: FormBuilder, private AlertService: AlertService,  private iconSetService: IconSetService) 
+  constructor(private http: HttpService, private fb: FormBuilder, private AlertService: AlertService) 
   {
     this.loadDropDownValues();
     this.topicHeadForm = this.fb.group({

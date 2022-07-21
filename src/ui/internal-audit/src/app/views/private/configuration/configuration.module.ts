@@ -9,6 +9,7 @@ import { ButtonModule, FormModule, ModalModule } from '@coreui/angular-pro';
 import { ReactiveFormsModule } from '@angular/forms';
 import { RiskProfileComponent } from './riskProfile/risk-profile.component';
 import { EmailConfigComponent } from './emailConfig/emailConfig.component';
+import { IconModule } from '@coreui/icons-angular';
 
 
 @NgModule({
@@ -26,6 +27,8 @@ import { EmailConfigComponent } from './emailConfig/emailConfig.component';
     ButtonModule,
     FormModule,
     ReactiveFormsModule,
+    IconModule,
+    
   ]
 })
 export class ConfigurationModule { }

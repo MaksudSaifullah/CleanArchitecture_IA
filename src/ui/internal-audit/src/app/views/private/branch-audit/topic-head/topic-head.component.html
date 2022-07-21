@@ -17,7 +17,7 @@
             <div class="row">
               <div class="col-sm-7 mb-2">
                 <button [cModalToggle]="verticallyCenteredModal.id" class="btnCreateColor" (click)="reset()" cButton >
-                  <svg cIcon name="cilPlus" size="md" title="Add Button Icon"></svg> Add
+                  <svg cIcon name="cilPlus" size="md" title="Add Button Icon"></svg> Create
                 </button>
               </div>
               <div class="col-sm-5 mb-2">
@@ -52,7 +52,7 @@
                       <div class="btn-group" role="group" aria-label="Basic example" >
                         <!-- <svg cIcon [name]="cil-airplane-mode" [title]="cil-airplane-mode" size="3xl">gjhj</svg> -->
                         <button type="button" class="btn btn-secondary btnEditColor" (click)="edit(verticallyCenteredModal,topichead)">
-                          <svg cIcon name="cilPencil" size="md" title="Create Button icon"></svg>
+                          <svg cIcon name="cilPencil" size="md" title="Edit Button icon"></svg>
                         </button>
                         <button type="button" class="btn btn-danger btnDeleteColor" (click)="delete(topichead.id)">
                           <svg cIcon name="cilTrash" size="md" title="Delete Button Icon"></svg>

@@ -27,6 +27,7 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { RequestInterceptor } from 'src/app/core/interceptors/request.interceptor';
 import {CdkAccordionModule} from '@angular/cdk/accordion';
 import { ProfileUpdateComponent } from './profile-update/profile-update.component';
+import { IconModule } from '@coreui/icons-angular';
 
 @NgModule({
   declarations: [
@@ -56,7 +57,8 @@ import { ProfileUpdateComponent } from './profile-update/profile-update.componen
     HttpClientModule,
     AccordionModule,
     CdkAccordionModule,
-    AvatarModule
+    AvatarModule,
+    IconModule
   ],
   providers:[
   ]

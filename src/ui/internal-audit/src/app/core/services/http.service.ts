@@ -39,9 +39,9 @@ export class HttpService {
   }
 
   //#region [ Public ]
-  get<T>(endpoint:string): Observable<T[]> {
+  get<T>(endpoint:string): Observable<T> {
     return this.httpClient
-      .get<T[]>(`${this.hostName}/${endpoint}`)
+      .get<T>(`${this.hostName}/${endpoint}`)
       .pipe(
         retry(0),
         catchError(this.handleError)

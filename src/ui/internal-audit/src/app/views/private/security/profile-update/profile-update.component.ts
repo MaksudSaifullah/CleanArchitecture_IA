@@ -3,6 +3,8 @@ import {FormBuilder, FormGroup, Validator, Validators} from "@angular/forms";
 import {HttpService} from "../../../../core/services/http.service";
 import {environment} from "../../../../../environments/environment";
 import {FileResponseInterface} from "../../../../core/interfaces/file-response.interface";
+import {AlertService} from "../../../../core/services/alert.service";
+import {ProfileUpdateResponse} from "../../../../core/interfaces/security/user-registration.interface";
 
 @Component({
   selector: 'app-profile-update',
@@ -14,17 +16,22 @@ export class ProfileUpdateComponent implements OnInit {
   fileValue:any;
 
   imageUrl:any = '';
-  constructor(private fb:FormBuilder, private httpService: HttpService) {
+  constructor(private fb:FormBuilder, private httpService: HttpService,private alertService: AlertService) {
     this.profileUpdateForm = fb.group({
       fullName:['', [Validators.required,Validators.minLength(5),Validators.maxLength(50)]],
-      profileImage: ['']
+      ProfileImageUrl: ['']
     })
   }
 
   ngOnInit(): void {
+    this.httpService.get<any>('UserRegistration/GetUserProfile').subscribe(x=>{
+      let convertedResponse = x as ProfileUpdateResponse;
+      this.profileUpdateForm.patchValue(convertedResponse);
+     // this.profileUpdateForm.controls['ProfileImageUrl'].setValue(`/api/v1/document/get-file-stream?Id=${environment.file_host+ convertedResponse.profileImageUrl}`);
+      this.imageUrl =  convertedResponse.profileImageUrl;
+    })
   }
   clickFileControl(controlId:any){
-    console.log(controlId);
     document.getElementById(controlId)?.click();
   }
   onFileChange(event:any) {
@@ -34,12 +41,20 @@ export class ProfileUpdateComponent implements OnInit {
       this.httpService.postFile(environment.upload_file_configuration.id,environment.upload_file_configuration.name,'user.png',_file).subscribe(x=>{
         let response = x as FileResponseInterface;
         this.imageUrl = environment.file_host+`/api/v1/document/get-file-stream?Id=${response.id}`;
-        this.profileUpdateForm.controls['profileImage'].setValue(`/api/v1/document/get-file-stream?Id=${response.id}`);
+        this.profileUpdateForm.controls['ProfileImageUrl'].setValue(`/api/v1/document/get-file-stream?Id=${response.id}`);
       });
     }
   }
   submit():void{
-    console.log(this.profileUpdateForm.value);
-    console.log(this.imageUrl);
+    if(this.profileUpdateForm.valid){
+      let data = this.profileUpdateForm.value as ProfileUpdateResponse;
+      data.profileImageUrl = this.imageUrl;
+      this.httpService.post('UserRegistration/UpdateUserProfile',data).subscribe(x=>{
+        if(x == true){
+          this.alertService.success('Profile update successful');
+        }
+      });
+    }
+
   }
 }

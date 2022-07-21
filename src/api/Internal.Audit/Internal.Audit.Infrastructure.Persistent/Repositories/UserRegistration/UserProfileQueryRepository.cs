@@ -11,7 +11,7 @@ namespace Internal.Audit.Infrastructure.Persistent.Repositories.UserRegistration
 
         public async Task<User> GetByEmail(string email)
         {
-            return await Single($"SELECT * FROM [security].[users] where Email = {email}", false);
+            return await Single($"SELECT * FROM [security].[User] where Username = '{email}'", false);
         }
     }
 }

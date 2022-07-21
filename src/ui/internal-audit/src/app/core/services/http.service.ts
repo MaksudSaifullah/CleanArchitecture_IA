@@ -58,6 +58,8 @@ export class HttpService {
   }
 
   post<T>(endpoint:string,item: any): Observable<T> {
+    debugger;
+    console.log('aaaaaaaaaaaaaaaaaaaa',endpoint, item);
     return this.httpClient.post<T>(`${this.hostName}/${endpoint}`, JSON.stringify(item), this.httpOptions)
       .pipe(
         retry(0),

@@ -77,6 +77,10 @@ export const navItems: INavData[] = [
         url: '/security/userRegistration',
       },
       {
+        name: 'User List',
+        url: '/security/userlist',
+      },
+      {
         name: 'Role',
         url: '/security/userrole',
       },

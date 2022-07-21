@@ -21,7 +21,7 @@ public class GetSampleSelectionMethodQueryHandler : IRequestHandler<GetSampleSel
 
     public async Task<List<SampleSelectionMethodDTO>> Handle(GetSampleSelectionMethodQuery request, CancellationToken cancellationToken)
     {
-        var commonValueAndTypes = await _commonValueAndTypesRepository.GetAllSampleSelectionMethod();
+        var commonValueAndTypes = await _commonValueAndTypesRepository.GetCommonValueType("SAMPLESELECTIONMETHOD");
         return _mapper.Map< List<SampleSelectionMethodDTO>>(commonValueAndTypes);
     }
 }

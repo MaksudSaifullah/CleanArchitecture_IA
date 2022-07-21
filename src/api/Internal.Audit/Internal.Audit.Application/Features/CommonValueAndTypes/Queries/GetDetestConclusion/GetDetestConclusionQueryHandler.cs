@@ -21,7 +21,7 @@ public class GetDetestConclusionQueryHandler : IRequestHandler<GetDetestConclusi
 
     public async Task<List<DetestConclusionDTO>> Handle(GetDetestConclusionQuery request, CancellationToken cancellationToken)
     {
-        var commonValueAndTypes = await _commonValueAndTypesRepository.GetAllDetestConclusion();
+        var commonValueAndTypes = await _commonValueAndTypesRepository.GetCommonValueType("DETESTCONCLUSION");
         return _mapper.Map<List<DetestConclusionDTO>>(commonValueAndTypes);
     }
 }

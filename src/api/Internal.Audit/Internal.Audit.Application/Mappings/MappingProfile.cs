@@ -86,6 +86,11 @@ using Internal.Audit.Application.Features.TopicHeads.Queries.GetTopicHeadById;
 using Internal.Audit.Application.Features.TopicHeads.Commands.AddTopicHead;
 using Internal.Audit.Application.Features.TopicHeads.Commands.UpdateTopicHead;
 using Internal.Audit.Application.Features.TopicHeads.Commands.DeleteTopicHead;
+using Internal.Audit.Application.Features.DocumentSources.Queries.GetAllDocumentSource;
+using Internal.Audit.Application.Features.Documents.Commands.AddDocumentCommand;
+using Internal.Audit.Application.Features.Documents.Commands.UpdateDocumentCommand;
+using Internal.Audit.Application.Features.Documents.Commands.DeleteDocumentCommand;
+using Internal.Audit.Application.Features.Documents.Queries.GetByDocumentId;
 using Internal.Audit.Application.Features.EmailConfig.Queries.GetEmailTypeList;
 
 using Internal.Audit.Application.Features.RiskAssessments.Commands.AddRiskAssessment;
@@ -253,5 +258,11 @@ public class MappingProfile : Profile
         CreateMap<TopicHead, DeleteTopicHeadCommand>().ReverseMap();
         CreateMap<CompositEmailConfig, GetEmailConfigListResponseDTO>().ReverseMap();
         CreateMap<Domain.CompositeEntities.EmailType, GetEmailTypeListResponseDTO>().ReverseMap();
+
+        CreateMap<DocumentSource, GetAllDocumentSourceDTO>().ReverseMap();
+        CreateMap<Document, AddDocumentCommand>().ReverseMap();
+        CreateMap<Document, UpdateDocumentCommand>().ReverseMap();
+        CreateMap<Document, DeleteDocumentCommand>().ReverseMap();
+        CreateMap<Document, GetByDocumentIdResponseDTO>().ReverseMap();
     }
 }

@@ -11,17 +11,17 @@ export const navItems: INavData[] = [
     }
   },
   
-  {
-    name: 'Public',
-    url: '/public',
-    iconComponent: { name: 'cil-puzzle' },
-    children: [
-      {
-        name: 'about',
-        url: '/public/about'
-      }
-    ]
-  },
+  // {
+  //   name: 'Public',
+  //   url: '/public',
+  //   iconComponent: { name: 'cil-puzzle' },
+  //   children: [
+  //     {
+  //       name: 'about',
+  //       url: '/public/about'
+  //     }
+  //   ]
+  // },
   {
     name: 'Pages',
     url: '/login',
@@ -73,6 +73,10 @@ export const navItems: INavData[] = [
     iconComponent: { name: 'cilMenu' },
     children: [
       {
+        name: 'User Registration',
+        url: '/security/userRegistration',
+      },
+      {
         name: 'Role',
         url: '/security/userrole',
       },
@@ -90,7 +94,7 @@ export const navItems: INavData[] = [
   {
     name: 'Branch Audit',
     url: '/branch-audit',
-    iconComponent: { name: 'cil-star' },
+    iconComponent: { name: 'cil-puzzle' },
     children: [
       {
         name: 'Topic Head',

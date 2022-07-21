@@ -21,7 +21,7 @@ public class GetNatureOfControlActivityQueryHandler : IRequestHandler<GetNatureO
 
     public async Task<List<NatureOfControlActivityDTO>> Handle(GetNatureOfControlActivityQuery request, CancellationToken cancellationToken)
     {
-        var commonValueAndTypes = await _commonValueAndTypesRepository.GetAllNatureOfControlActivity();
+        var commonValueAndTypes = await _commonValueAndTypesRepository.GetCommonValueType("NATUREOFCONTROLACTIVITY");
         return _mapper.Map<List<NatureOfControlActivityDTO>>(commonValueAndTypes);
     }
 }

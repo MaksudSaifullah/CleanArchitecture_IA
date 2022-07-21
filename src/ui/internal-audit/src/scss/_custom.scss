@@ -1,2 +1,50 @@
 // Here you can add other styles
+.datatableStyle th {
+    background-color: #002e4d;//001a4d
+    color: white;
+}
+.datatableStyle tr{
+    min-height: 2px;
+}
 
+//  .datatableStyle tr:nth-child(even) {
+//     background-color: #f2f2f2; }
+.datatableStyle tr:hover{
+    background-color: #93bcd6;// #f7f7f8; //f2f2f2
+    color: white;
+}
+.btnCancelColor{
+    background-color: #666666b6;
+    color: white;
+    min-width: 80px;
+ }
+ .btnSaveColor{
+     background-color: #3b6998d7;
+     color: white;
+     min-width: 80px;
+  }
+  .btnEditColor{
+   background-color:whitesmoke;
+   color:  #2854bcf6;
+   min-width: 40px;
+   margin-right: 10%;
+}
+ .btnDeleteColor{
+   background-color: whitesmoke;  
+   color: #a11c1c;
+   min-width: 40px;
+   margin-left: 10%;
+} 
+ .btnCreateColor{
+   background-color: #036203;// hwb(152 10% 54% / 0.856);
+   color: rgb(255, 255, 255);   
+   min-width: 40px;
+}
+.btnCreateColor:hover{
+   background-color:rgb(57, 97, 76);   
+}
+
+ .form-check-input:checked{
+    background-color:#4dbd74;
+    border-color: #3a9d5d;
+ }

@@ -8,13 +8,16 @@ import { AlertService } from '../../../../core/services/alert.service';
 import { topicHead } from 'src/app/core/interfaces/branch-audit/topicHead.interface';
 import { country } from 'src/app/core/interfaces/configuration/country.interface';
 import { paginatedResponseInterface } from 'src/app/core/interfaces/paginated.interface';
+import { cilTrash, cilPencil, cilPlus, cilPlaylistAdd, flagSet } from '@coreui/icons';
+import { IconSetService } from '@coreui/icons-angular';
+import { iconSubset } from '../../../../icons/icon-subset';
 
 @Component({
   selector: 'app-topic-head',
   templateUrl: './topic-head.component.html',
   styleUrls: ['./topic-head.component.scss']
 })
-export class TopicHeadComponent implements OnInit {
+export class TopicHeadComponent implements OnInit  {
   @Input('tabPaneIdx')
   tabIndex!: string;
 
@@ -28,7 +31,7 @@ export class TopicHeadComponent implements OnInit {
   topicheads: topicHead[] = [];
   countries: country[] = [];
 
-  constructor(private http: HttpService, private fb: FormBuilder, private AlertService: AlertService) 
+  constructor(private http: HttpService, private fb: FormBuilder, private AlertService: AlertService,  private iconSetService: IconSetService) 
   {
     this.loadDropDownValues();
     this.topicHeadForm = this.fb.group({
@@ -37,7 +40,8 @@ export class TopicHeadComponent implements OnInit {
       name: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(100)]],
       effectiveFrom: [Date, [Validators.required]],
       effectiveTo: [Date, [Validators.required]],
-      description: ['', [Validators.maxLength(300)]],      
+      description: ['', [Validators.maxLength(300)]],
+      isActive: [''],
     })
   }
 
@@ -98,6 +102,21 @@ export class TopicHeadComponent implements OnInit {
       this.topicHeadForm.markAllAsTouched();
       return;
     }    
+  }
+  edit(modalId: any, topicHead: any): void {
+    const localmodalId = modalId;
+    console.log(topicHead);
+    this.http
+      .getById('topichead', 'id?Id='+ topicHead.id)
+      .subscribe(res => {
+        const response = res as topicHead;      
+        this.topicHeadForm.setValue({ id: response.id,
+          countryId: response.countryId,
+          name: response.name, 
+          effectiveFrom: response.effectiveFrom, effectiveTo: response.effectiveTo, 
+          description: response.description });
+      });
+    localmodalId.visible = true;
   }
 
   private ReloadAllDataTable() {

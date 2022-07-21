@@ -10,6 +10,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { CdkAccordionModule } from '@angular/cdk/accordion';
 import { SecurityRoutingModule } from '../security/security-routing.module';
 import { RiskCriteriaComponent } from './risk-criteria/risk-criteria.component';
+import { IconModule,IconSetService } from '@coreui/icons-angular';
 
 
 @NgModule({
@@ -33,7 +34,10 @@ import { RiskCriteriaComponent } from './risk-criteria/risk-criteria.component';
     NavModule,
     HttpClientModule,
     AccordionModule,
-    CdkAccordionModule
-  ]
+    CdkAccordionModule,
+    IconModule,
+ 
+    
+  ]  
 })
 export class BranchAuditModule { }

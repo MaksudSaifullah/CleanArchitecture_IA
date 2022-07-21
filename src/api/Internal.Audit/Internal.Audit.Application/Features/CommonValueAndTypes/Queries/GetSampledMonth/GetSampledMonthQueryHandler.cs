@@ -21,7 +21,7 @@ public class GetSampledMonthHandler : IRequestHandler<GetSampledMonthQuery, List
 
     public async Task<List<SampledMonthDTO>> Handle(GetSampledMonthQuery request, CancellationToken cancellationToken)
     {
-        var commonValueAndTypes = await _commonValueAndTypesRepository.GetAllSampledMonth();
+        var commonValueAndTypes = await _commonValueAndTypesRepository.GetCommonValueType("SAMPLEDMONTH");
         return _mapper.Map< List<SampledMonthDTO>>(commonValueAndTypes);
     }
 }

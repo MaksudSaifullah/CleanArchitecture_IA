@@ -21,7 +21,7 @@ public class GetControlFrequencyQueryHandler : IRequestHandler<GetControlFrequen
 
     public async Task<List<ControlFrequencyDTO>> Handle(GetControlFrequencyQuery request, CancellationToken cancellationToken)
     {
-        var commonValueAndTypes = await _commonValueAndTypesRepository.GetAllControlFrequency();
+        var commonValueAndTypes = await _commonValueAndTypesRepository.GetCommonValueType("CONTROLFREQUENCY");
         return _mapper.Map<List<ControlFrequencyDTO>>(commonValueAndTypes);
     }
 }

@@ -21,7 +21,7 @@ public class YesNoQueryHandler : IRequestHandler<GetYesNoQuery, List<YesNoDTO>>
 
     public async Task<List<YesNoDTO>> Handle(GetYesNoQuery request, CancellationToken cancellationToken)
     {
-        var commonValueAndTypes = await _commonValueAndTypesRepository.GetAllYesNo();
+        var commonValueAndTypes = await _commonValueAndTypesRepository.GetCommonValueType("YESNO");
         return _mapper.Map< List<YesNoDTO>>(commonValueAndTypes);
     }
 }

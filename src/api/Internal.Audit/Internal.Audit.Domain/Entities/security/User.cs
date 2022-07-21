@@ -20,6 +20,11 @@ public class User : EntityBase
     [MaxLength(30)]
     public string UserName { get; set; } = null!;
     [Required]
+    [MaxLength(80)]
+    public string FullName { get; set; } = null!;
+    [MaxLength(512)]
+    public string ProfileImageUrl { get; set; } = null!;
+    [Required]
     [MaxLength(100)]
     public string Password { get; set; } = null!;
 

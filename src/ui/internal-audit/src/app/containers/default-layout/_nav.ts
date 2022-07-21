@@ -73,6 +73,10 @@ export const navItems: INavData[] = [
     iconComponent: { name: 'cilMenu' },
     children: [
       {
+        name: 'User Registration',
+        url: '/security/userRegistration',
+      },
+      {
         name: 'Role',
         url: '/security/userrole',
       },
@@ -96,10 +100,10 @@ export const navItems: INavData[] = [
         name: 'Topic Head',
         url: '/branch-audit/topichead'
       },
-      {
-        name: 'Risk Criteria',
-        url: '/branch-audit/risk-criteria'
-      },
+      // {
+      //   name: 'Risk Criteria',
+      //   url: '/branch-audit/risk-criteria'
+      // },
     ]
   },
   

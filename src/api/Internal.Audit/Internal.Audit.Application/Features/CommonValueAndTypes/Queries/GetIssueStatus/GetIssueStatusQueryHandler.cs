@@ -21,7 +21,7 @@ public class GetIssueStatusQueryHandler : IRequestHandler<GetIssueStatusQuery, L
 
     public async Task<List<IssueStatusDTO>> Handle(GetIssueStatusQuery request, CancellationToken cancellationToken)
     {
-        var commonValueAndTypes = await _commonValueAndTypesRepository.GetAllIssueStatus();
+        var commonValueAndTypes = await _commonValueAndTypesRepository.GetCommonValueType("ISSUESTATUS");
         return _mapper.Map<List<IssueStatusDTO>>(commonValueAndTypes);
     }
 }

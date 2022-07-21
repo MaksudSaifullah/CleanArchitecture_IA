@@ -21,7 +21,7 @@ public class GetLevelOfImpactQueryHandler : IRequestHandler<GetLevelOfImpactQuer
 
     public async Task<List<LevelOfImpactDTO>> Handle(GetLevelOfImpactQuery request, CancellationToken cancellationToken)
     {
-        var commonValueAndTypes = await _commonValueAndTypesRepository.GetAllLevelOfImpact();
+        var commonValueAndTypes = await _commonValueAndTypesRepository.GetCommonValueType("LEVELOFIMPACT");
         return _mapper.Map<List<LevelOfImpactDTO>>(commonValueAndTypes);
     }
 }

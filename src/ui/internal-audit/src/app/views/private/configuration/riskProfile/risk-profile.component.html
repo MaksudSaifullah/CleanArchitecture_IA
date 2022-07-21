@@ -167,8 +167,11 @@
                 (riskProfileForm.get('effectiveTo')?.dirty || riskProfileForm.get('effectiveTo')?.touched)">
             <small class="text-danger" *ngIf="riskProfileForm.get('effectiveTo').hasError('required')">
               This field is required.
-            </small>                                 
+            </small>                                                      
           </div>
+          <small class="text-danger" *ngIf="riskProfileForm.hasError('invalidDateRange')">
+            Effective from should be greater than effective to.
+          </small>          
           <br>          
   
       </div>

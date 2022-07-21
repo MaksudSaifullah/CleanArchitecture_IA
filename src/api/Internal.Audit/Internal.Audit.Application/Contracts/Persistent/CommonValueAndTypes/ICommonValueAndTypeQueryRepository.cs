@@ -10,7 +10,6 @@ namespace Internal.Audit.Application.Contracts.Persistent.CommonValueAndTypes
     public interface ICommonValueAndTypeQueryRepository : IAsyncQueryRepository<CommonValueAndType>
     {        
         Task<IEnumerable<CommonValueAndType>> GetCommonValueType(string type);
-    {
         Task<IEnumerable<CommonValueAndType>> GetAllEMailType();
         Task<IEnumerable<CommonValueAndType>> GetAllLevelOfLikelihood();
         Task<IEnumerable<CommonValueAndType>> GetAllLevelOfImpact();

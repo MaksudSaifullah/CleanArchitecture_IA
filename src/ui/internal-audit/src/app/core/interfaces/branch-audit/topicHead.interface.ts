@@ -5,5 +5,6 @@ export interface topicHead {
     effectiveFrom?: Date;
     effectiveTo?: Date;
     description?: string;
-    countryName?: string;
+    isActive?: boolean;
+    countryName?: string;    
 }

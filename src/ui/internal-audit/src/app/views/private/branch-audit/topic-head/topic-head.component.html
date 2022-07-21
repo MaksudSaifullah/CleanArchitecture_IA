@@ -12,37 +12,35 @@
           <div class="card-header"><i class="fa fa-align-justify" ></i> 
             Topic Head List
           </div>
+          
           <div class="card-body">
             <div class="row">
               <div class="col-sm-7 mb-2">
-                <button [cModalToggle]="verticallyCenteredModal.id" class="btnCreateColor" (click)="reset()" cButton>Create</button>
+                <button [cModalToggle]="verticallyCenteredModal.id" class="btnCreateColor" (click)="reset()" cButton >
+                  <svg cIcon name="cilPlus" size="md" title="Add Button Icon"></svg> Create
+                </button>
               </div>
               <div class="col-sm-5 mb-2">
-                <div class="row">
+                <div class="row" style="float: right;">
                   <div class="col-8">
-                  <input type="text" class="form-control pull-right" placeholder="Search by Name"/>
+                    <input type="text" class="form-control pull-right" placeholder="Search by Topic Head"/>
                   </div>
-                  <div class="col-2">
-                  <button type="button" class="btn btn-secondary mr-1 pull-right btn-block" data-toggle="modal" >
+                  <div class="col-4">
+                    <button type="button" class="btn btn-secondary mr-1 btn-block pull-right" data-toggle="modal" >
                       Search
                   </button>
                   </div>
-                  <div class="col-2">
-                  <button type="button" class="btn btn-secondary mr-1 pull-right btn-block" data-toggle="modal"  >
-                      Reset
-                  </button>
-                  </div>
                 </div>
-              </div>
+              </div>              
             </div>
             <div class="row overflow-auto">
-              <table datatable [dtOptions]="dtOptions[0]" id="DataTables_Table_1"  class="table table-bordered row-border hover" >
-                <thead>
+              <table datatable [dtOptions]="dtOptions[0]" id="DataTables_Table_1"  class="table table-bordered row-border hover datatableStyle" >
+                <thead >
                   <tr>
                     <th>Country</th>
                     <th>Topic Head</th>
                     <th>Description</th>
-                    <th>Action</th>
+                    <th class="col-1 text-center">Action</th>
                   </tr>
                 </thead>
                 <tbody *ngIf="topicheads?.length != 0">
@@ -50,13 +48,14 @@
                     <td>{{ topichead.countryName }}</td>
                     <td>{{ topichead.name }}</td>
                     <td>{{ topichead.description }}</td>
-                    <td>
-                      <div class="btn-group" role="group" aria-label="Basic example">
-                        <button type="button" class="btn btn-secondary btnSaveColor" (click)="edit(verticallyCenteredModal,role)">
-                          Edit
+                    <td class="text-center">
+                      <div class="btn-group" role="group" aria-label="Basic example" >
+                        <!-- <svg cIcon [name]="cil-airplane-mode" [title]="cil-airplane-mode" size="3xl">gjhj</svg> -->
+                        <button type="button" class="btn btn-secondary btnEditColor" (click)="edit(verticallyCenteredModal,topichead)">
+                          <svg cIcon name="cilPencil" size="md" title="Edit Button icon"></svg>
                         </button>
-                        <button type="button" class="btn btn-danger btnDeleteColor" (click)="delete(role.id)">
-                          Delete
+                        <button type="button" class="btn btn-danger btnDeleteColor" (click)="delete(topichead.id)">
+                          <svg cIcon name="cilTrash" size="md" title="Delete Button Icon"></svg>
                         </button>
                       </div>
                     </td>
@@ -85,6 +84,22 @@
         <c-modal-body>
           <div class="col-md-12" >
             <input type="hidden" formControlName="id"/>
+              <div class="form-floating mb-3">
+                <select aria-label="Floating label select example" cSelect id="countryId"
+                  formControlName="countryId" name="countryId">
+                  <option value="null">Select Country</option>
+                  <option *ngFor="let country of countries" [value]="country.id">
+                    {{country.name}}
+                  </option>
+                </select>            
+    
+                <div cRow *ngIf="((topicHeadForm.get('countryId')?.invalid && topicHeadForm.get('countryId')?.errors)) &&
+                  (topicHeadForm.get('countryId')?.dirty || topicHeadForm.get('countryId')?.touched)">
+                  <small class="text-danger">
+                    This field is required.
+                  </small>                                 
+                </div>
+              </div>
   
               <div class="form-floating mb-3">
                 <input type="text" class="form-control" formControlName="name" id="name" placeholder="Name">
@@ -163,9 +178,11 @@
           </div>
         </c-modal-body>
         <c-modal-footer>
-          <button cButton class="btn btn-primary btnSaveColor me-1" (click)="onSubmit(verticallyCenteredModal)">Save</button>
-              <button [cModalToggle]="verticallyCenteredModal.id" cButton class="btn btn-danger btnCancelColor me-1">
-                Close
+          <button cButton class="btn btn-primary btnSaveColor me-1" (click)="onSubmit(verticallyCenteredModal)">
+            <svg cIcon name="cilSave" size="md" title="Save Button Icon"></svg> Save
+          </button>
+          <button [cModalToggle]="verticallyCenteredModal.id" cButton class="btn btn-danger btnCancelColor me-1">
+            <svg cIcon name="cilX" size="md" title="Close Button Icon"></svg> Close
           </button>
         </c-modal-footer>
       </c-modal>

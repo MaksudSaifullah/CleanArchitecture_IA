@@ -11,47 +11,47 @@ export const navItems: INavData[] = [
     }
   },
   
-  {
-    name: 'Public',
-    url: '/public',
-    iconComponent: { name: 'cil-puzzle' },
-    children: [
-      {
-        name: 'about',
-        url: '/public/about'
-      }
-    ]
-  },
-  {
-    name: 'Pages',
-    url: '/login',
-    iconComponent: { name: 'cil-star' },
-    children: [
-      {
-        name: 'Error 404',
-        url: '/404'
-      },
-      {
-        name: 'Error 500',
-        url: '/500'
-      }
-    ]
-  },
-  {
-    name: 'Public',
-    url: '/about',
-    iconComponent: { name: 'cilPaperPlane' },
-    children: [
-      {
-        name: 'About',
-        url: '/about'
-      },
-      {
-        name: 'Login',
-        url: '/login'
-      },
-    ]
-  },
+  // {
+  //   name: 'Public',
+  //   url: '/public',
+  //   iconComponent: { name: 'cil-puzzle' },
+  //   children: [
+  //     {
+  //       name: 'about',
+  //       url: '/public/about'
+  //     }
+  //   ]
+  // },
+  // {
+  //   name: 'Pages',
+  //   url: '/login',
+  //   iconComponent: { name: 'cil-star' },
+  //   children: [
+  //     {
+  //       name: 'Error 404',
+  //       url: '/404'
+  //     },
+  //     {
+  //       name: 'Error 500',
+  //       url: '/500'
+  //     }
+  //   ]
+  // },
+  // {
+  //   name: 'Public',
+  //   url: '/about',
+  //   iconComponent: { name: 'cilPaperPlane' },
+  //   children: [
+  //     {
+  //       name: 'About',
+  //       url: '/about'
+  //     },
+  //     {
+  //       name: 'Login',
+  //       url: '/login'
+  //     },
+  //   ]
+  // },
   {
     name: 'Configuration',
     url: '/configuration',
@@ -73,6 +73,14 @@ export const navItems: INavData[] = [
     iconComponent: { name: 'cilMenu' },
     children: [
       {
+        name: 'User Registration',
+        url: '/security/userRegistration',
+      },
+      {
+        name: 'User List',
+        url: '/security/userlist',
+      },
+      {
         name: 'Role',
         url: '/security/userrole',
       },
@@ -90,12 +98,16 @@ export const navItems: INavData[] = [
   {
     name: 'Branch Audit',
     url: '/branch-audit',
-    iconComponent: { name: 'cil-star' },
+    iconComponent: { name: 'cil-puzzle' },
     children: [
       {
         name: 'Topic Head',
         url: '/branch-audit/topichead'
       },
+      // {
+      //   name: 'Risk Criteria',
+      //   url: '/branch-audit/risk-criteria'
+      // },
       {
         name: 'Risk Criteria',
         url: '/branch-audit/risk-criteria'

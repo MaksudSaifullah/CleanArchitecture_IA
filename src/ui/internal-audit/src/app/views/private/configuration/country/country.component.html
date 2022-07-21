@@ -9,7 +9,10 @@
         <div class="card-body">
           <div class="row">
             <div class="col-sm-7 mb-2">
-                <button [cModalToggle]="verticallyCenteredModal.id" class="btnCreateColor" (click)="reset()" cButton>Create Country</button>
+                <button [cModalToggle]="verticallyCenteredModal.id" class="btnCreateColor" (click)="reset()" cButton>
+                  <svg cIcon name="cilPlus" size="md" title="Add Button Icon"></svg>  
+                  Create
+                </button>
 
             </div>
             <div class="col-sm-5 mb-2">
@@ -18,7 +21,7 @@
                   <!-- <input type="text" [(ngModel)]="searchText" class="form-control pull-right" placeholder="Search by Code"/> -->
                   <input type="text" class="form-control pull-right" placeholder="Search by Name"/>
                 </div>
-                <div class="col-2">
+                <div class="col-4">
                   <!-- <button type="button" class="btn btn-secondary mr-1 pull-right btn-block" data-toggle="modal" (click)="search()" >
                       <i class="fa fa-search" aria-hidden="true"></i>
                   </button> -->
@@ -26,26 +29,19 @@
                     Search
                 </button>
                 </div>
-                <div class="col-2">
-                  <!-- <button type="button" class="btn btn-secondary mr-1 pull-right btn-block" data-toggle="modal" (click)="clearSearch()" >
-                      <i [ngClass]="searchText ? 'fa fa-times' : 'fa fa-refresh'" aria-hidden="true"></i>
-                  </button> -->
-                  <button type="button" class="btn btn-secondary mr-1 pull-right btn-block" data-toggle="modal"  >
-                    Reset
-                </button>
-                </div>
+                
               </div>
             </div>
           </div>
           <div class="row overflow-auto">
-              <table datatable [dtOptions]="dtOptions" class="table table-bordered row-border hover" >
+              <table datatable [dtOptions]="dtOptions" class="table table-bordered row-border hover datatableStyle" >
                 <thead>
                   <tr>
                     <th>Name</th>
                     <th>Code</th>
                     <th>Created On</th>
                     <th>Remarks</th>
-                    <th>Action</th>
+                    <th class="col-1 text-center">Action</th>
                   </tr>
                 </thead>
                 <tbody *ngIf="countries?.length != 0">
@@ -54,13 +50,13 @@
                     <td>{{ country.code }}</td>
                     <td>{{ country.createdOn | date:'medium' }}</td>
                     <td>{{ country.remarks }}</td>
-                    <td>
+                    <td class="text-center">
                       <div class="btn-group" role="group" aria-label="Basic example">
-                        <button type="button" class="btn btn-secondary btnSaveColor" (click)="edit(verticallyCenteredModal,country)">
-                         Edit
+                        <button type="button" class="btn btn-secondary btnEditColor" (click)="edit(verticallyCenteredModal,country)">
+                          <svg cIcon name="cilPencil" size="md" title="Edit Button icon"></svg>
                         </button>
-                        <button type="button" class="btn btn-danger btnDeleteColor" (click)="delete(country.id)">
-                          Delete
+                        <button type="button" class="btn btn-danger btnDeleteColor" (click)="delete(country.id)">                          
+                          <svg cIcon name="cilTrash" size="md" title="Delete Button Icon"></svg>
                         </button>
                       </div>
                     </td>
@@ -144,9 +140,11 @@
     </div>
   </c-modal-body>
   <c-modal-footer>
-    <button cButton class="btn btn-primary btnSaveColor me-1" (click)="onSubmit(verticallyCenteredModal)">Save</button>
-        <button [cModalToggle]="verticallyCenteredModal.id" cButton class="btn btn-danger btnCancelColor me-1">
-          Close
+    <button cButton class="btn btn-primary btnSaveColor me-1" (click)="onSubmit(verticallyCenteredModal)">
+      <svg cIcon name="cilSave" size="md" title="Save Button Icon"></svg> Save
+    </button>
+    <button [cModalToggle]="verticallyCenteredModal.id" cButton class="btn btn-danger btnCancelColor me-1">
+      <svg cIcon name="cilX" size="md" title="Close Button Icon"></svg> Close
     </button>
   </c-modal-footer>
 </c-modal>

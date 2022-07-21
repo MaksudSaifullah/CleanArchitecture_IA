@@ -22,7 +22,7 @@ public class GetAuditTypeQueryQueryHandler : IRequestHandler<GetAuditTypeQuery, 
 
     public async Task<List<AuditTypeDTO>> Handle(GetAuditTypeQuery request, CancellationToken cancellationToken)
     {
-        var commonValueAndTypes = await _commonValueAndTypesRepository.GetAllAuditType();
+        var commonValueAndTypes = await _commonValueAndTypesRepository.GetCommonValueType("AUDITTYPE");
         return _mapper.Map<List<AuditTypeDTO>>(commonValueAndTypes);
     }
 }

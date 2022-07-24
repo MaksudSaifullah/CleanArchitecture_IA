@@ -20,16 +20,23 @@ export class DesignationComponent implements OnInit {
   dtOptions: DataTables.Settings = {};
   designations: designation[] = [];
   designationForm: FormGroup;
+  searchForm: FormGroup;
   formService: FormService = new FormService();
   dataTableService: DatatableService = new DatatableService();
   dtTrigger: Subject<any> = new Subject<any>();
+  
 
   constructor(private http: HttpService , private fb: FormBuilder, private AlertService: AlertService) {
     this.designationForm = this.fb.group({
       id: [''],
       name: ['',[Validators.required,Validators.maxLength(50),Validators.minLength(2)]],
       description: ['']      
-    })
+    });
+    this.searchForm = this.fb.group(
+      {
+        searchTerm: ['']
+      }
+    )
   }
   ngOnDestroy(): void {
   }
@@ -47,9 +54,10 @@ export class DesignationComponent implements OnInit {
       processing: true,
       searching: false,
       ajax: (dataTablesParameters: any, callback) => {
+        console.log('hellllo:' );
         this.http
           .paginatedPost(
-            'designation/paginated', dataTablesParameters.length,((dataTablesParameters.start/dataTablesParameters.length)+1),{}
+            'designation/paginated', dataTablesParameters.length,((dataTablesParameters.start/dataTablesParameters.length)+1), this.searchForm.get('searchTerm')?.value
           ).subscribe(resp => {
             let convertedResp = resp as paginatedResponseInterface<designation>;
             console.log(convertedResp);
@@ -115,6 +123,9 @@ export class DesignationComponent implements OnInit {
   }
   reset(){
     this.designationForm.reset();
+  }
+  search(){
+    this.dataTableService.redraw(this.datatableElement);
   }
 
 }

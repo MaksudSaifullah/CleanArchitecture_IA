@@ -50,6 +50,8 @@ using Internal.Audit.Application.Contracts.Persistent.Documents;
 using Internal.Audit.Infrastructure.Persistent.Repositories.Documents;
 using Internal.Audit.Application.Contracts.Persistent.RiskAssessments;
 using Internal.Audit.Infrastructure.Persistent.Repositories.RiskAssessments;
+using Internal.Audit.Application.Contracts.Persistent.Audit;
+using Internal.Audit.Infrastructure.Persistent.Repositories.Audit;
 
 namespace Internal.Audit.Infrastructure.Persistent;
 
@@ -127,6 +129,9 @@ public static class PersistentInfrastructureServiceRegistration
 
         services.AddScoped<IRiskAssessmentCommandRepository, RiskAssessmentCommandRepository>();
         services.AddScoped<IRiskAssessmentQueryRepository>(s => new RiskAssessmentQueryRepository(configuration.GetConnectionString("InternalAuditDb")));
+
+        services.AddScoped<IAuditCommandRepository, AuditCommandRepository>();
+        services.AddScoped<IAuditQueryRepository>(s => new AuditQueryRepository(configuration.GetConnectionString("InternalAuditDb")));
 
         return services;
     }

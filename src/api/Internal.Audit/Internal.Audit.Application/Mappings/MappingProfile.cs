@@ -100,6 +100,9 @@ using Internal.Audit.Application.Features.RiskAssessments.Queries.GetRiskAssessm
 using Internal.Audit.Application.Features.RiskAssessments.Queries.GetRiskAssessmentById;
 using Internal.Audit.Domain.Entities.BranchAudit;
 using Internal.Audit.Domain.CompositeEntities.BranchAudit;
+using Internal.Audit.Application.Features.Audit.Queries.GetAuditList;
+using Internal.Audit.Application.Features.Audit.Commands.AddAudit;
+using Internal.Audit.Application.Features.Audit.Commands.DeleteAudit;
 
 namespace Internal.Audit.Application.Mappings;
 
@@ -264,5 +267,11 @@ public class MappingProfile : Profile
         CreateMap<Document, UpdateDocumentCommand>().ReverseMap();
         CreateMap<Document, DeleteDocumentCommand>().ReverseMap();
         CreateMap<Document, GetByDocumentIdResponseDTO>().ReverseMap();
+
+        CreateMap<CompositAudit, GetAuditListResponseDTO>().ReverseMap();
+       // CreateMap<AuditCreation, AddAuditResponseDTO>().ReverseMap();
+        CreateMap<AuditCreation, AddAuditCommand>().ReverseMap();
+        CreateMap<AuditCreation, DeleteAuditCommand>().ReverseMap();
+        
     }
 }

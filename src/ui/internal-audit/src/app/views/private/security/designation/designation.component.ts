@@ -86,7 +86,7 @@ export class DesignationComponent implements OnInit {
       }
       else{
         this.designationForm.markAllAsTouched();
-        this.AlertService.error('Invalid Information');
+        this.AlertService.error('Provide Valid Information');
       }
   }
   edit(modalId:any, designation:any):void 

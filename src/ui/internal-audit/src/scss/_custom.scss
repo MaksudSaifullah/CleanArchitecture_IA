@@ -13,6 +13,19 @@
     background-color: #dbe2e6;// #f7f7f8; //f2f2f2
     color: white;
 }
+
+.datatableStyle td{
+ max-width: 100px;
+ overflow: hidden;
+ text-overflow: ellipsis;
+ white-space: nowrap;
+}
+
+.datatableStyle td:hover{
+   overflow: visible;
+   white-space: normal;
+   height: auto;
+}
 .btnCancelColor{
     background-color: #666666b6;
     color: white;

@@ -11,5 +11,6 @@ namespace Internal.Audit.Application.Contracts.Persistent.EmailConfigs
     public interface IEmailConfigQueryRepository : IAsyncQueryRepository<CompositEmailConfig>
     {
         Task<(long, IEnumerable<CompositEmailConfig>)> GetAll(string searchTerm, int pageSize, int pageNumber);
+        Task<CompositEmailConfig> GetById(Guid id);
     }
 }

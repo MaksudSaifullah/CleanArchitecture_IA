@@ -1695,7 +1695,6 @@ namespace Internal.Audit.Infrastructure.Persistent.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("FullName")
-                        .IsRequired()
                         .HasMaxLength(80)
                         .HasColumnType("nvarchar(80)");
 
@@ -1730,7 +1729,6 @@ namespace Internal.Audit.Infrastructure.Persistent.Migrations
                         .HasColumnType("nvarchar(100)");
 
                     b.Property<string>("ProfileImageUrl")
-                        .IsRequired()
                         .HasMaxLength(512)
                         .HasColumnType("nvarchar(512)");
 

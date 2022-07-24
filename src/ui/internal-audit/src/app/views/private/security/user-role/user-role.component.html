@@ -136,12 +136,13 @@
               </small>
           </div>
 
-          <c-form-check sizing="xl" switch>
-            <input cFormCheckInput checked type="checkbox" formControlName="isActive" id="isActive" checked />
-            <label cFormCheckLabel>Active Status</label>
-          </c-form-check>
-
-          
+          <div *ngIf ="isVisible">
+            <c-form-check sizing="xl" switch >
+              <input cFormCheckInput checked type="checkbox" formControlName="isActive" id="isActive" checked />
+              <label cFormCheckLabel>Active Status</label>
+            </c-form-check>
+          </div>
+       
 
         </div>
       </c-modal-body>

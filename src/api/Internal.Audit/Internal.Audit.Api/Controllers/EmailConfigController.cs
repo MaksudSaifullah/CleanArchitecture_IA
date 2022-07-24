@@ -1,5 +1,6 @@
 ﻿using Internal.Audit.Application.Features.EmailConfig.Commands.AddEmailConfig;
 using Internal.Audit.Application.Features.EmailConfig.Commands.DeleteEmailConfig;
+using Internal.Audit.Application.Features.EmailConfig.Commands.UpdateEmailConfig;
 using Internal.Audit.Application.Features.EmailConfig.Queries.GetEmailConfigById;
 using Internal.Audit.Application.Features.EmailConfig.Queries.GetEmailConfigList;
 using Internal.Audit.Application.Features.EmailConfig.Queries.GetEmailTypeList;
@@ -43,6 +44,12 @@ namespace Internal.Audit.Api.Controllers
         }
         [HttpPost]
         public async Task<ActionResult<AddEmailConfigResponseDTO>> Add(AddEmailConfigCommand command)
+        {
+            var result = await _mediator.Send(command);
+            return Ok(result);
+        }
+        [HttpPut]
+        public async Task<ActionResult<UpdateEmailConfigResponseDTO>> Update(UpdateEmailConfigCommand command)
         {
             var result = await _mediator.Send(command);
             return Ok(result);

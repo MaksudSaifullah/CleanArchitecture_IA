@@ -8,10 +8,15 @@ public class DesignationQueryRepository : QueryRepositoryBase<Designation>, IDes
     {
     }
 
-    public async Task<(long, IEnumerable<Designation>)> GetAll(int pageSize, int pageNumber)
+    public async Task<(long, IEnumerable<Designation>)> GetAll(int pageSize, int pageNumber, dynamic searchTerm = null)
     {
-        var query = "EXEC [dbo].[GetDesignationListProcedure] @pageSize,@pageNumber";
-        var parameters = new Dictionary<string, object> { { "@pageSize", pageSize }, { "@pageNumber", pageNumber } };
+        string searchTermConverted = (object)searchTerm == null ? null : Convert.ToString(searchTerm);
+        if(!string.IsNullOrWhiteSpace(searchTermConverted))
+        {
+            searchTermConverted = searchTermConverted.Replace("{", "").Replace("}", "");
+        }
+        var query = "EXEC [dbo].[GetDesignationListProcedure] @pageSize,@pageNumber,@searchTerm";
+        var parameters = new Dictionary<string, object> { { "@pageSize", pageSize }, { "@pageNumber", pageNumber }, { "@searchTerm", searchTermConverted } };
         return await GetWithPagingInfo(query, parameters, false);
     }
     public async Task<IEnumerable<Designation>> GetAll()

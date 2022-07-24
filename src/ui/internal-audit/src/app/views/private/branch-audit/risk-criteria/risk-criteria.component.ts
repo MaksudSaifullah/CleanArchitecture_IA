@@ -23,7 +23,8 @@ import { country } from 'src/app/core/interfaces/configuration/country.interface
 export class RiskCriteriaComponent implements OnInit {
   @ViewChild(DataTableDirective, {static: false})
   datatableElement: DataTableDirective | undefined;
-  dtOptions: DataTables.Settings = {};
+  dtOptions: DataTables.Settings[] = [];
+  // dtOptions: DataTables.Settings = {};
   riskCriteriaType: commonValueAndType[] = [];
   ratingType: commonValueAndType[] = [];
   riskCriterias: riskCriteria[] = [];
@@ -40,10 +41,10 @@ export class RiskCriteriaComponent implements OnInit {
       id: [''],
       countryId:[null,[Validators.required, Validators.pattern("^(?!null$).*$")]],
       riskCriteriaTypeId:[null,[Validators.required, Validators.pattern("^(?!null$).*$")]],
-      minimumValue: ['',[Validators.required,Validators.maxLength(10),Validators.minLength(1)]],
-      maximumValue: ['',[Validators.required,Validators.maxLength(10),Validators.minLength(1)]],
+      minimumValue: [''],
+      maximumValue: [''],
       ratingTypeId: [null,[Validators.required, Validators.pattern("^(?!null$).*$")]],
-      score: ['',[Validators.required,Validators.maxLength(10),Validators.minLength(1)]],
+      score: [''],
       effectiveFrom: [Date,[Validators.required]],
       effectiveTo: [Date, [Validators.required]],
       description: ['']
@@ -59,7 +60,8 @@ export class RiskCriteriaComponent implements OnInit {
 
   LoadData() {
     const that = this;
-    this.dtOptions = {
+    
+    this.dtOptions[0] = {
       pagingType: 'full_numbers',
       pageLength: 10,
       serverSide: true,
@@ -68,19 +70,11 @@ export class RiskCriteriaComponent implements OnInit {
       ajax: (dataTablesParameters: any, callback) => {
         this.http
           .paginatedPost(
-            'riskcriteria/paginated',dataTablesParameters.length,((dataTablesParameters.start/dataTablesParameters.length)+1),{}
-          ).subscribe(resp => that.riskCriterias = this.dataTableService.datatableMap(resp,callback));
+            'riskcriteria/paginated', dataTablesParameters.length, ((dataTablesParameters.start / dataTablesParameters.length) + 1), ''
+          ).subscribe(resp => that.riskCriterias = this.dataTableService.datatableMap(resp, callback));
       },
     };
-
   }
-
-  // LoadLikelihoodLevel() {
-  //   this.http.get('commonValueAndType/leveloflikelihood').subscribe(resp => {
-  //     let convertedResp = resp as commonValueAndType[];
-  //     this.likelihoodType = convertedResp;
-  //   })
-  // }
 
   LoadCountry() {
     this.http.paginatedPost('country/paginated', 100, 1, {}).subscribe(resp => {
@@ -95,13 +89,6 @@ export class RiskCriteriaComponent implements OnInit {
       this.riskCriteriaType = convertedResp;
     })
   }
-
-  // LoadRiskRating() {
-  //   this.http.get('commonValueAndType/riskrating').subscribe(resp => {
-  //     let convertedResp = resp as commonValueAndType[];
-  //     this.ratingType = convertedResp;
-  //   })
-  // }
   LoadRiskRating() {
     this.http.get('commonValueAndType/riskrating').subscribe(resp => {
       let convertedResp = resp as commonValueAndType[];
@@ -109,7 +96,6 @@ export class RiskCriteriaComponent implements OnInit {
     })
   }
   LoadDropDownValues() {
-
     this.LoadCountry();
     this.LoadRiskCriteriaName();
     this.LoadRiskRating();

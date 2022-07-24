@@ -28,7 +28,7 @@ export class DesignationComponent implements OnInit {
     this.designationForm = this.fb.group({
       id: [''],
       name: ['',[Validators.required,Validators.maxLength(50),Validators.minLength(2)]],
-      description: ['',[Validators.required]]      
+      description: ['']      
     })
   }
   ngOnDestroy(): void {
@@ -72,7 +72,7 @@ export class DesignationComponent implements OnInit {
           this.http.put('designation',this.designationForm.value,null).subscribe(x=>{
             localmodalId.visible = false;
             this.dataTableService.redraw(this.datatableElement);
-            this.AlertService.success('Designation Saved Successful');
+            this.AlertService.success('Designation Updated Successfully');
 
           });
         }
@@ -80,7 +80,7 @@ export class DesignationComponent implements OnInit {
           this.http.post('designation',this.designationForm.value).subscribe(x=>{
             localmodalId.visible = false;
             this.dataTableService.redraw(this.datatableElement);
-            this.AlertService.success('Designation Saved Successful');
+            this.AlertService.success('Designation Saved Successfully');
           });
         }
       }

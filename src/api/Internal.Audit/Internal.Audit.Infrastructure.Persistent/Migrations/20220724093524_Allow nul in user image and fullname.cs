@@ -4,7 +4,7 @@
 
 namespace Internal.Audit.Infrastructure.Persistent.Migrations
 {
-    public partial class UserFullNameAndProfileImageUrlAdded : Migration
+    public partial class Allownulinuserimageandfullname : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -14,8 +14,7 @@ namespace Internal.Audit.Infrastructure.Persistent.Migrations
                 table: "User",
                 type: "nvarchar(80)",
                 maxLength: 80,
-                nullable: false,
-                defaultValue: "");
+                nullable: true);
 
             migrationBuilder.AddColumn<string>(
                 name: "ProfileImageUrl",
@@ -23,8 +22,7 @@ namespace Internal.Audit.Infrastructure.Persistent.Migrations
                 table: "User",
                 type: "nvarchar(512)",
                 maxLength: 512,
-                nullable: false,
-                defaultValue: "");
+                nullable: true);
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)

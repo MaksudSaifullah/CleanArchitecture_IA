@@ -4,7 +4,7 @@
 
 namespace Internal.Audit.Infrastructure.Persistent.Migrations
 {
-    public partial class riskcriteriafix : Migration
+    public partial class Usertableissuesolved : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {

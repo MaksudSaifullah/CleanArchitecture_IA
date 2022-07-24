@@ -27,6 +27,7 @@ public class AddRoleCommandHandler : IRequestHandler<AddRoleCommand, AddRoleResp
     public async Task<AddRoleResponseDTO> Handle(AddRoleCommand request, CancellationToken cancellationToken)
     {
         var role = _mapper.Map<Role>(request);
+        role.IsActive = true;
         var newRole = await _roleRepository.Add(role);
         var rowsAffected = await _unitOfWork.CommitAsync();
 

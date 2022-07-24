@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Internal.Audit.Infrastructure.Persistent.Migrations
 {
     [DbContext(typeof(InternalAuditContext))]
-    [Migration("20220720083216_UserFullNameAndProfileImageUrlAdded")]
-    partial class UserFullNameAndProfileImageUrlAdded
+    [Migration("20220724093004_UpdateRoleProcedure")]
+    partial class UpdateRoleProcedure
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -1412,7 +1412,7 @@ namespace Internal.Audit.Infrastructure.Persistent.Migrations
                     b.Property<bool>("IsActive")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bit")
-                        .HasDefaultValueSql("0");
+                        .HasDefaultValueSql("1");
 
                     b.Property<bool>("IsDeleted")
                         .ValueGeneratedOnAdd()

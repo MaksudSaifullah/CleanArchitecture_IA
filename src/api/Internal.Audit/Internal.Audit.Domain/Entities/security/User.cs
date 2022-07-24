@@ -19,11 +19,11 @@ public class User : EntityBase
     [Required]
     [MaxLength(30)]
     public string UserName { get; set; } = null!;
-    [Required]
+    
     [MaxLength(80)]
-    public string FullName { get; set; } = null!;
+    public string? FullName { get; set; }
     [MaxLength(512)]
-    public string ProfileImageUrl { get; set; } = null!;
+    public string? ProfileImageUrl { get; set; }
     [Required]
     [MaxLength(100)]
     public string Password { get; set; } = null!;

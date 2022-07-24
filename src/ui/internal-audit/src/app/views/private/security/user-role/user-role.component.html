@@ -164,7 +164,7 @@
       <c-col xs="12"> 
         <c-card class="mb-4">
           <c-card-header>
-            <strong>User Role wise Access Privilege</strong>
+            <strong>User Role Wise Access Privilege</strong>
           </c-card-header>
           <c-card-body>
 
@@ -182,6 +182,7 @@
                         {{role.name}}
                       </option>
                     </select>
+                    <label for="role" class="dropdownLabel">Select Role</label>
                   </div>
   
                   <!-- <div cRow *ngIf="privilegeForm.get('role')?.invalid &&
@@ -205,8 +206,9 @@
                       <option value="00000000-0000-0000-0000-000000000000">All</option>
                       <option *ngFor="let module of modules" [value]="module.id">
                         {{module.displayName}}
-                      </option>
+                      </option>                     
                     </select>
+                    <label for="module" class="dropdownLabel">Select Module</label>
                   </div>
   
                   <!-- <div cRow *ngIf="privilegeForm.get('module')?.invalid &&
@@ -241,16 +243,16 @@
                           <td>
                             <div>                              
                               <label class = "checkbox-inline" style="margin-left: 10%;"  >
-                                <input type = "checkbox" value = "" [checked]="isChecked('view',privilege.module.id,privilege.feature.id)" (change)="onCheckChange($event,'view',privilege.module.id,privilege.feature.id)">View
+                                <input style="margin-right: 5px;" type = "checkbox" value = "" [checked]="isChecked('view',privilege.module.id,privilege.feature.id)" (change)="onCheckChange($event,'view',privilege.module.id,privilege.feature.id)">View
                              </label>
                              <label class = "checkbox-inline"  style="margin-left: 10%;">
-                              <input type="checkbox" value="" [checked]="isChecked('create',privilege.module.id,privilege.feature.id)" (change)="onCheckChange($event,'create',privilege.module.id,privilege.feature.id)">Create
+                              <input style="margin-right: 5px;" type="checkbox" value="" [checked]="isChecked('create',privilege.module.id,privilege.feature.id)" (change)="onCheckChange($event,'create',privilege.module.id,privilege.feature.id)">Create
                            </label>
                            <label class = "checkbox-inline"  style="margin-left: 10%;">
-                              <input type = "checkbox" value = "" [checked]="isChecked('edit',privilege.module.id,privilege.feature.id)" (change)="onCheckChange($event,'edit',privilege.module.id,privilege.feature.id)">Edit
+                              <input style="margin-right: 5px;" type = "checkbox" value = "" [checked]="isChecked('edit',privilege.module.id,privilege.feature.id)" (change)="onCheckChange($event,'edit',privilege.module.id,privilege.feature.id)">Edit
                            </label>
                            <label class = "checkbox-inline"  style="margin-left: 10%;">
-                            <input type = "checkbox" value = "" [checked]="isChecked('delete',privilege.module.id,privilege.feature.id)" (change)="onCheckChange($event,'delete',privilege.module.id,privilege.feature.id)">Delete
+                            <input style="margin-right: 5px;" type = "checkbox" value = "" [checked]="isChecked('delete',privilege.module.id,privilege.feature.id)" (change)="onCheckChange($event,'delete',privilege.module.id,privilege.feature.id)">Delete
                          </label>
                             </div>
                           </td>
@@ -261,16 +263,16 @@
                           <td>
                             <div>                            
                               <label class = "checkbox-inline" style="margin-left: 10%;"  >
-                                <input type = "checkbox" value = "" [checked]="isChecked('view',privilege.module.id,privilege.feature.id)" (change)="onCheckChange($event,'view',privilege.module.id,privilege.feature.id)">View
+                                <input style="margin-right: 5px;" type = "checkbox" value = "" [checked]="isChecked('view',privilege.module.id,privilege.feature.id)" (change)="onCheckChange($event,'view',privilege.module.id,privilege.feature.id)">View
                              </label>
                              <label class = "checkbox-inline"  style="margin-left: 10%;">
-                              <input type="checkbox" value="" [checked]="isChecked('create',privilege.module.id,privilege.feature.id)" (change)="onCheckChange($event,'create',privilege.module.id,privilege.feature.id)">Create
+                              <input style="margin-right: 5px;" type="checkbox" value="" [checked]="isChecked('create',privilege.module.id,privilege.feature.id)" (change)="onCheckChange($event,'create',privilege.module.id,privilege.feature.id)">Create
                            </label>
                            <label class = "checkbox-inline"  style="margin-left: 10%;">
-                              <input type = "checkbox" value = "" [checked]="isChecked('edit',privilege.module.id,privilege.feature.id)" (change)="onCheckChange($event,'edit',privilege.module.id,privilege.feature.id)">Edit
+                              <input style="margin-right: 5px;" type = "checkbox" value = "" [checked]="isChecked('edit',privilege.module.id,privilege.feature.id)" (change)="onCheckChange($event,'edit',privilege.module.id,privilege.feature.id)">Edit
                            </label>
                            <label class = "checkbox-inline"  style="margin-left: 10%;">
-                            <input type = "checkbox" value = "" [checked]="isChecked('delete',privilege.module.id,privilege.feature.id)" (change)="onCheckChange($event,'delete',privilege.module.id,privilege.feature.id)">Delete
+                            <input style="margin-right: 5px;" type = "checkbox" value = "" [checked]="isChecked('delete',privilege.module.id,privilege.feature.id)" (change)="onCheckChange($event,'delete',privilege.module.id,privilege.feature.id)">Delete
                          </label>
                             </div>
                           </td>

@@ -178,7 +178,7 @@ export class UserRoleComponent implements OnInit {
   }
   onChangModule(e: any) {
     this.ifFirstLoad=true;
-    if (e.value != 'null' && (this.privilegeForm?.value.role != 'null')) {
+    if (e.value != 'null' && (this.privilegeForm?.value.role != 'null' && this.privilegeForm?.value.role != null)) {
       this.roleSelected = true;
       this.featureId = e.value;
       //this.dataTableService.redraw(this.dtElements?.get(1));

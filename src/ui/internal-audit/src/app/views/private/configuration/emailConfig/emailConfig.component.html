@@ -10,7 +10,10 @@
           <form [formGroup]="emailConfigSearchForm">
           <div class="row">
             <div class="col-sm-7 mb-2">
-                <button [cModalToggle]="verticallyCenteredModal.id" class="btnCreateColor"  cButton>Create Email Config</button>
+                <button [cModalToggle]="verticallyCenteredModal.id" class="btnCreateColor" (click)="reset()" cButton>
+                  <svg cIcon name="cilPlus" size="md" title="Add Button Icon"></svg>  
+                  Create
+                </button>
             </div>
           
             <div class="col-sm-5 mb-2">
@@ -25,18 +28,18 @@
                     Search
                 </button>
                 </div>
-                <div class="col-2">
+                <!-- <div class="col-2">
                   <button type="button" class="btn btn-secondary mr-1 pull-right btn-block" (click)="clearSearch()"  >
                     Reset
                 </button>
-                </div>
+                </div> -->
               </div>
             </div>
            
           </div>
         </form>
           <div class="row overflow-auto">
-              <table datatable [dtOptions]="dtOptions" class="table table-bordered row-border hover" >
+              <table datatable [dtOptions]="dtOptions" class="table table-bordered row-border hover datatableStyle" >
                 <thead>
                   <tr>
                     <th>Email Type</th>
@@ -56,8 +59,11 @@
                     <td>{{ config.createdOn | date:'medium' }}</td>
                     <td>
                       <div class="btn-group" role="group" aria-label="Basic example">
+                        <button type="button" class="btn btn-secondary btnEditColor" (click)="edit(verticallyCenteredModal,config)">
+                          <svg cIcon name="cilPencil" size="md" title="Edit Button icon"></svg>
+                        </button>
                         <button type="button" class="btn btn-danger btnDeleteColor" (click)="delete(config.id)">
-                          Delete
+                          <svg cIcon name="cilTrash" size="md" title="Delete Button Icon"></svg>
                         </button>
                       </div>
                     </td>
@@ -88,7 +94,7 @@
       <div class="col-md-12" >
         <input type="hidden" formControlName="id"/>
 
-            <div form-floating>
+            <div cFormFloating>
               <select aria-label="Floating label select example" cSelect id="emailTypeId"
                 formControlName="emailTypeId" name="emailTypeId">
                 <option value=null>Select Email Type</option>
@@ -96,6 +102,7 @@
                   {{emailType.name}}
                 </option>
               </select>
+              <label for="emailTypeId" class="dropdownLabel">Select Email Type</label>
             </div>
             <div cRow *ngIf="(emailConfigForm.get('emailTypeId')?.invalid && emailConfigForm.get('emailTypeId')?.errors) &&         
             (emailConfigForm.get('emailTypeId')?.dirty || emailConfigForm.get('emailTypeId')?.touched)">
@@ -104,7 +111,7 @@
             </small>                                 
           </div> 
           <br>
-          <div form-floating>
+          <div cFormFloating>
             <select aria-label="Floating label select example" cSelect id="countryId"
               formControlName="countryId" name="countryId">
               <option value=null>Select Country</option>
@@ -112,6 +119,7 @@
                 {{country.name}}
               </option>
             </select>
+            <label for="countryId" class="dropdownLabel">Select Country</label>
           </div>
           <div cRow *ngIf="(emailConfigForm.get('countryId')?.invalid && emailConfigForm.get('countryId')?.errors) &&         
           (emailConfigForm.get('countryId')?.dirty || emailConfigForm.get('countryId')?.touched)">
@@ -146,8 +154,12 @@
       </div>
     </c-modal-body>
     <c-modal-footer>
-      <button cButton class="btn btn-primary btnSaveColor me-1" [disabled]="!emailConfigForm.valid" (click)="onSubmit(verticallyCenteredModal)">Save</button>
-      <button [cModalToggle]="verticallyCenteredModal.id" cButton class="btn btn-danger btnCancelColor me-1">Close</button>
+      <button cButton class="btn btn-primary btnSaveColor me-1"  (click)="onSubmit(verticallyCenteredModal)">
+        <svg cIcon name="cilSave" size="md" title="Save Button Icon"></svg> Save
+      </button>
+      <button [cModalToggle]="verticallyCenteredModal.id" cButton class="btn btn-danger btnCancelColor me-1">
+        <svg cIcon name="cilX" size="md" title="Close Button Icon"></svg> Close
+      </button>
     </c-modal-footer>
   </c-modal>
   </form>

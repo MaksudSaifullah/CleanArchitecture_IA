@@ -65,6 +65,10 @@ export const navItems: INavData[] = [
         name: 'Risk Profile',
         url: '/configuration/risk-profile',
       },
+      {
+        name: 'Email Config',
+        url: '/configuration/emailConfig',
+      },
     ]
   },
   {

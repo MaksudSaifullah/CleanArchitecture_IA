@@ -102,6 +102,8 @@ using Internal.Audit.Domain.Entities.BranchAudit;
 using Internal.Audit.Domain.CompositeEntities.BranchAudit;
 using Internal.Audit.Application.Features.CommonValueAndTypes.Queries.GetAuditType;
 using Internal.Audit.Application.Features.EmailConfig.Commands.UpdateEmailConfig;
+using Internal.Audit.Application.Features.CommonValueAndTypes.Queries.GetAuditFrequency;
+using Internal.Audit.Application.Features.CommonValueAndTypes.Queries.GetAuditScore;
 
 namespace Internal.Audit.Application.Mappings;
 
@@ -267,5 +269,7 @@ public class MappingProfile : Profile
         CreateMap<Document, DeleteDocumentCommand>().ReverseMap();
         CreateMap<Document, GetByDocumentIdResponseDTO>().ReverseMap();
         CreateMap<CommonValueAndType, AuditTypeDTO>().ReverseMap();
+        CreateMap<CommonValueAndType, AuditFrequencyDTO>().ReverseMap();
+        CreateMap<CommonValueAndType, AuditScoreDTO>().ReverseMap();
     }
 }

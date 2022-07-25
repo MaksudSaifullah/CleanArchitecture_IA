@@ -101,6 +101,7 @@ using Internal.Audit.Application.Features.RiskAssessments.Queries.GetRiskAssessm
 using Internal.Audit.Domain.Entities.BranchAudit;
 using Internal.Audit.Domain.CompositeEntities.BranchAudit;
 using Internal.Audit.Application.Features.CommonValueAndTypes.Queries.GetAuditType;
+using Internal.Audit.Application.Features.EmailConfig.Commands.UpdateEmailConfig;
 using Internal.Audit.Application.Features.CommonValueAndTypes.Queries.GetAuditFrequency;
 using Internal.Audit.Application.Features.CommonValueAndTypes.Queries.GetAuditScore;
 

@@ -6,31 +6,26 @@
             <div class="fa fa-align-justify" >Risk Assessment List</div> 
           </div>
           <div class="card-body">
-            <div class="row">
-              <div class="col-sm-7 mb-2">
-                  <button [cModalToggle]="verticallyCenteredModal.id" class="btnCreateColor" (click)="reset()" cButton>Create Risk Assessment</button> 
-  
+           
+            <div class="row" style="margin: 0 auto;">
+              <div class="col-md-6 mb-2">
+                <button [cModalToggle]="verticallyCenteredModal.id" class="btnCreateColor" (click)="reset()" cButton>
+                  <svg cIcon name="cilPlus" size="md" title="Add Button Icon"></svg> Create
+                </button> 
               </div>
-              <div class="col-sm-5 mb-2">
-                <div class="row">
-                  <div class="col-8">
-                    <input type="text" class="form-control pull-right" placeholder="Search by Name"/>
-                  </div>
-                  <div class="col-2">
-                    <button type="button" class="btn btn-secondary mr-1 pull-right btn-block" data-toggle="modal" >
-                      Search
-                  </button>
-                  </div>
-                  <div class="col-2">
-                    <button type="button" class="btn btn-secondary mr-1 pull-right btn-block" data-toggle="modal"  >
-                      Reset
-                  </button>
-                  </div>
-                </div>
+              <div class="col-md-5 mb-2 form-floating">
+                <input type="text" class="form-control searchInput"  placeholder="Search by Name or Code"/>
+                <label class="searchLevel" for="floatingInput">Country Name / Country Code</label>
+              </div>
+              <div class="col-md-1 mb-2">
+                <button type="button" class="btn btn-secondary mr-1 btn-block searchBtn" data-toggle="modal" >
+                  Search
+                </button>
               </div>
             </div>
+            
             <div class="row overflow-auto">
-                <table datatable [dtOptions]="dtOptions" class="table table-bordered row-border hover" >
+                <table datatable [dtOptions]="dtOptions" class="table table-bordered row-border datatableStyle hover" >
                   <thead>
                     <tr>
                       <th>Risk Assessment Code</th>
@@ -50,11 +45,11 @@
                       <td>{{ riskAssessment.effectiveTo | date:'medium' }}</td>
                       <td>
                         <div class="btn-group" role="group" aria-label="Basic example">
-                          <button type="button" class="btn btn-secondary btnSaveColor" (click)="edit(verticallyCenteredModal,riskAssessment)">
-                           Edit
+                          <button type="button" class="btn btn-secondary btnEditColor" (click)="edit(verticallyCenteredModal,riskAssessment)">
+                            <svg cIcon name="cilPencil" size="md" title="Edit Button icon"></svg>
                           </button>
                           <button type="button" class="btn btn-danger btnDeleteColor" (click)="delete(riskAssessment.id)">
-                            Delete
+                            <svg cIcon name="cilTrash" size="md" title="Delete Button Icon"></svg>
                           </button>
                         </div>
                       </td>
@@ -71,7 +66,7 @@
         </div>
       </div>
     </div>
-  </div>
+</div>
 
   <form [formGroup]="riskAssessmentForm" (ngSubmit)="onSubmit(verticallyCenteredModal)" novalidate>
   <c-modal #verticallyCenteredModal alignment="center" id="verticallyCenteredModal">
@@ -83,36 +78,10 @@
      <c-modal-body>
       <div class="col-md-12" >
         <input type="hidden" formControlName="id"/>  
-
-        <!-- <div class="form-floating">
-          <textarea class="form-control" placeholder="assesmentCode" formControlName="assesmentCode" id="assesmentCode"></textarea>
-          <label for="floatingTextarea">Assesment Code</label> 
-        </div> -->
-
         <div class="form-floating mb-3">
           <input type="text" class="form-control" formControlName="assesmentCode" id="assesmentCode" placeholder="assesmentCode">
           <label for="floatingInput">Assesment Code</label>
         </div>
-
-
-          <!-- <div form-floating>
-            <select aria-label="Floating label select example" cSelect id="countryId"
-              formControlName="countryId" name="countryId">
-              <option value=null>Select Country Level</option>
-              <option *ngFor="let country of countryId" [value]="country.id">
-                {{country.name}}
-              </option>
-            </select>
-          </div>
-
-          <div cRow *ngIf="(riskAssessmentForm.get('countryId')?.invalid && riskAssessmentForm.get('countryId')?.errors) &&         
-            (riskAssessmentForm.get('countryId')?.dirty || riskAssessmentForm.get('countryId')?.touched)">
-            <small class="text-danger">
-              This field is required.
-            </small>                                 
-          </div> 
-          <br> -->
-
           <div form-floating>
             <select aria-label="Floating label select example" cSelect id="countryId"
               formControlName="countryId" name="countryId">
@@ -139,17 +108,7 @@
               </option>
             </select>
           </div>
-            <!-- <c-multi-select multiple formControlName="auditTypeId" name="auditTypeId" required>
-              <c-multi-select-option *ngFor="let commonValueAndType of auditType" [value]="commonValueAndType.id" [selected]="isSelected(commonValueAndType.id)" >
-                {{commonValueAndType.text}}
-              </c-multi-select-option>
-            </c-multi-select>
-       
-
- -->
-
-         
-
+            
           <div cRow *ngIf="((riskAssessmentForm.get('auditTypeId')?.invalid && riskAssessmentForm.get('auditTypeId')?.errors)) &&
             (riskAssessmentForm.get('auditTypeId')?.dirty || riskAssessmentForm.get('auditTypeId')?.touched)">
             <small class="text-danger">

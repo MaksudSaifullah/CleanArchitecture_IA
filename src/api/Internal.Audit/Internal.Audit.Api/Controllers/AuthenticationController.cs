@@ -1,4 +1,5 @@
 ﻿//using Internal.Audit.Application.Features.Users.Queries.GetAuthUser;
+using Internal.Audit.Application.Contracts.Auth;
 using Internal.Audit.Application.Features.UserList.Queries.GetAuthUser;
 using MediatR;
 using Microsoft.AspNetCore.Http;
@@ -11,17 +12,29 @@ namespace Internal.Audit.Api.Controllers
     public class AuthenticationController : ControllerBase
     {
         private readonly IMediator _mediator;
+        private readonly IGoogleRecatchaVerificationService _googleRecaptchaVerificationService;
 
-        public AuthenticationController(IMediator mediator)
+        public AuthenticationController(IMediator mediator, IGoogleRecatchaVerificationService googleRecaptchaVerificationService)
         {
-            _mediator = mediator ?? throw new ArgumentNullException(nameof(mediator));
+            _mediator = mediator;
+            _googleRecaptchaVerificationService = googleRecaptchaVerificationService;
         }
 
         [HttpPost]
         public async Task<ActionResult<AuthUserDTO>> Get(GetAuthUserQuery query)
         {
-            var result = await _mediator.Send(query);
-            return Ok(result);
+            var captchaVerificationResult = await _googleRecaptchaVerificationService.ValidateRecaptchaV2(query.CaptchaToken);
+            if (captchaVerificationResult.Item1 == true)
+            {
+                var result = await _mediator.Send(query);
+                return Ok(result);
+            }
+            return Ok(new AuthUserDTO()
+            {
+                Success = captchaVerificationResult.Item1,
+                Message = captchaVerificationResult.Item2
+            });
+            
         }
     }
 }

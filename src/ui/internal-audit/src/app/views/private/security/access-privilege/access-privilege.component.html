@@ -19,10 +19,12 @@
                       Password Length
                   </c-card-header>
                   <c-card-body class="form-inline" >
-                      <label for="minLength">Minimum Length :</label>
-                      <input id="minLength" type="number" formControlName="minLength" name="minLength">
+                      <span class="text-danger">* </span>
+                      <label for="minLength"> Minimum Length :</label>
+                      <input id="minLength" type="number" min="1" formControlName="minLength" name="minLength"  (keyup)="numberOnly($event,'minLength')" (keydown)="numberOnly($event, 'minLength')">
+                      <span class="text-danger"> * </span>
                       <label for="maxLength">Maximum Length :</label>
-                      <input id="maxLength" type="number" formControlName="maxLength" name="maxLength">
+                      <input id="maxLength" type="number" min="1" formControlName="maxLength" name="maxLength" (keyup)="numberOnly($event,'maxLength')" (keydown)="numberOnly($event, 'maxLength')">
                   </c-card-body>
               </c-card>
               
@@ -35,11 +37,12 @@
                     <c-row><c-form-check>
                       <!-- <span class="form-inline"> -->
                       <c-row><c-col>                                  
-                        <input type="checkbox" name="cbAlphabet" onclick="onCheckAlphabet" formControlName="isAlphabetMandatory" (change)="true" #cbAlphabet>                              
+                        <input type="checkbox" name="cbAlphabet" formControlName="isAlphabetMandatory" (change)="true" #cbAlphabet>                              
                         <label for="cbAlphabet" class="m-1">Alphabet</label>
                         <span *ngIf="cbAlphabet.checked" >
                         <label for="maxAlphabet" class="m-1">: Maximum Letters </label>
-                        <input type="number" name="maxAlphabet" onclick="onCheckAlphabet" formControlName="alphabetLength" class='inline-textbox'>                              
+                        <input type="number" min="1" name="maxAlphabet" formControlName="alphabetLength" class='inline-textbox' (keyup)="numberOnly($event,'alphabetLength')" (keydown)="numberOnly($event, 'alphabetLength')">                              
+                        <span class="text-danger"> * </span>
                         </span>                              
                       </c-col></c-row> 
                       
@@ -48,7 +51,8 @@
                         <label for="cbNumeric" class="m-1">Numeric</label>
                         <span *ngIf="cbNumeric.checked">
                         <label for="maxNumber" class="m-1">: Maximum Numbers </label>
-                        <input type="number" name="maxNumber" onclick="" formControlName="numericLength" class='inline-textbox'>
+                        <input type="number" min="1" name="maxNumber" onclick="" formControlName="numericLength" class='inline-textbox' (keyup)="numberOnly($event,'numericLength')" (keydown)="numberOnly($event, 'numericLength')">
+                        <span class="text-danger"> * </span>
                         </span>
                       </c-col></c-row>
                       
@@ -57,7 +61,8 @@
                         <label for="cbSpecialChar" class="m-1">Special Character</label>
                         <span *ngIf="cbSpecialChar.checked">
                         <label for="maxNumber" class="m-1">: Maximum Special Characters </label>
-                        <input type="number" name="maxNumber" onclick="" formControlName="specialCharsLength" class='inline-textbox'>
+                        <input type="number" min="1" name="maxNumber" onclick="" formControlName="specialCharsLength" class='inline-textbox' (keyup)="numberOnly($event,'specialCharsLength')" (keydown)="numberOnly($event, 'specialCharsLength')">
+                        <span class="text-danger"> * </span>
                         </span>
                       </c-col></c-row>
 
@@ -78,25 +83,25 @@
               <c-row><c-form-check>
                 <input type="checkbox" name="cbNoLogin" formControlName="isLockedOnNoLoginActivity" (change)="true" #cbNoLogin>
                 <label for="cbNoLogin" class="m-1" >No login for 
-                  <input id="noLoginDays" name="noLoginDays" class="inline-textbox" formControlName="noLoginActivityDays">
+                  <input type="number" min="1" id="noLoginDays" name="noLoginDays" class="inline-textbox" formControlName="noLoginActivityDays" (keypress)="numberOnly($event)">
                   days (for this case account will be unlocked through authorized person)
                 </label><br>
                 
                 <input type="checkbox" name="cbFailedLogin" formControlName="isLockedOnFailedLoginAttempts" (change)="true" #cbFailedLogin>
                 <label for="cbFailedLogin" class="m-1" >
                   Failed Login for 
-                  <input id="numberOfFailedLoginAttempts" name="numberOfFailedLoginAttempts" class="inline-textbox" formControlName="numberOfFailedLoginAttempts">
+                  <input type="number" min="1" id="numberOfFailedLoginAttempts" name="numberOfFailedLoginAttempts" class="inline-textbox" formControlName="numberOfFailedLoginAttempts" (keypress)="numberOnly($event)">
                   times within
-                  <input id="failedLoginAttemptsDuration" name="failedLoginAttemptsDuration" class="inline-textbox" formControlName="failedLoginAttemptsDuration">
+                  <input type="number" min="1" id="failedLoginAttemptsDuration" name="failedLoginAttemptsDuration" class="inline-textbox" formControlName="failedLoginAttemptsDuration" (keypress)="numberOnly($event)">
                   minutes. Later user will be locked for next
-                  <input id="failedLoginLockedDuration" name="failedLoginLockedDuration" class="inline-textbox" formControlName="failedLoginLockedDuration">
+                  <input type="number" min="1" id="failedLoginLockedDuration" name="failedLoginLockedDuration" class="inline-textbox" formControlName="failedLoginLockedDuration" (keypress)="numberOnly($event)">
                   hour.                      
                 </label><br>
 
                 <input type="checkbox" name="cbUnlocking" formControlName="isUnlockedOnByAdmin" (change)="true" #cbUnlocking>
                 <label for="cbUnlocking" class="m-1"> 
                   Unlock Account
-                  <input id="unlockedByAdminDuration" name="unlockedByAdminDuration" class="inline-textbox" formControlName="unlockedOnByAdminDuration">
+                  <input type="number" min="1" id="unlockedByAdminDuration" name="unlockedByAdminDuration" class="inline-textbox" formControlName="unlockedOnByAdminDuration" (keypress)="numberOnly($event)">
                   minutes later (only applicable when user failed to login within configured time by configured number of attempt)
                 </label>
               </c-form-check></c-row>
@@ -118,9 +123,9 @@
                 <input type="checkbox" name="cbForceReset" formControlName="isPasswordResetForcedPeriodically" (change)="true" #cbForceReset>
                 <label for="cbForceReset" class="m-1" >
                   Force Reset After
-                  <input type="number" id="forcePasswordResetDays" name="forcePasswordResetDays" class="inline-textbox" formControlName="forcePasswordResetDays">
+                  <input type="number" min="1" id="forcePasswordResetDays" name="forcePasswordResetDays" class="inline-textbox" formControlName="forcePasswordResetDays">
                   days. Notify user prior
-                  <input type="number" id="notifyPasswordResetDays" name="notifyPasswordResetDays" class="inline-textbox" formControlName="notifyPasswordResetDays">
+                  <input type="number" min="1" id="notifyPasswordResetDays" name="notifyPasswordResetDays" class="inline-textbox" formControlName="notifyPasswordResetDays">
                   days.                                          
                 </label><br>                      
               </c-form-check></c-row>
@@ -136,7 +141,7 @@
             <c-card-body>
               <input type="checkbox" name="cbSessionPolicy" formControlName="sessionPolicy_isEnabled" (change)="true" #cbSessionPolicy>
               <label for="cbSessionPolicy" class="m-1">Duration </label>
-              <input type="number" id="sessionDuration" name="sessionDuration" class="inline-textbox" formControlName="sessionPolicy_duration">
+              <input type="number" min="1" id="sessionDuration" name="sessionDuration" class="inline-textbox" formControlName="sessionPolicy_duration">
               minutes.
             </c-card-body>
           </c-card>
@@ -147,7 +152,7 @@
             <button cButton class="btn btn-primary btnSaveColor me-1" (click)="onSubmit()">
               <svg cIcon name="cilSave" size="md" title="Save Button Icon"></svg> Save
             </button>
-            <button cButton class="btn btn-danger btnCancelColor me-1" onclick=" window.location.reload();">
+            <button cButton class="btn btn-danger btnCancelColor me-1" onclick="window.location.reload();">
               <svg cIcon name="cilX" size="md" title="Close Button Icon"></svg> Cancel
             </button>
           </c-col>

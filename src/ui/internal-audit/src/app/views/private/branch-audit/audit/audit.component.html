@@ -8,30 +8,20 @@
         <div class="card-body">
           <form [formGroup]="auditSearchForm">
             <div class="row">
-              <div class="col-sm-7 mb-2">
-                  <!-- <button [cModalToggle]="verticallyCenteredModal.id" class="btnCreateColor" (click)="reset()" cButton>
-                    <svg cIcon name="cilPlus" size="md" title="Add Button Icon"></svg>  
-                    Create
-                  </button> -->
-              </div>
-            
-              <div class="col-sm-5 mb-2">
-                <div class="row">
-                  
-                  <div class="col-8">
-                    <input type="text" formControlName="searchText" id="searchText" class="form-control pull-right" placeholder="Search by Country"/>
-                  </div>
-                  
-                  <div class="col-2">
-                    <button type="button"  class="btn btn-secondary mr-1 pull-right btn-block"  (click)="search()" >
-                      Search
+              <div class="row" style="margin: 0 auto;">
+                <div class="col-md-6 mb-2">
+                  <button [cModalToggle]="verticallyCenteredModal.id" class="btnCreateColor" (click)="reset()" cButton>
+                    <svg cIcon name="cilPlus" size="md" title="Add Button Icon"></svg> Create
+                  </button> 
+                </div>
+                <div class="col-md-5 mb-2 form-floating">
+                  <input type="text" class="form-control searchInput" formControlName="searchText"  placeholder="Search by Audit Id"/>
+                  <label class="searchLevel" for="floatingInput">Search by Audit Id</label>
+                </div>
+                <div class="col-md-1 mb-2">
+                  <button type="button" class="btn btn-secondary mr-1 btn-block searchBtn" data-toggle="modal" (click)="search()" >
+                    Search
                   </button>
-                  </div>
-                  <!-- <div class="col-2">
-                    <button type="button" class="btn btn-secondary mr-1 pull-right btn-block" (click)="clearSearch()"  >
-                      Reset
-                  </button>
-                  </div> -->
                 </div>
               </div>
             
@@ -85,3 +75,84 @@
     </div>
   </div>
 </div>
+
+<form [formGroup]="auditForm" (ngSubmit)="onSubmit(verticallyCenteredModal)" novalidate>
+  <c-modal #verticallyCenteredModal alignment="center" id="verticallyCenteredModal">
+    <c-modal-header>
+      <h5 cModalTitle *ngIf="!formService.isEdit(this.auditForm.get('id'))">Create Audit</h5>
+      <h5 cModalTitle *ngIf="formService.isEdit(this.auditForm.get('id'))">Update Audit</h5>
+      <button [cModalToggle]="verticallyCenteredModal.id" cButtonClose></button>
+    </c-modal-header>
+    <c-modal-body>
+      <div class="col-md-12" >
+        <input type="hidden" formControlName="id"/>
+
+            <!-- <div cFormFloating>
+              <select aria-label="Floating label select example" cSelect id="emailTypeId"
+                formControlName="emailTypeId" name="emailTypeId">
+                <option value=null>Select Email Type</option>
+                <option *ngFor="let emailType of emailTypes" [value]="emailType.id">
+                  {{emailType.name}}
+                </option>
+              </select>
+              <label for="emailTypeId" class="dropdownLabel">Select Email Type</label>
+            </div> -->
+            <div cRow *ngIf="(auditForm.get('emailTypeId')?.invalid && auditForm.get('emailTypeId')?.errors) &&         
+            (auditForm.get('emailTypeId')?.dirty || auditForm.get('emailTypeId')?.touched)">
+            <small class="text-danger">
+              This field is required.
+            </small>                                 
+          </div> 
+          <br>
+          <div cFormFloating>
+            <select aria-label="Floating label select example" cSelect id="countryId"
+              formControlName="countryId" name="countryId">
+              <option value=null>Select Country</option>
+              <option *ngFor="let country of countries" [value]="country.id">
+                {{country.name}}
+              </option>
+            </select>
+            <label for="countryId" class="dropdownLabel">Select Country</label>
+          </div>
+          <div cRow *ngIf="(auditForm.get('countryId')?.invalid && auditForm.get('countryId')?.errors) &&         
+          (auditForm.get('countryId')?.dirty || auditForm.get('countryId')?.touched)">
+          <small class="text-danger">
+            This field is required.
+          </small>                                 
+        </div> 
+        <br>
+
+        
+      <div class="form-floating">
+        <textarea class="form-control" placeholder="Template Subject" formControlName="templateSubject" id="templateSubject"></textarea>
+        <label for="floatingTextarea">Template Subject</label>
+      </div>
+      <div cRow *ngIf="(auditForm.get('templateSubject')?.invalid && auditForm.get('templateSubject')?.errors) &&         
+          (auditForm.get('templateSubject')?.dirty || auditForm.get('templateSubject')?.touched)">
+          <small class="text-danger">
+            This field is required.
+          </small>                                 
+      </div> 
+      <br>
+      <div class="form-floating">
+        <textarea class="form-control" placeholder="Template Body" formControlName="templateBody" id="templateBody"></textarea>
+        <label for="floatingTextarea">Template Body</label>
+      </div>
+      <div cRow *ngIf="(auditForm.get('templateBody')?.invalid && auditForm.get('templateBody')?.errors) &&         
+          (auditForm.get('templateBody')?.dirty || auditForm.get('templateBody')?.touched)">
+          <small class="text-danger">
+            This field is required.
+          </small>                                 
+      </div> 
+      </div>
+    </c-modal-body>
+    <c-modal-footer>
+      <button cButton class="btn btn-primary btnSaveColor me-1"  (click)="onSubmit(verticallyCenteredModal)">
+        <svg cIcon name="cilSave" size="md" title="Save Button Icon"></svg> Save
+      </button>
+      <button [cModalToggle]="verticallyCenteredModal.id" cButton class="btn btn-danger btnCancelColor me-1">
+        <svg cIcon name="cilX" size="md" title="Close Button Icon"></svg> Close
+      </button>
+    </c-modal-footer>
+  </c-modal>
+  </form>

@@ -22,20 +22,20 @@ export class AuditComponent implements OnInit {
   dataTableService: DatatableService = new DatatableService();
   audits: Audit[] = [];
   formService: FormService = new FormService();
-  // auditForm: FormGroup;
+  auditForm: FormGroup;
    auditSearchForm: FormGroup;
   countries: country[] = [];
   //emailTypes: EmailType []=[];
 
   constructor(private http: HttpService, private fb: FormBuilder, private AlertService: AlertService) {
-    // this.auditForm = this.fb.group({
-    //   id: [''],
-    //   emailTypeId: [null,[Validators.required]],
-    //   countryId: [null,[Validators.required]],
-    //   templateSubject: ['',[Validators.required]],
-    //   templateBody: ['',[Validators.required]],
+    this.auditForm = this.fb.group({
+      id: [''],
+      emailTypeId: [null,[Validators.required]],
+      countryId: [null,[Validators.required]],
+      templateSubject: ['',[Validators.required]],
+      templateBody: ['',[Validators.required]],
       
-    // })
+    })
 
     this.auditSearchForm = this.fb.group({
       searchText:['']
@@ -66,7 +66,7 @@ export class AuditComponent implements OnInit {
       },
     };
   }
-   search(){
+  search(){
      this.dataTableService.redraw(this.datatableElement);
    }
   // clearSearch(){
@@ -74,25 +74,25 @@ export class AuditComponent implements OnInit {
   //   this.dataTableService.redraw(this.datatableElement);
   // }
 
-  // onSubmit(modalId:any):void{
-  //   const localmodalId = modalId;
-  //     if(this.auditForm.valid){
-  //       if(this.formService.isEdit(this.auditForm.get('id') as FormControl)){
-  //         this.http.put('audit',this.auditForm.value,null).subscribe(x=>{
-  //           this.formService.onSaveSuccess(localmodalId,this.datatableElement);
-  //           this.AlertService.success('Audit Saved Successful');
+  onSubmit(modalId:any):void{
+    const localmodalId = modalId;
+      if(this.auditForm.valid){
+        if(this.formService.isEdit(this.auditForm.get('id') as FormControl)){
+          this.http.put('audit',this.auditForm.value,null).subscribe(x=>{
+            this.formService.onSaveSuccess(localmodalId,this.datatableElement);
+            this.AlertService.success('Audit Saved Successful');
 
-  //         });
-  //       }
-  //       else{
-  //        // console.log(this.emailConfigForm.value);
-  //         this.http.post('audit',this.auditForm.value).subscribe(x=>{
-  //           this.formService.onSaveSuccess(localmodalId,this.datatableElement);
-  //           this.AlertService.success('Audit Saved Successful');
-  //         });
-  //       }
-  //     }
-  // }
+          });
+        }
+        else{
+         // console.log(this.emailConfigForm.value);
+          this.http.post('audit',this.auditForm.value).subscribe(x=>{
+            this.formService.onSaveSuccess(localmodalId,this.datatableElement);
+            this.AlertService.success('Audit Saved Successful');
+          });
+        }
+      }
+  }
   // edit(modalId:any, config:any):void {
   //   const localmodalId = modalId;
   //   console.log(config)
@@ -130,7 +130,7 @@ export class AuditComponent implements OnInit {
   //     this.emailTypes = convertedResp.items;
   //   })
   // }
-  // reset(){
-  //   this.auditForm.reset();
-  // }
+  reset(){
+    this.auditForm.reset();
+  }
 }

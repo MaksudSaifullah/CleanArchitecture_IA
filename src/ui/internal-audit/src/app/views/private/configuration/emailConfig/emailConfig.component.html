@@ -17,17 +17,24 @@
             </div>
           
             <div class="col-sm-5 mb-2">
-              <div class="row">
+              <div class="row g-2">
                 
-                <div class="col-8">
+                <!-- <div class="col-8">
                   <input type="text" formControlName="searchText" id="searchText" class="form-control pull-right" placeholder="Search by Country"/>
+                </div> -->
+                <div class="col-md-8" >
+                  <div class="form-floating" >
+                    <input type="text" formControlName="searchText" id="searchText" class="form-control pull-right "  placeholder="Search by Country"/>
+                    <label for="searchText">Search by Country</label>
+                  </div>
                 </div>
-                
-                <div class="col-2">
-                  <button type="button"  class="btn btn-secondary mr-1 pull-right btn-block"  (click)="search()" >
-                    Search
-                </button>
-                </div>
+                <div class="col-md">
+                  <div class="col-2">
+                    <button type="button"  class="btn btn-secondary mr-1 pull-right btn-block"  (click)="search()" >
+                      Search
+                    </button>
+                  </div>
+                </div>  
                 <!-- <div class="col-2">
                   <button type="button" class="btn btn-secondary mr-1 pull-right btn-block" (click)="clearSearch()"  >
                     Reset
@@ -47,7 +54,7 @@
                     <th>Template Subject</th>
                     <th>Template Body</th>
                     <th>CreatedOn</th>
-                    <th>Action</th>
+                    <th>Actions</th>
                   </tr>
                 </thead>
                 <tbody *ngIf="emailConfigs?.length != 0">
@@ -102,7 +109,7 @@
                   {{emailType.name}}
                 </option>
               </select>
-              <label for="emailTypeId" class="dropdownLabel">Select Email Type</label>
+              <label for="emailTypeId" class="dropdownLabel">Email</label>
             </div>
             <div cRow *ngIf="(emailConfigForm.get('emailTypeId')?.invalid && emailConfigForm.get('emailTypeId')?.errors) &&         
             (emailConfigForm.get('emailTypeId')?.dirty || emailConfigForm.get('emailTypeId')?.touched)">
@@ -119,7 +126,7 @@
                 {{country.name}}
               </option>
             </select>
-            <label for="countryId" class="dropdownLabel">Select Country</label>
+            <label for="countryId" class="dropdownLabel">Country</label>
           </div>
           <div cRow *ngIf="(emailConfigForm.get('countryId')?.invalid && emailConfigForm.get('countryId')?.errors) &&         
           (emailConfigForm.get('countryId')?.dirty || emailConfigForm.get('countryId')?.touched)">

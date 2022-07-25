@@ -21,6 +21,7 @@ const routes: Routes = [{
   loadChildren: () =>
     import('./branch-audit/branch-audit.module').then((m) => m.BranchAuditModule)
 },
+
 ];
 
 @NgModule({

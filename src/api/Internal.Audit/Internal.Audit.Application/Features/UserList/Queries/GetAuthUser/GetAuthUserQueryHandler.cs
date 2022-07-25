@@ -1,12 +1,6 @@
 ﻿using Internal.Audit.Application.Contracts.Auth;
-using Internal.Audit.Application.Contracts.Persistent;
 using Internal.Audit.Application.Contracts.Persistent.UserRegistration;
 using MediatR;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Internal.Audit.Application.Features.UserList.Queries.GetAuthUser;
 public class GetAuthUserQueryHandler : IRequestHandler<GetAuthUserQuery, AuthUserDTO>
@@ -24,7 +18,7 @@ public class GetAuthUserQueryHandler : IRequestHandler<GetAuthUserQuery, AuthUse
     {
         var user = await _userRepository.GetByUserEmail(request.Email, request.Password);
         if (user == null)
-            return new AuthUserDTO { Success = false };
+            return new AuthUserDTO { Success = false, Message = "Invalid Username or Password." };
 
         var token = _jwtTokenService.GenerateJwtToken(user.UserName, "ADMIN");
 

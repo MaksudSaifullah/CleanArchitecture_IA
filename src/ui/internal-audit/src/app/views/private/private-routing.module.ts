@@ -21,6 +21,8 @@ const routes: Routes = [{
   loadChildren: () =>
     import('./branch-audit/branch-audit.module').then((m) => m.BranchAuditModule)
 },
+{path: '**', redirectTo: 'dashboard'},
+{path: '/', redirectTo: ''},
 ];
 
 @NgModule({

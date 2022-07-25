@@ -61,6 +61,7 @@ export class RiskAssessmentComponent implements OnInit {
       serverSide: true,
       processing: true,
       searching: false,
+      ordering: false,
       ajax: (dataTablesParameters: any, callback) => {
         this.http
           .paginatedPost(
@@ -78,7 +79,7 @@ export class RiskAssessmentComponent implements OnInit {
         this.http.put('riskassessment',this.riskAssessmentForm.value,null).subscribe(x=>{
             localmodalId.visible = false;
             this.dataTableService.redraw(this.datatableElement);
-            this.AlertService.success('Risk Assessment Saved Successful');
+            this.AlertService.success('Risk Assessment Updated Successfully');
           });
       }
       else {
@@ -95,16 +96,21 @@ export class RiskAssessmentComponent implements OnInit {
     }    
   }
 
+
   edit(modalId:any, riskAssessment:any):void {
     const localmodalId = modalId;
     this.http
       .getById('riskAssessment', riskAssessment.id)
       .subscribe(res => {
           const riskAssessmentResponse = res as riskAssessment;
-          this.effectiveFrom = riskAssessmentResponse.effectiveFrom;
-          this.riskAssessmentForm.setValue({id : riskAssessmentResponse.id, countryId : riskAssessmentResponse.countryId, 
-            auditTypeId: riskAssessmentResponse.auditTypeId,
-            effectiveFrom: formatDate(riskAssessmentResponse.effectiveFrom, 'yyyy-MM-dd', 'en'), effectiveTo: formatDate(riskAssessmentResponse.effectiveTo, 'yyyy-MM-dd', 'en')
+          console.log('RiskAssesment', riskAssessment);
+          this.riskAssessmentForm.setValue({
+            id : riskAssessmentResponse.id, 
+            countryId : riskAssessmentResponse.countryId, 
+            auditTypeId: riskAssessmentResponse.auditTypeId, 
+            assesmentCode: riskAssessmentResponse.assesmentCode, 
+            effectiveFrom: formatDate(riskAssessmentResponse.effectiveFrom, 'yyyy-MM-dd', 'en'), 
+            effectiveTo: formatDate(riskAssessmentResponse.effectiveTo, 'yyyy-MM-dd', 'en')
           });
       });
       localmodalId.visible = true;
@@ -116,7 +122,7 @@ export class RiskAssessmentComponent implements OnInit {
     this.AlertService.confirmDialog().then(res =>{
       if(res.isConfirmed){
           this.http.delete('riskAssessment/'+ id ,{}).subscribe(response=>{
-          this.AlertService.successDialog('Deleted','Risk Profile deleted successfully.');
+          this.AlertService.successDialog('Deleted','Risk Assessment deleted successfully.');
           this.dataTableService.redraw(that.datatableElement);
         })
       }

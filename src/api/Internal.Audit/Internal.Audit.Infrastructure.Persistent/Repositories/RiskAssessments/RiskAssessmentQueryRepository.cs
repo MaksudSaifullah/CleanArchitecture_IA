@@ -24,16 +24,16 @@ public class RiskAssessmentQueryRepository : QueryRepositoryBase<CompositeRiskAs
         var query = @"SELECT ra.[Id]
 					,ra.AssesmentCode
 	                ,cntr.Id AS CountryId
-	                ,adtp.Id AS AuditTypeId
-	                ,cntr.Name AS CountryName
-	                ,adtp.Name AS AuditTypeName
+	                ,cvtit.Id AS AuditTypeId
+					,cntr.Name As CountryName
+					,cvtit.text As AuditType
                     ,ra.[EffectiveFrom]
                     ,ra.[EffectiveTo]
                     ,ra.[CreatedBy]
                     ,ra.[CreatedOn]
                 FROM [BranchAudit].[RiskAssesment] as ra
                 INNER JOIN [common].[Country] as cntr on cntr.Id = ra.CountryId
-                INNER JOIN [Config].[AuditType] as adtp on adtp.Id = ra.AuditTypeId
+                INNER JOIN [config].[CommonValueAndType] as cvtit on cvtit.Id = ra.AuditTypeId
 				 WHERE ra.[Id] = @id AND ra.IsDeleted = 0 ";
         var parameters = new Dictionary<string, object> { { "id", id } };
 

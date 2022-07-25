@@ -1,4 +1,6 @@
 ﻿using Internal.Audit.Application.Features.CommonValueAndTypes.Queries.GetAuditConducted;
+using Internal.Audit.Application.Features.CommonValueAndTypes.Queries.GetAuditFrequency;
+using Internal.Audit.Application.Features.CommonValueAndTypes.Queries.GetAuditScore;
 using Internal.Audit.Application.Features.CommonValueAndTypes.Queries.GetAuditType;
 using Internal.Audit.Application.Features.CommonValueAndTypes.Queries.GetControlFrequency;
 using Internal.Audit.Application.Features.CommonValueAndTypes.Queries.GetDetestConclusion;
@@ -156,5 +158,22 @@ namespace Internal.Audit.Api.Controllers
             var audittype = await _mediator.Send(query);
             return Ok(audittype);
         }
+
+        [HttpGet("auditscore")]
+        public async Task<ActionResult<IEnumerable<AuditScoreDTO>>> GetAllAuditScore()
+        {
+            var query = new GetAuditScoreQuery();
+            var auditscore = await _mediator.Send(query);
+            return Ok(auditscore);
+        }
+
+        [HttpGet("auditfrequency")]
+        public async Task<ActionResult<IEnumerable<AuditFrequencyDTO>>> GetAllAuditFrequencyType()
+        {
+            var query = new GetAuditFrequencyQuery();
+            var auditfrequency = await _mediator.Send(query);
+            return Ok(auditfrequency);
+        }
+
     }
 }

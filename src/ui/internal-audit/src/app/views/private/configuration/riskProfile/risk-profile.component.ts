@@ -28,6 +28,7 @@ export class RiskProfileComponent implements OnInit {
   ratingType: commonValueAndType[] = [];
   riskProfiles: riskProfile[] = [];
   riskProfileForm: FormGroup;
+  searchForm: FormGroup;
   formService: FormService = new FormService();
   dataTableService: DatatableService = new DatatableService();
   dtTrigger: Subject<any> = new Subject<any>();
@@ -45,7 +46,12 @@ export class RiskProfileComponent implements OnInit {
       effectiveTo: [Date, [Validators.required]],
       isActive: []
       
-    }, { validator: this.customValidator.checkEffectiveDateToAfterFrom('effectiveFrom', 'effectiveTo') })
+    }, { validator: this.customValidator.checkEffectiveDateToAfterFrom('effectiveFrom', 'effectiveTo') });
+    this.searchForm = this.fb.group(
+      {
+        searchTerm: ['']
+      }
+    )
   }
   ngOnDestroy(): void {
 
@@ -65,7 +71,7 @@ export class RiskProfileComponent implements OnInit {
       ajax: (dataTablesParameters: any, callback) => {
         this.http
           .paginatedPost(
-            'riskprofile/paginated',dataTablesParameters.length,((dataTablesParameters.start/dataTablesParameters.length)+1),{}
+            'riskprofile/paginated',dataTablesParameters.length,((dataTablesParameters.start/dataTablesParameters.length)+1),this.searchForm.get('searchTerm')?.value
           ).subscribe(resp => that.riskProfiles = this.dataTableService.datatableMap(resp,callback));
       },
     };
@@ -165,6 +171,9 @@ export class RiskProfileComponent implements OnInit {
   }
   reset(){
     this.riskProfileForm.reset();
+  }
+  search(){
+    this.dataTableService.redraw(this.datatableElement);
   }
 
 }

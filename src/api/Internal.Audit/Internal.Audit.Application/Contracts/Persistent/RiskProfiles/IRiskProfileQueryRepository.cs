@@ -6,6 +6,6 @@ namespace Internal.Audit.Application.Contracts.Persistent.RiskProfiles;
 
 public interface IRiskProfileQueryRepository : IAsyncQueryRepository<CompositeRiskProfile>
 {
-    Task<(long, IEnumerable<CompositeRiskProfile>)> GetAll(int pageSize, int pageNumber);
+    Task<(long, IEnumerable<CompositeRiskProfile>)> GetAll(int pageSize, int pageNumber, dynamic searchTerm = null);
     Task<CompositeRiskProfile> GetById(Guid id);
 }

@@ -2,6 +2,8 @@
 .datatableStyle th {
     background-color: #002e4d;//001a4d
     color: white;
+    vertical-align: middle;
+    
 }
 // .datatableStyle tr{
 //    padding: auto;
@@ -76,4 +78,5 @@
  }
  .dropdownLabel{
    padding-top: 1.5% !important;
+//height: 70px !important;
  }

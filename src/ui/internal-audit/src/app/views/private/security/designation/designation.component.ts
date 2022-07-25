@@ -30,7 +30,7 @@ export class DesignationComponent implements OnInit {
     this.designationForm = this.fb.group({
       id: [''],
       name: ['',[Validators.required,Validators.maxLength(50),Validators.minLength(2)]],
-      description: ['']      
+      description: ['', [Validators.maxLength(300)]]      
     });
     this.searchForm = this.fb.group(
       {
@@ -53,6 +53,7 @@ export class DesignationComponent implements OnInit {
       serverSide: true,
       processing: true,
       searching: false,
+      ordering: false,
       ajax: (dataTablesParameters: any, callback) => {
         console.log('hellllo:' );
         this.http

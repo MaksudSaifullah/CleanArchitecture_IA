@@ -45,7 +45,7 @@ public class RiskCriteria : EntityBase
     [MaxLength(300)]
     public string Description { get; set; }
 
-    public string CountryName { get; set; } = null!;
+
 
     [ForeignKey("CountryId")]
     public virtual Country Country { get; set; } = null!;

@@ -130,6 +130,9 @@ public static class PersistentInfrastructureServiceRegistration
         services.AddScoped<IRiskAssessmentCommandRepository, RiskAssessmentCommandRepository>();
         services.AddScoped<IRiskAssessmentQueryRepository>(s => new RiskAssessmentQueryRepository(configuration.GetConnectionString("InternalAuditDb")));
 
+        services.AddScoped<IUserProfileUpdateRepository, UserProfileUpdateRepository>();
+        services.AddScoped<IUserProfileQueryRepository>(s => new UserProfileQueryRepository(configuration.GetConnectionString("InternalAuditDb")));
+
         services.AddScoped<IAuditCommandRepository, AuditCommandRepository>();
         services.AddScoped<IAuditQueryRepository>(s => new AuditQueryRepository(configuration.GetConnectionString("InternalAuditDb")));
 

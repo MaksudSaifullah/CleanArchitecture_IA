@@ -23,5 +23,12 @@ namespace Internal.Audit.Infrastructure.Persistent.Repositories.EmailConfig
             return await GetWithPagingInfo(query, parameters, false);
         }
 
+        public async Task<CompositEmailConfig> GetById(Guid id)
+        {
+            var query = "SELECT [Id],[EmailTypeId],[CountryId],[TemplateSubject],[TemplateBody], [CreatedOn] FROM [Config].[EmailConfiguration] WHERE Id = @id AND [IsDeleted] = 0";
+            var parameters = new Dictionary<string, object> { { "id", id } };
+
+            return await Single(query, parameters);
+        }
     }
 }

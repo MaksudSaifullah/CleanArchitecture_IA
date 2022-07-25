@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { FormGroup } from '@angular/forms';
+import { AbstractControl, FormGroup } from '@angular/forms';
 
 @Injectable({
   providedIn: 'root'
@@ -26,6 +26,25 @@ export class CutomvalidatorService {
       }
       return null;
     }
+  }
+
+  checkEffectiveDateToAfterFrom(effectiveFrom:string, effectiveTo: string){
+    return (formGroup: FormGroup)=>
+    {   
+      console.log('jhhhhhhhhhhhhh')   
+      const from = formGroup.controls['effectiveFrom'];
+      const to = formGroup.controls['effectiveTo'];
+      if (!from || !to) {
+        return null;
+      }
+      if((to.value)<(from.value)){
+        console.log('error jhhhhhhhhhhhhh')          
+        return { invalidDateRange : true };
+      }
+      return null;
+
+    }
+
   }
 
 

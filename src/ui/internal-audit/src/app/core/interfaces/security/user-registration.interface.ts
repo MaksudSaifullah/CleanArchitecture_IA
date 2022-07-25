@@ -41,6 +41,12 @@ export interface UserRole {
     roleId: string;
 }
 
+export interface ProfileUpdateResponse {
+  fullName: string;
+  profileImageUrl: string;
+}
+
+
 
 
 

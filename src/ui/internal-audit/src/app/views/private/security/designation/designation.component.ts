@@ -20,16 +20,23 @@ export class DesignationComponent implements OnInit {
   dtOptions: DataTables.Settings = {};
   designations: designation[] = [];
   designationForm: FormGroup;
+  searchForm: FormGroup;
   formService: FormService = new FormService();
   dataTableService: DatatableService = new DatatableService();
   dtTrigger: Subject<any> = new Subject<any>();
+  
 
   constructor(private http: HttpService , private fb: FormBuilder, private AlertService: AlertService) {
     this.designationForm = this.fb.group({
       id: [''],
       name: ['',[Validators.required,Validators.maxLength(50),Validators.minLength(2)]],
-      description: ['',[Validators.required]]      
-    })
+      description: ['', [Validators.maxLength(300)]]      
+    });
+    this.searchForm = this.fb.group(
+      {
+        searchTerm: ['']
+      }
+    )
   }
   ngOnDestroy(): void {
   }
@@ -46,10 +53,12 @@ export class DesignationComponent implements OnInit {
       serverSide: true,
       processing: true,
       searching: false,
+      ordering: false,
       ajax: (dataTablesParameters: any, callback) => {
+        console.log('hellllo:' );
         this.http
           .paginatedPost(
-            'designation/paginated', dataTablesParameters.length,((dataTablesParameters.start/dataTablesParameters.length)+1),{}
+            'designation/paginated', dataTablesParameters.length,((dataTablesParameters.start/dataTablesParameters.length)+1), this.searchForm.get('searchTerm')?.value
           ).subscribe(resp => {
             let convertedResp = resp as paginatedResponseInterface<designation>;
             console.log(convertedResp);
@@ -72,7 +81,7 @@ export class DesignationComponent implements OnInit {
           this.http.put('designation',this.designationForm.value,null).subscribe(x=>{
             localmodalId.visible = false;
             this.dataTableService.redraw(this.datatableElement);
-            this.AlertService.success('Designation Saved Successful');
+            this.AlertService.success('Designation Updated Successfully');
 
           });
         }
@@ -80,13 +89,13 @@ export class DesignationComponent implements OnInit {
           this.http.post('designation',this.designationForm.value).subscribe(x=>{
             localmodalId.visible = false;
             this.dataTableService.redraw(this.datatableElement);
-            this.AlertService.success('Designation Saved Successful');
+            this.AlertService.success('Designation Saved Successfully');
           });
         }
       }
       else{
         this.designationForm.markAllAsTouched();
-        this.AlertService.error('Invalid Information');
+        this.AlertService.error('Provide Valid Information');
       }
   }
   edit(modalId:any, designation:any):void 
@@ -115,6 +124,9 @@ export class DesignationComponent implements OnInit {
   }
   reset(){
     this.designationForm.reset();
+  }
+  search(){
+    this.dataTableService.redraw(this.datatableElement);
   }
 
 }

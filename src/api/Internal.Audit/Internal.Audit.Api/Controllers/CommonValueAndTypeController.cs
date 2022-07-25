@@ -1,4 +1,5 @@
 ﻿using Internal.Audit.Application.Features.CommonValueAndTypes.Queries.GetAuditConducted;
+using Internal.Audit.Application.Features.CommonValueAndTypes.Queries.GetAuditType;
 using Internal.Audit.Application.Features.CommonValueAndTypes.Queries.GetControlFrequency;
 using Internal.Audit.Application.Features.CommonValueAndTypes.Queries.GetDetestConclusion;
 using Internal.Audit.Application.Features.CommonValueAndTypes.Queries.GetEmailType;
@@ -146,6 +147,14 @@ namespace Internal.Audit.Api.Controllers
             var query = new GetYesNoQuery();
             var yesno = await _mediator.Send(query);
             return Ok(yesno);
+        }
+
+        [HttpGet("audittype")]
+        public async Task<ActionResult<IEnumerable<LevelOfImpactDTO>>> GetAllauditType()
+        {
+            var query = new GetAuditTypeQuery();
+            var audittype = await _mediator.Send(query);
+            return Ok(audittype);
         }
     }
 }

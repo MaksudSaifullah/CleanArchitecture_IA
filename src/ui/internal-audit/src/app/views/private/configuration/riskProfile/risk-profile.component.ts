@@ -1,5 +1,5 @@
 import { AfterViewInit, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ModalComponent } from '@coreui/angular-pro';
 import { DataTableDirective } from 'angular-datatables';
 import { Subject } from 'rxjs';
@@ -12,6 +12,7 @@ import {DatatableService} from '../../../../core/services/datatable.service';
 import {AlertService} from '../../../../core/services/alert.service';
 import { paginatedResponseInterface } from 'src/app/core/interfaces/paginated.interface';
 import { formatDate } from '@angular/common';
+import { CutomvalidatorService } from 'src/app/core/services/cutomvalidator.service'
 
 @Component({
   selector: 'app-riskProfile',
@@ -30,9 +31,9 @@ export class RiskProfileComponent implements OnInit {
   formService: FormService = new FormService();
   dataTableService: DatatableService = new DatatableService();
   dtTrigger: Subject<any> = new Subject<any>();
-  effectiveFrom: any;
+  //effectiveFrom: any;
 
-  constructor(private http: HttpService , private fb: FormBuilder, private AlertService: AlertService) {
+  constructor(private http: HttpService , private fb: FormBuilder, private AlertService: AlertService, private customValidator: CutomvalidatorService,) {
     this.LoadDropDownValues();
     this.riskProfileForm = this.fb.group({
       id: [''],
@@ -44,7 +45,7 @@ export class RiskProfileComponent implements OnInit {
       effectiveTo: [Date, [Validators.required]],
       isActive: []
       
-    })
+    }, { validator: this.customValidator.checkEffectiveDateToAfterFrom('effectiveFrom', 'effectiveTo') })
   }
   ngOnDestroy(): void {
 
@@ -98,6 +99,16 @@ export class RiskProfileComponent implements OnInit {
     this.LoadRiskRating();
   }
 
+//   checkIfEndDateAfterStartDate (c: AbstractControl) {
+//     //safety check
+//     if (!c.get('effectiveFrom').value || !c.get('effectiveTo').value) { return null }
+//     // carry out the actual date checks here for is-endDate-after-startDate
+//     // if valid, return null,
+//     // if invalid, return an error object (any arbitrary name), like, return { invalidEndDate: true }
+//     // make sure it always returns a 'null' for valid or non-relevant cases, and a 'non-null' object for when an error should be raised on the formGroup
+// }
+
+
   onSubmit(modalId:any):void{
     const localmodalId = modalId;
     if (this.riskProfileForm.valid ){
@@ -105,14 +116,14 @@ export class RiskProfileComponent implements OnInit {
         this.http.put('riskProfile',this.riskProfileForm.value,null).subscribe(x=>{
             localmodalId.visible = false;
             this.dataTableService.redraw(this.datatableElement);
-            this.AlertService.success('Risk Profile Saved Successful');
+            this.AlertService.success('Risk Profile Updated Successfully');
           });
       }
       else {
        // console.log(this.riskProfileForm.value);
         this.http.post('riskProfile',this.riskProfileForm.value).subscribe(x=>{
           this.formService.onSaveSuccess(localmodalId,this.datatableElement);
-          this.AlertService.success('Risk Profile Saved successfully');
+          this.AlertService.success('Risk Profile Saved Successfully');
         });
       }      
     }
@@ -129,7 +140,7 @@ export class RiskProfileComponent implements OnInit {
       .getById('riskProfile', riskProfile.id)
       .subscribe(res => {
           const riskProfileResponse = res as riskProfile;
-          this.effectiveFrom = riskProfileResponse.effectiveFrom;
+          //this.effectiveFrom = riskProfileResponse.effectiveFrom;
           //console.log(riskProfileResponse);
           this.riskProfileForm.setValue({id : riskProfileResponse.id, likelihoodTypeId : riskProfileResponse.likelihoodTypeId, 
             impactTypeId: riskProfileResponse.impactTypeId, ratingTypeId: riskProfileResponse.ratingTypeId, 

@@ -22,36 +22,36 @@ export const navItems: INavData[] = [
   //     }
   //   ]
   // },
-  {
-    name: 'Pages',
-    url: '/login',
-    iconComponent: { name: 'cil-star' },
-    children: [
-      {
-        name: 'Error 404',
-        url: '/404'
-      },
-      {
-        name: 'Error 500',
-        url: '/500'
-      }
-    ]
-  },
-  {
-    name: 'Public',
-    url: '/about',
-    iconComponent: { name: 'cilPaperPlane' },
-    children: [
-      {
-        name: 'About',
-        url: '/about'
-      },
-      {
-        name: 'Login',
-        url: '/login'
-      },
-    ]
-  },
+  // {
+  //   name: 'Pages',
+  //   url: '/login',
+  //   iconComponent: { name: 'cil-star' },
+  //   children: [
+  //     {
+  //       name: 'Error 404',
+  //       url: '/404'
+  //     },
+  //     {
+  //       name: 'Error 500',
+  //       url: '/500'
+  //     }
+  //   ]
+  // },
+  // {
+  //   name: 'Public',
+  //   url: '/about',
+  //   iconComponent: { name: 'cilPaperPlane' },
+  //   children: [
+  //     {
+  //       name: 'About',
+  //       url: '/about'
+  //     },
+  //     {
+  //       name: 'Login',
+  //       url: '/login'
+  //     },
+  //   ]
+  // },
   {
     name: 'Configuration',
     url: '/configuration',
@@ -65,6 +65,10 @@ export const navItems: INavData[] = [
         name: 'Risk Profile',
         url: '/configuration/risk-profile',
       },
+      {
+        name: 'Email Config',
+        url: '/configuration/emailConfig',
+      },
     ]
   },
   {
@@ -72,6 +76,14 @@ export const navItems: INavData[] = [
     url: '/security',
     iconComponent: { name: 'cilMenu' },
     children: [
+      {
+        name: 'User Registration',
+        url: '/security/userRegistration',
+      },
+      {
+        name: 'User List',
+        url: '/security/userlist',
+      },
       {
         name: 'Role',
         url: '/security/userrole',
@@ -96,9 +108,17 @@ export const navItems: INavData[] = [
         name: 'Topic Head',
         url: '/branch-audit/topichead'
       },
+      // {
+      //   name: 'Risk Criteria',
+      //   url: '/branch-audit/risk-criteria'
+      // },
       {
         name: 'Risk Criteria',
         url: '/branch-audit/risk-criteria'
+      },
+      {
+        name: 'Risk Assessment',
+        url: '/branch-audit/risk-assessment'
       },
     ]
   },

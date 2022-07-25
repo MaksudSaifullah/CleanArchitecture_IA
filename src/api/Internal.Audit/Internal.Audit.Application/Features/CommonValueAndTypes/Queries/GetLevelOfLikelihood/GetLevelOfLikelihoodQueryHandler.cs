@@ -21,7 +21,7 @@ public class GetLevelOfLikelihoodQueryHandler : IRequestHandler<GetLevelOfLikeli
 
     public async Task<List<LevelOfLikelihoodDTO>> Handle(GetLevelOfLikelihoodQuery request, CancellationToken cancellationToken)
     {
-        var commonValueAndTypes = await _commonValueAndTypesRepository.GetAllLevelOfLikelihood();
+        var commonValueAndTypes = await _commonValueAndTypesRepository.GetCommonValueType("LEVELOFLIKELIHOOD");
         return _mapper.Map<List<LevelOfLikelihoodDTO>>(commonValueAndTypes);
     }
 }

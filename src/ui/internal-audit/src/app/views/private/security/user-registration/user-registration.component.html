@@ -14,28 +14,6 @@
                 <label for="checkThree" class="m-1"> {{data.name}}</label>
               </c-form-check>
             </c-col>
-            <!-- <div cRow *ngIf="countryForm.get('countryListSelected')?.invalid &&
-            countryForm.get('countryListSelected')?.errors &&
-                  (countryForm.get('countryListSelected')?.dirty || countryForm.get('countryListSelected')?.touched)">
-              <small class="text-danger" *ngIf="countryForm.get('countryListSelected').hasError('required')">
-               Please select at least one country
-              </small>                   
-            </div> -->
-
-            <!-- <c-col md="4" *ngFor="let control of countriesArray.controls;let i=index;">
-              <c-form-check>
-                <input   type="checkbox" [checked]="country[i].check" (change)="getSelectedCountryValue()"/>
-                <label for="inlineCheckbox{{i}}" class="m-1"> {{country[i].name}}</label>
-              </c-form-check>
-            </c-col> -->
-
-            <!-- <div>
-              <small class="text-danger" *ngIf="countryError ">
-               Please select at least one country
-              </small>                   
-            </div> -->
-
-            
           </c-row>
         </div>
         <br>
@@ -78,7 +56,7 @@
                   <div cFormFloating>
                     <input cFormControl formControlName="empEmail" name="empEmai" id="empEmail"
                       placeholder="abc@example.com" type="email" autocomplete="false"/>
-                    <label cLabel for="empEmail">Email address</label>
+                    <label cLabel for="empEmail">Email Address</label>
                   </div>
 
                   <div cRow *ngIf="countryForm.get('empEmail')?.invalid &&
@@ -101,7 +79,7 @@
                         {{designation.name}}
                       </option>
                     </select>
-                    <label for="empDesignation" style="float: right;">Select Designation</label>
+                    <label for="empDesignation" class="dropdownLabel">Designation</label>
                   </div>
 
                   <div cRow *ngIf="countryForm.get('empDesignation')?.invalid &&
@@ -110,8 +88,8 @@
                     <small class="text-danger" *ngIf="countryForm.get('empDesignation').hasError('required')">
                       This field is required.
                     </small>
-                                
-                    
+
+
                   </div>
                 </c-col>
               </c-row>
@@ -124,7 +102,7 @@
                       formControlName="userName" name="userName" />
                     <label cLabel for="floatingInputGrid">User Name</label>
                   </div>
-                  
+
                   <div cRow *ngIf="countryForm.get('userName')?.invalid &&
                   countryForm.get('userName')?.errors &&
                         (countryForm.get('userName')?.dirty || countryForm.get('userName')?.touched)">
@@ -185,19 +163,19 @@
         <div  *ngIf="displayUserStatus" class="form-control m-2">
           <c-form-check>
             <input formControlName="isEnabled" id="isEnabled" type="checkbox"/>
-            <label for="isEnabled" class="m-3"> Enabled</label>
+            <label for="isEnabled" class="m-2"> Enabled</label>
           </c-form-check>
           <c-form-check>
             <input formControlName="accountExpired" id="accountExpired" type="checkbox"/>
-            <label for="accountExpired" class="m-3"> Account Expired</label>
+            <label for="accountExpired" class="m-2"> Account Expired</label>
           </c-form-check>
           <c-form-check>
             <input formControlName="passwordExpired" id="passwordExpired" type="checkbox"/>
-            <label for="passwordExpired" class="m-3"> Password Expired</label>
+            <label for="passwordExpired" class="m-2"> Password Expired</label>
           </c-form-check>
           <c-form-check>
             <input formControlName="accountLocked" id="accountLocked" type="checkbox"/>
-            <label for="accountLocked" class="m-3"> Account Locked</label>
+            <label for="accountLocked" class="m-2"> Account Locked</label>
           </c-form-check>
         </div>
 
@@ -220,7 +198,7 @@
                         (countryForm.get('roleList')?.dirty || countryForm.get('roleList')?.touched)">
                     <small class="text-danger" *ngIf="countryForm.get('roleList').hasError('required')">
                       This field is required.
-                    </small>                   
+                    </small>
                   </div>
                 </c-col>
               </c-row>
@@ -237,9 +215,12 @@
 
         <c-col xs="12">
           <c-col md>
-            <button cButton class="btn btn-primary btnSaveColor me-1" (click)="onSubmit()">Save</button>
-            <button cButton class="btn btn-danger btnCancelColor me-1"
-              onclick=" window.location.reload();">Cancel</button>
+            <button cButton class="btn btn-primary btnSaveColor me-1" (click)="onSubmit()">
+              <svg cIcon name="cilSave" size="md" title="Save Button Icon"></svg> Save
+            </button>
+            <button cButton class="btn btn-danger btnCancelColor me-1" onclick=" window.location.reload();">
+              <svg cIcon name="cilX" size="md" title="Close Button Icon"></svg>Cancel
+            </button>
 
           </c-col>
         </c-col>
@@ -251,7 +232,7 @@
   </c-card>
 </c-col>
 
-<!-- 
+<!--
 <c-col xs="12">
   <c-card class="mb-4">
     <c-card-header>
@@ -284,13 +265,13 @@
             <c-row [gutter]="{g: 2}">
               <input type="hidden" formControlName="id"/>
               <c-col md>
-                <div cFormFloating>                 
+                <div cFormFloating>
                   <input type="text" class="form-control" formControlName="empName" name="empName" id="empName" placeholder="Name">
                   <label cLabel for="empName">Employee Name</label>
                 </div>
               </c-col>
               <c-col md>
-                <div cFormFloating> 
+                <div cFormFloating>
                   <input cFormControl id="empEmai" placeholder="abc@example.com" type="email"/>
                   <label cLabel for="empEmai">Email address</label>
                 </div>

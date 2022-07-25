@@ -7,7 +7,13 @@ namespace Internal.Audit.Infrastructure.Persistent.Repositories.CommonValueAndTy
     {
         public CommonValueAndTypeQueryRepository(string _connectionString) : base(_connectionString)
         {
-        }       
+        }
+
+        public async Task<CommonValueAndType> GetByIDCreationValue(int value)
+        {
+            var query = "SELECT [Text] FROM [Config].[CommonValueAndType] WHERE [Type] = '" + "IDCREATION" + "' AND [Value] = "+value;
+            return await Single(query);
+        }
 
         public async Task<IEnumerable<CommonValueAndType>> GetCommonValueType(string type)
         {

@@ -14,12 +14,14 @@ import { HttpService } from 'src/app/core/services/http.service';
 export class ChangePasswordComponent implements OnInit {
   changePasswordForm : FormGroup;
   public formService: FormService;
-  constructor(private fb: FormBuilder, private cutomvalidatorService: CutomvalidatorService,private _formService : FormService,private http: HttpService, private alertService:AlertService) {
+  constructor(private customValidator:CutomvalidatorService,private fb: FormBuilder, private cutomvalidatorService: CutomvalidatorService,private _formService : FormService,private http: HttpService, private alertService:AlertService) {
     this.formService = _formService;
     this.changePasswordForm = fb.group({
         currentPassword: ['',[Validators.required,Validators.minLength(5)]],
         newPassword: ['',[Validators.required,Validators.minLength(5)]],
         confirmPassword: ['',[Validators.required,Validators.minLength(5)]],
+      },{
+        validator: this.customValidator.MatchPassword('newPassword', 'confirmPassword'),
       }
       )
    }

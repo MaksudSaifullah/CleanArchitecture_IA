@@ -7,13 +7,20 @@ import { ButtonModule, CardModule, FormModule, GridModule } from '@coreui/angula
 import { IconModule } from '@coreui/icons-angular';
 import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
-import { RECAPTCHA_V3_SITE_KEY, RecaptchaV3Module, RecaptchaFormsModule, RecaptchaModule } from "ng-recaptcha";
 import { environment } from 'src/environments/environment';
-
+import { RecaptchaComponent } from './components/recaptcha/recaptcha.component';
+import {
+  RECAPTCHA_V3_SITE_KEY,
+  RecaptchaLoaderService,
+  RecaptchaModule,
+  RecaptchaV3Module,
+  ReCaptchaV3Service
+} from "ng-recaptcha";
 @NgModule({
   declarations: [
     AboutComponent,
-    LoginComponent
+    LoginComponent,
+    RecaptchaComponent
   ],
   imports: [
     CommonModule,
@@ -26,9 +33,12 @@ import { environment } from 'src/environments/environment';
     FormModule,
     ReactiveFormsModule,
     HttpClientModule,
-    RecaptchaFormsModule,
-    RecaptchaModule,
+    RecaptchaV3Module,
+    RecaptchaModule
   ],
-  providers:[{ provide: RECAPTCHA_V3_SITE_KEY, useValue: environment.captcha_public_key }]
+  providers:[ReCaptchaV3Service,RecaptchaLoaderService,{
+    provide: RECAPTCHA_V3_SITE_KEY,
+    useValue: environment.captcha_public_key,
+  }]
 })
 export class PublicModule { }

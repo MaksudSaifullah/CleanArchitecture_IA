@@ -17,7 +17,7 @@ public class MockDesignationRepository
     {
         var designations = DesignationMockData.GetDesignationList();
         var mockRepo = new Mock<IDesignationQueryRepository>();
-        mockRepo.Setup(x => x.GetAll(10, 1)).ReturnsAsync((1, designations));        
+        mockRepo.Setup(x => x.GetAll(10, 1,"")).ReturnsAsync((1, designations));        
         return mockRepo;
     }
 

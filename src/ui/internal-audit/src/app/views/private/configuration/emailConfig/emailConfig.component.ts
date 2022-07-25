@@ -60,6 +60,7 @@ export class EmailConfigComponent implements OnInit {
       serverSide: true,
       processing: true,
       searching: false,
+      ordering:false,
       ajax: (dataTablesParameters: any, callback) => {
         this.http
           .paginatedPost(
@@ -95,6 +96,18 @@ export class EmailConfigComponent implements OnInit {
         }
       }
   }
+  edit(modalId:any, config:any):void {
+    const localmodalId = modalId;
+    console.log(config)
+    this.http
+      .getById('emailconfig',config.id)
+      .subscribe(res => {
+          const configResponse = res as EmailConfig;
+          this.emailConfigForm.setValue({id : configResponse.id, emailTypeId : configResponse.emailTypeId, countryId: configResponse.countryId, templateSubject: configResponse.templateSubject, templateBody: configResponse.templateBody});
+      });
+      localmodalId.visible = true;
+  }
+
   delete(id:string){
    // console.log(id)
     const that = this;
@@ -120,6 +133,8 @@ export class EmailConfigComponent implements OnInit {
       this.emailTypes = convertedResp.items;
     })
   }
-
+  reset(){
+    this.emailConfigForm.reset();
+  }
 
 }

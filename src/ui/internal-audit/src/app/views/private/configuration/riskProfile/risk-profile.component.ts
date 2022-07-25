@@ -116,14 +116,14 @@ export class RiskProfileComponent implements OnInit {
         this.http.put('riskProfile',this.riskProfileForm.value,null).subscribe(x=>{
             localmodalId.visible = false;
             this.dataTableService.redraw(this.datatableElement);
-            this.AlertService.success('Risk Profile Saved Successful');
+            this.AlertService.success('Risk Profile Updated Successfully');
           });
       }
       else {
        // console.log(this.riskProfileForm.value);
         this.http.post('riskProfile',this.riskProfileForm.value).subscribe(x=>{
           this.formService.onSaveSuccess(localmodalId,this.datatableElement);
-          this.AlertService.success('Risk Profile Saved successfully');
+          this.AlertService.success('Risk Profile Saved Successfully');
         });
       }      
     }

@@ -101,6 +101,7 @@ using Internal.Audit.Application.Features.RiskAssessments.Queries.GetRiskAssessm
 using Internal.Audit.Domain.Entities.BranchAudit;
 using Internal.Audit.Domain.CompositeEntities.BranchAudit;
 using Internal.Audit.Application.Features.CommonValueAndTypes.Queries.GetAuditType;
+using Internal.Audit.Application.Features.EmailConfig.Commands.UpdateEmailConfig;
 
 
 namespace Internal.Audit.Application.Mappings;
@@ -221,14 +222,14 @@ public class MappingProfile : Profile
 
         CreateMap<ModuleFeature, GetAllModuleListResponseDTO>().ReverseMap();
 
-       // CreateMap<EmailConfiguration, GetEmailConfigListResponseDTO>().ReverseMap();
+        CreateMap<CompositEmailConfig, GetEmailConfigByIdResponseDTO>().ReverseMap();
         CreateMap<EmailConfiguration, GetEmailConfigByIdResponseDTO>().ReverseMap();
         CreateMap<EmailConfiguration, AddEmailConfigResponseDTO>().ReverseMap();
         CreateMap<EmailConfiguration, AddEmailConfigCommand>().ReverseMap();
         CreateMap<EmailConfiguration, DeleteEmailConfigCommand>().ReverseMap();
         CreateMap<EmailConfiguration, DeleteEmailConfigResponseDTO>().ReverseMap();
         CreateMap<AuditModule, GetOnlyModuleListResponseDTO>().ReverseMap();
-
+        CreateMap<EmailConfiguration, UpdateEmailConfigCommand>().ReverseMap();
 
         CreateMap<RiskAssessment, RiskAssessmentDTO>().ReverseMap();
         CreateMap<CompositeRiskAssessment, RiskAssessmentDTO>().ReverseMap();

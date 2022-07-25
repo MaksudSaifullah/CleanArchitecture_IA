@@ -10,5 +10,5 @@ namespace Internal.Audit.Application.Features.Designation.Commands.AddDesignatio
 public class AddDesignationCommand : IRequest<AddDesignationResponseDTO>
 {
     public string Name { get; set; }
-    public string Description { get; set; }
+    public string? Description { get; set; }
 }

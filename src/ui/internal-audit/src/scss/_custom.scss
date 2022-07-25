@@ -13,6 +13,32 @@
     background-color: #dbe2e6;// #f7f7f8; //f2f2f2
     color: white;
 }
+
+.datatableStyle td{
+ max-width: 100px;
+ overflow: hidden;
+ text-overflow: ellipsis;
+ white-space: nowrap;
+}
+
+.datatableStyle td:hover{
+   overflow: visible;
+   white-space: normal;
+   height: auto;
+}
+
+.searchLevel{
+   padding: 0.5rem 1rem !important;
+}
+.searchInput{
+   height: 75% !important;
+}
+.searchBtn{
+   float: right; 
+   width: 115%;
+   background: skyblue;
+   color: white;
+}
 .btnCancelColor{
     background-color: #666666b6;
     color: white;

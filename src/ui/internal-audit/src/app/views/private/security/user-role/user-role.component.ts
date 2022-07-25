@@ -39,6 +39,7 @@ export class UserRoleComponent implements OnInit {
   rolewisePrivilegelist: RoleSelectedListResponse = {};
   roleUserSelectionMaster: RoleBody[] = [];
   ifFirstLoad:boolean=true;
+  isVisible: boolean = false;
 
   constructor(private http: HttpService, private fb: FormBuilder, private AlertService: AlertService) {
     this.loadDropDownValues();
@@ -65,13 +66,13 @@ export class UserRoleComponent implements OnInit {
   };
   LoadData() {
     const that = this;
-
     this.dtOptions[1] = {
       pagingType: 'full_numbers',
       pageLength: 10,
       serverSide: true,
       processing: true,
       searching: false,
+      ordering: false,
       ajax: (dataTablesParameters: any, callback) => {
         this.http
           .paginatedPost(
@@ -119,13 +120,16 @@ export class UserRoleComponent implements OnInit {
   }
 
   edit(modalId: any, role: any): void {
+    this.isVisible = true;
     const localmodalId = modalId;
+  
     this.http
       .getById('role', role.id)
       .subscribe(res => {
         const roleResponse = res as role;      
         this.roleForm.setValue({ id: roleResponse.id, name: roleResponse.name, description: roleResponse.description, isActive: roleResponse.isActive });
       });
+      
     localmodalId.visible = true;
   }
   delete(id: string) {
@@ -141,6 +145,7 @@ export class UserRoleComponent implements OnInit {
   }
   reset() {
     this.roleForm.reset();
+    this.isVisible = false;
   }
 
   loadRole() {
@@ -174,7 +179,7 @@ export class UserRoleComponent implements OnInit {
   }
   onChangModule(e: any) {
     this.ifFirstLoad=true;
-    if (e.value != 'null' && (this.privilegeForm?.value.role != 'null')) {
+    if (e.value != 'null' && (this.privilegeForm?.value.role != 'null' && this.privilegeForm?.value.role != null)) {
       this.roleSelected = true;
       this.featureId = e.value;
       //this.dataTableService.redraw(this.dtElements?.get(1));

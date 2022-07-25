@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Internal.Audit.Application.Contracts.Persistent.Countries;
+using Internal.Audit.Domain.Entities;
 using MediatR;
 
 namespace Internal.Audit.Application.Features.Countries.Queries.GetCountryList
@@ -17,11 +18,9 @@ namespace Internal.Audit.Application.Features.Countries.Queries.GetCountryList
 
         public async Task<CountryListPagingDTO> Handle(GetCountryListQuery request, CancellationToken cancellationToken)
         {
-            var (count, result) = await _countryRepository.GetAll(request.pageSize, request.pageNumber);
-
-            var countryList = _mapper.Map<IEnumerable<CountryDTO>>(result).ToList();
-
-            return new CountryListPagingDTO { Items = countryList, TotalCount = count };
+            (long, IEnumerable<Country>) country = await _countryRepository.GetAll(request.pageSize, request.pageNumber, request.searchTerm);
+            var countryList = _mapper.Map<List<CountryDTO>>(country.Item2);
+            return new CountryListPagingDTO { Items = countryList, TotalCount = country.Item1 };
         }
     }
 }

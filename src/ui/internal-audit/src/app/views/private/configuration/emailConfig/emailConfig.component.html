@@ -9,40 +9,27 @@
         <div class="card-body">
           <form [formGroup]="emailConfigSearchForm">
           <div class="row">
-            <div class="col-sm-7 mb-2">
-                <button [cModalToggle]="verticallyCenteredModal.id" class="btnCreateColor" (click)="reset()" cButton>
-                  <svg cIcon name="cilPlus" size="md" title="Add Button Icon"></svg>  
-                  Create
-                </button>
-            </div>
+
+            <div class="col-sm-8 mb-2">
+              <button [cModalToggle]="verticallyCenteredModal.id" class="btnCreateColor" (click)="reset()" cButton>
+                <svg cIcon name="cilPlus" size="md" title="Add Button Icon"></svg> Create
+              </button> 
+             </div>
           
-            <div class="col-sm-5 mb-2">
-              <div class="row g-2">
-                
-                <!-- <div class="col-8">
-                  <input type="text" formControlName="searchText" id="searchText" class="form-control pull-right" placeholder="Search by Country"/>
-                </div> -->
-                <div class="col-md-8" >
-                  <div class="form-floating" >
-                    <input type="text" formControlName="searchText" id="searchText" class="form-control pull-right "  placeholder="Search by Country"/>
-                    <label for="searchText">Search by Country</label>
-                  </div>
+             <div class="col-sm-4 mb-2">
+              <div class="row">
+                <div class="form-floating col-md-10" style="padding-right:50px ;">
+                    <input type="text" formControlName="searchText" class="form-control searchInput"  placeholder="Search by Country"/>
+                    <label class="searchLevel" for="floatingInput">Search by Country</label>
                 </div>
-                <div class="col-md">
-                  <div class="col-2">
-                    <button type="button"  class="btn btn-secondary mr-1 pull-right btn-block"  (click)="search()" >
-                      Search
-                    </button>
-                  </div>
-                </div>  
-                <!-- <div class="col-2">
-                  <button type="button" class="btn btn-secondary mr-1 pull-right btn-block" (click)="clearSearch()"  >
-                    Reset
-                </button>
-                </div> -->
+                <div class="col-md-2">                    
+                  <button type="button" class="btn btn-secondary mr-1 btn-block searchBtn" data-toggle="modal" (click)="search()">
+                    Search
+                  </button>
+                </div>                 
               </div>
             </div>
-           
+            
           </div>
         </form>
           <div class="row overflow-auto">

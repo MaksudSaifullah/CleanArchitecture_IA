@@ -12,13 +12,15 @@ import { SecurityRoutingModule } from '../security/security-routing.module';
 import { RiskCriteriaComponent } from './risk-criteria/risk-criteria.component';
 import { IconModule } from '@coreui/icons-angular';
 import { RiskAssessmentComponent } from './risk-assessment/risk-assessment.component';
+import { AuditComponent } from './audit/audit.component';
 
 
 @NgModule({
   declarations: [
     TopicHeadComponent,
     RiskCriteriaComponent,
-    RiskAssessmentComponent
+    RiskAssessmentComponent,
+    AuditComponent
   ],
   imports: [
     CommonModule,

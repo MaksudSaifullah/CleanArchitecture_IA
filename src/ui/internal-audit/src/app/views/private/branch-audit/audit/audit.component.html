@@ -6,7 +6,7 @@
           <i class="fa fa-align-justify" ></i> Audit List
         </div>
         <div class="card-body">
-          <form >
+          <form [formGroup]="auditSearchForm">
             <div class="row">
               <div class="col-sm-7 mb-2">
                   <!-- <button [cModalToggle]="verticallyCenteredModal.id" class="btnCreateColor" (click)="reset()" cButton>
@@ -38,7 +38,7 @@
             </div>
           </form>
           <div class="row overflow-auto">
-              <table datatable   class="table table-bordered row-border hover datatableStyle" >
+              <table datatable [dtOptions]="dtOptions" class="table table-bordered row-border hover datatableStyle" >
                 <thead>
                   <tr>
                     <th>Audit Id</th>
@@ -47,6 +47,7 @@
                     <th>Country</th>
                     <th>Audit Period From</th>
                     <th>Audit Period To</th>
+                    <th>CreatedOn</th>
                     <th>Actions</th>
                   </tr>
                 </thead>

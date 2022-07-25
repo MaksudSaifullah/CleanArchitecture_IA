@@ -9,8 +9,8 @@ namespace Internal.Audit.Application.Contracts.Persistent.CommonValueAndTypes
 {
     public interface ICommonValueAndTypeQueryRepository : IAsyncQueryRepository<CommonValueAndType>
     {        
-        Task<IEnumerable<CommonValueAndType>> GetCommonValueType(string type);       
-      
+        Task<IEnumerable<CommonValueAndType>> GetCommonValueType(string type);
+        Task<CommonValueAndType> GetByIDCreationValue(int value);
 
     }
 }

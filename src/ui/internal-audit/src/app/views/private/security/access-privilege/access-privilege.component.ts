@@ -104,7 +104,7 @@ export class AccessPrivilegeComponent implements OnInit {
         });
       }
       else{
-        this.AlertService.error('Invalid Information');
+        this.AlertService.error('Provide Valid Information');
       }
   }
   
@@ -156,4 +156,21 @@ export class AccessPrivilegeComponent implements OnInit {
   //   }
   // }
 
+  numberOnly(event:any, name:string=''): boolean {
+    
+    if(this.accessPrivilegeForm.get(name)?.value === 0)
+    {
+      this.accessPrivilegeForm.get(name)?.setValue(1);     
+    }
+    const charCode = (event.which) ? event.which : event.keyCode;
+    if (charCode > 31 && ((event.target.value.length > 0 ? charCode < 48 : charCode < 49) || charCode > 57)) {
+      return false;
+    }
+    console.log(this.accessPrivilegeForm.get(name)?.value);
+    return true;
+  }
+
+  // reset(){
+  //   this.accessPrivilegeForm.reset();
+  // }
 }

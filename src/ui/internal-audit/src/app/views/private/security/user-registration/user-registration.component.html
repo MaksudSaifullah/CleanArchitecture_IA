@@ -11,7 +11,7 @@
             <c-col md="4" *ngFor="let data of Data; let i=index">
               <c-form-check>
                 <input type="checkbox" [id]="data.id" [checked]="isChecked(data.id)" (change)="onCheckChange($event)"/>
-                <label for="checkThree" class="m-1"> {{data.name}}</label>
+                <label [for]="data.id" class="m-1"> {{data.name}}</label>
               </c-form-check>
             </c-col>
           </c-row>

@@ -5,7 +5,7 @@
 export const environment = {
   production: false,
   hostName: 'https://localhost:7049/api/v1',
-  captcha_public_key:'6Lfmr4AgAAAAAKy7KpD1F6qGRQ5ahAQEAP7nVLrq',
+  captcha_public_key:'6LdcoxohAAAAAOIxeTBNMubRhgEu_clJPnFRa0uP',
   upload_file_configuration :{
     "id": "24eb5c76-2107-ed11-b3b2-00155d610b18",
     "name": "Profile_Picture"

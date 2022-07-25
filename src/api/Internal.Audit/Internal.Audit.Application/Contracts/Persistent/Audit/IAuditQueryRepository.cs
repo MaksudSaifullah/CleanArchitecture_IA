@@ -11,5 +11,6 @@ namespace Internal.Audit.Application.Contracts.Persistent.Audit
     public interface IAuditQueryRepository : IAsyncQueryRepository<CompositAudit>
     {
         Task<(long, IEnumerable<CompositAudit>)> GetAll(string searchTerm, int pageSize, int pageNumber);
+        Task<CompositAudit> GetById(Guid id);
     }
 }

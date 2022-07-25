@@ -24,6 +24,12 @@ namespace Internal.Audit.Infrastructure.Persistent.Repositories.Audit
             return await GetWithPagingInfo(query, parameters, false);
         }
 
-       
+        public async Task<CompositAudit> GetById(Guid id)
+        {
+            var query = "SELECT [Id],[CountryId],[AuditTypeId],[PlanId],[AuditId], [Year],[AuditName],[AuditPeriodFrom],[AuditPeriodTo] FROM [BranchAudit].[AuditCreation] WHERE Id = @id AND [IsDeleted] = 0";
+            var parameters = new Dictionary<string, object> { { "id", id } };
+
+            return await Single(query, parameters);
+        }
     }
 }

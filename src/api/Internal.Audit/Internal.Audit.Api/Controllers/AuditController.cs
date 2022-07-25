@@ -1,5 +1,7 @@
 ﻿using Internal.Audit.Application.Features.Audit.Commands.AddAudit;
 using Internal.Audit.Application.Features.Audit.Commands.DeleteAudit;
+using Internal.Audit.Application.Features.Audit.Commands.UpdateAudit;
+using Internal.Audit.Application.Features.Audit.Queries.GetAuditById;
 using Internal.Audit.Application.Features.Audit.Queries.GetAuditList;
 using MediatR;
 using Microsoft.AspNetCore.Http;
@@ -23,6 +25,13 @@ public class AuditController : ControllerBase
         return Ok(audits);
 
     }
+    [HttpGet("{Id}")]
+    public async Task<ActionResult<GetAuditByIdResponseDTO>> GetById(Guid Id)
+    {
+        var query = new GetAuditQuery(Id);
+        var audit = await _mediator.Send(query);
+        return Ok(audit);
+    }
 
     [HttpPost]
     public async Task<ActionResult<AddAuditResponseDTO>> Add(AddAuditCommand command)
@@ -30,7 +39,12 @@ public class AuditController : ControllerBase
         var result = await _mediator.Send(command);
         return Ok(result);
     }
-
+    [HttpPut]
+    public async Task<ActionResult<UpdateAuditResponseDTO>> Update(UpdateAuditCommand command)
+    {
+        var result = await _mediator.Send(command);
+        return Ok(result);
+    }
     [HttpDelete("{id}")]
     public async Task<ActionResult<DeleteAuditResponseDTO>> Delete(Guid id)
     {

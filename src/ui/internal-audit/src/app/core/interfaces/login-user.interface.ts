@@ -4,4 +4,5 @@ export interface LoginUserInterface {
   userName: string;
   token: string;
   role: string;
+  message: string;
 }

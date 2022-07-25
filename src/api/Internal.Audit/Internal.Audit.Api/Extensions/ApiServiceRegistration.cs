@@ -9,6 +9,7 @@ public static class ApiServiceRegistration
     {
         services.AddTransient<ICurrentAuthService, CurrentAuthService>();
         services.AddTransient<IJwtTokenService, JwtTokenService>();
+        services.AddTransient<IGoogleRecatchaVerificationService, GoogleRecatchaVerificationService>();
 
         return services;
     }

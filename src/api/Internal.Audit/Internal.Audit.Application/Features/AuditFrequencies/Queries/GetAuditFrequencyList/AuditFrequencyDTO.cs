@@ -9,13 +9,10 @@ public record AuditFrequencyDTO
 {
     public Guid Id { get; set; }
     public Guid CountryId { get; set; }
-    public Guid AuditScoreId { get; set; }
 
     public string AuditScore { get; set; }
-    public Guid RatingTypeId { get; set; }
 
     public string RatingType { get; set; }
-    public Guid AuditFrequencyTypeId { get; set; }
 
     public string AuditFrequencyType { get; set; }
     public DateTime EffectiveFrom { get; set; }

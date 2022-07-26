@@ -109,6 +109,7 @@ using Internal.Audit.Application.Features.AuditFrequencies.Queries.GetAuditFrequ
 using Internal.Audit.Application.Features.AuditFrequencies.Commands.AddAuditFrequency;
 using Internal.Audit.Application.Features.AuditFrequencies.Commands.UpdateAuditFrequency;
 using Internal.Audit.Application.Features.AuditFrequencies.Commands.DeleteAuditFrequency;
+using Internal.Audit.Application.Features.AuditFrequencies.Queries.GetAuditFrequencyList;
 
 namespace Internal.Audit.Application.Mappings;
 
@@ -274,7 +275,7 @@ public class MappingProfile : Profile
         CreateMap<Document, DeleteDocumentCommand>().ReverseMap();
         CreateMap<Document, GetByDocumentIdResponseDTO>().ReverseMap();
         CreateMap<CommonValueAndType, AuditTypeDTO>().ReverseMap();
-        CreateMap<CommonValueAndType, AuditFrequencyDTO>().ReverseMap();
+        CreateMap<CommonValueAndType, AuditFrequencyTypeDTO>().ReverseMap();
         CreateMap<CommonValueAndType, AuditScoreDTO>().ReverseMap();
         CreateMap<CommonValueAndType, GetCommonValueTypeGenericDTO>().ReverseMap();
 

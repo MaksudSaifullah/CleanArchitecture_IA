@@ -11,4 +11,6 @@ public class AddDataCommand:IRequest<AddDataPullCommandDTO>
 {
     public Guid? Id { get; set; }
     public string Country { get; set; }
+    public DateTime Fromdate { get; set; }
+    public DateTime Todate { get; set; }
 }

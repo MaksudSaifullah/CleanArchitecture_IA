@@ -45,7 +45,7 @@ public class InternalAuditContext: DbContext
     public DbSet<RiskCriteria> RiskCriterias { get; set; }
     public DbSet<DocumentSource> DocumentSources { get; set; }
     public DbSet<Document> Documents { get; set; }
-
+   
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

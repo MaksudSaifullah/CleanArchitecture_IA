@@ -9,30 +9,29 @@
               <form cForm class="login-form needs-validation" [formGroup]="loginForm" (ngSubmit)="onSubmit()"
               novalidate >
                 <input type="hidden" formControlName="captchaToken">
-                <c-input-group class="mb-3">
+                <c-input-group>
                   <span cInputGroupText>
                     <svg cIcon name="cilUser"></svg>
                   </span>
                   <input autoComplete="username" cFormControl placeholder="Username" formControlName="username" required/>
-                  <c-row cRow *ngIf="loginForm.get('username')?.invalid &&
+                </c-input-group>
+                <div cRow class="mt-0 pt-0 mb-3" *ngIf="loginForm.get('username')?.invalid &&
                 loginForm.get('username')?.errors &&
                       (loginForm.get('username')?.dirty || loginForm.get('username')?.touched)">
-                    <small class="text-danger"
-                           *ngIf="loginForm.get('username').hasError('required')">
-                      This field is required.
-                    </small>
-                    <small class="text-danger"
-                           *ngIf="loginForm.get('username').hasError('minlength')">
-                      The minimum length for this field is {{loginForm.get('username').errors.minlength.requiredLength}} characters.
-                    </small>
-                    <small class="text-danger"
-                           *ngIf="loginForm.get('username').hasError('maxlength')">
-                      The maximum length for this field is {{loginForm.get('username').errors.maxlength.requiredLength}} characters.
-                    </small>
-                  </c-row>
-                </c-input-group>
-
-                <c-input-group class="mb-4">
+                  <small class="text-danger"
+                         *ngIf="loginForm.get('username').hasError('required')">
+                    This field is required.
+                  </small>
+                  <small class="text-danger"
+                         *ngIf="loginForm.get('username').hasError('minlength')">
+                    The minimum length for this field is {{loginForm.get('username').errors.minlength.requiredLength}} characters.
+                  </small>
+                  <small class="text-danger"
+                         *ngIf="loginForm.get('username').hasError('maxlength')">
+                    The maximum length for this field is {{loginForm.get('username').errors.maxlength.requiredLength}} characters.
+                  </small>
+                </div>
+                <c-input-group class="mt-2">
                   <span cInputGroupText>
                     <svg cIcon name="cilLockLocked"></svg>
                   </span>
@@ -42,22 +41,22 @@
                     placeholder="Password"
                     type="password" formControlName="password" required
                   />
-                  <c-row *ngIf="loginForm.get('password')?.invalid &&
+
+                </c-input-group>
+                <c-row class="mt-0 pt-0 mb-3" *ngIf="loginForm.get('password')?.invalid &&
                 loginForm.get('password')?.errors &&
                       (loginForm.get('password')?.dirty || loginForm.get('password')?.touched)">
-                    <small class="text-danger"
-                           *ngIf="loginForm.get('password').hasError('required')">
-                      This field is required.
-                    </small>
-                    <small class="text-danger"
-                           *ngIf="loginForm.get('password').hasError('minlength')">
-                      The minimum length for this field is {{loginForm.get('password').errors.minlength.requiredLength}} characters.
-                    </small>
+                  <small class="text-danger"
+                         *ngIf="loginForm.get('password').hasError('required')">
+                    This field is required.
+                  </small>
+                  <small class="text-danger"
+                         *ngIf="loginForm.get('password').hasError('minlength')">
+                    The minimum length for this field is {{loginForm.get('password').errors.minlength.requiredLength}} characters.
+                  </small>
 
-                  </c-row>
-                </c-input-group>
-
-                <c-row class="mb-3">
+                </c-row>
+                <c-row class="mb-3 mt-2">
                   <app-recaptcha (tokenEventEmitter)="bindToken($event)"></app-recaptcha>
                 </c-row>
                 <c-row>
@@ -66,6 +65,11 @@
                     <button class="btn btn-primary" type="submit">
                       <svg cIcon name="cilLockLocked" title="Login Lock Icon"></svg>
                       Login</button>
+                  </div>
+                </c-row>
+                <c-row>
+                  <div class="d-flex justify-content-end">
+                    <a routerLink="/forgot-password">Forgot Password</a>
                   </div>
                 </c-row>
               </form>

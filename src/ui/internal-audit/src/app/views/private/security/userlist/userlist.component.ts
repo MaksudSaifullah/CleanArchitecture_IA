@@ -107,6 +107,12 @@ export class UserlistComponent implements OnInit {
     this.router.navigate(['security/userRegistration'], {queryParams: {id: id}});
   }
 
-  
+  createNewUser(){
+    this.router.navigate(['security/userRegistration']);
+    // const url = this.router.serializeUrl(
+    //   this.router.createUrlTree(['//security/userRegistration'])
+    // );
+    // window.open(url, '_blank');
+  }
 
 }

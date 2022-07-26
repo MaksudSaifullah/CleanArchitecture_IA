@@ -105,6 +105,10 @@ using Internal.Audit.Application.Features.EmailConfig.Commands.UpdateEmailConfig
 using Internal.Audit.Application.Features.CommonValueAndTypes.Queries.GetAuditFrequency;
 using Internal.Audit.Application.Features.CommonValueAndTypes.Queries.GetAuditScore;
 using Internal.Audit.Application.Features.CommonValueAndTypes.Queries.GetCommonValueTypeGeneric;
+using Internal.Audit.Application.Features.AuditFrequencies.Queries.GetAuditFrequencyById;
+using Internal.Audit.Application.Features.AuditFrequencies.Commands.AddAuditFrequency;
+using Internal.Audit.Application.Features.AuditFrequencies.Commands.UpdateAuditFrequency;
+using Internal.Audit.Application.Features.AuditFrequencies.Commands.DeleteAuditFrequency;
 
 namespace Internal.Audit.Application.Mappings;
 
@@ -273,5 +277,16 @@ public class MappingProfile : Profile
         CreateMap<CommonValueAndType, AuditFrequencyDTO>().ReverseMap();
         CreateMap<CommonValueAndType, AuditScoreDTO>().ReverseMap();
         CreateMap<CommonValueAndType, GetCommonValueTypeGenericDTO>().ReverseMap();
+
+        CreateMap<AuditFrequency, AuditFrequencyDTO>().ReverseMap();
+        CreateMap<CompositeAuditFrequency, AuditFrequencyDTO>().ReverseMap();
+        CreateMap<CompositeAuditFrequency, AuditFrequencyByIdDTO>().ReverseMap();
+        CreateMap<AuditFrequency, AuditFrequencyByIdDTO>().ReverseMap();
+        CreateMap<AuditFrequency, AddAuditFrequencyResponseDTO>().ReverseMap();
+        CreateMap<AuditFrequency, AddAuditFrequencyCommand>().ReverseMap();
+        CreateMap<AuditFrequency, UpdateAuditFrequencyResponseDTO>().ReverseMap();
+        CreateMap<AuditFrequency, UpdateAuditFrequencyCommand>().ReverseMap();
+        CreateMap<AuditFrequency, DeleteAuditFrequencyResponseDTO>().ReverseMap();
+        CreateMap<AuditFrequency, DeleteAuditFrequencyCommand>().ReverseMap();
     }
 }

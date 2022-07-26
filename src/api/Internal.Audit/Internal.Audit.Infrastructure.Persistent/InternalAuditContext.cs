@@ -46,7 +46,6 @@ public class InternalAuditContext: DbContext
     public DbSet<DocumentSource> DocumentSources { get; set; }
     public DbSet<Document> Documents { get; set; }
 
-    public DbSet<AuditFrequency> AuditFrequencies { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

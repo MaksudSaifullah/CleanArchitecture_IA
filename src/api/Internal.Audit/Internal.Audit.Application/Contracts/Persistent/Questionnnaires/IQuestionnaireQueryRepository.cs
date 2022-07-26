@@ -1,12 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Internal.Audit.Domain.CompositeEntities.BranchAudit;
 
-namespace Internal.Audit.Application.Contracts.Persistent.Questionnnaires
+
+namespace Internal.Audit.Application.Contracts.Persistent.Questionnnaires;
+
+public interface IQuestionnaireQueryRepository : IAsyncQueryRepository<CompositeQuestionnaire>
 {
-    internal class IQuestionnaireQueryRepository
-    {
-    }
+    Task<(long, IEnumerable<CompositeQuestionnaire>)> GetAll(int pageSize, int pageNumber, dynamic searchTerm = null);
+    Task<CompositeQuestionnaire> GetById(Guid id);
 }

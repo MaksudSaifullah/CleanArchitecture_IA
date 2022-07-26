@@ -8,8 +8,8 @@ namespace Internal.Audit.Domain.Entities.BranchAudit;
 [Table("Questionnaire", Schema = "BranchAudit")]
 public class Questionnaire : EntityBase
 {
-	[Required]
-	public Guid CountryId { get; set; }
+	//[Required]
+	//public Guid CountryId { get; set; }
 	[Required]
 	public Guid TopicHeadId { get; set; }
 	[Required]
@@ -23,8 +23,8 @@ public class Questionnaire : EntityBase
 	[DefaultValue("1")]
 	public bool IsActive { get; set; }
 
-	[ForeignKey("CountryId")]
-	public virtual Country Country { get; set; } = null!;
+	//[ForeignKey("CountryId")]
+	//public virtual Country Country { get; set; } = null!;
     [ForeignKey("TopicHeadId")]
     public virtual TopicHead TopicHead { get; set; } = null!;
 }

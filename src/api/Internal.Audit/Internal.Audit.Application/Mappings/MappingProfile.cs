@@ -105,6 +105,11 @@ using Internal.Audit.Application.Features.EmailConfig.Commands.UpdateEmailConfig
 using Internal.Audit.Application.Features.CommonValueAndTypes.Queries.GetAuditFrequency;
 using Internal.Audit.Application.Features.CommonValueAndTypes.Queries.GetAuditScore;
 using Internal.Audit.Application.Features.CommonValueAndTypes.Queries.GetCommonValueTypeGeneric;
+using Internal.Audit.Application.Features.Questionnnaires.Queries.GetQuestionnaireById;
+using Internal.Audit.Application.Features.Questionnnaires.Queries.GetQuestionnnaireList;
+using Internal.Audit.Application.Features.Questionnnaires.Commands.AddQuestionnaire;
+using Internal.Audit.Application.Features.Questionnnaires.Commands.UpdateQuestionnaire;
+using Internal.Audit.Application.Features.Questionnnaires.Commands.DeleteQuestionnaire;
 
 namespace Internal.Audit.Application.Mappings;
 
@@ -273,5 +278,14 @@ public class MappingProfile : Profile
         CreateMap<CommonValueAndType, AuditFrequencyDTO>().ReverseMap();
         CreateMap<CommonValueAndType, AuditScoreDTO>().ReverseMap();
         CreateMap<CommonValueAndType, GetCommonValueTypeGenericDTO>().ReverseMap();
+
+        CreateMap<CompositeQuestionnaire, GetQuestionnaireListResponseDTO>().ReverseMap();
+        CreateMap<CompositeQuestionnaire, GetQuestionnaireByIdDTO>().ReverseMap();
+        CreateMap<Questionnaire, AddQuestionnaireResponseDTO>().ReverseMap();
+        CreateMap<Questionnaire, AddQuestionnaireCommand>().ReverseMap();
+        CreateMap<Questionnaire, UpdateQuestionnaireResponseDTO>().ReverseMap();
+        CreateMap<Questionnaire, UpdateQuestionnaireCommand>().ReverseMap();
+        CreateMap<Questionnaire, DeleteQuestionnaireResponseDTO>().ReverseMap();
+        CreateMap<Questionnaire, DeleteQuestionnaireCommand>().ReverseMap();
     }
 }

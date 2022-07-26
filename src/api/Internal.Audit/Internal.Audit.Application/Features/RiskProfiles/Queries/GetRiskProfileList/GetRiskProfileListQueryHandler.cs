@@ -2,11 +2,6 @@
 using Internal.Audit.Application.Contracts.Persistent.RiskProfiles;
 using Internal.Audit.Domain.CompositeEntities;
 using MediatR;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Internal.Audit.Application.Features.RiskProfiles.Queries.GetRiskProfileList
 {
@@ -20,12 +15,6 @@ namespace Internal.Audit.Application.Features.RiskProfiles.Queries.GetRiskProfil
             _riskProfileRepository = riskProfileRepository ?? throw new ArgumentNullException(nameof(riskProfileRepository));
             _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
         }
-
-        //public async Task<List<RiskProfileDTO>> Handle(GetRiskProfileListQuery request, CancellationToken cancellationToken)
-        //{
-        //    var riskProfiles = await _riskProfileRepository.GetAll();
-        //    return _mapper.Map<List<RiskProfileDTO>>(riskProfiles);
-        //}
 
         public async Task<RiskProfileListPagingDTO> Handle(GetRiskProfileListQuery request, CancellationToken cancellationToken)
         {

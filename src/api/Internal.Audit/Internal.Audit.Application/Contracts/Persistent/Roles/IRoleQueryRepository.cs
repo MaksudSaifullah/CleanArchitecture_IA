@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 namespace Internal.Audit.Application.Contracts.Persistent.Roles;
 public interface IRoleQueryRepository : IAsyncQueryRepository<Role>
 {
-    Task<(long, IEnumerable<Role>)> GetAll(int pageSize, int pageNumber);
+    Task<(long, IEnumerable<Role>)> GetAll(int pageSize, int pageNumber, dynamic searchTerm = null);
     Task<Role> GetById(Guid id);
 }
 

@@ -49,6 +49,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Features\Questionnnaires\Commands\AddQuestionnnaire\" />
+    <Folder Include="Features\Questionnnaires\Commands\DeleteQuestionnaire\" />
+    <Folder Include="Features\Questionnnaires\Commands\UpdateQuestionnaire\" />
+    <Folder Include="Features\Questionnnaires\Queries\GetQuestionnaireById\" />
     <Folder Include="Features\UserCountries\Quiries\" />
   </ItemGroup>
 

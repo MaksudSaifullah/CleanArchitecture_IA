@@ -6,27 +6,25 @@
             <div class="fa fa-align-justify" >Risk Profile List</div> 
           </div>
           <div class="card-body">
+            
             <form [formGroup]="searchForm">
-             <div class="row">
-              <div class="col-sm-6 mb-2">
+              <div class="row" style="margin: 0 auto;">
+                <div class="col-md-6 mb-2">
                   <button [cModalToggle]="verticallyCenteredModal.id" class="btnCreateColor" (click)="reset()" cButton>
                     <svg cIcon name="cilPlus" size="md" title="Add Button Icon"></svg> Create
-                  </button>
-              </div>
-              <div class="offset-sm-2 col-sm-4 mb-2">
-                <div class="row" >                 
-                  <div class="col-8">
-                    <input type="text" formControlName="searchTerm" class="form-control pull-right" placeholder="likelihood level/impact level/risk rating"/>
-                  </div>
-                  <div class="col-4">
-                    <button type="button" class="btn btn-secondary  pull-right btn-block" data-toggle="modal" (click)="search()">
-                      Search
-                    </button>
-                  </div>
+                  </button> 
                 </div>
-              </div>              
-             </div>
-            </form>
+                <div class="col-md-5 mb-2 form-floating">
+                  <input type="text" formControlName="searchTerm" class="form-control searchInput"  placeholder="search by likelihood level/impact level/risk rating"/>
+                  <label class="searchLevel" for="floatingInput"> Search by Likelihood level/Impact level/Risk rating</label>
+                </div>
+                <div class="col-md-1 mb-2">
+                  <button type="button" class="btn btn-secondary mr-1 btn-block " data-toggle="modal" (click)="search()" >
+                    Search
+                  </button>
+                </div>
+              </div>
+           </form>
             <div class="row overflow-auto">
                 <table datatable [dtOptions]="dtOptions" class="table table-bordered row-border hover datatableStyle" >
                   <thead>

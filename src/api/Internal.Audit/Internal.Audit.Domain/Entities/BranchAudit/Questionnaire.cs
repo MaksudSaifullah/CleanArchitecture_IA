@@ -25,7 +25,6 @@ public class Questionnaire : EntityBase
 
 	[ForeignKey("CountryId")]
 	public virtual Country Country { get; set; } = null!;
-	//TODO: TopicHead
-	//[ForeignKey("TopicHeadId")]
-	//public virtual TopicHead TopicHead { get; set; } = null!;
+    [ForeignKey("TopicHeadId")]
+    public virtual TopicHead TopicHead { get; set; } = null!;
 }

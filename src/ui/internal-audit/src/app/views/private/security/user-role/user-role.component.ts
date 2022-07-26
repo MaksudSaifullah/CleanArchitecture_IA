@@ -30,6 +30,7 @@ export class UserRoleComponent implements OnInit {
   modules: ModuleList[] = [];
   roleForm: FormGroup;
   privilegeForm: FormGroup;
+  searchForm: FormGroup;
   formService: FormService = new FormService();
   dataTableService: DatatableService = new DatatableService();
   dtTrigger: Subject<any> = new Subject<any>();
@@ -48,7 +49,12 @@ export class UserRoleComponent implements OnInit {
       name: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(20)]],
       description: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(50)]],
       isActive: [''],
-    })
+    });
+    this.searchForm = this.fb.group(
+      {
+        searchTerm: ['']
+      }
+    );
 
     this.privilegeForm = this.fb.group({
       id: [''],
@@ -76,8 +82,8 @@ export class UserRoleComponent implements OnInit {
       ajax: (dataTablesParameters: any, callback) => {
         this.http
           .paginatedPost(
-            'role/paginated', dataTablesParameters.length, ((dataTablesParameters.start / dataTablesParameters.length) + 1), {}
-          ).subscribe(resp => that.roles = this.dataTableService.datatableMap(resp, callback));
+            'role/paginated', dataTablesParameters.length, ((dataTablesParameters.start / dataTablesParameters.length) + 1), this.searchForm.get('searchTerm')?.value)
+          .subscribe(resp => that.roles = this.dataTableService.datatableMap(resp, callback));
       },
     };
 
@@ -118,6 +124,9 @@ export class UserRoleComponent implements OnInit {
         });
       }
     }
+  }
+  search(){
+    this.ReloadAllDataTable();
   }
 
   edit(modalId: any, role: any): void {

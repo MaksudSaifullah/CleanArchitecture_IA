@@ -18,6 +18,7 @@
   <ItemGroup>
     <Compile Remove="Contracts\Persistent\IUserCommandRepository.cs" />
     <Compile Remove="Contracts\Persistent\IUserQueryRepository.cs" />
+    <Compile Remove="Features\AuditFrequencies\Commands\AddAuditFrequency\AddAuditFrequencyCommandValidator.cs" />
   </ItemGroup>
 
   <ItemGroup>
@@ -53,6 +54,10 @@
     <Folder Include="Features\Questionnnaires\Commands\UpdateQuestionnaire\" />
     <Folder Include="Features\Questionnnaires\Queries\GetQuestionnaireById\" />
     <Folder Include="Features\UserCountries\Quiries\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="Features\AuditFrequencies\Commands\AddAuditFrequency\AddAuditFrequencyCommandValidator.cs" />
   </ItemGroup>
 
 </Project>

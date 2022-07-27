@@ -86,8 +86,7 @@ export class RiskAssessmentComponent implements OnInit {
     if (this.riskAssessmentForm.valid ){
       if(this.formService.isEdit(this.riskAssessmentForm.get('id') as FormControl)){
         this.http.put('riskassessment',this.riskAssessmentForm.value,null).subscribe(x=>{
-            localmodalId.visible = false;
-            this.dataTableService.redraw(this.datatableElement);
+          this.formService.onSaveSuccess(localmodalId,this.datatableElement);
             this.AlertService.success('Risk Assessment Updated Successfully');
           });
       }

@@ -1,6 +1,7 @@
 ﻿//using Internal.Audit.Application.Features.Users.Queries.GetAuthUser;
 using Internal.Audit.Application.Contracts.Auth;
 using Internal.Audit.Application.Features.UserList.Queries.GetAuthUser;
+using Internal.Audit.Application.Features.UserPasswordReset.Command;
 using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -35,6 +36,26 @@ namespace Internal.Audit.Api.Controllers
                 Message = captchaVerificationResult.Item2
             });
             
+        }
+
+        [HttpPost(nameof(SendPasswordReset))]
+        public async Task<ActionResult<UserPasswordResetCommandResponse>> SendPasswordReset(UserPasswordResetCommand command)
+        {
+            var result = await _mediator.Send(command);
+            return Ok(result);
+        }
+
+        [HttpPost(nameof(VerifyPasswordResetLink))]
+        public async Task<ActionResult<UserPasswordResetVerifyCommandResponse>> VerifyPasswordResetLink(UserPasswordResetVerifyCommandResponse command)
+        {
+            var result = await _mediator.Send(command);
+            return Ok(result);
+        }
+        [HttpPost(nameof(UpdateUserPasswordByPostCode))]
+        public async Task<ActionResult<ResetUserPasswordCommandResponse>> UpdateUserPasswordByPostCode(ResetUserPasswordCommand command)
+        {
+            var result = await _mediator.Send(command);
+            return Ok(result);
         }
     }
 }

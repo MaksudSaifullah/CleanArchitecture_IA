@@ -133,5 +133,13 @@ namespace Internal.Audit.Infrastructure.Persistent.Repositories.UserRegistration
 
             return await Single(query, parameters);
         }
+
+        public async Task<User> GetByUserEmail(string email)
+        {
+            var query = "SELECT * FROM [Security].[User] WHERE [Username] = @email";
+            var parameters = new Dictionary<string, object> { { "email", email } };
+
+            return await Single(query, parameters);
+        }
     }
 }

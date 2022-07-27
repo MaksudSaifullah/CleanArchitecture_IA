@@ -12,6 +12,7 @@ namespace Internal.Audit.Application.Contracts.Persistent.UserRegistration
         Task<IEnumerable<User>> GetAll(bool activeOnly);
         Task<User> Get(long id);
         Task<User> GetByUserEmail(string email, string password);
+        Task<User> GetByUserEmail(string email);
         Task<IEnumerable<User>> GetAllUserList();
         Task<User> GetAllUserListById(Guid userId);
     }

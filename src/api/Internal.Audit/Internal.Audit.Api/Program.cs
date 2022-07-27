@@ -148,7 +148,6 @@ app.MigrateDatabase<InternalAuditContext>((context, services) =>
 //    app.UseSwagger();
 //    app.UseSwaggerUI();
 //}
-
 app.UseSwagger();
 app.UseSwaggerUI();
 app.UseExceptionLogging();

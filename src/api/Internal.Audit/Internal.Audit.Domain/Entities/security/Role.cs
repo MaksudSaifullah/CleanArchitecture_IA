@@ -19,7 +19,7 @@ public class Role : EntityBase
     public string Description { get; set; } = null!;
 
     [Required]
-    [DefaultValue("0")]
+    [DefaultValue("1")]
     public bool IsActive { get; set; }
 
     public virtual ICollection<RoleAction> roleActions { get; set; } = null!;

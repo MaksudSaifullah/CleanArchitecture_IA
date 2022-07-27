@@ -1,7 +1,11 @@
+
 <c-nav variant="tabs">
     <a [active]="true" [cTabContent]="tabContent" [routerLink] [tabPaneIdx]="0" cNavLink>User Role</a>
-    <a [cTabContent]="tabContent" [routerLink] [tabPaneIdx]="1" cNavLink>Access Privilege</a>
+    <a  [cTabContent]="tabContent" [routerLink] [tabPaneIdx]="1" cNavLink>Access Privilege</a>
   </c-nav>
+  <c-col xs="12">
+    <c-card class="mb-4"> 
+  
   <c-tab-content #tabContent="cTabContent">
     <c-tab-pane class="p-3">
         
@@ -13,37 +17,32 @@
                 <i class="fa fa-align-justify" ></i> Role List
               </div>
               <div class="card-body">
-                <div class="row">
-                  <div class="col-sm-7 mb-2">
-                      <button [cModalToggle]="verticallyCenteredModal.id" class="btnCreateColor" (click)="reset()" cButton>Create Role</button>
-
-                  </div>
-                  <div class="col-sm-5 mb-2">
-                    <div class="row">
-                      <div class="col-8">
-                        <input type="text" class="form-control pull-right" placeholder="Search by Name"/>
-                      </div>
-                      <div class="col-2">
-                        <button type="button" class="btn btn-secondary mr-1 pull-right btn-block" data-toggle="modal" >
-                          Search
+                <form [formGroup]="searchForm">
+                  <div class="row" style="margin: 0 auto;">
+                    <div class="col-md-6 mb-2">
+                      <button [cModalToggle]="verticallyCenteredModal.id" class="btnCreateColor" (click)="reset()" cButton>
+                        <svg cIcon name="cilPlus" size="md" title="Add Button Icon"></svg> Create
+                      </button> 
+                    </div>
+                    <div class="col-md-5 mb-2 form-floating">
+                      <input type="text" formControlName="searchTerm" class="form-control searchInput"  placeholder="Search by Name or Description"/>
+                      <label class="searchLevel" for="floatingInput">Role Name / Description</label>
+                    </div>
+                    <div class="col-md-1 mb-2">
+                      <button type="button" class="btn btn-secondary mr-1 btn-block searchBtn" data-toggle="modal" (click)="search()" >
+                        Search
                       </button>
-                      </div>
-                      <div class="col-2">
-                        <button type="button" class="btn btn-secondary mr-1 pull-right btn-block" data-toggle="modal"  >
-                          Reset
-                      </button>
-                      </div>
                     </div>
                   </div>
-                </div>
+               </form>
                 <div class="row overflow-auto">
-                    <table datatable [dtOptions]="dtOptions" class="table table-bordered row-border hover" >
+                    <table datatable [dtOptions]="dtOptions[1]" id="DataTables_Table_1"  class="table table-bordered row-border hover datatableStyle" >
                       <thead>
                         <tr>
                           <th>Name</th>
                           <th>Description</th>
                           <th>Active</th>
-                          <th>Action</th>
+                          <th class="col-1 text-center">Action</th>
                         </tr>
                       </thead>
                       <tbody *ngIf="roles?.length != 0">
@@ -51,13 +50,13 @@
                           <td>{{ role.name }}</td>
                           <td>{{ role.description }}</td>
                           <td>{{ role.isActive }}</td>
-                          <td>
+                          <td class="text-center">
                             <div class="btn-group" role="group" aria-label="Basic example">
-                              <button type="button" class="btn btn-secondary btnSaveColor" (click)="edit(verticallyCenteredModal,role)">
-                                Edit
+                              <button type="button" class="btn btn-secondary btnEditColor" (click)="edit(verticallyCenteredModal,role)">
+                                <svg cIcon name="cilPencil" size="md" title="Edit Button icon"></svg>
                               </button>
                               <button type="button" class="btn btn-danger btnDeleteColor" (click)="delete(role.id)">
-                                Delete
+                                <svg cIcon name="cilTrash" size="md" title="Delete Button Icon"></svg>
                               </button>
                             </div>
                           </td>
@@ -135,19 +134,22 @@
               </small>
           </div>
 
-          <c-form-check sizing="xl" switch>
-            <input cFormCheckInput checked type="checkbox" formControlName="isActive" id="isActive" checked />
-            <label cFormCheckLabel>Active Status</label>
-          </c-form-check>
-
-          
+          <div *ngIf ="isVisible">
+            <c-form-check sizing="xl" switch >
+              <input cFormCheckInput checked type="checkbox" formControlName="isActive" id="isActive" checked />
+              <label cFormCheckLabel>Active Status</label>
+            </c-form-check>
+          </div>
+       
 
         </div>
       </c-modal-body>
       <c-modal-footer>
-        <button cButton class="btn btn-primary btnSaveColor me-1" (click)="onSubmit(verticallyCenteredModal)">Save</button>
-            <button [cModalToggle]="verticallyCenteredModal.id" cButton class="btn btn-danger btnCancelColor me-1">
-              Close
+        <button cButton class="btn btn-primary btnSaveColor me-1" (click)="onSubmit(verticallyCenteredModal)">
+          <svg cIcon name="cilSave" size="md" title="Save Button Icon"></svg> Save
+        </button>
+        <button [cModalToggle]="verticallyCenteredModal.id" cButton class="btn btn-danger btnCancelColor me-1">
+          <svg cIcon name="cilX" size="md" title="Close Button Icon"></svg> Close
         </button>
       </c-modal-footer>
     </c-modal>
@@ -157,8 +159,159 @@
 
     </c-tab-pane>
     <c-tab-pane class="p-3">
-      This is some placeholder content the <strong>Profile</strong> tab's associated content. Clicking another
-      tab will toggle the visibility of this one for the next. The tab JavaScript swaps classes to control the
-      content visibility and styling. You can use it with tabs, pills, and any other .nav-powered navigation.
+      <c-col xs="12"> 
+        <c-card class="mb-4">
+          <c-card-header>
+            <strong>User Role Wise Access Privilege</strong>
+          </c-card-header>
+          <c-card-body>
+
+            <form [formGroup]="privilegeForm">
+
+              <c-row [gutter]="{g: 2}">
+              
+                <c-col md>
+                  <div cFormFloating>
+                    <select aria-label="Floating label select example" cSelect id="role"
+                      formControlName="role" name="role" (change)="onChangRole($event.target)">
+                      <option value="null">Select Role</option>
+                      <!-- <option value="1">All</option> -->
+                      <option *ngFor="let role of rolesDropdown" [value]="role.id">
+                        {{role.name}}
+                      </option>
+                    </select>
+                    <label for="role" class="dropdownLabel">Role</label>
+                  </div>
+  
+                  <!-- <div cRow *ngIf="privilegeForm.get('role')?.invalid &&
+                  privilegeForm.get('role')?.errors &&
+                        (privilegeForm.get('role')?.dirty || privilegeForm.get('role')?.touched)">
+                    <small class="text-danger" *ngIf="countryForm.get('role').hasError('required')">
+                      This field is required.
+                    </small>
+                                
+                    
+                  </div> -->
+                </c-col>
+  
+  
+  
+                <c-col md>
+                  <div cFormFloating>
+                    <select aria-label="Floating label select example" cSelect id="module"
+                      formControlName="module" name="module" (change)="onChangModule($event.target)">
+                      <option value="null">Select Module</option>
+                      <option value="00000000-0000-0000-0000-000000000000">All</option>
+                      <option *ngFor="let module of modules" [value]="module.id">
+                        {{module.displayName}}
+                      </option>                     
+                    </select>
+                    <label for="module" class="dropdownLabel">Module</label>
+                  </div>
+  
+                  <!-- <div cRow *ngIf="privilegeForm.get('module')?.invalid &&
+                  privilegeForm.get('module')?.errors &&
+                        (privilegeForm.get('module')?.dirty || privilegeForm.get('module')?.touched)">
+                    <small class="text-danger" *ngIf="countryForm.get('module').hasError('required')">
+                      This field is required.
+                    </small>
+                                
+                    
+                  </div> -->
+                </c-col>
+  
+              </c-row>
+              <c-row>
+
+                <div class="row overflow-auto mt-4" *ngIf="roleSelected">
+                  <table datatable id="DataTables_Table_0" [dtOptions]="dtOptions[0]" class="table table-bordered row-border hover datatableStyle" style="width: 100% !important" >
+                    <thead>
+                      <tr>
+                        <th>Module</th>
+                        <th>Feature</th>                        
+                        <th>Action</th>
+                      </tr>
+                    </thead>
+                    <tbody *ngIf="userPrivilegeList?.length != 0">
+                      <ng-container *ngFor="let privilege of userPrivilegeList">
+
+                        <tr *ngIf="privilege.rowSpan == 2 || privilege.rowSpan == 1">                       
+                          <td [attr.rowspan]="privilege.rowSpan">{{ privilege.module.displayName }}</td>                      
+                          <td>{{ privilege.feature.displayName }}</td>                         
+                          <td>
+                            <div>                              
+                              <label class = "checkbox-inline" style="margin-left: 10%;"  >
+                                <input style="margin-right: 5px;" type = "checkbox" value = "" [checked]="isChecked('view',privilege.module.id,privilege.feature.id)" (change)="onCheckChange($event,'view',privilege.module.id,privilege.feature.id)">View
+                             </label>
+                             <label class = "checkbox-inline"  style="margin-left: 10%;">
+                              <input style="margin-right: 5px;" type="checkbox" value="" [checked]="isChecked('create',privilege.module.id,privilege.feature.id)" (change)="onCheckChange($event,'create',privilege.module.id,privilege.feature.id)">Create
+                           </label>
+                           <label class = "checkbox-inline"  style="margin-left: 10%;">
+                              <input style="margin-right: 5px;" type = "checkbox" value = "" [checked]="isChecked('edit',privilege.module.id,privilege.feature.id)" (change)="onCheckChange($event,'edit',privilege.module.id,privilege.feature.id)">Edit
+                           </label>
+                           <label class = "checkbox-inline"  style="margin-left: 10%;">
+                            <input style="margin-right: 5px;" type = "checkbox" value = "" [checked]="isChecked('delete',privilege.module.id,privilege.feature.id)" (change)="onCheckChange($event,'delete',privilege.module.id,privilege.feature.id)">Delete
+                         </label>
+                            </div>
+                          </td>
+                        </tr>                        
+
+                        <tr *ngIf="privilege.rowSpan == -1">
+                           <td>{{ privilege.feature.displayName }}</td>                         
+                          <td>
+                            <div>                            
+                              <label class = "checkbox-inline" style="margin-left: 10%;"  >
+                                <input style="margin-right: 5px;" type = "checkbox" value = "" [checked]="isChecked('view',privilege.module.id,privilege.feature.id)" (change)="onCheckChange($event,'view',privilege.module.id,privilege.feature.id)">View
+                             </label>
+                             <label class = "checkbox-inline"  style="margin-left: 10%;">
+                              <input style="margin-right: 5px;" type="checkbox" value="" [checked]="isChecked('create',privilege.module.id,privilege.feature.id)" (change)="onCheckChange($event,'create',privilege.module.id,privilege.feature.id)">Create
+                           </label>
+                           <label class = "checkbox-inline"  style="margin-left: 10%;">
+                              <input style="margin-right: 5px;" type = "checkbox" value = "" [checked]="isChecked('edit',privilege.module.id,privilege.feature.id)" (change)="onCheckChange($event,'edit',privilege.module.id,privilege.feature.id)">Edit
+                           </label>
+                           <label class = "checkbox-inline"  style="margin-left: 10%;">
+                            <input style="margin-right: 5px;" type = "checkbox" value = "" [checked]="isChecked('delete',privilege.module.id,privilege.feature.id)" (change)="onCheckChange($event,'delete',privilege.module.id,privilege.feature.id)">Delete
+                         </label>
+                            </div>
+                          </td>
+                        </tr>
+
+
+
+
+
+                      </ng-container>
+                    
+                    </tbody>
+                    <tbody *ngIf="userPrivilegeList?.length == 0">
+                      <tr>
+                        <td colspan="5" class="no-data-available">No data!</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                  <div>
+                    <button cButton class="btn btn-primary btnSaveColor me-1" (click)="onAccessPrivilegeSubmit()">
+                      <svg cIcon name="cilSave" size="md" title="Save Button Icon"></svg> Save
+                    </button>
+                    <button cButton class="btn btn-danger btnCancelColor me-1" (click)="refreshCheckboxSelect()">
+                      <svg cIcon name="cilX" size="md" title="Close Button Icon"></svg> Cancel
+                 </button>
+                  </div>
+              </div>
+
+              </c-row>
+              <c-row>
+             
+              </c-row>
+              </form>
+
+
+
+           
+          </c-card-body>
+        </c-card>
+      </c-col>
     </c-tab-pane>
   </c-tab-content>
+</c-card>
+</c-col>

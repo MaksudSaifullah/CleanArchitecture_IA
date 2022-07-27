@@ -1,0 +1,34 @@
+<div class="col-lg-4 m-auto">
+
+<c-card>
+  <c-card-header>Update Your Profile</c-card-header>
+  <c-card-body>
+    <form [formGroup]="profileUpdateForm" (submit)="submit()">
+        <div (click)="clickFileControl('profileImage')" class="w-50 m-auto profile-image-div">
+          <img *ngIf="imageUrl == ''" src="assets/img/avatars/1.jpg" class="profile-image">
+          <img *ngIf="imageUrl != ''" src="{{imageUrl}}" class="profile-image">
+        </div>
+        <div cRow>
+          <div class="mt-2">
+            <input type="text" placeholder="Full Name" class="form-control" formControlName="fullName" (tap)="clickFileControl('profileImage')">
+          </div>
+          <input type="file" class="d-none" formControlName="ProfileImageUrl" id="profileImage" (change)="onFileChange($event)">
+          <div class="mt-0 mb-2" cRow *ngIf="profileUpdateForm.get('fullName')?.invalid &&
+        profileUpdateForm.get('fullName')?.errors &&
+                      (profileUpdateForm.get('fullName')?.dirty || profileUpdateForm.get('fullName')?.touched)">
+            <small class="text-danger"
+                   *ngIf="profileUpdateForm.get('fullName').hasError('required')">
+              This field is required.
+            </small>
+            <small class="text-danger"
+                   *ngIf="profileUpdateForm.get('fullName').hasError('minlength')">
+              The minimum length for this field is {{profileUpdateForm.get('fullName').errors.minlength.requiredLength}} characters.
+            </small>
+          </div>
+        </div>
+        <button cButton class="mt-4" (click)="submit()">Update Profile</button>
+    </form>
+  </c-card-body>
+</c-card>
+</div>
+

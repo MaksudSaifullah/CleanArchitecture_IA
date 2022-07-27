@@ -8,6 +8,9 @@ using System.ComponentModel;
 using System.Reflection;
 using Internal.Audit.Domain.Entities.Common;
 using Internal.Audit.Domain.Entities.Config;
+using Internal.Audit.Domain.Entities.config;
+using Internal.Audit.Domain.Entities.BranchAudit;
+
 
 namespace Internal.Audit.Infrastructure.Persistent;
 
@@ -33,6 +36,23 @@ public class InternalAuditContext: DbContext
     public DbSet<UserRole> UserRoles { get; set; }
     public DbSet<CommonValueAndType> CommonValueAndTypes { get; set; }
     public DbSet<DashBoardBase> Dashboards { get; set; }
+    public DbSet<ModulewiseRolePriviliege> ModulewiseRolePrivilieges { get; set; }
+    public DbSet<ModuleFeature> ModuleFeatures { get; set; }
+    public DbSet<EmailConfiguration> EmailConfigurations { get; set; }
+    public DbSet<TopicHead> TopicHeads { get; set; }
+    public DbSet<RiskAssessment> RiskAssessments { get; set; }
+
+    public DbSet<RiskCriteria> RiskCriterias { get; set; }
+    public DbSet<DocumentSource> DocumentSources { get; set; }
+    public DbSet<Document> Documents { get; set; }
+
+    public DbSet<WeightScore> WeightScores { get; set; }
+
+
+    public DbSet<AuditFrequency> AuditFrequencies { get; set; }
+    public DbSet<Questionnaire> Questionnaires { get; set; }
+    public DbSet<DataRequestQueueService> DataRequestQueueServices { get; set; }
+
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

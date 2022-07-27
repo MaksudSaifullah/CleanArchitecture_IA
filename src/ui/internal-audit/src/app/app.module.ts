@@ -14,7 +14,6 @@ import { AppRoutingModule } from './app-routing.module';
 import {CoreModule} from './core/core.module'
 // Import app component
 import { AppComponent } from './app.component';
-
 // Import containers
 import {
   DefaultAsideComponent,
@@ -41,15 +40,26 @@ import {
   ProgressModule,
   SharedModule,
   SidebarModule,
+  SpinnerModule,
   TabsModule,
   UtilitiesModule,
 } from '@coreui/angular-pro';
 
 import { IconModule, IconSetService } from '@coreui/icons-angular';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClient, HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AuthService } from './core/auth/auth.service';
 import { HttpService } from './core/services/http.service';
 import { HotToastModule } from '@ngneat/hot-toast';
+import { NgxUiLoaderModule, NgxUiLoaderRouterModule } from "ngx-ui-loader";
+import { RequestInterceptor } from './core/interceptors/request.interceptor';
+import {
+  RECAPTCHA_V3_SITE_KEY,
+  RecaptchaLoaderService,
+  RecaptchaModule,
+  RecaptchaV3Module,
+  ReCaptchaV3Service
+} from "ng-recaptcha";
+import {environment} from "../environments/environment";
 
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
   suppressScrollX: true,
@@ -94,7 +104,11 @@ const APP_CONTAINERS = [
     CardModule,
     CoreModule,
     HttpClientModule,
-    HotToastModule.forRoot()
+    HotToastModule.forRoot(),
+    SpinnerModule,
+    NgxUiLoaderModule,
+    RecaptchaV3Module
+
   ],
   providers: [
     {
@@ -105,9 +119,10 @@ const APP_CONTAINERS = [
       provide: PERFECT_SCROLLBAR_CONFIG,
       useValue: DEFAULT_PERFECT_SCROLLBAR_CONFIG,
     },
-    AuthService,HttpService,
     IconSetService,
-    Title
+    Title,
+    RecaptchaLoaderService,
+
   ],
   bootstrap: [AppComponent],
 })

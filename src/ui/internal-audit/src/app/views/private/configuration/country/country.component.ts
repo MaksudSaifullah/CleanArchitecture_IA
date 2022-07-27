@@ -20,6 +20,7 @@ export class CountryComponent implements OnInit {
   datatableElement: DataTableDirective | undefined;
   dtOptions: DataTables.Settings = {};
   countries: country[] = [];
+  searchForm: FormGroup;
   countryForm: FormGroup;
   formService: FormService = new FormService();
   dataTableService: DatatableService = new DatatableService();
@@ -31,7 +32,12 @@ export class CountryComponent implements OnInit {
       name: ['',[Validators.required,Validators.maxLength(20),Validators.minLength(5)]],
       code: ['',[Validators.required,Validators.maxLength(3),Validators.minLength(3)]],
       remarks: [''],
-    })
+    });
+    this.searchForm = this.fb.group(
+      {
+        searchTerm: ['']
+      }
+    )
   }
   ngOnDestroy(): void {
 
@@ -48,11 +54,12 @@ export class CountryComponent implements OnInit {
       serverSide: true,
       processing: true,
       searching: false,
+      ordering: false,
       ajax: (dataTablesParameters: any, callback) => {
         this.http
           .paginatedPost(
-            'country/paginated',dataTablesParameters.length,((dataTablesParameters.start/dataTablesParameters.length)+1),{}
-          ).subscribe(resp => that.countries = this.dataTableService.datatableMap(resp,callback));
+            'country/paginated',dataTablesParameters.length,((dataTablesParameters.start/dataTablesParameters.length)+1), this.searchForm.get('searchTerm')?.value)
+            .subscribe(resp => that.countries = this.dataTableService.datatableMap(resp,callback));
       },
     };
 
@@ -101,6 +108,9 @@ export class CountryComponent implements OnInit {
     }
     reset(){
       this.countryForm.reset();
+    }
+    search(){
+      this.dataTableService.redraw(this.datatableElement);
     }
   }
 

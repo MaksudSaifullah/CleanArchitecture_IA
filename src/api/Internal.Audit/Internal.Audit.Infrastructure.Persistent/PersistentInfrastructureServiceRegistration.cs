@@ -34,6 +34,30 @@ using Internal.Audit.Application.Contracts.Persistent.Dashboards;
 using Internal.Audit.Infrastructure.Persistent.Repositories.Dashboards;
 using Internal.Audit.Application.Contracts.Persistent.UserRegistration;
 using Internal.Audit.Infrastructure.Persistent.Repositories.UserRegistration;
+using Internal.Audit.Application.Contracts.Persistent.ModulewiseRolePrivilege;
+using Internal.Audit.Infrastructure.Persistent.Repositories.ModulewiseRolePrivilege;
+using Internal.Audit.Application.Contracts.Persistent.ModuleFeature;
+using Internal.Audit.Infrastructure.Persistent.Repositories.ModuleFeature;
+using Internal.Audit.Application.Contracts.Persistent.EmailConfigs;
+using Internal.Audit.Infrastructure.Persistent.Repositories.EmailConfig;
+using Internal.Audit.Application.Contracts.Persistent.RiskCriterias;
+using Internal.Audit.Infrastructure.Persistent.Repositories.RiskCriterias;
+using Internal.Audit.Application.Contracts.Persistent.TopicHeads;
+using Internal.Audit.Infrastructure.Persistent.Repositories.TopicHeads;
+using Internal.Audit.Application.Contracts.Persistent.DocumentSources;
+using Internal.Audit.Infrastructure.Persistent.Repositories.DocumentSources;
+using Internal.Audit.Application.Contracts.Persistent.Documents;
+using Internal.Audit.Infrastructure.Persistent.Repositories.Documents;
+using Internal.Audit.Application.Contracts.Persistent.RiskAssessments;
+using Internal.Audit.Infrastructure.Persistent.Repositories.RiskAssessments;
+using Internal.Audit.Application.Contracts.Persistent.WeightScoreConfigurations;
+using Internal.Audit.Infrastructure.Persistent.Repositories.WeightScoreConfigurations;
+using Internal.Audit.Application.Contracts.Persistent.AuditFrequencies;
+using Internal.Audit.Infrastructure.Persistent.Repositories.AuditFrequencies;
+using Internal.Audit.Application.Contracts.Persistent.Questionnnaires;
+using Internal.Audit.Infrastructure.Persistent.Repositories.Questionnaires;
+using Internal.Audit.Application.Contracts.Persistent.DataRequestQueue;
+using Internal.Audit.Infrastructure.Persistent.Repositories.DataRequestQueueService;
 
 namespace Internal.Audit.Infrastructure.Persistent;
 
@@ -88,7 +112,42 @@ public static class PersistentInfrastructureServiceRegistration
         services.AddScoped<IUserRoleQueryRepository>(s => new UserRoleQueryRepository(configuration.GetConnectionString("InternalAuditDb")));
         services.AddScoped<IUserCountryQueryRepository>(s => new UserCountryQueryRepository(configuration.GetConnectionString("InternalAuditDb")));
         services.AddScoped<IEmployeeQueryRepository>(s => new EmployeeQueryRepository(configuration.GetConnectionString("InternalAuditDb")));
-       
+
+        services.AddScoped<IModulewiseRolePrivilegeCommandRepository, ModulewiseRolePrivilegeCommandRepository>();
+        services.AddScoped<IModulewiseRoleQueryRepository>(s => new ModulewiseRolePrivilegeQueryRepository(configuration.GetConnectionString("InternalAuditDb")));
+
+        services.AddScoped<IModuleFeatureCommandRepository, ModuleFeatureCommandRepository>();
+        services.AddScoped<IModuleFeatureQueryRepository>(s => new ModuleFeatureQueryRepository(configuration.GetConnectionString("InternalAuditDb")));
+
+        services.AddScoped<IEmailConfigCommandRepository, EmailConfigCommandRepository>();
+        services.AddScoped<IEmailConfigQueryRepository>(s => new EmailConfigQueryRepository(configuration.GetConnectionString("InternalAuditDb")));
+        services.AddScoped<IEmailTypeQueryRepository>(s => new EmailTypeQueryRepository(configuration.GetConnectionString("InternalAuditDb")));
+
+        services.AddScoped<IRiskCriteriaCommandRepository, RiskCriteriaCommandRepository>();
+        services.AddScoped<IRiskCriteriaQueryRepository>(s => new RiskCriteriaQueryRepository(configuration.GetConnectionString("InternalAuditDb")));
+
+        services.AddScoped<ITopicHeadCommandRepository, TopicHeadCommandRepository>();
+        services.AddScoped<ITopicHeadQueryRepository>(s => new TopicHeadQueryRepository(configuration.GetConnectionString("InternalAuditDb")));
+
+        services.AddScoped<IDocumentSourceQueryRepository>(s => new DocumentSourceQueryRepository(configuration.GetConnectionString("InternalAuditDb")));
+        services.AddScoped<IDocumentCommandRepository, DocumentCommandrepository>();
+        services.AddScoped<IDocumentQueryRepository>(s => new DocumentQueryRepository(configuration.GetConnectionString("InternalAuditDb")));
+
+        services.AddScoped<IRiskAssessmentCommandRepository, RiskAssessmentCommandRepository>();
+        services.AddScoped<IRiskAssessmentQueryRepository>(s => new RiskAssessmentQueryRepository(configuration.GetConnectionString("InternalAuditDb")));
+
+        services.AddScoped<IUserProfileUpdateRepository, UserProfileUpdateRepository>();
+        services.AddScoped<IUserProfileQueryRepository>(s => new UserProfileQueryRepository(configuration.GetConnectionString("InternalAuditDb")));
+
+        services.AddScoped<IWeightScoreConfigurationCommandRepository, WeightScoreConfigurationCommandRepository>();
+        services.AddScoped<IWeightScoreConfigurationQueryRepository>(s => new WeightScoreConfigurationQueryRepository(configuration.GetConnectionString("InternalAuditDb")));
+
+        services.AddScoped<IAuditFrequencyCommandRepository, AuditFrequencyCommandRepository>();
+        services.AddScoped<IAuditFrequencyQueryRepository>(s => new AuditFrequencyQueryRepository(configuration.GetConnectionString("InternalAuditDb")));
+
+        services.AddScoped<IQuestionnaireCommandRepository, QuestionnaireCommandRepository>();
+        services.AddScoped<IQuestionnaireQueryRepository>(s => new QuestionnaireQueryRepository(configuration.GetConnectionString("InternalAuditDb")));
+        services.AddScoped<IDataRequestCommandRepository, DataRequestCommandRepository>();
 
         return services;
     }

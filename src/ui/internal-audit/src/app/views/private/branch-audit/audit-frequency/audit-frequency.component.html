@@ -1,0 +1,205 @@
+<div class="animated fadeIn">
+    <div class="row">
+      <div class="col-lg-12">
+        <div class="card">
+          <div class="card-header">
+            <div class="fa fa-align-justify" >Audit Frequency List</div> 
+          </div>
+          <div class="card-body">
+            
+            <form [formGroup]="searchForm">
+              <div class="row" style="margin: 0 auto;">
+                <div class="col-md-6 mb-2">
+                  <button [cModalToggle]="verticallyCenteredModal.id" class="btnCreateColor" (click)="reset()" cButton>
+                    <svg cIcon name="cilPlus" size="md" title="Add Button Icon"></svg> Create
+                  </button> 
+                </div>
+                <div class="col-md-5 mb-2 form-floating">
+                  <input type="text" formControlName="searchTerm" class="form-control searchInput"  placeholder="search by Score/Audit Frequency/Rating"/>
+                  <label class="searchLevel" for="floatingInput"> Search by Score/Audit Frequency/Rating</label>
+                </div>
+                <div class="col-md-1 mb-2">
+                  <button type="button" class="btn btn-secondary mr-1 btn-block " data-toggle="modal" (click)="search()" >
+                    Search
+                  </button>
+                </div>
+              </div>
+           </form>
+            <div class="row overflow-auto">
+                <table datatable [dtOptions]="dtOptions" class="table table-bordered row-border hover datatableStyle" >
+                  <thead>
+                    <tr>
+                      <th>Country</th>
+                      <th>Score</th>
+                      <th>Rating</th>
+                      <th>Audit Frequency</th>
+                      <th>Effective From</th>
+                      <th>Effective To</th>  
+                      <th class="col-1 text-center">Actions</th>                   
+                    </tr>
+                  </thead>
+                  <tbody *ngIf="auditFrequencies?.length != 0">
+                    <tr *ngFor="let auditFrequency of auditFrequencies">
+                      <td>{{ auditFrequency.countryName }}</td>
+                      <td>{{ auditFrequency.auditScore }}</td>
+                      <td>{{ auditFrequency.ratingType }}</td>
+                      <td>{{ auditFrequency.auditFrequencyType }}</td>
+                      <td>{{ auditFrequency.effectiveFrom | date:'medium' }}</td>
+                      <td>{{ auditFrequency.effectiveTo | date:'medium' }}</td>
+                      <td class="text-center">
+                        <div class="btn-group" role="group" aria-label="Basic example">
+                          <button type="button" class="btn btn-secondary btnEditColor" (click)="edit(verticallyCenteredModal,auditFrequency)">
+                            <svg cIcon name="cilPencil" size="md" title="Edit Button icon"></svg>
+                          </button>
+                          <button type="button" class="btn btn-danger btnDeleteColor" (click)="delete(auditFrequency.id)">
+                            <svg cIcon name="cilTrash" size="md" title="Delete Button Icon"></svg>
+                          </button>
+                        </div>
+                      </td>
+                    </tr>
+                  </tbody>
+                  <tbody *ngIf="auditFrequencies?.length == 0">
+                    <tr>
+                      <td colspan="5" class="no-data-available">No data!</td>
+                    </tr>
+                  </tbody>
+                </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <form [formGroup]="auditFrequencyForm" (ngSubmit)="onSubmit(verticallyCenteredModal)" novalidate>
+  <c-modal #verticallyCenteredModal alignment="center" id="verticallyCenteredModal">
+    <c-modal-header>
+      <h5 cModalTitle *ngIf="!formService.isEdit(this.auditFrequencyForm.get('id'))">Create Audit Frequency</h5>
+      <h5 cModalTitle *ngIf="formService.isEdit(this.auditFrequencyForm.get('id'))">Update Audit Frequency</h5>
+      <button [cModalToggle]="verticallyCenteredModal.id" cButtonClose></button> 
+    </c-modal-header>
+     <c-modal-body>
+      <div class="col-md-12" >
+        <input type="hidden" formControlName="id"/>
+
+          <div style="padding-bottom: 2%;">
+            <div form-floating>
+                <select aria-label="Floating label select example" cSelect id="countryId"
+                  formControlName="countryId" name="countryId">
+                  <option value=null>Select Country</option>
+                  <option *ngFor="let country of countries" [value]="country.id">
+                    {{country.name}}
+                  </option>
+                </select>
+              </div>
+              <div cRow *ngIf="(auditFrequencyForm.get('countryId')?.invalid && auditFrequencyForm.get('countryId')?.errors) &&         
+              (auditFrequencyForm.get('countryId')?.dirty || auditFrequencyForm.get('countryId')?.touched)">
+              <small class="text-danger">
+                This field is required.
+              </small>                                 
+            </div> 
+            <br>
+          
+          <div style="padding-bottom: 2%;">
+          <div class="form-floating" >
+            <select aria-label="Floating label select example" cSelect id="auditScoreId"
+              formControlName="auditScoreId" name="auditScoreId" style="height: 70px;">
+              <option value="null" >Select</option>
+              <option *ngFor="let commonValueAndType of auditScore" [value]="commonValueAndType.id">
+                {{commonValueAndType.text}}
+              </option>
+            </select>
+            <label for="auditScoreId" >Score</label>
+          </div>
+
+          <div cRow *ngIf="((auditFrequencyForm.get('auditScoreId')?.invalid && auditFrequencyForm.get('auditScoreId')?.errors)) &&
+            (auditFrequencyForm.get('auditScoreId')?.dirty || auditFrequencyForm.get('auditScoreId')?.touched)">
+            <small class="text-danger">
+              This field is required.
+            </small>                                 
+          </div> 
+        </div>
+        
+        <div style="padding-bottom: 2%;">
+            <div class="form-floating" >
+              <select aria-label="Floating label select example" cSelect id="ratingTypeId"
+                formControlName="ratingTypeId" name="ratingTypeId" style="height: 70px;">
+                <option value="null" >Select</option>
+                <option *ngFor="let commonValueAndType of ratingType" [value]="commonValueAndType.id">
+                  {{commonValueAndType.text}}
+                </option>
+              </select>
+              <label for="ratingTypeId" >Rating</label>
+            </div>
+  
+            <div cRow *ngIf="((auditFrequencyForm.get('ratingTypeId')?.invalid && auditFrequencyForm.get('ratingTypeId')?.errors)) &&
+              (auditFrequencyForm.get('ratingTypeId')?.dirty || auditFrequencyForm.get('ratingTypeId')?.touched)">
+              <small class="text-danger">
+                This field is required.
+              </small>                                 
+            </div> 
+          </div>
+
+          <div style="padding-bottom: 2%;">
+            <div class="form-floating" >
+              <select aria-label="Floating label select example" cSelect id="auditFrequencyTypeId"
+                formControlName="auditFrequencyTypeId" name="auditFrequencyTypeId" style="height: 70px;">
+                <option value="null" >Select</option>
+                <option *ngFor="let commonValueAndType of auditFrequencyType" [value]="commonValueAndType.id">
+                  {{commonValueAndType.text}}
+                </option>
+              </select>
+              <label for="ratingTypeId" >Rating</label>
+            </div>
+  
+            <div cRow *ngIf="((auditFrequencyForm.get('auditFrequencyTypeId')?.invalid && auditFrequencyForm.get('auditFrequencyTypeId')?.errors)) &&
+              (auditFrequencyForm.get('auditFrequencyTypeId')?.dirty || auditFrequencyForm.get('auditFrequencyTypeId')?.touched)">
+              <small class="text-danger">
+                This field is required.
+              </small>                                 
+            </div> 
+          </div>
+              
+
+          
+          <div class="form-floating">
+            <input class="form-control" placeholder="effectiveFrom" formControlName="effectiveFrom" id="effectiveFrom" type="date" >
+            <label for="effectiveFrom">Effective From</label>
+          </div>
+          <div cRow *ngIf="auditFrequencyForm.get('effectiveFrom')?.invalid && auditFrequencyForm.get('effectiveFrom')?.errors &&
+                (auditFrequencyForm.get('effectiveFrom')?.dirty || auditFrequencyForm.get('effectiveFrom')?.touched)">
+            <small class="text-danger" *ngIf="auditFrequencyForm.get('effectiveFrom').hasError('required')">
+              This field is required.
+            </small>                                 
+          </div>
+          <br>
+
+          <div class="form-floating">
+            <input class="form-control" placeholder="effectiveTo" formControlName="effectiveTo" id="effectiveTo" type="date" >
+            <label for="effectiveTo">Effective To</label>
+          </div>
+          <div cRow *ngIf="auditFrequencyForm.get('effectiveTo')?.invalid && auditFrequencyForm.get('effectiveTo')?.errors &&
+                (auditFrequencyForm.get('effectiveTo')?.dirty || auditFrequencyForm.get('effectiveTo')?.touched)">
+            <small class="text-danger" *ngIf="auditFrequencyForm.get('effectiveTo').hasError('required')">
+              This field is required.
+            </small>                                                      
+          </div>
+          <small class="text-danger" *ngIf="auditFrequencyForm.hasError('invalidDateRange')">
+            Effective from should be greater than effective to.
+          </small>          
+          <br>          
+  
+      </div>
+      </div>
+    </c-modal-body> 
+     <c-modal-footer>
+      <button cButton class="btn btn-primary btnSaveColor me-1" (click)="onSubmit(verticallyCenteredModal)">
+        <svg cIcon name="cilSave" size="md" title="Save Button Icon"></svg> Save
+      </button>
+      <button [cModalToggle]="verticallyCenteredModal.id" cButton class="btn btn-danger btnCancelColor me-1"> 
+        <svg cIcon name="cilX" size="md" title="Close Button Icon"></svg> Close
+      </button> 
+    </c-modal-footer> 
+  </c-modal>
+  </form>
+  

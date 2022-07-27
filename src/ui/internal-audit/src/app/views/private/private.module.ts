@@ -4,8 +4,18 @@ import { CommonModule } from '@angular/common';
 import { PrivateRoutingModule } from './private-routing.module';
 import {DashboardComponent} from './dashboard/dashboard.component';
 import { DataTablesModule } from "angular-datatables";
-import { ButtonModule, CardModule, FormModule,MultiSelectModule  } from '@coreui/angular-pro';
+import {
+  ButtonModule,
+  CardModule,
+  FormModule,
+  GridModule,
+  MultiSelectModule,
+  AccordionModule,
+  AvatarModule
+} from '@coreui/angular-pro';
 import { FormsModule } from '@angular/forms';
+import { IconModule } from '@coreui/icons-angular';
+import { ChartjsModule } from '@coreui/angular-chartjs';
 @NgModule({
   declarations: [
     DashboardComponent
@@ -18,7 +28,12 @@ import { FormsModule } from '@angular/forms';
     CardModule,
     FormModule,
     FormsModule,
-    MultiSelectModule 
+    MultiSelectModule,
+    GridModule,
+    IconModule,
+    ChartjsModule,
+    AccordionModule,
+    AvatarModule
   ]
 })
 export class PrivateModule { }

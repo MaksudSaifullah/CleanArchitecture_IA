@@ -14,6 +14,6 @@ public class AddRiskProfileCommand : IRequest<AddRiskProfileResponseDTO>
     public Guid RatingTypeId { get; set; }
     public DateTime EffectiveFrom { get; set; }
     public DateTime EffectiveTo { get; set; }
-    public string Description { get; set; } = null!;
-    public bool IsActive { get; set; }
+    public string? Description { get; set; } = null;
+    public bool? IsActive { get; set; }
 }

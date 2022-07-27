@@ -65,10 +65,64 @@ using Internal.Audit.Application.Features.UserRegistration.Queries.GetALlUserLis
 using Internal.Audit.Application.Features.UserRegistration.Commands.UpdateUserRegistration;
 using Internal.Audit.Application.Features.UserRegistration.Commands.DeleteUserRegistration;
 using Internal.Audit.Application.Features.Designation.Queries.GetDesignationById;
+using Internal.Audit.Application.Features.ModulewiseRolePrivilege.Commands.AddModulewiseRolePrivilege;
+using Internal.Audit.Application.Features.ModulewiseRolePrivilege.Commands.UpdateModulewisePrivilege;
+using Internal.Audit.Application.Features.ModulewiseRolePrivilege.Quiries.GetModilewiseRoleByRoleIdList;
+using Internal.Audit.Application.Features.ModuleFeature.Quiries.GetAllModuleList;
+using Internal.Audit.Application.Features.ModuleFeature.Quiries.GetOnlyModuleList;
+using Internal.Audit.Domain.Entities.config;
+using Internal.Audit.Application.Features.EmailConfig.Queries.GetEmailConfigList;
+using Internal.Audit.Application.Features.EmailConfig.Queries.GetEmailConfigById;
+using Internal.Audit.Application.Features.EmailConfig.Commands.AddEmailConfig;
+using Internal.Audit.Application.Features.EmailConfig.Commands.DeleteEmailConfig;
+using Internal.Audit.Domain.Entities.BranchAudit;
+using Internal.Audit.Application.Features.RiskCriterias.Queries.GetRiskCriteriaList;
+using Internal.Audit.Application.Features.RiskCriterias.Queries.GetRiskCriteriaById;
+using Internal.Audit.Application.Features.RiskCriterias.Commands.AddRiskCriteria;
+using Internal.Audit.Application.Features.RiskCriterias.Commands.UpdateRiskCriteria;
+using Internal.Audit.Application.Features.RiskCriterias.Commands.DeleteRiskCriteria;
+using Internal.Audit.Application.Features.TopicHeads.Queries.GetTopicHeadList;
+using Internal.Audit.Application.Features.TopicHeads.Queries.GetTopicHeadById;
+using Internal.Audit.Application.Features.TopicHeads.Commands.AddTopicHead;
+using Internal.Audit.Application.Features.TopicHeads.Commands.UpdateTopicHead;
+using Internal.Audit.Application.Features.TopicHeads.Commands.DeleteTopicHead;
+using Internal.Audit.Application.Features.DocumentSources.Queries.GetAllDocumentSource;
+using Internal.Audit.Application.Features.Documents.Commands.AddDocumentCommand;
+using Internal.Audit.Application.Features.Documents.Commands.UpdateDocumentCommand;
+using Internal.Audit.Application.Features.Documents.Commands.DeleteDocumentCommand;
+using Internal.Audit.Application.Features.Documents.Queries.GetByDocumentId;
+using Internal.Audit.Application.Features.EmailConfig.Queries.GetEmailTypeList;
+
+using Internal.Audit.Application.Features.RiskAssessments.Commands.AddRiskAssessment;
+using Internal.Audit.Application.Features.RiskAssessments.Commands.UpdateRiskAssessment;
+using Internal.Audit.Application.Features.RiskAssessments.Commands.DeleteRiskAssessment;
+using Internal.Audit.Application.Features.RiskAssessments.Queries.GetRiskAssessmentList;
+using Internal.Audit.Application.Features.RiskAssessments.Queries.GetRiskAssessmentById;
+using Internal.Audit.Domain.Entities.BranchAudit;
+using Internal.Audit.Domain.CompositeEntities.BranchAudit;
+using Internal.Audit.Application.Features.CommonValueAndTypes.Queries.GetAuditType;
+using Internal.Audit.Application.Features.EmailConfig.Commands.UpdateEmailConfig;
+using Internal.Audit.Application.Features.CommonValueAndTypes.Queries.GetAuditFrequency;
+using Internal.Audit.Application.Features.CommonValueAndTypes.Queries.GetAuditScore;
+using Internal.Audit.Application.Features.CommonValueAndTypes.Queries.GetCommonValueTypeGeneric;
+
+using Internal.Audit.Application.Features.WeightScoreConfigurations.Queries.WeightScoreByCountryId;
+
+using Internal.Audit.Application.Features.AuditFrequencies.Queries.GetAuditFrequencyById;
+using Internal.Audit.Application.Features.AuditFrequencies.Commands.AddAuditFrequency;
+using Internal.Audit.Application.Features.AuditFrequencies.Commands.UpdateAuditFrequency;
+using Internal.Audit.Application.Features.AuditFrequencies.Commands.DeleteAuditFrequency;
+using Internal.Audit.Application.Features.AuditFrequencies.Queries.GetAuditFrequencyList;
+using Internal.Audit.Application.Features.Questionnnaires.Queries.GetQuestionnaireById;
+using Internal.Audit.Application.Features.Questionnnaires.Queries.GetQuestionnnaireList;
+using Internal.Audit.Application.Features.Questionnnaires.Commands.AddQuestionnaire;
+using Internal.Audit.Application.Features.Questionnnaires.Commands.UpdateQuestionnaire;
+using Internal.Audit.Application.Features.Questionnnaires.Commands.DeleteQuestionnaire;
+using Internal.Audit.Application.Features.DataRequestQueue.Command.AddDataRequestQueueCommand;
 
 namespace Internal.Audit.Application.Mappings;
 
-public class MappingProfile: Profile
+public class MappingProfile : Profile
 {
     public MappingProfile()
     {
@@ -85,6 +139,8 @@ public class MappingProfile: Profile
         CreateMap<Country, DeleteCountryCommand>().ReverseMap();
 
         CreateMap<RiskProfile, RiskProfileDTO>().ReverseMap();
+        CreateMap<CompositeRiskProfile, RiskProfileDTO>().ReverseMap();
+        CreateMap<CompositeRiskProfile, RiskProfileByIdDTO>().ReverseMap();
         CreateMap<RiskProfile, RiskProfileByIdDTO>().ReverseMap();
         CreateMap<RiskProfile, AddRiskProfileResponseDTO>().ReverseMap();
         CreateMap<RiskProfile, AddRiskProfileCommand>().ReverseMap();
@@ -175,5 +231,88 @@ public class MappingProfile: Profile
         CreateMap<Employee, AddEmployeeUpdateCommand>().ReverseMap();
         CreateMap<User, DeleteUserRegistrationCommand>().ReverseMap();
         CreateMap<User, DeleteUserRegistrationResponseDTO>().ReverseMap();
+
+        CreateMap<ModulewiseRolePriviliege, AddModulewiseRolePrivilegeCommand>().ReverseMap();
+        CreateMap<ModulewiseRolePriviliege, UpdateModulewiseRolePrivilegeCommand>().ReverseMap();
+        CreateMap<ModulewiseRolePriviliege, GetModulewiseRolePrivilegeByRoleIdListResponseDTO>().ReverseMap();
+
+        CreateMap<ModuleFeature, GetAllModuleListResponseDTO>().ReverseMap();
+
+        CreateMap<CompositEmailConfig, GetEmailConfigByIdResponseDTO>().ReverseMap();
+        CreateMap<EmailConfiguration, GetEmailConfigByIdResponseDTO>().ReverseMap();
+        CreateMap<EmailConfiguration, AddEmailConfigResponseDTO>().ReverseMap();
+        CreateMap<EmailConfiguration, AddEmailConfigCommand>().ReverseMap();
+        CreateMap<EmailConfiguration, DeleteEmailConfigCommand>().ReverseMap();
+        CreateMap<EmailConfiguration, DeleteEmailConfigResponseDTO>().ReverseMap();
+        CreateMap<AuditModule, GetOnlyModuleListResponseDTO>().ReverseMap();
+        CreateMap<EmailConfiguration, UpdateEmailConfigCommand>().ReverseMap();
+
+        CreateMap<RiskAssessment, RiskAssessmentDTO>().ReverseMap();
+        CreateMap<CompositeRiskAssessment, RiskAssessmentDTO>().ReverseMap();
+        CreateMap<CompositeRiskAssessment, RiskAssessmentByIdDTO>().ReverseMap();
+        CreateMap<RiskAssessment, RiskAssessmentByIdDTO>().ReverseMap();
+        CreateMap<RiskAssessment, AddRiskAssessmentResponseDTO>().ReverseMap();
+        CreateMap<RiskAssessment, AddRiskAssessmentCommand>().ReverseMap();
+        CreateMap<RiskAssessment, UpdateRiskAssessmentResponseDTO>().ReverseMap();
+        CreateMap<RiskAssessment, UpdateRiskAssessmentCommand>().ReverseMap();
+        CreateMap<RiskAssessment, DeleteRiskAssessmentResponseDTO>().ReverseMap();
+        CreateMap<RiskAssessment, DeleteRiskAssessmentCommand>().ReverseMap();
+        CreateMap<AddModulewiseRolePrivilege, ModulewiseRolePriviliege>().ReverseMap();
+
+        CreateMap<RiskCriteria, RiskCriteriaDTO>().ReverseMap();
+        CreateMap<CompositeRiskCriteria, RiskCriteriaDTO>().ReverseMap();
+        CreateMap<CompositeRiskCriteria, RiskCriteriaByIdDTO>().ReverseMap();
+        CreateMap<RiskCriteria, RiskCriteriaByIdDTO>().ReverseMap();
+        CreateMap<RiskCriteria, AddRiskCriteriaResponseDTO>().ReverseMap();
+        CreateMap<RiskCriteria, AddRiskCriteriaCommand>().ReverseMap();
+        CreateMap<RiskCriteria, UpdateRiskCriteriaResponseDTO>().ReverseMap();
+        CreateMap<RiskCriteria, UpdateRiskCriteriaCommand>().ReverseMap();
+        CreateMap<RiskCriteria, DeleteRiskCriteriaResponseDTO>().ReverseMap();
+        CreateMap<RiskCriteria, DeleteRiskCriteriaCommand>().ReverseMap();
+
+        CreateMap<TopicHead, TopicHeadDTO>().ReverseMap();
+        CreateMap<TopicHead, TopicHeadByIdDTO>().ReverseMap();
+        CreateMap<TopicHead, AddTopicHeadCommand>().ReverseMap();
+        CreateMap<TopicHead, UpdateTopicHeadCommand>().ReverseMap();
+        CreateMap<TopicHead, DeleteTopicHeadCommand>().ReverseMap();
+        CreateMap<CompositEmailConfig, GetEmailConfigListResponseDTO>().ReverseMap();
+        CreateMap<Domain.CompositeEntities.EmailType, GetEmailTypeListResponseDTO>().ReverseMap();
+
+        CreateMap<DocumentSource, GetAllDocumentSourceDTO>().ReverseMap();
+        CreateMap<Document, AddDocumentCommand>().ReverseMap();
+        CreateMap<Document, UpdateDocumentCommand>().ReverseMap();
+        CreateMap<Document, DeleteDocumentCommand>().ReverseMap();
+        CreateMap<Document, GetByDocumentIdResponseDTO>().ReverseMap();
+        CreateMap<CommonValueAndType, AuditTypeDTO>().ReverseMap();
+        CreateMap<CommonValueAndType, AuditFrequencyTypeDTO>().ReverseMap();
+        CreateMap<CommonValueAndType, AuditScoreDTO>().ReverseMap();
+        CreateMap<CommonValueAndType, GetCommonValueTypeGenericDTO>().ReverseMap();
+
+        CreateMap<WeightScore, WeightScoreByCountryIdDTO>().ReverseMap();
+
+
+        CreateMap<AuditFrequency, AuditFrequencyDTO>().ReverseMap();
+        CreateMap<CompositeAuditFrequency, AuditFrequencyDTO>().ReverseMap();
+        CreateMap<CompositeAuditFrequency, AuditFrequencyByIdDTO>().ReverseMap();
+        CreateMap<AuditFrequency, AuditFrequencyByIdDTO>().ReverseMap();
+        CreateMap<AuditFrequency, AddAuditFrequencyResponseDTO>().ReverseMap();
+        CreateMap<AuditFrequency, AddAuditFrequencyCommand>().ReverseMap();
+        CreateMap<AuditFrequency, UpdateAuditFrequencyResponseDTO>().ReverseMap();
+        CreateMap<AuditFrequency, UpdateAuditFrequencyCommand>().ReverseMap();
+        CreateMap<AuditFrequency, DeleteAuditFrequencyResponseDTO>().ReverseMap();
+        CreateMap<AuditFrequency, DeleteAuditFrequencyCommand>().ReverseMap();
+
+        CreateMap<CompositeQuestionnaire, GetQuestionnaireListResponseDTO>().ReverseMap();
+        CreateMap<CompositeQuestionnaire, GetQuestionnaireByIdDTO>().ReverseMap();
+        CreateMap<Questionnaire, AddQuestionnaireResponseDTO>().ReverseMap();
+        CreateMap<Questionnaire, AddQuestionnaireCommand>().ReverseMap();
+        CreateMap<Questionnaire, UpdateQuestionnaireResponseDTO>().ReverseMap();
+        CreateMap<Questionnaire, UpdateQuestionnaireCommand>().ReverseMap();
+        CreateMap<Questionnaire, DeleteQuestionnaireResponseDTO>().ReverseMap();
+        CreateMap<Questionnaire, DeleteQuestionnaireCommand>().ReverseMap();
+
+        CreateMap<DataRequestQueueService, AddDatarequestCommand>().ReverseMap();
+
+
     }
 }

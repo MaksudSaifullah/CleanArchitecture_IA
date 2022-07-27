@@ -11,7 +11,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="6.0.3" />
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="6.0.0" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Versioning" Version="5.0.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="6.0.3">
       <PrivateAssets>all</PrivateAssets>
@@ -22,10 +22,12 @@
     <PackageReference Include="Serilog.Sinks.File" Version="5.0.0" />
     <PackageReference Include="Serilog.Sinks.MSSqlServer" Version="5.7.0" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.2.3" />
+    <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="6.20.0" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\Internal.Audit.Application\Internal.Audit.Application.csproj" />
+    <ProjectReference Include="..\Internal.Audit.Infrastructure.MQService\Internal.Audit.Infrastructure.MQService.csproj" />
     <ProjectReference Include="..\Internal.Audit.Infrastructure.Notification\Internal.Audit.Infrastructure.Notification.csproj" />
     <ProjectReference Include="..\Internal.Audit.Infrastructure.Persistent\Internal.Audit.Infrastructure.Persistent.csproj" />
   </ItemGroup>

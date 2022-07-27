@@ -21,7 +21,8 @@ namespace Internal.Audit.Application.Features.UserRegistration.Commands.AddUserR
     }
 
     public record AddEmployeeCommand 
-    {       
+    {
+        public Guid? Id { get; set; }
         public Guid? UserId { get; set; }      
         public Guid DesignationId { get; set; }     
         public Guid PhotoId { get; set; } 

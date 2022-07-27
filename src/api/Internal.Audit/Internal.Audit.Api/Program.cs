@@ -2,10 +2,13 @@ using Internal.Audit.Api.Extensions;
 using Internal.Audit.Api.Middlewares;
 using Internal.Audit.Application;
 using Internal.Audit.Application.Common;
+using Internal.Audit.Infrastructure.MQService;
 using Internal.Audit.Infrastructure.Notification;
 using Internal.Audit.Infrastructure.Persistent;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Http.Features;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Server.Kestrel.Core;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.Net.Http.Headers;
 using Microsoft.OpenApi.Models;
@@ -27,6 +30,26 @@ builder.Services.AddCors(c =>
     c.AddPolicy("AllowOrigin", options => options.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader()
      .WithHeaders(HeaderNames.ContentType));
 });
+#region fileuploadconfig
+
+//IIS
+builder.Services.Configure<IISServerOptions>(options =>
+{
+    options.MaxRequestBodySize = int.MaxValue;
+});
+//Kestrel
+builder.Services.Configure<KestrelServerOptions>(options =>
+{
+    options.Limits.MaxRequestBodySize = int.MaxValue;
+});
+builder.Services.Configure<FormOptions>(options =>
+{
+    options.ValueLengthLimit = int.MaxValue;
+    options.MultipartBodyLengthLimit = int.MaxValue;
+    options.MultipartHeadersLengthLimit = int.MaxValue;
+});
+#endregion
+
 
 // Add services to the container.
 
@@ -36,6 +59,7 @@ builder.Services.AddApiServices();
 builder.Services.AddApplicationServices();
 builder.Services.AddPersistentInfrastructureServices(builder.Configuration);
 builder.Services.AddInfrastructureNotificationsServices(builder.Configuration);
+builder.Services.AddInfrastructureMQServices(builder.Configuration);
 
 builder.Services.AddApiVersioning(config =>
 {
@@ -44,16 +68,19 @@ builder.Services.AddApiVersioning(config =>
 });
 
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-                .AddJwtBearer(options =>
+                .AddJwtBearer(JwtBearerDefaults.AuthenticationScheme, options =>
                 {
                     options.TokenValidationParameters = new TokenValidationParameters
                     {
                         ValidateIssuer = false,
                         ValidateAudience = false,
-                        ValidateLifetime = true,
                         ValidateIssuerSigningKey = true,
                         ValidIssuer = builder.Configuration["Jwt:Issuer"],
                         ValidAudience = builder.Configuration["Jwt:Issuer"],
+#if DEBUG
+                        ValidateLifetime = false,
+                        RequireExpirationTime = false,
+#endif
                         IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"]))
                     };
                 });
@@ -116,12 +143,13 @@ app.MigrateDatabase<InternalAuditContext>((context, services) =>
 });
 
 // Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
-{
-    app.UseSwagger();
-    app.UseSwaggerUI();
-}
-
+//if (app.Environment.IsDevelopment())
+//{
+//    app.UseSwagger();
+//    app.UseSwaggerUI();
+//}
+app.UseSwagger();
+app.UseSwaggerUI();
 app.UseExceptionLogging();
 
 app.UseHttpsRedirection();

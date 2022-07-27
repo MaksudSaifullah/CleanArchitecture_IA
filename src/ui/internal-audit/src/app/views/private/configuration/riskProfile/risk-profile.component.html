@@ -1,0 +1,193 @@
+<div class="animated fadeIn">
+    <div class="row">
+      <div class="col-lg-12">
+        <div class="card">
+          <div class="card-header">
+            <div class="fa fa-align-justify"><strong>Risk Profile List</strong></div> 
+          </div>
+          <div class="card-body">
+            
+            <form [formGroup]="searchForm">
+              <div class="row" style="margin: 0 auto;">
+                <div class="col-md-6 mb-2">
+                  <button [cModalToggle]="verticallyCenteredModal.id" class="btnCreateColor" (click)="reset()" cButton>
+                    <svg cIcon name="cilPlus" size="md" title="Add Button Icon"></svg> Create
+                  </button> 
+                </div>
+                <div class="col-md-5 mb-2 form-floating">
+                  <input type="text" formControlName="searchTerm" class="form-control searchInput"  placeholder="search by likelihood level/impact level/risk rating"/>
+                  <label class="searchLevel" for="floatingInput"> Search by Likelihood level/Impact level/Risk rating</label>
+                </div>
+                <div class="col-md-1 mb-2">
+                  <button type="button" class="btn btn-secondary mr-1 btn-block " data-toggle="modal" (click)="search()" >
+                    Search
+                  </button>
+                </div>
+              </div>
+           </form>
+            <div class="row overflow-auto">
+                <table datatable [dtOptions]="dtOptions" class="table table-bordered row-border hover datatableStyle" >
+                  <thead>
+                    <tr>
+                      <th>Level of Likelihood</th>
+                      <th>Level of Impact</th>
+                      <th>Risk Rating</th>
+                      <th>Description</th>
+                      <th>Effective From</th>
+                      <th>Effective To</th>  
+                      <th class="col-1 text-center">Actions</th>                   
+                    </tr>
+                  </thead>
+                  <tbody *ngIf="riskProfiles?.length != 0">
+                    <tr *ngFor="let riskProfile of riskProfiles">
+                      <td>{{ riskProfile.likelihoodType }}</td>
+                      <td>{{ riskProfile.impactType }}</td>
+                      <td>{{ riskProfile.ratingType }}</td>
+                      <td>{{ riskProfile.description }}</td>
+                      <td>{{ riskProfile.effectiveFrom | date:'medium' }}</td>
+                      <td>{{ riskProfile.effectiveTo | date:'medium' }}</td>
+                      <td class="text-center">
+                        <div class="btn-group" role="group" aria-label="Basic example">
+                          <button type="button" class="btn btn-secondary btnEditColor" (click)="edit(verticallyCenteredModal,riskProfile)">
+                            <svg cIcon name="cilPencil" size="md" title="Edit Button icon"></svg>
+                          </button>
+                          <button type="button" class="btn btn-danger btnDeleteColor" (click)="delete(riskProfile.id)">
+                            <svg cIcon name="cilTrash" size="md" title="Delete Button Icon"></svg>
+                          </button>
+                        </div>
+                      </td>
+                    </tr>
+                  </tbody>
+                  <tbody *ngIf="riskProfiles?.length == 0">
+                    <tr>
+                      <td colspan="5" class="no-data-available">No data!</td>
+                    </tr>
+                  </tbody>
+                </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <form [formGroup]="riskProfileForm" (ngSubmit)="onSubmit(verticallyCenteredModal)" novalidate>
+  <c-modal #verticallyCenteredModal alignment="center" id="verticallyCenteredModal">
+    <c-modal-header>
+      <h5 cModalTitle *ngIf="!formService.isEdit(this.riskProfileForm.get('id'))">Create Risk Profile</h5>
+      <h5 cModalTitle *ngIf="formService.isEdit(this.riskProfileForm.get('id'))">Update Risk Profile</h5>
+      <button [cModalToggle]="verticallyCenteredModal.id" cButtonClose></button> 
+    </c-modal-header>
+     <c-modal-body>
+      <div class="col-md-12" >
+        <input type="hidden" formControlName="id"/>
+
+          <div style="padding-bottom: 2%;">
+            <div class="form-floating">
+              <select aria-label="Floating label select example" cSelect id="likelihoodTypeId"
+                formControlName="likelihoodTypeId" name="likelihoodTypeId" style="height: 70px;">
+                <option value=null>Select</option>
+                <option *ngFor="let commonValueAndType of likelihoodType" [value]="commonValueAndType.id">
+                  {{commonValueAndType.text}}
+                </option>
+              </select>
+              <label for="likelihoodTypeId" >Likelihood Level</label>
+            </div>
+            <div cRow *ngIf="(riskProfileForm.get('likelihoodTypeId')?.invalid && riskProfileForm.get('likelihoodTypeId')?.errors) &&         
+              (riskProfileForm.get('likelihoodTypeId')?.dirty || riskProfileForm.get('likelihoodTypeId')?.touched)">
+              <small class="text-danger">
+                This field is required.
+              </small>                                 
+            </div> 
+          </div>          
+          <div style="padding-bottom: 2%;">
+            <div class="form-floating">
+              <select aria-label="Floating label select example" cSelect id="impactTypeId"
+                formControlName="impactTypeId" name="impactTypeId" style="height: 70px;">
+                <option value="null">Select</option>
+                <option *ngFor="let commonValueAndType of impactType" [value]="commonValueAndType.id">
+                  {{commonValueAndType.text}}
+                </option>
+              </select>
+              <label for="impactTypeId" >Impact Level</label>
+            </div>
+            <div cRow *ngIf="((riskProfileForm.get('impactTypeId')?.invalid && riskProfileForm.get('impactTypeId')?.errors)) &&
+              (riskProfileForm.get('impactTypeId')?.dirty || riskProfileForm.get('impactTypeId')?.touched)">
+              <small class="text-danger">
+                This field is required.
+              </small>                                 
+            </div> 
+          </div>
+          
+          <div style="padding-bottom: 2%;">
+          <div class="form-floating" >
+            <select aria-label="Floating label select example" cSelect id="ratingTypeId"
+              formControlName="ratingTypeId" name="ratingTypeId" style="height: 70px;">
+              <option value="null" >Select</option>
+              <option *ngFor="let commonValueAndType of ratingType" [value]="commonValueAndType.id">
+                {{commonValueAndType.text}}
+              </option>
+            </select>
+            <label for="ratingTypeId" >Risk Rating</label>
+          </div>
+
+          <div cRow *ngIf="((riskProfileForm.get('ratingTypeId')?.invalid && riskProfileForm.get('ratingTypeId')?.errors)) &&
+            (riskProfileForm.get('ratingTypeId')?.dirty || riskProfileForm.get('ratingTypeId')?.touched)">
+            <small class="text-danger">
+              This field is required.
+            </small>                                 
+          </div> 
+        </div>
+               
+              
+
+          <div class="form-floating">
+            <textarea class="form-control" placeholder="description" formControlName="description" id="description"></textarea>
+            <label for="floatingTextarea">Description</label>
+          </div>
+          <!-- <small class="text-danger"
+                    *ngIf="riskProfileForm.get('description')?length && riskProfileForm.get('description').hasError('maxlength')">
+                    The maximum length for this field is {{riskProfileForm.get('description').errors.maxlength.requiredLength}} characters.
+          </small> -->
+          <br>
+          
+          <div class="form-floating">
+            <input class="form-control" placeholder="effectiveFrom" formControlName="effectiveFrom" id="effectiveFrom" type="date" >
+            <label for="effectiveFrom">Effective From</label>
+          </div>
+          <div cRow *ngIf="riskProfileForm.get('effectiveFrom')?.invalid && riskProfileForm.get('effectiveFrom')?.errors &&
+                (riskProfileForm.get('effectiveFrom')?.dirty || riskProfileForm.get('effectiveFrom')?.touched)">
+            <small class="text-danger" *ngIf="riskProfileForm.get('effectiveFrom').hasError('required')">
+              This field is required.
+            </small>                                 
+          </div>
+          <br>
+
+          <div class="form-floating">
+            <input class="form-control" placeholder="effectiveTo" formControlName="effectiveTo" id="effectiveTo" type="date" >
+            <label for="effectiveTo">Effective To</label>
+          </div>
+          <div cRow *ngIf="riskProfileForm.get('effectiveTo')?.invalid && riskProfileForm.get('effectiveTo')?.errors &&
+                (riskProfileForm.get('effectiveTo')?.dirty || riskProfileForm.get('effectiveTo')?.touched)">
+            <small class="text-danger" *ngIf="riskProfileForm.get('effectiveTo').hasError('required')">
+              This field is required.
+            </small>                                                      
+          </div>
+          <small class="text-danger" *ngIf="riskProfileForm.hasError('invalidDateRange')">
+            Effective from should be greater than effective to.
+          </small>          
+          <br>          
+  
+      </div>
+    </c-modal-body> 
+     <c-modal-footer>
+      <button cButton class="btn btn-primary btnSaveColor me-1" (click)="onSubmit(verticallyCenteredModal)">
+        <svg cIcon name="cilSave" size="md" title="Save Button Icon"></svg> Save
+      </button>
+      <button [cModalToggle]="verticallyCenteredModal.id" cButton class="btn btn-danger btnCancelColor me-1"> 
+        <svg cIcon name="cilX" size="md" title="Close Button Icon"></svg> Close
+      </button> 
+    </c-modal-footer> 
+  </c-modal>
+  </form>
+  

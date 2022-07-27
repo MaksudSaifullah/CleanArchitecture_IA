@@ -21,7 +21,7 @@ public class GetYearQueryHandler : IRequestHandler<GetYearQuery, List<YearDTO>>
 
     public async Task<List<YearDTO>> Handle(GetYearQuery request, CancellationToken cancellationToken)
     {
-        var commonValueAndTypes = await _commonValueAndTypesRepository.GetAllYear();
+        var commonValueAndTypes = await _commonValueAndTypesRepository.GetCommonValueType("YEAR");
         return _mapper.Map<List<YearDTO>>(commonValueAndTypes);
     }
 }

@@ -1,4 +1,9 @@
 ﻿using Internal.Audit.Application.Features.CommonValueAndTypes.Queries.GetAuditConducted;
+using Internal.Audit.Application.Features.CommonValueAndTypes.Queries.GetAuditFrequency;
+using Internal.Audit.Application.Features.CommonValueAndTypes.Queries.GetAuditScore;
+using Internal.Audit.Application.Features.CommonValueAndTypes.Queries.GetAuditType;
+using Internal.Audit.Application.Features.CommonValueAndTypes.Queries.GetByIdCreationValue;
+using Internal.Audit.Application.Features.CommonValueAndTypes.Queries.GetCommonValueTypeGeneric;
 using Internal.Audit.Application.Features.CommonValueAndTypes.Queries.GetControlFrequency;
 using Internal.Audit.Application.Features.CommonValueAndTypes.Queries.GetDetestConclusion;
 using Internal.Audit.Application.Features.CommonValueAndTypes.Queries.GetEmailType;
@@ -146,6 +151,44 @@ namespace Internal.Audit.Api.Controllers
             var query = new GetYesNoQuery();
             var yesno = await _mediator.Send(query);
             return Ok(yesno);
+        }
+
+        [HttpGet("audittype")]
+        public async Task<ActionResult<IEnumerable<LevelOfImpactDTO>>> GetAllauditType()
+        {
+            var query = new GetAuditTypeQuery();
+            var audittype = await _mediator.Send(query);
+            return Ok(audittype);
+        }
+
+        [HttpGet("auditscore")]
+        public async Task<ActionResult<IEnumerable<AuditScoreDTO>>> GetAllAuditScore()
+        {
+            var query = new GetAuditScoreQuery();
+            var auditscore = await _mediator.Send(query);
+            return Ok(auditscore);
+        }
+
+        [HttpGet("auditfrequency")]
+        public async Task<ActionResult<IEnumerable<AuditFrequencyTypeDTO>>> GetAllAuditFrequencyType()
+        {
+            var query = new GetAuditFrequencyQuery();
+            var auditfrequency = await _mediator.Send(query);
+            return Ok(auditfrequency);
+        }
+        [HttpGet("generictype")]
+        public async Task<ActionResult<IEnumerable<GetCommonValueTypeGenericDTO>>> GetByType(string type)
+        {
+            var query = new GetCommonValueTypeQuery(type);
+            var generictype = await _mediator.Send(query);
+            return Ok(generictype);
+        }
+        [HttpGet("idcreation")]
+        public async Task<ActionResult<IEnumerable<GetCommonValueTypeGenericDTO>>> GetId(int idcreationValue,int auditType,Guid countryId)
+        {
+            var query = new GetByIdCreationQuery(idcreationValue,countryId, auditType);
+            var generictype = await _mediator.Send(query);
+            return Ok(generictype);
         }
     }
 }

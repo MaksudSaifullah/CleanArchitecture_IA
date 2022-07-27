@@ -16,8 +16,8 @@ public class GetDesignationListQueryHandler : IRequestHandler<GetDesignationList
 
     public async Task<GetDesignationListPagingDTO> Handle(GetDesignationListQuery request, CancellationToken cancellationToken)
     {
-        var (count, result) = await _designationRepository.GetAll(request.pageSize, request.pageNumber);
-        var designationList = _mapper.Map<List<GetDesignationListResponseDTO>>(result);
-        return new GetDesignationListPagingDTO { Items = designationList, TotalCount = count };
+        (long, IEnumerable<Domain.Entities.common.Designation>) xx = await _designationRepository.GetAll(request.pageSize, request.pageNumber, request.searchTerm);
+        var designationList = _mapper.Map<List<GetDesignationListResponseDTO>>(xx.Item2);
+        return new GetDesignationListPagingDTO { Items = designationList, TotalCount = xx.Item1 };
     }
 }

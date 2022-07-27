@@ -10,41 +10,141 @@ import { HttpService } from 'src/app/core/services/http.service';
   styleUrls: ['./access-privilege.component.scss']
 })
 export class AccessPrivilegeComponent implements OnInit {
-  accessPrivilegeConfig: any ;
+  accessPrivilegeConfigData: accessPrivilegeConfig[] = [];
   accessPrivilegeForm: FormGroup;
   formService: FormService = new FormService();
-
+ 
   
   constructor(private http: HttpService , private fb: FormBuilder, private AlertService: AlertService) {
     this.accessPrivilegeForm = this.fb.group({
-      id: [''],
-      name: ['',[Validators.required,Validators.maxLength(50),Validators.minLength(2)]],
-      description: ['',[Validators.required]]      
+      passwordPolicy_id: [''],
+      minLength: ['', [Validators.required]],
+      maxLength: ['', [Validators.required]],
+      isAlphabetMandatory: ['', [Validators.required]],
+      alphabetLength: [''],
+      isNumberMandatory: ['', [Validators.required]],
+      numericLength: [''],
+      isSpecialCharsMandatory: ['', [Validators.required]],
+      specialCharsLength: [''],
+      isPasswordChangeForcedOnFirstLogin: ['', [Validators.required]],
+      isPasswordResetForcedPeriodically: ['', [Validators.required]],
+      forcePasswordResetDays: ['', [Validators.required]],
+      notifyPasswordResetDays: ['', [Validators.required]],
+
+      userLockingPolicy_id : [''],
+      isLockedOnNoLoginActivity : ['', [Validators.required]],
+      noLoginActivityDays : [''],
+      isLockedOnFailedLoginAttempts : ['', [Validators.required]],
+      numberOfFailedLoginAttempts : [''],
+      failedLoginAttemptsDuration : [''],
+      failedLoginLockedDuration : [''],
+      isUnlockedOnByAdmin : ['', Validators.required],
+      unlockedOnByAdminDuration : ['', Validators.required],
+
+      sessionPolicy_id: [''],
+      sessionPolicy_isEnabled: [''],
+      sessionPolicy_duration: ['', [Validators.required]]
     })
   }
   ngOnDestroy(): void {
 
   }
   ngOnInit(): void {
-    this.LoadData();
+    this.loadData();
   };
 
   onSubmit():void 
   {
-    //const localmodalId = modalId;
-      if(this.accessPrivilegeForm.valid){        
+      const RequestModel = {
+        passwordPolicy: {
+          id:                                this.accessPrivilegeForm.value.passwordPolicy_id,
+          minLength:                         this.accessPrivilegeForm.value.minLength,
+          maxLength:                         this.accessPrivilegeForm.value.maxLength,
+          isAlphabetMandatory:               this.accessPrivilegeForm.value.isAlphabetMandatory,
+          alphabetLength:                    this.accessPrivilegeForm.value.alphabetLength,
+          isNumberMandatory:                 this.accessPrivilegeForm.value.isNumberMandatory,
+          numericLength:                     this.accessPrivilegeForm.value.numericLength,
+          isSpecialCharsMandatory:           this.accessPrivilegeForm.value.isSpecialCharsMandatory,
+          specialCharsLength:                this.accessPrivilegeForm.value.specialCharsLength,
+          isPasswordChangeForcedOnFirstLogin:this.accessPrivilegeForm.value.isPasswordChangeForcedOnFirstLogin,
+          isPasswordResetForcedPeriodically: this.accessPrivilegeForm.value.isPasswordResetForcedPeriodically,
+          forcePasswordResetDays:            this.accessPrivilegeForm.value.forcePasswordResetDays,
+          notifyPasswordResetDays:           this.accessPrivilegeForm.value.notifyPasswordResetDays,
+          effectiveFrom:                     this.accessPrivilegeForm.value.effectiveFrom,
+          effectiveTo:                       this.accessPrivilegeForm.value.effectiveTo,
+        },
+        userLockingPolicy: {         
+          id:                          this.accessPrivilegeForm.value.userLockingPolicy_id,
+          isLockedOnNoLoginActivity:   this.accessPrivilegeForm.value.isLockedOnNoLoginActivity,
+          noLoginActivityDays:         this.accessPrivilegeForm.value.noLoginActivityDays,
+          lockedOnFailedLoginAttempts: this.accessPrivilegeForm.value.isLockedOnFailedLoginAttempts,
+          numberOfFailedLoginAttempts: this.accessPrivilegeForm.value.numberOfFailedLoginAttempts,
+          failedLoginAttemptsDuration: this.accessPrivilegeForm.value.failedLoginAttemptsDuration,
+          failedLoginLockedDuration:   this.accessPrivilegeForm.value.failedLoginLockedDuration,
+          unlockedOnByAdmin:           this.accessPrivilegeForm.value.unlockedOnByAdmin,
+          unlockedOnByAdminDuration:   this.accessPrivilegeForm.value.unlockedOnByAdminDuration,
+          effectiveFrom:               this.accessPrivilegeForm.value.effectiveFrom,
+          effectiveTo:                 this.accessPrivilegeForm.value.effectiveTo,
+        },
+        sessionPolicy: {
+          id:        this.accessPrivilegeForm.value.sessionPolicy_id,
+          IsEnabled: this.accessPrivilegeForm.value.sessionPolicy_isEnabled,
+          Duration:  this.accessPrivilegeForm.value.sessionPolicy_duration,          
+        }
+      };
+   
+    
+      if(this.accessPrivilegeForm.valid){    
+        console.log(this.accessPrivilegeForm.value);    
+        this.http.put('accessPrivilege', RequestModel, null).subscribe(x=>{        
+          //window.location.reload();
+          this.AlertService.success('Access Privilege Config Saved Successfully');
+          //setTimeout(()=>{}, 500) 
         
-        
+        });
       }
       else{
-        this.AlertService.error('Invalid Information');
+        this.AlertService.error('Provide Valid Information');
       }
   }
-  LoadData() {
-    this.http.get('accessPrivilege').subscribe(resp => {
-      let convertedResp = resp as unknown as accessPrivilegeConfig;
-      this.accessPrivilegeConfig = convertedResp;
-    })
+  
+
+  loadData():void {
+    this.http
+      .get('accessPrivilege')
+      .subscribe(res => {
+          const response = res as unknown as accessPrivilegeConfig;
+          //console.log(response.passwordPolicy.minLength);
+          this.accessPrivilegeForm.setValue({
+            passwordPolicy_id : response.passwordPolicy.id,
+            minLength : response.passwordPolicy.minLength, 
+            maxLength : response.passwordPolicy.maxLength,
+            isAlphabetMandatory : response.passwordPolicy.isAlphabetMandatory,
+            alphabetLength : response.passwordPolicy.alphabetLength,
+            isNumberMandatory : response.passwordPolicy.isNumberMandatory,
+            numericLength : response.passwordPolicy.numericLength,
+            isSpecialCharsMandatory : response.passwordPolicy.isSpecialCharsMandatory,
+            specialCharsLength : response.passwordPolicy.specialCharsLength,
+            isPasswordChangeForcedOnFirstLogin: response.passwordPolicy.isPasswordChangeForcedOnFirstLogin,
+            isPasswordResetForcedPeriodically: response.passwordPolicy.isPasswordResetForcedPeriodically,
+            forcePasswordResetDays : response.passwordPolicy.forcePasswordResetDays,
+            notifyPasswordResetDays : response.passwordPolicy.notifyPasswordResetDays,
+
+            userLockingPolicy_id : response.userLockingPolicy.id,
+            isLockedOnNoLoginActivity : response.userLockingPolicy.isLockedOnNoLoginActivity,
+            noLoginActivityDays : response.userLockingPolicy.noLoginActivityDays,
+            isLockedOnFailedLoginAttempts : response.userLockingPolicy.lockedOnFailedLoginAttempts,
+            numberOfFailedLoginAttempts : response.userLockingPolicy.numberOfFailedLoginAttempts,
+            failedLoginAttemptsDuration : response.userLockingPolicy.failedLoginAttemptsDuration,
+            failedLoginLockedDuration : response.userLockingPolicy.failedLoginLockedDuration,
+            isUnlockedOnByAdmin : response.userLockingPolicy.unlockedOnByAdmin,
+            unlockedOnByAdminDuration: response.userLockingPolicy.unlockedOnByAdminDuration,
+
+            sessionPolicy_id : response.sessionPolicy.id,
+            sessionPolicy_isEnabled : response.sessionPolicy.isEnabled,
+            sessionPolicy_duration : response.sessionPolicy.duration,
+          });
+      });    
   }
   // onCheckAlphabet():void{
   //   var checkBox = document.getElementById("alphabet");
@@ -56,4 +156,21 @@ export class AccessPrivilegeComponent implements OnInit {
   //   }
   // }
 
+  numberOnly(event:any, name:string=''): boolean {
+    
+    if(this.accessPrivilegeForm.get(name)?.value === 0)
+    {
+      this.accessPrivilegeForm.get(name)?.setValue(1);     
+    }
+    const charCode = (event.which) ? event.which : event.keyCode;
+    if (charCode > 31 && ((event.target.value.length > 0 ? charCode < 48 : charCode < 49) || charCode > 57)) {
+      return false;
+    }
+    console.log(this.accessPrivilegeForm.get(name)?.value);
+    return true;
+  }
+
+  reset(){
+    this.loadData();
+  }
 }

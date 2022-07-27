@@ -6,3 +6,8 @@ export interface country {
     createdOn: Date;
 }
 
+// export interface countryForDDL {
+//    // [key: string]: any;
+//     id: string;
+//     name: string;
+// }

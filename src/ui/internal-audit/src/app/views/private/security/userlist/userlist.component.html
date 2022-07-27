@@ -9,32 +9,40 @@
           <div class="card-body">
             <div class="row">
               <div class="col-lg-12">
-                <div class="row">
-                  <div class="col-3">
-                    <input type="text" [(ngModel)]="userName" class="form-control pull-right" placeholder="User Name"/>
+                <form [formGroup]="userListForm">
+                  <div class="row" style="margin: 0 auto;">
+                    <div class="col-md-2 mb-2">
+                      <button  class="btnCreateColor" (click)="createNewUser()" cButton>
+                        <svg cIcon name="cilPlus" size="md" title="Add Button Icon"></svg> Create
+                      </button> 
+                    </div>
+                    <div class="col-md-3 mb-2 form-floating">
+                      <input type="text" formControlName="userName" class="form-control searchInput"  placeholder="Search by User Name"/>
+                      <label class="searchLevel" for="floatingInput">Search by User Name</label>
+                    </div>
+                    <div class="col-md-3 mb-2 form-floating">
+                      <input type="text" formControlName="employeeName" class="form-control searchInput"  placeholder="Search by Employee Name"/>
+                      <label class="searchLevel" for="floatingInput">Search by Employee Name</label>
+                    </div>
+                    <div class="col-md-3 mb-2 form-floating">
+                      <select aria-label="Floating label select example" class="searchInput" cSelect id="userRole" formControlName="userRole" name="userRole">
+                        <option value="">Select Role</option>
+                        <option *ngFor="let role of roles" [value]="role.name"> {{role.name}}</option>
+                      </select>
+                      <label class="searchLevel" for="floatingInput">Search by Role</label> 
+                    </div>
+                    <div class="col-md-1 mb-2">
+                      <button type="button" class="btn btn-secondary mr-1 btn-block searchBtn" data-toggle="modal" (click)="search()">
+                        Search
+                      </button>
+                    </div>
                   </div>
-                  <div class="col-3">
-                    <input type="text" [(ngModel)]="employeeName" class="form-control pull-right" placeholder="Employee Name"/>
-                  </div>
-                  <div class="col-3">
-                    <!-- <input type="text"  [(ngModel)]="userRole" class="form-control pull-right" placeholder="User Role"/> -->
-                    <select class="form-control" [(ngModel)]="userRole" >  
-                      <option selected [value]=" ">Select Role</option>
-                      <option *ngFor="let role of roles" [value]="role.name"> {{role.name}}</option>
-                    </select>  
-                  </div>
-                  <div class="col-3">
-                    <button type="button" class="btn btn-secondary mr-1 pull-right btn-block"  (click)="search()" >
-                      Search
-                  </button>
-                  </div>
-                  
-                </div>
+              </form>
               </div>
             </div>
             <br>
             <div class="row overflow-auto">
-                <table datatable [dtOptions]="dtOptions" class="table table-bordered row-border hover" >
+                <table datatable [dtOptions]="dtOptions" class="table table-bordered row-border hover datatableStyle" >
                   <thead>
                     <tr>
                       <th>User Name</th>
@@ -45,7 +53,7 @@
                       <th>Account Locked</th>
                       <th>Account Expired</th>
                       <th>Password Expired</th>
-                      <th>Action</th>
+                      <th class="col-1 text-center">Actions</th>
                     </tr>
                   </thead>
                   <tbody *ngIf="compositeUsers?.length != 0">
@@ -58,17 +66,17 @@
                       <td>{{ user.isAccountLocked }}</td>
                       <td>{{ user.isAccountExpired }}</td>
                       <td>{{ user.isPasswordExpired }}</td>
-                      <td>
+                      <td class="text-center">
                         <div class="btn-group" role="group" aria-label="Basic example">
-                          <button type="button" class="btn btn-secondary" [routerLink]="['/security/userRegistration',user.id]">
-                           Edit
+                          <button type="button" class="btn btn-secondary btnEditColor" [routerLink]="['/security/userRegistration',user.id]">
+                            <svg cIcon name="cilPencil" size="md" title="Edit Button icon"></svg>
                           </button>
-                          <button type="button" class="btn btn-danger" (click)="lockUser(user.id)">
-                            Lock User
+                          <button type="button" class="btn btn-danger btnDeleteColor" (click)="lockUser(user.id)">
+                            <svg cIcon name="cilUserX" size="md" title="Delete Button Icon"></svg>
                           </button>
                         </div>
                       </td>
-                      
+
                     </tr>
                   </tbody>
                   <tbody *ngIf="compositeUsers?.length == 0">
@@ -77,7 +85,7 @@
                     </tr>
                   </tbody>
                 </table>
-            
+
             </div>
           </div>
         </div>

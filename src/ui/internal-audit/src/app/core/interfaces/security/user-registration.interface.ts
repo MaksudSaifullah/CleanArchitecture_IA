@@ -32,14 +32,20 @@ export interface User {
 
 export interface UserCountry {
     countryId: string;
-    userId?: string;
+    userId?: string|null;
     isActive: boolean;
 }
 
 export interface UserRole {
-    userId?: string;
+    userId?: string|null;
     roleId: string;
 }
+
+export interface ProfileUpdateResponse {
+  fullName: string;
+  profileImageUrl: string;
+}
+
 
 
 
@@ -53,9 +59,9 @@ export interface UserResponse {
     isAccountExpired?:  boolean;
     isPasswordExpired?: boolean;
     isAccountLocked?:   boolean;
-    userCountries?:     UserCountry[];
-    userRoles?:         UserRole[];
-    employee?:          Employee;
+    userCountries:     UserCountry[];
+    userRoles:         UserRole[];
+    employee:          EmployeeResponse;
 }
 
 export interface EmployeeResponse {
@@ -67,7 +73,7 @@ export interface EmployeeResponse {
     isActive?:      boolean;
     user?:          null;
     designation?:   null;
-    id?:            string;
+    id:            string;
     createdBy?:     string;
     createdOn?:     Date;
     updatedBy?:     null;

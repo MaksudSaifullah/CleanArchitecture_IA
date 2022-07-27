@@ -1,10 +1,12 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { ChangePasswordComponent } from './change-password/change-password.component';
 import { AccessPrivilegeComponent } from './access-privilege/access-privilege.component';
 import { DesignationComponent } from './designation/designation.component';
 import{UserRegistrationComponent} from './user-registration/user-registration.component'
 import { UserRoleComponent } from './user-role/user-role.component';
 import { UserlistComponent } from './userlist/userlist.component';
+import {ProfileUpdateComponent} from "./profile-update/profile-update.component";
 
 
 const routes: Routes = [
@@ -12,8 +14,14 @@ const routes: Routes = [
     path:'userRegistration',component:UserRegistrationComponent
   },
   {
-    path: 'userRegistration/:id', component: UserRegistrationComponent 
+    path:'designation',
+    component:DesignationComponent
   },
+  {
+    path:'changepassword',
+    component:ChangePasswordComponent
+  },
+  { path: 'userRegistration/:id', component: UserRegistrationComponent },
   {
     path:'userlist',
     component:UserlistComponent
@@ -29,6 +37,10 @@ const routes: Routes = [
   {
     path:'userrole',
     component: UserRoleComponent
+  },
+  {
+    path:'profile-update',
+    component:ProfileUpdateComponent
   }
 ];
 

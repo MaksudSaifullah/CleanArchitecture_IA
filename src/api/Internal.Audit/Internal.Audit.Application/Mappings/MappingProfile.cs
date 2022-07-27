@@ -105,7 +105,20 @@ using Internal.Audit.Application.Features.EmailConfig.Commands.UpdateEmailConfig
 using Internal.Audit.Application.Features.CommonValueAndTypes.Queries.GetAuditFrequency;
 using Internal.Audit.Application.Features.CommonValueAndTypes.Queries.GetAuditScore;
 using Internal.Audit.Application.Features.CommonValueAndTypes.Queries.GetCommonValueTypeGeneric;
+
 using Internal.Audit.Application.Features.WeightScoreConfigurations.Queries.WeightScoreByCountryId;
+
+using Internal.Audit.Application.Features.AuditFrequencies.Queries.GetAuditFrequencyById;
+using Internal.Audit.Application.Features.AuditFrequencies.Commands.AddAuditFrequency;
+using Internal.Audit.Application.Features.AuditFrequencies.Commands.UpdateAuditFrequency;
+using Internal.Audit.Application.Features.AuditFrequencies.Commands.DeleteAuditFrequency;
+using Internal.Audit.Application.Features.AuditFrequencies.Queries.GetAuditFrequencyList;
+using Internal.Audit.Application.Features.Questionnnaires.Queries.GetQuestionnaireById;
+using Internal.Audit.Application.Features.Questionnnaires.Queries.GetQuestionnnaireList;
+using Internal.Audit.Application.Features.Questionnnaires.Commands.AddQuestionnaire;
+using Internal.Audit.Application.Features.Questionnnaires.Commands.UpdateQuestionnaire;
+using Internal.Audit.Application.Features.Questionnnaires.Commands.DeleteQuestionnaire;
+
 
 namespace Internal.Audit.Application.Mappings;
 
@@ -271,9 +284,32 @@ public class MappingProfile : Profile
         CreateMap<Document, DeleteDocumentCommand>().ReverseMap();
         CreateMap<Document, GetByDocumentIdResponseDTO>().ReverseMap();
         CreateMap<CommonValueAndType, AuditTypeDTO>().ReverseMap();
-        CreateMap<CommonValueAndType, AuditFrequencyDTO>().ReverseMap();
+        CreateMap<CommonValueAndType, AuditFrequencyTypeDTO>().ReverseMap();
         CreateMap<CommonValueAndType, AuditScoreDTO>().ReverseMap();
         CreateMap<CommonValueAndType, GetCommonValueTypeGenericDTO>().ReverseMap();
+
         CreateMap<WeightScore, WeightScoreByCountryIdDTO>().ReverseMap();
+
+
+        CreateMap<AuditFrequency, AuditFrequencyDTO>().ReverseMap();
+        CreateMap<CompositeAuditFrequency, AuditFrequencyDTO>().ReverseMap();
+        CreateMap<CompositeAuditFrequency, AuditFrequencyByIdDTO>().ReverseMap();
+        CreateMap<AuditFrequency, AuditFrequencyByIdDTO>().ReverseMap();
+        CreateMap<AuditFrequency, AddAuditFrequencyResponseDTO>().ReverseMap();
+        CreateMap<AuditFrequency, AddAuditFrequencyCommand>().ReverseMap();
+        CreateMap<AuditFrequency, UpdateAuditFrequencyResponseDTO>().ReverseMap();
+        CreateMap<AuditFrequency, UpdateAuditFrequencyCommand>().ReverseMap();
+        CreateMap<AuditFrequency, DeleteAuditFrequencyResponseDTO>().ReverseMap();
+        CreateMap<AuditFrequency, DeleteAuditFrequencyCommand>().ReverseMap();
+
+        CreateMap<CompositeQuestionnaire, GetQuestionnaireListResponseDTO>().ReverseMap();
+        CreateMap<CompositeQuestionnaire, GetQuestionnaireByIdDTO>().ReverseMap();
+        CreateMap<Questionnaire, AddQuestionnaireResponseDTO>().ReverseMap();
+        CreateMap<Questionnaire, AddQuestionnaireCommand>().ReverseMap();
+        CreateMap<Questionnaire, UpdateQuestionnaireResponseDTO>().ReverseMap();
+        CreateMap<Questionnaire, UpdateQuestionnaireCommand>().ReverseMap();
+        CreateMap<Questionnaire, DeleteQuestionnaireResponseDTO>().ReverseMap();
+        CreateMap<Questionnaire, DeleteQuestionnaireCommand>().ReverseMap();
+
     }
 }

@@ -27,6 +27,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Internal.Audit.Application\Internal.Audit.Application.csproj" />
+    <ProjectReference Include="..\Internal.Audit.Infrastructure.MQService\Internal.Audit.Infrastructure.MQService.csproj" />
     <ProjectReference Include="..\Internal.Audit.Infrastructure.Notification\Internal.Audit.Infrastructure.Notification.csproj" />
     <ProjectReference Include="..\Internal.Audit.Infrastructure.Persistent\Internal.Audit.Infrastructure.Persistent.csproj" />
   </ItemGroup>

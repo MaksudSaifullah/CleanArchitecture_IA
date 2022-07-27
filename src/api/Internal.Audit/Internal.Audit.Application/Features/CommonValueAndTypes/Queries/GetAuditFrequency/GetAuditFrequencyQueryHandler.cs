@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Internal.Audit.Application.Features.CommonValueAndTypes.Queries.GetAuditFrequency;
 
-public class GetAuditFrequencyQueryHandler : IRequestHandler<GetAuditFrequencyQuery, List<AuditFrequencyDTO>>
+public class GetAuditFrequencyQueryHandler : IRequestHandler<GetAuditFrequencyQuery, List<AuditFrequencyTypeDTO>>
 {
     private readonly ICommonValueAndTypeQueryRepository _commonValueAndTypesRepository;
     private readonly IMapper _mapper;
@@ -21,9 +21,9 @@ public class GetAuditFrequencyQueryHandler : IRequestHandler<GetAuditFrequencyQu
         _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
     }
 
-    public async Task<List<AuditFrequencyDTO>> Handle(GetAuditFrequencyQuery request, CancellationToken cancellationToken)
+    public async Task<List<AuditFrequencyTypeDTO>> Handle(GetAuditFrequencyQuery request, CancellationToken cancellationToken)
     {
         var commonValueAndTypes = await _commonValueAndTypesRepository.GetCommonValueType("AUDITFREQUENCY");
-        return _mapper.Map<List<AuditFrequencyDTO>>(commonValueAndTypes);
+        return _mapper.Map<List<AuditFrequencyTypeDTO>>(commonValueAndTypes);
     }
 }

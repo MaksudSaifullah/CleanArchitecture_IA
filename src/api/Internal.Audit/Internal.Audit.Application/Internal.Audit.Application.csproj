@@ -49,6 +49,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Features\DataRequestQueue\Command\UpdateDataRequestQueueCommand\" />
     <Folder Include="Features\UserCountries\Quiries\" />
   </ItemGroup>
 

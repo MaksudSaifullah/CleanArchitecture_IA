@@ -127,7 +127,7 @@ Set-ExecutionPolicy RemoteSigned -Scope CurrentUser
 
 ### Frontend
 - User Interface – The user interface has built with using HTML5, CSS, JavaScript, Bootstrap. The main application targeted for desktops, Laptops and Mobile. 
-![](img/frontend_architecture.pdf)
+![](img/user_interface.png))
 
 - APP – This is the mother module of Internal-Audit Frontend. It is the root module of Internal-Audit Application. App Routing mapping the URLs to a specific function that will handle the logic for that URL. 
 

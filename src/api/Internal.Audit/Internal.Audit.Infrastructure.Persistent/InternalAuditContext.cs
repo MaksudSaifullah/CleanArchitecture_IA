@@ -51,6 +51,7 @@ public class InternalAuditContext: DbContext
 
     public DbSet<AuditFrequency> AuditFrequencies { get; set; }
     public DbSet<Questionnaire> Questionnaires { get; set; }
+    public DbSet<DataRequestQueueService> DataRequestQueueServices { get; set; }
 
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)

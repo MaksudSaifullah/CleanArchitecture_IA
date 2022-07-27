@@ -4,6 +4,7 @@ using Internal.Audit.Infrastructure.Persistent;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Internal.Audit.Infrastructure.Persistent.Migrations
 {
     [DbContext(typeof(InternalAuditContext))]
-    partial class InternalAuditContextModelSnapshot : ModelSnapshot
+    [Migration("20220727164516_Ambs data sync table add")]
+    partial class Ambsdatasynctableadd
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -1500,7 +1502,7 @@ namespace Internal.Audit.Infrastructure.Persistent.Migrations
 
                     b.HasIndex("CountryId");
 
-                    b.ToTable("DataRequestQueueService", "Security");
+                    b.ToTable("DataRequestQueueServices");
                 });
 
             modelBuilder.Entity("Internal.Audit.Domain.Entities.Security.Employee", b =>

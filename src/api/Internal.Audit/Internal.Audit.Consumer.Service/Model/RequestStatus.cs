@@ -8,12 +8,14 @@ namespace Internal.Audit.Consumer.Service.Model
 {
     public class RequestStatus
     {
-        public long CountryId { get; set; }      
-        public DateTime BeginDate { get; set; }
-        public DateTime EndDate { get; set; }
-        public double Progression { get; set; }
-        public int Status { get; set; }
-        public string Message { get; set; }
-        public bool CompareOnly { get; set; }
+        public Guid DataRequestQueueServiceId { get; set; }
+        public int BranchCode { get; set; }
+        public long BranchId { get; set; }
+        public string BranchName { get; set; }
+        public decimal Amount { get; set; }
+        public decimal AmountConverted { get; set; }
+        public DateTime FromDate { get; set; }
+        public DateTime ToDate { get; set; }
+        public int CommonValueTableId { get; set; }
     }
 }

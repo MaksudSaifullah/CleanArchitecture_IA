@@ -1,4 +1,4 @@
-﻿using Asai.Ambs.Utility;
+﻿//using Asai.Ambs.Utility;
 using Internal.Audit.Consumer.Service.IService;
 using Internal.Audit.Consumer.Service.Service;
 using System;
@@ -19,15 +19,15 @@ namespace Internal.Audit.Consumer.Service.Handler
 
         public CompareRequestHandler()
         {
-            _connectionString = DBUtility.DecryptConnectionString(ConfigurationManager
-                .ConnectionStrings["Internal.Audit.Consumer.Service.ConnectionString"].ConnectionString);
+            _connectionString = ConfigurationManager
+                .ConnectionStrings["Internal.Audit.Consumer.Service.ConnectionString"].ConnectionString;
             _apiService = new APIService();
             _repositoryService = new RepositoryService(_connectionString);
         }
 
         internal IRepositoryService RepositoryService => _repositoryService;
 
-        public async Task<bool> ProcessRequest(DateTime startDate, DateTime endDate)
+        public async Task<bool> ProcessRequest(DateTime startDate, DateTime endDate,Guid dd)
         {
             try
             {

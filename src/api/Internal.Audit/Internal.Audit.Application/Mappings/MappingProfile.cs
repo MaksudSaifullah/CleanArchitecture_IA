@@ -119,6 +119,7 @@ using Internal.Audit.Application.Features.Questionnnaires.Commands.AddQuestionna
 using Internal.Audit.Application.Features.Questionnnaires.Commands.UpdateQuestionnaire;
 using Internal.Audit.Application.Features.Questionnnaires.Commands.DeleteQuestionnaire;
 using Internal.Audit.Application.Features.DataRequestQueue.Command.AddDataRequestQueueCommand;
+using Internal.Audit.Application.Features.AmbsDataSyncs.Command.AddAmbsDataSyncCommand;
 
 namespace Internal.Audit.Application.Mappings;
 
@@ -312,7 +313,8 @@ public class MappingProfile : Profile
         CreateMap<Questionnaire, DeleteQuestionnaireCommand>().ReverseMap();
 
         CreateMap<DataRequestQueueService, AddDatarequestCommand>().ReverseMap();
-
+        CreateMap<AmbsDataSync, AddAmbsDataSyncCommand>().ReverseMap();
+        CreateMap<AmbsDataSync, AddAmbsDataSyncCommandRequest>().ReverseMap();
 
     }
 }

@@ -9,7 +9,7 @@ namespace Internal.Audit.Consumer.Service.IService
 {
     public interface IAPIService
     {
-        Task<bool> PostData(List<TableDataresponse> data, string token, bool compareOnly = false);
+        Task<bool> PostData(List<TableDataresponse> data, string token);
         //Task<bool> PostLoanDisburtionData(List<TableDataresponse> data, string token, bool compareOnly = false);
         Task<bool> RequestCompletion(RequestStatus data, string token);       
         Task<string> GetToken();       

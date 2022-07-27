@@ -42,18 +42,20 @@ public class AddDataRequestCommandHandler : IRequestHandler<AddDatarequestComman
         dataPullrequest.IsActive = true;
         dataPullrequest.RequestedOn = DateTime.Now;
         dataPullrequest.Status = (int)AppConstants.RequestStatus.REQUESTED;
+        dataPullrequest.Id = Guid.NewGuid();
         await _dataRequestCommand.Add(dataPullrequest);
 
         var country = await _countryRepository.GetById(request.CountryId);
 
         var message = new
         {
-            ToDate = request.FromDate.ToString("yyyy-MM-dd"),
-            FromDate = request.ToDate.ToString("yyyy-MM-dd"),
+            ToDate = request.ToDate.ToString("yyyy-MM-dd"),
+            FromDate = request.FromDate.ToString("yyyy-MM-dd"),
             Country = request.CountryId,
-            CountryName = country.Name
+            CountryName = country.Name,
+            DataRequestQueueServiceId = dataPullrequest.Id
         };
-        var response = _broker.Produce(message, country.Name);
+        var response = _broker.Produce(message, country.Name+"-IA");
 
         if (response.Success)
         {

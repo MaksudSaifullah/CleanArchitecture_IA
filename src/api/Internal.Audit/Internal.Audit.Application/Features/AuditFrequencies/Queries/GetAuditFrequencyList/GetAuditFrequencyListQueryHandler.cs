@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Internal.Audit.Application.Contracts.Persistent.AuditFrequencies;
+using Internal.Audit.Domain.CompositeEntities;
 using MediatR;
 using System;
 using System.Collections.Generic;
@@ -24,11 +25,12 @@ namespace Internal.Audit.Application.Features.AuditFrequencies.Queries.GetAuditF
 
         public async Task<AuditFrequencyListPagingDTO> Handle(GetAuditFrequencyListQuery request, CancellationToken cancellationToken)
         {
-            var (count, result) = await _auditfrequencyRepository.GetAll(request.pageSize, request.pageNumber);
+            (long, IEnumerable<CompositeAuditFrequency>) result = await _auditfrequencyRepository.GetAll(request.pageSize, request.pageNumber, request.searchTerm);
 
-            var auditFrequencyList = _mapper.Map<IEnumerable<AuditFrequencyDTO>>(result).ToList();
+            var auditFrequencyList = _mapper.Map<List<AuditFrequencyDTO>>(result.Item2);
 
-            return new AuditFrequencyListPagingDTO { Items = auditFrequencyList, TotalCount = count };
+            return new AuditFrequencyListPagingDTO { Items = auditFrequencyList, TotalCount = result.Item1 };
+          
         }
     }
 }

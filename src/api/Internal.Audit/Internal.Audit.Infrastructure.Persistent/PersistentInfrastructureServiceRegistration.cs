@@ -50,10 +50,14 @@ using Internal.Audit.Application.Contracts.Persistent.Documents;
 using Internal.Audit.Infrastructure.Persistent.Repositories.Documents;
 using Internal.Audit.Application.Contracts.Persistent.RiskAssessments;
 using Internal.Audit.Infrastructure.Persistent.Repositories.RiskAssessments;
+using Internal.Audit.Application.Contracts.Persistent.WeightScoreConfigurations;
+using Internal.Audit.Infrastructure.Persistent.Repositories.WeightScoreConfigurations;
 using Internal.Audit.Application.Contracts.Persistent.AuditFrequencies;
 using Internal.Audit.Infrastructure.Persistent.Repositories.AuditFrequencies;
 using Internal.Audit.Application.Contracts.Persistent.Questionnnaires;
 using Internal.Audit.Infrastructure.Persistent.Repositories.Questionnaires;
+using Internal.Audit.Application.Contracts.Persistent.DataRequestQueue;
+using Internal.Audit.Infrastructure.Persistent.Repositories.DataRequestQueueService;
 
 namespace Internal.Audit.Infrastructure.Persistent;
 
@@ -135,11 +139,15 @@ public static class PersistentInfrastructureServiceRegistration
         services.AddScoped<IUserProfileUpdateRepository, UserProfileUpdateRepository>();
         services.AddScoped<IUserProfileQueryRepository>(s => new UserProfileQueryRepository(configuration.GetConnectionString("InternalAuditDb")));
 
+        services.AddScoped<IWeightScoreConfigurationCommandRepository, WeightScoreConfigurationCommandRepository>();
+        services.AddScoped<IWeightScoreConfigurationQueryRepository>(s => new WeightScoreConfigurationQueryRepository(configuration.GetConnectionString("InternalAuditDb")));
+
         services.AddScoped<IAuditFrequencyCommandRepository, AuditFrequencyCommandRepository>();
         services.AddScoped<IAuditFrequencyQueryRepository>(s => new AuditFrequencyQueryRepository(configuration.GetConnectionString("InternalAuditDb")));
 
         services.AddScoped<IQuestionnaireCommandRepository, QuestionnaireCommandRepository>();
         services.AddScoped<IQuestionnaireQueryRepository>(s => new QuestionnaireQueryRepository(configuration.GetConnectionString("InternalAuditDb")));
+        services.AddScoped<IDataRequestCommandRepository, DataRequestCommandRepository>();
 
         return services;
     }

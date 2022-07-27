@@ -15,10 +15,19 @@ public class AuditFrequencyQueryRepository : QueryRepositoryBase<CompositeAuditF
 
     }
 
-    public async Task<(long, IEnumerable<CompositeAuditFrequency>)> GetAll(int pageSize, int pageNumber)
+    public async Task<(long, IEnumerable<CompositeAuditFrequency>)> GetAll(int pageSize, int pageNumber, dynamic searchTerm = null)
     {
-        var query = "EXEC [dbo].[GetAuditFrequencyListProcedure] @pageSize,@pageNumber";
-        var parameters = new Dictionary<string, object> { { "@pageSize", pageSize }, { "@pageNumber", pageNumber } };
+        string searchTermConverted = (object)searchTerm == null ? null : Convert.ToString(searchTerm);
+        if (!string.IsNullOrWhiteSpace(searchTermConverted))
+        {
+            searchTermConverted = searchTermConverted.Replace("{", "").Replace("}", "");
+        }
+
+        var query = "EXEC [dbo].[GetAuditFrequencyListProcedure] @pageSize,@pageNumber,@searchTerm";
+        var parameters = new Dictionary<string, object> { { "@pageSize", pageSize }, { "@pageNumber", pageNumber }, { "@searchTerm", searchTermConverted } };
+
+        // var parameters = new Dictionary<string, object> { { "@pageSize", pageSize }, { "@pageNumber", pageNumber } };
+
         // var (count, result) = await GetWithPagingInfo(query, parameters, false);
         //return await Get(query);
         return await GetWithPagingInfo(query, parameters, false);

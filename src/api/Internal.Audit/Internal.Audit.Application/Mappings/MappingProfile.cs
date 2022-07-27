@@ -105,6 +105,9 @@ using Internal.Audit.Application.Features.EmailConfig.Commands.UpdateEmailConfig
 using Internal.Audit.Application.Features.CommonValueAndTypes.Queries.GetAuditFrequency;
 using Internal.Audit.Application.Features.CommonValueAndTypes.Queries.GetAuditScore;
 using Internal.Audit.Application.Features.CommonValueAndTypes.Queries.GetCommonValueTypeGeneric;
+
+using Internal.Audit.Application.Features.WeightScoreConfigurations.Queries.WeightScoreByCountryId;
+
 using Internal.Audit.Application.Features.AuditFrequencies.Queries.GetAuditFrequencyById;
 using Internal.Audit.Application.Features.AuditFrequencies.Commands.AddAuditFrequency;
 using Internal.Audit.Application.Features.AuditFrequencies.Commands.UpdateAuditFrequency;
@@ -115,6 +118,7 @@ using Internal.Audit.Application.Features.Questionnnaires.Queries.GetQuestionnna
 using Internal.Audit.Application.Features.Questionnnaires.Commands.AddQuestionnaire;
 using Internal.Audit.Application.Features.Questionnnaires.Commands.UpdateQuestionnaire;
 using Internal.Audit.Application.Features.Questionnnaires.Commands.DeleteQuestionnaire;
+using Internal.Audit.Application.Features.DataRequestQueue.Command.AddDataRequestQueueCommand;
 
 namespace Internal.Audit.Application.Mappings;
 
@@ -284,6 +288,9 @@ public class MappingProfile : Profile
         CreateMap<CommonValueAndType, AuditScoreDTO>().ReverseMap();
         CreateMap<CommonValueAndType, GetCommonValueTypeGenericDTO>().ReverseMap();
 
+        CreateMap<WeightScore, WeightScoreByCountryIdDTO>().ReverseMap();
+
+
         CreateMap<AuditFrequency, AuditFrequencyDTO>().ReverseMap();
         CreateMap<CompositeAuditFrequency, AuditFrequencyDTO>().ReverseMap();
         CreateMap<CompositeAuditFrequency, AuditFrequencyByIdDTO>().ReverseMap();
@@ -303,5 +310,9 @@ public class MappingProfile : Profile
         CreateMap<Questionnaire, UpdateQuestionnaireCommand>().ReverseMap();
         CreateMap<Questionnaire, DeleteQuestionnaireResponseDTO>().ReverseMap();
         CreateMap<Questionnaire, DeleteQuestionnaireCommand>().ReverseMap();
+
+        CreateMap<DataRequestQueueService, AddDatarequestCommand>().ReverseMap();
+
+
     }
 }

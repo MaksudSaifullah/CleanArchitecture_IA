@@ -12,6 +12,7 @@ namespace Internal.Audit.Application.Features.RiskAssessments.Queries.GetRiskAss
         public int pageSize { get; set; }
         public int pageNumber { get; set; }
         public dynamic searchTerm { get; set; }
+   
     }
 
 }

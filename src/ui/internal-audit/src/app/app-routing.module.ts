@@ -68,7 +68,6 @@ const routes: Routes = [
       title: 'About Page'
     }
   },
-  {path: '**', redirectTo: 'login'}
 ];
 
 @NgModule({

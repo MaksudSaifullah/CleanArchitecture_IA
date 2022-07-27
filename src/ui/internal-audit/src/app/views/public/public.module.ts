@@ -16,11 +16,15 @@ import {
   RecaptchaV3Module,
   ReCaptchaV3Service
 } from "ng-recaptcha";
+import { ResetPasswordComponent } from './components/reset-password/reset-password.component';
+import { ForgotPasswordComponent } from './components/forgot-password/forgot-password.component';
 @NgModule({
   declarations: [
     AboutComponent,
     LoginComponent,
-    RecaptchaComponent
+    RecaptchaComponent,
+    ResetPasswordComponent,
+    ForgotPasswordComponent
   ],
   imports: [
     CommonModule,

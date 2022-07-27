@@ -15,12 +15,17 @@ namespace Internal.Audit.Infrastructure.Persistent.Repositories.RiskCriterias
         {
         }
 
-        public async Task<(long, IEnumerable<CompositeRiskCriteria>)> GetAll(int pageSize, int pageNumber)
+        public async Task<(long, IEnumerable<CompositeRiskCriteria>)> GetAll(int pageSize, int pageNumber, dynamic searchTerm = null)
         {
-            var query = "EXEC [dbo].[GetRiskCriteriaListProcedure] @pageSize,@pageNumber";
-            var parameters = new Dictionary<string, object> { { "@pageSize", pageSize }, { "@pageNumber", pageNumber } };
-            // var (count, result) = await GetWithPagingInfo(query, parameters, false);
-            //return await Get(query);
+            string searchTermConverted = (object)searchTerm == null ? null : Convert.ToString(searchTerm);
+            if (!string.IsNullOrWhiteSpace(searchTermConverted))
+            {
+                searchTermConverted = searchTermConverted.Replace("{", "").Replace("}", "");
+            }
+
+            var query = "EXEC [dbo].[GetRiskCriteriaListProcedure] @pageSize,@pageNumber,@searchTerm";
+            var parameters = new Dictionary<string, object> { { "@pageSize", pageSize }, { "@pageNumber", pageNumber }, { "@searchTerm", searchTermConverted } };
+
             return await GetWithPagingInfo(query, parameters, false);
         }
         public async Task<CompositeRiskCriteria> GetById(Guid id)

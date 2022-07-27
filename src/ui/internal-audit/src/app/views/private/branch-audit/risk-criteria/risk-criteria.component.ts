@@ -13,6 +13,7 @@ import {AlertService} from '../../../../core/services/alert.service';
 import { paginatedResponseInterface } from 'src/app/core/interfaces/paginated.interface';
 import { formatDate } from '@angular/common';
 import { country } from 'src/app/core/interfaces/configuration/country.interface';
+import { CutomvalidatorService } from 'src/app/core/services/cutomvalidator.service';
 
 
 @Component({
@@ -30,12 +31,13 @@ export class RiskCriteriaComponent implements OnInit {
   riskCriterias: riskCriteria[] = [];
   countries: country[] = [];
   riskCriteriaForm: FormGroup;
+  searchForm: FormGroup;
   formService: FormService = new FormService();
   dataTableService: DatatableService = new DatatableService();
   dtTrigger: Subject<any> = new Subject<any>();
   effectiveFrom: any;
 
-  constructor(private http: HttpService , private fb: FormBuilder, private AlertService: AlertService) {
+  constructor(private http: HttpService , private fb: FormBuilder, private AlertService: AlertService, private customValidator: CutomvalidatorService,) {
     this.LoadDropDownValues();
     this.riskCriteriaForm = this.fb.group({
       id: [''],
@@ -49,7 +51,12 @@ export class RiskCriteriaComponent implements OnInit {
       effectiveTo: [Date, [Validators.required]],
       description: ['']
       
-    })
+    }, { validator: this.customValidator.checkEffectiveDateToAfterFrom('effectiveFrom', 'effectiveTo') });
+    this.searchForm = this.fb.group(
+      {
+        searchTerm: ['']
+      }
+    )
   }
   ngOnDestroy(): void {
 
@@ -70,7 +77,7 @@ export class RiskCriteriaComponent implements OnInit {
       ajax: (dataTablesParameters: any, callback) => {
         this.http
           .paginatedPost(
-            'riskcriteria/paginated', dataTablesParameters.length, ((dataTablesParameters.start / dataTablesParameters.length) + 1), ''
+            'riskcriteria/paginated', dataTablesParameters.length,((dataTablesParameters.start/dataTablesParameters.length)+1),this.searchForm.get('searchTerm')?.value
           ).subscribe(resp => that.riskCriterias = this.dataTableService.datatableMap(resp, callback));
       },
     };
@@ -158,6 +165,10 @@ export class RiskCriteriaComponent implements OnInit {
   }
   reset(){
     this.riskCriteriaForm.reset();
+  }
+
+  search(){
+    this.dataTableService.redraw(this.datatableElement);
   }
 
 }

@@ -20,6 +20,6 @@ namespace Internal.Audit.Application.Contracts.Persistent.UserRegistration
         /// </summary>
         /// <param name="postCode">Validate Post code with Url</param>
         /// <returns></returns>
-        Task<Guid?> UserByValidPostCode(string postCode);
+        Task<Guid?> UserByValidPostCode(string preCode);
     }
 }

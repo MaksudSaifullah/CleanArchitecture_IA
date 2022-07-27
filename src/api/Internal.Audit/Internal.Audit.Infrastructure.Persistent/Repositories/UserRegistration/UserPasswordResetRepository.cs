@@ -9,18 +9,20 @@ namespace Internal.Audit.Infrastructure.Persistent.Repositories.UserRegistration
         {
         }
 
-        public async Task<bool> IsValidPostCode(string postCode)
+        public async Task<bool> IsValidPreCode(string postCode)
         {
-            var userPasswordReset = await Single($"SELECT * FROM [security].[UserPasswordReset] where PasswordResetPostCode= '{postCode}' and IsCompleted = 0");
-            if (userPasswordReset.PasswordResetPostCodeExpiry < DateTime.Now)
+            var userPasswordReset = await Single($"SELECT * FROM [security].[UserPasswordReset] where PasswordResetUrlCode= '{postCode}' and IsCompleted = 0");
+            if (userPasswordReset.PasswordResetUrlCodeExpiry < DateTime.Now)
                 return false;
             return true;
         }
 
-        public async Task<Guid?> IsValidPreCode(string preCode)
+       
+
+        public async Task<Guid?> UserByValidPostCode(string postcode)
         {
-            var userPasswordReset = await Single($"SELECT * FROM [security].[UserPasswordReset] where PasswordResetUrlCode  = '{preCode}' and IsCompleted = 0");
-            if (userPasswordReset.PasswordResetUrlCodeExpiry < DateTime.Now)
+            var userPasswordReset = await Single($"SELECT * FROM [security].[UserPasswordReset] where PasswordResetPostCode  = '{postcode}' and IsCompleted = 0");
+            if (userPasswordReset.PasswordResetPostCodeExpiry< DateTime.Now)
                 return userPasswordReset.UserId;
             return null;
         }

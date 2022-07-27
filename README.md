@@ -1,12 +1,13 @@
 # Internal Audit
 
-Team IA aim is to develop an end to end solution for the Audit team.
+Internal audits evaluate a company’s internal controls, including its corporate governance and accounting processes. These audits ensure compliance with laws and regulations and help to maintain accurate and timely financial reporting and data collection.  
+
+Internal audits also provide management with the tools necessary to attain operational efficiency by identifying problems and correcting lapses before they are discovered in an external audit. 
 
 ## Getting started
 
 To make it easy for you to get started with GitLab, here's a list of recommended next steps.
 
-Already a pro? Just edit this README.md and make it your own. Want to make it easy? [Use the template at the bottom](#editing-this-readme)!
 
 ## Add your files
 
@@ -43,10 +44,19 @@ Use the built-in continuous integration in GitLab.
 - [ ] [Set up protected environments](https://docs.gitlab.com/ee/ci/environments/protected_environments.html)
 
 
-# Installation
+# Development Guidelines
+## Required technologies
+The solution is built with using 
+- Microsoft technologies
+- .NET core, Web Services
+- SQL Server
+- Angular 13
+- HTML5
+- CSS
+- Typescript  
 ## Backend
 Pre-requisites
-- Visual Studio 
+- Visual Studio 2022
 - .NET 6 core
 
 Clone the project repo:
@@ -81,35 +91,104 @@ Open the angular project with visual studio code to edit & run these commands to
 npm install
 ng serve -o
 ```
+If you are running any angular command e.g. ng serve, ng build, ng new, ng generate etc. from Visual Studio Code Terminal or from command prompt and getting a error related to execution policy, then you can go through the below solution to fix above issue.
+
+Solution: Run the following command from the same terminal or command prompt and re-run the ng command to check if it works on your machine:
+```
+Set-ExecutionPolicy RemoteSigned -Scope CurrentUser
+```
 
 ## Architecture Overview
 
 ![](img/architecture.png)
 
+### Backend
+- CQRS – Command Query Responsibility Segregation is used here, for insert, update, delete system will use Entity framework core and for selecting data it will use Dapper. CQRS stands for Command and Query Responsibility Segregation, a pattern that separates read and update operations for a data store. Implementing CQRS in your application can maximize its performance, scalability, and security. The flexibility created by migrating to CQRS allows a system to better evolve over time and prevents update commands from causing merge conflicts at the domain level. 
+
+
+- Mediator – For loosely couple and easy readability mediator pattern is followed here. The Mediator design pattern defines an object that encapsulates how a set of objects interact. Mediator promotes loose coupling by keeping objects from referring to each other explicitly, and it lets you vary their interaction independently. 
+
+ 
+
+- Auto Mapper – Data transfer object (DTO) is used for so that we don’t expose our table structure to client. It is a popular object-to-object mapping library that can be used to map objects belonging to dissimilar types. As an example, you might need to map the DTOs (Data Transfer Objects) in your application to the model objects. Auto Mapper saves the tedious effort of having to manually map one or more properties of such incompatible types 
+
+
+- Fluent API – For model validation and sending mail fluent API is used. Fluent API is an advanced way of specifying model configuration that covers everything that data annotations can do in addition to some more advanced configuration not possible with data annotations. Data annotations and the fluent API can be used together, but Code First gives precedence to Fluent API > data annotations > default conventions. 
+
+ 
+
+  - Fluent API is another way to configure your domain classes. 
+
+  - The Code First Fluent API is most commonly accessed by overriding the OnModelCreating method on your derived DbContext. 
+
+  - Fluent API provides more functionality for configuration than DataAnnotations. Fluent API supports the following types of mappings. 
+
+![](img/backend_architecture.pdf)
+
+### Frontend
+- User Interface – The user interface has built with using HTML5, CSS, JavaScript, Bootstrap. The main application targeted for desktops, Laptops and Mobile. 
+![](img/frontend_architecture.pdf)
+
+- APP – This is the mother module of Internal-Audit Frontend. It is the root module of Internal-Audit Application. App Routing mapping the URLs to a specific function that will handle the logic for that URL. 
+
+   - Example: In our application, the URL (“/”) is associated with the root URL. So if our site’s domain was www.internalaudit.com and we want to add routing to “www.internalaudit.com/ #/dashboard”, we would use “#/dashboard”. To bind a function to an URL path we use the app route decorator. Here we will decide which module will open first. 
+
+
+- Core – This is the main module for all kind of services where back end api will be connected with front end. Currently this module is divided into five parts. which are AUTH, CONSTANTS, GUARDS, INTERCEPTORS, SERVICES. 
+  - AUTH -- Here JSON Web Tokens can be used to establish a user session, JWTs are digitally signed JSON payloads, encoded in a URL-friendly string format. If JWTs are used for Authentication, they will contain at least a user ID and an expiration timestamp. 
+
+  - CONSTANTS –  All kind of constant policies would be written here. Like Email or Phone Regular Expression are written here in a class 
+
+  - GUARDS –  Authentication Guard, Role Guard, User Guard etc. are stored in this folder. The guard is use to check the user or role is valid or not.   
+
+  - INTERCEPTORS – HttpInterceptor will be implemented here using jwtInterceptor. Authorization header will be built here with jwt token. 
+
+  - SERVICES -- All type of service will be implemented here with a common service. Common service will handle most of the api. If any service cannot perform with common service, then the service will be created in this folder individually 
+
+- Views – All the Modules views, component and typescript will be held in this portion. One stage of routing will be implemented here and the main routing will be covered by app-routing.  
+ 
+
+- Model – All the database table and property are here in the model folder. 
+
+# Deployment Guidelines
+### Prerequisite to install
+- IIS
+- .NET 6 SDK for hosting. You can install it from here: [.NET 6](https://dotnet.microsoft.com/en-us/download/dotnet/thank-you/runtime-aspnetcore-6.0.6-windows-hosting-bundle-installer)
+
+## Publish Backend
+- Step 1: Open the source code with Visual Studio on your local machine
+- Step 2: Right click on the API project (Internal.Audit.Api), then select "Publish".
+- Step 3: Select Target folder, some files will be published to the folder. Later, you will copy these file from your local machine to the server. 
+
+- Step 4: Open IIS in your desired server where you want to host the API
+- Step 5: Add a website by right click on sites with a application pool that contains .NET 6 sdk, you have to give a path while adding the website. Copy the files generated in Step 3 to this folder. You also need to specify the port number in this step.
+  - If there is no application pool with .NET 6 sdk, create one first as per the screenshot.
+  ![](img/apk_pool.png)
+- Step 6: Now just start the Site. You can verify by accessing http://serverIp:port/swagger/index.html if the swagger is kept on.
+
+## Publish Frontend
+
+- Step 1: Just run the coomand ``` ng build --prod ```, it will create a folder named "dist" in the source folder. Copy these files.
+- Step 2: Open IIS in your desired server where you want to host the API
+- Step 3: Add a website by right click on sites with any application pool with a port number.
+- Step 4: Now just start the Site and access the UI. [Use the port number specified in Step 3]
+
+### Configuration guideline
+- For the API connection use the address of API (where you already had published the API) port number specified in the Step 5 of publishing the Backend API. You can set the API address & IP in the following file of Frontend:
+  ![](img/UIconfiguration.png)
+- You can also change the connection string before publishing the source code in the following file: (appsettings.json)
+  ![](img/databaseConfiguration.png)
+
 ## IMPORTANT NOTES!
 
 
-**Note for Pull Requests (PRs)**: We accept pull requests from the community. When doing it, please do it onto the **DEV branch** which is the consolidated work-in-progress branch. Do not request it onto **main** branch.
+**Note for Pull Requests (PRs)**: We accept pull requests from the community. When doing it, please do it onto the **DEV branch** which is the consolidated work-in-progress branch. Do not request it onto **master** branch.
 
 ## Usage
 
-```python
-import foobar
 
-# returns 'words'
-foobar.pluralize('word')
-
-# returns 'geese'
-foobar.pluralize('goose')
-
-# returns 'phenomenon'
-foobar.singularize('phenomena')
-```
 
 ## Contributing
 Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
 
 Please make sure to update tests as appropriate.
-
-## License
-[MIT](https://choosealicense.com/licenses/mit/)

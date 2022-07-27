@@ -105,6 +105,7 @@ using Internal.Audit.Application.Features.EmailConfig.Commands.UpdateEmailConfig
 using Internal.Audit.Application.Features.CommonValueAndTypes.Queries.GetAuditFrequency;
 using Internal.Audit.Application.Features.CommonValueAndTypes.Queries.GetAuditScore;
 using Internal.Audit.Application.Features.CommonValueAndTypes.Queries.GetCommonValueTypeGeneric;
+using Internal.Audit.Application.Features.WeightScoreConfigurations.Queries.WeightScoreByCountryId;
 
 namespace Internal.Audit.Application.Mappings;
 
@@ -273,5 +274,6 @@ public class MappingProfile : Profile
         CreateMap<CommonValueAndType, AuditFrequencyDTO>().ReverseMap();
         CreateMap<CommonValueAndType, AuditScoreDTO>().ReverseMap();
         CreateMap<CommonValueAndType, GetCommonValueTypeGenericDTO>().ReverseMap();
+        CreateMap<WeightScore, WeightScoreByCountryIdDTO>().ReverseMap();
     }
 }

@@ -49,6 +49,8 @@
 
   <ItemGroup>
     <Folder Include="Features\UserCountries\Quiries\" />
+    <Folder Include="Features\WeightScoreConfigurations\Commands\" />
+    <Folder Include="Features\WeightScoreConfigurations\Queries\WeightScoreByCountryId\" />
   </ItemGroup>
 
 </Project>

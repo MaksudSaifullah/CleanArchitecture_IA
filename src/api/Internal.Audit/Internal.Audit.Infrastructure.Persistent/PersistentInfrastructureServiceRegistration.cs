@@ -50,6 +50,8 @@ using Internal.Audit.Application.Contracts.Persistent.Documents;
 using Internal.Audit.Infrastructure.Persistent.Repositories.Documents;
 using Internal.Audit.Application.Contracts.Persistent.RiskAssessments;
 using Internal.Audit.Infrastructure.Persistent.Repositories.RiskAssessments;
+using Internal.Audit.Application.Contracts.Persistent.WeightScoreConfigurations;
+using Internal.Audit.Infrastructure.Persistent.Repositories.WeightScoreConfigurations;
 
 namespace Internal.Audit.Infrastructure.Persistent;
 
@@ -130,6 +132,10 @@ public static class PersistentInfrastructureServiceRegistration
 
         services.AddScoped<IUserProfileUpdateRepository, UserProfileUpdateRepository>();
         services.AddScoped<IUserProfileQueryRepository>(s => new UserProfileQueryRepository(configuration.GetConnectionString("InternalAuditDb")));
+
+        services.AddScoped<IWeightScoreConfigurationCommandRepository, WeightScoreConfigurationCommandRepository>();
+        services.AddScoped<IWeightScoreConfigurationQueryRepository>(s => new WeightScoreConfigurationQueryRepository(configuration.GetConnectionString("InternalAuditDb")));
+
 
         return services;
     }

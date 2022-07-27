@@ -10,6 +10,6 @@ namespace Internal.Audit.Application.Contracts.Persistent.AuditFrequencies;
 
 public interface IAuditFrequencyQueryRepository : IAsyncQueryRepository<CompositeAuditFrequency>
 {
-Task<(long, IEnumerable<CompositeAuditFrequency>)> GetAll(int pageSize, int pageNumber);
+Task<(long, IEnumerable<CompositeAuditFrequency>)> GetAll(int pageSize, int pageNumber, dynamic searchTerm = null);
 Task<CompositeAuditFrequency> GetById(Guid id);
 }

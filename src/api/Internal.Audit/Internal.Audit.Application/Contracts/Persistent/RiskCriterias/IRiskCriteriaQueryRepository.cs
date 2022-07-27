@@ -6,6 +6,6 @@ namespace Internal.Audit.Application.Contracts.Persistent.RiskCriterias;
 
 public interface IRiskCriteriaQueryRepository : IAsyncQueryRepository<CompositeRiskCriteria>
 {
-    Task<(long, IEnumerable<CompositeRiskCriteria>)> GetAll(int pageSize, int pageNumber);
+    Task<(long, IEnumerable<CompositeRiskCriteria>)> GetAll(int pageSize, int pageNumber, dynamic searchTerm = null);
     Task<CompositeRiskCriteria> GetById(Guid id);
 }

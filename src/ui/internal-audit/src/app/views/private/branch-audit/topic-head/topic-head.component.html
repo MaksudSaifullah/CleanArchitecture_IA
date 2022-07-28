@@ -10,29 +10,29 @@
       <div class="col-lg-12">
         <div class="card">
           <div class="card-header"><i class="fa fa-align-justify" ></i> 
-            Topic Head List
+            <strong>Topic Head List</strong>
           </div>
           
           <div class="card-body">
-            <div class="row">
-              <div class="col-sm-7 mb-2">
-                <button [cModalToggle]="verticallyCenteredModal.id" class="btnCreateColor" (click)="reset()" cButton >
-                  <svg cIcon name="cilPlus" size="md" title="Add Button Icon"></svg> Create
-                </button>
-              </div>
-              <div class="col-sm-5 mb-2">
-                <div class="row" style="float: right;">
-                  <div class="col-8">
-                    <input type="text" class="form-control pull-right" placeholder="Search by Topic Head"/>
-                  </div>
-                  <div class="col-4">
-                    <button type="button" class="btn btn-secondary mr-1 btn-block pull-right" data-toggle="modal" >
-                      Search
-                  </button>
-                  </div>
+            <form [formGroup]="searchForm">
+              <div class="row" style="margin: 0 auto;">
+                <div class="col-md-6 mb-2">
+                  <button [cModalToggle]="verticallyCenteredModal.id" class="btnCreateColor" (click)="reset()" cButton>
+                    <svg cIcon name="cilPlus" size="md" title="Add Button Icon"></svg> Create
+                  </button> 
                 </div>
-              </div>              
-            </div>
+                <div class="col-md-5 mb-2 form-floating">
+                  <input type="text" formControlName="searchTerm" class="form-control searchInput"  placeholder="Search by Country/Topic Head"/>
+                  <label class="searchLevel" for="floatingInput"> Search by Country/Topic Head</label>
+                </div>
+                <div class="col-md-1 mb-2">
+                  <button type="button" class="btn btn-secondary mr-1 btn-block " data-toggle="modal" (click)="search()" >
+                    Search
+                  </button>
+                </div>
+              </div>
+           </form>
+            
             <div class="row overflow-auto">
               <table datatable [dtOptions]="dtOptions[0]" id="DataTables_Table_1"  class="table table-bordered row-border hover datatableStyle" >
                 <thead >
@@ -40,7 +40,7 @@
                     <th>Country</th>
                     <th>Topic Head</th>
                     <th>Description</th>
-                    <th class="col-1 text-center">Action</th>
+                    <th class="col-1 text-center">Actions</th>
                   </tr>
                 </thead>
                 <tbody *ngIf="topicheads?.length != 0">
@@ -90,9 +90,9 @@
                   <option value="null">Select Country</option>
                   <option *ngFor="let country of countries" [value]="country.id">
                     {{country.name}}
-                  </option>
-                </select>            
-    
+                  </option>                  
+                </select>
+                <label for="countryId" class="dropdownLabel">Country</label>          
                 <div cRow *ngIf="((topicHeadForm.get('countryId')?.invalid && topicHeadForm.get('countryId')?.errors)) &&
                   (topicHeadForm.get('countryId')?.dirty || topicHeadForm.get('countryId')?.touched)">
                   <small class="text-danger">
@@ -149,7 +149,7 @@
               </div>
   
               <div class="form-floating mb-3">
-                <input type="text" class="form-control" formControlName="description" id="description" placeholder="description">
+                <textarea class="form-control" formControlName="description" id="description" placeholder="description"></textarea>
                 <label for="floatingInput">Description</label>
               
   
@@ -171,10 +171,10 @@
                 </div>
               </div>
   
-            <c-form-check sizing="xl" switch>
+            <!-- <c-form-check sizing="xl" switch>
               <input cFormCheckInput checked type="checkbox" formControlName="isActive" id="isActive" checked />
               <label cFormCheckLabel>Active Status</label>
-            </c-form-check>
+            </c-form-check> -->
           </div>
         </c-modal-body>
         <c-modal-footer>
@@ -190,7 +190,175 @@
   
   </c-tab-pane>
   <c-tab-pane class="p-3">
-    Questionnaires
+    <div class="animated fadeIn">
+      <div class="row">
+       <div class="col-lg-12 xs-12">
+         <div class="card">
+           <div class="card-header"><i class="fa fa-align-justify" ></i> 
+             <strong>Questionnaires</strong>
+           </div>
+           
+           <div class="card-body">
+             <form [formGroup]="searchForm2">
+               <div class="row" style="margin: 0 auto;">
+                 <div class="col-md-6 mb-2">
+                   <button [cModalToggle]="verticallyCenteredModalQuestionnaires.id" class="btnCreateColor" (click)="reset()" cButton>
+                     <svg cIcon name="cilPlus" size="md" title="Add Button Icon"></svg> Create
+                   </button> 
+                 </div>
+                 <div class="col-md-5 mb-2 form-floating">
+                   <input type="text" formControlName="searchTerm2" class="form-control searchInput"  placeholder="Search by Questionnaires/Topic Head/Country"/>
+                   <label class="searchLevel" for="floatingInput"> Search by Questionnaires/Topic Head/Country</label>
+                 </div>
+                 <div class="col-md-1 mb-2">
+                   <button type="button" class="btn btn-secondary mr-1 btn-block " data-toggle="modal" (click)="search()" >
+                     Search
+                   </button>
+                 </div>
+               </div>
+            </form>
+             
+             <div class="row overflow-auto"  >
+               <table datatable [dtOptions]="dtOptions[2]" id="DataTables_Table_2"  class="table table-bordered row-border hover datatableStyle" style="width: 100%;">
+                 <thead >
+                   <tr>
+                     <th>Country</th>
+                     <th>Topic Head</th>
+                     <th>Questionnaires</th>
+                     <th class="col-1 text-center">Actions</th>
+                   </tr>
+                 </thead>
+                 <tbody *ngIf="questionnaires?.length != 0">
+                   <tr *ngFor="let questionnaire of questionnaires">
+                     <td>{{ questionnaire.country }}</td>
+                     <td>{{ questionnaire.topicHead }}</td>
+                     <td>{{ questionnaire.question }}</td>
+                     <td class="text-center">
+                       <div class="btn-group" role="group" aria-label="Basic example" >
+                         <!-- <svg cIcon [name]="cil-airplane-mode" [title]="cil-airplane-mode" size="3xl">gjhj</svg> -->
+                         <button type="button" class="btn btn-secondary btnEditColor" (click)="editQuestionnaire(verticallyCenteredModalQuestionnaires,questionnaire)">
+                           <svg cIcon name="cilPencil" size="md" title="Edit Button icon"></svg>
+                         </button>
+                         <button type="button" class="btn btn-danger btnDeleteColor" (click)="deleteQuestionnaire(questionnaire.id)">
+                           <svg cIcon name="cilTrash" size="md" title="Delete Button Icon"></svg>
+                         </button>
+                       </div>
+                     </td>
+                   </tr>
+                 </tbody>
+                 <tbody *ngIf="questionnaires?.length == 0">
+                   <tr>
+                     <td colspan="5" class="no-data-available">No data!</td>
+                   </tr>
+                 </tbody>
+               </table>
+             </div>
+           </div>
+         </div>
+       </div>
+      </div>
+     </div>
+ 
+     <form [formGroup]="questionnaireForm" (ngSubmit)="onSubmitQuestionnaire(verticallyCenteredModalQuestionnaires)" novalidate>
+       <c-modal #verticallyCenteredModalQuestionnaires alignment="center" id="verticallyCenteredModalQuestionnaires">
+         <c-modal-header>
+           <h5 cModalTitle *ngIf="!formService.isEdit(this.questionnaireForm.get('id'))">Create Questionnaire</h5>
+           <h5 cModalTitle *ngIf="formService.isEdit(this.questionnaireForm.get('id'))">Update Questionnaire</h5>
+           <button [cModalToggle]="verticallyCenteredModalQuestionnaires.id" cButtonClose></button>
+         </c-modal-header>
+         <c-modal-body>
+           <div class="col-md-12" >
+             <input type="hidden" formControlName="id"/>
+                <!-- <div class="form-floating mb-3">
+                  <input type="text" readonly class="form-control" id="country" placeholder="country">
+                  <label for="floatingInput">Country</label>
+                </div> -->
+                <div class="form-floating mb-3">
+                  <select aria-label="Floating label select example" cSelect id="countryId"
+                    formControlName="countryId" name="countryId" disabled>
+                    <option value="null">Select Country</option>
+                    <option *ngFor="let country of countries" [value]="country.id">
+                      {{country.name}}
+                    </option>
+                  </select>
+                  <label for="countryId" class="dropdownLabel"> Country</label>
+                </div>
+
+                <div class="form-floating mb-3">
+                  <select aria-label="Floating label select example" cSelect id="topicHeadId"
+                    formControlName="topicHeadId" name="topicHeadId" (change)="onChangeTopic($event.target)">
+                    <option value="null">Select Topic Head</option>
+                    <option *ngFor="let topicHead of topicheadDropdownList" [value]="topicHead.id">
+                      {{topicHead.name}}
+                    </option>
+                  </select>
+                  <label for="topicHeadId" class="dropdownLabel">Topic</label>
+                  <div cRow *ngIf="((questionnaireForm.get('topicHeadId')?.invalid && questionnaireForm.get('topicHeadId')?.errors)) &&
+                    (questionnaireForm.get('topicHeadId')?.dirty || questionnaireForm.get('topicHeadId')?.touched)">
+                    <small class="text-danger">
+                      This field is required.
+                    </small>                                 
+                  </div>
+                </div>
+   
+               <div class="form-floating mb-3">
+                 <textarea type="text" class="form-control" formControlName="question" id="question" placeholder="Type Question"></textarea>
+                 <label for="floatingInput">Questionnaire</label>
+   
+                 <div cRow *ngIf="questionnaireForm.get('question')?.invalid &&
+                 questionnaireForm.get('question')?.errors &&
+                       (questionnaireForm.get('question')?.dirty || questionnaireForm.get('question')?.touched)">
+                   <small class="text-danger"
+                       *ngIf="questionnaireForm.get('question').hasError('required')">
+                       This field is required.
+                   </small>
+                   <small class="text-danger"
+                       *ngIf="questionnaireForm.get('question').hasError('minlength')">
+                       The minimum length for this field is {{questionnaireForm.get('question').errors.minlength.requiredLength}} characters.
+                   </small>
+                   <small class="text-danger"
+                       *ngIf="questionnaireForm.get('question').hasError('maxlength')">
+                       The maximum length for this field is {{questionnaireForm.get('question').errors.maxlength.requiredLength}} characters.
+                   </small>
+                 </div>
+               </div>
+ 
+               <div class="form-floating mb-3">
+                 <input class="form-control" placeholder="effectiveFrom" formControlName="effectiveFrom" id="effectiveFrom" type="date" >
+                 <label for="effectiveFrom">Effective From</label>               
+                 <div cRow *ngIf="questionnaireForm.get('effectiveFrom')?.invalid &&
+                 questionnaireForm.get('effectiveFrom')?.errors &&
+                       (questionnaireForm.get('effectiveFrom')?.dirty || questionnaireForm.get('effectiveFrom')?.touched)">
+                   <small class="text-danger"
+                       *ngIf="questionnaireForm.get('effectiveFrom').hasError('required')"
+                       >
+                       This field is required.
+                   </small>
+                 </div>
+               </div>
+     
+               <div class="form-floating mb-3">
+                 <input class="form-control" placeholder="effectiveTo" formControlName="effectiveTo" id="effectiveTo" type="date" >
+                 <label for="effectiveTo">Effective To</label>
+                 <div cRow *ngIf="questionnaireForm.get('effectiveTo')?.invalid && questionnaireForm.get('effectiveTo')?.errors &&
+                      (questionnaireForm.get('effectiveTo')?.dirty || questionnaireForm.get('effectiveTo')?.touched)">
+                  <small class="text-danger" *ngIf="questionnaireForm.get('effectiveTo').hasError('required')">
+                    This field is required.
+                  </small>                                 
+                 </div>
+               </div>
+           </div>
+         </c-modal-body>
+         <c-modal-footer>
+           <button cButton class="btn btn-primary btnSaveColor me-1" (click)="onSubmitQuestionnaire(verticallyCenteredModalQuestionnaires)">
+             <svg cIcon name="cilSave" size="md" title="Save Button Icon"></svg> Save
+           </button>
+           <button [cModalToggle]="verticallyCenteredModalQuestionnaires.id" cButton class="btn btn-danger btnCancelColor me-1">
+             <svg cIcon name="cilX" size="md" title="Close Button Icon"></svg> Close
+           </button>
+         </c-modal-footer>
+       </c-modal>
+      </form>
   </c-tab-pane>
   <c-tab-pane class="p-3">
    Test Steps

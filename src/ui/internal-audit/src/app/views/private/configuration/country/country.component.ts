@@ -71,14 +71,14 @@ export class CountryComponent implements OnInit {
           if(this.formService.isEdit(this.countryForm.get('id') as FormControl)){
             this.http.put('country',this.countryForm.value,null).subscribe(x=>{
               this.formService.onSaveSuccess(localmodalId,this.datatableElement);
-              this.AlertService.success('Country Saved Successful');
+              this.AlertService.success('Country Saved Successfully');
 
             });
           }
           else{
             this.http.post('country',this.countryForm.value).subscribe(x=>{
               this.formService.onSaveSuccess(localmodalId,this.datatableElement);
-              this.AlertService.success('Country Saved Successful');
+              this.AlertService.success('Country Saved Successfully');
             });
           }
         }

@@ -152,7 +152,8 @@
             <button cButton class="btn btn-primary btnSaveColor me-1" (click)="onSubmit()">
               <svg cIcon name="cilSave" size="md" title="Save Button Icon"></svg> Save
             </button>
-            <button cButton class="btn btn-danger btnCancelColor me-1" onclick="window.location.reload();">
+            <button cButton class="btn btn-danger btnCancelColor me-1" (click)="reset()">
+              <!-- onclick="window.location.reload();" -->
               <svg cIcon name="cilX" size="md" title="Close Button Icon"></svg> Cancel
             </button>
           </c-col>

@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Internal.Audit.Application.Contracts.Persistent.RiskCriterias;
+using Internal.Audit.Domain.CompositeEntities;
 using MediatR;
 using System;
 using System.Collections.Generic;
@@ -24,11 +25,12 @@ namespace Internal.Audit.Application.Features.RiskCriterias.Queries.GetRiskCrite
 
         public async Task<RiskCriteriaListPagingDTO> Handle(GetRiskCriteriaListQuery request, CancellationToken cancellationToken)
         {
-            var (count, result) = await _riskCriteriaRepository.GetAll(request.pageSize, request.pageNumber);
 
-            var riskCriteriaList = _mapper.Map<IEnumerable<RiskCriteriaDTO>>(result).ToList();
+            (long, IEnumerable<CompositeRiskCriteria>) result = await _riskCriteriaRepository.GetAll(request.pageSize, request.pageNumber, request.searchTerm);
 
-            return new RiskCriteriaListPagingDTO { Items = riskCriteriaList, TotalCount = count };
+            var riskCriteriaList = _mapper.Map<List<RiskCriteriaDTO>>(result.Item2);
+
+            return new RiskCriteriaListPagingDTO { Items = riskCriteriaList, TotalCount = result.Item1 };
         }
     }
 }

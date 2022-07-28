@@ -27,12 +27,8 @@ public class WeightScore : EntityBase
     [Required]
     public DateTime EffectiveTo { get; set; }
 
-    [Required]
-    [MaxLength(300)]
-    public string Description { get; set; }
-
-    [ForeignKey("CountryId")]
-    public virtual Country Country { get; set; } = null!;
+    //[ForeignKey("CountryId")]
+    //public virtual Country Country { get; set; } = null!;
 
     [ForeignKey("TopicHeadId")]
     public virtual TopicHead TopicHead { get; set; } = null!;

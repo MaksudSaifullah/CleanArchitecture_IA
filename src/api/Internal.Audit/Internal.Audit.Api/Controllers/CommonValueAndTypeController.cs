@@ -170,7 +170,7 @@ namespace Internal.Audit.Api.Controllers
         }
 
         [HttpGet("auditfrequency")]
-        public async Task<ActionResult<IEnumerable<AuditFrequencyDTO>>> GetAllAuditFrequencyType()
+        public async Task<ActionResult<IEnumerable<AuditFrequencyTypeDTO>>> GetAllAuditFrequencyType()
         {
             var query = new GetAuditFrequencyQuery();
             var auditfrequency = await _mediator.Send(query);

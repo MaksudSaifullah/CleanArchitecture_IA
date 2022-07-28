@@ -1,6 +1,7 @@
 ﻿using Internal.Audit.Domain.Common;
 using Internal.Audit.Domain.Entities.Config;
 using System;
+using System.ComponentModel;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -25,17 +26,18 @@ public class AuditFrequency : EntityBase
     [Required]
     public Guid AuditFrequencyTypeId { get; set; }
 
+    [Required]
+    public DateTime EffectiveFrom { get; set; }
+
+    [Required]
+    public DateTime EffectiveTo { get; set; }
 
     [ForeignKey("CountryId")]
     public virtual Country Country { get; set; } = null!;
 
-    [ForeignKey("AuditScoreId")]
-    public virtual AuditScore AuditScore { get; set; } = null!;
-
-    [ForeignKey("RatingTypeId")]
-    public virtual RatingType RatingType { get; set; } = null!;
-
-    [ForeignKey("AuditFrequencyTypeId")]
-    public virtual AuditFrequencyType AuditFrequencyType { get; set; } = null!;
+    
+    public virtual CommonValueAndType CommonValueAuditScoreType { get; set; }
+    public virtual CommonValueAndType CommonValueRatingType { get; set; }
+    public virtual CommonValueAndType CommonValueAuditFrequencyType { get; set; }
 
 }

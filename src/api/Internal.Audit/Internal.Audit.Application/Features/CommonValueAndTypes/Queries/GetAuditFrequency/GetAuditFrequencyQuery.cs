@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Internal.Audit.Application.Features.CommonValueAndTypes.Queries.GetAuditFrequency;
 
-public record GetAuditFrequencyQuery : IRequest<List<AuditFrequencyDTO>>
+public record GetAuditFrequencyQuery : IRequest<List<AuditFrequencyTypeDTO>>
 {
 
 }

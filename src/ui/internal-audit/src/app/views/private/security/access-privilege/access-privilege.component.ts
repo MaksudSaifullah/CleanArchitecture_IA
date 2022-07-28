@@ -170,7 +170,7 @@ export class AccessPrivilegeComponent implements OnInit {
     return true;
   }
 
-  // reset(){
-  //   this.accessPrivilegeForm.reset();
-  // }
+  reset(){
+    this.loadData();
+  }
 }

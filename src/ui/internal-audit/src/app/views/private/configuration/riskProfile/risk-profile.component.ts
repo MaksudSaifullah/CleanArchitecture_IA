@@ -68,6 +68,7 @@ export class RiskProfileComponent implements OnInit {
       serverSide: true,
       processing: true,
       searching: false,
+      ordering: false,
       ajax: (dataTablesParameters: any, callback) => {
         this.http
           .paginatedPost(
@@ -119,6 +120,7 @@ export class RiskProfileComponent implements OnInit {
     const localmodalId = modalId;
     if (this.riskProfileForm.valid ){
       if(this.formService.isEdit(this.riskProfileForm.get('id') as FormControl)){
+        console.log(this.riskProfileForm.value);
         this.http.put('riskProfile',this.riskProfileForm.value,null).subscribe(x=>{
             localmodalId.visible = false;
             this.dataTableService.redraw(this.datatableElement);

@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Internal.Audit.Application.Contracts.Persistent.Roles;
+using Internal.Audit.Domain.Entities.Security;
 using MediatR;
 
 namespace Internal.Audit.Application.Features.Roles.Queries.GetRolesList
@@ -17,11 +18,9 @@ namespace Internal.Audit.Application.Features.Roles.Queries.GetRolesList
 
         public async Task<RoleListPagingDTO> Handle(GetRoleListQuery request, CancellationToken cancellationToken)
         {
-            var (count, result) = await _roleRepository.GetAll(request.pageSize, request.pageNumber);
-
-            var countryList = _mapper.Map<IEnumerable<RoleDTO>>(result).ToList();
-
-            return new RoleListPagingDTO { Items = countryList, TotalCount = count };
+            (long, IEnumerable<Role>) role = await _roleRepository.GetAll(request.pageSize, request.pageNumber, request.searchTerm);
+            var roleList = _mapper.Map<List<RoleDTO>>(role.Item2);
+            return new RoleListPagingDTO { Items = roleList, TotalCount = role.Item1 };
 
         }
     }

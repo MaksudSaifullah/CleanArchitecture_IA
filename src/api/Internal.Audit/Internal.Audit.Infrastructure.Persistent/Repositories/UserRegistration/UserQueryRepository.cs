@@ -136,7 +136,10 @@ namespace Internal.Audit.Infrastructure.Persistent.Repositories.UserRegistration
 
         public async Task<User> GetByUserEmail(string email)
         {
-            var query = "SELECT * FROM [Security].[User] WHERE [Username] = @email";
+            var query = $@"SELECT u.* FROM [security].[User] u
+                                   INNER JOIN security.Employee e on u.Id = e.UserId
+                                   where e.Email = @email";
+
             var parameters = new Dictionary<string, object> { { "email", email } };
 
             return await Single(query, parameters);

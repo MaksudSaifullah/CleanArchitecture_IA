@@ -1,12 +1,14 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
-import { DefaultLayoutComponent, EmailLayoutComponent } from './containers';
+import { DefaultLayoutComponent} from './containers';
 import { Page404Component } from './views/pages/page404/page404.component';
 import { Page500Component } from './views/pages/page500/page500.component';
 import { LoginComponent } from './views/public/components/login/login.component';
 import { AboutComponent } from './views/public/components/about/about.component';
 import{ AuthGuard} from './core/guards/auth.guard'
+import {ForgotPasswordComponent} from "./views/public/components/forgot-password/forgot-password.component";
+import {ResetPasswordComponent} from "./views/public/components/reset-password/reset-password.component";
 const routes: Routes = [
   {
     path: '',
@@ -68,6 +70,20 @@ const routes: Routes = [
       title: 'About Page'
     }
   },
+  {
+    path: 'forgot-password',
+    component: ForgotPasswordComponent,
+    data: {
+      title: 'Forgot Password'
+    }
+  },
+  {
+    path: 'reset-password/:code',
+    component: ResetPasswordComponent,
+    data: {
+      title: 'Reset Password'
+    }
+  }
 ];
 
 @NgModule({

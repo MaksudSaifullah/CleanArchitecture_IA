@@ -12,9 +12,9 @@ namespace Internal.Audit.Infrastructure.Persistent.Repositories.UserRegistration
         public async Task<bool> IsValidPreCode(string postCode)
         {
             var userPasswordReset = await Single($"SELECT * FROM [security].[UserPasswordReset] where PasswordResetUrlCode= '{postCode}' and IsCompleted = 0");
-            if (userPasswordReset.PasswordResetUrlCodeExpiry < DateTime.Now)
+            if (userPasswordReset?.PasswordResetUrlCodeExpiry < DateTime.Now)
                 return false;
-            return true;
+            return userPasswordReset != null;
         }
 
        
@@ -22,7 +22,7 @@ namespace Internal.Audit.Infrastructure.Persistent.Repositories.UserRegistration
         public async Task<Guid?> UserByValidPostCode(string postcode)
         {
             var userPasswordReset = await Single($"SELECT * FROM [security].[UserPasswordReset] where PasswordResetPostCode  = '{postcode}' and IsCompleted = 0");
-            if (userPasswordReset.PasswordResetPostCodeExpiry< DateTime.Now)
+            if (userPasswordReset.PasswordResetPostCodeExpiry< DateTime.Now.AddMinutes(5))
                 return userPasswordReset.UserId;
             return null;
         }

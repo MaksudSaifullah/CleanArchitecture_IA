@@ -46,7 +46,7 @@ namespace Internal.Audit.Api.Controllers
         }
 
         [HttpPost(nameof(VerifyPasswordResetLink))]
-        public async Task<ActionResult<UserPasswordResetVerifyCommandResponse>> VerifyPasswordResetLink(UserPasswordResetVerifyCommandResponse command)
+        public async Task<ActionResult<UserPasswordResetVerifyCommandResponse>> VerifyPasswordResetLink(UserPasswordCommandVerifyCommand command)
         {
             var result = await _mediator.Send(command);
             return Ok(result);

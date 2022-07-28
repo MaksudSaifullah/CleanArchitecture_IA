@@ -26,7 +26,7 @@ namespace Internal.Audit.Consumer.Service.Service
                 comm.ExecuteNonQuery();
             }
         }
-        public List<TableDataresponse> GetData(DateTime startDate, DateTime endDate, string type = "loandisburse")
+        public List<TableDataresponse> GetData(DateTime startDate, DateTime endDate, string type, Guid DataRequestQueueServiceId,  int CommonValueTableId)
         {
             RequestHelper.WriteInfoLog("Internal.Audit.Consumer.Service Method: " + System.Reflection.MethodBase.GetCurrentMethod().Name + "::" + "Fetching aging data");
             var dynamicList = new List<TableDataresponse>();
@@ -51,9 +51,14 @@ namespace Internal.Audit.Consumer.Service.Service
                         {
                             dynamicList.Add(new TableDataresponse
                             {
-                                Id = Guid.NewGuid(),
+                                CommonValueTableId = CommonValueTableId,
+                                AmountConverted=0,
+                                BranchCode = int.Parse(sqlReader["BranchCode"].ToString()),
+                                DataRequestQueueServiceId=DataRequestQueueServiceId,
+                                FromDate= startDate,
+                                ToDate= endDate,
                                 Amount = decimal.Parse(sqlReader["Amount"].ToString()),
-                                BranchId = long.Parse(sqlReader["Amount"].ToString()),
+                                BranchId = long.Parse(sqlReader["BranchId"].ToString()),
                                 BranchName =sqlReader["BranchName"].ToString(),
                                 
                             });

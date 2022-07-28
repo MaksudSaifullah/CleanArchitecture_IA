@@ -14,14 +14,15 @@ namespace Internal.Audit.Consumer.Service.Handler
         public static RequestStatus GetRequestStatus(bool success, DateTime startDate, DateTime endDate, string error = "", bool compareOnly = false, int progression = 100, int statusId = -1)
         {
             var status = new RequestStatus();
-            status.BeginDate = startDate;
-            status.CountryId = 1;
+            status.FromDate = startDate;           
            // status.EntityId = Int64.Parse(ConfigurationManager.AppSettings["entityId"]);
-            status.EndDate = endDate;
-            status.Message = error;
-            status.Progression = progression;
-            status.Status = statusId != -1 ? statusId : success ? 3 : -1;
-            status.CompareOnly = compareOnly;
+            status.ToDate = endDate;
+            status.AmountConverted = 0;
+            status.Amount = 0;
+            status.BranchName = "";
+            status.BranchCode = 0;
+            status.BranchId = 0;
+            
             return status;
         }
 

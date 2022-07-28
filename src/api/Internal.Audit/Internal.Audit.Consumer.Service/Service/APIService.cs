@@ -99,12 +99,16 @@ namespace Internal.Audit.Consumer.Service.Service
 
         }
 
-        public async Task<bool> PostData(List<TableDataresponse> data, string token, bool compareOnly = false)
+        public async Task<bool> PostData(List<TableDataresponse> request, string token)
         {
             try
             {
-                RequestHelper.WriteInfoLog("Internal.Audit.Consumer.Service Method: " + System.Reflection.MethodBase.GetCurrentMethod().Name + "::" + "posting journal data for branch Id: " + data.FirstOrDefault()?.BranchId);
-                var url = ConfigurationManager.AppSettings["baseApi"];
+                RequestAPI data = new RequestAPI
+                {
+                    dataGet = request
+                };
+                //RequestHelper.WriteInfoLog("Internal.Audit.Consumer.Service Method: " + System.Reflection.MethodBase.GetCurrentMethod().Name + "::" + "posting journal data for branch Id: " + data.FirstOrDefault()?.BranchId);
+                var url = ConfigurationManager.AppSettings["baseApi"]+ ConfigurationManager.AppSettings["ApiUrl"];
                 HttpClient client = new HttpClient();
                 client.Timeout = TimeSpan.FromMinutes(10);
                 client.DefaultRequestHeaders.Authorization =

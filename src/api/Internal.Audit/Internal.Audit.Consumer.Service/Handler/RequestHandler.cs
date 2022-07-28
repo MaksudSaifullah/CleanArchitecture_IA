@@ -1,4 +1,4 @@
-﻿using Asai.Ambs.Utility;
+﻿//using Asai.Ambs.Utility;
 using Internal.Audit.Consumer.Service.IService;
 using Internal.Audit.Consumer.Service.Model;
 using Internal.Audit.Consumer.Service.Service;
@@ -20,42 +20,42 @@ namespace Internal.Audit.Consumer.Service.Handler
 
         public RequestHandler()
         {
-            _connectionString = DBUtility.DecryptConnectionString(ConfigurationManager
-                .ConnectionStrings["Internal.Audit.Consumer.Service.ConnectionString"].ConnectionString);
+            _connectionString = ConfigurationManager
+                .ConnectionStrings["Internal.Audit.Consumer.Service.ConnectionString"].ConnectionString;
             _apiService = new APIService();
             _repositoryService = new RepositoryService(_connectionString);
         }
 
         //public IRepositoryService RepositoryService => _repositoryService;
 
-        public async Task<bool> ProcessRequest(DateTime startDate, DateTime endDate)
+        public async Task<bool> ProcessRequest(DateTime startDate, DateTime endDate,Guid DataRequestQueueServiceId)
         {
             try
             {
                 //todo: add the clusteredEntityCheck and get the branchId into a var if exist
                
-                await _apiService.RequestCompletion(RequestHelper.GetRequestStatus(false, startDate, endDate, "process initiated", false, 1, 2), token);
+              ////  await _apiService.RequestCompletion(RequestHelper.GetRequestStatus(false, startDate, endDate, "process initiated", false, 1, 2), token);
                 //fetch branch list
-                var dataListOverdue = _repositoryService.GetData(startDate, endDate, "Overdue");
+                var dataListOverdue = _repositoryService.GetData(startDate, endDate, "Overdue", DataRequestQueueServiceId, 1);
                 if (!dataListOverdue.Any())
                 {
-                    await _apiService.RequestCompletion(RequestHelper.GetRequestStatus(false, startDate, endDate, "empty  list"), token);
-                    return false;
+                   //// await _apiService.RequestCompletion(RequestHelper.GetRequestStatus(false, startDate, endDate, "empty  list"), token);
+                   //// return false;
                 }
-                var dataListCollection = _repositoryService.GetData(startDate, endDate, "Collection");
+                var dataListCollection = _repositoryService.GetData(startDate, endDate, "Collection", DataRequestQueueServiceId, 2);
                 if (!dataListCollection.Any())
                 {
-                    await _apiService.RequestCompletion(RequestHelper.GetRequestStatus(false, startDate, endDate, "empty  list"), token);
-                    return false;
+                   //// await _apiService.RequestCompletion(RequestHelper.GetRequestStatus(false, startDate, endDate, "empty  list"), token);
+                   //// return false;
                 }
 
-                var dataListDisburse = _repositoryService.GetData(startDate, endDate, "Disburse");
+                var dataListDisburse = _repositoryService.GetData(startDate, endDate, "Disburse", DataRequestQueueServiceId, 3);
                 if (!dataListDisburse.Any())
                 {
-                    await _apiService.RequestCompletion(RequestHelper.GetRequestStatus(false, startDate, endDate, "empty  list"), token);
-                    return false;
+                  ////  await _apiService.RequestCompletion(RequestHelper.GetRequestStatus(false, startDate, endDate, "empty  list"), token);
+                   //// return false;
                 }
-                return true;
+                
                 var isDataPostedOverDue = await _apiService.PostData(dataListOverdue, token);
                 var isDataPostedCollection = await _apiService.PostData(dataListCollection, token);
                 var isDataPostedDisburse = await _apiService.PostData(dataListDisburse, token);

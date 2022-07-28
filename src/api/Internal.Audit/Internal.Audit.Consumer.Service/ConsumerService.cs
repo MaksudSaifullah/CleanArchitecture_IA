@@ -62,7 +62,7 @@ namespace Internal.Audit.Consumer.Service
                         if (e.Redelivered)
                         {
                             RequestHelper.WriteInfoLog("Internal.Audit.Consumer.Service Method: " + System.Reflection.MethodBase.GetCurrentMethod().Name + "::" + "Redelivered Request received.");
-                            return;
+                           // return;
                         }
                         var body = e.Body.ToArray();
                         RequestHelper.WriteInfoLog("Internal.Audit.Consumer.Service Method: " + System.Reflection.MethodBase.GetCurrentMethod().Name + "::" + "Body parsed.");
@@ -82,12 +82,13 @@ namespace Internal.Audit.Consumer.Service
                         var endDate = messaJObject["ToDate"] != null ? Convert.ToDateTime(messaJObject["ToDate"].ToString()) : DateTime.MinValue;
                         RequestHelper.WriteInfoLog("Internal.Audit.Consumer.Service Method: " + System.Reflection.MethodBase.GetCurrentMethod().Name + "::" + "End date: " + endDate);
                         var _requestHandler = new RequestHandlerFactory().GetRequestHandler(false);
-
+                        var DataRequestQueueServiceId = messaJObject["DataRequestQueueServiceId"] != null ? Guid.Parse(messaJObject["DataRequestQueueServiceId"].ToString()) : Guid.NewGuid();
+                        
 
                         //RequestHelper.WriteInfoLog("Internal.Audit.Consumer.Service Method: " + System.Reflection.MethodBase.GetCurrentMethod().Name + "::" + "factory product received.");
                         //RequestHelper.WriteInfoLog("Internal.Audit.Consumer.Service Method: " + System.Reflection.MethodBase.GetCurrentMethod().Name + "::" + "received request: ." + messaJObject);
                         //RequestHelper.WriteInfoLog("Internal.Audit.Consumer.Service Method: " + System.Reflection.MethodBase.GetCurrentMethod().Name + "::" + "process is about to start ");
-                        var isProcessed = _requestHandler.ProcessRequest(startDate, endDate).GetAwaiter().GetResult();
+                        var isProcessed = _requestHandler.ProcessRequest(startDate, endDate, DataRequestQueueServiceId).GetAwaiter().GetResult();
                         RequestHelper.WriteInfoLog("Internal.Audit.Consumer.Service Method: " + System.Reflection.MethodBase.GetCurrentMethod().Name + "::" + "process ended.");
                         if (!isProcessed)
                             RequestHelper.WriteInfoLog("Internal.Audit.Consumer.Service Method: " + System.Reflection.MethodBase.GetCurrentMethod().Name + "::" + "Requested Operation Failed.");

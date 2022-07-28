@@ -8,6 +8,6 @@ namespace Internal.Audit.Consumer.Service.Handler
 {
     public interface IRequestHandler
     {
-        Task<bool> ProcessRequest(DateTime startDate, DateTime endDate);
+        Task<bool> ProcessRequest(DateTime startDate, DateTime endDate,Guid DataRequestQueueServiceId);
     }
 }

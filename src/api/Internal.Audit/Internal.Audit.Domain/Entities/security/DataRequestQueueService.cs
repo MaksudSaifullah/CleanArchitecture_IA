@@ -1,9 +1,10 @@
 ﻿using Internal.Audit.Domain.Common;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Internal.Audit.Domain.Entities.security;
-
+[Table("DataRequestQueueService", Schema = "Security")]
 public class DataRequestQueueService:EntityBase
 {
     [Required]

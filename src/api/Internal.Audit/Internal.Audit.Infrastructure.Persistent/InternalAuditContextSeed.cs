@@ -365,7 +365,12 @@ public class InternalAuditContextSeed
             },new CommonValueAndType
             {
                 IsActive = true,CreatedBy="admin",CreatedOn=DateTime.Now,Type="IDCREATION",SubType="",Value=15,Text="FinalReport- Final Report",SortOrder=130,
-            },new CommonValueAndType
+            }
+            ,new CommonValueAndType
+            {
+                IsActive = true,CreatedBy="admin",CreatedOn=DateTime.Now,Type="IDCREATION",SubType="",Value=16,Text="BAudit- New Branch Audit",SortOrder=140,
+            },
+            new CommonValueAndType
             {
                 IsActive = true,CreatedBy="admin",CreatedOn=DateTime.Now,Type="DATAPULLREQUEST",SubType="",Value=1,Text="OverDue",SortOrder=10,
             },new CommonValueAndType

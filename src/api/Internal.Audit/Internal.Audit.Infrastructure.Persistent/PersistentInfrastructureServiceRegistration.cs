@@ -157,6 +157,8 @@ public static class PersistentInfrastructureServiceRegistration
         services.AddScoped<IAuditCommandRepository, AuditCommandRepository>();
         services.AddScoped<IAuditQueryRepository>(s => new AuditQueryRepository(configuration.GetConnectionString("InternalAuditDb")));
 
+        services.AddScoped<IAuditPlanCodeQueryRepository>(s => new AuditPlanCodeQueryRepository(configuration.GetConnectionString("InternalAuditDb")));
+
         return services;
     }
 }

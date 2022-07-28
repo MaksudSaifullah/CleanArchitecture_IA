@@ -15,7 +15,7 @@
                   </button> 
                 </div>
                 <div class="col-md-5 mb-2 form-floating">
-                  <input type="text" class="form-control searchInput" formControlName="searchText"  placeholder="Search by Audit Id"/>
+                  <input type="textarea" class="form-control searchInput" formControlName="searchText"  placeholder="Search by Audit Id"/>
                   <label class="searchLevel" for="floatingInput">Search by Audit Id</label>
                 </div>
                 <div class="col-md-1 mb-2">
@@ -86,64 +86,116 @@
     <c-modal-body>
       <div class="col-md-12" >
         <input type="hidden" formControlName="id"/>
-
-            <!-- <div cFormFloating>
-              <select aria-label="Floating label select example" cSelect id="emailTypeId"
-                formControlName="emailTypeId" name="emailTypeId">
-                <option value=null>Select Email Type</option>
-                <option *ngFor="let emailType of emailTypes" [value]="emailType.id">
-                  {{emailType.name}}
-                </option>
-              </select>
-              <label for="emailTypeId" class="dropdownLabel">Select Email Type</label>
-            </div> -->
-            <div cRow *ngIf="(auditForm.get('emailTypeId')?.invalid && auditForm.get('emailTypeId')?.errors) &&         
-            (auditForm.get('emailTypeId')?.dirty || auditForm.get('emailTypeId')?.touched)">
-            <small class="text-danger">
-              This field is required.
-            </small>                                 
-          </div> 
-          <br>
           <div cFormFloating>
-            <select aria-label="Floating label select example" cSelect id="countryId"
-              formControlName="countryId" name="countryId">
+            <select aria-label="Floating label select example" cSelect id="countryId" formControlName="countryId" name="countryId" (change)="LoadAuditId()">
               <option value=null>Select Country</option>
               <option *ngFor="let country of countries" [value]="country.id">
                 {{country.name}}
               </option>
             </select>
-            <label for="countryId" class="dropdownLabel">Select Country</label>
+            <label for="countryId" class="dropdownLabel">Country</label>
           </div>
           <div cRow *ngIf="(auditForm.get('countryId')?.invalid && auditForm.get('countryId')?.errors) &&         
+            (auditForm.get('countryId')?.dirty || auditForm.get('countryId')?.touched)">
+            <small class="textarea-danger">
+              This field is required.
+            </small>                                 
+          </div> 
+        <br>
+        <div cFormFloating>
+          <select aria-label="Floating label select example" cSelect id="auditTypeId" formControlName="auditTypeId" name="auditTypeId" >
+            <option value=null>Select Audit</option>
+            <option *ngFor="let auditType of auditTypes" [value]="auditType.id">
+              {{auditType.text}}
+            </option>
+          </select>
+          <label for="auditTypeId" class="dropdownLabel">Audit Type</label>
+        </div>
+        <!-- <div cRow *ngIf="(auditForm.get('countryId')?.invalid && auditForm.get('countryId')?.errors) &&         
           (auditForm.get('countryId')?.dirty || auditForm.get('countryId')?.touched)">
+          <small class="textarea-danger">
+            This field is required.
+          </small>                                 
+        </div>  -->
+      <br>
+        <div class="form-floating">
+          <!-- <textarea class="form-control" placeholder="Year" formControlName="year" id="year"></textarea> -->
+          <input type="text" class="form-control" formControlName="year" id="year" placeholder="Year">
+          <label for="floatingInput">Year</label>
+        </div>
+        <div cRow *ngIf="(auditForm.get('year')?.invalid && auditForm.get('year')?.errors) &&         
+          (auditForm.get('year')?.dirty || auditForm.get('year')?.touched)">
           <small class="text-danger">
+            This field is required.
+          </small>                                 
+      </div> 
+        <br>
+        <div cFormFloating>
+          <select aria-label="Floating label select example" cSelect id="planId" formControlName="planId" name="planId" >
+            <option value=null>Select Plan Id</option>
+            <option *ngFor="let auditPlan of auditPlanCodes" [value]="auditPlan.planCode">
+              {{auditPlan.planCode}}
+            </option>
+          </select>
+          <label for="planId" class="dropdownLabel">Plan Id</label>
+        </div>
+        <div cRow *ngIf="(auditForm.get('planId')?.invalid && auditForm.get('planId')?.errors) &&         
+          (auditForm.get('planId')?.dirty || auditForm.get('planId')?.touched)">
+          <small class="textarea-danger">
             This field is required.
           </small>                                 
         </div> 
+       
         <br>
-
-        
+        <div class="form-floating">
+          <!-- <textarea class="form-control" placeholder="Audit Id" formControlName="auditId" id="auditId"></textarea> -->
+          <input type="text" class="form-control" formControlName="auditId" id="auditId" placeholder="Audit Id">
+          <label for="floatingInput">Audit Id</label>
+        </div>
+        <div cRow *ngIf="(auditForm.get('auditId')?.invalid && auditForm.get('auditId')?.errors) &&         
+        (auditForm.get('auditId')?.dirty || auditForm.get('auditId')?.touched)">
+        <small class="text-danger">
+          This field is required.
+        </small>                                 
+        </div> 
+        <br>
+        <div class="form-floating">
+          <!-- <textarea class="form-control" placeholder="Audit Id" formControlName="auditId" id="auditId"></textarea> -->
+          <input type="text" class="form-control" formControlName="auditName" id="auditName" placeholder="Audit Name">
+          <label for="floatingInput">Audit Name</label>
+        </div>
+        <div cRow *ngIf="(auditForm.get('auditName')?.invalid && auditForm.get('auditName')?.errors) &&         
+        (auditForm.get('auditName')?.dirty || auditForm.get('auditName')?.touched)">
+        <small class="text-danger">
+          This field is required.
+        </small>                                 
+        </div> 
+        <br>
       <div class="form-floating">
-        <textarea class="form-control" placeholder="Template Subject" formControlName="templateSubject" id="templateSubject"></textarea>
-        <label for="floatingTextarea">Template Subject</label>
+        <input class="form-control" placeholder="auditPeriodFrom" formControlName="auditPeriodFrom" id="auditPeriodFrom" type="date" >
+        <label for="auditPeriodFrom">Audit Period From</label>
       </div>
-      <div cRow *ngIf="(auditForm.get('templateSubject')?.invalid && auditForm.get('templateSubject')?.errors) &&         
-          (auditForm.get('templateSubject')?.dirty || auditForm.get('templateSubject')?.touched)">
-          <small class="text-danger">
-            This field is required.
-          </small>                                 
-      </div> 
+      <div cRow *ngIf="auditForm.get('auditPeriodFrom')?.invalid && auditForm.get('auditPeriodFrom')?.errors &&
+            (auditForm.get('auditPeriodFrom')?.dirty || auditForm.get('auditPeriodFrom')?.touched)">
+        <small class="textarea-danger" *ngIf="auditForm.get('auditPeriodFrom').hasError('required')">
+          This field is required.
+        </small>                                 
+      </div>
       <br>
       <div class="form-floating">
-        <textarea class="form-control" placeholder="Template Body" formControlName="templateBody" id="templateBody"></textarea>
-        <label for="floatingTextarea">Template Body</label>
+        <input class="form-control" placeholder="auditPeriodTo" formControlName="auditPeriodTo" id="auditPeriodTo" type="date" >
+        <label for="auditPeriodTo">Audit Period To</label>
       </div>
-      <div cRow *ngIf="(auditForm.get('templateBody')?.invalid && auditForm.get('templateBody')?.errors) &&         
-          (auditForm.get('templateBody')?.dirty || auditForm.get('templateBody')?.touched)">
-          <small class="text-danger">
-            This field is required.
-          </small>                                 
-      </div> 
+      <div cRow *ngIf="auditForm.get('auditPeriodTo')?.invalid && auditForm.get('auditPeriodTo')?.errors &&
+            (auditForm.get('auditPeriodTo')?.dirty || auditForm.get('auditPeriodTo')?.touched)">
+        <small class="textarea-danger" *ngIf="auditForm.get('auditPeriodTo').hasError('required')">
+          This field is required.
+        </small>                                                      
+      </div>
+      <small class="textarea-danger" *ngIf="auditForm.hasError('invalidDateRange')">
+        Effective from should be greater than effective to.
+      </small>          
+      <br>         
       </div>
     </c-modal-body>
     <c-modal-footer>

@@ -4,11 +4,14 @@ import { DatatableService } from 'src/app/core/services/datatable.service';
 import { HttpService } from 'src/app/core/services/http.service';
 import { EmailConfig} from 'src/app/core/interfaces/configuration/emailConfig.interface'
 import { FormService } from 'src/app/core/services/form.service';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, MaxLengthValidator, Validators } from '@angular/forms';
 import {AlertService} from '../../../../core/services/alert.service';
 import { country } from 'src/app/core/interfaces/configuration/country.interface';
 import { Audit } from 'src/app/core/interfaces/branch-audit/audit.interface';
+import { AuditPlanCode } from 'src/app/core/interfaces/branch-audit/auditPlanCode.interface';
 import { paginatedResponseInterface } from 'src/app/core/interfaces/paginated.interface';
+import { commonValueAndType } from 'src/app/core/interfaces/configuration/commonValueAndType.interface';
+import { formatDate } from '@angular/common';
 
 @Component({
   selector: 'app-audit',
@@ -23,17 +26,23 @@ export class AuditComponent implements OnInit {
   audits: Audit[] = [];
   formService: FormService = new FormService();
   auditForm: FormGroup;
-   auditSearchForm: FormGroup;
+  auditSearchForm: FormGroup;
   countries: country[] = [];
-  //emailTypes: EmailType []=[];
+  auditTypes: commonValueAndType[] = [];
+  auditIds: commonValueAndType | undefined;
+  auditPlanCodes: AuditPlanCode [] = [];
 
   constructor(private http: HttpService, private fb: FormBuilder, private AlertService: AlertService) {
     this.auditForm = this.fb.group({
       id: [''],
-      emailTypeId: [null,[Validators.required]],
+      auditTypeId: ["1"],
       countryId: [null,[Validators.required]],
-      templateSubject: ['',[Validators.required]],
-      templateBody: ['',[Validators.required]],
+      year: ['',[Validators.required,Validators.maxLength(4),Validators.minLength(4)]],
+      planId: ['',[Validators.required]],
+      auditId: ['',[Validators.required]],
+      auditName:['',[Validators.required]],
+      auditPeriodFrom: ['',[Validators.required]],
+      auditPeriodTo: ['',[Validators.required]],
       
     })
 
@@ -44,8 +53,10 @@ export class AuditComponent implements OnInit {
 
   ngOnInit() {
     this.LoadData();
-    // this.LoadCountry();
-    // this.LoadEmailType();
+    this.LoadCountry();
+    this.LoadAuditType();
+    this.LoadAuditPlanCode();
+   // this.LoadAuditId();
   }
 
   LoadData() {
@@ -69,10 +80,6 @@ export class AuditComponent implements OnInit {
   search(){
      this.dataTableService.redraw(this.datatableElement);
    }
-  // clearSearch(){
-  //   this.auditSearchForm.setValue({searchText:''})
-  //   this.dataTableService.redraw(this.datatableElement);
-  // }
 
   onSubmit(modalId:any):void{
     const localmodalId = modalId;
@@ -85,7 +92,7 @@ export class AuditComponent implements OnInit {
           });
         }
         else{
-         // console.log(this.emailConfigForm.value);
+          console.log(this.auditForm.value);
           this.http.post('audit',this.auditForm.value).subscribe(x=>{
             this.formService.onSaveSuccess(localmodalId,this.datatableElement);
             this.AlertService.success('Audit Saved Successful');
@@ -93,44 +100,63 @@ export class AuditComponent implements OnInit {
         }
       }
   }
-  // edit(modalId:any, config:any):void {
-  //   const localmodalId = modalId;
-  //   console.log(config)
-  //   this.http
-  //     .getById('audit',config.id)
-  //     .subscribe(res => {
-  //         const configResponse = res as EmailConfig;
-  //         this.auditForm.setValue({id : configResponse.id, emailTypeId : configResponse.emailTypeId, countryId: configResponse.countryId, templateSubject: configResponse.templateSubject, templateBody: configResponse.templateBody});
-  //     });
-  //     localmodalId.visible = true;
-  // }
+  edit(modalId:any, audit:any):void {
+    const localmodalId = modalId;
+    console.log(audit)
+    this.http
+      .getById('audit',audit.id)
+      .subscribe(res => {
+          const auditResponse = res as Audit;
+          this.auditForm.setValue({id : auditResponse.id, countryId : auditResponse.countryId, auditName: auditResponse.auditName, year:auditResponse.year, auditTypeId: auditResponse.auditTypeId, planId: auditResponse.planId, auditId: auditResponse.auditId, 
+            auditPeriodFrom: formatDate(auditResponse.auditPeriodFrom, 'yyyy-MM-dd', 'en'),
+            auditPeriodTo: formatDate(auditResponse.auditPeriodTo, 'yyyy-MM-dd', 'en')});
+      });
+      localmodalId.visible = true;
+  }
 
-  // delete(id:string){
-  //  // console.log(id)
-  //   const that = this;
-  //   this.AlertService.confirmDialog().then(res =>{
-  //     if(res.isConfirmed){
-  //         this.http.delete('audit/'+ id ,{}).subscribe(response=>{
-  //         this.AlertService.successDialog('Deleted','Audit deleted successfully.');
-  //         this.dataTableService.redraw(that.datatableElement);
-  //       })
-  //     }
-  //   });
-  // }
+  delete(id:string){
+   // console.log(id)
+    const that = this;
+    this.AlertService.confirmDialog().then(res =>{
+      if(res.isConfirmed){
+          this.http.delete('audit/'+ id ,{}).subscribe(response=>{
+          this.AlertService.successDialog('Deleted','Audit deleted successfully.');
+          this.dataTableService.redraw(that.datatableElement);
+        })
+      }
+    });
+  }
 
-  // LoadCountry() {
-  //   this.http.paginatedPost('country/paginated', 100, 1, {}).subscribe(resp => {
-  //     let convertedResp = resp as paginatedResponseInterface<country>;
-  //     this.countries = convertedResp.items;    
-  //   })
-  // }
-  // LoadEmailType() {
-  //   this.http.paginatedPost('emailconfig/paginatedEmailType', 100, 1, {}).subscribe(resp => {
-  //     let convertedResp = resp as paginatedResponseInterface<EmailType>;
-  //     this.emailTypes = convertedResp.items;
-  //   })
-  // }
+  LoadAuditId(){
+    console.log(';sldflaskdjflsdkjf;lsdkfj')
+    console.log(this.auditForm.value.countryId)
+    this.http.get('commonValueAndType/idcreation?idcreationValue=1&auditType=1&countryId='+this.auditForm.value.countryId).subscribe(resp => {
+      let convertedResp = resp as commonValueAndType;
+      this.auditIds = convertedResp;
+      this.auditForm.patchValue({auditId: this.auditIds.text})
+    })
+  }
+  LoadCountry() {
+    this.http.paginatedPost('country/paginated', 100, 1, {}).subscribe(resp => {
+      let convertedResp = resp as paginatedResponseInterface<country>;
+      this.countries = convertedResp.items;    
+    })
+  }
+  LoadAuditType() {
+    this.http.get('commonValueAndType/audittype').subscribe(resp => {
+      let convertedResp = resp as commonValueAndType[];
+      this.auditTypes = convertedResp;
+    })
+  }
+  LoadAuditPlanCode(){
+    this.http.paginatedPost('audit/paginatedAuditPlanCode', 100 , 1 , {}).subscribe(resp => {
+      let convertedResp = resp as paginatedResponseInterface<AuditPlanCode>;
+      this.auditPlanCodes = convertedResp.items;
+    })
+  }
   reset(){
     this.auditForm.reset();
+    this.auditForm.patchValue({auditTypeId:"1"});
+    //this.auditForm.controls['auditTypeId'].disable();
   }
 }

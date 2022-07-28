@@ -125,6 +125,7 @@ using Internal.Audit.Application.Features.Questionnnaires.Commands.UpdateQuestio
 using Internal.Audit.Application.Features.Questionnnaires.Commands.DeleteQuestionnaire;
 using Internal.Audit.Application.Features.DataRequestQueue.Command.AddDataRequestQueueCommand;
 using Internal.Audit.Application.Features.AmbsDataSyncs.Command.AddAmbsDataSyncCommand;
+using Internal.Audit.Application.Features.Audit.Queries.GetAuditPlanCodeList;
 
 namespace Internal.Audit.Application.Mappings;
 
@@ -328,6 +329,7 @@ public class MappingProfile : Profile
         CreateMap<AuditCreation, DeleteAuditCommand>().ReverseMap();
         CreateMap<CompositAudit, GetAuditByIdResponseDTO>().ReverseMap();
         CreateMap<AuditCreation, UpdateAuditCommand>().ReverseMap();
+        CreateMap<AuditPlanCode, GetAuditPlanCodeListResponseDTO>().ReverseMap();
 
     }
 }

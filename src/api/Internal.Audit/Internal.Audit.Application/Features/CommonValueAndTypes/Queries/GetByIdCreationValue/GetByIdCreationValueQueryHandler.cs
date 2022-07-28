@@ -26,8 +26,12 @@ public class GetByIdCreationValueQueryHandler : IRequestHandler<GetByIdCreationQ
     {
         var commonValue =await _commonValueAndTypesRepository.GetByIDCreationValue(request.value);
         var country = await _countryRepository.GetById(request.countryId);
-        string auditType = request.auditType == 1 ? "BA" : "PNC";
-        string code = commonValue.Text.Split('-')[0].Trim()+ auditType+country.Code+DateTime.Now.ToString("yyyyMMddHHmmss");
+        string auditType = request.auditType == 1 ? "BA" : "PNC";        
+        if(request.value == 4 || request.value == 16)
+        {
+            auditType = "";
+        }
+        string code = commonValue.Text.Split('-')[0].Trim()+ auditType + country.Code+DateTime.Now.ToString("yyyyMMddHHmmss");
         return new GetByIdCreationValueDTO { Text = code };
     }
 }

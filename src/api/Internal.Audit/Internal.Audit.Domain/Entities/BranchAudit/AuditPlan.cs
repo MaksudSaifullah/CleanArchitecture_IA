@@ -28,7 +28,7 @@ namespace Internal.Audit.Domain.Entities.BranchAudit
         public string AssesmentCode { get; set; } = null!;
 
         [Required]
-        public Int32 PlanningYear { get; set; } 
+        public string? PlanningYear { get; set; } 
 
         [Required]
         public DateTime AssesmentFrom { get; set; }
@@ -40,8 +40,9 @@ namespace Internal.Audit.Domain.Entities.BranchAudit
         [ForeignKey("CountryId")]
         public virtual Country Country { get; set; } = null!;
 
+
         [ForeignKey("AuditTypeId")]
-        public virtual AuditType AuditType { get; set; } = null!;
+        public virtual CommonValueAndType CommonValueAuditType { get; set; } = null!;
 
         [ForeignKey("RiskAssesmentId")]
         public virtual RiskAssessment RiskAssesment { get; set; } = null!;

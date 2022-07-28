@@ -1,5 +1,7 @@
-﻿using Internal.Audit.Application.Contracts.Persistent.UserRegistration;
+﻿using Internal.Audit.Application.Contracts.Notifications;
+using Internal.Audit.Application.Contracts.Persistent.UserRegistration;
 using MediatR;
+using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,11 +15,15 @@ namespace Internal.Audit.Application.Features.UserPasswordReset.Command
     {
         private readonly IUserPasswordResetCommandRepository _userPasswordResetCommandRepository;
         private readonly IUserQueryRepository _userQueryRepository;
+        private readonly IMailService _mailService;
+        private readonly IConfiguration _configuration;
 
-        public UserPasswordResetCommandHandler(IUserPasswordResetCommandRepository userPasswordResetCommandRepository, IUserQueryRepository userQueryRepository)
+        public UserPasswordResetCommandHandler(IUserPasswordResetCommandRepository userPasswordResetCommandRepository, IUserQueryRepository userQueryRepository, IMailService mailService, IConfiguration configuration)
         {
             _userPasswordResetCommandRepository = userPasswordResetCommandRepository;
             _userQueryRepository = userQueryRepository;
+            _mailService = mailService;
+            _configuration = configuration;
         }
 
         public async Task<UserPasswordResetCommandResponse> Handle(UserPasswordResetCommand request, CancellationToken cancellationToken)
@@ -33,6 +39,11 @@ namespace Internal.Audit.Application.Features.UserPasswordReset.Command
                 };
             }
             await _userPasswordResetCommandRepository.UserPasswordResetCreate(user.Id, random);
+            // email send for password reset
+            _mailService.Setup(_configuration.GetValue<string>("MailSettings:DefaultSender"), new List<string>() { request.Email }, new List<string>(), true);
+            _mailService.FormatSubject("Password Reset Request From Internal Audit ", "", new Dictionary<string, string>());
+            _mailService.FormatBody($"For reset your password, <a href='{_configuration.GetValue<string>("ClientApplicationHost")}reset-password/{random}'>Click Here</a>", "", new Dictionary<string, string>());
+            await _mailService.SendAsync();
 
             return new UserPasswordResetCommandResponse()
             {

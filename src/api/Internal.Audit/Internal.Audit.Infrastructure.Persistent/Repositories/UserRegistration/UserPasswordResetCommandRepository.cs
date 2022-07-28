@@ -29,6 +29,7 @@ namespace Internal.Audit.Infrastructure.Persistent.Repositories.UserRegistration
         {
             var userPasswordReset = _dbContext.UserPasswordResets.FirstOrDefault(x => x.PasswordResetUrlCode == preCode);
             userPasswordReset.PasswordResetPostCode = postCode;
+            userPasswordReset.PasswordResetUrlCodeExpiry = DateTime.Now.AddMinutes(-2);
             userPasswordReset.PasswordResetPostCodeExpiry = DateTime.Now.AddMinutes(5);
             _dbContext.Update(userPasswordReset);
             await _dbContext.SaveChangesAsync();

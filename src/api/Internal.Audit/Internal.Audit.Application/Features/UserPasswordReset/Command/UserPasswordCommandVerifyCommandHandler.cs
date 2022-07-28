@@ -24,10 +24,11 @@ namespace Internal.Audit.Application.Features.UserPasswordReset.Command
             try
             {
                 var isValidPreCode = await _userPasswordResetRepository.IsValidPreCode(request.EmailCode);
-                string random = string.Join("", Guid.NewGuid().ToString("n").Take(8).Select(o => o));
+                
 
                 if (isValidPreCode)
                 {
+                    string random = string.Join("", Guid.NewGuid().ToString("n").Take(8).Select(o => o));
                     await _userPasswordResetCommandRepository.UserPasswordResetUpdatePostCode(request.EmailCode, random);
                     return new UserPasswordResetVerifyCommandResponse()
                     {

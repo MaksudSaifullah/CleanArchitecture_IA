@@ -12,11 +12,11 @@ public class RiskAssessmentQueryRepository : QueryRepositoryBase<CompositeRiskAs
     public RiskAssessmentQueryRepository(string _connectionString) : base(_connectionString)
     {
     }
-
-    public async Task<(long, IEnumerable<CompositeRiskAssessment>)> GetAll(int pageSize, int pageNumber)
+   
+    public async Task<(long, IEnumerable<CompositeRiskAssessment>)> GetAll(int pageSize, int pageNumber, string search , string year)
     {
-        var query = "EXEC [dbo].[GetRiskAssessmentListProcedure] @pageSize,@pageNumber";
-        var parameters = new Dictionary<string, object> { { "@pageSize", pageSize }, { "@pageNumber", pageNumber } };
+        var query = "EXEC [dbo].[GetRiskAssessmentListProcedure] @pageSize,@pageNumber,@searchTerm, @year";
+        var parameters = new Dictionary<string, object> { { "@pageSize", pageSize }, { "@pageNumber", pageNumber }, { "@searchTerm", search }, { "@year", year } };
         return await GetWithPagingInfo(query, parameters, false);
     }
     public async Task<CompositeRiskAssessment> GetById(Guid id)

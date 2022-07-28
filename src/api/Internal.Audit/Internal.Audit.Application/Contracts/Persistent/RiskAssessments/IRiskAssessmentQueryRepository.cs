@@ -9,7 +9,7 @@ namespace Internal.Audit.Application.Contracts.Persistent.RiskAssessments
 {
     public interface IRiskAssessmentQueryRepository : IAsyncQueryRepository<CompositeRiskAssessment>
     {
-        Task<(long, IEnumerable<CompositeRiskAssessment>)> GetAll(int pageSize, int pageNumber);
+        Task<(long, IEnumerable<CompositeRiskAssessment>)> GetAll(int pageSize, int pageNumber, string search, string year);
 
         Task<CompositeRiskAssessment> GetById(Guid id);
     }

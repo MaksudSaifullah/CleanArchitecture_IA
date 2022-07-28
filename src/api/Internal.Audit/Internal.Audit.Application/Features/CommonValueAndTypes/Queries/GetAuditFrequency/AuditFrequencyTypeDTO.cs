@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Internal.Audit.Application.Features.CommonValueAndTypes.Queries.GetAuditFrequency;
 
-public record AuditFrequencyDTO
+public record AuditFrequencyTypeDTO
 {
 public Guid Id { get; set; }
 public string Type { get; set; }

@@ -7,24 +7,24 @@
           <i class="fa fa-align-justify" ></i> Country List
         </div>
         <div class="card-body">
-         
-          <div class="row" style="margin: 0 auto;">
-            <div class="col-md-6 mb-2">
-              <button [cModalToggle]="verticallyCenteredModal.id" class="btnCreateColor" (click)="reset()" cButton>
-                <svg cIcon name="cilPlus" size="md" title="Add Button Icon"></svg> Create
-              </button> 
+          <form [formGroup]="searchForm">
+            <div class="row" style="margin: 0 auto;">
+              <div class="col-md-6 mb-2">
+                <button [cModalToggle]="verticallyCenteredModal.id" class="btnCreateColor" (click)="reset()" cButton>
+                  <svg cIcon name="cilPlus" size="md" title="Add Button Icon"></svg> Create
+                </button> 
+              </div>
+              <div class="col-md-5 mb-2 form-floating">
+                <input type="text" formControlName="searchTerm" class="form-control searchInput"  placeholder="Search by Name or Code"/>
+                <label class="searchLevel" for="floatingInput">Country Name / Country Code</label>
+              </div>
+              <div class="col-md-1 mb-2">
+                <button type="button" class="btn btn-secondary mr-1 btn-block searchBtn" data-toggle="modal" (click)="search()" >
+                  Search
+                </button>
+              </div>
             </div>
-            <div class="col-md-5 mb-2 form-floating">
-              <input type="text" class="form-control searchInput"  placeholder="Search by Name or Code"/>
-              <label class="searchLevel" for="floatingInput">Country Name / Country Code</label>
-            </div>
-            <div class="col-md-1 mb-2">
-              <button type="button" class="btn btn-secondary mr-1 btn-block searchBtn" data-toggle="modal" >
-                Search
-              </button>
-            </div>
-          </div>
-          
+         </form>
           <div class="row overflow-auto">
               <table datatable [dtOptions]="dtOptions" class="table table-bordered row-border hover datatableStyle" >
                 <thead>

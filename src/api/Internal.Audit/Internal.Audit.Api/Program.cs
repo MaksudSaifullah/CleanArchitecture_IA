@@ -2,6 +2,7 @@ using Internal.Audit.Api.Extensions;
 using Internal.Audit.Api.Middlewares;
 using Internal.Audit.Application;
 using Internal.Audit.Application.Common;
+using Internal.Audit.Infrastructure.MQService;
 using Internal.Audit.Infrastructure.Notification;
 using Internal.Audit.Infrastructure.Persistent;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -58,6 +59,7 @@ builder.Services.AddApiServices();
 builder.Services.AddApplicationServices();
 builder.Services.AddPersistentInfrastructureServices(builder.Configuration);
 builder.Services.AddInfrastructureNotificationsServices(builder.Configuration);
+builder.Services.AddInfrastructureMQServices(builder.Configuration);
 
 builder.Services.AddApiVersioning(config =>
 {
@@ -141,12 +143,13 @@ app.MigrateDatabase<InternalAuditContext>((context, services) =>
 });
 
 // Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
-{
-    app.UseSwagger();
-    app.UseSwaggerUI();
-}
-
+//if (app.Environment.IsDevelopment())
+//{
+//    app.UseSwagger();
+//    app.UseSwaggerUI();
+//}
+app.UseSwagger();
+app.UseSwaggerUI();
 app.UseExceptionLogging();
 
 app.UseHttpsRedirection();

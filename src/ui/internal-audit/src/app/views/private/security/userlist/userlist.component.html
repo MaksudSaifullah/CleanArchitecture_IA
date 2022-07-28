@@ -10,40 +10,32 @@
             <div class="row">
               <div class="col-lg-12">
                 <form [formGroup]="userListForm">
-                  <div class="row">
-                    <div class="col-sm-8">
-                      <div class="row">
-                        <div class="col-4">
-                          <input type="text" formControlName="userName" id="userName" class="form-control pull-right" placeholder="User Name"/>
-                        </div>
-                        <div class="col-4">
-                          <input type="text" formControlName="employeeName" id="employeeName" class="form-control pull-right" placeholder="Employee Name"/>
-                        </div>
-                        <div class="col-4" >
-                          <select aria-label="Floating label select example" cSelect id="userRole"
-                            formControlName="userRole" name="userRole">
-                            <option value="">Select Role</option>
-                            <option *ngFor="let role of roles" [value]="role.name"> {{role.name}}</option>
-                          </select>
-                        </div>
-                      </div>
-                    </div>   
-                    <div class="col-sm-4">
-                      <div class="row">
-                        <div class="col-3">
-                          <button type="button" class="btn btn-secondary mr-1 pull-right btn-block"  (click)="search()" >
-                            Search
-                        </button>
-                        </div>
-                        <!-- <div class="col-3">
-                          <button type="button" class="btn btn-secondary mr-1 pull-right btn-block"  (click)="clearSearch()" >
-                            Reset
-                        </button>
-                        </div> -->
-                      </div>
+                  <div class="row" style="margin: 0 auto;">
+                    <div class="col-md-2 mb-2">
+                      <button  class="btnCreateColor" (click)="createNewUser()" cButton>
+                        <svg cIcon name="cilPlus" size="md" title="Add Button Icon"></svg> Create
+                      </button> 
                     </div>
-
-
+                    <div class="col-md-3 mb-2 form-floating">
+                      <input type="text" formControlName="userName" class="form-control searchInput"  placeholder="Search by User Name"/>
+                      <label class="searchLevel" for="floatingInput">Search by User Name</label>
+                    </div>
+                    <div class="col-md-3 mb-2 form-floating">
+                      <input type="text" formControlName="employeeName" class="form-control searchInput"  placeholder="Search by Employee Name"/>
+                      <label class="searchLevel" for="floatingInput">Search by Employee Name</label>
+                    </div>
+                    <div class="col-md-3 mb-2 form-floating">
+                      <select aria-label="Floating label select example" class="searchInput" cSelect id="userRole" formControlName="userRole" name="userRole">
+                        <option value="">Select Role</option>
+                        <option *ngFor="let role of roles" [value]="role.name"> {{role.name}}</option>
+                      </select>
+                      <label class="searchLevel" for="floatingInput">Search by Role</label> 
+                    </div>
+                    <div class="col-md-1 mb-2">
+                      <button type="button" class="btn btn-secondary mr-1 btn-block searchBtn" data-toggle="modal" (click)="search()">
+                        Search
+                      </button>
+                    </div>
                   </div>
               </form>
               </div>

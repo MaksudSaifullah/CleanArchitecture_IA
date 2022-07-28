@@ -3,41 +3,39 @@
       <div class="col-lg-12">
         <div class="card">
           <div class="card-header">
-            <div class="fa fa-align-justify" >Risk Profile List</div> 
+            <div class="fa fa-align-justify"><strong>Risk Profile List</strong></div> 
           </div>
           <div class="card-body">
-            <div class="row">
-              <div class="col-sm-7 mb-2">
+            
+            <form [formGroup]="searchForm">
+              <div class="row" style="margin: 0 auto;">
+                <div class="col-md-6 mb-2">
                   <button [cModalToggle]="verticallyCenteredModal.id" class="btnCreateColor" (click)="reset()" cButton>
                     <svg cIcon name="cilPlus" size="md" title="Add Button Icon"></svg> Create
                   </button> 
-  
-              </div>
-              <div class="col-sm-5 mb-2">
-                <div class="row">
-                  <div class="col-8">
-                    <!-- <input type="text" [(ngModel)]="searchText" class="form-control pull-right" placeholder="Search by Code"/> -->
-                    <input type="text" class="form-control pull-right" placeholder="Search by Name"/>
-                  </div>
-                  <div class="col-4">                    
-                    <button type="button" class="btn btn-secondary mr-1 pull-right btn-block" data-toggle="modal" >
-                      Search
-                    </button>
-                  </div>                 
+                </div>
+                <div class="col-md-5 mb-2 form-floating">
+                  <input type="text" formControlName="searchTerm" class="form-control searchInput"  placeholder="search by likelihood level/impact level/risk rating"/>
+                  <label class="searchLevel" for="floatingInput"> Search by Likelihood level/Impact level/Risk rating</label>
+                </div>
+                <div class="col-md-1 mb-2">
+                  <button type="button" class="btn btn-secondary mr-1 btn-block " data-toggle="modal" (click)="search()" >
+                    Search
+                  </button>
                 </div>
               </div>
-            </div>
+           </form>
             <div class="row overflow-auto">
                 <table datatable [dtOptions]="dtOptions" class="table table-bordered row-border hover datatableStyle" >
                   <thead>
                     <tr>
                       <th>Level of Likelihood</th>
-                      <th>Level of impact</th>
+                      <th>Level of Impact</th>
                       <th>Risk Rating</th>
                       <th>Description</th>
                       <th>Effective From</th>
                       <th>Effective To</th>  
-                      <th class="col-1 text-center">Action</th>                   
+                      <th class="col-1 text-center">Actions</th>                   
                     </tr>
                   </thead>
                   <tbody *ngIf="riskProfiles?.length != 0">
@@ -82,51 +80,55 @@
     </c-modal-header>
      <c-modal-body>
       <div class="col-md-12" >
-        <input type="hidden" formControlName="id"/>  
-          <div form-floating>
-            <select aria-label="Floating label select example" cSelect id="likelihoodTypeId"
-              formControlName="likelihoodTypeId" name="likelihoodTypeId">
-              <option value=null>Select Likelihood Level</option>
-              <option *ngFor="let commonValueAndType of likelihoodType" [value]="commonValueAndType.id">
-                {{commonValueAndType.text}}
-              </option>
-            </select>
+        <input type="hidden" formControlName="id"/>
+
+          <div style="padding-bottom: 2%;">
+            <div class="form-floating">
+              <select aria-label="Floating label select example" cSelect id="likelihoodTypeId"
+                formControlName="likelihoodTypeId" name="likelihoodTypeId" style="height: 70px;">
+                <option value=null>Select</option>
+                <option *ngFor="let commonValueAndType of likelihoodType" [value]="commonValueAndType.id">
+                  {{commonValueAndType.text}}
+                </option>
+              </select>
+              <label for="likelihoodTypeId" >Likelihood Level</label>
+            </div>
+            <div cRow *ngIf="(riskProfileForm.get('likelihoodTypeId')?.invalid && riskProfileForm.get('likelihoodTypeId')?.errors) &&         
+              (riskProfileForm.get('likelihoodTypeId')?.dirty || riskProfileForm.get('likelihoodTypeId')?.touched)">
+              <small class="text-danger">
+                This field is required.
+              </small>                                 
+            </div> 
+          </div>          
+          <div style="padding-bottom: 2%;">
+            <div class="form-floating">
+              <select aria-label="Floating label select example" cSelect id="impactTypeId"
+                formControlName="impactTypeId" name="impactTypeId" style="height: 70px;">
+                <option value="null">Select</option>
+                <option *ngFor="let commonValueAndType of impactType" [value]="commonValueAndType.id">
+                  {{commonValueAndType.text}}
+                </option>
+              </select>
+              <label for="impactTypeId" >Impact Level</label>
+            </div>
+            <div cRow *ngIf="((riskProfileForm.get('impactTypeId')?.invalid && riskProfileForm.get('impactTypeId')?.errors)) &&
+              (riskProfileForm.get('impactTypeId')?.dirty || riskProfileForm.get('impactTypeId')?.touched)">
+              <small class="text-danger">
+                This field is required.
+              </small>                                 
+            </div> 
           </div>
-
-          <div cRow *ngIf="(riskProfileForm.get('likelihoodTypeId')?.invalid && riskProfileForm.get('likelihoodTypeId')?.errors) &&         
-            (riskProfileForm.get('likelihoodTypeId')?.dirty || riskProfileForm.get('likelihoodTypeId')?.touched)">
-            <small class="text-danger">
-              This field is required.
-            </small>                                 
-          </div> 
-          <br>
-
-          <div form-floating>
-            <select aria-label="Floating label select example" cSelect id="impactTypeId"
-              formControlName="impactTypeId" name="impactTypeId">
-              <option value="null">Select Impact Level</option>
-              <option *ngFor="let commonValueAndType of impactType" [value]="commonValueAndType.id">
-                {{commonValueAndType.text}}
-              </option>
-            </select>
-          </div>
-
-          <div cRow *ngIf="((riskProfileForm.get('impactTypeId')?.invalid && riskProfileForm.get('impactTypeId')?.errors)) &&
-            (riskProfileForm.get('impactTypeId')?.dirty || riskProfileForm.get('impactTypeId')?.touched)">
-            <small class="text-danger">
-              This field is required.
-            </small>                                 
-          </div> 
-          <br>
-
-          <div form-floating>
+          
+          <div style="padding-bottom: 2%;">
+          <div class="form-floating" >
             <select aria-label="Floating label select example" cSelect id="ratingTypeId"
-              formControlName="ratingTypeId" name="ratingTypeId">
-              <option value="null">Select Risk Rating</option>
+              formControlName="ratingTypeId" name="ratingTypeId" style="height: 70px;">
+              <option value="null" >Select</option>
               <option *ngFor="let commonValueAndType of ratingType" [value]="commonValueAndType.id">
                 {{commonValueAndType.text}}
               </option>
             </select>
+            <label for="ratingTypeId" >Risk Rating</label>
           </div>
 
           <div cRow *ngIf="((riskProfileForm.get('ratingTypeId')?.invalid && riskProfileForm.get('ratingTypeId')?.errors)) &&
@@ -135,7 +137,9 @@
               This field is required.
             </small>                                 
           </div> 
-          <br>
+        </div>
+               
+              
 
           <div class="form-floating">
             <textarea class="form-control" placeholder="description" formControlName="description" id="description"></textarea>

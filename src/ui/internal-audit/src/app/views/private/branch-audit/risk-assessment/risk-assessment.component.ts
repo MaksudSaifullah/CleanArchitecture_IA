@@ -22,8 +22,10 @@ export class RiskAssessmentComponent implements OnInit {
   datatableElement: DataTableDirective | undefined;
   dtOptions: DataTables.Settings = {};
   auditType: commonValueAndType[] = [];
+  year: commonValueAndType[] = [];
   riskAssessments: riskAssessment[] = [];
   riskAssessmentForm: FormGroup;
+  searchForm: FormGroup;
   formService: FormService = new FormService();
   dataTableService: DatatableService = new DatatableService();
   dtTrigger: Subject<any> = new Subject<any>();
@@ -42,8 +44,14 @@ export class RiskAssessmentComponent implements OnInit {
       effectiveFrom: [Date,[Validators.required]],
       effectiveTo: [Date, [Validators.required]],
       
-    })
-
+    });
+    this.searchForm = this.fb.group(
+      {
+        searchTerm: [''],
+        year:['']
+      }
+    );
+    
   }
 
   ngOnDestroy(): void {
@@ -65,8 +73,9 @@ export class RiskAssessmentComponent implements OnInit {
       ajax: (dataTablesParameters: any, callback) => {
         this.http
           .paginatedPost(
-            'riskassessment/paginated',dataTablesParameters.length,((dataTablesParameters.start/dataTablesParameters.length)+1),{}
-          ).subscribe(resp => that.riskAssessments = this.dataTableService.datatableMap(resp,callback));
+            'riskassessment/paginated',dataTablesParameters.length,((dataTablesParameters.start/dataTablesParameters.length)+1),
+            {"searchTerm" : this.searchForm.get('searchTerm')?.value, "year" : this.searchForm.get('year')?.value } )
+            .subscribe(resp => that.riskAssessments = this.dataTableService.datatableMap(resp,callback));
       },
     };
 
@@ -77,8 +86,7 @@ export class RiskAssessmentComponent implements OnInit {
     if (this.riskAssessmentForm.valid ){
       if(this.formService.isEdit(this.riskAssessmentForm.get('id') as FormControl)){
         this.http.put('riskassessment',this.riskAssessmentForm.value,null).subscribe(x=>{
-            localmodalId.visible = false;
-            this.dataTableService.redraw(this.datatableElement);
+          this.formService.onSaveSuccess(localmodalId,this.datatableElement);
             this.AlertService.success('Risk Assessment Updated Successfully');
           });
       }
@@ -86,7 +94,7 @@ export class RiskAssessmentComponent implements OnInit {
         console.log(JSON.stringify(this.riskAssessmentForm.value))
         this.http.post('riskassessment',this.riskAssessmentForm.value).subscribe(x=>{ 
           this.formService.onSaveSuccess(localmodalId,this.datatableElement);
-          this.AlertService.success('Risk Assessment Saved successfully');
+          this.AlertService.success('Risk Assessment Saved Successfully');
         });
       }      
     }
@@ -132,7 +140,10 @@ export class RiskAssessmentComponent implements OnInit {
     this.riskAssessmentForm.reset();
   }
 
-
+  
+  search(){
+    this.dataTableService.redraw(this.datatableElement);
+  }
 
   LoadAuditType() {
     this.http.get('commonValueAndType/audittype').subscribe(resp => {
@@ -147,13 +158,20 @@ export class RiskAssessmentComponent implements OnInit {
       let convertedResp = resp as paginatedResponseInterface<country>;
       console.log("Country",convertedResp);
       this.countries = convertedResp.items;
-      //this.Data=convertedResp.items;
-     
+    })
+  }
+
+  LoadYear() {
+    this.http.get('commonValueAndType/year').subscribe(resp => {
+      let convertedResp = resp as commonValueAndType[];
+      console.log("YEAR", convertedResp);
+      this.year = convertedResp;
     })
   }
 
   LoadDropDownValues() {
     this.LoadAuditType();
     this.LoadCountry();
+    this.LoadYear();
   }
 }

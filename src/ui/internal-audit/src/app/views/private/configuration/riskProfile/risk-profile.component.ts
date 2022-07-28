@@ -28,6 +28,7 @@ export class RiskProfileComponent implements OnInit {
   ratingType: commonValueAndType[] = [];
   riskProfiles: riskProfile[] = [];
   riskProfileForm: FormGroup;
+  searchForm: FormGroup;
   formService: FormService = new FormService();
   dataTableService: DatatableService = new DatatableService();
   dtTrigger: Subject<any> = new Subject<any>();
@@ -45,7 +46,12 @@ export class RiskProfileComponent implements OnInit {
       effectiveTo: [Date, [Validators.required]],
       isActive: []
       
-    }, { validator: this.customValidator.checkEffectiveDateToAfterFrom('effectiveFrom', 'effectiveTo') })
+    }, { validator: this.customValidator.checkEffectiveDateToAfterFrom('effectiveFrom', 'effectiveTo') });
+    this.searchForm = this.fb.group(
+      {
+        searchTerm: ['']
+      }
+    )
   }
   ngOnDestroy(): void {
 
@@ -62,10 +68,11 @@ export class RiskProfileComponent implements OnInit {
       serverSide: true,
       processing: true,
       searching: false,
+      ordering: false,
       ajax: (dataTablesParameters: any, callback) => {
         this.http
           .paginatedPost(
-            'riskprofile/paginated',dataTablesParameters.length,((dataTablesParameters.start/dataTablesParameters.length)+1),{}
+            'riskprofile/paginated',dataTablesParameters.length,((dataTablesParameters.start/dataTablesParameters.length)+1),this.searchForm.get('searchTerm')?.value
           ).subscribe(resp => that.riskProfiles = this.dataTableService.datatableMap(resp,callback));
       },
     };
@@ -113,6 +120,7 @@ export class RiskProfileComponent implements OnInit {
     const localmodalId = modalId;
     if (this.riskProfileForm.valid ){
       if(this.formService.isEdit(this.riskProfileForm.get('id') as FormControl)){
+        console.log(this.riskProfileForm.value);
         this.http.put('riskProfile',this.riskProfileForm.value,null).subscribe(x=>{
             localmodalId.visible = false;
             this.dataTableService.redraw(this.datatableElement);
@@ -165,6 +173,9 @@ export class RiskProfileComponent implements OnInit {
   }
   reset(){
     this.riskProfileForm.reset();
+  }
+  search(){
+    this.dataTableService.redraw(this.datatableElement);
   }
 
 }

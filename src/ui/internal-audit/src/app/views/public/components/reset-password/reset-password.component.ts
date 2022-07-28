@@ -48,13 +48,13 @@ export class ResetPasswordComponent implements OnInit {
       this.httpService.post('authentication/UpdateUserPasswordByPostCode',this.forgotPasswordForm.value).subscribe(x=>{
         let convertedResponse = x as CommonResponseInterface;
         if(convertedResponse.success){
-          this.alertService.success("Password Reset Successful");
           this.routingService.navigate('/login');
+          this.alertService.success("Password Reset Successful");
         }
         else{
           this.alertService.error(convertedResponse.message);
         }
-      })
+      });
     }
   }
 }

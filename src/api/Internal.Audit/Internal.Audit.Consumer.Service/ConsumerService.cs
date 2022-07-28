@@ -62,7 +62,7 @@ namespace Internal.Audit.Consumer.Service
                         if (e.Redelivered)
                         {
                             RequestHelper.WriteInfoLog("Internal.Audit.Consumer.Service Method: " + System.Reflection.MethodBase.GetCurrentMethod().Name + "::" + "Redelivered Request received.");
-                            return;
+                           // return;
                         }
                         var body = e.Body.ToArray();
                         RequestHelper.WriteInfoLog("Internal.Audit.Consumer.Service Method: " + System.Reflection.MethodBase.GetCurrentMethod().Name + "::" + "Body parsed.");

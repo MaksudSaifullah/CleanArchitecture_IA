@@ -14,21 +14,16 @@ namespace Internal.Audit.Domain.Entities.BranchAudit
     public class AuditPlan : EntityBase
     {
 
-        [Required]
-        public Guid CountryId { get; set; }
-
-        [Required]
-        public Guid AuditTypeId { get; set; }
 
         [Required]
         public Guid RiskAssesmentId { get; set; }
 
         [Required]
-        [MaxLength(50)]
-        public string AssesmentCode { get; set; } = null!;
+        [MaxLength(60)]
+        public string PlanCode { get; set; } = null!;
 
         [Required]
-        public string? PlanningYear { get; set; } 
+        public Guid PlanningYearId { get; set; }
 
         [Required]
         public DateTime AssesmentFrom { get; set; }
@@ -36,13 +31,6 @@ namespace Internal.Audit.Domain.Entities.BranchAudit
         [Required]
         public DateTime AssesmentTo { get; set; }
 
-
-        [ForeignKey("CountryId")]
-        public virtual Country Country { get; set; } = null!;
-
-
-        [ForeignKey("AuditTypeId")]
-        public virtual CommonValueAndType CommonValueAuditType { get; set; } = null!;
 
         [ForeignKey("RiskAssesmentId")]
         public virtual RiskAssessment RiskAssesment { get; set; } = null!;

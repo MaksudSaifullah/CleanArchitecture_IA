@@ -12,7 +12,7 @@ export class DatatableService {
 
   datatableMap<T>(resp: any, callback: any, type: any = 'sp') {
     if (type === 'sp') {
-
+    debugger;
       let convertedResp = resp as paginatedResponseInterface<T>;
       console.log(convertedResp);
       callback({
@@ -20,6 +20,7 @@ export class DatatableService {
         recordsFiltered: convertedResp.totalCount,
         data: []
       });
+      console.log(convertedResp.items);
       return convertedResp.items;
     } else {
       let convertedResp = resp;

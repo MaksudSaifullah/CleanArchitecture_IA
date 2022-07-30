@@ -10,11 +10,9 @@ namespace Internal.Audit.Application.Features.AuditPlans.Commands.UpdateAuditPla
 public class UpdateAuditPlanCommand : IRequest<UpdateAuditPlanResponseDTO>
 {
     public Guid Id { get; set; }
-    public Guid CountryId { get; set; }
-    public Guid AuditTypeId { get; set; }
     public Guid RiskAssesmentId { get; set; }
-    public string? AssesmentCode { get; set; }
-    public string? PlanningYear { get; set; }
+    public string? PlanCode { get; set; }
+    public Guid PlanningYearId { get; set; }
     public DateTime AssesmentFrom { get; set; }
     public DateTime AssesmentTo { get; set; }
 }

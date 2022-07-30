@@ -60,6 +60,8 @@ using Internal.Audit.Application.Contracts.Persistent.DataRequestQueue;
 using Internal.Audit.Infrastructure.Persistent.Repositories.DataRequestQueueService;
 using Internal.Audit.Application.Contracts.Persistent.AmbsDataSync;
 using Internal.Audit.Infrastructure.Persistent.Repositories.AmbsDataSyncs;
+using Internal.Audit.Application.Contracts.Persistent.AuditPlans;
+using Internal.Audit.Infrastructure.Persistent.Repositories.AuditPlans;
 
 namespace Internal.Audit.Infrastructure.Persistent;
 
@@ -151,6 +153,9 @@ public static class PersistentInfrastructureServiceRegistration
         services.AddScoped<IQuestionnaireQueryRepository>(s => new QuestionnaireQueryRepository(configuration.GetConnectionString("InternalAuditDb")));
         services.AddScoped<IDataRequestCommandRepository, DataRequestCommandRepository>();
         services.AddScoped<IAmbsDataSyncCommandRepository, AmbsDataSyncCommandRepository>();
+        services.AddScoped<IAuditPlanCommandRepository, AuditPlanCommandRepository>();
+        services.AddScoped<IAuditPlanQueryRepository>(s => new AuditPlanQueryRepository(configuration.GetConnectionString("InternalAuditDb")));
+
 
         return services;
     }

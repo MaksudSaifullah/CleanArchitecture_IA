@@ -9,13 +9,12 @@ namespace Internal.Audit.Application.Features.AuditPlans.Queries.GetAuditPlanByI
     public record AuditPlanByIdDTO
     {
         public Guid Id { get; set; }
-        public Guid CountryId { get; set; }
         public string? CountryName { get; set; }
-        public Guid AuditTypeId { get; set; }
         public string? AuditTypeName { get; set; }
+        public string? RiskAssesmentCode { get; set; }
         public Guid RiskAssesmentId { get; set; }
-        public string? AssesmentCode { get; set; }
-        public string? PlanningYear { get; set; }
+        public string? PlanCode { get; set; }
+        public Guid PlanningYearId { get; set; }
         public DateTime AssesmentFrom { get; set; }
         public DateTime AssesmentTo { get; set; }
     }

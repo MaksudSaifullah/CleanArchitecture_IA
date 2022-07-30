@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Internal.Audit.Infrastructure.Persistent.Migrations
 {
     [DbContext(typeof(InternalAuditContext))]
-    [Migration("20220727174108_AuditPlan")]
+    [Migration("20220728045814_AuditPlan")]
     partial class AuditPlan
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -119,20 +119,14 @@ namespace Internal.Audit.Infrastructure.Persistent.Migrations
 
                     b.Property<string>("AssesmentCode")
                         .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
+                        .HasMaxLength(60)
+                        .HasColumnType("nvarchar(60)");
 
                     b.Property<DateTime>("AssesmentFrom")
                         .HasColumnType("datetime2");
 
                     b.Property<DateTime>("AssesmentTo")
                         .HasColumnType("datetime2");
-
-                    b.Property<Guid>("AuditTypeId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("CountryId")
-                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("CreatedBy")
                         .IsRequired()
@@ -169,10 +163,6 @@ namespace Internal.Audit.Infrastructure.Persistent.Migrations
                         .HasColumnType("datetime2");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("AuditTypeId");
-
-                    b.HasIndex("CountryId");
 
                     b.HasIndex("RiskAssesmentId");
 
@@ -1425,6 +1415,89 @@ namespace Internal.Audit.Infrastructure.Persistent.Migrations
                     b.ToTable("Country", "common");
                 });
 
+            modelBuilder.Entity("Internal.Audit.Domain.Entities.security.AmbsDataSync", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier")
+                        .HasColumnName("Id")
+                        .HasDefaultValueSql("newsequentialid()");
+
+                    b.Property<decimal>("Amount")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<decimal?>("AmountConverted")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<string>("ApprovedBy")
+                        .HasMaxLength(10)
+                        .HasColumnType("nvarchar(10)");
+
+                    b.Property<DateTime?>("ApprovedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("BranchCode")
+                        .HasColumnType("int");
+
+                    b.Property<long>("BranchId")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("BranchName")
+                        .IsRequired()
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)");
+
+                    b.Property<int>("CommonValueTableId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("CreatedBy")
+                        .IsRequired()
+                        .HasMaxLength(10)
+                        .HasColumnType("nvarchar(10)");
+
+                    b.Property<DateTime>("CreatedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid>("DataRequestQueueServiceId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("FromDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsActive")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bit")
+                        .HasDefaultValueSql("1");
+
+                    b.Property<bool>("IsDeleted")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bit")
+                        .HasDefaultValueSql("0");
+
+                    b.Property<string>("ReviewedBy")
+                        .HasMaxLength(10)
+                        .HasColumnType("nvarchar(10)");
+
+                    b.Property<DateTime?>("ReviewedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("ToDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("UpdatedBy")
+                        .HasMaxLength(10)
+                        .HasColumnType("nvarchar(10)");
+
+                    b.Property<DateTime?>("UpdatedOn")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("DataRequestQueueServiceId");
+
+                    b.ToTable("AmbsDataSync", "Security");
+                });
+
             modelBuilder.Entity("Internal.Audit.Domain.Entities.security.DataRequestQueueService", b =>
                 {
                     b.Property<Guid>("Id")
@@ -1496,7 +1569,7 @@ namespace Internal.Audit.Infrastructure.Persistent.Migrations
 
                     b.HasIndex("CountryId");
 
-                    b.ToTable("DataRequestQueueServices");
+                    b.ToTable("DataRequestQueueService", "Security");
                 });
 
             modelBuilder.Entity("Internal.Audit.Domain.Entities.Security.Employee", b =>
@@ -2356,27 +2429,11 @@ namespace Internal.Audit.Infrastructure.Persistent.Migrations
 
             modelBuilder.Entity("Internal.Audit.Domain.Entities.BranchAudit.AuditPlan", b =>
                 {
-                    b.HasOne("Internal.Audit.Domain.Entities.Config.CommonValueAndType", "CommonValueAuditType")
-                        .WithMany()
-                        .HasForeignKey("AuditTypeId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Internal.Audit.Domain.Entities.Country", "Country")
-                        .WithMany()
-                        .HasForeignKey("CountryId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("Internal.Audit.Domain.Entities.BranchAudit.RiskAssessment", "RiskAssesment")
                         .WithMany()
                         .HasForeignKey("RiskAssesmentId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.Navigation("CommonValueAuditType");
-
-                    b.Navigation("Country");
 
                     b.Navigation("RiskAssesment");
                 });
@@ -2569,6 +2626,17 @@ namespace Internal.Audit.Infrastructure.Persistent.Migrations
                     b.Navigation("Country");
 
                     b.Navigation("EmailType");
+                });
+
+            modelBuilder.Entity("Internal.Audit.Domain.Entities.security.AmbsDataSync", b =>
+                {
+                    b.HasOne("Internal.Audit.Domain.Entities.security.DataRequestQueueService", "DataRequestQueueService")
+                        .WithMany()
+                        .HasForeignKey("DataRequestQueueServiceId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("DataRequestQueueService");
                 });
 
             modelBuilder.Entity("Internal.Audit.Domain.Entities.security.DataRequestQueueService", b =>

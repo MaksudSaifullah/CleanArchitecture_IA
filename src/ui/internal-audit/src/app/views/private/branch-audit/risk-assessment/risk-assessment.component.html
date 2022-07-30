@@ -45,7 +45,7 @@
              </form>
               
               <div class="row overflow-auto">
-                  <table datatable [dtOptions]="dtOptions" class="table table-bordered row-border datatableStyle hover" >
+                  <table datatable [dtOptions]="dtOptions[0]" class="table table-bordered row-border datatableStyle hover" >
                     <thead>
                       <tr>
                         <th>Risk Assessment Code</th>
@@ -173,8 +173,218 @@
   </form>
   
   </c-tab-pane>
+
+
   <c-tab-pane class="p-3"> 
+    <div class="animated fadeIn">
+      <div class="row">
+        <div class="col-lg-12">
+          <div class="card">
+            <div class="card-header">
+              <div class="fa fa-align-justify" >Audit Plan List</div> 
+            </div>
+            <div class="card-body">
+             
+              <form [formGroup]="searchForm1">
+                <div class="row" style="margin: 0 auto;">
+                  <div class="col-md-5 mb-2">
+                    <button [cModalToggle]="verticallyCenteredModal.id" class="btnCreateColor" (click)="reset()" cButton>
+                      <svg cIcon name="cilPlus" size="md" title="Add Button Icon"></svg> Create
+                    </button> 
+                  </div>
+                  <div class="col-md-5 mb-2 form-floating">
+                    <input type="text" formControlName="searchTerm" class="form-control searchInput"  placeholder="Search by Name or Code"/>
+                    <label class="searchLevel" for="floatingInput">Assessment Code</label>
+                  </div>
+                  <div class="col-md-1 mb-2">
+                    <button type="button" class="btn btn-secondary mr-1 btn-block searchBtn" data-toggle="modal" (click)="search()" >
+                      Search
+                    </button>
+                  </div>
+                </div>
+             </form>
+              
+              <div class="row overflow-auto">
+                  <table datatable [dtOptions]="dtOptions[1]" class="table table-bordered row-border datatableStyle hover" style="width: 100%;">
+                    <thead>
+                      <tr>
+                        <th>RA Code</th>
+                        <th>Country</th>
+                        <th>Audit Type</th>
+                        <th>Year</th>
+                        <th>Assessment From</th>
+                        <th>Assessment To</th>  
+                        <th>Action</th>                   
+                      </tr>
+                    </thead>
+                    <tbody *ngIf="auditPlans?.length != 0">
+                      <tr *ngFor="let auditPlan of auditPlans">
+                        <td>{{ auditPlan.assesmentCode }}</td>
+                        <td>{{ auditPlan.countryName }}</td>
+                        <td>{{ auditPlan.auditTypeName }}</td>
+                        <td>{{ auditPlan.planningYearName }}</td>
+                        <td>{{ auditPlan.assesmentFrom | date:'medium' }}</td>
+                        <td>{{ auditPlan.assesmentTo | date:'medium' }}</td>
+                        <td>
+                          <div class="btn-group" role="group" aria-label="Basic example">
+                            <button type="button" class="btn btn-secondary btnEditColor" (click)="edit(verticallyCenteredModal,riskAssessment)">
+                              <svg cIcon name="cilPencil" size="md" title="Edit Button icon"></svg>
+                            </button>
+                            <button type="button" class="btn btn-danger btnDeleteColor" (click)="delete(riskAssessment.id)">
+                              <svg cIcon name="cilTrash" size="md" title="Delete Button Icon"></svg>
+                            </button>
+                          </div>
+                        </td>
+                      </tr>
+                    </tbody>
+                    <tbody *ngIf="riskAssessments?.length == 0">
+                      <tr>
+                        <td colspan="5" class="no-data-available">No data!</td>
+                      </tr>
+                    </tbody>
+                  </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+  </div>
+  
+<form [formGroup]="auditPlanForm" (ngSubmit)="onAuditPlanSubmit(verticallyCenteredModal)" novalidate>
+  <c-modal #verticallyCenteredModal alignment="center" id="verticallyCenteredModal">
+    <c-modal-header>
+      <h5 cModalTitle *ngIf="!formService.isEdit(this.auditPlanForm.get('id'))">Create Audit Plan</h5>
+      <h5 cModalTitle *ngIf="formService.isEdit(this.auditPlanForm.get('id'))">Update Audit Plan</h5>
+      <button [cModalToggle]="verticallyCenteredModal.id" cButtonClose></button> 
+    </c-modal-header>
+      <c-modal-body>
+      <div class="col-md-12" >
+        <input type="hidden" formControlName="id"/>  
+        <div class="form-floating mb-3">
+          <input type="text" class="form-control" formControlName="planCode" id="planCode" placeholder="planCode">
+          <label for="floatingInput">Plan Id</label>
+        </div>
+        <div class="row">
+        <div class="col-md-6">
+          <div form-floating>
+            <select aria-label="Floating label select example" cSelect id="countryId"
+              formControlName="countryId" name="countryId">
+              <option value=null>Select Country Level</option>
+              <option *ngFor="let country of countries" [value]="country.id">
+                {{country.name}}
+              </option>
+            </select>
+          </div>
+          <div cRow *ngIf="(auditPlanForm.get('countryId')?.invalid && auditPlanForm.get('countryId')?.errors) &&         
+          (auditPlanForm.get('countryId')?.dirty || auditPlanForm.get('countryId')?.touched)">
+          <small class="text-danger">
+            This field is required.
+          </small>                                 
+        </div> 
+        <br> 
+        </div>
+
+        <div class="col-md-6">
+          <div form-floating>
+            <select aria-label="Floating label select example" cSelect id="auditTypeId"
+              formControlName="auditTypeId" name="auditTypeId">
+              <option value="null">Select Audit Type</option>
+              <option *ngFor="let commonValueAndType of auditType" [value]="commonValueAndType.id">
+                {{commonValueAndType.text}}
+              </option>
+            </select>
+          </div>
+            
+          <div cRow *ngIf="((auditPlanForm.get('auditTypeId')?.invalid && auditPlanForm.get('auditTypeId')?.errors)) &&
+            (auditPlanForm.get('auditTypeId')?.dirty || auditPlanForm.get('auditTypeId')?.touched)">
+            <small class="text-danger">
+              This field is required.
+            </small>                                 
+          </div> 
+          <br>
+        </div>
+
+        
+      </div>
+        
+      <div class="row">
+        <div class="col-md-6">
+          <div form-floating>
+            <select aria-label="Floating label select example" cSelect id="planningYearId"
+              formControlName="planningYearId" name="planningYearId">
+              <option value="null">Select Year</option>
+              <option *ngFor="let commonValueAndType of year" [value]="commonValueAndType.id">
+                {{commonValueAndType.text}}
+              </option>
+            </select>
+          </div>
+            
+          <div cRow *ngIf="((auditPlanForm.get('planningYearId')?.invalid && auditPlanForm.get('planningYearId')?.errors)) &&
+            (auditPlanForm.get('planningYearId')?.dirty || auditPlanForm.get('planningYearId')?.touched)">
+            <small class="text-danger">
+              This field is required.
+            </small>                                 
+          </div> 
+          <br>
+        </div>
+
+        <div class="col-md-6">
+          <div form-floating>
+            <select aria-label="Floating label select example" cSelect id="riskAssesmentId"
+              formControlName="riskAssesmentId" name="riskAssesmentId">
+              <option value="null">Select Risk Assessment Id</option>
+              <option *ngFor="let riskAssessment of riskAssessments" [value]="riskAssessment.id">
+                {{riskAssessment.assesmentCode}}
+              </option>
+            </select>
+          </div>
+          <br>
+  
+            
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-6">
+          <div class="form-floating">
+            <input class="form-control" placeholder="assesmentFrom" formControlName="assesmentFrom" id="assesmentFrom" type="date" >
+            <label for="assesmentFrom">Assessment From</label>
+          </div>
     
+              <div cRow *ngIf="auditPlanForm.get('effectiveFrom')?.invalid && auditPlanForm.get('effectiveFrom')?.errors &&
+                    (auditPlanForm.get('effectiveFrom')?.dirty || auditPlanForm.get('effectiveFrom')?.touched)">
+                <small class="text-danger" *ngIf="auditPlanForm.get('effectiveFrom').hasError('required')">
+                  This field is required.
+                </small>                                 
+              </div>
+              <br>
+      
+        </div>
+        <div class="col-md-6">
+          <div class="form-floating">
+            <input class="form-control" placeholder="assesmentTo" formControlName="assesmentTo" id="assesmentTo" type="date" >
+            <label for="assesmentTo">Effective To</label>
+          </div>
+          <div cRow *ngIf="auditPlanForm.get('effectiveTo')?.invalid && auditPlanForm.get('effectiveTo')?.errors &&
+                (auditPlanForm.get('effectiveTo')?.dirty || auditPlanForm.get('effectiveTo')?.touched)">
+            <small class="text-danger" *ngIf="auditPlanForm.get('effectiveTo').hasError('required')">
+              This field is required.
+            </small>                                 
+          </div>
+          <br> 
+        </div>
+      </div>
+
+      </div>
+    </c-modal-body> 
+      <c-modal-footer>
+      <button cButton class="btn btn-primary btnSaveColor me-1" (click)="onAuditPlanSubmit(verticallyCenteredModal)">Save</button>
+            <button [cModalToggle]="verticallyCenteredModal.id" cButton class="btn btn-danger btnCancelColor me-1"> 
+            Close
+        </button> 
+    </c-modal-footer> 
+  </c-modal>
+  </form>
   </c-tab-pane>
 </c-tab-content>
 

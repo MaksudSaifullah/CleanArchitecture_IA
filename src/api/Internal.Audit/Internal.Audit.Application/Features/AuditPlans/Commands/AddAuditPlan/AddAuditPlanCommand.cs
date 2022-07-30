@@ -9,9 +9,9 @@ namespace Internal.Audit.Application.Features.AuditPlans.Commands.AddAuditPlan;
 
 public class AddAuditPlanCommand : IRequest<AddAuditPlanResponseDTO>
 {
-    public Guid RiskAssesmentId { get; set; }
+    public Guid RiskAssessmentId { get; set; }
     public string? PlanCode { get; set; }
     public Guid PlanningYearId { get; set; }
-    public DateTime AssesmentFrom { get; set; }
-    public DateTime AssesmentTo { get; set; }
+    public DateTime AssessmentFrom { get; set; }
+    public DateTime AssessmentTo { get; set; }
 }

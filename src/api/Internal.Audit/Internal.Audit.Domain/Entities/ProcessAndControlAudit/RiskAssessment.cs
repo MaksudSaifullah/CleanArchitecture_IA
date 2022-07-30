@@ -26,7 +26,7 @@ namespace Internal.Audit.Domain.Entities.ProcessAndControlAudit;
 
 	[Required]
 	[MaxLength(50)]
-	public string AssesmentCode { get; set; } = null!;
+	public string AssessmentCode { get; set; } = null!;
 
 	[Required]
 	public DateTime EffectiveFrom { get; set; }

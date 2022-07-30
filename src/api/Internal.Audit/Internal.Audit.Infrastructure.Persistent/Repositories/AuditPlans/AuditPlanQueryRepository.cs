@@ -27,20 +27,21 @@ public class AuditPlanQueryRepository : QueryRepositoryBase<CompositeAuditPlan>,
     public async Task<CompositeAuditPlan> GetById(Guid id)
     {
         var query = @"SELECT ap.[Id]
-      ,ap.[RiskAssesmentId]
-      ,ra.[AssesmentCode]
+      ,ap.[RiskAssessmentId]
+      ,ra.[AssessmentCode]
 	  ,cnt.Name As CountryName
 	  ,cvt.Text As AuditTypeName
       ,ap.PlanningYearId
 	  ,cvta.Text As YearName
-      ,ap.[AssesmentFrom]
-      ,ap.[AssesmentTo]
+      ,ap.[AssessmentFrom]
+      ,ap.[AssessmentTo]
       ,ap.[IsDeleted]
   FROM [BranchAudit].[AuditPlan] AS ap
-  Inner Join [BranchAudit].[RiskAssesment] as ra on ap.RiskAssesmentId = ra.Id
+  Inner Join [BranchAudit].[RiskAssessment] as ra on ap.RiskAssessmentId = ra.Id
   Inner Join [common].[Country] as cnt on ra.CountryId = cnt.Id
   Inner Join [Config].[CommonValueAndType] as cvt on ra.AuditTypeId = cvt.Id
-  Inner Join [Config].[CommonValueAndType] as cvta on ap.PlanningYearId = cvta.Id";
+  Inner Join [Config].[CommonValueAndType] as cvta on ap.PlanningYearId = cvta.Id
+  WHERE  ap.[Id] = @id AND ap.IsDeleted = 0 ";
         var parameters = new Dictionary<string, object> { { "id", id } };
 
         return await Single(query, parameters);

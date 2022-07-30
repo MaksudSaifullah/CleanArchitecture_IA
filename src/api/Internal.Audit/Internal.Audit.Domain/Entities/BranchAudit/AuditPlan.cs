@@ -16,7 +16,7 @@ namespace Internal.Audit.Domain.Entities.BranchAudit
 
 
         [Required]
-        public Guid RiskAssesmentId { get; set; }
+        public Guid RiskAssessmentId { get; set; }
 
         [Required]
         [MaxLength(60)]
@@ -26,13 +26,13 @@ namespace Internal.Audit.Domain.Entities.BranchAudit
         public Guid PlanningYearId { get; set; }
 
         [Required]
-        public DateTime AssesmentFrom { get; set; }
+        public DateTime AssessmentFrom { get; set; }
 
         [Required]
-        public DateTime AssesmentTo { get; set; }
+        public DateTime AssessmentTo { get; set; }
 
 
-        [ForeignKey("RiskAssesmentId")]
-        public virtual RiskAssessment RiskAssesment { get; set; } = null!;
+        [ForeignKey("RiskAssessmentId")]
+        public virtual RiskAssessment RiskAssessment { get; set; } = null!;
     }
 }

@@ -80,6 +80,7 @@ export class RiskAssessmentComponent implements OnInit {
   ngOnInit(): void {   
     this.LoadData();
     this.LoadAuditPlanData();
+    console.log('hwlllloooo', this.auditPlanForm);
   };
 
   LoadData() {

@@ -22,7 +22,7 @@ public class RiskAssessmentQueryRepository : QueryRepositoryBase<CompositeRiskAs
     public async Task<CompositeRiskAssessment> GetById(Guid id)
     {
         var query = @"SELECT ra.[Id]
-					,ra.AssesmentCode
+					,ra.AssessmentCode
 	                ,cntr.Id AS CountryId
 	                ,cvtit.Id AS AuditTypeId
 					,cntr.Name As CountryName
@@ -31,7 +31,7 @@ public class RiskAssessmentQueryRepository : QueryRepositoryBase<CompositeRiskAs
                     ,ra.[EffectiveTo]
                     ,ra.[CreatedBy]
                     ,ra.[CreatedOn]
-                FROM [BranchAudit].[RiskAssesment] as ra
+                FROM [BranchAudit].[RiskAssessment] as ra
                 INNER JOIN [common].[Country] as cntr on cntr.Id = ra.CountryId
                 INNER JOIN [config].[CommonValueAndType] as cvtit on cvtit.Id = ra.AuditTypeId
 				 WHERE ra.[Id] = @id AND ra.IsDeleted = 0 ";

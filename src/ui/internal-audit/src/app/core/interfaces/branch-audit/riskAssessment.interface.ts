@@ -4,7 +4,7 @@ export interface riskAssessment {
     countryName:      string;
     auditTypeId?:     string;
     auditTypeName:    string;
-    assesmentCode:    string;
+    assessmentCode:    string;
     effectiveFrom:    Date;
     effectiveTo:      Date;
 

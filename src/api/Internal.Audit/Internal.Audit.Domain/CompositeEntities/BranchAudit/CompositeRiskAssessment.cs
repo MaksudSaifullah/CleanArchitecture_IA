@@ -13,7 +13,7 @@ namespace Internal.Audit.Domain.CompositeEntities.BranchAudit
         public string? CountryName { get; set; }
         public Guid AuditTypeId { get; set; }
         public string? AuditTypeName { get; set; }
-        public string AssesmentCode { get; set; } = null!;
+        public string AssessmentCode { get; set; } = null!;
         public DateTime EffectiveFrom { get; set; }
         public DateTime EffectiveTo { get; set; }
     }

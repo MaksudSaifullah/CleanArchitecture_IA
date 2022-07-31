@@ -105,6 +105,11 @@ using Internal.Audit.Application.Features.EmailConfig.Commands.UpdateEmailConfig
 using Internal.Audit.Application.Features.CommonValueAndTypes.Queries.GetAuditFrequency;
 using Internal.Audit.Application.Features.CommonValueAndTypes.Queries.GetAuditScore;
 using Internal.Audit.Application.Features.CommonValueAndTypes.Queries.GetCommonValueTypeGeneric;
+using Internal.Audit.Application.Features.Audit.Queries.GetAuditList;
+using Internal.Audit.Application.Features.Audit.Commands.AddAudit;
+using Internal.Audit.Application.Features.Audit.Commands.DeleteAudit;
+using Internal.Audit.Application.Features.Audit.Queries.GetAuditById;
+using Internal.Audit.Application.Features.Audit.Commands.UpdateAudit;
 
 using Internal.Audit.Application.Features.WeightScoreConfigurations.Queries.WeightScoreByCountryId;
 
@@ -120,6 +125,12 @@ using Internal.Audit.Application.Features.Questionnnaires.Commands.UpdateQuestio
 using Internal.Audit.Application.Features.Questionnnaires.Commands.DeleteQuestionnaire;
 using Internal.Audit.Application.Features.DataRequestQueue.Command.AddDataRequestQueueCommand;
 using Internal.Audit.Application.Features.AmbsDataSyncs.Command.AddAmbsDataSyncCommand;
+using Internal.Audit.Application.Features.AuditPlans.Queries.GetAuditPlanList;
+using Internal.Audit.Application.Features.AuditPlans.Queries.GetAuditPlanById;
+using Internal.Audit.Application.Features.AuditPlans.Commands.AddAuditPlan;
+using Internal.Audit.Application.Features.AuditPlans.Commands.UpdateAuditPlan;
+using Internal.Audit.Application.Features.AuditPlans.Commands.DeleteAuditPlan;
+using Internal.Audit.Application.Features.Audit.Queries.GetAuditPlanCodeList;
 using Internal.Audit.Application.Features.TestSteps.Queries.GetTestStepList;
 using Internal.Audit.Application.Features.TestSteps.Queries.GetTestStepById;
 
@@ -317,6 +328,25 @@ public class MappingProfile : Profile
         CreateMap<DataRequestQueueService, AddDatarequestCommand>().ReverseMap();
         CreateMap<AmbsDataSync, AddAmbsDataSyncCommand>().ReverseMap();
         CreateMap<AmbsDataSync, AddAmbsDataSyncCommandRequest>().ReverseMap();
+
+        CreateMap<AuditPlan, AuditPlanDTO>().ReverseMap();
+        CreateMap<CompositeAuditPlan, AuditPlanDTO>().ReverseMap();
+        CreateMap<CompositeAuditPlan, AuditPlanByIdDTO>().ReverseMap();
+        CreateMap<AuditPlan, AuditPlanByIdDTO>().ReverseMap();
+        CreateMap<AuditPlan, AddAuditPlanResponseDTO>().ReverseMap();
+        CreateMap<AuditPlan, AddAuditPlanCommand>().ReverseMap();
+        CreateMap<AuditPlan, UpdateAuditPlanResponseDTO>().ReverseMap();
+        CreateMap<AuditPlan, UpdateAuditPlanCommand>().ReverseMap();
+        CreateMap<AuditPlan, DeleteAuditPlanResponseDTO>().ReverseMap();
+        CreateMap<AuditPlan, DeleteAuditPlanCommand>().ReverseMap();
+
+        CreateMap<CompositAudit, GetAuditListResponseDTO>().ReverseMap();
+       // CreateMap<AuditCreation, AddAuditResponseDTO>().ReverseMap();
+        CreateMap<AuditCreation, AddAuditCommand>().ReverseMap();
+        CreateMap<AuditCreation, DeleteAuditCommand>().ReverseMap();
+        CreateMap<CompositAudit, GetAuditByIdResponseDTO>().ReverseMap();
+        CreateMap<AuditCreation, UpdateAuditCommand>().ReverseMap();
+        CreateMap<AuditPlanCode, GetAuditPlanCodeListResponseDTO>().ReverseMap();
 
         CreateMap<CompositeTestStep, GetTestStepListQueryResponseDTO>().ReverseMap();
         CreateMap<CompositeTestStep, GetTestStepByIdDTO>().ReverseMap();

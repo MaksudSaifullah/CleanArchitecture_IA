@@ -35,7 +35,7 @@ export class AuditComponent implements OnInit {
   constructor(private http: HttpService, private fb: FormBuilder, private AlertService: AlertService) {
     this.auditForm = this.fb.group({
       id: [''],
-      auditTypeId: ["1"],
+      auditTypeId: ["3ee0ab25-baf2-ec11-b3b0-00155d610b11"],
       countryId: [null,[Validators.required]],
       year: ['',[Validators.required,Validators.maxLength(4),Validators.minLength(4)]],
       planId: ['',[Validators.required]],
@@ -85,7 +85,7 @@ export class AuditComponent implements OnInit {
     const localmodalId = modalId;
       if(this.auditForm.valid){
         if(this.formService.isEdit(this.auditForm.get('id') as FormControl)){
-          this.http.put('audit',this.auditForm.value,null).subscribe(x=>{
+          this.http.put('audit',this.auditForm.getRawValue(),null).subscribe(x=>{
             this.formService.onSaveSuccess(localmodalId,this.datatableElement);
             this.AlertService.success('Audit Saved Successful');
 
@@ -93,7 +93,7 @@ export class AuditComponent implements OnInit {
         }
         else{
           console.log(this.auditForm.value);
-          this.http.post('audit',this.auditForm.value).subscribe(x=>{
+          this.http.post('audit',this.auditForm.getRawValue()).subscribe(x=>{
             this.formService.onSaveSuccess(localmodalId,this.datatableElement);
             this.AlertService.success('Audit Saved Successful');
           });
@@ -128,9 +128,7 @@ export class AuditComponent implements OnInit {
   }
 
   LoadAuditId(){
-    console.log(';sldflaskdjflsdkjf;lsdkfj')
-    console.log(this.auditForm.value.countryId)
-    this.http.get('commonValueAndType/idcreation?idcreationValue=1&auditType=1&countryId='+this.auditForm.value.countryId).subscribe(resp => {
+    this.http.get('commonValueAndType/idcreation?idcreationValue=16&auditType=1&countryId='+this.auditForm.value.countryId).subscribe(resp => {
       let convertedResp = resp as commonValueAndType;
       this.auditIds = convertedResp;
       this.auditForm.patchValue({auditId: this.auditIds.text})
@@ -156,7 +154,8 @@ export class AuditComponent implements OnInit {
   }
   reset(){
     this.auditForm.reset();
-    this.auditForm.patchValue({auditTypeId:"1"});
-    //this.auditForm.controls['auditTypeId'].disable();
+    this.auditForm.patchValue({auditTypeId:"3ee0ab25-baf2-ec11-b3b0-00155d610b11"});
+     this.auditForm.controls['auditTypeId'].disable();
+     this.auditForm.controls['auditId'].disable();
   }
 }

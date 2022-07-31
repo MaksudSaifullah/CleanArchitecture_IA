@@ -33,6 +33,8 @@
                   <tr>
                     <th>Audit Id</th>
                     <th>Plan Id</th>
+                    <th>Audit Name</th>
+                    <th>Year</th>
                     <th>Audit Type Name</th>
                     <th>Country</th>
                     <th>Audit Period From</th>
@@ -45,6 +47,8 @@
                   <tr *ngFor="let audit of audits">
                     <td>{{ audit.auditId }}</td>
                     <td>{{ audit.planId }}</td>
+                    <td>{{ audit.auditName }}</td>
+                    <td>{{ audit.year }}</td>
                     <td>{{ audit.auditTypeName }}</td>
                     <td>{{ audit.countryName }}</td>
                     <td>{{ audit.auditPeriodFrom }}</td>
@@ -97,7 +101,7 @@
           </div>
           <div cRow *ngIf="(auditForm.get('countryId')?.invalid && auditForm.get('countryId')?.errors) &&         
             (auditForm.get('countryId')?.dirty || auditForm.get('countryId')?.touched)">
-            <small class="textarea-danger">
+            <small class="text-danger">
               This field is required.
             </small>                                 
           </div> 
@@ -123,12 +127,23 @@
           <input type="text" class="form-control" formControlName="year" id="year" placeholder="Year">
           <label for="floatingInput">Year</label>
         </div>
+
         <div cRow *ngIf="(auditForm.get('year')?.invalid && auditForm.get('year')?.errors) &&         
-          (auditForm.get('year')?.dirty || auditForm.get('year')?.touched)">
-          <small class="text-danger">
-            This field is required.
-          </small>                                 
-      </div> 
+        (auditForm.get('year')?.dirty || auditForm.get('year')?.touched)">
+        <small class="text-danger"   *ngIf="auditForm.get('year').hasError('required')">
+          This field is required.
+        </small>   
+        <small class="text-danger"
+        *ngIf="auditForm.get('year').hasError('minlength')">
+        The minimum length for this field is {{auditForm.get('year').errors.minlength.requiredLength}} characters.
+        </small>
+        <small class="text-danger"
+            *ngIf="auditForm.get('year').hasError('maxlength')">
+            The maximum length for this field is {{auditForm.get('year').errors.maxlength.requiredLength}} characters.
+        </small>                              
+        </div> 
+        
+       
         <br>
         <div cFormFloating>
           <select aria-label="Floating label select example" cSelect id="planId" formControlName="planId" name="planId" >
@@ -141,7 +156,7 @@
         </div>
         <div cRow *ngIf="(auditForm.get('planId')?.invalid && auditForm.get('planId')?.errors) &&         
           (auditForm.get('planId')?.dirty || auditForm.get('planId')?.touched)">
-          <small class="textarea-danger">
+          <small class="text-danger">
             This field is required.
           </small>                                 
         </div> 
@@ -177,7 +192,7 @@
       </div>
       <div cRow *ngIf="auditForm.get('auditPeriodFrom')?.invalid && auditForm.get('auditPeriodFrom')?.errors &&
             (auditForm.get('auditPeriodFrom')?.dirty || auditForm.get('auditPeriodFrom')?.touched)">
-        <small class="textarea-danger" *ngIf="auditForm.get('auditPeriodFrom').hasError('required')">
+        <small class="text-danger" *ngIf="auditForm.get('auditPeriodFrom').hasError('required')">
           This field is required.
         </small>                                 
       </div>
@@ -188,11 +203,11 @@
       </div>
       <div cRow *ngIf="auditForm.get('auditPeriodTo')?.invalid && auditForm.get('auditPeriodTo')?.errors &&
             (auditForm.get('auditPeriodTo')?.dirty || auditForm.get('auditPeriodTo')?.touched)">
-        <small class="textarea-danger" *ngIf="auditForm.get('auditPeriodTo').hasError('required')">
+        <small class="text-danger" *ngIf="auditForm.get('auditPeriodTo').hasError('required')">
           This field is required.
         </small>                                                      
       </div>
-      <small class="textarea-danger" *ngIf="auditForm.hasError('invalidDateRange')">
+      <small class="text-danger" *ngIf="auditForm.hasError('invalidDateRange')">
         Effective from should be greater than effective to.
       </small>          
       <br>         

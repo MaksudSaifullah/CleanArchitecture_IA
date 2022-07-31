@@ -120,6 +120,8 @@ using Internal.Audit.Application.Features.Questionnnaires.Commands.UpdateQuestio
 using Internal.Audit.Application.Features.Questionnnaires.Commands.DeleteQuestionnaire;
 using Internal.Audit.Application.Features.DataRequestQueue.Command.AddDataRequestQueueCommand;
 using Internal.Audit.Application.Features.AmbsDataSyncs.Command.AddAmbsDataSyncCommand;
+using Internal.Audit.Application.Features.TestSteps.Queries.GetTestStepList;
+using Internal.Audit.Application.Features.TestSteps.Queries.GetTestStepById;
 
 namespace Internal.Audit.Application.Mappings;
 
@@ -315,6 +317,9 @@ public class MappingProfile : Profile
         CreateMap<DataRequestQueueService, AddDatarequestCommand>().ReverseMap();
         CreateMap<AmbsDataSync, AddAmbsDataSyncCommand>().ReverseMap();
         CreateMap<AmbsDataSync, AddAmbsDataSyncCommandRequest>().ReverseMap();
+
+        CreateMap<CompositeTestStep, GetTestStepListQueryResponseDTO>().ReverseMap();
+        CreateMap<CompositeTestStep, GetTestStepByIdDTO>().ReverseMap();
 
     }
 }

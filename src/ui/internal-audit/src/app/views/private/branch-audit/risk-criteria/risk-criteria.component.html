@@ -89,49 +89,49 @@
       </c-modal-header> 
        <c-modal-body>
         <div class="col-md-12" >
-          <input type="hidden" formControlName="id"/>  
-           
-            <div form-floating>
+          <input type="hidden" formControlName="id"/>
+            <div class="form-floating mb-3">
               <select aria-label="Floating label select example" cSelect id="countryId"
                 formControlName="countryId" name="countryId">
-                <option value=null>Select Country</option>
+                <option value="null">Select Country</option>
                 <option *ngFor="let country of countries" [value]="country.id">
                   {{country.name}}
-                </option>
+                </option>                  
               </select>
-            </div>
-            <div cRow *ngIf="(riskCriteriaForm.get('countryId')?.invalid && riskCriteriaForm.get('countryId')?.errors) &&         
-            (riskCriteriaForm.get('countryId')?.dirty || riskCriteriaForm.get('countryId')?.touched)">
-            <small class="text-danger">
-              This field is required.
-            </small>                                 
-          </div> 
-          <br>
-  
-            <div form-floating>
-              <select aria-label="Floating label select example" cSelect id="riskCriteriaTypeId"
-                formControlName="riskCriteriaTypeId" name="riskCriteriaTypeId">
-                <option value="null">Select Risk Criteria</option>
-                <option *ngFor="let commonValueAndType of riskCriteriaType" [value]="commonValueAndType.id">
-                  {{commonValueAndType.text}}
-                </option>
-              </select>
+              <label for="countryId" class="dropdownLabel">Country</label>          
+              <div cRow *ngIf="((riskCriteriaForm.get('countryId')?.invalid && riskCriteriaForm.get('countryId')?.errors)) &&
+                (riskCriteriaForm.get('countryId')?.dirty || riskCriteriaForm.get('countryId')?.touched)">
+                <small class="text-danger">
+                  This field is required.
+                </small>                                 
+              </div>
             </div>
 
-            <div cRow *ngIf="((riskCriteriaForm.get('riskCriteriaTypeId')?.invalid && riskCriteriaForm.get('riskCriteriaTypeId')?.errors)) &&
-              (riskCriteriaForm.get('riskCriteriaTypeId')?.dirty || riskCriteriaForm.get('riskCriteriaTypeId')?.touched)">
-              <small class="text-danger">
-                This field is required.
-              </small>                                 
-            </div> 
-            <br>
+            <div style="padding-bottom: 2%;">
+              <div class="form-floating">
+                <select aria-label="Floating label select example" cSelect id="riskCriteriaTypeId"
+                  formControlName="riskCriteriaTypeId" name="riskCriteriaTypeId" style="height: 70px;">
+                  <option value="null">Select Risk Criteria</option>
+                  <option *ngFor="let commonValueAndType of riskCriteriaType" [value]="commonValueAndType.id">
+                    {{commonValueAndType.text}}
+                  </option>
+                </select>
+                <label for="riskCriteriaTypeId" >Risk Criteria</label>
+              </div>
+              <div cRow *ngIf="((riskCriteriaForm.get('riskCriteriaTypeId')?.invalid && riskCriteriaForm.get('riskCriteriaTypeId')?.errors)) &&
+                (riskCriteriaForm.get('riskCriteriaTypeId')?.dirty || riskCriteriaForm.get('riskCriteriaTypeId')?.touched)">
+                <small class="text-danger">
+                  This field is required.
+                </small>                                 
+              </div> 
+            </div>
 
 
-              <div class="form-floating mb-3">
+            <div style="padding-bottom: 2%;">
+              <div class="form-floating">
                 <input type="number" class="form-control" formControlName="minimumValue" id="minimumValue" placeholder="MinimumValue">
                 <label for="floatingInput">Minimum Value</label>
-              </div>
-           
+              </div>         
               <div cRow *ngIf="riskCriteriaForm.get('minimumValue')?.invalid &&
               riskCriteriaForm.get('minimumValue')?.errors &&
                     (riskCriteriaForm.get('minimumValue')?.dirty || riskCriteriaForm.get('minimumValue')?.touched)">
@@ -140,8 +140,10 @@
                     This field is required.
                 </small>              
             </div>
+            </div>
       
-              <div class="form-floating mb-3">
+            <div style="padding-bottom: 2%;">
+              <div class="form-floating">
                 <input type="number" class="form-control" formControlName="maximumValue" id="code" placeholder="Maximum Value">
                 <label for="floatingInput">Maximum Value</label>
               </div>
@@ -154,27 +156,31 @@
                     This field is required.
                 </small>   
             </div>
-            <br>
-      
-            <div form-floating>
-              <select aria-label="Floating label select example" cSelect id="ratingTypeId"
-                formControlName="ratingTypeId" name="ratingTypeId">
-                <option value="null">Select Risk Rating</option>
-                <option *ngFor="let commonValueAndType of ratingType" [value]="commonValueAndType.id">
-                  {{commonValueAndType.text}}
-                </option>
-              </select>
             </div>
-  
-            <div cRow *ngIf="((riskCriteriaForm.get('ratingTypeId')?.invalid && riskCriteriaForm.get('ratingTypeId')?.errors)) &&
-              (riskCriteriaForm.get('ratingTypeId')?.dirty || riskCriteriaForm.get('ratingTypeId')?.touched)">
-              <small class="text-danger">
-                This field is required.
-              </small>                                 
-            </div> 
-            <br>
+            
+      
 
-            <div class="form-floating mb-3">
+            <div style="padding-bottom: 2%;">
+              <div class="form-floating">
+                <select aria-label="Floating label select example" cSelect id="ratingTypeId"
+                  formControlName="ratingTypeId" name="ratingTypeId" style="height: 70px;">
+                  <option value="null">Select Rating</option>
+                  <option *ngFor="let commonValueAndType of ratingType" [value]="commonValueAndType.id">
+                    {{commonValueAndType.text}}
+                  </option>
+                </select>
+                <label for="ratingTypeId" >Rating</label>
+              </div>
+              <div cRow *ngIf="((riskCriteriaForm.get('ratingTypeId')?.invalid && riskCriteriaForm.get('ratingTypeId')?.errors)) &&
+                (riskCriteriaForm.get('ratingTypeId')?.dirty || riskCriteriaForm.get('ratingTypeId')?.touched)">
+                <small class="text-danger">
+                  This field is required.
+                </small>                                 
+              </div> 
+            </div>
+
+            <div style="padding-bottom: 2%;">
+              <div class="form-floating">
               <input type="number" class="form-control" formControlName="score" id="score" placeholder="Score">
               <label for="floatingInput">Score</label>
             </div>     
@@ -185,14 +191,15 @@
                   *ngIf="riskCriteriaForm.get('score').hasError('required')">
                   This field is required.
               </small>
-              <!-- <small class="text-danger"
+              <small class="text-danger"
                   *ngIf="riskCriteriaForm.get('score').hasError('minlength')">
                   The minimum length for this field is {{riskCriteriaForm.get('score').errors.minlength.requiredLength}} characters.
               </small>
               <small class="text-danger"
                   *ngIf="riskCriteriaForm.get('score').hasError('maxlength')">
                   The maximum length for this field is {{riskCriteriaForm.get('score').errors.maxlength.requiredLength}} characters.
-              </small> -->
+              </small>
+          </div>
           </div>
   
             <div class="form-floating">

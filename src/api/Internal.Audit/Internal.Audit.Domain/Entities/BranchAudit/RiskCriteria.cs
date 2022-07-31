@@ -41,9 +41,9 @@ public class RiskCriteria : EntityBase
 
 
 
-    [Required]
+
     [MaxLength(300)]
-    public string Description { get; set; }
+    public string? Description { get; set; } = null!;
 
 
 

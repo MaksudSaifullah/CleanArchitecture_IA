@@ -125,6 +125,11 @@ using Internal.Audit.Application.Features.Questionnnaires.Commands.UpdateQuestio
 using Internal.Audit.Application.Features.Questionnnaires.Commands.DeleteQuestionnaire;
 using Internal.Audit.Application.Features.DataRequestQueue.Command.AddDataRequestQueueCommand;
 using Internal.Audit.Application.Features.AmbsDataSyncs.Command.AddAmbsDataSyncCommand;
+using Internal.Audit.Application.Features.AuditPlans.Queries.GetAuditPlanList;
+using Internal.Audit.Application.Features.AuditPlans.Queries.GetAuditPlanById;
+using Internal.Audit.Application.Features.AuditPlans.Commands.AddAuditPlan;
+using Internal.Audit.Application.Features.AuditPlans.Commands.UpdateAuditPlan;
+using Internal.Audit.Application.Features.AuditPlans.Commands.DeleteAuditPlan;
 using Internal.Audit.Application.Features.Audit.Queries.GetAuditPlanCodeList;
 
 namespace Internal.Audit.Application.Mappings;
@@ -322,6 +327,16 @@ public class MappingProfile : Profile
         CreateMap<AmbsDataSync, AddAmbsDataSyncCommand>().ReverseMap();
         CreateMap<AmbsDataSync, AddAmbsDataSyncCommandRequest>().ReverseMap();
 
+        CreateMap<AuditPlan, AuditPlanDTO>().ReverseMap();
+        CreateMap<CompositeAuditPlan, AuditPlanDTO>().ReverseMap();
+        CreateMap<CompositeAuditPlan, AuditPlanByIdDTO>().ReverseMap();
+        CreateMap<AuditPlan, AuditPlanByIdDTO>().ReverseMap();
+        CreateMap<AuditPlan, AddAuditPlanResponseDTO>().ReverseMap();
+        CreateMap<AuditPlan, AddAuditPlanCommand>().ReverseMap();
+        CreateMap<AuditPlan, UpdateAuditPlanResponseDTO>().ReverseMap();
+        CreateMap<AuditPlan, UpdateAuditPlanCommand>().ReverseMap();
+        CreateMap<AuditPlan, DeleteAuditPlanResponseDTO>().ReverseMap();
+        CreateMap<AuditPlan, DeleteAuditPlanCommand>().ReverseMap();
 
         CreateMap<CompositAudit, GetAuditListResponseDTO>().ReverseMap();
        // CreateMap<AuditCreation, AddAuditResponseDTO>().ReverseMap();

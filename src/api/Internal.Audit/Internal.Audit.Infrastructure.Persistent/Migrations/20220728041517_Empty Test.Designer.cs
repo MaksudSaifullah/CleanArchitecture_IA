@@ -4,6 +4,7 @@ using Internal.Audit.Infrastructure.Persistent;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Internal.Audit.Infrastructure.Persistent.Migrations
 {
     [DbContext(typeof(InternalAuditContext))]
-    partial class InternalAuditContextModelSnapshot : ModelSnapshot
+    [Migration("20220728041517_Empty Test")]
+    partial class EmptyTest
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -100,72 +102,6 @@ namespace Internal.Audit.Infrastructure.Persistent.Migrations
                     b.ToTable("AuditFrequency", "BranchAudit");
                 });
 
-            modelBuilder.Entity("Internal.Audit.Domain.Entities.BranchAudit.AuditPlan", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier")
-                        .HasColumnName("Id")
-                        .HasDefaultValueSql("newsequentialid()");
-
-                    b.Property<string>("ApprovedBy")
-                        .HasMaxLength(10)
-                        .HasColumnType("nvarchar(10)");
-
-                    b.Property<DateTime?>("ApprovedOn")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime>("AssessmentFrom")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime>("AssessmentTo")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("CreatedBy")
-                        .IsRequired()
-                        .HasMaxLength(10)
-                        .HasColumnType("nvarchar(10)");
-
-                    b.Property<DateTime>("CreatedOn")
-                        .HasColumnType("datetime2");
-
-                    b.Property<bool>("IsDeleted")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bit")
-                        .HasDefaultValueSql("0");
-
-                    b.Property<string>("PlanCode")
-                        .IsRequired()
-                        .HasMaxLength(60)
-                        .HasColumnType("nvarchar(60)");
-
-                    b.Property<Guid>("PlanningYearId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("ReviewedBy")
-                        .HasMaxLength(10)
-                        .HasColumnType("nvarchar(10)");
-
-                    b.Property<DateTime?>("ReviewedOn")
-                        .HasColumnType("datetime2");
-
-                    b.Property<Guid>("RiskAssessmentId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("UpdatedBy")
-                        .HasMaxLength(10)
-                        .HasColumnType("nvarchar(10)");
-
-                    b.Property<DateTime?>("UpdatedOn")
-                        .HasColumnType("datetime2");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("RiskAssessmentId");
-
-                    b.ToTable("AuditPlan", "BranchAudit");
-                });
-
             modelBuilder.Entity("Internal.Audit.Domain.Entities.BranchAudit.Questionnaire", b =>
                 {
                     b.Property<Guid>("Id")
@@ -249,10 +185,10 @@ namespace Internal.Audit.Infrastructure.Persistent.Migrations
                     b.Property<DateTime?>("ApprovedOn")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("AssessmentCode")
+                    b.Property<string>("AssesmentCode")
                         .IsRequired()
-                        .HasMaxLength(60)
-                        .HasColumnType("nvarchar(60)");
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
                     b.Property<Guid>("AuditTypeId")
                         .HasColumnType("uniqueidentifier");
@@ -299,7 +235,7 @@ namespace Internal.Audit.Infrastructure.Persistent.Migrations
 
                     b.HasIndex("CountryId");
 
-                    b.ToTable("RiskAssessment", "BranchAudit");
+                    b.ToTable("RiskAssesment", "BranchAudit");
                 });
 
             modelBuilder.Entity("Internal.Audit.Domain.Entities.BranchAudit.RiskCriteria", b =>
@@ -2330,75 +2266,6 @@ namespace Internal.Audit.Infrastructure.Persistent.Migrations
                     b.ToTable("UserLockingPolicy", "Security");
                 });
 
-            modelBuilder.Entity("Internal.Audit.Domain.Entities.security.UserPasswordReset", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier")
-                        .HasColumnName("Id")
-                        .HasDefaultValueSql("newsequentialid()");
-
-                    b.Property<string>("ApprovedBy")
-                        .HasMaxLength(10)
-                        .HasColumnType("nvarchar(10)");
-
-                    b.Property<DateTime?>("ApprovedOn")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime?>("CompletedOn")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("CreatedBy")
-                        .IsRequired()
-                        .HasMaxLength(10)
-                        .HasColumnType("nvarchar(10)");
-
-                    b.Property<DateTime>("CreatedOn")
-                        .HasColumnType("datetime2");
-
-                    b.Property<bool>("IsCompleted")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("IsDeleted")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bit")
-                        .HasDefaultValueSql("0");
-
-                    b.Property<string>("PasswordResetPostCode")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime?>("PasswordResetPostCodeExpiry")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("PasswordResetUrlCode")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("PasswordResetUrlCodeExpiry")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("ReviewedBy")
-                        .HasMaxLength(10)
-                        .HasColumnType("nvarchar(10)");
-
-                    b.Property<DateTime?>("ReviewedOn")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("UpdatedBy")
-                        .HasMaxLength(10)
-                        .HasColumnType("nvarchar(10)");
-
-                    b.Property<DateTime?>("UpdatedOn")
-                        .HasColumnType("datetime2");
-
-                    b.Property<Guid>("UserId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("UserPasswordReset", "security");
-                });
-
             modelBuilder.Entity("Internal.Audit.Domain.Entities.security.UserRole", b =>
                 {
                     b.Property<Guid>("Id")
@@ -2491,17 +2358,6 @@ namespace Internal.Audit.Infrastructure.Persistent.Migrations
                     b.Navigation("CommonValueRatingType");
 
                     b.Navigation("Country");
-                });
-
-            modelBuilder.Entity("Internal.Audit.Domain.Entities.BranchAudit.AuditPlan", b =>
-                {
-                    b.HasOne("Internal.Audit.Domain.Entities.BranchAudit.RiskAssessment", "RiskAssessment")
-                        .WithMany()
-                        .HasForeignKey("RiskAssessmentId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("RiskAssessment");
                 });
 
             modelBuilder.Entity("Internal.Audit.Domain.Entities.BranchAudit.Questionnaire", b =>

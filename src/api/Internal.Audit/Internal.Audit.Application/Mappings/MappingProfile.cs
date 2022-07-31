@@ -133,6 +133,9 @@ using Internal.Audit.Application.Features.AuditPlans.Commands.DeleteAuditPlan;
 using Internal.Audit.Application.Features.Audit.Queries.GetAuditPlanCodeList;
 using Internal.Audit.Application.Features.TestSteps.Queries.GetTestStepList;
 using Internal.Audit.Application.Features.TestSteps.Queries.GetTestStepById;
+using Internal.Audit.Application.Features.TestSteps.Commands.AddTestStep;
+using Internal.Audit.Application.Features.TestSteps.Commands.UpdateTestStep;
+using Internal.Audit.Application.Features.TestSteps.Commands.DeleteTestStep;
 
 namespace Internal.Audit.Application.Mappings;
 
@@ -350,6 +353,11 @@ public class MappingProfile : Profile
 
         CreateMap<CompositeTestStep, GetTestStepListQueryResponseDTO>().ReverseMap();
         CreateMap<CompositeTestStep, GetTestStepByIdDTO>().ReverseMap();
-
+        CreateMap<TestStep, AddTestStepResponseDTO>().ReverseMap();
+        CreateMap<TestStep, AddTestStepCommand>().ReverseMap();
+        CreateMap<TestStep, UpdateTestStepResponseDTO>().ReverseMap();
+        CreateMap<TestStep, UpdateTestStepCommand>().ReverseMap();
+        CreateMap<TestStep, DeleteTestStepResponseDTO>().ReverseMap();
+        CreateMap<TestStep, DeleteTestStepCommand>().ReverseMap();
     }
 }

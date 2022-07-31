@@ -361,7 +361,76 @@
       </form>
   </c-tab-pane>
   <c-tab-pane class="p-3">
-   Test Steps
+    <div class="animated fadeIn">
+      <div class="row">
+       <div class="col-lg-12 xs-12">
+         <div class="card">
+           <div class="card-header"><i class="fa fa-align-justify" ></i> 
+             <strong>Questionnaires</strong>
+           </div>
+           
+           <div class="card-body">
+             <form [formGroup]="searchForm3">
+               <div class="row" style="margin: 0 auto;">
+                 <div class="col-md-6 mb-2">
+                   <button [cModalToggle]="verticallyCenteredModalQuestionnaires.id" class="btnCreateColor" (click)="reset()" cButton>
+                     <svg cIcon name="cilPlus" size="md" title="Add Button Icon"></svg> Create
+                   </button> 
+                 </div>
+                 <div class="col-md-5 mb-2 form-floating">
+                   <input type="text" formControlName="searchTerm3" class="form-control searchInput"  placeholder="Search by TestStep/Questionnaires/Topic Head/Country"/>
+                   <label class="searchLevel" for="floatingInput"> Search by TestStep/Questionnaires/Topic Head/Country</label>
+                 </div>
+                 <div class="col-md-1 mb-2">
+                   <button type="button" class="btn btn-secondary mr-1 btn-block " data-toggle="modal" (click)="search()" >
+                     Search
+                   </button>
+                 </div>
+               </div>
+            </form>
+             
+             <div class="row overflow-auto"  >
+               <table datatable [dtOptions]="dtOptions[3]" id="DataTables_Table_3"  class="table table-bordered row-border hover datatableStyle" style="width: 100%;">
+                 <thead >
+                   <tr>
+                     <th>Country</th>
+                     <th>Topic Head</th>
+                     <th>Questionnaires</th>
+                     <th>Test Steps</th>
+                     <th class="col-1 text-center">Actions</th>
+                   </tr>
+                 </thead>
+                 <tbody *ngIf="questionnaires?.length != 0">
+                   <tr *ngFor="let teststep of teststeps">
+                     <td>{{ teststep.country }}</td>
+                     <td>{{ teststep.topicHead }}</td>
+                     <td>{{ teststep.questionnaire }}</td>
+                     <td>{{ teststep.testStepDetails }}</td>
+                     <td class="text-center">
+                       <div class="btn-group" role="group" aria-label="Basic example" >
+                         <!-- <svg cIcon [name]="cil-airplane-mode" [title]="cil-airplane-mode" size="3xl">gjhj</svg> -->
+                         <button type="button" class="btn btn-secondary btnEditColor" (click)="editTestStep(verticallyCenteredModalQuestionnaires,teststep)">
+                           <svg cIcon name="cilPencil" size="md" title="Edit Button icon"></svg>
+                         </button>
+                         <button type="button" class="btn btn-danger btnDeleteColor" (click)="deleteTestStep(teststep.id)">
+                           <svg cIcon name="cilTrash" size="md" title="Delete Button Icon"></svg>
+                         </button>
+                       </div>
+                     </td>
+                   </tr>
+                 </tbody>
+                 <tbody *ngIf="teststeps?.length == 0">
+                   <tr>
+                     <td colspan="5" class="no-data-available">No data!</td>
+                   </tr>
+                 </tbody>
+               </table>
+             </div>
+           </div>
+         </div>
+       </div>
+      </div>
+     </div>
   </c-tab-pane>
 
 </c-tab-content>

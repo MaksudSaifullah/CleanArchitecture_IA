@@ -1,12 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿
+using Internal.Audit.Application.Common;
 
-namespace Internal.Audit.Application.Features.TestSteps.Commands.UpdateTestStep
+namespace Internal.Audit.Application.Features.TestSteps.Commands.UpdateTestStep;
+
+public record UpdateTestStepResponseDTO : BaseResponseDTO
 {
-    internal class UpdateTestStepResponseDTO
+    public UpdateTestStepResponseDTO(Guid Id, bool Success, string Message) : base(Id, Success, Message)
     {
     }
 }
+

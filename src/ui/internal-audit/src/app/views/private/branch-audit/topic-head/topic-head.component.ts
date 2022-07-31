@@ -7,6 +7,7 @@ import { HttpService } from 'src/app/core/services/http.service';
 import { AlertService } from '../../../../core/services/alert.service';
 import { topicHead } from 'src/app/core/interfaces/branch-audit/topicHead.interface';
 import { questionnaire } from 'src/app/core/interfaces/branch-audit/questionnaire.interface';
+import { testStep } from 'src/app/core/interfaces/branch-audit/testStep.interface';
 import { country } from 'src/app/core/interfaces/configuration/country.interface';
 import { paginatedResponseInterface } from 'src/app/core/interfaces/paginated.interface';
 
@@ -29,12 +30,15 @@ export class TopicHeadComponent implements OnInit  {
   topicheads: topicHead[] = [];
   countries: country[] = [];
   searchForm: FormGroup;
-
   
   questionnaireForm: FormGroup;
   searchForm2: FormGroup;
   questionnaires: questionnaire[] = [];
   topicheadDropdownList: topicHead[] = [];
+
+  testStepForm: FormGroup;
+  searchForm3: FormGroup;
+  teststeps: testStep[] = [];
 
   constructor(private http: HttpService, private fb: FormBuilder, private AlertService: AlertService) 
   {
@@ -64,11 +68,26 @@ export class TopicHeadComponent implements OnInit  {
         searchTerm2: ['']
     });
 
+    this.testStepForm = this.fb.group({
+      id: [''],
+      countryId: [null],
+      topicHeadId: [null,[Validators.required, Validators.pattern("^(?!null$).*$")]],
+      questionnaireId: [null,[Validators.required, Validators.pattern("^(?!null$).*$")]],
+      effectiveFrom: [, [Validators.required]],
+      effectiveTo: [, [Validators.required]],
+      testStepDetails: ['', [Validators.required, Validators.minLength(5), Validators.maxLength(300)]],      
+
+    });
+    this.searchForm3 = this.fb.group({
+      searchTerm3: ['']
+  });
+
   }
 
   ngOnInit(): void {
     this.LoadData();
     this.LoadQuestionnaireData();
+    this.LoadTestStepData();
   }
 
   LoadData() {
@@ -150,6 +169,7 @@ export class TopicHeadComponent implements OnInit  {
   reset(){
     this.topicHeadForm.reset();
     this.questionnaireForm.reset();
+    this.testStepForm.reset();
   }
   search(){
     this.ReloadAllDataTable();
@@ -274,4 +294,65 @@ export class TopicHeadComponent implements OnInit  {
     localmodalId.visible = true;
 
   }
+
+// Test Steps
+
+LoadTestStepData(){
+  console.log('loading test step data');
+   const that = this;
+
+   this.dtOptions[3] = {
+     pagingType: 'full_numbers',
+     pageLength: 10,
+     serverSide: true,
+     processing: true,
+     searching: false,
+     ordering: false,
+     ajax: (dataTablesParameters: any, callback) => {
+       this.http
+         .paginatedPost(
+           'test-step/paginated', dataTablesParameters.length, ((dataTablesParameters.start / dataTablesParameters.length) + 1), this.searchForm3.get('searchTerm3')?.value
+         ).subscribe(resp => that.teststeps = this.dataTableService.datatableMap(resp, callback));
+         
+     },
+   };
+ }
+ onSubmitTestStep(modalId:any):void
+ {
+
+ }
+ editTestStep(modalId: any, testStep: any):void
+ {
+  const localmodalId = modalId;
+    //console.log(questionnaire);
+    this.http
+      .getById('test-step', 'id?Id='+ testStep.id)
+      .subscribe(res => {
+        const response = res as testStep;  
+        console.log(response);    
+        this.testStepForm.setValue({ id: response.id,
+          countryId: response.countryId,
+          topicHeadId: response.topicHeadId,
+          questionnaireId: response.questionnaireId,
+          testStepDetails: response.testStepDetails,
+          effectiveFrom: response.effectiveFrom, 
+          effectiveTo: response.effectiveTo });
+      });
+    localmodalId.visible = true;
+
+ }
+ deleteTestStep(id: string) 
+ {
+  const that = this;
+    this.AlertService.confirmDialog().then(res => {
+      if (res.isConfirmed) {
+        this.http.delete('test-step/id?Id=' + id, {}).subscribe(response => {
+          this.AlertService.successDialog('Deleted', 'Test Step deleted successfully.');
+          this.ReloadAllDataTable();
+        })
+      }
+    });
+
+ }
+
 }

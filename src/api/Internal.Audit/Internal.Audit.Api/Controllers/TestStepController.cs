@@ -1,4 +1,7 @@
 ﻿
+using Internal.Audit.Application.Features.TestSteps.Commands.AddTestStep;
+using Internal.Audit.Application.Features.TestSteps.Commands.DeleteTestStep;
+using Internal.Audit.Application.Features.TestSteps.Commands.UpdateTestStep;
 using Internal.Audit.Application.Features.TestSteps.Queries.GetTestStepById;
 using Internal.Audit.Application.Features.TestSteps.Queries.GetTestStepList;
 using MediatR;
@@ -18,7 +21,7 @@ namespace Internal.Audit.Api.Controllers
 
         [HttpPost("paginated")]
         public async Task<ActionResult<GetTestStepListPagingDTO>> GetList(GetTestStepListQuery query)
-        {
+       {
             var result = await _mediator.Send(query);
             return Ok(result);
         }
@@ -31,26 +34,26 @@ namespace Internal.Audit.Api.Controllers
             return Ok(result);
         }
 
-        //[HttpPost]
-        //public async Task<ActionResult<AddQuestionnaireResponseDTO>> Add(AddQuestionnaireCommand command)
-        //{
-        //    var result = await _mediator.Send(command);
-        //    return Ok(result);
-        //}
+        [HttpPost]
+        public async Task<ActionResult<AddTestStepResponseDTO>> Add(AddTestStepCommand command)
+        {
+            var result = await _mediator.Send(command);
+            return Ok(result);
+        }
 
-        //[HttpPut]
-        //public async Task<ActionResult<UpdateQuestionnaireResponseDTO>> Update(UpdateQuestionnaireCommand command)
-        //{
-        //    var result = await _mediator.Send(command);
-        //    return Ok(result);
-        //}
+        [HttpPut]
+        public async Task<ActionResult<UpdateTestStepResponseDTO>> Update(UpdateTestStepCommand command)
+        {
+            var result = await _mediator.Send(command);
+            return Ok(result);
+        }
 
-        //[HttpDelete("id")]
-        //public async Task<ActionResult<DeleteQuestionnaireResponseDTO>> Delete(Guid Id)
-        //{
-        //    var command = new DeleteQuestionnaireCommand(Id);
-        //    var result = await _mediator.Send(command);
-        //    return Ok(result);
-        //}
+        [HttpDelete("id")]
+        public async Task<ActionResult<DeleteTestStepResponseDTO>> Delete(Guid Id)
+        {
+            var command = new DeleteTestStepCommand(Id);
+            var result = await _mediator.Send(command);
+            return Ok(result);
+        }
     }
 }

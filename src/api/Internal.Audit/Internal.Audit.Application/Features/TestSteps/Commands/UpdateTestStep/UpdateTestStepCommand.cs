@@ -1,12 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using MediatR;
 
-namespace Internal.Audit.Application.Features.TestSteps.Commands.UpdateTestStep
+
+namespace Internal.Audit.Application.Features.TestSteps.Commands.UpdateTestStep;
+public class UpdateTestStepCommand : IRequest<UpdateTestStepResponseDTO>
 {
-    internal class UpdateTestStepCommand
-    {
-    }
+    public Guid Id { get; set; }
+    public Guid QuestionnaireId { get; set; }
+    public string TestStepDetails { get; set; } = null;
+    public DateTime EffectiveFrom { get; set; }
+    public DateTime EffectiveTo { get; set; }
 }

@@ -38,6 +38,7 @@ export class RiskAssessmentComponent implements OnInit {
   effectiveFrom: any;
   countries: country[] = [];
   Data: Array<any> = [];
+  riskAssessmentId: commonValueAndType[] = [];
 
   constructor(private http: HttpService , private fb: FormBuilder, private AlertService: AlertService) { 
 
@@ -46,7 +47,7 @@ export class RiskAssessmentComponent implements OnInit {
       id: [''],
       countryId:[null,[Validators.required, Validators.pattern("^(?!null$).*$")]],
       auditTypeId: [null,[Validators.required, Validators.pattern("^(?!null$).*$")]],
-      assesmentCode: [''],
+      assessmentCode: [''],
       effectiveFrom: [Date,[Validators.required]],
       effectiveTo: [Date, [Validators.required]],
       
@@ -63,9 +64,9 @@ export class RiskAssessmentComponent implements OnInit {
       countryId:[null,[Validators.required, Validators.pattern("^(?!null$).*$")]],
       auditTypeId:[null,[Validators.required, Validators.pattern("^(?!null$).*$")]],
       planningYearId:[null,[Validators.required, Validators.pattern("^(?!null$).*$")]],
-      riskAssesmentId:[null,[Validators.required, Validators.pattern("^(?!null$).*$")]],
-      assesmentFrom: [Date,[Validators.required]],
-      assesmentTo: [Date, [Validators.required]],
+      riskAssessmentId:[null,[Validators.required, Validators.pattern("^(?!null$).*$")]],
+      assessmentFrom: [Date,[Validators.required]],
+      assessmentTo: [Date, [Validators.required]],
     });
     this.searchForm1 = this.fb.group(
       {
@@ -80,7 +81,6 @@ export class RiskAssessmentComponent implements OnInit {
   ngOnInit(): void {   
     this.LoadData();
     this.LoadAuditPlanData();
-    console.log('hwlllloooo', this.auditPlanForm);
   };
 
   LoadData() {
@@ -133,12 +133,12 @@ export class RiskAssessmentComponent implements OnInit {
       .getById('riskAssessment', riskAssessment.id)
       .subscribe(res => {
           const riskAssessmentResponse = res as riskAssessment;
-          console.log('RiskAssesment', riskAssessment);
+          console.log('RiskAssessment', riskAssessment);
           this.riskAssessmentForm.setValue({
             id : riskAssessmentResponse.id, 
             countryId : riskAssessmentResponse.countryId, 
             auditTypeId: riskAssessmentResponse.auditTypeId, 
-            assesmentCode: riskAssessmentResponse.assesmentCode, 
+            assessmentCode: riskAssessmentResponse.assessmentCode, 
             effectiveFrom: formatDate(riskAssessmentResponse.effectiveFrom, 'yyyy-MM-dd', 'en'), 
             effectiveTo: formatDate(riskAssessmentResponse.effectiveTo, 'yyyy-MM-dd', 'en')
           });
@@ -170,7 +170,6 @@ export class RiskAssessmentComponent implements OnInit {
   LoadAuditType() {
     this.http.get('commonValueAndType/audittype').subscribe(resp => {
       let convertedResp = resp as commonValueAndType[];
-      console.log("AuditType",convertedResp)
       this.auditType = convertedResp;
     })
   }
@@ -178,7 +177,6 @@ export class RiskAssessmentComponent implements OnInit {
   LoadCountry() {
     this.http.paginatedPost('country/paginated', 100, 1, {}).subscribe(resp => {
       let convertedResp = resp as paginatedResponseInterface<country>;
-      console.log("Country",convertedResp);
       this.countries = convertedResp.items;
     })
   }
@@ -186,7 +184,6 @@ export class RiskAssessmentComponent implements OnInit {
   LoadYear() {
     this.http.get('commonValueAndType/year').subscribe(resp => {
       let convertedResp = resp as commonValueAndType[];
-      console.log("YEAR", convertedResp);
       this.year = convertedResp;
     })
   }
@@ -195,6 +192,7 @@ export class RiskAssessmentComponent implements OnInit {
     this.LoadAuditType();
     this.LoadCountry();
     this.LoadYear();
+    this.LoadAssessmentCode();
   }
 
   private ReloadAllDataTable() {
@@ -202,6 +200,15 @@ export class RiskAssessmentComponent implements OnInit {
       this.dataTableService.redraw(dtElement);
     });
   }
+
+  GetRiskAssessmentId(event: any) :void {
+    this.http.get('commonValueAndType/idcreation?idcreationValue=1&auditType=1&countryId='+ event.target.value +'')
+    .subscribe(resp => {
+      let convertedResp = resp as commonValueAndType[];
+      this.riskAssessmentId = convertedResp;
+    })
+  }
+
  // #Region AuditType
 
     LoadAuditPlanData() {
@@ -216,7 +223,8 @@ export class RiskAssessmentComponent implements OnInit {
         ajax: (dataTablesParameters: any, callback) => {
           this.http
             .paginatedPost(
-              'auditplan/paginated',dataTablesParameters.length,((dataTablesParameters.start/dataTablesParameters.length)+1), this.searchForm1.get('searchTerm')?.value)
+              'auditplan/paginated',dataTablesParameters.length,((dataTablesParameters.start/dataTablesParameters.length)+1),
+               this.searchForm1.get('searchTerm')?.value)
               .subscribe(resp => that.auditPlans = this.dataTableService.datatableMap(resp,callback));
         },
       };
@@ -246,14 +254,14 @@ export class RiskAssessmentComponent implements OnInit {
       }    
     }
 
-    // LoadAssessmentCode() {
-    //   this.http.paginatedPost('riskassessment/paginated', 100, 1, {}).subscribe(resp => {
-    //     debugger;
-    //     let convertedResp = resp as paginatedResponseInterface<riskAssessment>;
-    //     this.riskAssessments = convertedResp.items;
-    //   })
-    // }
+    LoadAssessmentCode() {
+      this.http.paginatedPost('riskassessment/paginated', 100, 1, {}).subscribe(resp => {
+        let convertedResp = resp as paginatedResponseInterface<riskAssessment>;
+        this.riskAssessments = convertedResp.items;
+      })
+    }
   
+
  // #EndRegion AuditType
   
 }

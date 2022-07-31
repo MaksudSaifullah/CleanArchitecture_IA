@@ -5,8 +5,8 @@ export interface auditPlan {
     auditTypeName:    string;
     planningYearId:     string;
     planningYearName:    string;
-    riskAssesmentId?: string;
-    assesmentCode:    string;
-    assesmentFrom:    Date;
-    assesmentTo:      Date;
+    riskAssessmentId?: string;
+    assessmentCode:    string;
+    assessmentFrom:    Date;
+    assessmentTo:      Date;
 }

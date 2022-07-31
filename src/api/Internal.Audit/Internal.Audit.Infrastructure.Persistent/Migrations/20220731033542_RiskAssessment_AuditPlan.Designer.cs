@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Internal.Audit.Infrastructure.Persistent.Migrations
 {
     [DbContext(typeof(InternalAuditContext))]
-    [Migration("20220730052049_AuditPlanYear")]
-    partial class AuditPlanYear
+    [Migration("20220731033542_RiskAssessment_AuditPlan")]
+    partial class RiskAssessment_AuditPlan
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -117,10 +117,10 @@ namespace Internal.Audit.Infrastructure.Persistent.Migrations
                     b.Property<DateTime?>("ApprovedOn")
                         .HasColumnType("datetime2");
 
-                    b.Property<DateTime>("AssesmentFrom")
+                    b.Property<DateTime>("AssessmentFrom")
                         .HasColumnType("datetime2");
 
-                    b.Property<DateTime>("AssesmentTo")
+                    b.Property<DateTime>("AssessmentTo")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("CreatedBy")
@@ -151,7 +151,7 @@ namespace Internal.Audit.Infrastructure.Persistent.Migrations
                     b.Property<DateTime?>("ReviewedOn")
                         .HasColumnType("datetime2");
 
-                    b.Property<Guid>("RiskAssesmentId")
+                    b.Property<Guid>("RiskAssessmentId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("UpdatedBy")
@@ -163,7 +163,7 @@ namespace Internal.Audit.Infrastructure.Persistent.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("RiskAssesmentId");
+                    b.HasIndex("RiskAssessmentId");
 
                     b.ToTable("AuditPlan", "BranchAudit");
                 });
@@ -251,10 +251,10 @@ namespace Internal.Audit.Infrastructure.Persistent.Migrations
                     b.Property<DateTime?>("ApprovedOn")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("AssesmentCode")
+                    b.Property<string>("AssessmentCode")
                         .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
+                        .HasMaxLength(60)
+                        .HasColumnType("nvarchar(60)");
 
                     b.Property<Guid>("AuditTypeId")
                         .HasColumnType("uniqueidentifier");
@@ -301,7 +301,7 @@ namespace Internal.Audit.Infrastructure.Persistent.Migrations
 
                     b.HasIndex("CountryId");
 
-                    b.ToTable("RiskAssesment", "BranchAudit");
+                    b.ToTable("RiskAssessment", "BranchAudit");
                 });
 
             modelBuilder.Entity("Internal.Audit.Domain.Entities.BranchAudit.RiskCriteria", b =>
@@ -2428,13 +2428,13 @@ namespace Internal.Audit.Infrastructure.Persistent.Migrations
 
             modelBuilder.Entity("Internal.Audit.Domain.Entities.BranchAudit.AuditPlan", b =>
                 {
-                    b.HasOne("Internal.Audit.Domain.Entities.BranchAudit.RiskAssessment", "RiskAssesment")
+                    b.HasOne("Internal.Audit.Domain.Entities.BranchAudit.RiskAssessment", "RiskAssessment")
                         .WithMany()
-                        .HasForeignKey("RiskAssesmentId")
+                        .HasForeignKey("RiskAssessmentId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("RiskAssesment");
+                    b.Navigation("RiskAssessment");
                 });
 
             modelBuilder.Entity("Internal.Audit.Domain.Entities.BranchAudit.Questionnaire", b =>

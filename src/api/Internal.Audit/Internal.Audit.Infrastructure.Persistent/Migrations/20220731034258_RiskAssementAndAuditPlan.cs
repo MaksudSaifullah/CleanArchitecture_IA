@@ -5,41 +5,19 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Internal.Audit.Infrastructure.Persistent.Migrations
 {
-    public partial class RiskAssessment : Migration
+    public partial class RiskAssementAndAuditPlan : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "AuditType",
-                schema: "Config",
-                columns: table => new
-                {
-                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false, defaultValueSql: "newsequentialid()"),
-                    Name = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: false),
-                    CreatedBy = table.Column<string>(type: "nvarchar(10)", maxLength: 10, nullable: false),
-                    CreatedOn = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    UpdatedBy = table.Column<string>(type: "nvarchar(10)", maxLength: 10, nullable: true),
-                    UpdatedOn = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    ReviewedBy = table.Column<string>(type: "nvarchar(10)", maxLength: 10, nullable: true),
-                    ReviewedOn = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    ApprovedBy = table.Column<string>(type: "nvarchar(10)", maxLength: 10, nullable: true),
-                    ApprovedOn = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    IsDeleted = table.Column<bool>(type: "bit", nullable: false, defaultValueSql: "0")
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_AuditType", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "RiskAssesment",
+                name: "RiskAssessment",
                 schema: "BranchAudit",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false, defaultValueSql: "newsequentialid()"),
                     CountryId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     AuditTypeId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    AssesmentCode = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    AssessmentCode = table.Column<string>(type: "nvarchar(60)", maxLength: 60, nullable: false),
                     EffectiveFrom = table.Column<DateTime>(type: "datetime2", nullable: false),
                     EffectiveTo = table.Column<DateTime>(type: "datetime2", nullable: false),
                     CreatedBy = table.Column<string>(type: "nvarchar(10)", maxLength: 10, nullable: false),
@@ -54,16 +32,16 @@ namespace Internal.Audit.Infrastructure.Persistent.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_RiskAssesment", x => x.Id);
+                    table.PrimaryKey("PK_RiskAssessment", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_RiskAssesment_AuditType_AuditTypeId",
+                        name: "FK_RiskAssessment_CommonValueAndType_AuditTypeId",
                         column: x => x.AuditTypeId,
                         principalSchema: "Config",
-                        principalTable: "AuditType",
+                        principalTable: "CommonValueAndType",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_RiskAssesment_Country_CountryId",
+                        name: "FK_RiskAssessment_Country_CountryId",
                         column: x => x.CountryId,
                         principalSchema: "common",
                         principalTable: "Country",
@@ -71,28 +49,67 @@ namespace Internal.Audit.Infrastructure.Persistent.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
-            migrationBuilder.CreateIndex(
-                name: "IX_RiskAssesment_AuditTypeId",
+            migrationBuilder.CreateTable(
+                name: "AuditPlan",
                 schema: "BranchAudit",
-                table: "RiskAssesment",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false, defaultValueSql: "newsequentialid()"),
+                    RiskAssessmentId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    PlanCode = table.Column<string>(type: "nvarchar(60)", maxLength: 60, nullable: false),
+                    PlanningYearId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    AssessmentFrom = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    AssessmentTo = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    CreatedBy = table.Column<string>(type: "nvarchar(10)", maxLength: 10, nullable: false),
+                    CreatedOn = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    UpdatedBy = table.Column<string>(type: "nvarchar(10)", maxLength: 10, nullable: true),
+                    UpdatedOn = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    ReviewedBy = table.Column<string>(type: "nvarchar(10)", maxLength: 10, nullable: true),
+                    ReviewedOn = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    ApprovedBy = table.Column<string>(type: "nvarchar(10)", maxLength: 10, nullable: true),
+                    ApprovedOn = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    IsDeleted = table.Column<bool>(type: "bit", nullable: false, defaultValueSql: "0")
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_AuditPlan", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_AuditPlan_RiskAssessment_RiskAssessmentId",
+                        column: x => x.RiskAssessmentId,
+                        principalSchema: "BranchAudit",
+                        principalTable: "RiskAssessment",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_AuditPlan_RiskAssessmentId",
+                schema: "BranchAudit",
+                table: "AuditPlan",
+                column: "RiskAssessmentId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_RiskAssessment_AuditTypeId",
+                schema: "BranchAudit",
+                table: "RiskAssessment",
                 column: "AuditTypeId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_RiskAssesment_CountryId",
+                name: "IX_RiskAssessment_CountryId",
                 schema: "BranchAudit",
-                table: "RiskAssesment",
+                table: "RiskAssessment",
                 column: "CountryId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "RiskAssesment",
+                name: "AuditPlan",
                 schema: "BranchAudit");
 
             migrationBuilder.DropTable(
-                name: "AuditType",
-                schema: "Config");
+                name: "RiskAssessment",
+                schema: "BranchAudit");
         }
     }
 }

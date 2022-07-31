@@ -58,7 +58,7 @@
                     </thead>
                     <tbody *ngIf="riskAssessments?.length != 0">
                       <tr *ngFor="let riskAssessment of riskAssessments">
-                        <td>{{ riskAssessment.assesmentCode }}</td>
+                        <td>{{ riskAssessment.assessmentCode }}</td>
                         <td>{{ riskAssessment.countryName }}</td>
                         <td>{{ riskAssessment.auditTypeName }}</td>
                         <td>{{ riskAssessment.effectiveFrom | date:'medium' }}</td>
@@ -99,12 +99,12 @@
       <div class="col-md-12" >
         <input type="hidden" formControlName="id"/>  
         <div class="form-floating mb-3">
-          <input type="text" class="form-control" formControlName="assesmentCode" id="assesmentCode" placeholder="assesmentCode">
-          <label for="floatingInput">Assesment Code</label>
+          <input type="text" class="form-control" formControlName="assessmentCode" id="assessmentCode" placeholder="assessmentCode" [value]=" this.riskAssessmentId">
+          <label for="floatingInput">Assessment Code</label>
         </div>
           <div form-floating>
             <select aria-label="Floating label select example" cSelect id="countryId"
-              formControlName="countryId" name="countryId">
+              formControlName="countryId" name="countryId"  (change)="GetRiskAssessmentId($event)">
               <option value=null>Select Country Level</option>
               <option *ngFor="let country of countries" [value]="country.id">
                 {{country.name}}
@@ -219,12 +219,12 @@
                     </thead>
                     <tbody *ngIf="auditPlans?.length != 0">
                       <tr *ngFor="let auditPlan of auditPlans">
-                        <td>{{ auditPlan.assesmentCode }}</td>
+                        <td>{{ auditPlan.assessmentCode }}</td>
                         <td>{{ auditPlan.countryName }}</td>
                         <td>{{ auditPlan.auditTypeName }}</td>
                         <td>{{ auditPlan.planningYearName }}</td>
-                        <td>{{ auditPlan.assesmentFrom | date:'medium' }}</td>
-                        <td>{{ auditPlan.assesmentTo | date:'medium' }}</td>
+                        <td>{{ auditPlan.assessmentFrom | date:'medium' }}</td>
+                        <td>{{ auditPlan.assessmentTo | date:'medium' }}</td>
                         <td>
                           <div class="btn-group" role="group" aria-label="Basic example">
                             <button type="button" class="btn btn-secondary btnEditColor" (click)="edit(verticallyCenteredModal,riskAssessment)">
@@ -330,11 +330,11 @@
 
         <div class="col-md-6">
           <div form-floating>
-            <select aria-label="Floating label select example" cSelect id="riskAssesmentId"
-              formControlName="riskAssesmentId" name="riskAssesmentId">
+            <select aria-label="Floating label select example" cSelect id="riskAssessmentId"
+              formControlName="riskAssessmentId" name="riskAssessmentId">
               <option value="null">Select Risk Assessment Id</option>
               <option *ngFor="let riskAssessment of riskAssessments" [value]="riskAssessment.id">
-                {{riskAssessment.assesmentCode}}
+                {{riskAssessment.assessmentCode}}
               </option>
             </select>
           </div>
@@ -347,8 +347,8 @@
       <div class="row">
         <div class="col-md-6">
           <div class="form-floating">
-            <input class="form-control" placeholder="assesmentFrom" formControlName="assesmentFrom" id="assesmentFrom" type="date" >
-            <label for="assesmentFrom">Assessment From</label>
+            <input class="form-control" placeholder="assessmentFrom" formControlName="assessmentFrom" id="assessmentFrom" type="date" >
+            <label for="assessmentFrom">Assessment From</label>
           </div>
     
               <div cRow *ngIf="auditPlanForm.get('effectiveFrom')?.invalid && auditPlanForm.get('effectiveFrom')?.errors &&
@@ -362,8 +362,8 @@
         </div>
         <div class="col-md-6">
           <div class="form-floating">
-            <input class="form-control" placeholder="assesmentTo" formControlName="assesmentTo" id="assesmentTo" type="date" >
-            <label for="assesmentTo">Effective To</label>
+            <input class="form-control" placeholder="assessmentTo" formControlName="assessmentTo" id="assessmentTo" type="date" >
+            <label for="assessmentTo">Effective To</label>
           </div>
           <div cRow *ngIf="auditPlanForm.get('effectiveTo')?.invalid && auditPlanForm.get('effectiveTo')?.errors &&
                 (auditPlanForm.get('effectiveTo')?.dirty || auditPlanForm.get('effectiveTo')?.touched)">

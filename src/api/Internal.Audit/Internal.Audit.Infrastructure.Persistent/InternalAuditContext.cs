@@ -45,6 +45,7 @@ public class InternalAuditContext: DbContext
     public DbSet<RiskCriteria> RiskCriterias { get; set; }
     public DbSet<DocumentSource> DocumentSources { get; set; }
     public DbSet<Document> Documents { get; set; }
+    public DbSet<UserPasswordReset> UserPasswordResets { get; set; }
     public DbSet<AuditCreation> AuditCreations { get; set; }
 
     public DbSet<WeightScore> WeightScores { get; set; }

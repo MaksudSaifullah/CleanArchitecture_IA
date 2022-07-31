@@ -30,9 +30,16 @@ namespace Internal.Audit.Consumer.Service
             Log.Fatal("test", "Something went wrong, application failed to start!");
             try
             {
-                var cc = new ConsumerService();
-                cc.Consume();
-                Console.ReadKey(true);
+                ServiceBase[] ServicesToRun;
+                ServicesToRun = new ServiceBase[] { new ConsumerService() };
+                ServiceBase.Run(ServicesToRun);
+
+
+                //var cc = new ConsumerService();
+                //cc.Consume();
+                //Console.ReadKey(true);
+
+
                 //if (System.Environment.UserInteractive)
                 //{
 

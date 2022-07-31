@@ -154,6 +154,10 @@ public static class PersistentInfrastructureServiceRegistration
         services.AddScoped<IDataRequestCommandRepository, DataRequestCommandRepository>();
         services.AddScoped<IAmbsDataSyncCommandRepository, AmbsDataSyncCommandRepository>();
 
+
+        services.AddScoped<IUserProfileQueryRepository, UserProfileQueryRepository>(s => new UserProfileQueryRepository(configuration.GetConnectionString("InternalAuditDb")));
+        services.AddScoped<IUserPasswordResetCommandRepository, UserPasswordResetCommandRepository>();
+        services.AddScoped<IUserPasswordResetRepository, UserPasswordResetRepository>(s => new UserPasswordResetRepository(configuration.GetConnectionString("InternalAuditDb")));
         services.AddScoped<IAuditCommandRepository, AuditCommandRepository>();
         services.AddScoped<IAuditQueryRepository>(s => new AuditQueryRepository(configuration.GetConnectionString("InternalAuditDb")));
 

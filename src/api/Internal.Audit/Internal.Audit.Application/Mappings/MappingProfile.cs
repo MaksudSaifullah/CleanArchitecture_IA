@@ -105,6 +105,11 @@ using Internal.Audit.Application.Features.EmailConfig.Commands.UpdateEmailConfig
 using Internal.Audit.Application.Features.CommonValueAndTypes.Queries.GetAuditFrequency;
 using Internal.Audit.Application.Features.CommonValueAndTypes.Queries.GetAuditScore;
 using Internal.Audit.Application.Features.CommonValueAndTypes.Queries.GetCommonValueTypeGeneric;
+using Internal.Audit.Application.Features.Audit.Queries.GetAuditList;
+using Internal.Audit.Application.Features.Audit.Commands.AddAudit;
+using Internal.Audit.Application.Features.Audit.Commands.DeleteAudit;
+using Internal.Audit.Application.Features.Audit.Queries.GetAuditById;
+using Internal.Audit.Application.Features.Audit.Commands.UpdateAudit;
 
 using Internal.Audit.Application.Features.WeightScoreConfigurations.Queries.WeightScoreByCountryId;
 
@@ -125,6 +130,7 @@ using Internal.Audit.Application.Features.AuditPlans.Queries.GetAuditPlanById;
 using Internal.Audit.Application.Features.AuditPlans.Commands.AddAuditPlan;
 using Internal.Audit.Application.Features.AuditPlans.Commands.UpdateAuditPlan;
 using Internal.Audit.Application.Features.AuditPlans.Commands.DeleteAuditPlan;
+using Internal.Audit.Application.Features.Audit.Queries.GetAuditPlanCodeList;
 
 namespace Internal.Audit.Application.Mappings;
 
@@ -331,5 +337,14 @@ public class MappingProfile : Profile
         CreateMap<AuditPlan, UpdateAuditPlanCommand>().ReverseMap();
         CreateMap<AuditPlan, DeleteAuditPlanResponseDTO>().ReverseMap();
         CreateMap<AuditPlan, DeleteAuditPlanCommand>().ReverseMap();
+
+        CreateMap<CompositAudit, GetAuditListResponseDTO>().ReverseMap();
+       // CreateMap<AuditCreation, AddAuditResponseDTO>().ReverseMap();
+        CreateMap<AuditCreation, AddAuditCommand>().ReverseMap();
+        CreateMap<AuditCreation, DeleteAuditCommand>().ReverseMap();
+        CreateMap<CompositAudit, GetAuditByIdResponseDTO>().ReverseMap();
+        CreateMap<AuditCreation, UpdateAuditCommand>().ReverseMap();
+        CreateMap<AuditPlanCode, GetAuditPlanCodeListResponseDTO>().ReverseMap();
+
     }
 }

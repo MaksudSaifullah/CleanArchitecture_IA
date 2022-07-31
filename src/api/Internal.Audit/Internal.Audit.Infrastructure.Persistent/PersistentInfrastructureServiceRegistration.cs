@@ -62,6 +62,8 @@ using Internal.Audit.Application.Contracts.Persistent.AmbsDataSync;
 using Internal.Audit.Infrastructure.Persistent.Repositories.AmbsDataSyncs;
 using Internal.Audit.Application.Contracts.Persistent.AuditPlans;
 using Internal.Audit.Infrastructure.Persistent.Repositories.AuditPlans;
+using Internal.Audit.Application.Contracts.Persistent.Audit;
+using Internal.Audit.Infrastructure.Persistent.Repositories.Audit;
 
 namespace Internal.Audit.Infrastructure.Persistent;
 
@@ -161,6 +163,11 @@ public static class PersistentInfrastructureServiceRegistration
         services.AddScoped<IUserProfileQueryRepository, UserProfileQueryRepository>(s => new UserProfileQueryRepository(configuration.GetConnectionString("InternalAuditDb")));
         services.AddScoped<IUserPasswordResetCommandRepository, UserPasswordResetCommandRepository>();
         services.AddScoped<IUserPasswordResetRepository, UserPasswordResetRepository>(s => new UserPasswordResetRepository(configuration.GetConnectionString("InternalAuditDb")));
+        services.AddScoped<IAuditCommandRepository, AuditCommandRepository>();
+        services.AddScoped<IAuditQueryRepository>(s => new AuditQueryRepository(configuration.GetConnectionString("InternalAuditDb")));
+
+        services.AddScoped<IAuditPlanCodeQueryRepository>(s => new AuditPlanCodeQueryRepository(configuration.GetConnectionString("InternalAuditDb")));
+
         return services;
     }
 }

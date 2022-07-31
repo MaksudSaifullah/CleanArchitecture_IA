@@ -10,7 +10,9 @@ namespace Internal.Audit.Domain.CompositeEntities.BranchAudit
     public class CompositeAuditPlan : EntityBase
     {
         public string? CountryName { get; set; }
+        public Guid CountryId { get; set; }
         public string? AuditTypeName { get; set; }
+        public Guid AuditTypeId { get; set; }
         public string? AssessmentCode { get; set; }
         public string? YearName { get; set; }
         public Guid RiskAssessmentId { get; set; }

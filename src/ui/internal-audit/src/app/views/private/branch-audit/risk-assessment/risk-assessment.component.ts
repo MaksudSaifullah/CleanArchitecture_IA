@@ -38,7 +38,6 @@ export class RiskAssessmentComponent implements OnInit {
   effectiveFrom: any;
   countries: country[] = [];
   Data: Array<any> = [];
-  riskAssessmentId: commonValueAndType[] = [];
 
   constructor(private http: HttpService , private fb: FormBuilder, private AlertService: AlertService) { 
 
@@ -160,6 +159,7 @@ export class RiskAssessmentComponent implements OnInit {
   }
   reset(){
     this.riskAssessmentForm.reset();
+    this.auditPlanForm.reset();
   }
 
   
@@ -201,11 +201,14 @@ export class RiskAssessmentComponent implements OnInit {
     });
   }
 
-  GetRiskAssessmentId(event: any) :void {
+  GetRiskAssessmentCode(event: any) :void {
     this.http.get('commonValueAndType/idcreation?idcreationValue=1&auditType=1&countryId='+ event.target.value +'')
     .subscribe(resp => {
-      let convertedResp = resp as commonValueAndType[];
-      this.riskAssessmentId = convertedResp;
+      const convertedResp = resp as commonValueAndType;
+      this.riskAssessmentForm.patchValue({
+        assessmentCode : convertedResp.text,
+      });  
+      console.log(this.riskAssessmentForm?.value.assessmentCode);
     })
   }
 
@@ -260,7 +263,52 @@ export class RiskAssessmentComponent implements OnInit {
         this.riskAssessments = convertedResp.items;
       })
     }
+    
+    GetAuditPlanCode(event: any) :void {
+      this.http.get('commonValueAndType/idcreation?idcreationValue=2&auditType=1&countryId='+ event.target.value +'')
+      .subscribe(resp => {
+        const convertedResp = resp as commonValueAndType;
+        this.auditPlanForm.patchValue({
+          planCode : convertedResp.text,
+        });
+      })
+    }
   
+    deleteAuditPlan(id: string) {
+      const that = this;
+      this.AlertService.confirmDialog().then(res => {
+        if (res.isConfirmed) {
+          this.http.delete('auditplan/' + id, {}).subscribe(response => {
+            this.AlertService.successDialog('Deleted', 'Audit Plan deleted successfully.');
+            this.ReloadAllDataTable();
+          })
+        }
+      });
+    }
+
+    editAuditPlan(modalId: any, auditplan: any): void {
+      const localmodalId = modalId;
+      console.log('jkkj'+ auditplan.id);
+      this.http
+        .getById('auditplan', auditplan.id)
+        .subscribe(res => {
+          const auditplanResponse = res as auditPlan;
+          console.log('sssssssssss', auditplanResponse);      
+          this.auditPlanForm.patchValue({ 
+            id: auditplanResponse.id,
+             planCode: auditplanResponse.planCode, 
+             countryId: auditplanResponse.countryId,
+             auditTypeId: auditplanResponse.auditTypeId,
+             planningYearId: auditplanResponse.planningYearId, 
+             riskAssessmentId : auditplanResponse.riskAssessmentId, 
+             assessmentCode: auditplanResponse.assessmentCode,
+             assessmentFrom: auditplanResponse.assessmentFrom,
+             assessmentTo: auditplanResponse.assessmentTo });
+         });
+        
+        
+      localmodalId.visible = true;
+    }
 
  // #EndRegion AuditType
   

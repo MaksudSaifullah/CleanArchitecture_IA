@@ -59,6 +59,7 @@ public class InternalAuditContext: DbContext
     public DbSet<AmbsDataSync> AmbsDataSyncs { get; set; }
     public DbSet<AuditPlan> AuditPlans { get; set; }
     public DbSet<TestStep> TestSteps { get; set; }
+    public DbSet<Branch> Branches { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

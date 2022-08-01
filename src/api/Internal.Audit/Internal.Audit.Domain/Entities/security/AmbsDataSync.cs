@@ -33,6 +33,7 @@ public class AmbsDataSync : EntityBase
 
     [ForeignKey("DataRequestQueueServiceId")]
     public virtual DataRequestQueueService DataRequestQueueService { get; set; } = null!;
+    [NotMapped]
     public virtual RiskCriteria RiskCriteria { get; set; } = null!;
 
 }

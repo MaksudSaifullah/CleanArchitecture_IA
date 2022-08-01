@@ -22,4 +22,11 @@ public class TopicHeadQueryRepository : QueryRepositoryBase<TopicHead>, ITopicHe
 
         return await Single(query, parameters);
     }
+    public async Task<IEnumerable<TopicHead>> GetByFilter(string FilterName, Guid FilterValue)
+    {
+        var query = "SELECT [Id],[CountryId],[Name],[EffectiveFrom],[EffectiveTo],[Description] FROM [BranchAudit].[TopicHead] WHERE "+ FilterName + " = @FilterValue AND [IsDeleted] = 0";
+        var parameters = new Dictionary<string, object> { { "FilterValue", FilterValue } };
+
+        return await Get(query, parameters);
+    }
 }

@@ -11,5 +11,6 @@ public interface ITopicHeadQueryRepository : IAsyncQueryRepository<TopicHead>
 {
     Task<(long, IEnumerable<TopicHead>)> GetAll(int pageSize, int pageNumber, string searchTerm);
     Task<TopicHead> GetById(Guid id);
+    Task<IEnumerable<TopicHead>> GetByFilter(string FilterName, Guid FilterValue);
 }
 

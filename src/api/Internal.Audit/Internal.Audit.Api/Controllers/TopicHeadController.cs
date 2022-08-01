@@ -1,6 +1,7 @@
 ﻿using Internal.Audit.Application.Features.TopicHeads.Commands.AddTopicHead;
 using Internal.Audit.Application.Features.TopicHeads.Commands.DeleteTopicHead;
 using Internal.Audit.Application.Features.TopicHeads.Commands.UpdateTopicHead;
+using Internal.Audit.Application.Features.TopicHeads.Queries.GetTopicHeadByFilter;
 using Internal.Audit.Application.Features.TopicHeads.Queries.GetTopicHeadById;
 using Internal.Audit.Application.Features.TopicHeads.Queries.GetTopicHeadList;
 using MediatR;
@@ -31,6 +32,14 @@ namespace Internal.Audit.Api.Controllers
             var query = new GetTopicHeadByIdQuery(Id);
             var topicHead = await _mediator.Send(query);
             return Ok(topicHead);
+        }
+
+        [HttpPost("filter")]
+        public async Task<ActionResult<IEnumerable<GetTopicHeadByFilterResponseDTO>>> GetByFilter(GetTopicHeadFilterDTO Filter)
+        {
+            var query = new GetTopicHeadByFilterQuery(Filter);
+            var result = await _mediator.Send(query);
+            return Ok(result);
         }
 
         [HttpPost]

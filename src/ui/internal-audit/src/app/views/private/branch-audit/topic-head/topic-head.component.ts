@@ -39,11 +39,13 @@ export class TopicHeadComponent implements OnInit  {
   testStepForm: FormGroup;
   searchForm3: FormGroup;
   teststeps: testStep[] = [];
+  questionnaireDropdownList: questionnaire[] = [];
 
   constructor(private http: HttpService, private fb: FormBuilder, private AlertService: AlertService) 
   {
     this.loadDropDownValues();
     this.LoadTopicHeadDropdownList();
+    this.LoadQuestionnaireDropdownList();
     this.topicHeadForm = this.fb.group({
       id: [''],
       countryId: [null,[Validators.required, Validators.pattern("^(?!null$).*$")]],
@@ -70,7 +72,7 @@ export class TopicHeadComponent implements OnInit  {
 
     this.testStepForm = this.fb.group({
       id: [''],
-      countryId: [null],
+      countryId: [null,[Validators.required, Validators.pattern("^(?!null$).*$")]],
       topicHeadId: [null,[Validators.required, Validators.pattern("^(?!null$).*$")]],
       questionnaireId: [null,[Validators.required, Validators.pattern("^(?!null$).*$")]],
       effectiveFrom: [, [Validators.required]],
@@ -116,7 +118,7 @@ export class TopicHeadComponent implements OnInit  {
 
   LoadCountries() 
   {
-    this.http.paginatedPost('country/paginated', 100, 1, {}).subscribe(resp => {
+    this.http.paginatedPost('country/paginated', 1000, 1, {}).subscribe(resp => {
       let convertedResp = resp as paginatedResponseInterface<country>;
       this.countries = convertedResp.items;     
     })
@@ -147,7 +149,9 @@ export class TopicHeadComponent implements OnInit  {
   }
   edit(modalId: any, topicHead: any): void {
     const localmodalId = modalId;
+    console.log("topichead");
     console.log(topicHead);
+    console.log("topichead");
     this.http
       .getById('topichead', 'id?Id='+ topicHead.id)
       .subscribe(res => {
@@ -170,6 +174,8 @@ export class TopicHeadComponent implements OnInit  {
     this.topicHeadForm.reset();
     this.questionnaireForm.reset();
     this.testStepForm.reset();
+    this.topicheadDropdownList = [];
+    this.questionnaireDropdownList = [];
   }
   search(){
     this.ReloadAllDataTable();
@@ -231,6 +237,7 @@ export class TopicHeadComponent implements OnInit  {
           this.formService.onSaveSuccess(localmodalId, this.ReloadAllDataTable());          
           this.AlertService.success('Questionnaire Updated Successful');
         });
+        this.reset();
       }
       else {
        // console.log(this.questionnaireForm.value);
@@ -238,6 +245,7 @@ export class TopicHeadComponent implements OnInit  {
           this.formService.onSaveSuccess(localmodalId,this.ReloadAllDataTable());
           this.AlertService.success('Questionnaire Saved successfully');
         });
+        this.reset();
       }      
     }
     else {     
@@ -317,20 +325,48 @@ LoadTestStepData(){
      },
    };
  }
+ LoadQuestionnaireDropdownList() 
+  {
+    this.http.paginatedPost('questionnaire/paginated', 1000, 1, '').subscribe(resp => {
+      let convertedResp = resp as paginatedResponseInterface<questionnaire>;
+      this.questionnaireDropdownList = convertedResp.items;     
+    })
+  }
  onSubmitTestStep(modalId:any):void
  {
-
+  const localmodalId = modalId;
+    if (this.testStepForm.valid ){
+      if(this.formService.isEdit(this.testStepForm.get('id') as FormControl)){
+        this.http.put('test-step',this.testStepForm.value,null).subscribe(x=>{
+          this.formService.onSaveSuccess(localmodalId, this.ReloadAllDataTable());          
+          this.AlertService.success('Test Steps Updated Successful');
+        });
+        this.reset();
+      }
+      else {
+       // console.log(this.riskProfileForm.value);
+        this.http.post('test-step',this.testStepForm.value).subscribe(x=>{
+          this.formService.onSaveSuccess(localmodalId,this.ReloadAllDataTable());
+          this.AlertService.success('Test Steps Saved successfully');
+        });
+        this.reset();
+      }      
+    }
+    else {     
+      this.testStepForm.markAllAsTouched();
+      return;
+    }
  }
  editTestStep(modalId: any, testStep: any):void
  {
   const localmodalId = modalId;
-    //console.log(questionnaire);
+    console.log(testStep.value);
     this.http
       .getById('test-step', 'id?Id='+ testStep.id)
       .subscribe(res => {
         const response = res as testStep;  
         console.log(response);    
-        this.testStepForm.setValue({ id: response.id,
+        this.testStepForm.patchValue({ id: response.id,
           countryId: response.countryId,
           topicHeadId: response.topicHeadId,
           questionnaireId: response.questionnaireId,
@@ -339,7 +375,6 @@ LoadTestStepData(){
           effectiveTo: response.effectiveTo });
       });
     localmodalId.visible = true;
-
  }
  deleteTestStep(id: string) 
  {
@@ -354,5 +389,26 @@ LoadTestStepData(){
     });
 
  }
+  onChangeCountry(filter:string):void
+  {
+    if(filter=="null"){
+      this.topicheadDropdownList = [];
+      this.questionnaireDropdownList = [];
+    }
+    else{
+      this.http.post('topicHead/filter', {FilterName: 'CountryId', FilterValue: filter}).subscribe(resp => {
+        this.topicheadDropdownList = resp as topicHead[];
+      })
+    }
+  }
+  onChangeTopicHead(filter:string):void
+  {
+    if(filter=="null"){
+      this.questionnaireDropdownList = [];
+    }
+    this.http.post('questionnaire/filter', {FilterName: 'TopicHeadId', FilterValue: filter}).subscribe(resp => {
+      this.questionnaireDropdownList = resp as questionnaire[];
+    })
+  }
 
 }

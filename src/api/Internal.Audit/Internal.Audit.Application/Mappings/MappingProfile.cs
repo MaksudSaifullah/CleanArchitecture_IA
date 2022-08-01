@@ -136,6 +136,8 @@ using Internal.Audit.Application.Features.TestSteps.Queries.GetTestStepById;
 using Internal.Audit.Application.Features.TestSteps.Commands.AddTestStep;
 using Internal.Audit.Application.Features.TestSteps.Commands.UpdateTestStep;
 using Internal.Audit.Application.Features.TestSteps.Commands.DeleteTestStep;
+using Internal.Audit.Application.Features.TopicHeads.Queries.GetTopicHeadByFilter;
+using Internal.Audit.Application.Features.Questionnnaires.Queries.GetQuestionnaireByFilter;
 
 namespace Internal.Audit.Application.Mappings;
 
@@ -289,6 +291,7 @@ public class MappingProfile : Profile
 
         CreateMap<TopicHead, TopicHeadDTO>().ReverseMap();
         CreateMap<TopicHead, TopicHeadByIdDTO>().ReverseMap();
+        CreateMap<TopicHead, GetTopicHeadByFilterResponseDTO>().ReverseMap();
         CreateMap<TopicHead, AddTopicHeadCommand>().ReverseMap();
         CreateMap<TopicHead, UpdateTopicHeadCommand>().ReverseMap();
         CreateMap<TopicHead, DeleteTopicHeadCommand>().ReverseMap();
@@ -321,6 +324,7 @@ public class MappingProfile : Profile
 
         CreateMap<CompositeQuestionnaire, GetQuestionnaireListResponseDTO>().ReverseMap();
         CreateMap<CompositeQuestionnaire, GetQuestionnaireByIdDTO>().ReverseMap();
+        CreateMap<CompositeQuestionnaire, GetQuestionnaireByFilterResponseDTO>().ReverseMap();
         CreateMap<Questionnaire, AddQuestionnaireResponseDTO>().ReverseMap();
         CreateMap<Questionnaire, AddQuestionnaireCommand>().ReverseMap();
         CreateMap<Questionnaire, UpdateQuestionnaireResponseDTO>().ReverseMap();

@@ -1,4 +1,5 @@
 ﻿using Internal.Audit.Domain.Common;
+using Internal.Audit.Domain.Entities.BranchAudit;
 using Internal.Audit.Domain.Entities.Config;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
@@ -32,5 +33,6 @@ public class AmbsDataSync : EntityBase
 
     [ForeignKey("DataRequestQueueServiceId")]
     public virtual DataRequestQueueService DataRequestQueueService { get; set; } = null!;
+    public virtual RiskCriteria RiskCriteria { get; set; } = null!;
 
 }

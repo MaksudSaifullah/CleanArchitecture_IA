@@ -4,7 +4,7 @@
 
 namespace Internal.Audit.Infrastructure.Persistent.Migrations
 {
-    public partial class ModuleFeaturetableadded : Migration
+    public partial class AfterMastermigrationinitialEmpty : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {

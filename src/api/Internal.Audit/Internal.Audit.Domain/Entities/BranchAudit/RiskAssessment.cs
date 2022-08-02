@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace Internal.Audit.Domain.Entities.BranchAudit;
 
-[Table("RiskAssesment", Schema = "BranchAudit")]
+[Table("RiskAssessment", Schema = "BranchAudit")]
 public class RiskAssessment : EntityBase
 {
     [Required]
@@ -20,8 +20,8 @@ public class RiskAssessment : EntityBase
     public Guid AuditTypeId { get; set; }
 
     [Required]
-    [MaxLength(50)]
-    public string AssesmentCode { get; set; } = null!;
+    [MaxLength(60)]
+    public string AssessmentCode { get; set; } = null!;
 
     [Required]
     public DateTime EffectiveFrom { get; set; }

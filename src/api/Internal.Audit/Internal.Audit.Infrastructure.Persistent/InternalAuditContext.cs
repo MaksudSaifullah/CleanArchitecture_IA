@@ -24,11 +24,15 @@ public class InternalAuditContext: DbContext
     public DbSet<Country> Countries { get; set; }
     public DbSet<UserCountry> UserCountries { get; set; }
     public DbSet<Designation> Designations { get; set; }
+    public DbSet<RoleAction> RoleActions { get; set; }
+    public DbSet<RoleFeature> RoleFeatures { get; set; }
+    public DbSet<RoleModule> RoleModules { get; set; }
     public DbSet<Role> Roles { get; set; }
     public DbSet<PasswordPolicy> PasswordPolicies { get; set; }
     public DbSet<SessionPolicy> SessionPolicies { get; set; }
     public DbSet<UserLockingPolicy> UserLockingPolicies { get; set; }
     public DbSet<AuditModule> AuditModule { get; set; }
+    public DbSet<FeatureAction> FeatureActions { get; set; }
     public DbSet<AuditFeature> AuditFeature { get; set; }
     public DbSet<AuditAction> AuditAction { get; set; }
     public DbSet<RiskProfile> RiskProfiles { get; set; }
@@ -38,23 +42,24 @@ public class InternalAuditContext: DbContext
     public DbSet<DashBoardBase> Dashboards { get; set; }
     public DbSet<ModulewiseRolePriviliege> ModulewiseRolePrivilieges { get; set; }
     public DbSet<ModuleFeature> ModuleFeatures { get; set; }
+    public DbSet<EmailType> EmailTypes { get; set; }
     public DbSet<EmailConfiguration> EmailConfigurations { get; set; }
     public DbSet<TopicHead> TopicHeads { get; set; }
     public DbSet<RiskAssessment> RiskAssessments { get; set; }
-
     public DbSet<RiskCriteria> RiskCriterias { get; set; }
     public DbSet<DocumentSource> DocumentSources { get; set; }
     public DbSet<Document> Documents { get; set; }
     public DbSet<UserPasswordReset> UserPasswordResets { get; set; }
-
+    public DbSet<AuditType> AuditTypes { get; set; }
+    public DbSet<AuditCreation> AuditCreations { get; set; }
     public DbSet<WeightScore> WeightScores { get; set; }
-
-
     public DbSet<AuditFrequency> AuditFrequencies { get; set; }
     public DbSet<Questionnaire> Questionnaires { get; set; }
     public DbSet<DataRequestQueueService> DataRequestQueueServices { get; set; }
     public DbSet<AmbsDataSync> AmbsDataSyncs { get; set; }
-
+    public DbSet<AuditPlan> AuditPlans { get; set; }
+    public DbSet<TestStep> TestSteps { get; set; }
+    public DbSet<Branch> Branches { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

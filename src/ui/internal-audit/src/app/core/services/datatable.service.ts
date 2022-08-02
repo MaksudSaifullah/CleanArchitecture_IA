@@ -12,9 +12,7 @@ export class DatatableService {
 
   datatableMap<T>(resp: any, callback: any, type: any = 'sp') {
     if (type === 'sp') {
-
       let convertedResp = resp as paginatedResponseInterface<T>;
-      console.log(convertedResp);
       callback({
         recordsTotal: convertedResp.totalCount,
         recordsFiltered: convertedResp.totalCount,

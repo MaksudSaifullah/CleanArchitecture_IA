@@ -60,6 +60,14 @@ using Internal.Audit.Application.Contracts.Persistent.DataRequestQueue;
 using Internal.Audit.Infrastructure.Persistent.Repositories.DataRequestQueueService;
 using Internal.Audit.Application.Contracts.Persistent.AmbsDataSync;
 using Internal.Audit.Infrastructure.Persistent.Repositories.AmbsDataSyncs;
+using Internal.Audit.Application.Contracts.Persistent.AuditPlans;
+using Internal.Audit.Infrastructure.Persistent.Repositories.AuditPlans;
+using Internal.Audit.Application.Contracts.Persistent.Audit;
+using Internal.Audit.Infrastructure.Persistent.Repositories.Audit;
+using Internal.Audit.Application.Contracts.Persistent.TestSteps;
+using Internal.Audit.Infrastructure.Persistent.Repositories.TestSteps;
+using Internal.Audit.Infrastructure.Persistent.Repositories.Branches;
+using Internal.Audit.Application.Contracts.Persistent.Branches;
 
 namespace Internal.Audit.Infrastructure.Persistent;
 
@@ -151,11 +159,25 @@ public static class PersistentInfrastructureServiceRegistration
         services.AddScoped<IQuestionnaireQueryRepository>(s => new QuestionnaireQueryRepository(configuration.GetConnectionString("InternalAuditDb")));
         services.AddScoped<IDataRequestCommandRepository, DataRequestCommandRepository>();
         services.AddScoped<IAmbsDataSyncCommandRepository, AmbsDataSyncCommandRepository>();
+        services.AddScoped<IAuditPlanCommandRepository, AuditPlanCommandRepository>();
+        services.AddScoped<IAuditPlanQueryRepository>(s => new AuditPlanQueryRepository(configuration.GetConnectionString("InternalAuditDb")));
+
 
 
         services.AddScoped<IUserProfileQueryRepository, UserProfileQueryRepository>(s => new UserProfileQueryRepository(configuration.GetConnectionString("InternalAuditDb")));
         services.AddScoped<IUserPasswordResetCommandRepository, UserPasswordResetCommandRepository>();
         services.AddScoped<IUserPasswordResetRepository, UserPasswordResetRepository>(s => new UserPasswordResetRepository(configuration.GetConnectionString("InternalAuditDb")));
+        services.AddScoped<IAuditCommandRepository, AuditCommandRepository>();
+        services.AddScoped<IAuditQueryRepository>(s => new AuditQueryRepository(configuration.GetConnectionString("InternalAuditDb")));
+
+        services.AddScoped<IAuditPlanCodeQueryRepository>(s => new AuditPlanCodeQueryRepository(configuration.GetConnectionString("InternalAuditDb")));
+
+
+        services.AddScoped<ITestStepCommandRepository, TestStepCommandRepository>();
+        services.AddScoped<ITestStepQueryRepository>(s => new TestStepQueryRepository(configuration.GetConnectionString("InternalAuditDb")));
+
+        services.AddScoped<IBranchCommandRepository, BranchCommandRepository>();
+
         return services;
     }
 }

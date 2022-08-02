@@ -81,24 +81,22 @@
      <c-modal-body>
       <div class="col-md-12" >
         <input type="hidden" formControlName="id"/>
-
-          <div style="padding-bottom: 2%;">
-            <div form-floating>
-                <select aria-label="Floating label select example" cSelect id="countryId"
-                  formControlName="countryId" name="countryId">
-                  <option value=null>Select Country</option>
-                  <option *ngFor="let country of countries" [value]="country.id">
-                    {{country.name}}
-                  </option>
-                </select>
-              </div>
-              <div cRow *ngIf="(auditFrequencyForm.get('countryId')?.invalid && auditFrequencyForm.get('countryId')?.errors) &&         
+          <div class="form-floating mb-3">
+            <select aria-label="Floating label select example" cSelect id="countryId"
+              formControlName="countryId" name="countryId">
+              <option value="null">Select Country</option>
+              <option *ngFor="let country of countries" [value]="country.id">
+                {{country.name}}
+              </option>                  
+            </select>
+            <label for="countryId" class="dropdownLabel">Country</label>          
+            <div cRow *ngIf="((auditFrequencyForm.get('countryId')?.invalid && auditFrequencyForm.get('countryId')?.errors)) &&
               (auditFrequencyForm.get('countryId')?.dirty || auditFrequencyForm.get('countryId')?.touched)">
               <small class="text-danger">
                 This field is required.
               </small>                                 
-            </div> 
-            <br>
+            </div>
+          </div>
           
           <div style="padding-bottom: 2%;">
           <div class="form-floating" >
@@ -190,7 +188,7 @@
           <br>          
   
       </div>
-      </div>
+      <!-- </div> -->
     </c-modal-body> 
      <c-modal-footer>
       <button cButton class="btn btn-primary btnSaveColor me-1" (click)="onSubmit(verticallyCenteredModal)">

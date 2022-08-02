@@ -16,6 +16,7 @@ import { AuditFrequencyComponent } from './audit-frequency/audit-frequency.compo
 import { RiskAssessmentViewComponent } from './risk-assessment-view/risk-assessment-view.component';
 import { OverdueTabComponentComponent } from './risk-assessment-view/overdue-tab/overdue-tab-component';
 import { StaffTurnoverComponent } from './risk-assessment-view/staff-turnover/staff-turnover.component';
+import { AuditComponent } from './audit/audit.component';
 
 
 @NgModule({
@@ -27,6 +28,9 @@ import { StaffTurnoverComponent } from './risk-assessment-view/staff-turnover/st
     RiskAssessmentViewComponent,
     OverdueTabComponentComponent,
     StaffTurnoverComponent
+    AuditFrequencyComponent,
+
+    AuditComponent
   ],
   imports: [
     CommonModule,

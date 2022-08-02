@@ -216,7 +216,7 @@
                    </button>
                  </div>
                </div>
-            </form>
+              </form>
              
              <div class="row overflow-auto"  >
                <table datatable [dtOptions]="dtOptions[2]" id="DataTables_Table_2"  class="table table-bordered row-border hover datatableStyle" style="width: 100%;">
@@ -275,13 +275,19 @@
                 </div> -->
                 <div class="form-floating mb-3">
                   <select aria-label="Floating label select example" cSelect id="countryId"
-                    formControlName="countryId" name="countryId" disabled>
+                    formControlName="countryId" name="countryId" (change)="onChangeCountry(country.value)" #country>
                     <option value="null">Select Country</option>
                     <option *ngFor="let country of countries" [value]="country.id">
                       {{country.name}}
                     </option>
                   </select>
                   <label for="countryId" class="dropdownLabel"> Country</label>
+                  <div cRow *ngIf="((questionnaireForm.get('countryId')?.invalid && questionnaireForm.get('countryId')?.errors)) &&
+                    (questionnaireForm.get('countryId')?.dirty || questionnaireForm.get('countryId')?.touched)">
+                    <small class="text-danger">
+                      This field is required.
+                    </small>
+                  </div>
                 </div>
 
                 <div class="form-floating mb-3">
@@ -361,7 +367,199 @@
       </form>
   </c-tab-pane>
   <c-tab-pane class="p-3">
-   Test Steps
+    <div class="animated fadeIn">
+      <div class="row">
+       <div class="col-lg-12 xs-12">
+         <div class="card">
+           <div class="card-header"><i class="fa fa-align-justify" ></i> 
+             <strong>Test Steps</strong>
+           </div>
+           
+           <div class="card-body">
+             <form [formGroup]="searchForm3">
+               <div class="row" style="margin: 0 auto;">
+                 <div class="col-md-6 mb-2">
+                   <button [cModalToggle]="verticallyCenteredModalTestStep.id" class="btnCreateColor" (click)="reset()" cButton>
+                     <svg cIcon name="cilPlus" size="md" title="Add Button Icon"></svg> Create
+                   </button> 
+                 </div>
+                 <div class="col-md-5 mb-2 form-floating">
+                   <input type="text" formControlName="searchTerm3" class="form-control searchInput"  placeholder="Search by TestStep/Questionnaires/Topic Head/Country"/>
+                   <label class="searchLevel" for="floatingInput"> Search by TestStep/Questionnaires/Topic Head/Country</label>
+                 </div>
+                 <div class="col-md-1 mb-2">
+                   <button type="button" class="btn btn-secondary mr-1 btn-block " data-toggle="modal" (click)="search()" >
+                     Search
+                   </button>
+                 </div>
+               </div>
+            </form>
+             
+             <div class="row overflow-auto"  >
+               <table datatable [dtOptions]="dtOptions[3]" id="DataTables_Table_3"  class="table table-bordered row-border hover datatableStyle" style="width: 100%;">
+                 <thead >
+                   <tr>
+                     <th>Country</th>
+                     <th>Topic Head</th>
+                     <th>Questionnaires</th>
+                     <th>Test Steps</th>
+                     <th class="col-1 text-center">Actions</th>
+                   </tr>
+                 </thead>
+                 <tbody *ngIf="questionnaires?.length != 0">
+                   <tr *ngFor="let teststep of teststeps">
+                     <td>{{ teststep.country }}</td>
+                     <td>{{ teststep.topicHead }}</td>
+                     <td>{{ teststep.questionnaire }}</td>
+                     <td>{{ teststep.testStepDetails }}</td>
+                     <td class="text-center">
+                       <div class="btn-group" role="group" aria-label="Basic example" >
+                         <!-- <svg cIcon [name]="cil-airplane-mode" [title]="cil-airplane-mode" size="3xl">gjhj</svg> -->
+                         <button type="button" class="btn btn-secondary btnEditColor" (click)="editTestStep(verticallyCenteredModalTestStep,teststep)">
+                           <svg cIcon name="cilPencil" size="md" title="Edit Button icon"></svg>
+                         </button>
+                         <button type="button" class="btn btn-danger btnDeleteColor" (click)="deleteTestStep(teststep.id)">
+                           <svg cIcon name="cilTrash" size="md" title="Delete Button Icon"></svg>
+                         </button>
+                       </div>
+                     </td>
+                   </tr>
+                 </tbody>
+                 <tbody *ngIf="teststeps?.length == 0">
+                   <tr>
+                     <td colspan="5" class="no-data-available">No data!</td>
+                   </tr>
+                 </tbody>
+               </table>
+             </div>
+           </div>
+         </div>
+       </div>
+      </div>
+     </div>
+
+     <form [formGroup]="testStepForm" (ngSubmit)="onSubmitTestStep(verticallyCenteredModalTestStep)" novalidate>
+      <c-modal #verticallyCenteredModalTestStep alignment="center" id="verticallyCenteredModalTestStep">
+        <c-modal-header>
+          <h5 cModalTitle *ngIf="!formService.isEdit(this.testStepForm.get('id'))">Create Test Step</h5>
+          <h5 cModalTitle *ngIf="formService.isEdit(this.testStepForm.get('id'))">Update Test Step</h5>
+          <button [cModalToggle]="verticallyCenteredModalTestStep.id" cButtonClose></button>
+        </c-modal-header>
+        <c-modal-body>
+          <div class="col-md-12" >
+            <input type="hidden" formControlName="id"/>
+               <!-- <div class="form-floating mb-3">
+                 <input type="text" readonly class="form-control" id="country" placeholder="country">
+                 <label for="floatingInput">Country</label>
+               </div> -->
+               <div class="form-floating mb-3">
+                 <select aria-label="Floating label select example" cSelect id="countryId"
+                   formControlName="countryId" name="countryId" (change)="onChangeCountry(country1.value)" #country1>
+                   <option value="null">Select Country</option>
+                   <option *ngFor="let country of countries" [value]="country.id">
+                     {{country.name}}
+                   </option>
+                 </select>
+                 <label for="countryId" class="dropdownLabel"> Country</label>
+                 <div cRow *ngIf="((testStepForm.get('countryId')?.invalid && testStepForm.get('countryId')?.errors)) &&
+                   (testStepForm.get('countryId')?.dirty || testStepForm.get('countryId')?.touched)">
+                   <small class="text-danger">
+                     This field is required.
+                   </small>                                 
+                 </div>
+               </div>
+
+               <div class="form-floating mb-3">
+                 <select aria-label="Floating label select example" cSelect id="topicHeadId"
+                   formControlName="topicHeadId" name="topicHeadId" (change) = "onChangeTopicHead(topic.value)" #topic>  <!-- -->
+                   <option value="null">Select Topic Head</option>
+                   <option *ngFor="let topicHead of topicheadDropdownList" [value]="topicHead.id">
+                     {{topicHead.name}}
+                   </option>
+                 </select>
+                 <label for="topicHeadId" class="dropdownLabel">Topic</label>
+                 <div cRow *ngIf="((testStepForm.get('topicHeadId')?.invalid && testStepForm.get('topicHeadId')?.errors)) &&
+                   (testStepForm.get('topicHeadId')?.dirty || testStepForm.get('topicHeadId')?.touched)">
+                   <small class="text-danger">
+                     This field is required.
+                   </small>                                 
+                 </div>
+               </div>
+               <div class="form-floating mb-3">
+                <select aria-label="Floating label select example" cSelect id="questionnaireId"
+                  formControlName="questionnaireId" name="questionnaireId">  <!--(change)="onChangeQuestionnaire($event.target)" -->
+                  <option value="null">Select Questionnaire</option>
+                  <option *ngFor="let questionnaire of questionnaireDropdownList" [value]="questionnaire.id">
+                    {{questionnaire.question}}
+                  </option>
+                </select>
+                <label for="questionnaireId" class="dropdownLabel">Questionnaire</label>
+                <div cRow *ngIf="((testStepForm.get('questionnaireId')?.invalid && testStepForm.get('questionnaireId')?.errors)) &&
+                  (testStepForm.get('questionnaireId')?.dirty || testStepForm.get('questionnaireId')?.touched)">
+                  <small class="text-danger">
+                    This field is required.
+                  </small>                                 
+                </div>
+              </div>
+  
+              <div class="form-floating mb-3">
+                <textarea type="text" class="form-control" formControlName="testStepDetails" id="testStepDetails" placeholder="Type Test Steps"></textarea>
+                <label for="floatingInput">Test Steps</label>
+  
+                <div cRow *ngIf="testStepForm.get('testStepDetails')?.invalid &&
+                testStepForm.get('testStepDetails')?.errors &&
+                      (testStepForm.get('testStepDetails')?.dirty || testStepForm.get('testStepDetails')?.touched)">
+                  <small class="text-danger"
+                      *ngIf="testStepForm.get('testStepDetails').hasError('required')">
+                      This field is required.
+                  </small>
+                  <small class="text-danger"
+                      *ngIf="testStepForm.get('testStepDetails').hasError('minlength')">
+                      The minimum length for this field is {{testStepForm.get('testStepDetails').errors.minlength.requiredLength}} characters.
+                  </small>
+                  <small class="text-danger"
+                      *ngIf="testStepForm.get('testStepDetails').hasError('maxlength')">
+                      The maximum length for this field is {{testStepForm.get('testStepDetails').errors.maxlength.requiredLength}} characters.
+                  </small>
+                </div>
+              </div>
+
+              <div class="form-floating mb-3">
+                <input class="form-control" placeholder="effectiveFrom" formControlName="effectiveFrom" id="effectiveFrom" type="date" >
+                <label for="effectiveFrom">Effective From</label>               
+                <div cRow *ngIf="testStepForm.get('effectiveFrom')?.invalid &&
+                testStepForm.get('effectiveFrom')?.errors &&
+                      (testStepForm.get('effectiveFrom')?.dirty || testStepForm.get('effectiveFrom')?.touched)">
+                  <small class="text-danger"
+                      *ngIf="testStepForm.get('effectiveFrom').hasError('required')"
+                      >
+                      This field is required.
+                  </small>
+                </div>
+              </div>
+    
+              <div class="form-floating mb-3">
+                <input class="form-control" placeholder="effectiveTo" formControlName="effectiveTo" id="effectiveTo" type="date" >
+                <label for="effectiveTo">Effective To</label>
+                <div cRow *ngIf="testStepForm.get('effectiveTo')?.invalid && testStepForm.get('effectiveTo')?.errors &&
+                     (testStepForm.get('effectiveTo')?.dirty || testStepForm.get('effectiveTo')?.touched)">
+                 <small class="text-danger" *ngIf="testStepForm.get('effectiveTo').hasError('required')">
+                   This field is required.
+                 </small>                                 
+                </div>
+              </div>
+          </div>
+        </c-modal-body>
+        <c-modal-footer>
+          <button cButton class="btn btn-primary btnSaveColor me-1" (click)="onSubmitTestStep(verticallyCenteredModalTestStep)">
+            <svg cIcon name="cilSave" size="md" title="Save Button Icon"></svg> Save
+          </button>
+          <button [cModalToggle]="verticallyCenteredModalTestStep.id" cButton class="btn btn-danger btnCancelColor me-1" (change)="reset()">
+            <svg cIcon name="cilX" size="md" title="Close Button Icon"></svg> Close
+          </button>
+        </c-modal-footer>
+      </c-modal>
+     </form>
   </c-tab-pane>
 
 </c-tab-content>

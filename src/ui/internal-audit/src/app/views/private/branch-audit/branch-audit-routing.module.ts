@@ -5,6 +5,7 @@ import { RiskAssessmentComponent } from './risk-assessment/risk-assessment.compo
 import { RiskAssessmentViewComponent } from './risk-assessment-view/risk-assessment-view.component';
 import { RiskCriteriaComponent } from './risk-criteria/risk-criteria.component';
 import { TopicHeadComponent } from './topic-head/topic-head.component';
+import { AuditComponent } from './audit/audit.component';
 
 const routes: Routes = [
   {
@@ -23,6 +24,10 @@ const routes: Routes = [
   {
     path:'audit-frequency',
     component: AuditFrequencyComponent
+  },
+  {
+    path:'audit',
+    component: AuditComponent
   },
   {
     path:'risk-assessment-view',

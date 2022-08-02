@@ -380,6 +380,19 @@ public class InternalAuditContextSeed
             {
                 IsActive = true,CreatedBy="admin",CreatedOn=DateTime.Now,Type="DATAPULLREQUEST",SubType="",Value=3,Text="Disburse",SortOrder=10,
             },
+            new CommonValueAndType
+            {
+                IsActive = true,CreatedBy="admin",CreatedOn=DateTime.Now,Type="AUDITSCHEDULELISTTYPE",SubType="",Value=1,Text="NameOfApprover",SortOrder=10,
+            },
+            new CommonValueAndType
+            {
+                IsActive = true,CreatedBy="admin",CreatedOn=DateTime.Now,Type="AUDITSCHEDULELISTTYPE",SubType="",Value=2,Text="NameOfTeamLeader",SortOrder=20,
+            },
+            new CommonValueAndType
+            {
+                IsActive = true,CreatedBy="admin",CreatedOn=DateTime.Now,Type="AUDITSCHEDULELISTTYPE",SubType="",Value=3,Text="NameOfAuditor",SortOrder=30,
+            },
+
         };
     }
     #endregion

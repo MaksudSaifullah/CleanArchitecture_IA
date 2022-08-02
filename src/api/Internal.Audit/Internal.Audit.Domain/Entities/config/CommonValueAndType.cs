@@ -40,7 +40,8 @@ public class CommonValueAndType : EntityBase
     public ICollection<RiskCriteria> RiskCriteria { get; set; }
 
     public ICollection<AuditFrequency> AuditFrequency { get; set; }
-    
+
+
 
 }
 

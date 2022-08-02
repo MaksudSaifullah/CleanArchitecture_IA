@@ -10,9 +10,9 @@
               <div class="row">
                 <div class="row" style="margin: 0 auto;">
                   <div class="col-md-6 mb-2">
-                    <button [cModalToggle]="verticallyCenteredModal.id" class="btnCreateColor" (click)="reset()" cButton>
+                    <!-- <button [cModalToggle]="verticallyCenteredModal.id" class="btnCreateColor" (click)="reset()" cButton>
                       <svg cIcon name="cilPlus" size="md" title="Add Button Icon"></svg> Create
-                    </button> 
+                    </button>  -->
                   </div>
                   <div class="col-md-5 mb-2 form-floating">
                     <input type="textarea" class="form-control searchInput" formControlName="searchText"  placeholder="Search by Audit Id"/>
@@ -80,7 +80,7 @@
     </div>
   </div>
   
-  <form [formGroup]="auditForm" (ngSubmit)="onSubmit(verticallyCenteredModal)" novalidate>
+  <!-- <form [formGroup]="auditForm" (ngSubmit)="onSubmit(verticallyCenteredModal)" novalidate>
     <c-modal #verticallyCenteredModal alignment="center" id="verticallyCenteredModal">
       <c-modal-header>
         <h5 cModalTitle *ngIf="!formService.isEdit(this.auditForm.get('id'))">Create Schedule</h5>
@@ -101,11 +101,7 @@
             <label for="auditTypeId" class="dropdownLabel">Audit Type</label>
           </div>
           <br>
-          <!-- <div class="form-floating">
-            <input type="text" class="form-control" formControlName="year" id="year" placeholder="Year">
-            <label for="floatingInput">Schedule Id</label>
-          </div>
-          <br> -->
+
           <div class="form-floating">
             <input type="text" class="form-control" formControlName="auditId" id="auditId" placeholder="Audit Id">
             <label for="floatingInput">Audit Id</label>
@@ -177,7 +173,7 @@
                 <c-row [gutter]="{g: 2}">
                   <c-col md>
                     <c-multi-select multiple>
-                      <c-multi-select-option *ngFor="let role of countries" [value]="role.id">{{role.name}}
+                      <c-multi-select-option *ngFor="let branch of branches" [value]="branch.id">{{branch.branchName}}
                       </c-multi-select-option>
                     </c-multi-select>
                   </c-col>
@@ -251,4 +247,4 @@
         </button>
       </c-modal-footer>
     </c-modal>
-    </form>
+    </form> -->

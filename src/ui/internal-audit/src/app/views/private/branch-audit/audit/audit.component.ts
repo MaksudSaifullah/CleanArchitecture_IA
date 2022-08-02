@@ -12,6 +12,7 @@ import { AuditPlanCode } from 'src/app/core/interfaces/branch-audit/auditPlanCod
 import { paginatedResponseInterface } from 'src/app/core/interfaces/paginated.interface';
 import { commonValueAndType } from 'src/app/core/interfaces/configuration/commonValueAndType.interface';
 import { formatDate } from '@angular/common';
+import { Branch } from 'src/app/core/interfaces/branch-audit/branch.interface';
 
 @Component({
   selector: 'app-audit',
@@ -26,11 +27,13 @@ export class AuditComponent implements OnInit {
   audits: Audit[] = [];
   formService: FormService = new FormService();
   auditForm: FormGroup;
+  auditScheduleForm: FormGroup;
   auditSearchForm: FormGroup;
   countries: country[] = [];
   auditTypes: commonValueAndType[] = [];
   auditIds: commonValueAndType | undefined;
   auditPlanCodes: AuditPlanCode [] = [];
+  branches: Branch[] = [];
 
   constructor(private http: HttpService, private fb: FormBuilder, private AlertService: AlertService) {
     this.auditForm = this.fb.group({
@@ -43,6 +46,17 @@ export class AuditComponent implements OnInit {
       auditName:['',[Validators.required]],
       auditPeriodFrom: ['',[Validators.required]],
       auditPeriodTo: ['',[Validators.required]],
+      
+    })
+    this.auditScheduleForm = this.fb.group({
+      id: [''],
+      auditTypeId: ["3ee0ab25-baf2-ec11-b3b0-00155d610b11"],
+      countryId: [null,[Validators.required]],
+      auditId: ['',[Validators.required]],
+      auditPeriodFrom: ['',[Validators.required]],
+      auditPeriodTo: ['',[Validators.required]],
+      scheduleStartDate: ['',[Validators.required]],
+      scheduleEndDate: ['',[Validators.required]],
       
     })
 
@@ -152,11 +166,32 @@ export class AuditComponent implements OnInit {
       this.auditPlanCodes = convertedResp.items;
     })
   }
+  LoadBranch(){
+    var countryId=this.auditScheduleForm.value.countryId;
+    console.log(countryId)
+    this.http.get('commonValueAndType/getBranch?countryId='+countryId).subscribe(resp => {
+      let convertedResp = resp as Branch[];
+      this.branches = convertedResp;
+    })
+  }
   reset(){
     this.auditForm.reset();
     this.auditForm.patchValue({auditTypeId:"3ee0ab25-baf2-ec11-b3b0-00155d610b11"});
      this.auditForm.controls['auditTypeId'].disable();
      this.auditForm.controls['auditId'].disable();
+  }
+  resetScheduleForm(audit:any){
+    this.auditScheduleForm.reset();
+    this.auditScheduleForm.patchValue({countryId : audit.countryId, auditTypeId: audit.auditTypeId, auditId: audit.auditId, 
+            auditPeriodFrom: formatDate(audit.auditPeriodFrom, 'yyyy-MM-dd', 'en'),
+            auditPeriodTo: formatDate(audit.auditPeriodTo, 'yyyy-MM-dd', 'en')})
+
+     this.LoadBranch();
+     this.auditScheduleForm.controls['auditTypeId'].disable();
+     this.auditScheduleForm.controls['auditId'].disable();
+     this.auditScheduleForm.controls['countryId'].disable();
+     this.auditScheduleForm.controls['auditPeriodFrom'].disable();
+     this.auditScheduleForm.controls['auditPeriodTo'].disable();
   }
   
 }

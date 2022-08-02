@@ -7,6 +7,7 @@ import { Audit } from 'src/app/core/interfaces/branch-audit/audit.interface';
 import { AuditPlanCode } from 'src/app/core/interfaces/branch-audit/auditPlanCode.interface';
 import { commonValueAndType } from 'src/app/core/interfaces/configuration/commonValueAndType.interface';
 import { country } from 'src/app/core/interfaces/configuration/country.interface';
+import { Branch } from 'src/app/core/interfaces/branch-audit/branch.interface';
 import { paginatedResponseInterface } from 'src/app/core/interfaces/paginated.interface';
 import { DatatableService } from 'src/app/core/services/datatable.service';
 import { FormService } from 'src/app/core/services/form.service';
@@ -28,6 +29,7 @@ export class AuditScheduleComponent implements OnInit {
   auditForm: FormGroup;
   auditSearchForm: FormGroup;
   countries: country[] = [];
+  branches: Branch[] = [];
   auditTypes: commonValueAndType[] = [];
   auditIds: commonValueAndType | undefined;
   auditPlanCodes: AuditPlanCode [] = [];
@@ -83,6 +85,14 @@ export class AuditScheduleComponent implements OnInit {
       let convertedResp = resp as commonValueAndType;
       this.auditIds = convertedResp;
       this.auditForm.patchValue({auditId: this.auditIds.text})
+      this.LoadBranch();
+    })
+  }
+  LoadBranch(){
+    const countryId=this.auditForm.value.countryId;
+    this.http.get('commonValueAndType/getBranch?countryId='+countryId).subscribe(resp => {
+      let convertedResp = resp as Branch[];
+      this.branches = convertedResp;
     })
   }
   LoadCountry() {

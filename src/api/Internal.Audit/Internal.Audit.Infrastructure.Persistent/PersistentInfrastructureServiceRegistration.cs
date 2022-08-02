@@ -66,6 +66,12 @@ using Internal.Audit.Application.Contracts.Persistent.Audit;
 using Internal.Audit.Infrastructure.Persistent.Repositories.Audit;
 using Internal.Audit.Application.Contracts.Persistent.TestSteps;
 using Internal.Audit.Infrastructure.Persistent.Repositories.TestSteps;
+using Internal.Audit.Infrastructure.Persistent.Repositories.Branches;
+using Internal.Audit.Application.Contracts.Persistent.Branches;
+using Internal.Audit.Application.Contracts.Persistent.AuditSchedules;
+using Internal.Audit.Infrastructure.Persistent.Repositories.AuditSchedules;
+using Internal.Audit.Application.Contracts.Persistent.AuditSchedulesParticipants;
+using Internal.Audit.Infrastructure.Persistent.Repositories.AuditSchedulesParticipants;
 
 namespace Internal.Audit.Infrastructure.Persistent;
 
@@ -173,6 +179,16 @@ public static class PersistentInfrastructureServiceRegistration
 
         services.AddScoped<ITestStepCommandRepository, TestStepCommandRepository>();
         services.AddScoped<ITestStepQueryRepository>(s => new TestStepQueryRepository(configuration.GetConnectionString("InternalAuditDb")));
+
+        services.AddScoped<IBranchCommandRepository, BranchCommandRepository>();
+        services.AddScoped<IAmbsDataSyncQueryRepository>(s => new AmbsDataSyncQueryRepository(configuration.GetConnectionString("InternalAuditDb")));
+
+
+        services.AddScoped<IAuditScheduleCommandRepository, AuditScheduleCommandRepository>();
+        services.AddScoped<IAuditScheduleQueryRepository>(s => new AuditScheduleQueryrepository(configuration.GetConnectionString("InternalAuditDb")));
+
+        services.AddScoped<IAuditScheduleParticipantsCommandRepository, AuditScheduleparticipantsCommandRepository>();
+        services.AddScoped<IAuditScheduleParticipantsQueryRepository>(s => new AuditScheduleParticipantsQueryRepository(configuration.GetConnectionString("InternalAuditDb")));
 
         return services;
     }

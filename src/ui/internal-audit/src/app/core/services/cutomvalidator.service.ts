@@ -30,16 +30,37 @@ export class CutomvalidatorService {
 
   checkEffectiveDateToAfterFrom(effectiveFrom:string, effectiveTo: string){
     return (formGroup: FormGroup)=>
-    {
+    {   
+      console.log('jhhhhhhhhhhhhh')   
       const from = formGroup.controls['effectiveFrom'];
       const to = formGroup.controls['effectiveTo'];
       if (!from || !to) {
         return null;
       }
       if((to.value)<(from.value)){
+        console.log('error jhhhhhhhhhhhhh')          
         return { invalidDateRange : true };
       }
       return null;
+
     }
+
+  }
+
+  checkAssessmentDateToAfterFrom(assessmentFrom:string, assessmentTo: string){
+    return (formGroup: FormGroup)=>
+    {    
+      const from = formGroup.controls['assessmentFrom'];
+      const to = formGroup.controls['assessmentTo'];
+      if (!from || !to) {
+        return null;
+      }
+      if((to.value)<(from.value)){      
+        return { invalidDateRange : true };
+      }
+      return null;
+
+    }
+
   }
 }

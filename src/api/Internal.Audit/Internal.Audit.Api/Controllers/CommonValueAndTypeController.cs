@@ -1,4 +1,5 @@
-﻿using Internal.Audit.Application.Features.CommonValueAndTypes.Queries.GetAuditConducted;
+﻿using Internal.Audit.Application.Features.Branches.Commands.GetBranchList;
+using Internal.Audit.Application.Features.CommonValueAndTypes.Queries.GetAuditConducted;
 using Internal.Audit.Application.Features.CommonValueAndTypes.Queries.GetAuditFrequency;
 using Internal.Audit.Application.Features.CommonValueAndTypes.Queries.GetAuditScore;
 using Internal.Audit.Application.Features.CommonValueAndTypes.Queries.GetAuditType;
@@ -189,6 +190,13 @@ namespace Internal.Audit.Api.Controllers
             var query = new GetByIdCreationQuery(idcreationValue,countryId, auditType);
             var generictype = await _mediator.Send(query);
             return Ok(generictype);
+        }
+        [HttpGet("getBranch")]
+        public async Task<ActionResult<IEnumerable<GetCommonValueTypeGenericDTO>>> GetBranchListId(Guid countryId)
+        {
+            var command = new GetBranchListCommnad(countryId);
+            var branchList = await _mediator.Send(command);
+            return Ok(branchList);
         }
     }
 }

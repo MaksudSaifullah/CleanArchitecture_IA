@@ -12,6 +12,8 @@ import { HttpService } from 'src/app/core/services/http.service';
 import {AlertService} from '../../../../core/services/alert.service';
 import { formatDate } from '@angular/common';
 import { paginatedResponseInterface } from 'src/app/core/interfaces/paginated.interface';
+import { event } from 'jquery';
+import { CutomvalidatorService } from 'src/app/core/services/cutomvalidator.service';
 
 @Component({
   selector: 'app-risk-assessment',
@@ -27,6 +29,7 @@ export class RiskAssessmentComponent implements OnInit {
   year: commonValueAndType[] = [];
   planningYear: commonValueAndType[] = [];
   riskAssessments: riskAssessment[] = [];
+  auditPlanRiskAssessments:  riskAssessment[] = [];
   auditPlans: auditPlan[] = [];
   riskAssessmentForm: FormGroup;
   auditPlanForm: FormGroup;
@@ -39,7 +42,7 @@ export class RiskAssessmentComponent implements OnInit {
   countries: country[] = [];
   Data: Array<any> = [];
 
-  constructor(private http: HttpService , private fb: FormBuilder, private AlertService: AlertService) { 
+  constructor(private http: HttpService , private fb: FormBuilder, private AlertService: AlertService, private customValidator: CutomvalidatorService) { 
 
     this.LoadDropDownValues();
     this.riskAssessmentForm = this.fb.group({
@@ -50,7 +53,7 @@ export class RiskAssessmentComponent implements OnInit {
       effectiveFrom: [Date,[Validators.required]],
       effectiveTo: [Date, [Validators.required]],
       
-    });
+    }, { validator: this.customValidator.checkEffectiveDateToAfterFrom('effectiveFrom', 'effectiveTo') });
     this.searchForm = this.fb.group(
       {
         searchTerm: [''],
@@ -66,7 +69,7 @@ export class RiskAssessmentComponent implements OnInit {
       riskAssessmentId:[null,[Validators.required, Validators.pattern("^(?!null$).*$")]],
       assessmentFrom: [Date,[Validators.required]],
       assessmentTo: [Date, [Validators.required]],
-    });
+    }, { validator: this.customValidator.checkAssessmentDateToAfterFrom('assessmentFrom', 'assessmentTo') });
     this.searchForm1 = this.fb.group(
       {
         searchTerm: ['']
@@ -192,7 +195,6 @@ export class RiskAssessmentComponent implements OnInit {
     this.LoadAuditType();
     this.LoadCountry();
     this.LoadYear();
-    this.LoadAssessmentCode();
   }
 
   private ReloadAllDataTable() {
@@ -202,14 +204,16 @@ export class RiskAssessmentComponent implements OnInit {
   }
 
   GetRiskAssessmentCode(event: any) :void {
-    this.http.get('commonValueAndType/idcreation?idcreationValue=1&auditType=1&countryId='+ event.target.value +'')
+    if( event.target.value !="null"){
+      this.http.get('commonValueAndType/idcreation?idcreationValue=1&auditType=1&countryId='+ event.target.value +'')
     .subscribe(resp => {
       const convertedResp = resp as commonValueAndType;
       this.riskAssessmentForm.patchValue({
         assessmentCode : convertedResp.text,
-      });  
-      console.log(this.riskAssessmentForm?.value.assessmentCode);
+      });
     })
+    }
+    
   }
 
  // #Region AuditType
@@ -257,10 +261,18 @@ export class RiskAssessmentComponent implements OnInit {
       }    
     }
 
-    LoadAssessmentCode() {
-      this.http.paginatedPost('riskassessment/paginated', 100, 1, {}).subscribe(resp => {
-        let convertedResp = resp as paginatedResponseInterface<riskAssessment>;
-        this.riskAssessments = convertedResp.items;
+    GetCode(event: any): void{
+      if(event.target.value != "null"){
+        this.LoadAssessmentCode(event);
+      this.GetAuditPlanCode(event);
+      }
+    }
+
+    LoadAssessmentCode(event: any): void {
+      this.http.get('riskassessment/CountryId?CountryId='+ event.target.value +'').subscribe(resp => {
+        let convertedResp = resp as riskAssessment[];
+        this.auditPlanRiskAssessments = convertedResp;
+        console.log(convertedResp);
       })
     }
     
@@ -301,9 +313,9 @@ export class RiskAssessmentComponent implements OnInit {
              auditTypeId: auditplanResponse.auditTypeId,
              planningYearId: auditplanResponse.planningYearId, 
              riskAssessmentId : auditplanResponse.riskAssessmentId, 
-             assessmentCode: auditplanResponse.assessmentCode,
-             assessmentFrom: auditplanResponse.assessmentFrom,
-             assessmentTo: auditplanResponse.assessmentTo });
+            assessmentFrom: formatDate(auditplanResponse.assessmentFrom, 'yyyy-MM-dd', 'en'),
+            assessmentTo: formatDate(auditplanResponse.assessmentTo, 'yyyy-MM-dd', 'en')
+            });
          });
         
         

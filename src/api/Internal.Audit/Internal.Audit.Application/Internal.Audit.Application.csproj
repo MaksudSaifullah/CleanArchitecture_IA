@@ -49,6 +49,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Features\AuditSchedules\Queries\" />
     <Folder Include="Features\DataRequestQueue\Command\UpdateDataRequestQueueCommand\" />
     <Folder Include="Features\UserCountries\Quiries\" />
     <Folder Include="Features\WeightScoreConfigurations\Commands\" />

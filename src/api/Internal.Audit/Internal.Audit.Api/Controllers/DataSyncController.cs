@@ -1,4 +1,5 @@
 ﻿using Internal.Audit.Application.Features.AmbsDataSyncs.Command.AddAmbsDataSyncCommand;
+using Internal.Audit.Application.Features.AmbsDataSyncs.Queries.GetAmbsDataSyncDataByCountryAndDateInfo;
 using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -18,6 +19,14 @@ public class DataSyncController : ControllerBase
 
     [HttpPost]
     public async Task<ActionResult<AddAmbsDataSyncCommandDTO>> GetList(AddAmbsDataSyncCommand command)
+    {
+        var result = await _mediator.Send(command);
+        return Ok(result);
+
+
+    }
+    [HttpPost("getSyncData")]
+    public async Task<ActionResult<GetAmbsDataSyncDataByCountryAndDateInfoDTO>> GetList(GetAmbsDataSyncDataByCountryAndDateInfoQuery command)
     {
         var result = await _mediator.Send(command);
         return Ok(result);

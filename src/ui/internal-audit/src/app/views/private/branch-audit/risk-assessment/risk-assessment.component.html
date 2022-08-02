@@ -48,11 +48,11 @@
                   <table datatable [dtOptions]="dtOptions[0]" class="table table-bordered row-border datatableStyle hover" >
                     <thead>
                       <tr>
-                        <th>Risk Assessment Code</th>
+                        <th>Assessment Id</th>
                         <th>Country</th>
                         <th>Audit Type</th>
-                        <th>Effective From</th>
-                        <th>Effective To</th>  
+                        <th>Assessment From</th>
+                        <th>Assessment To</th>
                         <th>Action</th>                   
                       </tr>
                     </thead>
@@ -160,6 +160,9 @@
               This field is required.
             </small>                                 
           </div>
+          <small class="text-danger" *ngIf="riskAssessmentForm.hasError('invalidDateRange')">
+            Effective From should be greater than Effective To.
+          </small>        
           <br>          
   
       </div>
@@ -209,6 +212,7 @@
                   <table datatable [dtOptions]="dtOptions[1]" class="table table-bordered row-border datatableStyle hover" style="width: 100%;">
                     <thead>
                       <tr>
+                        <th>Plan Code</th>
                         <th>RA Code</th>
                         <th>Country</th>
                         <th>Audit Type</th>
@@ -220,10 +224,11 @@
                     </thead>
                     <tbody *ngIf="auditPlans?.length != 0">
                       <tr *ngFor="let auditPlan of auditPlans">
+                        <td>{{ auditPlan.planCode }}</td>
                         <td>{{ auditPlan.assessmentCode }}</td>
                         <td>{{ auditPlan.countryName }}</td>
                         <td>{{ auditPlan.auditTypeName }}</td>
-                        <td>{{ auditPlan.planningYearName }}</td>
+                        <td>{{ auditPlan.yearName }}</td>
                         <td>{{ auditPlan.assessmentFrom | date:'medium' }}</td>
                         <td>{{ auditPlan.assessmentTo | date:'medium' }}</td>
                         <td>
@@ -269,7 +274,7 @@
         <div class="col-md-6">
           <div form-floating>
             <select aria-label="Floating label select example" cSelect id="countryId"
-              formControlName="countryId" name="countryId" (change)="GetAuditPlanCode($event)">
+              formControlName="countryId" name="countryId" (change)="GetCode($event)">
               <option value=null>Select Country Level</option>
               <option *ngFor="let country of countries" [value]="country.id">
                 {{country.name}}
@@ -334,13 +339,18 @@
             <select aria-label="Floating label select example" cSelect id="riskAssessmentId"
               formControlName="riskAssessmentId" name="riskAssessmentId">
               <option value="null">Select Risk Assessment Id</option>
-              <option *ngFor="let riskAssessment of riskAssessments" [value]="riskAssessment.id">
+              <option *ngFor="let riskAssessment of auditPlanRiskAssessments" [value]="riskAssessment.id">
                 {{riskAssessment.assessmentCode}}
               </option>
             </select>
           </div>
-          <br>
-  
+          <div cRow *ngIf="((auditPlanForm.get('riskAssessmentId')?.invalid && auditPlanForm.get('riskAssessmentId')?.errors)) &&
+          (auditPlanForm.get('riskAssessmentId')?.dirty || auditPlanForm.get('riskAssessmentId')?.touched)">
+          <small class="text-danger">
+            This field is required.
+          </small>                                 
+        </div> 
+        <br>
             
         </div>
       </div>
@@ -372,6 +382,9 @@
               This field is required.
             </small>                                 
           </div>
+          <small class="text-danger" *ngIf="auditPlanForm.hasError('invalidDateRange')">
+            Assessment From should be greater than Assessment To.
+          </small>    
           <br> 
         </div>
       </div>

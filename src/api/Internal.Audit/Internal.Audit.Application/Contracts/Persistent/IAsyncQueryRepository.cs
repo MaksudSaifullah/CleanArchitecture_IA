@@ -10,7 +10,7 @@ public interface IAsyncQueryRepository<TEntity> where TEntity : EntityBase
     Task<TEntity> Single(string query, bool isProcedure = false);
     Task<TEntity> Single(string query, Dictionary<string, object> parameters, bool isProcedure = false);
     Task<(long, IEnumerable<TEntity>)> GetWithPagingInfo(string query, Dictionary<string, object> parameters, bool isProcedure = false);
-  
+
 
     Task<IEnumerable<TEntity>> Get<TFirst, TSecond, TEntity>(string sql, Func<TFirst, TSecond, TEntity> map, Dictionary<string, object> parameters, string splitters, bool isProcedure = false)
             where TFirst : class
@@ -23,18 +23,37 @@ public interface IAsyncQueryRepository<TEntity> where TEntity : EntityBase
           where TThird : class
           where TEntity : class;
 
-    Task<IEnumerable<TEntity>> Get<TFirst, TSecond, TThird,TFourth, TEntity>(string sql, Func<TFirst, TSecond, TThird, TFourth, TEntity> map, Dictionary<string, object> parameters, string splitters, bool isProcedure = false)
+    Task<IEnumerable<TEntity>> Get<TFirst, TSecond, TThird, TFourth, TEntity>(string sql, Func<TFirst, TSecond, TThird, TFourth, TEntity> map, Dictionary<string, object> parameters, string splitters, bool isProcedure = false)
       where TFirst : class
       where TSecond : class
       where TThird : class
       where TFourth : class
       where TEntity : class;
 
-    Task<IEnumerable<TEntity>> Get<TFirst, TSecond, TThird, TFourth,TFifth, TEntity>(string sql, Func<TFirst, TSecond, TThird, TFourth, TFifth, TEntity> map, Dictionary<string, object> parameters, string splitters, bool isProcedure = false)
+    Task<IEnumerable<TEntity>> Get<TFirst, TSecond, TThird, TFourth, TFifth, TEntity>(string sql, Func<TFirst, TSecond, TThird, TFourth, TFifth, TEntity> map, Dictionary<string, object> parameters, string splitters, bool isProcedure = false)
      where TFirst : class
      where TSecond : class
      where TThird : class
      where TFourth : class
      where TFifth : class
      where TEntity : class;
+
+    Task<IEnumerable<TEntity>> Get<TFirst, TSecond, TThird, TFourth, TFifth, TSixth, TEntity>(string sql, Func<TFirst, TSecond, TThird, TFourth, TFifth, TSixth, TEntity> map, Dictionary<string, object> parameters, string splitters, bool isProcedure = false)
+    where TFirst : class
+    where TSecond : class
+    where TThird : class
+    where TFourth : class
+    where TFifth : class
+    where TSixth : class
+    where TEntity : class;
+
+    Task<IEnumerable<TEntity>> Get<TFirst, TSecond, TThird, TFourth, TFifth, TSixth, TSeventh, TEntity>(string sql, Func<TFirst, TSecond, TThird, TFourth, TFifth, TSixth, TSeventh, TEntity> map, Dictionary<string, object> parameters, string splitters, bool isProcedure = false)
+    where TFirst : class
+    where TSecond : class
+    where TThird : class
+    where TFourth : class
+    where TFifth : class
+    where TSixth : class
+    where TSeventh : class
+    where TEntity : class;
 }

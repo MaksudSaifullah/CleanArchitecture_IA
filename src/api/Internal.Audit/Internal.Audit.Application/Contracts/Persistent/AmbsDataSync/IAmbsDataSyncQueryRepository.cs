@@ -1,12 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿namespace Internal.Audit.Application.Contracts.Persistent.AmbsDataSync;
 
-namespace Internal.Audit.Application.Contracts.Persistent.AmbsDataSync
+public interface IAmbsDataSyncQueryRepository:IAsyncQueryRepository<Domain.Entities.security.AmbsDataSync>
 {
-    internal interface IAmbsDataSyncQueryRepository
-    {
-    }
+    Task<IEnumerable<Domain.Entities.security.AmbsDataSync>> GetDataSyncList(Guid? countryId,DateTime? FromDate, DateTime? ToDate,int typeId,decimal conversionRate);
 }

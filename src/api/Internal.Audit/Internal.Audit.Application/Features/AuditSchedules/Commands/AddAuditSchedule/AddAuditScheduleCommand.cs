@@ -12,7 +12,7 @@ namespace Internal.Audit.Application.Features.AuditSchedules.Commands.AddAuditSc
 public class AddAuditScheduleCommand:IRequest<AddAuditScheduleResponseDTO>
 {
     public Guid? Id { get; set; }
-    public Guid AuditPlanId { get; set; }
+    public Guid AuditCreationId { get; set; }
     public DateTime ScheduleStartDate { get; set; }    
     public DateTime ScheduleEndDate { get; set; }
     public List<AuditScheduleParticipantsCommand> AuditScheduleParticipants { get; set; }

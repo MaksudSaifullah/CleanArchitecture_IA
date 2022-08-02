@@ -56,6 +56,9 @@
                     <td>{{ audit.createdOn | date:'medium' }}</td>
                     <td>
                       <div class="btn-group" role="group" aria-label="Basic example">
+                        <button type="button" class="btn btn-secondary btnEditColor" [routerLink]="['/branch-audit/audit-schedule']">
+                          <svg cIcon name="cilClock" size="md" title="Schedule Button icon"></svg>
+                        </button>
                         <button type="button" class="btn btn-secondary btnEditColor" (click)="edit(verticallyCenteredModal,audit)">
                           <svg cIcon name="cilPencil" size="md" title="Edit Button icon"></svg>
                         </button>

@@ -1,24 +1,24 @@
+import { formatDate } from '@angular/common';
 import { Component, OnInit, ViewChild } from '@angular/core';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { ActivatedRoute } from '@angular/router';
 import { DataTableDirective } from 'angular-datatables';
-import { DatatableService } from 'src/app/core/services/datatable.service';
-import { HttpService } from 'src/app/core/services/http.service';
-import { EmailConfig} from 'src/app/core/interfaces/configuration/emailConfig.interface'
-import { FormService } from 'src/app/core/services/form.service';
-import { FormBuilder, FormControl, FormGroup, MaxLengthValidator, Validators } from '@angular/forms';
-import {AlertService} from '../../../../core/services/alert.service';
-import { country } from 'src/app/core/interfaces/configuration/country.interface';
 import { Audit } from 'src/app/core/interfaces/branch-audit/audit.interface';
 import { AuditPlanCode } from 'src/app/core/interfaces/branch-audit/auditPlanCode.interface';
-import { paginatedResponseInterface } from 'src/app/core/interfaces/paginated.interface';
 import { commonValueAndType } from 'src/app/core/interfaces/configuration/commonValueAndType.interface';
-import { formatDate } from '@angular/common';
+import { country } from 'src/app/core/interfaces/configuration/country.interface';
+import { paginatedResponseInterface } from 'src/app/core/interfaces/paginated.interface';
+import { DatatableService } from 'src/app/core/services/datatable.service';
+import { FormService } from 'src/app/core/services/form.service';
+import { HttpService } from 'src/app/core/services/http.service';
+import {AlertService} from '../../../../core/services/alert.service';
 
 @Component({
-  selector: 'app-audit',
-  templateUrl: './audit.component.html',
-  styleUrls: ['./audit.component.scss']
+  selector: 'app-audit-schedule',
+  templateUrl: './audit-schedule.component.html',
+  styleUrls: ['./audit-schedule.component.scss']
 })
-export class AuditComponent implements OnInit {
+export class AuditScheduleComponent implements OnInit {
   @ViewChild(DataTableDirective, {static: false})
   datatableElement: DataTableDirective | undefined;
   dtOptions: DataTables.Settings = {};
@@ -31,8 +31,9 @@ export class AuditComponent implements OnInit {
   auditTypes: commonValueAndType[] = [];
   auditIds: commonValueAndType | undefined;
   auditPlanCodes: AuditPlanCode [] = [];
+  paramId:string ='';
 
-  constructor(private http: HttpService, private fb: FormBuilder, private AlertService: AlertService) {
+  constructor(private http: HttpService, private fb: FormBuilder,  private activateRoute: ActivatedRoute, private AlertService: AlertService) {
     this.auditForm = this.fb.group({
       id: [''],
       auditTypeId: ["3ee0ab25-baf2-ec11-b3b0-00155d610b11"],
@@ -51,14 +52,14 @@ export class AuditComponent implements OnInit {
     })
    }
 
-  ngOnInit() {
-    this.LoadData();
-    this.LoadCountry();
-    this.LoadAuditType();
-    this.LoadAuditPlanCode();
-   // this.LoadAuditId();
-  }
+  ngOnInit(): void {
+    this.paramId = this.activateRoute.snapshot.params['id'];
+   this.LoadData();
+   this.LoadCountry();
+   this.LoadAuditType();
+   //this.LoadAuditId();
 
+  }
   LoadData() {
     const that = this;
     
@@ -77,10 +78,29 @@ export class AuditComponent implements OnInit {
       },
     };
   }
+  LoadAuditId(){
+    this.http.get('commonValueAndType/idcreation?idcreationValue=16&auditType=1&countryId='+this.auditForm.value.countryId).subscribe(resp => {
+      let convertedResp = resp as commonValueAndType;
+      this.auditIds = convertedResp;
+      this.auditForm.patchValue({auditId: this.auditIds.text})
+    })
+  }
+  LoadCountry() {
+    this.http.paginatedPost('country/paginated', 100, 1, {}).subscribe(resp => {
+      let convertedResp = resp as paginatedResponseInterface<country>;
+      this.countries = convertedResp.items;    
+    })
+  }
+  LoadAuditType() {
+    this.http.get('commonValueAndType/audittype').subscribe(resp => {
+      let convertedResp = resp as commonValueAndType[];
+      this.auditTypes = convertedResp;
+    })
+  }
+  
   search(){
      this.dataTableService.redraw(this.datatableElement);
    }
-
   onSubmit(modalId:any):void{
     const localmodalId = modalId;
       if(this.auditForm.valid){
@@ -114,49 +134,11 @@ export class AuditComponent implements OnInit {
       localmodalId.visible = true;
   }
 
-  delete(id:string){
-   // console.log(id)
-    const that = this;
-    this.AlertService.confirmDialog().then(res =>{
-      if(res.isConfirmed){
-          this.http.delete('audit/'+ id ,{}).subscribe(response=>{
-          this.AlertService.successDialog('Deleted','Audit deleted successfully.');
-          this.dataTableService.redraw(that.datatableElement);
-        })
-      }
-    });
-  }
-
-  LoadAuditId(){
-    this.http.get('commonValueAndType/idcreation?idcreationValue=16&auditType=1&countryId='+this.auditForm.value.countryId).subscribe(resp => {
-      let convertedResp = resp as commonValueAndType;
-      this.auditIds = convertedResp;
-      this.auditForm.patchValue({auditId: this.auditIds.text})
-    })
-  }
-  LoadCountry() {
-    this.http.paginatedPost('country/paginated', 100, 1, {}).subscribe(resp => {
-      let convertedResp = resp as paginatedResponseInterface<country>;
-      this.countries = convertedResp.items;    
-    })
-  }
-  LoadAuditType() {
-    this.http.get('commonValueAndType/audittype').subscribe(resp => {
-      let convertedResp = resp as commonValueAndType[];
-      this.auditTypes = convertedResp;
-    })
-  }
-  LoadAuditPlanCode(){
-    this.http.paginatedPost('audit/paginatedAuditPlanCode', 100 , 1 , {}).subscribe(resp => {
-      let convertedResp = resp as paginatedResponseInterface<AuditPlanCode>;
-      this.auditPlanCodes = convertedResp.items;
-    })
-  }
   reset(){
     this.auditForm.reset();
     this.auditForm.patchValue({auditTypeId:"3ee0ab25-baf2-ec11-b3b0-00155d610b11"});
      this.auditForm.controls['auditTypeId'].disable();
      this.auditForm.controls['auditId'].disable();
   }
-  
+
 }

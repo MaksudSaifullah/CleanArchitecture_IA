@@ -19,7 +19,7 @@ public class GetAmbsDataSyncDataByCountryAndDateInfoDTO
     public DateTime ToDate { get; set; }
 
     public virtual DataRequestQueueServiceDTO DataRequestQueueService { get; set; } = null!;
-    public virtual RiskCriteriaDTO RiskCriteria { get; set; } = null!;
+   public virtual RiskCriteriaDTOs RiskCriteria { get; set; } = null!;
 }
 
 
@@ -28,16 +28,13 @@ public class DataRequestQueueServiceDTO
     public Guid Id { get; set; }
     public Guid CountryId { get; set; }   
     public string RequestType { get; set; }   
-    public DateTime FromDate { get; set; }   
-    public DateTime ToDate { get; set; }
-    public DateTime RequestedOn { get; set; }
-    public int Status { get; set; }   
+    
     public bool IsActive { get; set; }
-    public virtual CountryDTO Country { get; set; }
+    public virtual CountryDTOs Country { get; set; }
 
 }
 
-public class CountryDTO
+public class CountryDTOs
 {
     public Guid Id { get; set; }
     public string Name { get; set; } = null!;
@@ -51,7 +48,7 @@ public class CountryDTO
 
 }
 
-public class RiskCriteriaDTO
+public class RiskCriteriaDTOs
 {
 
     public Guid Id { get; set; }
@@ -65,7 +62,7 @@ public class RiskCriteriaDTO
     public decimal Score { get; set; }
     public string? Description { get; set; } = null!;
    
-    public virtual CountryDTO Country { get; set; } = null!;
+    public virtual CountryDTOs Country { get; set; } = null!;
 
     public virtual CommonValueAndTypeDTO CommonValueRatingType { get; set; } = null!;
     public virtual CommonValueAndTypeDTO CommonValueRiskCriteriaType { get; set; } = null!;

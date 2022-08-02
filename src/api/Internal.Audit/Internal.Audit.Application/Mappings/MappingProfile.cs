@@ -140,6 +140,7 @@ using Internal.Audit.Application.Features.TopicHeads.Queries.GetTopicHeadByFilte
 using Internal.Audit.Application.Features.Questionnnaires.Queries.GetQuestionnaireByFilter;
 using Internal.Audit.Application.Features.Branches.Commands.AddBranchCommand;
 using Internal.Audit.Application.Features.Branches.Commands.GetBranchList;
+using Internal.Audit.Application.Features.AmbsDataSyncs.Queries.GetAmbsDataSyncDataByCountryAndDateInfo;
 
 namespace Internal.Audit.Application.Mappings;
 
@@ -368,6 +369,12 @@ public class MappingProfile : Profile
 
         CreateMap<Branch, AddAmbsDataSyncCommandRequest>().ReverseMap();
         CreateMap<Branch, GetBranchListResponseDTO>().ReverseMap();
+        CreateMap<AmbsDataSync, GetAmbsDataSyncDataByCountryAndDateInfoDTO>().ReverseMap();
+        CreateMap<DataRequestQueueServiceDTO, DataRequestQueueService>().ReverseMap();
+        CreateMap<CountryDTOs, Country>().ReverseMap();
+        CreateMap<RiskCriteriaDTOs, RiskCriteria>().ReverseMap();
+        CreateMap<CommonValueAndTypeDTO, CommonValueAndType>().ReverseMap();
+        
 
     }
 }

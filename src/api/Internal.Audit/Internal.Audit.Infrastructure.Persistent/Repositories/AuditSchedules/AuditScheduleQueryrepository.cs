@@ -13,4 +13,9 @@ public class AuditScheduleQueryrepository : QueryRepositoryBase<AuditSchedule>, 
     public AuditScheduleQueryrepository(string _connectionString) : base(_connectionString)
     {
     }
+
+    public Task<IEnumerable<AuditSchedule>> GetList(Guid? PlanId)
+    {
+        throw new NotImplementedException();
+    }
 }

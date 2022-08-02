@@ -17,9 +17,28 @@ public class AmbsDataSyncQueryRepository : QueryRepositoryBase<AmbsDataSync>, IA
     {
     }
 
-    public async Task<IEnumerable<AmbsDataSync>> GetDataSyncList(Guid? countryId, DateTime? FromDate, DateTime? ToDate)
+    public async Task<IEnumerable<AmbsDataSync>> GetDataSyncList(Guid? countryId, DateTime? FromDate, DateTime? ToDate,int typeId,decimal conversionRate)
     {
-        var query = @"SELECT x.*,y.*,c.*,z.*,p.*,q.*
+        var query = @"SELECT  x.[Id]
+      ,x.[DataRequestQueueServiceId]
+      ,x.[BranchCode]
+      ,x.[BranchId]
+      ,x.[BranchName]
+      ,x.[Amount]
+      ,x.[Amount]* "+conversionRate+@" as AmountConverted 
+      ,x.[IsActive]
+      ,x.[FromDate]
+      ,x.[ToDate]
+      ,x.[CommonValueTableId]
+      ,x.[CreatedBy]
+      ,x.[CreatedOn]
+      ,x.[UpdatedBy]
+      ,x.[UpdatedOn]
+      ,x.[ReviewedBy]
+      ,x.[ReviewedOn]
+      ,x.[ApprovedBy]
+      ,x.[ApprovedOn]
+      ,x.[IsDeleted],y.*,c.*,z.*,p.*,q.*
                     FROM [security].[AmbsDataSync] x
                     inner join [security].[DataRequestQueueService] y
                     on x.DataRequestQueueServiceId=y.Id
@@ -31,12 +50,12 @@ public class AmbsDataSyncQueryRepository : QueryRepositoryBase<AmbsDataSync>, IA
                     on p.Id=z.RatingTypeId
                     inner JOIN [Config].[CommonValueAndType] q
                     on q.Id=z.RiskCriteriaTypeId
-                    where CommonValueTableId=1
+                    where CommonValueTableId=@typeId
                     and CAST(x.FromDate as DATE)=CAST(@FromDate as date)
                     and CAST(x.ToDate as DATE)=CAST(@ToDate as date)
                     and x.IsDeleted=0
                     and y.CountryId=@CountryId";
-        var parameters = new Dictionary<string, object> { { "FromDate", FromDate }, { "ToDate", ToDate }, { "CountryId", countryId } };
+        var parameters = new Dictionary<string, object> { { "FromDate", FromDate }, { "ToDate", ToDate }, { "CountryId", countryId },{ "typeId",typeId } };
 
         string splitters = "Id, Id, Id, Id, Id, Id";
 

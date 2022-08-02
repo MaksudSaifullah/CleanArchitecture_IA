@@ -15,7 +15,7 @@ public class GetAmbsDataSyncDataByCountryAndDateInfoQueryHandler : IRequestHandl
     }
     public async Task<IEnumerable<GetAmbsDataSyncDataByCountryAndDateInfoDTO>> Handle(GetAmbsDataSyncDataByCountryAndDateInfoQuery request, CancellationToken cancellationToken)
     {
-        var datas =await _dataSyncQueryRepository.GetDataSyncList( request.CountryId, request.startDate, request.endDate);
+        var datas =await _dataSyncQueryRepository.GetDataSyncList( request.CountryId, request.startDate, request.endDate,request.typeId,request.conversionRate);
         var result = _mapper.Map<IEnumerable<GetAmbsDataSyncDataByCountryAndDateInfoDTO>>(datas);       
         return result;
     }

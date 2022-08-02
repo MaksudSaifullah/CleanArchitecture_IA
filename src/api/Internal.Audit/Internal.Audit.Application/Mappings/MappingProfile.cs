@@ -378,7 +378,8 @@ public class MappingProfile : Profile
 
         CreateMap<AuditSchedule, AddAuditScheduleCommand>().ReverseMap();
 
-        CreateMap<AuditScheduleParticipants, AuditScheduleParticipantsCommand>().ReverseMap();
+        CreateMap<AuditScheduleParticipants, AuditScheduleParticipantsCommand>().ReverseMap(); 
+        CreateMap<AuditScheduleBranch, AuditScheduleBranchCommand>().ReverseMap(); 
 
 
 

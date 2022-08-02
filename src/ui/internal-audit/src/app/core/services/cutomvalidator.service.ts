@@ -47,5 +47,20 @@ export class CutomvalidatorService {
 
   }
 
+  checkAssessmentDateToAfterFrom(assessmentFrom:string, assessmentTo: string){
+    return (formGroup: FormGroup)=>
+    {    
+      const from = formGroup.controls['assessmentFrom'];
+      const to = formGroup.controls['assessmentTo'];
+      if (!from || !to) {
+        return null;
+      }
+      if((to.value)<(from.value)){      
+        return { invalidDateRange : true };
+      }
+      return null;
 
+    }
+
+  }
 }

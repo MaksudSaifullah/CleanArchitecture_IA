@@ -141,6 +141,7 @@ using Internal.Audit.Application.Features.Questionnnaires.Queries.GetQuestionnai
 using Internal.Audit.Application.Features.Branches.Commands.AddBranchCommand;
 using Internal.Audit.Application.Features.Branches.Commands.GetBranchList;
 using Internal.Audit.Application.Features.AmbsDataSyncs.Queries.GetAmbsDataSyncDataByCountryAndDateInfo;
+using Internal.Audit.Application.Features.AuditSchedules.Commands.AddAuditSchedule;
 
 namespace Internal.Audit.Application.Mappings;
 
@@ -374,7 +375,12 @@ public class MappingProfile : Profile
         CreateMap<CountryDTOs, Country>().ReverseMap();
         CreateMap<RiskCriteriaDTOs, RiskCriteria>().ReverseMap();
         CreateMap<CommonValueAndTypeDTO, CommonValueAndType>().ReverseMap();
-        
+
+        CreateMap<AuditSchedule, AddAuditScheduleCommand>().ReverseMap();
+
+        CreateMap<AuditScheduleParticipants, AuditScheduleParticipantsCommand>().ReverseMap();
+
+
 
     }
 }

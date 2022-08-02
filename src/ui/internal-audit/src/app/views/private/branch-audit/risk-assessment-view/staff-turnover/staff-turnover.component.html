@@ -1,0 +1,93 @@
+<div class="animated fadeIn">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="card">
+                <div class="card-header">
+                    <div class="fa fa-align-justify">
+                        <button class="btn btn-success"> Save </button>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="container">
+                        <form [formGroup]="pullFromAMBSForm">
+                            <input type="hidden" formControlName="id" />
+                            <div class="col-md-6">
+                                <div form-floating>
+                                    <select aria-label="Floating label select example" cSelect id="countryId"
+                                        formControlName="countryId" name="countryId">
+                                        <option value=null>Select Country</option>
+                                        <option *ngFor="let country of countries" [value]="country.id">
+                                            {{country.name}}
+                                        </option>
+                                    </select>
+                                </div>
+                                <div class="form-floating mb-3 mt-4">
+                                    <input type="text" class="form-control" formControlName="conversionRate"
+                                        id="conversionRate" placeholder="conversionRate">
+                                    <label for="floatingInput">Conversion Rate</label>
+                                </div>
+                                <div class="form-floating">
+                                    <input class="form-control" placeholder="AsOnDate" formControlName="AsOnDate"
+                                        id="AsOnDate" type="date">
+                                    <label for="AsOnDate">Effective From</label>
+                                </div>
+                            </div>
+                            <button cButton class="btn btn-primary btnSaveColor mt-4 me-1">Pull Data From AMBS</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <br>
+
+            <div class="row overflow-auto">
+                <table datatable [dtOptions]="dtOptions" class="table table-bordered row-border datatableStyle hover">
+                    <thead>
+                        <tr>
+                            <th>Risk Assessment Code</th>
+                            <th>Country</th>
+                            <th>Audit Type</th>
+                            <th>Effective From</th>
+                            <th>Effective To</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody *ngIf="riskAssesmentOverdue?.length != 0">
+                        <tr *ngFor="let riskAssessment of riskAssesmentOverdue">
+                            <td>
+                                <div form-floating>
+                                    <select aria-label="Floating label select example" cSelect id="countryId"
+                                        formControlName="countryId" name="countryId">
+                                        <option value=null>Select Country</option>
+                                        <option *ngFor="let country of countries" [value]="country.id">
+                                            {{country.name}}
+                                        </option>
+                                    </select>
+                                </div>
+                            </td>
+                            <td>{{ riskAssessment.branchName }}</td>
+                            <td>{{ riskAssessment.effectiveFrom | date:'medium' }}</td>
+                            <td>{{ riskAssessment.effectiveTo | date:'medium' }}</td>
+                            <td>
+                                <div class="btn-group" role="group" aria-label="Basic example">
+                                    <button type="button" class="btn btn-secondary btnEditColor"
+                                        (click)="edit(verticallyCenteredModal,riskAssessment)">
+                                        <svg cIcon name="cilPencil" size="md" title="Edit Button icon"></svg>
+                                    </button>
+                                    <button type="button" class="btn btn-danger btnDeleteColor"
+                                        (click)="delete(riskAssessment.id)">
+                                        <svg cIcon name="cilTrash" size="md" title="Delete Button Icon"></svg>
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                    <tbody *ngIf="riskAssesmentOverdue?.length == 0">
+                        <tr>
+                            <td colspan="5" class="no-data-available">No data!</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

@@ -13,6 +13,9 @@ import { RiskCriteriaComponent } from './risk-criteria/risk-criteria.component';
 import { IconModule } from '@coreui/icons-angular';
 import { RiskAssessmentComponent } from './risk-assessment/risk-assessment.component';
 import { AuditFrequencyComponent } from './audit-frequency/audit-frequency.component';
+import { RiskAssessmentViewComponent } from './risk-assessment-view/risk-assessment-view.component';
+import { OverdueTabComponentComponent } from './risk-assessment-view/overdue-tab/overdue-tab-component';
+import { StaffTurnoverComponent } from './risk-assessment-view/staff-turnover/staff-turnover.component';
 
 
 @NgModule({
@@ -20,7 +23,10 @@ import { AuditFrequencyComponent } from './audit-frequency/audit-frequency.compo
     TopicHeadComponent,
     RiskCriteriaComponent,
     RiskAssessmentComponent,
-    AuditFrequencyComponent
+    AuditFrequencyComponent,
+    RiskAssessmentViewComponent,
+    OverdueTabComponentComponent,
+    StaffTurnoverComponent
   ],
   imports: [
     CommonModule,

@@ -3,10 +3,11 @@ export interface testStep {
     countryName?: string;
     topichHeadName?: string;
     questionnaire?: string;
-    testStepDetails?: string;
-    effectiveFrom?: Date;
-    effectiveTo?: Date; 
+    testStepDetails: string;
+    effectiveFrom: Date;
+    effectiveTo: Date; 
     countryId?: string;
     topicHeadId?: string;
     questionnaireId?: string;
+    
 }

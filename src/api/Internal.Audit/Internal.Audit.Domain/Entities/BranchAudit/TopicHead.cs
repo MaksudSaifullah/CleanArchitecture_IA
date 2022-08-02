@@ -27,7 +27,7 @@ public class TopicHead : EntityBase
     public DateTime EffectiveTo { get; set; }
     
     [MaxLength(300)]
-    public string Description { get; set; } = null!;
+    public string? Description { get; set; } = null!;
 
     [Required]
     [DefaultValue("1")]

@@ -131,6 +131,17 @@ using Internal.Audit.Application.Features.AuditPlans.Commands.AddAuditPlan;
 using Internal.Audit.Application.Features.AuditPlans.Commands.UpdateAuditPlan;
 using Internal.Audit.Application.Features.AuditPlans.Commands.DeleteAuditPlan;
 using Internal.Audit.Application.Features.Audit.Queries.GetAuditPlanCodeList;
+using Internal.Audit.Application.Features.TestSteps.Queries.GetTestStepList;
+using Internal.Audit.Application.Features.TestSteps.Queries.GetTestStepById;
+using Internal.Audit.Application.Features.TestSteps.Commands.AddTestStep;
+using Internal.Audit.Application.Features.TestSteps.Commands.UpdateTestStep;
+using Internal.Audit.Application.Features.TestSteps.Commands.DeleteTestStep;
+using Internal.Audit.Application.Features.TopicHeads.Queries.GetTopicHeadByFilter;
+using Internal.Audit.Application.Features.Questionnnaires.Queries.GetQuestionnaireByFilter;
+using Internal.Audit.Application.Features.Branches.Commands.AddBranchCommand;
+using Internal.Audit.Application.Features.Branches.Commands.GetBranchList;
+using Internal.Audit.Application.Features.AmbsDataSyncs.Queries.GetAmbsDataSyncDataByCountryAndDateInfo;
+using Internal.Audit.Application.Features.AuditSchedules.Commands.AddAuditSchedule;
 
 namespace Internal.Audit.Application.Mappings;
 
@@ -284,6 +295,7 @@ public class MappingProfile : Profile
 
         CreateMap<TopicHead, TopicHeadDTO>().ReverseMap();
         CreateMap<TopicHead, TopicHeadByIdDTO>().ReverseMap();
+        CreateMap<TopicHead, GetTopicHeadByFilterResponseDTO>().ReverseMap();
         CreateMap<TopicHead, AddTopicHeadCommand>().ReverseMap();
         CreateMap<TopicHead, UpdateTopicHeadCommand>().ReverseMap();
         CreateMap<TopicHead, DeleteTopicHeadCommand>().ReverseMap();
@@ -316,6 +328,7 @@ public class MappingProfile : Profile
 
         CreateMap<CompositeQuestionnaire, GetQuestionnaireListResponseDTO>().ReverseMap();
         CreateMap<CompositeQuestionnaire, GetQuestionnaireByIdDTO>().ReverseMap();
+        CreateMap<CompositeQuestionnaire, GetQuestionnaireByFilterResponseDTO>().ReverseMap();
         CreateMap<Questionnaire, AddQuestionnaireResponseDTO>().ReverseMap();
         CreateMap<Questionnaire, AddQuestionnaireCommand>().ReverseMap();
         CreateMap<Questionnaire, UpdateQuestionnaireResponseDTO>().ReverseMap();
@@ -345,6 +358,29 @@ public class MappingProfile : Profile
         CreateMap<CompositAudit, GetAuditByIdResponseDTO>().ReverseMap();
         CreateMap<AuditCreation, UpdateAuditCommand>().ReverseMap();
         CreateMap<AuditPlanCode, GetAuditPlanCodeListResponseDTO>().ReverseMap();
+
+        CreateMap<CompositeTestStep, GetTestStepListQueryResponseDTO>().ReverseMap();
+        CreateMap<CompositeTestStep, GetTestStepByIdDTO>().ReverseMap();
+        CreateMap<TestStep, AddTestStepResponseDTO>().ReverseMap();
+        CreateMap<TestStep, AddTestStepCommand>().ReverseMap();
+        CreateMap<TestStep, UpdateTestStepResponseDTO>().ReverseMap();
+        CreateMap<TestStep, UpdateTestStepCommand>().ReverseMap();
+        CreateMap<TestStep, DeleteTestStepResponseDTO>().ReverseMap();
+        CreateMap<TestStep, DeleteTestStepCommand>().ReverseMap();
+
+        CreateMap<Branch, AddAmbsDataSyncCommandRequest>().ReverseMap();
+        CreateMap<Branch, GetBranchListResponseDTO>().ReverseMap();
+        CreateMap<AmbsDataSync, GetAmbsDataSyncDataByCountryAndDateInfoDTO>().ReverseMap();
+        CreateMap<DataRequestQueueServiceDTO, DataRequestQueueService>().ReverseMap();
+        CreateMap<CountryDTOs, Country>().ReverseMap();
+        CreateMap<RiskCriteriaDTOs, RiskCriteria>().ReverseMap();
+        CreateMap<CommonValueAndTypeDTO, CommonValueAndType>().ReverseMap();
+
+        CreateMap<AuditSchedule, AddAuditScheduleCommand>().ReverseMap();
+
+        CreateMap<AuditScheduleParticipants, AuditScheduleParticipantsCommand>().ReverseMap();
+
+
 
     }
 }

@@ -40,5 +40,24 @@ public class QuestionnaireQueryRepository : QueryRepositoryBase<CompositeQuestio
         return await Single(query, parameters);
     }
 
+    public async Task<IEnumerable<CompositeQuestionnaire>> GetByFilter(string FilterName, Guid FilterValue)
+    {
+        var query = @"SELECT 
+                    Questionnaire.Id, 
+                    TopicHead.Id AS TopicHeadId,
+                    Country.Id AS CountryId,
+                    Questionnaire.Question,
+                    Questionnaire.EffectiveFrom,
+                    Questionnaire.EffectiveTo,
+                    Questionnaire.IsActive
+                    FROM BranchAudit.Questionnaire as Questionnaire
+                    INNER JOIN BranchAudit.TopicHead as TopicHead on TopicHead.Id = Questionnaire.TopicHeadId
+                    INNER JOIN common.Country as Country on Country.Id = TopicHead.CountryId
+                    WHERE " + FilterName + " = @FilterValue AND Questionnaire.IsDeleted = 0";
+        var parameters = new Dictionary<string, object> { { "FilterValue", FilterValue } };
+
+        return await Get(query, parameters);
+    }
+
 }
 

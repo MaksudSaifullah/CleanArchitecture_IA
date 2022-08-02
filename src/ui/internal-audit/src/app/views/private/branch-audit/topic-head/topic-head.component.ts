@@ -7,6 +7,7 @@ import { HttpService } from 'src/app/core/services/http.service';
 import { AlertService } from '../../../../core/services/alert.service';
 import { topicHead } from 'src/app/core/interfaces/branch-audit/topicHead.interface';
 import { questionnaire } from 'src/app/core/interfaces/branch-audit/questionnaire.interface';
+import { testStep } from 'src/app/core/interfaces/branch-audit/testStep.interface';
 import { country } from 'src/app/core/interfaces/configuration/country.interface';
 import { paginatedResponseInterface } from 'src/app/core/interfaces/paginated.interface';
 
@@ -29,17 +30,22 @@ export class TopicHeadComponent implements OnInit  {
   topicheads: topicHead[] = [];
   countries: country[] = [];
   searchForm: FormGroup;
-
   
   questionnaireForm: FormGroup;
   searchForm2: FormGroup;
   questionnaires: questionnaire[] = [];
   topicheadDropdownList: topicHead[] = [];
 
+  testStepForm: FormGroup;
+  searchForm3: FormGroup;
+  teststeps: testStep[] = [];
+  questionnaireDropdownList: questionnaire[] = [];
+
   constructor(private http: HttpService, private fb: FormBuilder, private AlertService: AlertService) 
   {
     this.loadDropDownValues();
     this.LoadTopicHeadDropdownList();
+    this.LoadQuestionnaireDropdownList();
     this.topicHeadForm = this.fb.group({
       id: [''],
       countryId: [null,[Validators.required, Validators.pattern("^(?!null$).*$")]],
@@ -64,11 +70,26 @@ export class TopicHeadComponent implements OnInit  {
         searchTerm2: ['']
     });
 
+    this.testStepForm = this.fb.group({
+      id: [''],
+      countryId: [null,[Validators.required, Validators.pattern("^(?!null$).*$")]],
+      topicHeadId: [null,[Validators.required, Validators.pattern("^(?!null$).*$")]],
+      questionnaireId: [null,[Validators.required, Validators.pattern("^(?!null$).*$")]],
+      effectiveFrom: [, [Validators.required]],
+      effectiveTo: [, [Validators.required]],
+      testStepDetails: ['', [Validators.required, Validators.minLength(5), Validators.maxLength(300)]],      
+
+    });
+    this.searchForm3 = this.fb.group({
+      searchTerm3: ['']
+  });
+
   }
 
   ngOnInit(): void {
     this.LoadData();
     this.LoadQuestionnaireData();
+    this.LoadTestStepData();
   }
 
   LoadData() {
@@ -97,7 +118,7 @@ export class TopicHeadComponent implements OnInit  {
 
   LoadCountries() 
   {
-    this.http.paginatedPost('country/paginated', 100, 1, {}).subscribe(resp => {
+    this.http.paginatedPost('country/paginated', 1000, 1, {}).subscribe(resp => {
       let convertedResp = resp as paginatedResponseInterface<country>;
       this.countries = convertedResp.items;     
     })
@@ -128,7 +149,9 @@ export class TopicHeadComponent implements OnInit  {
   }
   edit(modalId: any, topicHead: any): void {
     const localmodalId = modalId;
+    console.log("topichead");
     console.log(topicHead);
+    console.log("topichead");
     this.http
       .getById('topichead', 'id?Id='+ topicHead.id)
       .subscribe(res => {
@@ -150,6 +173,9 @@ export class TopicHeadComponent implements OnInit  {
   reset(){
     this.topicHeadForm.reset();
     this.questionnaireForm.reset();
+    this.testStepForm.reset();
+    this.topicheadDropdownList = [];
+    this.questionnaireDropdownList = [];
   }
   search(){
     this.ReloadAllDataTable();
@@ -211,6 +237,7 @@ export class TopicHeadComponent implements OnInit  {
           this.formService.onSaveSuccess(localmodalId, this.ReloadAllDataTable());          
           this.AlertService.success('Questionnaire Updated Successful');
         });
+        this.reset();
       }
       else {
        // console.log(this.questionnaireForm.value);
@@ -218,6 +245,7 @@ export class TopicHeadComponent implements OnInit  {
           this.formService.onSaveSuccess(localmodalId,this.ReloadAllDataTable());
           this.AlertService.success('Questionnaire Saved successfully');
         });
+        this.reset();
       }      
     }
     else {     
@@ -274,4 +302,113 @@ export class TopicHeadComponent implements OnInit  {
     localmodalId.visible = true;
 
   }
+
+// Test Steps
+
+LoadTestStepData(){
+  console.log('loading test step data');
+   const that = this;
+
+   this.dtOptions[3] = {
+     pagingType: 'full_numbers',
+     pageLength: 10,
+     serverSide: true,
+     processing: true,
+     searching: false,
+     ordering: false,
+     ajax: (dataTablesParameters: any, callback) => {
+       this.http
+         .paginatedPost(
+           'test-step/paginated', dataTablesParameters.length, ((dataTablesParameters.start / dataTablesParameters.length) + 1), this.searchForm3.get('searchTerm3')?.value
+         ).subscribe(resp => that.teststeps = this.dataTableService.datatableMap(resp, callback));
+         
+     },
+   };
+ }
+ LoadQuestionnaireDropdownList() 
+  {
+    this.http.paginatedPost('questionnaire/paginated', 1000, 1, '').subscribe(resp => {
+      let convertedResp = resp as paginatedResponseInterface<questionnaire>;
+      this.questionnaireDropdownList = convertedResp.items;     
+    })
+  }
+ onSubmitTestStep(modalId:any):void
+ {
+  const localmodalId = modalId;
+    if (this.testStepForm.valid ){
+      if(this.formService.isEdit(this.testStepForm.get('id') as FormControl)){
+        this.http.put('test-step',this.testStepForm.value,null).subscribe(x=>{
+          this.formService.onSaveSuccess(localmodalId, this.ReloadAllDataTable());          
+          this.AlertService.success('Test Steps Updated Successful');
+        });
+        this.reset();
+      }
+      else {
+       // console.log(this.riskProfileForm.value);
+        this.http.post('test-step',this.testStepForm.value).subscribe(x=>{
+          this.formService.onSaveSuccess(localmodalId,this.ReloadAllDataTable());
+          this.AlertService.success('Test Steps Saved successfully');
+        });
+        this.reset();
+      }      
+    }
+    else {     
+      this.testStepForm.markAllAsTouched();
+      return;
+    }
+ }
+ editTestStep(modalId: any, testStep: any):void
+ {
+  const localmodalId = modalId;
+    console.log(testStep.value);
+    this.http
+      .getById('test-step', 'id?Id='+ testStep.id)
+      .subscribe(res => {
+        const response = res as testStep;  
+        console.log(response);    
+        this.testStepForm.patchValue({ id: response.id,
+          countryId: response.countryId,
+          topicHeadId: response.topicHeadId,
+          questionnaireId: response.questionnaireId,
+          testStepDetails: response.testStepDetails,
+          effectiveFrom: response.effectiveFrom, 
+          effectiveTo: response.effectiveTo });
+      });
+    localmodalId.visible = true;
+ }
+ deleteTestStep(id: string) 
+ {
+  const that = this;
+    this.AlertService.confirmDialog().then(res => {
+      if (res.isConfirmed) {
+        this.http.delete('test-step/id?Id=' + id, {}).subscribe(response => {
+          this.AlertService.successDialog('Deleted', 'Test Step deleted successfully.');
+          this.ReloadAllDataTable();
+        })
+      }
+    });
+
+ }
+  onChangeCountry(filter:string):void
+  {
+    if(filter=="null"){
+      this.topicheadDropdownList = [];
+      this.questionnaireDropdownList = [];
+    }
+    else{
+      this.http.post('topicHead/filter', {FilterName: 'CountryId', FilterValue: filter}).subscribe(resp => {
+        this.topicheadDropdownList = resp as topicHead[];
+      })
+    }
+  }
+  onChangeTopicHead(filter:string):void
+  {
+    if(filter=="null"){
+      this.questionnaireDropdownList = [];
+    }
+    this.http.post('questionnaire/filter', {FilterName: 'TopicHeadId', FilterValue: filter}).subscribe(resp => {
+      this.questionnaireDropdownList = resp as questionnaire[];
+    })
+  }
+
 }

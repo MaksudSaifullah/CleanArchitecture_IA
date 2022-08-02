@@ -22,7 +22,7 @@ public class GetAuditScheduleByPlanIdQueryHandler : IRequestHandler<GetAuditSche
 
     public async Task<IEnumerable<AuditScheduleParticipantsDTO>> Handle(GetAuditScheduleByPlanIdQuery request, CancellationToken cancellationToken)
     {
-        var list =await _auditScheduleRepository.GetList(request.planId);
+        var list =await _auditScheduleRepository.GetList(request.creationId);
         return _mapper.Map<IEnumerable<AuditScheduleParticipantsDTO>>(list);
 
     }

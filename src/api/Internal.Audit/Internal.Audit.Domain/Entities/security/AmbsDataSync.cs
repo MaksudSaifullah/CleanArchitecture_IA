@@ -13,7 +13,7 @@ public class AmbsDataSync : EntityBase
     public int BranchCode { get; set; }
     public long BranchId { get; set; }
     [Required]
-    [MaxLength(20)]
+    [MaxLength(50)]
     public string? BranchName { get; set; }
     public decimal Amount { get; set; }
     public decimal? AmountConverted { get; set; }

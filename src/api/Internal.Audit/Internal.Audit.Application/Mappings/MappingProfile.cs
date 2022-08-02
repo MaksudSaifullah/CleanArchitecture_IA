@@ -138,6 +138,7 @@ using Internal.Audit.Application.Features.TestSteps.Commands.UpdateTestStep;
 using Internal.Audit.Application.Features.TestSteps.Commands.DeleteTestStep;
 using Internal.Audit.Application.Features.TopicHeads.Queries.GetTopicHeadByFilter;
 using Internal.Audit.Application.Features.Questionnnaires.Queries.GetQuestionnaireByFilter;
+using Internal.Audit.Application.Features.Branches.Commands.AddBranchCommand;
 
 namespace Internal.Audit.Application.Mappings;
 
@@ -363,5 +364,8 @@ public class MappingProfile : Profile
         CreateMap<TestStep, UpdateTestStepCommand>().ReverseMap();
         CreateMap<TestStep, DeleteTestStepResponseDTO>().ReverseMap();
         CreateMap<TestStep, DeleteTestStepCommand>().ReverseMap();
+
+        CreateMap<Branch, AddAmbsDataSyncCommandRequest>().ReverseMap();
+
     }
 }

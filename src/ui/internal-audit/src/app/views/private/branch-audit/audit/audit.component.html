@@ -228,7 +228,7 @@
   </form>
 
 
-<form [formGroup]="auditScheduleForm" (ngSubmit)="onSubmit(verticallyCenteredModalForSchedule)" novalidate>
+<form [formGroup]="auditScheduleForm" (ngSubmit)="onSubmitAuditSchedule(verticallyCenteredModalForSchedule)" novalidate>
   <c-modal #verticallyCenteredModalForSchedule alignment="center" id="verticallyCenteredModalForSchedule">
     <c-modal-header>
       <h5 cModalTitle *ngIf="!formService.isEdit(this.auditScheduleForm.get('id'))">Create Schedule</h5>
@@ -337,8 +337,8 @@
             <c-card-body>
               <c-row [gutter]="{g: 2}">
                 <c-col md>
-                  <c-multi-select multiple>
-                    <c-multi-select-option *ngFor="let role of countries" [value]="role.id">{{role.name}}
+                  <c-multi-select multiple formControlName="approverList" name="approverList" required>
+                    <c-multi-select-option *ngFor="let user of users" [value]="user.id" >{{user.userName}}
                     </c-multi-select-option>
                   </c-multi-select>
                 </c-col>
@@ -355,8 +355,8 @@
             <c-card-body>
               <c-row [gutter]="{g: 2}">
                 <c-col md>
-                  <c-multi-select multiple>
-                    <c-multi-select-option *ngFor="let role of countries" [value]="role.id">{{role.name}}
+                  <c-multi-select multiple formControlName="teamLeaderList" name="teamLeaderList" required>
+                    <c-multi-select-option *ngFor="let user of users" [value]="user.id" >{{user.userName}}
                     </c-multi-select-option>
                   </c-multi-select>
                 </c-col>
@@ -373,8 +373,8 @@
             <c-card-body>
               <c-row [gutter]="{g: 2}">
                 <c-col md>
-                  <c-multi-select multiple>
-                    <c-multi-select-option *ngFor="let role of countries" [value]="role.id">{{role.name}}
+                  <c-multi-select multiple formControlName="auditorList" name="auditorList" required>
+                    <c-multi-select-option *ngFor="let user of users" [value]="user.id" >{{user.userName}}
                     </c-multi-select-option>
                   </c-multi-select>
                 </c-col>
@@ -387,7 +387,7 @@
       </div>
     </c-modal-body>
     <c-modal-footer>
-      <button cButton class="btn btn-primary btnSaveColor me-1"  (click)="onSubmit(verticallyCenteredModalForSchedule)">
+      <button cButton class="btn btn-primary btnSaveColor me-1"  (click)="onSubmitAuditSchedule(verticallyCenteredModalForSchedule)">
         <svg cIcon name="cilSave" size="md" title="Save Button Icon"></svg> Save
       </button>
       <button [cModalToggle]="verticallyCenteredModalForSchedule.id" cButton class="btn btn-danger btnCancelColor me-1">

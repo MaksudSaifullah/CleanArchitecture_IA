@@ -8,6 +8,8 @@ import { FormBuilder, FormControl, FormGroup, MaxLengthValidator, Validators } f
 import {AlertService} from '../../../../core/services/alert.service';
 import { country } from 'src/app/core/interfaces/configuration/country.interface';
 import { Audit } from 'src/app/core/interfaces/branch-audit/audit.interface';
+import { AuditScheduleParticipant } from 'src/app/core/interfaces/branch-audit/auditScheduleParticipant.interface';
+import { User } from 'src/app/core/interfaces/branch-audit/user.interface';
 import { AuditPlanCode } from 'src/app/core/interfaces/branch-audit/auditPlanCode.interface';
 import { paginatedResponseInterface } from 'src/app/core/interfaces/paginated.interface';
 import { commonValueAndType } from 'src/app/core/interfaces/configuration/commonValueAndType.interface';
@@ -34,6 +36,8 @@ export class AuditComponent implements OnInit {
   auditIds: commonValueAndType | undefined;
   auditPlanCodes: AuditPlanCode [] = [];
   branches: Branch[] = [];
+  users: User[]=[];
+  auditScheduleParticipants: AuditScheduleParticipant []=[];
 
   constructor(private http: HttpService, private fb: FormBuilder, private AlertService: AlertService) {
     this.auditForm = this.fb.group({
@@ -57,6 +61,9 @@ export class AuditComponent implements OnInit {
       auditPeriodTo: ['',[Validators.required]],
       scheduleStartDate: ['',[Validators.required]],
       scheduleEndDate: ['',[Validators.required]],
+      approverList:['',[Validators.required]],
+      teamLeaderList:['',[Validators.required]],
+      auditorList:['',[Validators.required]]
       
     })
 
@@ -70,6 +77,7 @@ export class AuditComponent implements OnInit {
     this.LoadCountry();
     this.LoadAuditType();
     this.LoadAuditPlanCode();
+    this.LoadUser();
    // this.LoadAuditId();
   }
 
@@ -114,6 +122,52 @@ export class AuditComponent implements OnInit {
         }
       }
   }
+  onSubmitAuditSchedule(modalId:any):void{
+    console.log(this.auditScheduleForm.getRawValue())
+
+    const localmodalId = modalId;
+    let auditParticipantList: AuditScheduleParticipant[] = [];
+
+    if (this.auditScheduleForm.valid) {  
+
+      let approvers: AuditScheduleParticipant[] = this.auditScheduleForm.value.approverList as AuditScheduleParticipant[];
+      if (Array.isArray(approvers)) {
+        approvers.forEach(function (value) {
+          let user: AuditScheduleParticipant = { auditScheduleId : "", userId: value.userId.toString(),commonValueParticipantId:1}
+          auditParticipantList.push(user);
+        }); 
+      }
+      let teamLeaders: AuditScheduleParticipant[] = this.auditScheduleForm.value.teamLeaderList as AuditScheduleParticipant[];
+      if (Array.isArray(teamLeaders)) {
+        teamLeaders.forEach(function (value) {
+          let user: AuditScheduleParticipant = { auditScheduleId : "", userId: value.userId.toString(),commonValueParticipantId:2}
+          auditParticipantList.push(user);
+        }); 
+      }
+      let auditors: AuditScheduleParticipant[] = this.auditScheduleForm.value.auditorList as AuditScheduleParticipant[];
+      if (Array.isArray(auditors)) {
+        auditors.forEach(function (value) {
+          let user: AuditScheduleParticipant = { auditScheduleId : "", userId: value.userId.toString(),commonValueParticipantId:2}
+          auditParticipantList.push(user);
+        }); 
+      }
+
+      const RequestModelForSchedule = {
+        id:  this.auditScheduleForm.value.id,
+        auditId: this.auditScheduleForm.value.auditId,
+        scheduleStartDate: this.auditScheduleForm.value.scheduleStartDate,   
+        scheduleEndDate: this.auditScheduleForm.value.scheduleEndDate,
+        auditScheduleParticipants : auditParticipantList
+        
+      };
+      console.log(auditParticipantList);
+      // this.http.put('AuditSchedule',RequestModelForSchedule,null).subscribe(x=>{
+      //     this.formService.onSaveSuccess(localmodalId,this.datatableElement);
+      //     this.AlertService.success('Audit Schedule Saved Successful');
+      // });
+    }
+  }
+
   edit(modalId:any, audit:any):void {
     const localmodalId = modalId;
     console.log(audit)
@@ -167,11 +221,17 @@ export class AuditComponent implements OnInit {
     })
   }
   LoadBranch(){
-    var countryId=this.auditScheduleForm.value.countryId;
-    console.log(countryId)
-    this.http.get('commonValueAndType/getBranch?countryId='+countryId).subscribe(resp => {
+    var scheduleFormValue=this.auditScheduleForm.getRawValue();
+   // console.log(scheduleFormValue.countryId)
+    this.http.get('commonValueAndType/getBranch?countryId='+scheduleFormValue.countryId).subscribe(resp => {
       let convertedResp = resp as Branch[];
       this.branches = convertedResp;
+    })
+  }
+  LoadUser() {
+    this.http.paginatedPost('userlist/Paginated', 100, 1, {"userName": "","employeeName": "","userRole": ""}).subscribe(resp => {
+      let convertedResp = resp as paginatedResponseInterface<User>;
+      this.users = convertedResp.items;
     })
   }
   reset(){

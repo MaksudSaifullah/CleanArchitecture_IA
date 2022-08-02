@@ -146,7 +146,10 @@
                     This field is required.
                   </small>                                 
                 </div>
-              </div>
+                <small class="text-danger" *ngIf="topicHeadForm.hasError('invalidDateRange')">
+                  Effective To should be greater than Effective From.
+                </small>
+              </div>              
   
               <div class="form-floating mb-3">
                 <textarea class="form-control" formControlName="description" id="description" placeholder="description"></textarea>
@@ -292,7 +295,7 @@
 
                 <div class="form-floating mb-3">
                   <select aria-label="Floating label select example" cSelect id="topicHeadId"
-                    formControlName="topicHeadId" name="topicHeadId" (change)="onChangeTopic($event.target)">
+                    formControlName="topicHeadId" name="topicHeadId">
                     <option value="null">Select Topic Head</option>
                     <option *ngFor="let topicHead of topicheadDropdownList" [value]="topicHead.id">
                       {{topicHead.name}}
@@ -352,6 +355,9 @@
                     This field is required.
                   </small>                                 
                  </div>
+                 <small class="text-danger" *ngIf="questionnaireForm.hasError('invalidDateRange')">
+                  Effective To should be greater than Effective From.
+                </small>
                </div>
            </div>
          </c-modal-body>
@@ -359,7 +365,7 @@
            <button cButton class="btn btn-primary btnSaveColor me-1" (click)="onSubmitQuestionnaire(verticallyCenteredModalQuestionnaires)">
              <svg cIcon name="cilSave" size="md" title="Save Button Icon"></svg> Save
            </button>
-           <button [cModalToggle]="verticallyCenteredModalQuestionnaires.id" cButton class="btn btn-danger btnCancelColor me-1">
+           <button [cModalToggle]="verticallyCenteredModalQuestionnaires.id" cButton class="btn btn-danger btnCancelColor me-1" (change)="reset()">
              <svg cIcon name="cilX" size="md" title="Close Button Icon"></svg> Close
            </button>
          </c-modal-footer>
@@ -545,8 +551,11 @@
                      (testStepForm.get('effectiveTo')?.dirty || testStepForm.get('effectiveTo')?.touched)">
                  <small class="text-danger" *ngIf="testStepForm.get('effectiveTo').hasError('required')">
                    This field is required.
-                 </small>                                 
+                 </small>
                 </div>
+                <small class="text-danger" *ngIf="testStepForm.hasError('invalidDateRange')">
+                  Effective To should be greater than Effective From.
+                </small>
               </div>
           </div>
         </c-modal-body>

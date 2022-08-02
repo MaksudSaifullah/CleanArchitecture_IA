@@ -154,14 +154,7 @@ export class UserRegistrationComponent implements OnInit {
           });
           console.log(this.formArray);
       });
-
-
-     
-
-
-
-     
-      
+  
   }
 
   isChecked(id:any){

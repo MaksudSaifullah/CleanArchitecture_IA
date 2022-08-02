@@ -177,6 +177,7 @@ public static class PersistentInfrastructureServiceRegistration
         services.AddScoped<ITestStepQueryRepository>(s => new TestStepQueryRepository(configuration.GetConnectionString("InternalAuditDb")));
 
         services.AddScoped<IBranchCommandRepository, BranchCommandRepository>();
+        services.AddScoped<IAmbsDataSyncQueryRepository>(s => new AmbsDataSyncQueryRepository(configuration.GetConnectionString("InternalAuditDb")));
 
         return services;
     }

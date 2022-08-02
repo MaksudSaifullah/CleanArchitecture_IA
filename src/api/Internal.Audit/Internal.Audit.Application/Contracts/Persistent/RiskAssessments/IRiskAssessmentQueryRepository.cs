@@ -12,5 +12,6 @@ namespace Internal.Audit.Application.Contracts.Persistent.RiskAssessments
         Task<(long, IEnumerable<CompositeRiskAssessment>)> GetAll(int pageSize, int pageNumber, string search, string year);
 
         Task<CompositeRiskAssessment> GetById(Guid id);
+        Task<IEnumerable<CompositeRiskAssessment>> GetByCountryId(Guid id);
     }
 }

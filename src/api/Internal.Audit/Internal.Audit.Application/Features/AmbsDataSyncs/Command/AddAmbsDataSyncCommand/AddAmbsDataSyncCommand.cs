@@ -22,4 +22,6 @@ public class AddAmbsDataSyncCommandRequest
     public DateTime FromDate { get; set; }
     public DateTime ToDate { get; set; }  
     public int CommonValueTableId { get; set; }
+    public Guid? CountryId { get; set; }
+
 }

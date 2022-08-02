@@ -1,6 +1,7 @@
 ﻿using Internal.Audit.Application.Features.Questionnnaires.Commands.AddQuestionnaire;
 using Internal.Audit.Application.Features.Questionnnaires.Commands.DeleteQuestionnaire;
 using Internal.Audit.Application.Features.Questionnnaires.Commands.UpdateQuestionnaire;
+using Internal.Audit.Application.Features.Questionnnaires.Queries.GetQuestionnaireByFilter;
 using Internal.Audit.Application.Features.Questionnnaires.Queries.GetQuestionnaireById;
 using Internal.Audit.Application.Features.Questionnnaires.Queries.GetQuestionnnaireList;
 using MediatR;
@@ -23,6 +24,14 @@ namespace Internal.Audit.Api.Controllers
         {            
             var questionnaires = await _mediator.Send(getQuestionnaireListQuery);
             return Ok(questionnaires);
+        }
+
+        [HttpPost("filter")]
+        public async Task<ActionResult<IEnumerable<GetQuestionnaireByFilterResponseDTO>>> GetByFilter(GetQuestionnaireFilterDTO Filter)
+        {
+            var query = new GetQuestionnaireByFilterQuery(Filter);
+            var result = await _mediator.Send(query);
+            return Ok(result);
         }
 
         [HttpGet("id")]

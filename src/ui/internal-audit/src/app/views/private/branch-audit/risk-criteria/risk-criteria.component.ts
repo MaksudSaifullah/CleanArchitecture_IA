@@ -43,10 +43,10 @@ export class RiskCriteriaComponent implements OnInit {
       id: [''],
       countryId:[null,[Validators.required, Validators.pattern("^(?!null$).*$")]],
       riskCriteriaTypeId:[null,[Validators.required, Validators.pattern("^(?!null$).*$")]],
-      minimumValue: [''],
-      maximumValue: [''],
+      minimumValue: ['',[Validators.required]],
+      maximumValue: ['',[Validators.required]],
       ratingTypeId: [null,[Validators.required, Validators.pattern("^(?!null$).*$")]],
-      score: [''],
+      score: ['',[Validators.required,Validators.maxLength(10),Validators.minLength(1)]],
       effectiveFrom: [Date,[Validators.required]],
       effectiveTo: [Date, [Validators.required]],
       description: ['']

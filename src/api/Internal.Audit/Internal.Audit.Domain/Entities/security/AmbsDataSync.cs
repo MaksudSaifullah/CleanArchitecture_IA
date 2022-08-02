@@ -1,4 +1,5 @@
 ﻿using Internal.Audit.Domain.Common;
+using Internal.Audit.Domain.Entities.BranchAudit;
 using Internal.Audit.Domain.Entities.Config;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
@@ -12,7 +13,7 @@ public class AmbsDataSync : EntityBase
     public int BranchCode { get; set; }
     public long BranchId { get; set; }
     [Required]
-    [MaxLength(20)]
+    [MaxLength(50)]
     public string? BranchName { get; set; }
     public decimal Amount { get; set; }
     public decimal? AmountConverted { get; set; }
@@ -32,5 +33,7 @@ public class AmbsDataSync : EntityBase
 
     [ForeignKey("DataRequestQueueServiceId")]
     public virtual DataRequestQueueService DataRequestQueueService { get; set; } = null!;
+    [NotMapped]
+    public virtual RiskCriteria RiskCriteria { get; set; } = null!;
 
 }

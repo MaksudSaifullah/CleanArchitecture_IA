@@ -40,4 +40,24 @@ public class RiskAssessmentQueryRepository : QueryRepositoryBase<CompositeRiskAs
         return await Single(query, parameters);
     }
 
+    public async Task<IEnumerable<CompositeRiskAssessment>> GetByCountryId(Guid id)
+    {
+        var query = @"SELECT ra.[Id]
+					,ra.AssessmentCode
+	                ,cntr.Id AS CountryId
+	                ,cvtit.Id AS AuditTypeId
+					,cntr.Name As CountryName
+					,cvtit.text As AuditType
+                    ,ra.[EffectiveFrom]
+                    ,ra.[EffectiveTo]
+                    ,ra.[CreatedBy]
+                    ,ra.[CreatedOn]
+                FROM [BranchAudit].[RiskAssessment] as ra
+                INNER JOIN [common].[Country] as cntr on cntr.Id = ra.CountryId
+                INNER JOIN [config].[CommonValueAndType] as cvtit on cvtit.Id = ra.AuditTypeId
+				 WHERE cntr.[Id] = @id AND ra.IsDeleted = 0 ";
+        var parameters = new Dictionary<string, object> { { "id", id } };
+
+        return await Get(query, parameters);
+    }
 }

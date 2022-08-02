@@ -64,6 +64,10 @@ using Internal.Audit.Application.Contracts.Persistent.AuditPlans;
 using Internal.Audit.Infrastructure.Persistent.Repositories.AuditPlans;
 using Internal.Audit.Application.Contracts.Persistent.Audit;
 using Internal.Audit.Infrastructure.Persistent.Repositories.Audit;
+using Internal.Audit.Application.Contracts.Persistent.TestSteps;
+using Internal.Audit.Infrastructure.Persistent.Repositories.TestSteps;
+using Internal.Audit.Infrastructure.Persistent.Repositories.Branches;
+using Internal.Audit.Application.Contracts.Persistent.Branches;
 
 namespace Internal.Audit.Infrastructure.Persistent;
 
@@ -167,6 +171,12 @@ public static class PersistentInfrastructureServiceRegistration
         services.AddScoped<IAuditQueryRepository>(s => new AuditQueryRepository(configuration.GetConnectionString("InternalAuditDb")));
 
         services.AddScoped<IAuditPlanCodeQueryRepository>(s => new AuditPlanCodeQueryRepository(configuration.GetConnectionString("InternalAuditDb")));
+
+
+        services.AddScoped<ITestStepCommandRepository, TestStepCommandRepository>();
+        services.AddScoped<ITestStepQueryRepository>(s => new TestStepQueryRepository(configuration.GetConnectionString("InternalAuditDb")));
+
+        services.AddScoped<IBranchCommandRepository, BranchCommandRepository>();
 
         return services;
     }

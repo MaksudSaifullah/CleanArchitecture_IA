@@ -36,6 +36,15 @@ namespace Internal.Audit.Api.Controllers
 
         }
 
+        [HttpGet("CountryId")]
+        public async Task<ActionResult<RiskAssessmentByIdDTO>> GetByCountryId(Guid CountryId)
+        {
+            var query = new GetRiskAssessmentByCountryQuery(CountryId);
+            var riskAssessments = await _mediator.Send(query);
+            return Ok(riskAssessments);
+
+        }
+
         [HttpPost]
         public async Task<ActionResult<AddRiskAssessmentResponseDTO>> Add(AddRiskAssessmentCommand command)
         {

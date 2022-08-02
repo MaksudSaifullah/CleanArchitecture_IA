@@ -410,7 +410,6 @@ namespace Internal.Audit.Infrastructure.Persistent.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Description")
-                        .IsRequired()
                         .HasMaxLength(300)
                         .HasColumnType("nvarchar(300)");
 
@@ -467,6 +466,69 @@ namespace Internal.Audit.Infrastructure.Persistent.Migrations
                     b.ToTable("RiskCriteria", "BranchAudit");
                 });
 
+            modelBuilder.Entity("Internal.Audit.Domain.Entities.BranchAudit.TestStep", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier")
+                        .HasColumnName("Id")
+                        .HasDefaultValueSql("newsequentialid()");
+
+                    b.Property<string>("ApprovedBy")
+                        .HasMaxLength(10)
+                        .HasColumnType("nvarchar(10)");
+
+                    b.Property<DateTime?>("ApprovedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("CreatedBy")
+                        .IsRequired()
+                        .HasMaxLength(10)
+                        .HasColumnType("nvarchar(10)");
+
+                    b.Property<DateTime>("CreatedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("EffectiveFrom")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("EffectiveTo")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsDeleted")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bit")
+                        .HasDefaultValueSql("0");
+
+                    b.Property<Guid>("QuestionnaireId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("ReviewedBy")
+                        .HasMaxLength(10)
+                        .HasColumnType("nvarchar(10)");
+
+                    b.Property<DateTime?>("ReviewedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("TestStepDetails")
+                        .IsRequired()
+                        .HasMaxLength(300)
+                        .HasColumnType("nvarchar(300)");
+
+                    b.Property<string>("UpdatedBy")
+                        .HasMaxLength(10)
+                        .HasColumnType("nvarchar(10)");
+
+                    b.Property<DateTime?>("UpdatedOn")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("QuestionnaireId");
+
+                    b.ToTable("TestStep", "BranchAudit");
+                });
+
             modelBuilder.Entity("Internal.Audit.Domain.Entities.BranchAudit.TopicHead", b =>
                 {
                     b.Property<Guid>("Id")
@@ -494,7 +556,6 @@ namespace Internal.Audit.Infrastructure.Persistent.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Description")
-                        .IsRequired()
                         .HasMaxLength(300)
                         .HasColumnType("nvarchar(300)");
 
@@ -1571,8 +1632,8 @@ namespace Internal.Audit.Infrastructure.Persistent.Migrations
 
                     b.Property<string>("BranchName")
                         .IsRequired()
-                        .HasMaxLength(20)
-                        .HasColumnType("nvarchar(20)");
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
                     b.Property<int>("CommonValueTableId")
                         .HasColumnType("int");
@@ -1623,6 +1684,69 @@ namespace Internal.Audit.Infrastructure.Persistent.Migrations
                     b.HasIndex("DataRequestQueueServiceId");
 
                     b.ToTable("AmbsDataSync", "Security");
+                });
+
+            modelBuilder.Entity("Internal.Audit.Domain.Entities.security.Branch", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier")
+                        .HasColumnName("Id")
+                        .HasDefaultValueSql("newsequentialid()");
+
+                    b.Property<string>("ApprovedBy")
+                        .HasMaxLength(10)
+                        .HasColumnType("nvarchar(10)");
+
+                    b.Property<DateTime?>("ApprovedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("BranchCode")
+                        .HasColumnType("int");
+
+                    b.Property<long>("BranchId")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("BranchName")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<Guid>("CountryId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("CreatedBy")
+                        .IsRequired()
+                        .HasMaxLength(10)
+                        .HasColumnType("nvarchar(10)");
+
+                    b.Property<DateTime>("CreatedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsDeleted")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bit")
+                        .HasDefaultValueSql("0");
+
+                    b.Property<string>("ReviewedBy")
+                        .HasMaxLength(10)
+                        .HasColumnType("nvarchar(10)");
+
+                    b.Property<DateTime?>("ReviewedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("UpdatedBy")
+                        .HasMaxLength(10)
+                        .HasColumnType("nvarchar(10)");
+
+                    b.Property<DateTime?>("UpdatedOn")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CountryId");
+
+                    b.ToTable("Branch", "Security");
                 });
 
             modelBuilder.Entity("Internal.Audit.Domain.Entities.security.DataRequestQueueService", b =>
@@ -2714,6 +2838,17 @@ namespace Internal.Audit.Infrastructure.Persistent.Migrations
                     b.Navigation("Country");
                 });
 
+            modelBuilder.Entity("Internal.Audit.Domain.Entities.BranchAudit.TestStep", b =>
+                {
+                    b.HasOne("Internal.Audit.Domain.Entities.BranchAudit.Questionnaire", "Questionnaire")
+                        .WithMany()
+                        .HasForeignKey("QuestionnaireId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Questionnaire");
+                });
+
             modelBuilder.Entity("Internal.Audit.Domain.Entities.BranchAudit.TopicHead", b =>
                 {
                     b.HasOne("Internal.Audit.Domain.Entities.Country", "Country")
@@ -2852,6 +2987,17 @@ namespace Internal.Audit.Infrastructure.Persistent.Migrations
                         .IsRequired();
 
                     b.Navigation("DataRequestQueueService");
+                });
+
+            modelBuilder.Entity("Internal.Audit.Domain.Entities.security.Branch", b =>
+                {
+                    b.HasOne("Internal.Audit.Domain.Entities.Country", "Country")
+                        .WithMany()
+                        .HasForeignKey("CountryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Country");
                 });
 
             modelBuilder.Entity("Internal.Audit.Domain.Entities.security.DataRequestQueueService", b =>

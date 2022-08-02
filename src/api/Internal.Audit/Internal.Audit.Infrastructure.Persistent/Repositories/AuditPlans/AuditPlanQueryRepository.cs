@@ -29,6 +29,9 @@ public class AuditPlanQueryRepository : QueryRepositoryBase<CompositeAuditPlan>,
         var query = @"SELECT ap.[Id]
       ,ap.[RiskAssessmentId]
       ,ra.[AssessmentCode]
+      ,ap.[PlanCode]
+	  ,cnt.Id As CountryId
+	  ,cvt.Id As AuditTypeId
 	  ,cnt.Name As CountryName
 	  ,cvt.Text As AuditTypeName
       ,ap.PlanningYearId

@@ -11,7 +11,7 @@
         score: number;
         effectiveFrom: Date;
         effectiveTo: Date;
-        description: string;
+        description?:     string;
         countryName?: string;
     }
 

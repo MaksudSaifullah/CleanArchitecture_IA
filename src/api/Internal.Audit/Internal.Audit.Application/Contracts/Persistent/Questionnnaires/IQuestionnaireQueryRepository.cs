@@ -7,4 +7,5 @@ public interface IQuestionnaireQueryRepository : IAsyncQueryRepository<Composite
 {
     Task<(long, IEnumerable<CompositeQuestionnaire>)> GetAll(int pageSize, int pageNumber, dynamic searchTerm = null);
     Task<CompositeQuestionnaire> GetById(Guid id);
+    Task<IEnumerable<CompositeQuestionnaire>> GetByFilter(string FilterName, Guid FilterValue);
 }

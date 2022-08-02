@@ -27,7 +27,7 @@ import { AuditComponent } from './audit/audit.component';
     AuditFrequencyComponent,
     RiskAssessmentViewComponent,
     OverdueTabComponentComponent,
-    StaffTurnoverComponent
+    StaffTurnoverComponent,
     AuditFrequencyComponent,
 
     AuditComponent

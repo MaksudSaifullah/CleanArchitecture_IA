@@ -17,5 +17,6 @@ public class AuditSchedule : EntityBase
     [ForeignKey("AuditPlanId")]
     public virtual AuditPlan AuditPlan { get; set; } = null!;
     public virtual ICollection<AuditScheduleParticipants> AuditScheduleParticipants { get; set; } = null!;
+    public virtual ICollection<AuditScheduleBranch> AuditScheduleBranch { get; set; } = null!;
 
 }

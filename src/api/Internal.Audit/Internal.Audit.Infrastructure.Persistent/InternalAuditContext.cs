@@ -62,6 +62,7 @@ public class InternalAuditContext: DbContext
     public DbSet<Branch> Branches { get; set; }
     public DbSet<AuditSchedule> AuditSchedules { get; set; }
     public DbSet<AuditScheduleParticipants> AuditScheduleParticipants { get; set; }
+    public DbSet<AuditScheduleBranch> AuditScheduleBranches { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

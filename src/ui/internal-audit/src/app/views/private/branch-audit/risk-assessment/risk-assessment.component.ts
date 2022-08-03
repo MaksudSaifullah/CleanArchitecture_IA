@@ -14,6 +14,7 @@ import { formatDate } from '@angular/common';
 import { paginatedResponseInterface } from 'src/app/core/interfaces/paginated.interface';
 import { event } from 'jquery';
 import { CutomvalidatorService } from 'src/app/core/services/cutomvalidator.service';
+import { CommonResponseInterface } from 'src/app/core/interfaces/common-response.interface';
 
 @Component({
   selector: 'app-risk-assessment',
@@ -154,7 +155,14 @@ export class RiskAssessmentComponent implements OnInit {
     this.AlertService.confirmDialog().then(res =>{
       if(res.isConfirmed){
           this.http.delete('riskAssessment/'+ id ,{}).subscribe(response=>{
-          this.AlertService.successDialog('Deleted','Risk Assessment deleted successfully.');
+            let resp = response as CommonResponseInterface;
+            if(resp.success){
+              this.AlertService.successDialog('Deleted','Risk Assessment deleted successfully.');
+            }
+            else{
+              this.AlertService.errorDialog('Unsuccessful', 'It has dependency. Try to delete child first');
+            }      
+          
           this.ReloadAllDataTable();
         })
       }
@@ -163,6 +171,7 @@ export class RiskAssessmentComponent implements OnInit {
   reset(){
     this.riskAssessmentForm.reset();
     this.auditPlanForm.reset();
+   // this.auditPlanForm.patchValue({riskAssessmentId:"null" });
   }
 
   
@@ -261,10 +270,13 @@ export class RiskAssessmentComponent implements OnInit {
       }    
     }
 
-    GetCode(event: any): void{
-      if(event.target.value != "null"){
+    GetCode(event: string,isUser:boolean=false): void{
+      if(event != "null" || event != null){
         this.LoadAssessmentCode(event);
       this.GetAuditPlanCode(event);
+      if(!isUser){
+        this.auditPlanForm.patchValue({riskAssessmentId:"null" });
+      }
       }
     }
 
@@ -280,14 +292,14 @@ export class RiskAssessmentComponent implements OnInit {
       })
     }
     LoadAssessmentCode(event: any): void {
-      this.http.get('riskassessment/CountryId?CountryId='+ event.target.value +'').subscribe(resp => {
+      this.http.get('riskassessment/CountryId?CountryId='+ event +'').subscribe(resp => {
         let convertedResp = resp as riskAssessment[];
         this.auditPlanRiskAssessments = convertedResp;
       })
     }
     
     GetAuditPlanCode(event: any) :void {
-      this.http.get('commonValueAndType/idcreation?idcreationValue=2&auditType=1&countryId='+ event.target.value +'')
+      this.http.get('commonValueAndType/idcreation?idcreationValue=2&auditType=1&countryId='+ event +'')
       .subscribe(resp => {
         const convertedResp = resp as commonValueAndType;
         this.auditPlanForm.patchValue({
@@ -314,7 +326,9 @@ export class RiskAssessmentComponent implements OnInit {
         .getById('auditplan', auditplan.id)
         .subscribe(res => {
           const auditplanResponse = res as auditPlan;
-          console.log('sssssssssss', auditplanResponse);      
+          this.auditPlanRiskAssessments =[];
+          this.GetCode(auditplanResponse.countryId == null ? "null": auditplanResponse.countryId.toString(),true) ; 
+
           this.auditPlanForm.patchValue({ 
             id: auditplanResponse.id,
              planCode: auditplanResponse.planCode, 

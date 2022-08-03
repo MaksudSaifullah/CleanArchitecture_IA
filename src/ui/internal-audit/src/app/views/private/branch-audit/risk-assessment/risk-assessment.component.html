@@ -169,7 +169,7 @@
     </c-modal-body> 
       <c-modal-footer>
       <button cButton class="btn btn-primary btnSaveColor me-1" (click)="onSubmit(verticallyCenteredModal)">Save</button>
-            <button [cModalToggle]="verticallyCenteredModal.id" cButton class="btn btn-danger btnCancelColor me-1"> 
+            <button [cModalToggle]="verticallyCenteredModal.id" cButton class="btn btn-danger btnCancelColor me-1" (click)="reset()"> 
             Close
         </button> 
     </c-modal-footer> 
@@ -274,7 +274,7 @@
         <div class="col-md-6">
           <div form-floating>
             <select aria-label="Floating label select example" cSelect id="countryId"
-              formControlName="countryId" name="countryId" (change)="GetCode($event)">
+              formControlName="countryId" name="countryId" (change)="GetCode($event.target.value)">
               <option value=null>Select Country Level</option>
               <option *ngFor="let country of countries" [value]="country.id">
                 {{country.name}}

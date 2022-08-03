@@ -12,6 +12,7 @@ import { country } from 'src/app/core/interfaces/configuration/country.interface
 import { paginatedResponseInterface } from 'src/app/core/interfaces/paginated.interface';
 import { formatDate } from '@angular/common';
 import { CutomvalidatorService } from 'src/app/core/services/cutomvalidator.service'
+import { CommonResponseInterface } from 'src/app/core/interfaces/common-response.interface';
 
 @Component({
   selector: 'app-topic-head',
@@ -188,7 +189,13 @@ export class TopicHeadComponent implements OnInit  {
     this.AlertService.confirmDialog().then(res => {
       if (res.isConfirmed) {
         this.http.delete('topicHead/id?Id=' + id, {}).subscribe(response => {
-          this.AlertService.successDialog('Deleted', 'Topic Head deleted successfully.');
+          let resp = response as CommonResponseInterface;
+          if(resp.success){
+            this.AlertService.successDialog('Deleted', 'Topic Head deleted successfully.');
+          }
+          else{
+            this.AlertService.errorDialog('Unsuccessful', 'It has dependency. Try to delete child first');
+          }          
           this.ReloadAllDataTable();
         })
       }

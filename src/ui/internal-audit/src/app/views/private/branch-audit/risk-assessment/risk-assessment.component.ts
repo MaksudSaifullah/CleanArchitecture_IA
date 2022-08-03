@@ -69,7 +69,7 @@ export class RiskAssessmentComponent implements OnInit {
       riskAssessmentId:[null,[Validators.required, Validators.pattern("^(?!null$).*$")]],
       assessmentFrom: [Date,[Validators.required]],
       assessmentTo: [Date, [Validators.required]],
-    }, { validator: this.customValidator.checkAssessmentDateToAfterFrom('assessmentFrom', 'assessmentTo') });
+    });
     this.searchForm1 = this.fb.group(
       {
         searchTerm: ['']
@@ -268,11 +268,21 @@ export class RiskAssessmentComponent implements OnInit {
       }
     }
 
+    GetRiskAssessmentDateRange(event: any): void{
+      console.log(' event.target.value', event.target.value);
+      this.http.get('riskassessment/'+ event.target.value+'').subscribe(resp => {
+        let convertedResp = resp as riskAssessment;
+        this.auditPlanForm.patchValue({
+          assessmentFrom : formatDate(convertedResp.effectiveFrom, 'yyyy-MM-dd', 'en'),
+          assessmentTo :  formatDate(convertedResp.effectiveTo, 'yyyy-MM-dd', 'en'),
+        });
+
+      })
+    }
     LoadAssessmentCode(event: any): void {
       this.http.get('riskassessment/CountryId?CountryId='+ event.target.value +'').subscribe(resp => {
         let convertedResp = resp as riskAssessment[];
         this.auditPlanRiskAssessments = convertedResp;
-        console.log(convertedResp);
       })
     }
     
@@ -300,7 +310,6 @@ export class RiskAssessmentComponent implements OnInit {
 
     editAuditPlan(modalId: any, auditplan: any): void {
       const localmodalId = modalId;
-      console.log('jkkj'+ auditplan.id);
       this.http
         .getById('auditplan', auditplan.id)
         .subscribe(res => {

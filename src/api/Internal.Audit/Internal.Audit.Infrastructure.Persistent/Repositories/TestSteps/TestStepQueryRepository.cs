@@ -24,18 +24,20 @@ public class TestStepQueryRepository : QueryRepositoryBase<CompositeTestStep>, I
     }
     public async Task<CompositeTestStep> GetById(Guid id)
     {
-        var query = @"SELECT 
-                    Questionnaire.Id, 
-                    TopicHead.Id AS TopicHeadId,
-                    Country.Id AS CountryId,
-                    Questionnaire.Question,
-                    Questionnaire.EffectiveFrom,
-                    Questionnaire.EffectiveTo,
-                    Questionnaire.IsActive
-                    FROM BranchAudit.Questionnaire as Questionnaire
-                    INNER JOIN BranchAudit.TopicHead as TopicHead on TopicHead.Id = Questionnaire.TopicHeadId
-                    INNER JOIN common.Country as Country on Country.Id = TopicHead.CountryId
-                    WHERE Questionnaire.IsDeleted = 0 AND Questionnaire.Id = @id";
+        var query = @"SELECT
+	                     TestStep.[Id]
+	                    ,Questionnaire.Id AS QuestionnaireId
+	                    ,TopicHead.Id AS TopicHeadId
+	                    ,Country.Id AS CountryId
+	                    ,TestStep.TestStepDetails
+	                    ,TestStep.EffectiveFrom
+	                    ,TestStep.EffectiveTo
+								
+                    FROM [BranchAudit].[TestStep]
+	                    INNER JOIN BranchAudit.Questionnaire on TestStep.QuestionnaireId = Questionnaire.Id
+	                    INNER JOIN BranchAudit.TopicHead on TopicHead.Id = Questionnaire.TopicHeadId
+	                    INNER JOIN common.Country on Country.Id = TopicHead.CountryId
+	                    WHERE TestStep.IsDeleted = 0 AND TestStep.Id = @id";
         var parameters = new Dictionary<string, object> { { "id", id } };
 
         return await Single(query, parameters);

@@ -337,7 +337,7 @@
         <div class="col-md-6">
           <div form-floating>
             <select aria-label="Floating label select example" cSelect id="riskAssessmentId"
-              formControlName="riskAssessmentId" name="riskAssessmentId">
+              formControlName="riskAssessmentId" name="riskAssessmentId" (change)=" GetRiskAssessmentDateRange($event)">
               <option value="null">Select Risk Assessment Id</option>
               <option *ngFor="let riskAssessment of auditPlanRiskAssessments" [value]="riskAssessment.id">
                 {{riskAssessment.assessmentCode}}
@@ -358,7 +358,7 @@
       <div class="row">
         <div class="col-md-6">
           <div class="form-floating">
-            <input class="form-control" placeholder="assessmentFrom" formControlName="assessmentFrom" id="assessmentFrom" type="date" >
+            <input class="form-control" placeholder="assessmentFrom" formControlName="assessmentFrom" id="assessmentFrom" type="date" [readonly]="true">
             <label for="assessmentFrom">Assessment From</label>
           </div>
     
@@ -373,7 +373,7 @@
         </div>
         <div class="col-md-6">
           <div class="form-floating">
-            <input class="form-control" placeholder="assessmentTo" formControlName="assessmentTo" id="assessmentTo" type="date" >
+            <input class="form-control" placeholder="assessmentTo" formControlName="assessmentTo" id="assessmentTo" type="date"  [readonly]="true">
             <label for="assessmentTo">Assessment To</label>
           </div>
           <div cRow *ngIf="auditPlanForm.get('assessmentTo')?.invalid && auditPlanForm.get('assessmentTo')?.errors &&
@@ -382,9 +382,6 @@
               This field is required.
             </small>                                 
           </div>
-          <small class="text-danger" *ngIf="auditPlanForm.hasError('invalidDateRange')">
-            Assessment From should be greater than Assessment To.
-          </small>    
           <br> 
         </div>
       </div>

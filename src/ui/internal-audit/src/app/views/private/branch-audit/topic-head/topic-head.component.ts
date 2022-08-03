@@ -191,10 +191,10 @@ export class TopicHeadComponent implements OnInit  {
         this.http.delete('topicHead/id?Id=' + id, {}).subscribe(response => {
           let resp = response as CommonResponseInterface;
           if(resp.success){
-            this.AlertService.successDialog('Deleted', 'Topic Head deleted successfully.');
+            this.AlertService.successDialog('Deleted', resp.message);
           }
           else{
-            this.AlertService.errorDialog('Unsuccessful', 'It has dependency. Try to delete child first');
+            this.AlertService.errorDialog('Unsuccessful', resp.message);
           }
           this.ReloadAllDataTable();
         })
@@ -288,10 +288,10 @@ export class TopicHeadComponent implements OnInit  {
         this.http.delete('questionnaire/id?Id=' + id, {}).subscribe(response => {
           let resp = response as CommonResponseInterface;
           if(resp.success){
-            this.AlertService.successDialog('Deleted', 'Questionnaire deleted successfully.');
+            this.AlertService.successDialog('Deleted', resp.message);
           }
           else{
-            this.AlertService.errorDialog('Unsuccessful', 'It has dependency. Try to delete child first');
+            this.AlertService.errorDialog('Unsuccessful', resp.message);
           }
           this.ReloadAllDataTable();          
         })

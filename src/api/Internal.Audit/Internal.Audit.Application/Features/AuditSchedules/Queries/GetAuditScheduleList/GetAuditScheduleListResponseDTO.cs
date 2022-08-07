@@ -17,4 +17,6 @@ public record GetAuditScheduleListResponseDTO
     public DateTime ScheduleStartDate { get; set; }
     public DateTime ScheduleEndDate { get; set; }
     public DateTime CreatedOn { get; set; }
+    public string ScheduleId { get; set; }
+    public int ScheduleState { get; set; }
 }

@@ -1,4 +1,5 @@
 ﻿using Internal.Audit.Domain.Common;
+using Internal.Audit.Domain.CompositeEntities;
 using Internal.Audit.Domain.Entities.BranchAudit;
 using Internal.Audit.Domain.Entities.Config;
 using System.ComponentModel;
@@ -35,5 +36,7 @@ public class AmbsDataSync : EntityBase
     public virtual DataRequestQueueService DataRequestQueueService { get; set; } = null!;
     [NotMapped]
     public virtual RiskCriteria RiskCriteria { get; set; } = null!;
+    [NotMapped]
+    public virtual EfTotalCount TotalCount { get; set; }
 
 }

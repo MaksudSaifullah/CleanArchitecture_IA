@@ -38,5 +38,7 @@ public class TopicHead : EntityBase
     //Navigation properties
     [ForeignKey("CountryId")]
     public virtual Country Country { get; set; } = null!;
+    [NotMapped]
+    public virtual ICollection<WorkPaper> WorkPaperList { get; set; } = null!;
 
 }

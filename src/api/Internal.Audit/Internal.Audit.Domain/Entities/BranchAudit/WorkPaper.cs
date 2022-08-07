@@ -20,7 +20,6 @@ public class WorkPaper : EntityBase
     [Required]
     public Guid AuditScheduleId { get; set; }
 
-    [Required]
     public Guid TopicHeadId { get; set; }
     [Required]
     public Guid BranchId { get; set; }
@@ -63,7 +62,7 @@ public class WorkPaper : EntityBase
     public virtual AuditSchedule? AuditSchedule { get; set; }
 
     [ForeignKey("TopicHeadId")]
-    public virtual TopicHead? TopicHead { get; set; }
+    public virtual TopicHead TopicHead { get; set; }
 
     [ForeignKey("DocumentId")]
     public virtual Document? Document { get; set; }

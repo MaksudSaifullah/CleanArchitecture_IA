@@ -4,6 +4,7 @@ using Internal.Audit.Infrastructure.Persistent;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Internal.Audit.Infrastructure.Persistent.Migrations
 {
     [DbContext(typeof(InternalAuditContext))]
-    partial class InternalAuditContextModelSnapshot : ModelSnapshot
+    [Migration("20220804071434_WorkPaper_TBL")]
+    partial class WorkPaper_TBL
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -756,6 +758,9 @@ namespace Internal.Audit.Infrastructure.Persistent.Migrations
                     b.Property<DateTime?>("ReviewedOn")
                         .HasColumnType("datetime2");
 
+                    b.Property<Guid?>("TopicHeadId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<string>("UpdatedBy")
                         .HasMaxLength(10)
                         .HasColumnType("nvarchar(10)");
@@ -766,6 +771,8 @@ namespace Internal.Audit.Infrastructure.Persistent.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("CountryId");
+
+                    b.HasIndex("TopicHeadId");
 
                     b.ToTable("TopicHead", "BranchAudit");
                 });
@@ -936,8 +943,6 @@ namespace Internal.Audit.Infrastructure.Persistent.Migrations
                     b.HasIndex("CommonValueAndTypeId");
 
                     b.HasIndex("DocumentId");
-
-                    b.HasIndex("TopicHeadId");
 
                     b.ToTable("WorkPaper", "BranchAudit");
                 });
@@ -3175,6 +3180,10 @@ namespace Internal.Audit.Infrastructure.Persistent.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("Internal.Audit.Domain.Entities.BranchAudit.WorkPaper", null)
+                        .WithMany("TopicHead")
+                        .HasForeignKey("TopicHeadId");
+
                     b.Navigation("Country");
                 });
 
@@ -3207,19 +3216,11 @@ namespace Internal.Audit.Infrastructure.Persistent.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Internal.Audit.Domain.Entities.BranchAudit.TopicHead", "TopicHead")
-                        .WithMany()
-                        .HasForeignKey("TopicHeadId")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
-
                     b.Navigation("AuditSchedule");
 
                     b.Navigation("CommonValueAndType");
 
                     b.Navigation("Document");
-
-                    b.Navigation("TopicHead");
                 });
 
             modelBuilder.Entity("Internal.Audit.Domain.Entities.common.Document", b =>
@@ -3498,6 +3499,11 @@ namespace Internal.Audit.Infrastructure.Persistent.Migrations
                     b.Navigation("AuditScheduleBranch");
 
                     b.Navigation("AuditScheduleParticipants");
+                });
+
+            modelBuilder.Entity("Internal.Audit.Domain.Entities.BranchAudit.WorkPaper", b =>
+                {
+                    b.Navigation("TopicHead");
                 });
 
             modelBuilder.Entity("Internal.Audit.Domain.Entities.Common.AuditAction", b =>

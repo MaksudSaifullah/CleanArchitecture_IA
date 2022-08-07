@@ -43,30 +43,30 @@
                       <th>Actions</th>
                     </tr>
                   </thead>
-                  <tbody *ngIf="audits?.length != 0">
-                    <tr *ngFor="let audit of audits">
-                      <td>{{ audit.auditId }}</td>
-                      <td>{{ audit.planId }}</td>
-                      <td>{{ audit.auditName }}</td>
-                      <td>{{ audit.year }}</td>
-                      <td>{{ audit.auditTypeName }}</td>
-                      <td>{{ audit.countryName }}</td>
-                      <td>{{ audit.auditPeriodFrom }}</td>
-                      <td>{{ audit.auditPeriodTo }}</td>
-                      <td>{{ audit.createdOn | date:'medium' }}</td>
+                  <tbody *ngIf="auditSchedules?.length != 0">
+                    <tr *ngFor="let auditSchedule of auditSchedules">
+                      <td>{{ auditSchedule.id }}</td>
+                      <td>{{ auditSchedule.country }}</td>
+                      <td>{{ auditSchedule.teamLeader }}</td>
+                      <td>{{ auditSchedule.auditor }}</td>
+                      <td>{{ auditSchedule.scheduleStartDate }}</td>
+                      <td>{{ auditSchedule.scheduleEndDate }}</td>
+                      <td>{{ auditSchedule.executionStatus }}</td>
+                      <td>{{ auditSchedule.scheduleStatus }}</td>
+                      <td>{{ auditSchedule.createdOn | date:'medium' }}</td>
                       <td>
                         <div class="btn-group" role="group" aria-label="Basic example">
-                          <button type="button" class="btn btn-secondary btnEditColor" (click)="edit(verticallyCenteredModal,audit)">
+                          <button type="button" class="btn btn-secondary btnEditColor" (click)="edit(verticallyCenteredModal,auditSchedule)">
                             <svg cIcon name="cilPencil" size="md" title="Edit Button icon"></svg>
                           </button>
-                          <button type="button" class="btn btn-danger btnDeleteColor" (click)="delete(audit.id)">
+                          <button type="button" class="btn btn-danger btnDeleteColor" (click)="delete(auditSchedule.id)">
                             <svg cIcon name="cilTrash" size="md" title="Delete Button Icon"></svg>
                           </button>
                         </div>
                       </td>
                     </tr>
                   </tbody>
-                  <tbody *ngIf="audits?.length == 0">
+                  <tbody *ngIf="auditSchedules?.length == 0">
                     <tr>
                       <td colspan="5" class="no-data-available">No data!</td>
                     </tr>

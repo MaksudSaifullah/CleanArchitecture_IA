@@ -56,7 +56,7 @@
                     <td>{{ audit.createdOn | date:'medium' }}</td>
                     <td>
                       <div class="btn-group" role="group" aria-label="Basic example">
-                        <button [cModalToggle]="verticallyCenteredModalForSchedule.id" class="btn btn-secondary btnEditColor" (click)="resetScheduleForm(audit)" cButton>
+                        <button [cModalToggle]="verticallyCenteredModalForSchedule.id" class="btn btn-secondary btnEditColor" [disabled]="true" (click)="resetScheduleForm(audit)" cButton>
                           <svg cIcon name="cilClock" size="md" title="Add Button Icon"></svg>
                         </button> 
                         <button type="button" class="btn btn-secondary btnEditColor" (click)="edit(verticallyCenteredModal,audit)">
@@ -149,16 +149,16 @@
        
         <br>
         <div cFormFloating>
-          <select aria-label="Floating label select example" cSelect id="planId" formControlName="planId" name="planId" >
+          <select aria-label="Floating label select example" cSelect id="auditPlanId" formControlName="auditPlanId" name="auditPlanId" >
             <option value=null>Select Plan Id</option>
-            <option *ngFor="let auditPlan of auditPlanCodes" [value]="auditPlan.planCode">
+            <option *ngFor="let auditPlan of auditPlanCodes" [value]="auditPlan.id">
               {{auditPlan.planCode}}
             </option>
           </select>
-          <label for="planId" class="dropdownLabel">Plan Id</label>
+          <label for="auditPlanId" class="dropdownLabel">Plan Id</label>
         </div>
-        <div cRow *ngIf="(auditForm.get('planId')?.invalid && auditForm.get('planId')?.errors) &&         
-          (auditForm.get('planId')?.dirty || auditForm.get('planId')?.touched)">
+        <div cRow *ngIf="(auditForm.get('auditPlanId')?.invalid && auditForm.get('auditPlanId')?.errors) &&         
+          (auditForm.get('auditPlanId')?.dirty || auditForm.get('auditPlanId')?.touched)">
           <small class="text-danger">
             This field is required.
           </small>                                 
@@ -320,7 +320,7 @@
             <c-card-body>
               <c-row [gutter]="{g: 2}">
                 <c-col md>
-                  <c-multi-select multiple>
+                  <c-multi-select multiple formControlName="branchList" name="branchList" required>
                     <c-multi-select-option *ngFor="let branch of branches" [value]="branch.id">{{branch.branchName}}
                     </c-multi-select-option>
                   </c-multi-select>

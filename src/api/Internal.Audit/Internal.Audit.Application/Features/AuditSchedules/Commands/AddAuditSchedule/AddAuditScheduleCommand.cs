@@ -21,14 +21,14 @@ public class AddAuditScheduleCommand:IRequest<AddAuditScheduleResponseDTO>
 }
 public class AuditScheduleParticipantsCommand
 {   
-    public Guid AuditScheduleId { get; set; }   
+    public Guid? AuditScheduleId { get; set; }   
     public Guid UserId { get; set; }    
     public int CommonValueParticipantId { get; set; } 
 }
 
 public class AuditScheduleBranchCommand
 {   
-    public Guid AuditScheduleId { get; set; }  
+    public Guid? AuditScheduleId { get; set; }  
     public Guid BranchId { get; set; }  
   
 }

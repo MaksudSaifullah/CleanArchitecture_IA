@@ -142,6 +142,7 @@ using Internal.Audit.Application.Features.Branches.Commands.AddBranchCommand;
 using Internal.Audit.Application.Features.Branches.Commands.GetBranchList;
 using Internal.Audit.Application.Features.AmbsDataSyncs.Queries.GetAmbsDataSyncDataByCountryAndDateInfo;
 using Internal.Audit.Application.Features.AuditSchedules.Commands.AddAuditSchedule;
+using Internal.Audit.Application.Features.AuditSchedules.Queries.GetAuditScheduleList;
 
 namespace Internal.Audit.Application.Mappings;
 
@@ -379,7 +380,8 @@ public class MappingProfile : Profile
         CreateMap<AuditSchedule, AddAuditScheduleCommand>().ReverseMap();
 
         CreateMap<AuditScheduleParticipants, AuditScheduleParticipantsCommand>().ReverseMap(); 
-        CreateMap<AuditScheduleBranch, AuditScheduleBranchCommand>().ReverseMap(); 
+        CreateMap<AuditScheduleBranch, AuditScheduleBranchCommand>().ReverseMap();
+        CreateMap<CompositAuditSchedule, GetAuditScheduleListResponseDTO>().ReverseMap();
 
 
 

@@ -8,6 +8,7 @@ import { AuditPlanCode } from 'src/app/core/interfaces/branch-audit/auditPlanCod
 import { commonValueAndType } from 'src/app/core/interfaces/configuration/commonValueAndType.interface';
 import { country } from 'src/app/core/interfaces/configuration/country.interface';
 import { Branch } from 'src/app/core/interfaces/branch-audit/branch.interface';
+import { AuditSchedule } from 'src/app/core/interfaces/branch-audit/auditSchedule.interface';
 import { paginatedResponseInterface } from 'src/app/core/interfaces/paginated.interface';
 import { DatatableService } from 'src/app/core/services/datatable.service';
 import { FormService } from 'src/app/core/services/form.service';
@@ -24,7 +25,7 @@ export class AuditScheduleComponent implements OnInit {
   datatableElement: DataTableDirective | undefined;
   dtOptions: DataTables.Settings = {};
   dataTableService: DatatableService = new DatatableService();
-  audits: Audit[] = [];
+  auditSchedules: AuditSchedule[] = [];
   formService: FormService = new FormService();
   auditForm: FormGroup;
   auditSearchForm: FormGroup;
@@ -75,8 +76,8 @@ export class AuditScheduleComponent implements OnInit {
       ajax: (dataTablesParameters: any, callback) => {
         this.http
           .paginatedPost(
-            'audit/paginated',dataTablesParameters.length,((dataTablesParameters.start/dataTablesParameters.length)+1),{"auditId": this.auditSearchForm.value.searchText}
-          ).subscribe(resp => that.audits = this.dataTableService.datatableMap(resp,callback));
+            'AuditSchedule/paginated',dataTablesParameters.length,((dataTablesParameters.start/dataTablesParameters.length)+1),{"scheduleId": this.auditSearchForm.value.searchText}
+          ).subscribe(resp => that.auditSchedules = this.dataTableService.datatableMap(resp,callback));
       },
     };
   }

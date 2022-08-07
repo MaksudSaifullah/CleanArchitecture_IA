@@ -11,6 +11,12 @@ namespace Internal.Audit.Application.Features.Audit.Queries.GetAuditPlanCodeList
     {
         public int pageSize { get; set; }
         public int pageNumber { get; set; }
-        public dynamic searchTerm { get; set; }
+        public PlanCodeSearchTerm searchTerm { get; set; }
+        
+    }
+    public class PlanCodeSearchTerm
+    {
+        public Guid countryId { get; set; }
+        public Guid auditTypeId { get; set; }
     }
 }

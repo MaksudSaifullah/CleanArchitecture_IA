@@ -19,8 +19,10 @@ public class WorkPaper : EntityBase
     public string? WorkPaperCode { get; set; }
     [Required]
     public Guid AuditScheduleId { get; set; }
-
+    [Required]
     public Guid TopicHeadId { get; set; }
+    [Required]
+    public Guid QuestionId { get; set; }
     [Required]
     public Guid BranchId { get; set; }
 

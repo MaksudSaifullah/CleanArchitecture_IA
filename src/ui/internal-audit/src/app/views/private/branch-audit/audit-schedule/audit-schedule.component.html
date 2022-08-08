@@ -1,0 +1,250 @@
+<div class="animated fadeIn">
+    <div class="row">
+      <div class="col-lg-12">
+        <div class="card">
+          <div class="card-header">
+            <i class="fa fa-align-justify" ></i> Audit Schedule List
+          </div>
+          <div class="card-body">
+            <form [formGroup]="auditSearchForm">
+              <div class="row">
+                <div class="row" style="margin: 0 auto;">
+                  <div class="col-md-6 mb-2">
+                    <!-- <button [cModalToggle]="verticallyCenteredModal.id" class="btnCreateColor" (click)="reset()" cButton>
+                      <svg cIcon name="cilPlus" size="md" title="Add Button Icon"></svg> Create
+                    </button>  -->
+                  </div>
+                  <div class="col-md-5 mb-2 form-floating">
+                    <input type="textarea" class="form-control searchInput" formControlName="searchText"  placeholder="Search by Audit Id"/>
+                    <label class="searchLevel" for="floatingInput">Search by Schedule Id</label>
+                  </div>
+                  <div class="col-md-1 mb-2">
+                    <button type="button" class="btn btn-secondary mr-1 btn-block searchBtn" data-toggle="modal" (click)="search()" >
+                      Search
+                    </button>
+                  </div>
+                </div>
+              
+              </div>
+            </form>
+            <div class="row overflow-auto">
+                <table datatable [dtOptions]="dtOptions" class="table table-bordered row-border hover datatableStyle" >
+                  <thead>
+                    <tr>
+                      <th>Schedule Id</th>
+                      <th>Country</th>
+                      <th>Team Leader</th>
+                      <th>Auditor</th>
+                      <th>From Date & Time</th>
+                      <th>To Date & Time</th>
+                      <th>Execution Status</th>
+                      <th>Schedule Status</th>
+                      <th>CreatedOn</th>
+                      <th>Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody *ngIf="auditSchedules?.length != 0">
+                    <tr *ngFor="let auditSchedule of auditSchedules">
+                      <td>{{ auditSchedule.id }}</td>
+                      <td>{{ auditSchedule.country }}</td>
+                      <td>{{ auditSchedule.teamLeader }}</td>
+                      <td>{{ auditSchedule.auditor }}</td>
+                      <td>{{ auditSchedule.scheduleStartDate }}</td>
+                      <td>{{ auditSchedule.scheduleEndDate }}</td>
+                      <td>{{ auditSchedule.executionStatus }}</td>
+                      <td>{{ auditSchedule.scheduleStatus }}</td>
+                      <td>{{ auditSchedule.createdOn | date:'medium' }}</td>
+                      <td>
+                        <div class="btn-group" role="group" aria-label="Basic example">
+                          <button type="button" class="btn btn-secondary btnEditColor" (click)="edit(verticallyCenteredModal,auditSchedule)">
+                            <svg cIcon name="cilPencil" size="md" title="Edit Button icon"></svg>
+                          </button>
+                          <button type="button" class="btn btn-danger btnDeleteColor" (click)="delete(auditSchedule.id)">
+                            <svg cIcon name="cilTrash" size="md" title="Delete Button Icon"></svg>
+                          </button>
+                        </div>
+                      </td>
+                    </tr>
+                  </tbody>
+                  <tbody *ngIf="auditSchedules?.length == 0">
+                    <tr>
+                      <td colspan="5" class="no-data-available">No data!</td>
+                    </tr>
+                  </tbody>
+                </table>
+  
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <!-- <form [formGroup]="auditForm" (ngSubmit)="onSubmit(verticallyCenteredModal)" novalidate>
+    <c-modal #verticallyCenteredModal alignment="center" id="verticallyCenteredModal">
+      <c-modal-header>
+        <h5 cModalTitle *ngIf="!formService.isEdit(this.auditForm.get('id'))">Create Schedule</h5>
+        <h5 cModalTitle *ngIf="formService.isEdit(this.auditForm.get('id'))">Update Schedule</h5>
+        <button [cModalToggle]="verticallyCenteredModal.id" cButtonClose></button>
+      </c-modal-header>
+      <c-modal-body>
+        <div class="col-md-12" >
+          <input type="hidden" formControlName="id"/>
+
+          <div cFormFloating>
+            <select aria-label="Floating label select example" cSelect id="auditTypeId" formControlName="auditTypeId" name="auditTypeId" >
+              <option value=null>Select Audit</option>
+              <option *ngFor="let auditType of auditTypes" [value]="auditType.id">
+                {{auditType.text}}
+              </option>
+            </select>
+            <label for="auditTypeId" class="dropdownLabel">Audit Type</label>
+          </div>
+          <br>
+
+          <div class="form-floating">
+            <input type="text" class="form-control" formControlName="auditId" id="auditId" placeholder="Audit Id">
+            <label for="floatingInput">Audit Id</label>
+          </div>
+          <div cRow *ngIf="(auditForm.get('auditId')?.invalid && auditForm.get('auditId')?.errors) &&         
+          (auditForm.get('auditId')?.dirty || auditForm.get('auditId')?.touched)">
+          <small class="text-danger">
+            This field is required.
+          </small>                                 
+          </div> 
+          <br>
+            <div cFormFloating>
+                <select aria-label="Floating label select example" cSelect id="countryId" formControlName="countryId" name="countryId" (change)="LoadAuditId()">
+                <option value=null>Select Country</option>
+                <option *ngFor="let country of countries" [value]="country.id">
+                    {{country.name}}
+                </option>
+                </select>
+                <label for="countryId" class="dropdownLabel">Country</label>
+            </div>
+            <div cRow *ngIf="(auditForm.get('countryId')?.invalid && auditForm.get('countryId')?.errors) &&         
+                (auditForm.get('countryId')?.dirty || auditForm.get('countryId')?.touched)">
+                <small class="text-danger">
+                This field is required.
+                </small>                                 
+            </div> 
+          <br>
+          <div class="form-floating">
+            <input class="form-control" placeholder="auditPeriodFrom" formControlName="auditPeriodFrom" id="auditPeriodFrom" type="date" >
+            <label for="auditPeriodFrom">Audit Review Period From</label>
+          </div>
+          <br>
+          <div class="form-floating">
+            <input class="form-control" placeholder="auditPeriodFrom" formControlName="auditPeriodFrom" id="auditPeriodFrom" type="date" >
+            <label for="auditPeriodFrom">Audit Review Period To</label>
+          </div>
+          <br>
+          <div class="form-floating">
+            <input class="form-control" placeholder="auditPeriodFrom" formControlName="auditPeriodFrom" id="auditPeriodFrom" type="date" >
+            <label for="auditPeriodFrom">Schedule Start Date</label>
+          </div>
+          <div cRow *ngIf="auditForm.get('auditPeriodFrom')?.invalid && auditForm.get('auditPeriodFrom')?.errors &&
+                (auditForm.get('auditPeriodFrom')?.dirty || auditForm.get('auditPeriodFrom')?.touched)">
+            <small class="text-danger" *ngIf="auditForm.get('auditPeriodFrom').hasError('required')">
+              This field is required.
+            </small>                                 
+          </div>
+          <br>
+          <div class="form-floating">
+            <input class="form-control" placeholder="auditPeriodTo" formControlName="auditPeriodTo" id="auditPeriodTo" type="date" >
+            <label for="auditPeriodTo">Schedule Start Date</label>
+          </div>
+          <div cRow *ngIf="auditForm.get('auditPeriodTo')?.invalid && auditForm.get('auditPeriodTo')?.errors &&
+                (auditForm.get('auditPeriodTo')?.dirty || auditForm.get('auditPeriodTo')?.touched)">
+            <small class="text-danger" *ngIf="auditForm.get('auditPeriodTo').hasError('required')">
+              This field is required.
+            </small>                                                      
+          </div>
+          <small class="text-danger" *ngIf="auditForm.hasError('invalidDateRange')">
+            Effective from should be greater than effective to.
+          </small>          
+          <br> 
+          <c-col xs="12">
+            <c-card class="mb-4">
+              <c-card-header>
+                <strong>Branch</strong>
+              </c-card-header>
+              <c-card-body>
+                <c-row [gutter]="{g: 2}">
+                  <c-col md>
+                    <c-multi-select multiple>
+                      <c-multi-select-option *ngFor="let branch of branches" [value]="branch.id">{{branch.branchName}}
+                      </c-multi-select-option>
+                    </c-multi-select>
+                  </c-col>
+                </c-row>
+              </c-card-body>
+            </c-card>
+          </c-col>
+          <c-col xs="12">
+            <c-card class="mb-4">
+              <c-card-header>
+                <strong>Approver</strong>
+              </c-card-header>
+              <c-card-body>
+                <c-row [gutter]="{g: 2}">
+                  <c-col md>
+                    <c-multi-select multiple>
+                      <c-multi-select-option *ngFor="let role of countries" [value]="role.id">{{role.name}}
+                      </c-multi-select-option>
+                    </c-multi-select>
+                  </c-col>
+                </c-row>
+              </c-card-body>
+            </c-card>
+          </c-col>
+         
+         <c-col xs="12">
+            <c-card class="mb-4">
+              <c-card-header>
+                <strong>Team Leader</strong>
+              </c-card-header>
+              <c-card-body>
+                <c-row [gutter]="{g: 2}">
+                  <c-col md>
+                    <c-multi-select multiple>
+                      <c-multi-select-option *ngFor="let role of countries" [value]="role.id">{{role.name}}
+                      </c-multi-select-option>
+                    </c-multi-select>
+                  </c-col>
+                </c-row>
+              </c-card-body>
+            </c-card>
+          </c-col>
+
+         <c-col xs="12">
+            <c-card class="mb-4">
+              <c-card-header>
+                <strong>Auditor</strong>
+              </c-card-header>
+              <c-card-body>
+                <c-row [gutter]="{g: 2}">
+                  <c-col md>
+                    <c-multi-select multiple>
+                      <c-multi-select-option *ngFor="let role of countries" [value]="role.id">{{role.name}}
+                      </c-multi-select-option>
+                    </c-multi-select>
+                  </c-col>
+                </c-row>
+              </c-card-body>
+            </c-card>
+          </c-col>
+
+                
+        </div>
+      </c-modal-body>
+      <c-modal-footer>
+        <button cButton class="btn btn-primary btnSaveColor me-1"  (click)="onSubmit(verticallyCenteredModal)">
+          <svg cIcon name="cilSave" size="md" title="Save Button Icon"></svg> Save
+        </button>
+        <button [cModalToggle]="verticallyCenteredModal.id" cButton class="btn btn-danger btnCancelColor me-1">
+          <svg cIcon name="cilX" size="md" title="Close Button Icon"></svg> Close
+        </button>
+      </c-modal-footer>
+    </c-modal>
+    </form> -->

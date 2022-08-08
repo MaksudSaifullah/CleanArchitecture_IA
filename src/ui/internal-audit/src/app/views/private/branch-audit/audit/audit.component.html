@@ -56,6 +56,9 @@
                     <td>{{ audit.createdOn | date:'medium' }}</td>
                     <td>
                       <div class="btn-group" role="group" aria-label="Basic example">
+                        <button [cModalToggle]="verticallyCenteredModalForSchedule.id" class="btn btn-secondary btnEditColor" [disabled]="true" (click)="resetScheduleForm(audit)" cButton>
+                          <svg cIcon name="cilClock" size="md" title="Add Button Icon"></svg>
+                        </button> 
                         <button type="button" class="btn btn-secondary btnEditColor" (click)="edit(verticallyCenteredModal,audit)">
                           <svg cIcon name="cilPencil" size="md" title="Edit Button icon"></svg>
                         </button>
@@ -146,16 +149,16 @@
        
         <br>
         <div cFormFloating>
-          <select aria-label="Floating label select example" cSelect id="planId" formControlName="planId" name="planId" >
+          <select aria-label="Floating label select example" cSelect id="auditPlanId" formControlName="auditPlanId" name="auditPlanId" >
             <option value=null>Select Plan Id</option>
-            <option *ngFor="let auditPlan of auditPlanCodes" [value]="auditPlan.planCode">
+            <option *ngFor="let auditPlan of auditPlanCodes" [value]="auditPlan.id">
               {{auditPlan.planCode}}
             </option>
           </select>
-          <label for="planId" class="dropdownLabel">Plan Id</label>
+          <label for="auditPlanId" class="dropdownLabel">Plan Id</label>
         </div>
-        <div cRow *ngIf="(auditForm.get('planId')?.invalid && auditForm.get('planId')?.errors) &&         
-          (auditForm.get('planId')?.dirty || auditForm.get('planId')?.touched)">
+        <div cRow *ngIf="(auditForm.get('auditPlanId')?.invalid && auditForm.get('auditPlanId')?.errors) &&         
+          (auditForm.get('auditPlanId')?.dirty || auditForm.get('auditPlanId')?.touched)">
           <small class="text-danger">
             This field is required.
           </small>                                 
@@ -218,6 +221,176 @@
         <svg cIcon name="cilSave" size="md" title="Save Button Icon"></svg> Save
       </button>
       <button [cModalToggle]="verticallyCenteredModal.id" cButton class="btn btn-danger btnCancelColor me-1">
+        <svg cIcon name="cilX" size="md" title="Close Button Icon"></svg> Close
+      </button>
+    </c-modal-footer>
+  </c-modal>
+  </form>
+
+
+<form [formGroup]="auditScheduleForm" (ngSubmit)="onSubmitAuditSchedule(verticallyCenteredModalForSchedule)" novalidate>
+  <c-modal #verticallyCenteredModalForSchedule alignment="center" id="verticallyCenteredModalForSchedule">
+    <c-modal-header>
+      <h5 cModalTitle *ngIf="!formService.isEdit(this.auditScheduleForm.get('id'))">Create Schedule</h5>
+      <h5 cModalTitle *ngIf="formService.isEdit(this.auditScheduleForm.get('id'))">Update Schedule</h5>
+      <button [cModalToggle]="verticallyCenteredModalForSchedule.id" cButtonClose></button>
+    </c-modal-header>
+    <c-modal-body>
+      <div class="col-md-12" >
+        <input type="hidden" formControlName="id"/>
+
+        <div cFormFloating>
+          <select aria-label="Floating label select example" cSelect id="auditTypeId" formControlName="auditTypeId" name="auditTypeId" >
+            <option value=null>Select Audit</option>
+            <option *ngFor="let auditType of auditTypes" [value]="auditType.id">
+              {{auditType.text}}
+            </option>
+          </select>
+          <label for="auditTypeId" class="dropdownLabel">Audit Type</label>
+        </div>
+        <br>
+
+        <div class="form-floating">
+          <input type="text" class="form-control" formControlName="auditId" id="auditId" placeholder="Audit Id">
+          <label for="floatingInput">Audit Id</label>
+        </div>
+        <div cRow *ngIf="(auditForm.get('auditId')?.invalid && auditForm.get('auditId')?.errors) &&         
+        (auditForm.get('auditId')?.dirty || auditForm.get('auditId')?.touched)">
+        <small class="text-danger">
+          This field is required.
+        </small>                                 
+        </div> 
+        <br>
+          <div cFormFloating>
+              <select aria-label="Floating label select example" cSelect id="countryId" formControlName="countryId" name="countryId" (change)="LoadAuditId()">
+              <option value=null>Select Country</option>
+              <option *ngFor="let country of countries" [value]="country.id">
+                  {{country.name}}
+              </option>
+              </select>
+              <label for="countryId" class="dropdownLabel">Country</label>
+          </div>
+          <div cRow *ngIf="(auditForm.get('countryId')?.invalid && auditForm.get('countryId')?.errors) &&         
+              (auditForm.get('countryId')?.dirty || auditForm.get('countryId')?.touched)">
+              <small class="text-danger">
+              This field is required.
+              </small>                                 
+          </div> 
+        <br>
+        <div class="form-floating">
+          <input class="form-control" placeholder="auditPeriodFrom" formControlName="auditPeriodFrom" id="auditPeriodFrom" type="date" >
+          <label for="auditPeriodFrom">Audit Review Period From</label>
+        </div>
+        <br>
+        <div class="form-floating">
+          <input class="form-control" placeholder="auditPeriodTo" formControlName="auditPeriodTo" id="auditPeriodTo" type="date" >
+          <label for="auditPeriodTo">Audit Review Period To</label>
+        </div>
+        <br>
+        <div class="form-floating">
+          <input class="form-control" placeholder="scheduleStartDate" formControlName="scheduleStartDate" id="scheduleStartDate" type="date" >
+          <label for="scheduleStartDate">Schedule Start Date</label>
+        </div>
+        <div cRow *ngIf="auditScheduleForm.get('scheduleStartDate')?.invalid && auditScheduleForm.get('scheduleStartDate')?.errors &&
+              (auditScheduleForm.get('scheduleStartDate')?.dirty || auditScheduleForm.get('scheduleStartDate')?.touched)">
+          <small class="text-danger" *ngIf="auditScheduleForm.get('scheduleStartDate').hasError('required')">
+            This field is required.
+          </small>                                 
+        </div>
+        <br>
+        <div class="form-floating">
+          <input class="form-control" placeholder="scheduleEndDate" formControlName="scheduleEndDate" id="scheduleEndDate" type="date" >
+          <label for="scheduleEndDate">Schedule End Date</label>
+        </div>
+        <div cRow *ngIf="auditScheduleForm.get('scheduleEndDate')?.invalid && auditScheduleForm.get('scheduleEndDate')?.errors &&
+              (auditScheduleForm.get('scheduleEndDate')?.dirty || auditScheduleForm.get('scheduleEndDate')?.touched)">
+          <small class="text-danger" *ngIf="auditScheduleForm.get('scheduleEndDate').hasError('required')">
+            This field is required.
+          </small>                                                      
+        </div>
+        <small class="text-danger" *ngIf="auditScheduleForm.hasError('invalidDateRange')">
+          Schedule Start Date should be greater than Schedule End Date.
+        </small>          
+        <br> 
+        <c-col xs="12">
+          <c-card class="mb-4">
+            <c-card-header>
+              <strong>Branch</strong>
+            </c-card-header>
+            <c-card-body>
+              <c-row [gutter]="{g: 2}">
+                <c-col md>
+                  <c-multi-select multiple formControlName="branchList" name="branchList" required>
+                    <c-multi-select-option *ngFor="let branch of branches" [value]="branch.id">{{branch.branchName}}
+                    </c-multi-select-option>
+                  </c-multi-select>
+                </c-col>
+              </c-row>
+            </c-card-body>
+          </c-card>
+        </c-col>
+        <c-col xs="12">
+          <c-card class="mb-4">
+            <c-card-header>
+              <strong>Approver</strong>
+            </c-card-header>
+            <c-card-body>
+              <c-row [gutter]="{g: 2}">
+                <c-col md>
+                  <c-multi-select multiple formControlName="approverList" name="approverList" required>
+                    <c-multi-select-option *ngFor="let user of users" [value]="user.id" >{{user.userName}}
+                    </c-multi-select-option>
+                  </c-multi-select>
+                </c-col>
+              </c-row>
+            </c-card-body>
+          </c-card>
+        </c-col>
+        
+        <c-col xs="12">
+          <c-card class="mb-4">
+            <c-card-header>
+              <strong>Team Leader</strong>
+            </c-card-header>
+            <c-card-body>
+              <c-row [gutter]="{g: 2}">
+                <c-col md>
+                  <c-multi-select multiple formControlName="teamLeaderList" name="teamLeaderList" required>
+                    <c-multi-select-option *ngFor="let user of users" [value]="user.id" >{{user.userName}}
+                    </c-multi-select-option>
+                  </c-multi-select>
+                </c-col>
+              </c-row>
+            </c-card-body>
+          </c-card>
+        </c-col>
+
+        <c-col xs="12">
+          <c-card class="mb-4">
+            <c-card-header>
+              <strong>Auditor</strong>
+            </c-card-header>
+            <c-card-body>
+              <c-row [gutter]="{g: 2}">
+                <c-col md>
+                  <c-multi-select multiple formControlName="auditorList" name="auditorList" required>
+                    <c-multi-select-option *ngFor="let user of users" [value]="user.id" >{{user.userName}}
+                    </c-multi-select-option>
+                  </c-multi-select>
+                </c-col>
+              </c-row>
+            </c-card-body>
+          </c-card>
+        </c-col>
+
+              
+      </div>
+    </c-modal-body>
+    <c-modal-footer>
+      <button cButton class="btn btn-primary btnSaveColor me-1"  (click)="onSubmitAuditSchedule(verticallyCenteredModalForSchedule)">
+        <svg cIcon name="cilSave" size="md" title="Save Button Icon"></svg> Save
+      </button>
+      <button [cModalToggle]="verticallyCenteredModalForSchedule.id" cButton class="btn btn-danger btnCancelColor me-1">
         <svg cIcon name="cilX" size="md" title="Close Button Icon"></svg> Close
       </button>
     </c-modal-footer>

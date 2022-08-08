@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Internal.Audit.Domain.CompositeEntities;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -17,6 +18,7 @@ public class GetAmbsDataSyncDataByCountryAndDateInfoDTO
   
     public virtual DataRequestQueueServiceDTO DataRequestQueueService { get; set; } = null!;
    public virtual RiskCriteriaDTOs RiskCriteria { get; set; } = null!;
+   public virtual EfTotalCount TotalCount { get; set; } = null!;
 }
 
 

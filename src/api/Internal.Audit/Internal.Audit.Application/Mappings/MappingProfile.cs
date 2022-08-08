@@ -147,6 +147,7 @@ using Internal.Audit.Application.Features.WorkPapers.Queries.GetWorkPaperById;
 using Internal.Audit.Application.Features.WorkPapers.Commands.AddWorkPaper;
 using Internal.Audit.Application.Features.WorkPapers.Commands.UpdateWorkPaper;
 using Internal.Audit.Application.Features.WorkPapers.Commands.DeleteWorkPaper;
+using Internal.Audit.Application.Features.AuditSchedules.Queries.GetAuditScheduleList;
 
 namespace Internal.Audit.Application.Mappings;
 
@@ -385,6 +386,7 @@ public class MappingProfile : Profile
 
         CreateMap<AuditScheduleParticipants, AuditScheduleParticipantsCommand>().ReverseMap(); 
         CreateMap<AuditScheduleBranch, AuditScheduleBranchCommand>().ReverseMap();
+        CreateMap<CompositAuditSchedule, GetAuditScheduleListResponseDTO>().ReverseMap();
 
         CreateMap<WorkPaper, WorkPaperDTO>().ReverseMap();
         CreateMap<CompositeWorkPaper, WorkPaperDTO>().ReverseMap();

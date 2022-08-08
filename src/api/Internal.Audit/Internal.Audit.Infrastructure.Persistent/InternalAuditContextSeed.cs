@@ -30,13 +30,14 @@ public class InternalAuditContextSeed
             context.EmailTypes.AddRange(GetSeedEmailTypes());
             await context.SaveChangesAsync();
         }
-    }
-        if ( context.CommonValueAndTypes.Count(x => x.Type == "RISKRATINGNAME") == 3)
+        if (context.CommonValueAndTypes.Count(x => x.Type == "RISKRATINGNAME") == 3)
         {
             context.CommonValueAndTypes.AddRange(RiskRatingNewTypes());
-            await context.SaveChangesAsync(); 
+            await context.SaveChangesAsync();
         }
     }
+        
+    
 
     private static IEnumerable<User> GetSeedUsers()
     {

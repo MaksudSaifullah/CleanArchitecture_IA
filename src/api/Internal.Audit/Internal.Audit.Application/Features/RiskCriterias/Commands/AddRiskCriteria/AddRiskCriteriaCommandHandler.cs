@@ -29,9 +29,15 @@ public class AddRiskCriteriaCommandHandler : IRequestHandler<AddRiskCriteriaComm
     {
         var riskCriteria = _mapper.Map<RiskCriteria>(request);
         var newriskCriteria = await _riskCriteriaRepository.Add(riskCriteria);
-        var rowsAffected = await _unitOfWork.CommitAsync();
+        var rowsAffected = await _unitOfWork.CommitAsyncwithErrorMsg();
 
-        return new AddRiskCriteriaResponseDTO(newriskCriteria.Id, rowsAffected > 0, rowsAffected > 0 ? "Risk Criteria Added Successfully!" : "Error while creating Risk Criteria !");
+        if (rowsAffected.Item1 == -1)
+        {
+            return new AddRiskCriteriaResponseDTO(newriskCriteria.Id, false, rowsAffected.Item2);
+        }
+        return new AddRiskCriteriaResponseDTO(newriskCriteria.Id, rowsAffected.Item1 > 0, rowsAffected.Item1 > 0 ? "Risk Criteria Added Successfully!" : "Error while creating Risk Criteria !");
+
+        // return new AddRiskCriteriaResponseDTO(newriskCriteria.Id, rowsAffected > 0, rowsAffected > 0 ? "Risk Criteria Added Successfully!" : "Error while creating Risk Criteria !");
     }
 
 }

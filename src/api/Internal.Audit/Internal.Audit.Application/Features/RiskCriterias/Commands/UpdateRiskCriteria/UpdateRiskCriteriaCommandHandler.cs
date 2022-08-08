@@ -27,7 +27,16 @@ public class UpdateRiskCriteriaCommandHandler : IRequestHandler<UpdateRiskCriter
         var riskCriteria = await _riskCriteriaRepository.Get(request.Id);
         var mappedRiskCriteria = _mapper.Map(request, riskCriteria);
         var updatedRiskCriteria = await _riskCriteriaRepository.Update(mappedRiskCriteria);
-        var rowsAffected = await _unitOfWork.CommitAsync();
-        return new UpdateRiskCriteriaResponseDTO(updatedRiskCriteria.Id, rowsAffected > 0, rowsAffected > 0 ? "Risk Criteria Updated Successfully!" : "Error while updating Risk Criteria!");
+
+        var rowsAffected = await _unitOfWork.CommitAsyncwithErrorMsg();
+        if (rowsAffected.Item1 == -1)
+        {
+            return new UpdateRiskCriteriaResponseDTO(updatedRiskCriteria.Id, false, rowsAffected.Item2);
+        }
+        return new UpdateRiskCriteriaResponseDTO(updatedRiskCriteria.Id, rowsAffected.Item1 > 0, rowsAffected.Item1 > 0 ? "Designation Updated Successfully!" : "Error while updating Designation!");
+
+
+        //var rowsAffected = await _unitOfWork.CommitAsync();
+        //return new UpdateRiskCriteriaResponseDTO(updatedRiskCriteria.Id, rowsAffected > 0, rowsAffected > 0 ? "Risk Criteria Updated Successfully!" : "Error while updating Risk Criteria!");
     }
 }

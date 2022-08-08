@@ -2,6 +2,7 @@
 using Internal.Audit.Domain.Entities;
 using Internal.Audit.Domain.Entities.config;
 using Internal.Audit.Domain.Entities.Config;
+using Internal.Audit.Domain.Entities.security;
 using Internal.Audit.Domain.Entities.Security;
 
 namespace Internal.Audit.Infrastructure.Persistent;
@@ -35,6 +36,23 @@ public class InternalAuditContextSeed
             context.CommonValueAndTypes.AddRange(RiskRatingNewTypes());
             await context.SaveChangesAsync();
         }
+
+
+        if (!context.PasswordPolicies.Any())
+        {
+            context.PasswordPolicies.AddRange(GetSeedPasswordPolicy());
+            await context.SaveChangesAsync();
+        }
+        if (!context.SessionPolicies.Any())
+        {
+            context.SessionPolicies.AddRange(GetSeedSessionPolicy());
+            await context.SaveChangesAsync();
+        }
+        if (!context.UserLockingPolicies.Any())
+        {
+            context.UserLockingPolicies.AddRange(GetSeedUserLockingPolicy());
+            await context.SaveChangesAsync();
+        }
     }
         
     
@@ -49,6 +67,47 @@ public class InternalAuditContextSeed
                 IsAccountExpired = false, IsAccountLocked = false
             }
 
+        };
+    }
+
+    private static IEnumerable<PasswordPolicy> GetSeedPasswordPolicy()
+    {
+        return new List<PasswordPolicy>
+        {
+            new PasswordPolicy
+            {
+                MinLength = 8, MaxLength = 20, 
+                IsAlphabetMandatory = true, IsNumberMandatory = true, IsSpecialCharsMandatory = true,
+                AlphabetLength = 2, NumericLength = 1, SpecialCharsLength = 1,
+                IsPasswordChangeForcedOnFirstLogin = true, IsPasswordResetForcedPeriodically = true, 
+                ForcePasswordResetDays = 100, NotifyPasswordResetDays = 90,
+                EffectiveFrom = new DateTime(2022, 01, 01), EffectiveTo = null
+            }
+
+        };
+    }
+    private static IEnumerable<SessionPolicy> GetSeedSessionPolicy()
+    {
+        return new List<SessionPolicy>
+        {
+            new SessionPolicy
+            {
+                IsEnabled = true, Duration = 500,
+                EffectiveFrom = new DateTime(2022, 01, 01), EffectiveTo = null
+            }
+        };
+    }
+    private static IEnumerable<UserLockingPolicy> GetSeedUserLockingPolicy()
+    {
+        return new List<UserLockingPolicy>
+        {
+            new UserLockingPolicy
+            {
+                IsLockedOnNoLoginActivity = true, NoLoginActivityDays = 100, LockedOnFailedLoginAttempts = true,
+                NumberOfFailedLoginAttempts = 10, FailedLoginAttemptsDuration = 100, FailedLoginLockedDuration = 120,
+                UnlockedOnByAdmin = true, UnlockedOnByAdminDuration = 120,
+                EffectiveFrom = new DateTime(2022, 01, 01), EffectiveTo = null
+            }
         };
     }
     private static IEnumerable<EmailType> GetSeedEmailTypes()

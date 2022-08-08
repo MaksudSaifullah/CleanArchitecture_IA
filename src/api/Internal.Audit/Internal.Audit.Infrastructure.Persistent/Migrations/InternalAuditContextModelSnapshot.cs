@@ -1379,6 +1379,9 @@ namespace Internal.Audit.Infrastructure.Persistent.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("Name")
+                        .IsUnique();
+
                     b.ToTable("Designation", "Common");
                 });
 
@@ -2012,6 +2015,12 @@ namespace Internal.Audit.Infrastructure.Persistent.Migrations
                         .HasColumnType("datetime2");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("Code")
+                        .IsUnique();
+
+                    b.HasIndex("Name")
+                        .IsUnique();
 
                     b.ToTable("Country", "common");
                 });

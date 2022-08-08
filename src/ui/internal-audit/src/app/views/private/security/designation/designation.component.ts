@@ -2,6 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { DataTableDirective } from 'angular-datatables';
 import { Subject } from 'rxjs';
+import { CommonResponseInterface } from 'src/app/core/interfaces/common-response.interface';
 import { paginatedResponseInterface } from 'src/app/core/interfaces/paginated.interface';
 import { designation } from 'src/app/core/interfaces/security/designation.interface';
 import { DatatableService } from 'src/app/core/services/datatable.service';
@@ -79,17 +80,27 @@ export class DesignationComponent implements OnInit {
       if(this.designationForm.valid){        
         if(this.formService.isEdit(this.designationForm.get('id') as FormControl)){
           this.http.put('designation',this.designationForm.value,null).subscribe(x=>{
-            localmodalId.visible = false;
-            this.dataTableService.redraw(this.datatableElement);
-            this.AlertService.success('Designation Updated Successfully');
-
+            let resp = x as CommonResponseInterface;
+            if(resp.success){
+              this.formService.onSaveSuccess(localmodalId,this.datatableElement);
+              this.AlertService.success('Designation Updated Successfully');
+            }
+            else{
+              this.AlertService.errorDialog('Unsuccessful', 'Duplicate Value Or Other Error');
+            }
           });
         }
         else{
           this.http.post('designation',this.designationForm.value).subscribe(x=>{
-            localmodalId.visible = false;
-            this.dataTableService.redraw(this.datatableElement);
-            this.AlertService.success('Designation Saved Successfully');
+            let resp = x as CommonResponseInterface;
+            if(resp.success){
+              localmodalId.visible = false;
+              this.dataTableService.redraw(this.datatableElement);
+              this.AlertService.success('Designation Saved Successfully');
+            }
+            else{
+              this.AlertService.errorDialog('Unsuccessful', 'Duplicate Value Or Other Error');
+            }  
           });
         }
       }

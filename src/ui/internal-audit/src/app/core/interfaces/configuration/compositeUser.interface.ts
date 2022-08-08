@@ -4,6 +4,7 @@ export interface compositeUser {
       password : string
       userName : string
       entity : string
+      entityCount: number
       employeeName : string
       userRole : string
       designation : string

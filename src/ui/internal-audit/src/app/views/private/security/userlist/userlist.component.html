@@ -46,6 +46,7 @@
                   <thead>
                     <tr>
                       <th>User Name</th>
+                      <th>User Level</th>
                       <th>Entity</th>
                       <th>Employee Name</th>
                       <th>User Role</th>
@@ -59,6 +60,7 @@
                   <tbody *ngIf="compositeUsers?.length != 0">
                     <tr *ngFor="let user of compositeUsers">
                       <td>{{ user.userName }}</td>
+                      <td>{{ user.entityCount>1?"Global":"Country" }}</td>
                       <td>{{ user.entity }}</td>
                       <td>{{ user.employeeName }}</td>
                       <td>{{ user.userRole }}</td>
@@ -71,7 +73,7 @@
                           <button type="button" class="btn btn-secondary btnEditColor" [routerLink]="['/security/userRegistration',user.id]">
                             <svg cIcon name="cilPencil" size="md" title="Edit Button icon"></svg>
                           </button>
-                          <button type="button" class="btn btn-danger btnDeleteColor" (click)="lockUser(user.id)">
+                          <button type="button" class="btn btn-danger btnDeleteColor" [disabled]="user.isAccountLocked" (click)="lockUser(user.id)">
                             <svg cIcon name="cilUserX" size="md" title="Delete Button Icon"></svg>
                           </button>
                         </div>

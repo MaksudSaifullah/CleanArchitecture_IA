@@ -28,8 +28,12 @@ public class UpdateCountryCommandHandler : IRequestHandler<UpdateCountryCommand,
         var country = await _countryRepository.Get(request.Id);
         var mappedCountry = _mapper.Map(request,country);
         var updatedCountry =  await _countryRepository.Update(mappedCountry);
-        var rowsAffected = await _unitOfWork.CommitAsync();
-        return new UpdateCountryResponseDTO(updatedCountry.Id, rowsAffected > 0, rowsAffected > 0 ? "Country Updated Successfully!" : "Error while updating country!");
+        var rowsAffected = await _unitOfWork.CommitAsyncwithErrorMsg();
+        if (rowsAffected.Item1 == -1)
+        {
+            return new UpdateCountryResponseDTO(updatedCountry.Id, false, rowsAffected.Item2);
+        }
+        return new UpdateCountryResponseDTO(updatedCountry.Id, rowsAffected.Item1 > 0, rowsAffected.Item1 > 0 ? "Country Updated Successfully!" : "Error while updating country!");
     }
 }
 

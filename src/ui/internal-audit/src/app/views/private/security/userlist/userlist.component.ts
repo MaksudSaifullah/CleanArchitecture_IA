@@ -92,7 +92,7 @@ export class UserlistComponent implements OnInit {
 
   lockUser(id:string){
     const that = this;
-    this.AlertService.confirmDialog().then(res =>{
+    this.AlertService.confirmDialogForLockUser().then(res =>{
       if(res.isConfirmed){
           this.http.post('userlist/LockUser' ,{"id":id,"IsAccountLocked":true}).subscribe(response=>{
           this.AlertService.successDialog('Locked','Account Locked successfully.');

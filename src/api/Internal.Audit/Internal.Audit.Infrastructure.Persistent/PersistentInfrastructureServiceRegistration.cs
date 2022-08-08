@@ -72,6 +72,8 @@ using Internal.Audit.Application.Contracts.Persistent.AuditSchedules;
 using Internal.Audit.Infrastructure.Persistent.Repositories.AuditSchedules;
 using Internal.Audit.Application.Contracts.Persistent.AuditSchedulesParticipants;
 using Internal.Audit.Infrastructure.Persistent.Repositories.AuditSchedulesParticipants;
+using Internal.Audit.Application.Contracts.Persistent.Issues;
+using Internal.Audit.Infrastructure.Persistent.Repositories.Issues;
 
 namespace Internal.Audit.Infrastructure.Persistent;
 
@@ -189,6 +191,9 @@ public static class PersistentInfrastructureServiceRegistration
 
         services.AddScoped<IAuditScheduleParticipantsCommandRepository, AuditScheduleparticipantsCommandRepository>();
         services.AddScoped<IAuditScheduleParticipantsQueryRepository>(s => new AuditScheduleParticipantsQueryRepository(configuration.GetConnectionString("InternalAuditDb")));
+
+        services.AddScoped<IIssueCommandRepository, IssueCommandRepository>();
+        services.AddScoped<IIssueQueryRepository>(s => new IssueQueryRepository(configuration.GetConnectionString("InternalAuditDb")));
 
         return services;
     }

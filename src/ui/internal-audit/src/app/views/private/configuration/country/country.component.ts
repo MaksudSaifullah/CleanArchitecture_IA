@@ -75,7 +75,7 @@ export class CountryComponent implements OnInit {
               let resp = x as CommonResponseInterface;
               if(resp.success){
                 this.formService.onSaveSuccess(localmodalId,this.datatableElement);
-                this.AlertService.success('Country Saved Successfully');
+                this.AlertService.success('Country Updated Successfully');
               }
               else{
                 this.AlertService.errorDialog('Unsuccessful', 'Duplicate Value ');

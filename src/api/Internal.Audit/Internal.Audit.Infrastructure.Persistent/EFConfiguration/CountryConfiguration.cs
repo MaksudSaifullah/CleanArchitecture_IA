@@ -14,6 +14,7 @@ namespace Internal.Audit.Infrastructure.Persistent.EFConfiguration
         {
             base.Configure(builder);
             builder.HasIndex(c=>c.Name).IsUnique();
+            builder.HasIndex(c => c.Code).IsUnique();
         }
     }
 }

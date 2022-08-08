@@ -14,6 +14,7 @@ import { IconModule } from '@coreui/icons-angular';
 import { RiskAssessmentComponent } from './risk-assessment/risk-assessment.component';
 import { AuditFrequencyComponent } from './audit-frequency/audit-frequency.component';
 import { AuditComponent } from './audit/audit.component';
+import { AuditScheduleComponent } from './audit-schedule/audit-schedule.component';
 import { IssueComponent } from './issue/issue.component';
 
 
@@ -25,7 +26,8 @@ import { IssueComponent } from './issue/issue.component';
     AuditFrequencyComponent,
 
     AuditComponent,
-      IssueComponent
+    AuditScheduleComponent,
+    IssueComponent
   ],
   imports: [
     CommonModule,

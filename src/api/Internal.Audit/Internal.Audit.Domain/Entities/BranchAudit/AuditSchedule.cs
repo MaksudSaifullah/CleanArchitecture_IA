@@ -17,6 +17,11 @@ public class AuditSchedule : EntityBase
     [Required]
     public DateTime ScheduleEndDate { get; set; }
    
+    [MaxLength(10)]
+    public string? ScheduleId { get; set; }
+
+    public int ScheduleState { get; set; } = -1;
+
     //[ForeignKey("AuditPlanId")]
     //public virtual AuditPlan AuditPlan { get; set; } = null!;
 

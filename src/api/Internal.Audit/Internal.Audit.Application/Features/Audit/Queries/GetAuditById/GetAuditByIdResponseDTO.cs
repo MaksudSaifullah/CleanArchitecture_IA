@@ -11,7 +11,7 @@ namespace Internal.Audit.Application.Features.Audit.Queries.GetAuditById
         public Guid Id { get; set; }
         public Guid CountryId { get; set; }
         public Guid AuditTypeId { get; set; }
-        public string PlanId { get; set; }
+        public Guid AuditPlanId { get; set; }
         public string AuditId { get; set; }
         public Int32 Year { get; set; }
         public string AuditName { get; set; }

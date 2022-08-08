@@ -29,9 +29,13 @@ public class AddCountryCommandHandler : IRequestHandler<AddCountryCommand, AddCo
     {
         var country = _mapper.Map<Country>(request);
         var newCountry = await _countryRepository.Add(country);
-        var rowsAffected = await _unitOfWork.CommitAsync();      
+        var rowsAffected = await _unitOfWork.CommitAsyncwithErrorMsg();
+        if (rowsAffected.Item1==-1)
+        {
+            return new AddCountryResponseDTO(newCountry.Id, false, rowsAffected.Item2);
+        }
 
-        return new AddCountryResponseDTO(newCountry.Id, rowsAffected > 0, rowsAffected > 0 ? "Country Added Successfully!" : "Error while creating country!");
+        return new AddCountryResponseDTO(newCountry.Id, rowsAffected.Item1 > 0, rowsAffected.Item1 > 0 ? "Country Added Successfully!" : "Error while creating country!");
     }
 
 }

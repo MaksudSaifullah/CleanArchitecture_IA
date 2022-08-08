@@ -27,25 +27,24 @@ public class WorkPaperQueryRepository : QueryRepositoryBase<CompositeWorkPaper>,
     }
     public async Task<CompositeWorkPaper> GetById(Guid id)
     {
-        var query = @"SELECT ap.[Id]
-      ,ap.[RiskAssessmentId]
-      ,ra.[AssessmentCode]
-      ,ap.[PlanCode]
-	  ,cnt.Id As CountryId
-	  ,cvt.Id As AuditTypeId
-	  ,cnt.Name As CountryName
-	  ,cvt.Text As AuditTypeName
-      ,ap.PlanningYearId
-	  ,cvta.Text As YearName
-      ,ap.[AssessmentFrom]
-      ,ap.[AssessmentTo]
-      ,ap.[IsDeleted]
-  FROM [BranchAudit].[AuditPlan] AS ap
-  Inner Join [BranchAudit].[RiskAssessment] as ra on ap.RiskAssessmentId = ra.Id
-  Inner Join [common].[Country] as cnt on ra.CountryId = cnt.Id
-  Inner Join [Config].[CommonValueAndType] as cvt on ra.AuditTypeId = cvt.Id
-  Inner Join [Config].[CommonValueAndType] as cvta on ap.PlanningYearId = cvta.Id
-  WHERE  ap.[Id] = @id AND ap.IsDeleted = 0 ";
+        var query = @"SELECT wp.[Id]
+      ,wp.[WorkPaperCode]
+	  ,th.Name
+      ,wp.[TopicHeadId]
+      ,wp.[SampleName]
+	  ,cvtsm.Text As SampleMonth
+      ,wp.[SampleMonthId]
+	  ,cvttc.Text As TestingConclusion
+      ,wp.[TestingConclusionId]
+	  ,dcmnt.Name As DocumentName
+      ,wp.[DocumentId]
+      ,wp.[CommonValueAndTypeId]
+  FROM [BranchAudit].[WorkPaper] as wp
+  Inner Join BranchAudit.TopicHead th on wp.TopicHeadId = th.Id
+  Inner Join Config.CommonValueAndType cvtsm on wp.SampleMonthId = cvtsm.Id
+  Inner Join Config.CommonValueAndType cvttc on wp.TestingConclusionId = cvttc.Id
+  Inner Join common.Document dcmnt on wp.DocumentId = dcmnt.Id
+  WHERE  wp.[Id] = @id AND wp.IsDeleted = 0 ";
         var parameters = new Dictionary<string, object> { { "id", id } };
 
         return await Single(query, parameters);

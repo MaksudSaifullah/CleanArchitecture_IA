@@ -25,6 +25,12 @@ public class InternalAuditContextSeed
             context.CommonValueAndTypes.AddRange(GetInitialCommonvalueAndType());
             await context.SaveChangesAsync();
         }
+        if (!context.EmailTypes.Any())
+        {
+            context.EmailTypes.AddRange(GetSeedEmailTypes());
+            await context.SaveChangesAsync();
+        }
+    }
         if ( context.CommonValueAndTypes.Count(x => x.Type == "RISKRATINGNAME") == 3)
         {
             context.CommonValueAndTypes.AddRange(RiskRatingNewTypes());
@@ -41,6 +47,21 @@ public class InternalAuditContextSeed
                 UserName = "Admin", Password = "@dmin123", IsPasswordExpired = false, IsEnabled = true, IsDeleted = false,
                 IsAccountExpired = false, IsAccountLocked = false
             }
+
+        };
+    }
+    private static IEnumerable<EmailType> GetSeedEmailTypes()
+    {
+        return new List<EmailType>
+        {
+            new EmailType
+            {
+                Name = "Commencement Letter (Branch Audit)", Status = true, CreatedBy="system",CreatedOn=DateTime.Now, IsDeleted = false
+            },
+            new EmailType
+            {
+                Name = "Commencement Letter (Process & Control)", Status = true, CreatedBy="system",CreatedOn=DateTime.Now, IsDeleted = false
+            },
 
         };
     }

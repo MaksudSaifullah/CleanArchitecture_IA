@@ -29,10 +29,14 @@ public class AddAuditScheduleCommandHandler : IRequestHandler<AddAuditScheduleCo
     }
     public async Task<AddAuditScheduleResponseDTO> Handle(AddAuditScheduleCommand request, CancellationToken cancellationToken)
     {
-        var gid= Guid.NewGuid();
-        request.Id=gid;
+        var gid = Guid.NewGuid();
+        request.Id = gid;
+
+        var maxScheduleIdresult = await _auditscheduleRepository.Get(x => x.AuditCreationId == request.AuditCreationId);
+        var existsCount = maxScheduleIdresult.Count();
 
         var scheduleSet = _mapper.Map<AuditSchedule>(request);
+        scheduleSet.ScheduleId = request.ScheduleEndDate.Year.ToString() + (existsCount + 1).ToString();
         await _auditscheduleRepository.Add(scheduleSet);
 
         //request.AuditScheduleParticipants.ForEach(x => x.AuditScheduleId = gid);

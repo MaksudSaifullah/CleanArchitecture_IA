@@ -1,22 +1,22 @@
-import { Component, OnInit, QueryList, ViewChildren } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Component, OnInit, QueryList, ViewChild } from '@angular/core';
 import { DataTableDirective } from 'angular-datatables';
-import { Subject } from 'rxjs';
-import { riskAssessmentOverdue } from 'src/app/core/interfaces/branch-audit/riskAssessment.interface';
-import { DatatableService } from 'src/app/core/services/datatable.service';
+import { riskAssessment, riskAssessmentOverdue } from 'src/app/core/interfaces/branch-audit/riskAssessment.interface';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { FormService } from 'src/app/core/services/form.service';
+import { DatatableService } from 'src/app/core/services/datatable.service';
+import { Subject } from 'rxjs';
 import { country } from 'src/app/core/interfaces/configuration/country.interface';
 import { HttpService } from 'src/app/core/services/http.service';
-import {AlertService} from '../../../../../core/services/alert.service';
+import { AlertService } from '../../../../../core/services/alert.service';
 import { paginatedResponseInterface } from 'src/app/core/interfaces/paginated.interface';
 
 @Component({
-  selector: 'app-staff-turnover',
-  templateUrl: './staff-turnover.component.html',
-  styleUrls: ['./staff-turnover.component.scss']
+  selector: 'app-average-tab',
+  templateUrl: './average-tab.component.html',
+  styleUrls: ['./average-tab.component.scss']
 })
-export class StaffTurnoverComponent implements OnInit {
-  @ViewChildren(DataTableDirective)
+export class AverageTabComponent implements OnInit {
+  @ViewChild(DataTableDirective, { static: false })
   dtElements: QueryList<DataTableDirective> | undefined;
   dtOptions: DataTables.Settings = {};
   riskAssesmentOverdue: riskAssessmentOverdue[] = [];
@@ -26,7 +26,7 @@ export class StaffTurnoverComponent implements OnInit {
   dtTrigger: Subject<any> = new Subject<any>();
   countries: country[] = [];
   Data: Array<any> = [];
-  selectedValue : any[] = [];
+  tableTempData: any;
 
   constructor(private http: HttpService, private fb: FormBuilder, private AlertService: AlertService) {
 
@@ -38,7 +38,6 @@ export class StaffTurnoverComponent implements OnInit {
       AsOnDate: [Date, [Validators.required]],
     });
   }
-
   ngOnInit(): void {
     this.LoadData();
   };
@@ -54,7 +53,7 @@ export class StaffTurnoverComponent implements OnInit {
   LoadData() {
     this.dtOptions = {
       pagingType: 'full_numbers',
-        pageLength: 10,
+        pageLength: 10
     };
     this.http.post('DataSync/getSyncData', Object.assign({}, {
       "startDate": "2022-07-20T04:26:34.237Z",
@@ -68,6 +67,10 @@ export class StaffTurnoverComponent implements OnInit {
         this.riskAssesmentOverdue = resp as riskAssessmentOverdue[];
         this.dtTrigger.next(resp);
       })
+  }
+
+  onConsolidate(): void {
+    this.tableTempData = "abcd";
   }
 
   onSubmit(modalId: any): void {
@@ -94,12 +97,6 @@ export class StaffTurnoverComponent implements OnInit {
 
   LoadDropDownValues() {
     this.LoadCountry();
-  }
-  GetRating(event: any, i : any): void{
-    debugger;
-    if(event.target.value != "null"){
-      this.selectedValue[i] = event.target.value;
-    }
   }
 
 }

@@ -17,5 +17,8 @@ export interface riskAssessmentOverdue {
     slNo: string;
     branchName: string;
     averageOverdueinSLL: string;
+    dataRequestQueueService : {
+        id : any;
+    };
 
 }

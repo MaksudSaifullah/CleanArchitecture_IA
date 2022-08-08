@@ -4,7 +4,7 @@
             <div class="card">
                 <div class="card-header">
                     <div class="fa fa-align-justify">
-                        <button class="btn btn-success"> Save </button>
+                        <button class="btn btn-success" (click)="onSubmit()"> Save </button>
                     </div>
                 </div>
                 <div class="card-body">
@@ -32,7 +32,7 @@
                                     <label for="AsOnDate">Effective From</label>
                                 </div>
                             </div>
-                            <button cButton class="btn btn-primary btnSaveColor mt-4 me-1">Pull Data From AMBS</button>
+                            <button cButton class="btn btn-primary btnSaveColor mt-4 me-1" (click)="LoadData()">Pull Data From AMBS</button>
                         </form>
                     </div>
                 </div>
@@ -40,40 +40,31 @@
             <br>
 
             <div class="row overflow-auto">
-                <table datatable [dtOptions]="dtOptions" class="table table-bordered row-border datatableStyle hover">
+                <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="table table-bordered row-border datatableStyle hover" visibility="false">
                     <thead>
                         <tr>
-                            <th>Risk Assessment Code</th>
-                            <th>Country</th>
-                            <th>Audit Type</th>
-                            <th>Effective From</th>
-                            <th>Effective To</th>
-                            <th>Action</th>
+                            <th>SL No.</th>
+                            <th>Branch Name</th>
+                            <th>Average Overdue in  SLL</th>
+                            <th>Average Overdue in *$</th>
+                            <th>Rating</th>
+                            <th>Score</th>
                         </tr>
                     </thead>
                     <tbody *ngIf="riskAssesmentOverdue?.length != 0">
-                        <tr *ngFor="let riskAssessment of riskAssesmentOverdue">
-                            <td>{{ riskAssessment.slNo }}</td>
+                        
+                        <tr *ngFor="let riskAssessment of riskAssesmentOverdue; let i = index">
+                            <td> {{i + 1}} </td>
                             <td>{{ riskAssessment.branchName }}</td>
-                            <td>{{ riskAssessment.effectiveFrom | date:'medium' }}</td>
-                            <td>{{ riskAssessment.effectiveTo | date:'medium' }}</td>
-                            <td>
-                                <div class="btn-group" role="group" aria-label="Basic example">
-                                    <button type="button" class="btn btn-secondary btnEditColor"
-                                        (click)="edit(verticallyCenteredModal,riskAssessment)">
-                                        <svg cIcon name="cilPencil" size="md" title="Edit Button icon"></svg>
-                                    </button>
-                                    <button type="button" class="btn btn-danger btnDeleteColor"
-                                        (click)="delete(riskAssessment.id)">
-                                        <svg cIcon name="cilTrash" size="md" title="Delete Button Icon"></svg>
-                                    </button>
-                                </div>
-                            </td>
+                            <td>{{ riskAssessment.amount }}</td>
+                            <td>{{ riskAssessment.amountConverted }}</td>
+                            <td> {{ riskAssessment.riskCriteria.commonValueRatingType.text }} </td>
+                            <td> {{ riskAssessment.riskCriteria.commonValueRatingType.value }} </td>
                         </tr>
                     </tbody>
                     <tbody *ngIf="riskAssesmentOverdue?.length == 0">
                         <tr>
-                            <td colspan="5" class="no-data-available">No data!</td>
+                            <td colspan="5" class="no-data-available">Please pull data!</td>
                         </tr>
                     </tbody>
                 </table>

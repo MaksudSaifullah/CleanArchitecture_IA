@@ -30,7 +30,14 @@ public class InternalAuditContextSeed
             context.EmailTypes.AddRange(GetSeedEmailTypes());
             await context.SaveChangesAsync();
         }
+        if (context.CommonValueAndTypes.Count(x => x.Type == "RISKRATINGNAME") == 3)
+        {
+            context.CommonValueAndTypes.AddRange(RiskRatingNewTypes());
+            await context.SaveChangesAsync();
+        }
     }
+        
+    
 
     private static IEnumerable<User> GetSeedUsers()
     {
@@ -184,6 +191,17 @@ public class InternalAuditContextSeed
             },new CommonValueAndType
             {
                 IsActive = true,CreatedBy="admin",CreatedOn=DateTime.Now,Type="RISKRATINGNAME",SubType="",Value=3,Text="Disbursement",SortOrder=30,
+            }
+            ,new CommonValueAndType
+            {
+                IsActive = true,CreatedBy="admin",CreatedOn=DateTime.Now,Type="RISKRATINGNAME",SubType="",Value=4,Text="Lo productivity",SortOrder=40,
+            }
+            ,new CommonValueAndType
+            {
+                IsActive = true,CreatedBy="admin",CreatedOn=DateTime.Now,Type="RISKRATINGNAME",SubType="",Value=5,Text="StaffTurn Over",SortOrder=50,
+            },new CommonValueAndType
+            {
+                IsActive = true,CreatedBy="admin",CreatedOn=DateTime.Now,Type="RISKRATINGNAME",SubType="",Value=6,Text="Fraud ",SortOrder=60,
             },new CommonValueAndType
             {
                 IsActive = true,CreatedBy="admin",CreatedOn=DateTime.Now,Type="LOPRODUCTIVITY",SubType="",Value=1,Text="Not Available",SortOrder=10,
@@ -416,4 +434,22 @@ public class InternalAuditContextSeed
         };
     }
     #endregion
+
+    private static IEnumerable<CommonValueAndType> RiskRatingNewTypes()
+    {
+        return new List<CommonValueAndType>
+        {
+            new CommonValueAndType
+            {
+                IsActive = true,CreatedBy="admin",CreatedOn=DateTime.Now,Type="RISKRATINGNAME",SubType="",Value=4,Text="Lo productivity",SortOrder=40,
+            }
+            ,new CommonValueAndType
+            {
+                IsActive = true,CreatedBy="admin",CreatedOn=DateTime.Now,Type="RISKRATINGNAME",SubType="",Value=5,Text="StaffTurn Over",SortOrder=50,
+            },new CommonValueAndType
+            {
+                IsActive = true,CreatedBy="admin",CreatedOn=DateTime.Now,Type="RISKRATINGNAME",SubType="",Value=6,Text="Fraud ",SortOrder=60,
+            }
+        };
+      }
 }

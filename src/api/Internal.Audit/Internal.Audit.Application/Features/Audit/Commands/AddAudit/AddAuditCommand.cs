@@ -10,10 +10,10 @@ namespace Internal.Audit.Application.Features.Audit.Commands.AddAudit
     public class AddAuditCommand : IRequest<AddAuditResponseDTO>
     {
         public Guid AuditTypeId { get; set; }
-        public Guid CountryId { get; set; }
+       // public Guid CountryId { get; set; }
         public string Year { get; set; }
         public string AuditName { get; set; }
-        public string PlanId { get; set; }
+        public Guid AuditPlanId{ get; set; }
         public string AuditId { get; set; }
         public DateTime AuditPeriodFrom { get; set; }
         public DateTime AuditPeriodTo { get; set; }

@@ -10,6 +10,9 @@ import { questionnaire } from 'src/app/core/interfaces/branch-audit/questionnair
 import { testStep } from 'src/app/core/interfaces/branch-audit/testStep.interface';
 import { country } from 'src/app/core/interfaces/configuration/country.interface';
 import { paginatedResponseInterface } from 'src/app/core/interfaces/paginated.interface';
+import { formatDate } from '@angular/common';
+import { CutomvalidatorService } from 'src/app/core/services/cutomvalidator.service'
+import { CommonResponseInterface } from 'src/app/core/interfaces/common-response.interface';
 
 @Component({
   selector: 'app-topic-head',
@@ -41,7 +44,7 @@ export class TopicHeadComponent implements OnInit  {
   teststeps: testStep[] = [];
   questionnaireDropdownList: questionnaire[] = [];
 
-  constructor(private http: HttpService, private fb: FormBuilder, private AlertService: AlertService) 
+  constructor(private http: HttpService, private fb: FormBuilder, private AlertService: AlertService, private customValidator: CutomvalidatorService) 
   {
     this.loadDropDownValues();
     this.LoadTopicHeadDropdownList();
@@ -54,18 +57,18 @@ export class TopicHeadComponent implements OnInit  {
       effectiveTo: [Date, [Validators.required]],
       description: ['', [Validators.maxLength(300)]],
       // isActive: [''],
-    });
+    }, { validator: this.customValidator.checkEffectiveDateToAfterFrom('effectiveFrom', 'effectiveTo') });
     this.searchForm = this.fb.group({
         searchTerm: ['']
     });
     this.questionnaireForm = this.fb.group({
       id: [''],
-      countryId: [null],
+      countryId: [null,[Validators.required, Validators.pattern("^(?!null$).*$")]],
       topicHeadId: [null,[Validators.required, Validators.pattern("^(?!null$).*$")]],
       effectiveFrom: [, [Validators.required]],
       effectiveTo: [, [Validators.required]],
       question: ['', [Validators.required, Validators.minLength(5), Validators.maxLength(500)]],      
-    });
+    }, { validator: this.customValidator.checkEffectiveDateToAfterFrom('effectiveFrom', 'effectiveTo') });
     this.searchForm2 = this.fb.group({
         searchTerm2: ['']
     });
@@ -77,9 +80,8 @@ export class TopicHeadComponent implements OnInit  {
       questionnaireId: [null,[Validators.required, Validators.pattern("^(?!null$).*$")]],
       effectiveFrom: [, [Validators.required]],
       effectiveTo: [, [Validators.required]],
-      testStepDetails: ['', [Validators.required, Validators.minLength(5), Validators.maxLength(300)]],      
-
-    });
+      testStepDetails: ['', [Validators.required, Validators.minLength(5), Validators.maxLength(300)]],
+    }, { validator: this.customValidator.checkEffectiveDateToAfterFrom('effectiveFrom', 'effectiveTo') });
     this.searchForm3 = this.fb.group({
       searchTerm3: ['']
   });
@@ -159,7 +161,8 @@ export class TopicHeadComponent implements OnInit  {
         this.topicHeadForm.setValue({ id: response.id,
           countryId: response.countryId,
           name: response.name, 
-          effectiveFrom: response.effectiveFrom, effectiveTo: response.effectiveTo, 
+          effectiveFrom: formatDate(response.effectiveFrom, 'yyyy-MM-dd', 'en'), 
+          effectiveTo: formatDate(response.effectiveTo, 'yyyy-MM-dd', 'en'),
           description: response.description });
       });
     localmodalId.visible = true;
@@ -186,7 +189,13 @@ export class TopicHeadComponent implements OnInit  {
     this.AlertService.confirmDialog().then(res => {
       if (res.isConfirmed) {
         this.http.delete('topicHead/id?Id=' + id, {}).subscribe(response => {
-          this.AlertService.successDialog('Deleted', 'Topic Head deleted successfully.');
+          let resp = response as CommonResponseInterface;
+          if(resp.success){
+            this.AlertService.successDialog('Deleted', resp.message);
+          }
+          else{
+            this.AlertService.errorDialog('Unsuccessful', resp.message);
+          }
           this.ReloadAllDataTable();
         })
       }
@@ -226,10 +235,10 @@ export class TopicHeadComponent implements OnInit  {
   }
   onSubmitQuestionnaire(modalId:any):void 
   {
-    console.log('-------------------------------------------');
-    console.log(this.questionnaireForm.get('effectiveFrom'));
-    console.log(this.questionnaireForm.get('effectiveFrom')?.value);
-    console.log('-------------------------------------------');
+    // console.log('-------------------------------------------');
+    // console.log(this.questionnaireForm.get('effectiveFrom'));
+    // console.log(this.questionnaireForm.get('effectiveFrom')?.value);
+    // console.log('-------------------------------------------');
     const localmodalId = modalId;
     if (this.questionnaireForm.valid ){
       if(this.formService.isEdit(this.questionnaireForm.get('id') as FormControl)){
@@ -253,32 +262,38 @@ export class TopicHeadComponent implements OnInit  {
       return;
     }    
   }
-  onChangeTopic(e: any){
-    const topic = this.questionnaireForm.get('topicHeadId')?.value;
-    console.log(topic);
-    this.http
-      .getById('topichead', 'id?Id='+ topic)
-      .subscribe(res => {
-        const response = res as topicHead;      
+  // onChangeTopic(e: any){
+  //   const topic = this.questionnaireForm.get('topicHeadId')?.value;
+  //   console.log(topic);
+  //   this.http
+  //     .getById('topichead', 'id?Id='+ topic)
+  //     .subscribe(res => {
+  //       const response = res as topicHead;      
 
-        this.questionnaireForm.patchValue({
-          countryId : response.countryId,
-        });    
-        // this.topicHeadForm.setValue({ id: response.id,
-        //   countryId: response.countryId,
-        //   name: response.name, 
-        //   effectiveFrom: response.effectiveFrom, effectiveTo: response.effectiveTo, 
-        //   description: response.description });
-      });
-      console.log(this.questionnaireForm.get('countryId')?.value);
-  }
+  //       this.questionnaireForm.patchValue({
+  //         countryId : response.countryId,
+  //       });    
+  //       // this.topicHeadForm.setValue({ id: response.id,
+  //       //   countryId: response.countryId,
+  //       //   name: response.name, 
+  //       //   effectiveFrom: response.effectiveFrom, effectiveTo: response.effectiveTo, 
+  //       //   description: response.description });
+  //     });
+  //     console.log(this.questionnaireForm.get('countryId')?.value);
+  // }
   deleteQuestionnaire(id: string) {
     const that = this;
     this.AlertService.confirmDialog().then(res => {
       if (res.isConfirmed) {
         this.http.delete('questionnaire/id?Id=' + id, {}).subscribe(response => {
-          this.AlertService.successDialog('Deleted', 'Questionnaire deleted successfully.');
-          this.ReloadAllDataTable();
+          let resp = response as CommonResponseInterface;
+          if(resp.success){
+            this.AlertService.successDialog('Deleted', resp.message);
+          }
+          else{
+            this.AlertService.errorDialog('Unsuccessful', resp.message);
+          }
+          this.ReloadAllDataTable();          
         })
       }
     });
@@ -289,15 +304,16 @@ export class TopicHeadComponent implements OnInit  {
     //console.log(questionnaire);
     this.http
       .getById('questionnaire', 'id?Id='+ questionnaire.id)
-      .subscribe(res => {
-        const response = res as questionnaire;  
-        console.log(response);    
-        this.questionnaireForm.setValue({ id: response.id,
+      .subscribe(res => {        
+        const response = res as questionnaire;         
+        this.onChangeCountry(response.countryId == null ? "null" : response.countryId?.toString(), true);          
+        this.questionnaireForm.patchValue({ id: response.id,
           countryId: response.countryId,
           topicHeadId: response.topicHeadId,
           question: response.question, 
-          effectiveFrom: response.effectiveFrom, 
-          effectiveTo: response.effectiveTo });
+          effectiveFrom: formatDate(response.effectiveFrom, 'yyyy-MM-dd', 'en'), 
+          effectiveTo: formatDate(response.effectiveTo , 'yyyy-MM-dd', 'en')
+        });       
       });
     localmodalId.visible = true;
 
@@ -360,22 +376,51 @@ LoadTestStepData(){
  editTestStep(modalId: any, testStep: any):void
  {
   const localmodalId = modalId;
-    console.log(testStep.value);
+    //console.log(testStep.value);
     this.http
       .getById('test-step', 'id?Id='+ testStep.id)
       .subscribe(res => {
         const response = res as testStep;  
-        console.log(response);    
+        console.log(response);
+        //this.onChangeCountry("null")
+        this.onChangeCountry(response.countryId == null ? "null" : response.countryId?.toString(),true);
+        this.onChangeTopicHead(response.topicHeadId == null? "null" : response.topicHeadId?.toString());
+        console.log(this.topicheadDropdownList)
+        console.log(response.topicHeadId)
         this.testStepForm.patchValue({ id: response.id,
           countryId: response.countryId,
           topicHeadId: response.topicHeadId,
           questionnaireId: response.questionnaireId,
           testStepDetails: response.testStepDetails,
-          effectiveFrom: response.effectiveFrom, 
-          effectiveTo: response.effectiveTo });
+          effectiveFrom: formatDate(response.effectiveFrom, 'yyyy-MM-dd', 'en'), 
+          effectiveTo: formatDate(response.effectiveTo, 'yyyy-MM-dd', 'en')
+        });
+
       });
     localmodalId.visible = true;
  }
+
+//  edit(modalId: any, topicHead: any): void {
+//   const localmodalId = modalId;
+//   // console.log("topichead");
+//   // console.log(topicHead);
+//   // console.log("topichead");
+//   this.http
+//     .getById('topichead', 'id?Id='+ topicHead.id)
+//     .subscribe(res => {
+//       const response = res as topicHead;      
+//       this.topicHeadForm.setValue({ id: response.id,
+//         countryId: response.countryId,
+//         name: response.name, 
+//         effectiveFrom: formatDate(response.effectiveFrom, 'yyyy-MM-dd', 'en'), 
+//         effectiveTo: formatDate(response.effectiveTo, 'yyyy-MM-dd', 'en'),
+//         description: response.description });
+//     });
+//   localmodalId.visible = true;
+// }
+
+
+
  deleteTestStep(id: string) 
  {
   const that = this;
@@ -389,26 +434,38 @@ LoadTestStepData(){
     });
 
  }
-  onChangeCountry(filter:string):void
+  onChangeCountry(filter:string,isSystem:boolean=false):void
   {
-    if(filter=="null"){
-      this.topicheadDropdownList = [];
-      this.questionnaireDropdownList = [];
-    }
-    else{
+    this.topicheadDropdownList = [];
+    if(filter=="null"){           
+     // this.topicheadDropdownList = [];
+     //this.questionnaireDropdownList = [];
+
+      this.questionnaireForm.patchValue({topicHeadId:"null"});
+      this.testStepForm.patchValue({topicHeadId:"null"});      
+    }    
+    else{     
       this.http.post('topicHead/filter', {FilterName: 'CountryId', FilterValue: filter}).subscribe(resp => {
         this.topicheadDropdownList = resp as topicHead[];
       })
+      if(!isSystem){
+        this.testStepForm.patchValue({topicHeadId:"null",questionnaireId:"null"});
+        this.questionnaireForm.patchValue({topicHeadId:"null"});
+      }
     }
+    this.onChangeTopicHead("null");
   }
   onChangeTopicHead(filter:string):void
   {
     if(filter=="null"){
       this.questionnaireDropdownList = [];
+      this.testStepForm.patchValue({questionnaireId:"null"});
     }
-    this.http.post('questionnaire/filter', {FilterName: 'TopicHeadId', FilterValue: filter}).subscribe(resp => {
-      this.questionnaireDropdownList = resp as questionnaire[];
-    })
+    else{
+      this.http.post('questionnaire/filter', {FilterName: 'TopicHeadId', FilterValue: filter}).subscribe(resp => {
+        this.questionnaireDropdownList = resp as questionnaire[];
+      })
+    }
   }
 
 }

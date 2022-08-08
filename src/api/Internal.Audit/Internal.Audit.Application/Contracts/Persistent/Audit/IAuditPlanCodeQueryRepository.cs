@@ -9,6 +9,6 @@ namespace Internal.Audit.Application.Contracts.Persistent.Audit
 {
     public interface IAuditPlanCodeQueryRepository: IAsyncQueryRepository<AuditPlanCode>
     {
-        Task<(long, IEnumerable<AuditPlanCode>)> GetAll(int pageSize, int pageNumber);
+        Task<(long, IEnumerable<AuditPlanCode>)> GetAll(Guid countryId,Guid auditTypeId, int pageSize, int pageNumber);
     }
 }

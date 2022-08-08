@@ -12,6 +12,8 @@ namespace Internal.Audit.Domain.CompositeEntities.BranchAudit
         public Guid Id { get; set; }
         public Guid CountryId { get; set; }
         public Guid AuditTypeId { get; set; }
+        public Guid AuditPlanId { get; set; }
+        public Guid AuditScheduleId { get; set; }
         public string PlanId { get; set; }
         public string AuditId { get; set; }
         public Int32 Year { get; set; }

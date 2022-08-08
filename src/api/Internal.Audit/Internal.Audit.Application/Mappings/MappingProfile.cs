@@ -142,6 +142,12 @@ using Internal.Audit.Application.Features.Branches.Commands.AddBranchCommand;
 using Internal.Audit.Application.Features.Branches.Commands.GetBranchList;
 using Internal.Audit.Application.Features.AmbsDataSyncs.Queries.GetAmbsDataSyncDataByCountryAndDateInfo;
 using Internal.Audit.Application.Features.AuditSchedules.Commands.AddAuditSchedule;
+using Internal.Audit.Application.Features.WorkPapers.Queries.GetWorkPaperList;
+using Internal.Audit.Application.Features.WorkPapers.Queries.GetWorkPaperById;
+using Internal.Audit.Application.Features.WorkPapers.Commands.AddWorkPaper;
+using Internal.Audit.Application.Features.WorkPapers.Commands.UpdateWorkPaper;
+using Internal.Audit.Application.Features.WorkPapers.Commands.DeleteWorkPaper;
+using Internal.Audit.Application.Features.AuditSchedules.Queries.GetAuditScheduleList;
 
 namespace Internal.Audit.Application.Mappings;
 
@@ -378,9 +384,20 @@ public class MappingProfile : Profile
 
         CreateMap<AuditSchedule, AddAuditScheduleCommand>().ReverseMap();
 
-        CreateMap<AuditScheduleParticipants, AuditScheduleParticipantsCommand>().ReverseMap();
+        CreateMap<AuditScheduleParticipants, AuditScheduleParticipantsCommand>().ReverseMap(); 
+        CreateMap<AuditScheduleBranch, AuditScheduleBranchCommand>().ReverseMap();
+        CreateMap<CompositAuditSchedule, GetAuditScheduleListResponseDTO>().ReverseMap();
 
-
+        CreateMap<WorkPaper, WorkPaperDTO>().ReverseMap();
+        CreateMap<CompositeWorkPaper, WorkPaperDTO>().ReverseMap();
+        CreateMap<CompositeWorkPaper, WorkPaperByIdDTO>().ReverseMap();
+        CreateMap<WorkPaper, WorkPaperByIdDTO>().ReverseMap();
+        CreateMap<WorkPaper, AddWorkPaperResponseDTO>().ReverseMap();
+        CreateMap<WorkPaper, AddWorkPaperCommand>().ReverseMap();
+        CreateMap<WorkPaper, UpdateWorkPaperResponseDTO>().ReverseMap();
+        CreateMap<WorkPaper, UpdateWorkPaperCommand>().ReverseMap();
+        CreateMap<WorkPaper, DeleteWorkPaperResponseDTO>().ReverseMap();
+        CreateMap<WorkPaper, DeleteWorkPaperCommand>().ReverseMap();
 
     }
 }

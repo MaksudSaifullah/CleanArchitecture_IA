@@ -17,6 +17,7 @@ import { RiskAssessmentViewComponent } from './risk-assessment-view/risk-assessm
 import { OverdueTabComponentComponent } from './risk-assessment-view/overdue-tab/overdue-tab-component';
 import { StaffTurnoverComponent } from './risk-assessment-view/staff-turnover/staff-turnover.component';
 import { AuditComponent } from './audit/audit.component';
+import { AuditScheduleComponent } from './audit-schedule/audit-schedule.component';
 import { AverageTabComponent } from './risk-assessment-view/average-tab/average-tab.component';
 import { CollectionTabComponent } from './risk-assessment-view/collection-tab/collection-tab.component';
 
@@ -35,6 +36,8 @@ import { CollectionTabComponent } from './risk-assessment-view/collection-tab/co
     AuditComponent,
       AverageTabComponent,
       CollectionTabComponent
+    AuditComponent,
+      AuditScheduleComponent
   ],
   imports: [
     CommonModule,

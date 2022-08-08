@@ -22,7 +22,7 @@ namespace Internal.Audit.Application.Features.Audit.Queries.GetAuditPlanCodeList
 
         public async Task<AuditPlanCodePagingDTO> Handle(GetAuditPlanCodeListQuery request, CancellationToken cancellationToken)
         {
-            var (count, result) = await _auditPlanCodeQueryRepository.GetAll(request.pageSize, request.pageNumber);
+            var (count, result) = await _auditPlanCodeQueryRepository.GetAll(request.searchTerm.countryId,request.searchTerm.auditTypeId, request.pageSize, request.pageNumber);
             var auditPlanCodeList = _mapper.Map<IEnumerable<AuditPlanCode>, IEnumerable<GetAuditPlanCodeListResponseDTO>>(result).ToList();
 
             return new AuditPlanCodePagingDTO { Items = auditPlanCodeList, TotalCount = count };

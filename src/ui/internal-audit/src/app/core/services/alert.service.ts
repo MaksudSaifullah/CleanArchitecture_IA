@@ -59,13 +59,20 @@ export class AlertService {
       type?? 'Completed.',
       message?? 'Your operation completed successfully.',
     'success'
-  )
-}
+    )
+  }
 warningDialog(type:string|undefined,message:string|undefined){
   Swal.fire(
     type?? 'Completed.',
     message?? 'Your operation completed successfully.',
   'warning'
-)
-}
+  )
+  }
+  errorDialog(type:string|undefined,message:string|undefined){
+    Swal.fire(
+      type?? 'Unsuccessful.',
+      message?? 'Your operation cannot be completed.',
+    'error'
+    )
+    }
 }

@@ -131,6 +131,10 @@ export const navItems: INavData[] = [
       {
         name: 'Audit Creation',
         url: '/branch-audit/audit'
+      },
+      {
+        name: 'Audit Schedule',
+        url: '/branch-audit/audit-schedule'
       }
     ]
   },

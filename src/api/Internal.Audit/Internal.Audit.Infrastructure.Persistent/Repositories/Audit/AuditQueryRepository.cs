@@ -26,7 +26,10 @@ namespace Internal.Audit.Infrastructure.Persistent.Repositories.Audit
 
         public async Task<CompositAudit> GetById(Guid id)
         {
-            var query = "SELECT [Id],[CountryId],[AuditTypeId],[PlanId],[AuditId], [Year],[AuditName],[AuditPeriodFrom],[AuditPeriodTo] FROM [BranchAudit].[AuditCreation] WHERE Id = @id AND [IsDeleted] = 0";
+            var query = @"SELECT ac.[Id],[CountryId],ac.[AuditTypeId],ap.Id [AuditPlanId],[AuditId], [Year],[AuditName],                           [AuditPeriodFrom],[AuditPeriodTo] 
+                        FROM[BranchAudit].[AuditCreation] ac
+                        INNER JOIN[BranchAudit].AuditPlan ap on ac.AuditPlanId = ap.Id
+                        INNER JOIN[BranchAudit].RiskAssessment ra on ap.RiskAssessmentId = ra.Id WHERE ac.Id = @id AND ac.[IsDeleted] = 0";
             var parameters = new Dictionary<string, object> { { "id", id } };
 
             return await Single(query, parameters);

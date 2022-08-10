@@ -29,7 +29,8 @@
                         <option value="">Select Role</option>
                         <option *ngFor="let role of roles" [value]="role.name"> {{role.name}}</option>
                       </select>
-                      <label class="searchLevel" for="floatingInput">Search by Role</label> 
+                      <!-- <label class="searchLevel" for="floatingInput">Search by Role</label>  -->
+                      <label for="floatingInput" class="dropdownLabel">Designation</label>
                     </div>
                     <div class="col-md-1 mb-2">
                       <button type="button" class="btn btn-secondary mr-1 btn-block searchBtn" data-toggle="modal" (click)="search()">

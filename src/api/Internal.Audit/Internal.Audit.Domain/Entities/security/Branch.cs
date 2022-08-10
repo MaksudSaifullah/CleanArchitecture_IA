@@ -1,4 +1,5 @@
 ﻿using Internal.Audit.Domain.Common;
+using Internal.Audit.Domain.CompositeEntities;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -15,4 +16,6 @@ public class Branch : EntityBase
     public string? BranchName { get; set; }
     [ForeignKey("CountryId")]
     public virtual Country Country { get; set; } = null!;
+    [NotMapped]
+    public virtual EfTotalCount TotalCount { get; set; }
 }

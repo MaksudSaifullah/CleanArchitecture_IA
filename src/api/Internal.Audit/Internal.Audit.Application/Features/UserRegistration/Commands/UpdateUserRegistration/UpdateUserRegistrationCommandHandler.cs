@@ -36,6 +36,37 @@ namespace Internal.Audit.Application.Features.UserRegistration.Commands.UpdateUs
         }
         public async Task<UpdateUserRegistrationResponseDTO> Handle(UpdateUserRegistrationCommand request, CancellationToken cancellationToken)
         {
+            string errorMessage = string.Empty;
+            var checkIftheEmailisOthers = _employeeRepository.Get(x => x.Email == request.Employee.Email && x.UserId != request.User.Id && x.IsDeleted==false);
+            if (checkIftheEmailisOthers.Result.Count() > 0)
+            {
+                errorMessage += "Email already in use ";
+              //  return new UpdateUserRegistrationResponseDTO(request.User.Id, false, "Email already in use");
+            }
+
+          
+            var checkIftheUserNameOthers = _userRepository.Get(x => x.UserName == request.User.UserName && x.IsDeleted == false && x.Id != request.User.Id);
+            if (checkIftheUserNameOthers.Result.Count() > 0)
+            {
+                if (!string.IsNullOrWhiteSpace(errorMessage))
+                {
+                    errorMessage += " , This username already in use ";
+                }
+                else
+                {
+                    errorMessage += "This username already in use ";
+                }
+                //return new UpdateUserRegistrationResponseDTO(Guid.NewGuid(), false, "This username already used");
+
+            }
+            if (!string.IsNullOrWhiteSpace(errorMessage))
+            {
+                return new UpdateUserRegistrationResponseDTO(Guid.NewGuid(), false, errorMessage);
+            }
+
+
+
+
             var user = await _userRepository.Get(request.User.Id);
             if (user == null)
                 return new UpdateUserRegistrationResponseDTO(request.User.Id, false, "Invalid User Id");

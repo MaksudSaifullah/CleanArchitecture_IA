@@ -30,6 +30,8 @@ namespace Internal.Audit.Infrastructure.Persistent.EFConfiguration
                  .WithMany()
                  .HasForeignKey(b => b.RatingTypeId)
                  .OnDelete(DeleteBehavior.NoAction);
+            
+            //builder.HasKey(u => new { u.LikelihoodTypeId, u.ImpactTypeId, u.RatingTypeId, u.EffectiveFrom, u.EffectiveTo });
         }
     }
 }

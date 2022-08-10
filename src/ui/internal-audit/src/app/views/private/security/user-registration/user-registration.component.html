@@ -24,9 +24,9 @@
               <strong>User Information</strong>
             </c-card-header>
             <c-card-body>
-              <p class="text-medium-emphasis small">
+              <!-- <p class="text-medium-emphasis small">
                 Please give all the relevant employee information below :
-              </p>
+              </p> -->
 
               <c-row [gutter]="{g: 2}">
                 <c-col md>
@@ -55,7 +55,7 @@
                 <c-col md>
                   <div cFormFloating>
                     <input cFormControl formControlName="empEmail" name="empEmai" id="empEmail"
-                      placeholder="abc@example.com" type="email" autocomplete="false"/>
+                      placeholder="abc@example.com" type="email" autocomplete="false" autocomplete="off"/>
                     <label cLabel for="empEmail">Email Address</label>
                   </div>
 
@@ -99,7 +99,7 @@
                 <c-col md>
                   <div cFormFloating>
                     <input cFormControl id="floatingInputGrid" placeholder="Give Name" type="text" value=""
-                      formControlName="userName" name="userName" />
+                      formControlName="userName" name="userName" autocomplete="false" autocomplete="off"/>
                     <label cLabel for="floatingInputGrid">User Name</label>
                   </div>
 
@@ -122,7 +122,7 @@
                 <c-col md>
                   <div cFormFloating>
                     <input cFormControl id="floatingInputGrid" placeholder="Password" type="password" value=""
-                      formControlName="userPassword" name="userPassword" />
+                      formControlName="userPassword" name="userPassword" autocomplete="false" autocomplete="off"/>
                     <label cLabel for="floatingInputGrid">Password</label>
                   </div>
                   <div cRow *ngIf="countryForm.get('userPassword')?.invalid &&

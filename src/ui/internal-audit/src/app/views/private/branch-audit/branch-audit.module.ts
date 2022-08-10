@@ -15,6 +15,7 @@ import { RiskAssessmentComponent } from './risk-assessment/risk-assessment.compo
 import { AuditFrequencyComponent } from './audit-frequency/audit-frequency.component';
 import { AuditComponent } from './audit/audit.component';
 import { AuditScheduleComponent } from './audit-schedule/audit-schedule.component';
+import { IssueComponent } from './issue/issue.component';
 import { AuditViewComponent } from './audit-view/audit-view.component';
 
 
@@ -26,7 +27,9 @@ import { AuditViewComponent } from './audit-view/audit-view.component';
     AuditFrequencyComponent,
 
     AuditComponent,
-      AuditScheduleComponent,
+    AuditScheduleComponent,
+    IssueComponent
+
       AuditViewComponent
   ],
   imports: [

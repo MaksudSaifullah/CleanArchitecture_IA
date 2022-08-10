@@ -13,6 +13,7 @@ import {AlertService} from '../../../../core/services/alert.service';
 import { paginatedResponseInterface } from 'src/app/core/interfaces/paginated.interface';
 import { formatDate } from '@angular/common';
 import { CutomvalidatorService } from 'src/app/core/services/cutomvalidator.service'
+import { CommonResponseInterface } from 'src/app/core/interfaces/common-response.interface';
 
 @Component({
   selector: 'app-riskProfile',
@@ -122,16 +123,27 @@ export class RiskProfileComponent implements OnInit {
       if(this.formService.isEdit(this.riskProfileForm.get('id') as FormControl)){
         console.log(this.riskProfileForm.value);
         this.http.put('riskProfile',this.riskProfileForm.value,null).subscribe(x=>{
-            localmodalId.visible = false;
-            this.dataTableService.redraw(this.datatableElement);
-            this.AlertService.success('Risk Profile Updated Successfully');
-          });
+          let resp = x as CommonResponseInterface;
+          if(resp.success){
+            this.formService.onSaveSuccess(localmodalId,this.datatableElement);
+            this.AlertService.success(resp.message);
+          }
+          else{
+            this.AlertService.errorDialog('Unsuccessful', resp.message);
+          }
+        });
       }
       else {
        // console.log(this.riskProfileForm.value);
         this.http.post('riskProfile',this.riskProfileForm.value).subscribe(x=>{
-          this.formService.onSaveSuccess(localmodalId,this.datatableElement);
-          this.AlertService.success('Risk Profile Saved Successfully');
+          let resp = x as CommonResponseInterface;
+          if(resp.success){
+            this.formService.onSaveSuccess(localmodalId,this.datatableElement);
+            this.AlertService.success(resp.message);
+          }
+          else{
+            this.AlertService.errorDialog('Unsuccessful', resp.message);
+          }          
         });
       }      
     }

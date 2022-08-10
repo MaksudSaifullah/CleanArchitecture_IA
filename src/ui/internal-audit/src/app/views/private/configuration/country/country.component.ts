@@ -10,6 +10,8 @@ import {FormService} from '../../../../core/services/form.service';
 import {DatatableService} from '../../../../core/services/datatable.service';
 import {AlertService} from '../../../../core/services/alert.service';
 import { paginatedResponseInterface } from 'src/app/core/interfaces/paginated.interface';
+import { CommonResponseInterface } from 'src/app/core/interfaces/common-response.interface';
+import { RESOURCE_CACHE_PROVIDER } from '@angular/platform-browser-dynamic';
 @Component({
   selector: 'app-country',
   templateUrl: './country.component.html',
@@ -30,7 +32,7 @@ export class CountryComponent implements OnInit {
     this.countryForm = this.fb.group({
       id: [''],
       name: ['',[Validators.required,Validators.maxLength(20),Validators.minLength(5)]],
-      code: ['',[Validators.required,Validators.maxLength(3),Validators.minLength(3)]],
+      code: ['',[Validators.required,Validators.maxLength(2),Validators.minLength(2),Validators.pattern('^[A-Z ]*$')]],
       remarks: [''],
     });
     this.searchForm = this.fb.group(
@@ -70,15 +72,28 @@ export class CountryComponent implements OnInit {
         if(this.countryForm.valid){
           if(this.formService.isEdit(this.countryForm.get('id') as FormControl)){
             this.http.put('country',this.countryForm.value,null).subscribe(x=>{
-              this.formService.onSaveSuccess(localmodalId,this.datatableElement);
-              this.AlertService.success('Country Saved Successfully');
-
+              let resp = x as CommonResponseInterface;
+              if(resp.success){
+                this.formService.onSaveSuccess(localmodalId,this.datatableElement);
+                this.AlertService.success('Country Updated Successfully');
+              }
+              else{
+                this.AlertService.errorDialog('Unsuccessful', 'Duplicate Value ');
+              }
+             
             });
           }
           else{
             this.http.post('country',this.countryForm.value).subscribe(x=>{
-              this.formService.onSaveSuccess(localmodalId,this.datatableElement);
-              this.AlertService.success('Country Saved Successfully');
+              let resp = x as CommonResponseInterface;
+              if(resp.success){
+                this.formService.onSaveSuccess(localmodalId,this.datatableElement);
+                this.AlertService.success('Country Saved Successfully');
+              }
+              else{
+                this.AlertService.errorDialog('Unsuccessful', 'Duplicate Value');
+              }    
+            
             });
           }
         }

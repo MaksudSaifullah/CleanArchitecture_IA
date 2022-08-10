@@ -488,6 +488,132 @@ namespace Internal.Audit.Infrastructure.Persistent.Migrations
                     b.ToTable("Questionnaire", "BranchAudit");
                 });
 
+            modelBuilder.Entity("Internal.Audit.Domain.Entities.BranchAudit.RiskAssesmentDataManagement", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier")
+                        .HasColumnName("Id")
+                        .HasDefaultValueSql("newsequentialid()");
+
+                    b.Property<string>("ApprovedBy")
+                        .HasMaxLength(10)
+                        .HasColumnType("nvarchar(10)");
+
+                    b.Property<DateTime?>("ApprovedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("BranchId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("CreatedBy")
+                        .IsRequired()
+                        .HasMaxLength(10)
+                        .HasColumnType("nvarchar(10)");
+
+                    b.Property<DateTime>("CreatedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsDeleted")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bit")
+                        .HasDefaultValueSql("0");
+
+                    b.Property<bool>("IsDraft")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Rating")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ReviewedBy")
+                        .HasMaxLength(10)
+                        .HasColumnType("nvarchar(10)");
+
+                    b.Property<DateTime?>("ReviewedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid>("RiskAssesmentDataManagementLogId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<int>("Score")
+                        .HasColumnType("int");
+
+                    b.Property<string>("UpdatedBy")
+                        .HasMaxLength(10)
+                        .HasColumnType("nvarchar(10)");
+
+                    b.Property<DateTime?>("UpdatedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<float>("Value")
+                        .HasColumnType("real");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("RiskAssesmentDataManagementLogId");
+
+                    b.ToTable("RiskAssesmentDataManagement", "BranchAudit");
+                });
+
+            modelBuilder.Entity("Internal.Audit.Domain.Entities.BranchAudit.RiskAssesmentDataManagementLog", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier")
+                        .HasColumnName("Id")
+                        .HasDefaultValueSql("newsequentialid()");
+
+                    b.Property<string>("ApprovedBy")
+                        .HasMaxLength(10)
+                        .HasColumnType("nvarchar(10)");
+
+                    b.Property<DateTime?>("ApprovedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<decimal>("ConversionRate")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<string>("CreatedBy")
+                        .IsRequired()
+                        .HasMaxLength(10)
+                        .HasColumnType("nvarchar(10)");
+
+                    b.Property<DateTime>("CreatedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid>("DataRequestQueueServiceId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<bool>("IsDeleted")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bit")
+                        .HasDefaultValueSql("0");
+
+                    b.Property<string>("ReviewedBy")
+                        .HasMaxLength(10)
+                        .HasColumnType("nvarchar(10)");
+
+                    b.Property<DateTime?>("ReviewedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("TypeId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("UpdatedBy")
+                        .HasMaxLength(10)
+                        .HasColumnType("nvarchar(10)");
+
+                    b.Property<DateTime?>("UpdatedOn")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("DataRequestQueueServiceId");
+
+                    b.ToTable("RiskAssesmentDataManagementLog", "BranchAudit");
+                });
+
             modelBuilder.Entity("Internal.Audit.Domain.Entities.BranchAudit.RiskAssessment", b =>
                 {
                     b.Property<Guid>("Id")
@@ -887,6 +1013,9 @@ namespace Internal.Audit.Infrastructure.Persistent.Migrations
                         .HasColumnType("bit")
                         .HasDefaultValueSql("0");
 
+                    b.Property<Guid>("QuestionId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<string>("ReviewedBy")
                         .HasMaxLength(10)
                         .HasColumnType("nvarchar(10)");
@@ -1249,6 +1378,9 @@ namespace Internal.Audit.Infrastructure.Persistent.Migrations
                         .HasColumnType("datetime2");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("Name")
+                        .IsUnique();
 
                     b.ToTable("Designation", "Common");
                 });
@@ -1883,6 +2015,12 @@ namespace Internal.Audit.Infrastructure.Persistent.Migrations
                         .HasColumnType("datetime2");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("Code")
+                        .IsUnique();
+
+                    b.HasIndex("Name")
+                        .IsUnique();
 
                     b.ToTable("Country", "common");
                 });
@@ -3113,6 +3251,28 @@ namespace Internal.Audit.Infrastructure.Persistent.Migrations
                     b.Navigation("TopicHead");
                 });
 
+            modelBuilder.Entity("Internal.Audit.Domain.Entities.BranchAudit.RiskAssesmentDataManagement", b =>
+                {
+                    b.HasOne("Internal.Audit.Domain.Entities.BranchAudit.RiskAssesmentDataManagementLog", "RiskAssesmentDataManagementLog")
+                        .WithMany("RiskAssesmentDataManagement")
+                        .HasForeignKey("RiskAssesmentDataManagementLogId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("RiskAssesmentDataManagementLog");
+                });
+
+            modelBuilder.Entity("Internal.Audit.Domain.Entities.BranchAudit.RiskAssesmentDataManagementLog", b =>
+                {
+                    b.HasOne("Internal.Audit.Domain.Entities.security.DataRequestQueueService", "DataRequestQueueService")
+                        .WithMany()
+                        .HasForeignKey("DataRequestQueueServiceId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("DataRequestQueueService");
+                });
+
             modelBuilder.Entity("Internal.Audit.Domain.Entities.BranchAudit.RiskAssessment", b =>
                 {
                     b.HasOne("Internal.Audit.Domain.Entities.Config.CommonValueAndType", "CommonValueAuditType")
@@ -3505,6 +3665,11 @@ namespace Internal.Audit.Infrastructure.Persistent.Migrations
                     b.Navigation("AuditScheduleBranch");
 
                     b.Navigation("AuditScheduleParticipants");
+                });
+
+            modelBuilder.Entity("Internal.Audit.Domain.Entities.BranchAudit.RiskAssesmentDataManagementLog", b =>
+                {
+                    b.Navigation("RiskAssesmentDataManagement");
                 });
 
             modelBuilder.Entity("Internal.Audit.Domain.Entities.Common.AuditAction", b =>

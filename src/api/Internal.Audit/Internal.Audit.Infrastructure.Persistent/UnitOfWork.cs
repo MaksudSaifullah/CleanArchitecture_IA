@@ -32,6 +32,27 @@ public class UnitOfWork : IUnitOfWork, IDisposable
             await _context.DisposeAsync();
         }
     }
+    public async Task<(int,string)> CommitAsyncwithErrorMsg()
+    {
+        await using var transaction = await _context.Database.BeginTransactionAsync();
+        try
+        {
+            var affectedRows = await _context.SaveChangesAsync();
+            await transaction.CommitAsync();
+            return (affectedRows,"Success");
+        }
+        catch (Exception ex)
+        {
+            await transaction.RollbackAsync();
+            //throw ex.InnerException;
+            return (-1, ex.InnerException.Message.ToString());
+        }
+        finally
+        {
+            await _context.Database.CanConnectAsync();
+            await _context.DisposeAsync();
+        }
+    }
 
     public void Dispose()
     {

@@ -18,6 +18,7 @@ public class CompositeUser : EntityBase
     public string Password { get; set; } = null!;
     public string UserName { get; set; } = null!;
     public string Entity { get; set; } = null!;
+    public Int32 EntityCount { get; set; } = 0;
     public string EmployeeName { get; set; } = null!;
     public string UserRole { get; set; } = null!;
     public string Designation { get; set; } = null!;

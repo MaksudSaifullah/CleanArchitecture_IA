@@ -18,13 +18,15 @@ public class UpdateDesignationCommandHandler : IRequestHandler<UpdateDesignation
     }
 
     public async Task<UpdateDesignationResponseDTO> Handle(UpdateDesignationCommand request, CancellationToken cancellationToken)
-    {        
-
+    {
         var designation = await _designationRepository.Get(request.Id);
         designation = _mapper.Map(request, designation);
         await _designationRepository.Update(designation);
-        var rowsAffected = await _unitOfWork.CommitAsync();
-        return new UpdateDesignationResponseDTO(designation.Id, rowsAffected > 0, rowsAffected > 0 ? "Designation Updated Successfully!" : "Error while updating Designation!");
-
+        var rowsAffected = await _unitOfWork.CommitAsyncwithErrorMsg();
+        if (rowsAffected.Item1 == -1)
+        {
+            return new UpdateDesignationResponseDTO(designation.Id, false, rowsAffected.Item2);
+        }
+        return new UpdateDesignationResponseDTO(designation.Id, rowsAffected.Item1 > 0, rowsAffected.Item1 > 0 ? "Designation Updated Successfully!" : "Error while updating Designation!");
     }
 }

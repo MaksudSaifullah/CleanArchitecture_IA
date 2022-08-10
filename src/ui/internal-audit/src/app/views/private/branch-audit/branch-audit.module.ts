@@ -20,6 +20,7 @@ import { AuditComponent } from './audit/audit.component';
 import { AuditScheduleComponent } from './audit-schedule/audit-schedule.component';
 import { AverageTabComponent } from './risk-assessment-view/average-tab/average-tab.component';
 import { CollectionTabComponent } from './risk-assessment-view/collection-tab/collection-tab.component';
+import { IssueComponent } from './issue/issue.component';
 
 
 @NgModule({

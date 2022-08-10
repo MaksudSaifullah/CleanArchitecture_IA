@@ -4,6 +4,7 @@ using Internal.Audit.Infrastructure.Persistent;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Internal.Audit.Infrastructure.Persistent.Migrations
 {
     [DbContext(typeof(InternalAuditContext))]
-    partial class InternalAuditContextModelSnapshot : ModelSnapshot
+    [Migration("20220808081140_RiskAssesmentData Manage tables add")]
+    partial class RiskAssesmentDataManagetablesadd
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -533,7 +535,7 @@ namespace Internal.Audit.Infrastructure.Persistent.Migrations
                     b.Property<DateTime?>("ReviewedOn")
                         .HasColumnType("datetime2");
 
-                    b.Property<Guid>("RiskAssesmentDataManagementLogId")
+                    b.Property<Guid?>("RiskAssesmentDataManagementLogId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<int>("Score")
@@ -1379,9 +1381,6 @@ namespace Internal.Audit.Infrastructure.Persistent.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("Name")
-                        .IsUnique();
-
                     b.ToTable("Designation", "Common");
                 });
 
@@ -2015,12 +2014,6 @@ namespace Internal.Audit.Infrastructure.Persistent.Migrations
                         .HasColumnType("datetime2");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("Code")
-                        .IsUnique();
-
-                    b.HasIndex("Name")
-                        .IsUnique();
 
                     b.ToTable("Country", "common");
                 });
@@ -3253,13 +3246,9 @@ namespace Internal.Audit.Infrastructure.Persistent.Migrations
 
             modelBuilder.Entity("Internal.Audit.Domain.Entities.BranchAudit.RiskAssesmentDataManagement", b =>
                 {
-                    b.HasOne("Internal.Audit.Domain.Entities.BranchAudit.RiskAssesmentDataManagementLog", "RiskAssesmentDataManagementLog")
+                    b.HasOne("Internal.Audit.Domain.Entities.BranchAudit.RiskAssesmentDataManagementLog", null)
                         .WithMany("RiskAssesmentDataManagement")
-                        .HasForeignKey("RiskAssesmentDataManagementLogId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("RiskAssesmentDataManagementLog");
+                        .HasForeignKey("RiskAssesmentDataManagementLogId");
                 });
 
             modelBuilder.Entity("Internal.Audit.Domain.Entities.BranchAudit.RiskAssesmentDataManagementLog", b =>

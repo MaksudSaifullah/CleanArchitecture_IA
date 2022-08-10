@@ -32,7 +32,7 @@ export class CountryComponent implements OnInit {
     this.countryForm = this.fb.group({
       id: [''],
       name: ['',[Validators.required,Validators.maxLength(20),Validators.minLength(5)]],
-      code: ['',[Validators.required,Validators.maxLength(3),Validators.minLength(3)]],
+      code: ['',[Validators.required,Validators.maxLength(2),Validators.minLength(2),Validators.pattern('^[A-Z ]*$')]],
       remarks: [''],
     });
     this.searchForm = this.fb.group(

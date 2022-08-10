@@ -1,0 +1,29 @@
+export interface workpaper {
+    id: string;
+    workPaperCode: string;
+    auditScheduleId?: string;
+    scheduleCode: string;
+    topicHeadId?: string;
+    topicHeadName: string;
+    questionId?: string;
+    questionName: string;
+    branchId?: string;
+    branchName: string;
+    sampleName: string;
+    sampleMonthId?: string;
+    sampleMonth: string;
+    sampleSelectionMethodId?: string;
+    sampleSelectionMethod: string;
+    controlActivityNatureId?: string;
+    controlActivityNature: string;
+    controlFrequencyId?: string;
+    controlFrequency: string;
+    sampleSizeId?: string;
+    sampleSize: string;
+    testingDetails: string;
+    testingResults: string;
+    testingConclusionId?: string;
+    testingConclusion: string;
+    documentId?: string;
+    documentName: string;
+}

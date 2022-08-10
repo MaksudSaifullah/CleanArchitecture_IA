@@ -50,11 +50,13 @@ export class StaffTurnoverComponent implements OnInit {
         pageLength: 10,
     };
     this.http.post('DataSync/getSyncData', Object.assign({}, {
-      "startDate": "2022-07-20T04:26:34.237Z",
-     "endDate": "2022-07-25T04:26:34.237Z",
+      "effectiveFrom": "2022-07-20",
+     "effectiveTo": "2022-07-25",
      "countryId": "8EB2932F-0DF6-EC11-B3B0-00155D610B18",
      "typeId": 1},
-     {"conversionRate": 88
+     {"conversionRate": 88,
+     "pageSize": -1,
+     "pageNumber": 0
    }))
       .subscribe(resp => {
         console.log(resp, this.pullFromAMBSForm.value);
@@ -67,7 +69,7 @@ export class StaffTurnoverComponent implements OnInit {
     this.dtElement?.dtInstance.then((dtInstance: DataTables.Api) => console.log(dtInstance));
     console.log(Object.assign({}, this.riskAssesmentOverdue, this.pullFromAMBSForm));
     const tableData = [];
-    
+
   }
 
   LoadCountry() {

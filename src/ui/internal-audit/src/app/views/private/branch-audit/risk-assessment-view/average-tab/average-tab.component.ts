@@ -51,23 +51,23 @@ export class AverageTabComponent implements OnInit {
 
 
   LoadData() {
-    this.dtOptions = {
-      pagingType: 'full_numbers',
-        pageLength: 10
-    };
+  //   this.dtOptions = {
+  //     pagingType: 'full_numbers',
+  //       pageLength: 10
+  //   };
     
-    this.http.post('DataSync/getSyncData', Object.assign({}, {
-      "startDate": "2022-07-20T04:26:34.237Z",
-     "endDate": "2022-07-25T04:26:34.237Z",
-     "countryId": "8EB2932F-0DF6-EC11-B3B0-00155D610B18",
-     "typeId": 1},
-     {"conversionRate": 88
-   }))
-      .subscribe(resp => {
-        console.log(resp, this.pullFromAMBSForm.value);
-        this.riskAssesmentOverdue = resp as riskAssessmentOverdue[];
-        this.dtTrigger.next(resp);
-      })
+  //   this.http.post('DataSync/getSyncData', Object.assign({}, {
+  //     "startDate": "2022-07-20T04:26:34.237Z",
+  //    "endDate": "2022-07-25T04:26:34.237Z",
+  //    "countryId": "8EB2932F-0DF6-EC11-B3B0-00155D610B18",
+  //    "typeId": 1},
+  //    {"conversionRate": 88
+  //  }))
+  //     .subscribe(resp => {
+  //       console.log(resp, this.pullFromAMBSForm.value);
+  //       this.riskAssesmentOverdue = resp as riskAssessmentOverdue[];
+  //       this.dtTrigger.next(resp);
+  //     })
   }
 
   onConsolidate(): void {

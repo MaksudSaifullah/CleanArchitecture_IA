@@ -35,9 +35,10 @@ const routes: Routes = [
     component: AuditScheduleComponent
   },
   {
-    path:'risk-assessment-view',
+    path:'risk-assessment-view/:id',
     component: RiskAssessmentViewComponent
-  }
+  },
+  { path: 'userRegistration/:id', component: RiskAssessmentViewComponent },
 ];
 
 @NgModule({

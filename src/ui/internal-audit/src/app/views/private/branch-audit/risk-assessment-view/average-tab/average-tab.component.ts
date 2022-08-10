@@ -55,6 +55,7 @@ export class AverageTabComponent implements OnInit {
       pagingType: 'full_numbers',
         pageLength: 10
     };
+    
     this.http.post('DataSync/getSyncData', Object.assign({}, {
       "startDate": "2022-07-20T04:26:34.237Z",
      "endDate": "2022-07-25T04:26:34.237Z",

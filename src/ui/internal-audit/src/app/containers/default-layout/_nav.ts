@@ -122,7 +122,7 @@ export const navItems: INavData[] = [
       },
       {
         name: 'Risk Assessment View',
-        url: '/branch-audit/risk-assessment-view'
+        url: '/branch-audit/risk-assessment-view:id'
       },
       {
         name: 'Audit Fequency',

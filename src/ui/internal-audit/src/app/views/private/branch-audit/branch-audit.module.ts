@@ -35,7 +35,7 @@ import { CollectionTabComponent } from './risk-assessment-view/collection-tab/co
 
     AuditComponent,
       AverageTabComponent,
-      CollectionTabComponent
+      CollectionTabComponent,
     AuditComponent,
       AuditScheduleComponent
   ],

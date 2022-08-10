@@ -34,7 +34,6 @@
     </div>
   </div>
 </div>
-
 <c-nav variant="tabs">
   <a [active]="true" [cTabContent]="tabContent" [routerLink] [tabPaneIdx]="0" cNavLink>Overdue</a>
   <a [cTabContent]="tabContent" [routerLink] [tabPaneIdx]="1" cNavLink>Staff Turnover</a>
@@ -44,9 +43,8 @@
   <c-card class="mb-4">
     <c-tab-content #tabContent="cTabContent">
       <c-tab-pane class="p-3">
-        <app-overdue-tab-component></app-overdue-tab-component>
+        <app-overdue-tab-component [id]="id"></app-overdue-tab-component>
       </c-tab-pane>
-      
 
       <!-- staff turnover -->
       <c-tab-pane class="p-3">

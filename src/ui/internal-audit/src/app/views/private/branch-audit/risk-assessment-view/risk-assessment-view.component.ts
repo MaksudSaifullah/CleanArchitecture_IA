@@ -12,6 +12,7 @@ import { HttpService } from 'src/app/core/services/http.service';
 import {AlertService} from '../../../../core/services/alert.service';
 import { formatDate } from '@angular/common';
 import { paginatedResponseInterface } from 'src/app/core/interfaces/paginated.interface';
+import { ActivatedRoute } from '@angular/router';
 @Component({
   selector: 'app-risk-assessment-view',
   templateUrl: './risk-assessment-view.component.html',
@@ -33,8 +34,9 @@ export class RiskAssessmentViewComponent implements OnInit {
   dtTrigger: Subject<any> = new Subject<any>();
   countries: country[] = [];
   Data: Array<any> = [];
+  id : any;
 
-  constructor(private http: HttpService , private fb: FormBuilder, private AlertService: AlertService, private location: Location) { 
+  constructor(private http: HttpService , private fb: FormBuilder, private activateRoute: ActivatedRoute, private AlertService: AlertService, private location: Location) { 
   }
 
   goBack(){
@@ -45,5 +47,6 @@ export class RiskAssessmentViewComponent implements OnInit {
 
   }
   ngOnInit(): void {   
+    this.id = this.activateRoute.snapshot.params['id'];
   };
 }

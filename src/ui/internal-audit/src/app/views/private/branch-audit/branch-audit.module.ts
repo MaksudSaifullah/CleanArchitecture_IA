@@ -16,6 +16,7 @@ import { AuditFrequencyComponent } from './audit-frequency/audit-frequency.compo
 import { AuditComponent } from './audit/audit.component';
 import { AuditScheduleComponent } from './audit-schedule/audit-schedule.component';
 import { IssueComponent } from './issue/issue.component';
+import { WorkpaperComponent } from './workpaper/workpaper.component';
 
 
 @NgModule({
@@ -27,7 +28,8 @@ import { IssueComponent } from './issue/issue.component';
 
     AuditComponent,
     AuditScheduleComponent,
-    IssueComponent
+    IssueComponent,
+    WorkpaperComponent
   ],
   imports: [
     CommonModule,

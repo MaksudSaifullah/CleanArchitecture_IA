@@ -1,1 +1,148 @@
-<p>workpaper works!</p>
+
+<div class="animated fadeIn">
+    <div class="row">
+      <div class="col-lg-12">
+        <div class="card">
+          <div class="card-header">
+            <i class="fa fa-align-justify" ></i> Workpaper List
+          </div>
+          <div class="card-body">
+            <form [formGroup]="searchForm">
+              <div class="row" style="margin: 0 auto;">
+                <div class="col-md-6 mb-2">
+                  <button [cModalToggle]="verticallyCenteredModal.id" class="btnCreateColor" (click)="reset()" cButton>
+                    <svg cIcon name="cilPlus" size="md" title="Add Button Icon"></svg> Create
+                  </button> 
+                </div>
+                <div class="col-md-5 mb-2 form-floating">
+                  <input type="text" formControlName="searchTerm" class="form-control searchInput"  placeholder="Search by Name or Code"/>
+                  <label class="searchLevel" for="floatingInput">Workpaper Name / Workpaper Code</label>
+                </div>
+                <div class="col-md-1 mb-2">
+                  <button type="button" class="btn btn-secondary mr-1 btn-block searchBtn" data-toggle="modal" (click)="search()" >
+                    Search
+                  </button>
+                </div>
+              </div>
+           </form>
+            <div class="row overflow-auto">
+                <table datatable [dtOptions]="dtOptions" class="table table-bordered row-border hover datatableStyle" >
+                  <thead>
+                    <tr>
+                      <th>Sample Name</th>
+                      <th>Topic Head</th>
+                      <th>Sample Month</th>
+                      <th>Testing Conclusion</th>
+                      <th class="col-1 text-center">Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody *ngIf="workpapers?.length != 0">
+                    <tr *ngFor="let workpaper of workpapers">
+                      <td>{{ workpaper.sampleName }}</td>
+                      <td>{{ workpaper.topicHeadName }}</td>
+                      <td>{{ workpaper.sampleMonth }}</td>
+                      <td>{{ workpaper.testingConclusion }}</td>
+                      <td class="text-center">
+                        <div class="btn-group" role="group" aria-label="Basic example">
+                          <button type="button" class="btn btn-secondary btnEditColor" (click)="edit(verticallyCenteredModal,workpaper)">
+                            <svg cIcon name="cilPencil" size="md" title="Edit Button icon"></svg>
+                          </button>
+                          <button type="button" class="btn btn-danger btnDeleteColor" (click)="delete(workpaper.id)">                          
+                            <svg cIcon name="cilTrash" size="md" title="Delete Button Icon"></svg>
+                          </button>
+                        </div>
+                      </td>
+                    </tr>
+                  </tbody>
+                  <tbody *ngIf="workpapers?.length == 0">
+                    <tr>
+                      <td colspan="5" class="no-data-available">No data!</td>
+                    </tr>
+                  </tbody>
+                </table>
+  
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <form [formGroup]="workpaperForm" (ngSubmit)="onSubmit(verticallyCenteredModal)" novalidate>
+  <c-modal #verticallyCenteredModal alignment="center" id="verticallyCenteredModal">
+    <c-modal-header>
+      <h5 cModalTitle *ngIf="!formService.isEdit(this.workpaperForm.get('id'))">Create Workpaper</h5>
+      <h5 cModalTitle *ngIf="formService.isEdit(this.workpaperForm.get('id'))">Update Workpaper</h5>
+      <button [cModalToggle]="verticallyCenteredModal.id" cButtonClose></button>
+    </c-modal-header>
+    <c-modal-body>
+      <!-- <div class="col-md-12" >
+        <input type="hidden" formControlName="id"/>
+  
+          <div class="form-floating mb-3">
+            <input type="text" class="form-control" formControlName="name" id="name" placeholder="Name">
+            <label for="floatingInput">Name</label>
+          </div>
+  
+  
+          <div cRow *ngIf="workpaperForm.get('name')?.invalid &&
+          countryForm.get('name')?.errors &&
+                (countryForm.get('name')?.dirty || countryForm.get('name')?.touched)">
+            <small class="text-danger"
+                *ngIf="countryForm.get('name').hasError('required')">
+                This field is required.
+            </small>
+            <small class="text-danger"
+                *ngIf="countryForm.get('name').hasError('minlength')">
+                The minimum length for this field is {{countryForm.get('name').errors.minlength.requiredLength}} characters.
+            </small>
+            <small class="text-danger"
+                *ngIf="countryForm.get('name').hasError('maxlength')">
+                The maximum length for this field is {{countryForm.get('name').errors.maxlength.requiredLength}} characters.
+            </small>
+        </div>
+  
+          <div class="form-floating mb-3">
+            <input type="text" class="form-control" formControlName="code" id="code" placeholder="Code">
+            <label for="floatingInput">Code</label>
+          </div>
+  
+          <div cRow *ngIf="countryForm.get('code')?.invalid &&
+          countryForm.get('code')?.errors &&
+                (countryForm.get('code')?.dirty || countryForm.get('code')?.touched)">
+            <small class="text-danger"
+                *ngIf="countryForm.get('code').hasError('required')">
+                This field is required.
+            </small>
+            <small class="text-danger"
+                *ngIf="countryForm.get('code').hasError('minlength')">
+                The minimum length for this field is {{countryForm.get('code').errors.minlength.requiredLength}} characters.
+            </small>
+            <small class="text-danger"
+                *ngIf="countryForm.get('code').hasError('maxlength')">
+                The maximum length for this field is {{countryForm.get('code').errors.maxlength.requiredLength}} characters.
+            </small>
+            <small class="text-danger" 
+                *ngIf="countryForm.get('code').hasError('pattern')">
+                 Code should be in ISO Alpha 2 format
+            </small>
+        </div>
+  
+  
+          <div class="form-floating">
+            <textarea class="form-control" placeholder="Remarks" formControlName="remarks" id="remarks"></textarea>
+            <label for="floatingTextarea">Remark</label>
+          </div>
+  
+      </div> -->
+    </c-modal-body>
+    <c-modal-footer>
+      <button cButton class="btn btn-primary btnSaveColor me-1" (click)="onSubmit(verticallyCenteredModal)">
+        <svg cIcon name="cilSave" size="md" title="Save Button Icon"></svg> Save
+      </button>
+      <button [cModalToggle]="verticallyCenteredModal.id" cButton class="btn btn-danger btnCancelColor me-1">
+        <svg cIcon name="cilX" size="md" title="Close Button Icon"></svg> Close
+      </button>
+    </c-modal-footer>
+  </c-modal>
+  </form>
+  

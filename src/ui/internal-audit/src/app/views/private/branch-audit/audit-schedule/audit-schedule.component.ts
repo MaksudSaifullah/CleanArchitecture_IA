@@ -14,6 +14,8 @@ import { DatatableService } from 'src/app/core/services/datatable.service';
 import { FormService } from 'src/app/core/services/form.service';
 import { HttpService } from 'src/app/core/services/http.service';
 import {AlertService} from '../../../../core/services/alert.service';
+import { User } from 'src/app/core/interfaces/security/user-registration.interface';
+import { AuditScheduleParticipant } from 'src/app/core/interfaces/branch-audit/auditScheduleParticipant.interface';
 
 @Component({
   selector: 'app-audit-schedule',
@@ -27,7 +29,7 @@ export class AuditScheduleComponent implements OnInit {
   dataTableService: DatatableService = new DatatableService();
   auditSchedules: AuditSchedule[] = [];
   formService: FormService = new FormService();
-  auditForm: FormGroup;
+  auditScheduleCreateForm: FormGroup;
   auditSearchForm: FormGroup;
   countries: country[] = [];
   branches: Branch[] = [];
@@ -35,18 +37,24 @@ export class AuditScheduleComponent implements OnInit {
   auditIds: commonValueAndType | undefined;
   auditPlanCodes: AuditPlanCode [] = [];
   paramId:string ='';
+  auditCreationId:string='';
+  users: User[]=[];
+  auditScheduleParticipants: AuditScheduleParticipant []=[];
 
   constructor(private http: HttpService, private fb: FormBuilder,  private activateRoute: ActivatedRoute, private AlertService: AlertService) {
-    this.auditForm = this.fb.group({
+    this.auditScheduleCreateForm = this.fb.group({
       id: [''],
-      auditTypeId: ["3ee0ab25-baf2-ec11-b3b0-00155d610b11"],
-      countryId: [null,[Validators.required]],
-      year: ['',[Validators.required,Validators.maxLength(4),Validators.minLength(4)]],
-      planId: ['',[Validators.required]],
-      auditId: ['',[Validators.required]],
-      auditName:['',[Validators.required]],
-      auditPeriodFrom: ['',[Validators.required]],
-      auditPeriodTo: ['',[Validators.required]],
+      auditTypeId: [''],
+      countryId: [''],
+      auditId: [''],
+      auditPeriodFrom: [''],
+      auditPeriodTo: [''],
+      scheduleStartDate:[''],
+      scheduleEndDate:[''],
+      branchList:['',[Validators.required]],
+      approverList:['',[Validators.required]],
+      teamLeaderList:['',[Validators.required]],
+      auditorList:['',[Validators.required]]
       
     })
 
@@ -56,12 +64,11 @@ export class AuditScheduleComponent implements OnInit {
    }
 
   ngOnInit(): void {
-    this.paramId = this.activateRoute.snapshot.params['id'];
+   this.paramId = this.activateRoute.snapshot.queryParams['id'];
    this.LoadData();
    this.LoadCountry();
    this.LoadAuditType();
-   //this.LoadAuditId();
-
+   this.LoadUser();
   }
   LoadData() {
     const that = this;
@@ -81,19 +88,22 @@ export class AuditScheduleComponent implements OnInit {
       },
     };
   }
-  LoadAuditId(){
-    this.http.get('commonValueAndType/idcreation?idcreationValue=16&auditType=1&countryId='+this.auditForm.value.countryId).subscribe(resp => {
-      let convertedResp = resp as commonValueAndType;
-      this.auditIds = convertedResp;
-      this.auditForm.patchValue({auditId: this.auditIds.text})
-      this.LoadBranch();
-    })
-  }
+
   LoadBranch(){
-    const countryId=this.auditForm.value.countryId;
-    this.http.get('commonValueAndType/getBranch?countryId='+countryId).subscribe(resp => {
+    this.branches=[];
+    var scheduleFormValue=this.auditScheduleCreateForm.getRawValue();
+   
+    console.log('country id : '+ this.auditScheduleCreateForm.value.countryId)
+    console.log('audit id : '+ this.auditScheduleCreateForm.value.auditId)
+    this.http.get('commonValueAndType/getBranch?countryId='+scheduleFormValue.countryId).subscribe(resp => {
       let convertedResp = resp as Branch[];
       this.branches = convertedResp;
+    })
+  }
+  LoadUser() {
+    this.http.paginatedPost('userlist/Paginated', 100, 1, {"userName": "","employeeName": "","userRole": ""}).subscribe(resp => {
+      let convertedResp = resp as paginatedResponseInterface<User>;
+      this.users = convertedResp.items;
     })
   }
   LoadCountry() {
@@ -102,6 +112,7 @@ export class AuditScheduleComponent implements OnInit {
       this.countries = convertedResp.items;    
     })
   }
+  
   LoadAuditType() {
     this.http.get('commonValueAndType/audittype').subscribe(resp => {
       let convertedResp = resp as commonValueAndType[];
@@ -114,17 +125,17 @@ export class AuditScheduleComponent implements OnInit {
    }
   onSubmit(modalId:any):void{
     const localmodalId = modalId;
-      if(this.auditForm.valid){
-        if(this.formService.isEdit(this.auditForm.get('id') as FormControl)){
-          this.http.put('audit',this.auditForm.getRawValue(),null).subscribe(x=>{
+      if(this.auditScheduleCreateForm.valid){
+        if(this.formService.isEdit(this.auditScheduleCreateForm.get('id') as FormControl)){
+          this.http.put('audit',this.auditScheduleCreateForm.getRawValue(),null).subscribe(x=>{
             this.formService.onSaveSuccess(localmodalId,this.datatableElement);
             this.AlertService.success('Audit Saved Successful');
 
           });
         }
         else{
-          console.log(this.auditForm.value);
-          this.http.post('audit',this.auditForm.getRawValue()).subscribe(x=>{
+          console.log(this.auditScheduleCreateForm.value);
+          this.http.post('audit',this.auditScheduleCreateForm.getRawValue()).subscribe(x=>{
             this.formService.onSaveSuccess(localmodalId,this.datatableElement);
             this.AlertService.success('Audit Saved Successful');
           });
@@ -138,18 +149,41 @@ export class AuditScheduleComponent implements OnInit {
       .getById('audit',audit.id)
       .subscribe(res => {
           const auditResponse = res as Audit;
-          this.auditForm.setValue({id : auditResponse.id, countryId : auditResponse.countryId, auditName: auditResponse.auditName, year:auditResponse.year, auditTypeId: auditResponse.auditTypeId, planId: auditResponse.planId, auditId: auditResponse.auditId, 
+          this.auditScheduleCreateForm.setValue({id : auditResponse.id, countryId : auditResponse.countryId, auditName: auditResponse.auditName, year:auditResponse.year, auditTypeId: auditResponse.auditTypeId, planId: auditResponse.planId, auditId: auditResponse.auditId, 
             auditPeriodFrom: formatDate(auditResponse.auditPeriodFrom, 'yyyy-MM-dd', 'en'),
             auditPeriodTo: formatDate(auditResponse.auditPeriodTo, 'yyyy-MM-dd', 'en')});
       });
       localmodalId.visible = true;
   }
 
-  reset(){
-    this.auditForm.reset();
-    this.auditForm.patchValue({auditTypeId:"3ee0ab25-baf2-ec11-b3b0-00155d610b11"});
-     this.auditForm.controls['auditTypeId'].disable();
-     this.auditForm.controls['auditId'].disable();
+
+
+  getAuditById():void {
+    this.http
+      .getById('audit',this.paramId)
+      .subscribe(res => {
+          const auditResponse = res as Audit;
+          this.auditScheduleCreateForm.setValue({id:'', countryId : auditResponse.countryId, auditTypeId: auditResponse.auditTypeId, auditId: auditResponse.auditId, 
+            auditPeriodFrom: formatDate(auditResponse.auditPeriodFrom, 'yyyy-MM-dd', 'en'),
+            auditPeriodTo: formatDate(auditResponse.auditPeriodTo, 'yyyy-MM-dd', 'en'),
+            scheduleStartDate: formatDate(auditResponse.auditPeriodFrom, 'yyyy-MM-dd', 'en'),
+            scheduleEndDate: formatDate(auditResponse.auditPeriodFrom, 'yyyy-MM-dd', 'en'),
+            branchList:'',
+            approverList:'',
+            teamLeaderList:'',
+            auditorList:''});
+            
+            this.auditCreationId=auditResponse.id;
+      });
+      this.disabledInputField();
+      this.LoadBranch();
   }
+  disabledInputField(){
+    this.auditScheduleCreateForm.controls['auditTypeId'].disable();
+    this.auditScheduleCreateForm.controls['auditId'].disable();
+    this.auditScheduleCreateForm.controls['countryId'].disable();
+    this.auditScheduleCreateForm.controls['auditPeriodFrom'].disable();
+    this.auditScheduleCreateForm.controls['auditPeriodTo'].disable();
+ }
 
 }

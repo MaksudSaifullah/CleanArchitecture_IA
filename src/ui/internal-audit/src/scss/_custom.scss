@@ -14,6 +14,7 @@
 .datatableStyle tr:hover{
     background-color: #dbe2e6;// #f7f7f8; //f2f2f2
     color: white;
+    
 }
 
 .datatableStyle td{
@@ -29,6 +30,9 @@
    height: auto;
 }
 
+.datatableStyleWithCursor {
+   cursor: pointer;
+}
 .searchLevel{
    padding: 0.5rem 1rem !important;
 }

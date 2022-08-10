@@ -129,6 +129,10 @@ export const navItems: INavData[] = [
         url: '/branch-audit/audit'
       },
       {
+        name: 'Audit View',
+        url: '/branch-audit/audit-view'
+      },
+      {
         name: 'Audit Schedule',
         url: '/branch-audit/audit-schedule'
       }

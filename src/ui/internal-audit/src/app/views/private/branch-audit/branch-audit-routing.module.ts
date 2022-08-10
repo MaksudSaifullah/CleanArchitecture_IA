@@ -6,6 +6,8 @@ import { RiskCriteriaComponent } from './risk-criteria/risk-criteria.component';
 import { TopicHeadComponent } from './topic-head/topic-head.component';
 import { AuditComponent } from './audit/audit.component';
 import { AuditScheduleComponent } from './audit-schedule/audit-schedule.component';
+import { AuditViewComponent } from './audit-view/audit-view.component';
+
 
 const routes: Routes = [
   {
@@ -32,7 +34,15 @@ const routes: Routes = [
   {
     path:'audit-schedule',
     component: AuditScheduleComponent
-  }
+  },
+  {
+    path:'audit-view',
+    component: AuditViewComponent
+  },
+  { 
+    path: 'audit/:id', 
+    component: AuditComponent 
+   },
 ];
 
 @NgModule({

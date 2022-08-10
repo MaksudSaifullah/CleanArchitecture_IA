@@ -1,0 +1,115 @@
+<div class="animated fadeIn">
+    <div class="row">
+      <div class="col-lg-12">
+        <div class="card">
+          <div class="card-header">
+            <i class="fa fa-align-justify" ></i> Audit View
+          </div>
+          <div class="card-body">
+           
+              <div class="row">
+                <div class="col-md-6">
+                  <button  class="btnCreateColor"  cButton (click)="RedirectToAuditList()">
+                   Branch Audit List
+                  </button> 
+                </div>
+                <div class="col-md-6">
+                  <div class="a row">
+                    <div class="col-md-3">
+                      <button  class="btnCreateColor"  cButton > Issue
+                      </button> 
+                    </div>
+                    <div class="col-md-3">
+                      <button  class="btnCreateColor"  cButton > Report
+                      </button> 
+                    </div>
+                    <div class="col-md-3">
+                      <button  class="btnCreateColor"  cButton (click)="RedirectToScheduleList()"> Schedule 
+                      </button> 
+                    </div>
+                  </div>
+                </div>
+                
+               
+              </div>
+              <br>
+              <form [formGroup]="auditViewForm">
+                <div class="col-md-12" >
+                    <input type="hidden" formControlName="id"/>
+                    <input type="hidden" formControlName="countryId"/>
+                    <input type="hidden" formControlName="auditTypeId"/>
+                      <div cFormFloating>
+                        <div class="row">
+                          <div class="form-floating col-md-6">
+                            <input type="text" class="form-control" formControlName="auditId" id="auditId" placeholder="Audit Id">
+                            <label for="floatingInput">Audit Id</label> 
+                          </div>
+                          <div class="form-floating col-md-6">
+                            <input type="text" class="form-control" formControlName="auditName" id="auditName" placeholder="Audit Name">
+                            <label for="floatingInput">Audit Name</label>
+                          </div>
+                        </div>
+                        <br>
+                        <div class="row">
+                          <div class="form-floating col-md-6">
+                            <input type="text" class="form-control" formControlName="year" id="year" placeholder="Year">
+                            <label for="floatingInput">Audit Year</label>
+                          </div>
+                          <div cFormFloating class="col-md-6">
+                            <select aria-label="Floating label select example" cSelect id="auditPlanId" formControlName="auditPlanId" name="auditPlanId" >
+                              <option value=null>Select Plan Id</option>
+                              <option *ngFor="let auditPlan of auditPlanCodes" [value]="auditPlan.id">
+                                {{auditPlan.planCode}}
+                              </option>
+                            </select>
+                            <label for="auditPlanId" class="dropdownLabel">Plan Id</label>
+                          </div>
+                        </div>
+                        <br>
+                        <div class="row">
+                          <div class="form-floating col-md-6">
+                            <input class="form-control" placeholder="auditPeriodFrom" formControlName="auditPeriodFrom" id="auditPeriodFrom" type="date" >
+                            <label for="auditPeriodFrom">Audit Period From</label>
+                          </div>
+                          <div class="form-floating col-md-6">
+                            <input class="form-control" placeholder="auditPeriodTo" formControlName="auditPeriodTo" id="auditPeriodTo" type="date" >
+                            <label for="auditPeriodTo">Audit Period To</label>
+                          </div>
+                        </div>
+                        <br>
+                  
+                 </div>
+               </div> 
+            </form>
+            <br>
+            <div class="row overflow-auto">
+                <table datatable [dtOptions]="dtOptions" class="table table-bordered row-border hover datatableStyle" >
+                  <thead>
+                    <tr>
+                      <th>Country</th>
+                      <th>Branch</th>
+                     
+                    </tr>
+                  </thead>
+                  <tbody *ngIf="branches?.length != 0">
+                    <tr *ngFor="let branch of branches" >
+                      <td>{{ branch.auditId }}</td>
+                      <td>{{ branch.planId }}</td>
+                     
+                    </tr>
+                  </tbody>
+                  <tbody *ngIf="branches?.length == 0">
+                    <tr>
+                      <td colspan="5" class="no-data-available">No data!</td>
+                    </tr>
+                  </tbody>
+                </table>
+  
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+

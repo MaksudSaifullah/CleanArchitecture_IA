@@ -10,9 +10,9 @@
               <div class="row">
                 <div class="row" style="margin: 0 auto;">
                   <div class="col-md-6 mb-2">
-                    <!-- <button [cModalToggle]="verticallyCenteredModal.id" class="btnCreateColor" (click)="reset()" cButton>
+                    <button [cModalToggle]="verticallyCenteredModal.id" class="btnCreateColor" (click)="getAuditById()" cButton>
                       <svg cIcon name="cilPlus" size="md" title="Add Button Icon"></svg> Create
-                    </button>  -->
+                    </button> 
                   </div>
                   <div class="col-md-5 mb-2 form-floating">
                     <input type="textarea" class="form-control searchInput" formControlName="searchText"  placeholder="Search by Audit Id"/>
@@ -79,12 +79,12 @@
       </div>
     </div>
   </div>
-  
-  <!-- <form [formGroup]="auditForm" (ngSubmit)="onSubmit(verticallyCenteredModal)" novalidate>
+   
+  <form [formGroup]="auditScheduleCreateForm" (ngSubmit)="onSubmit(verticallyCenteredModal)" novalidate>
     <c-modal #verticallyCenteredModal alignment="center" id="verticallyCenteredModal">
       <c-modal-header>
-        <h5 cModalTitle *ngIf="!formService.isEdit(this.auditForm.get('id'))">Create Schedule</h5>
-        <h5 cModalTitle *ngIf="formService.isEdit(this.auditForm.get('id'))">Update Schedule</h5>
+        <h5 cModalTitle *ngIf="!formService.isEdit(this.auditScheduleCreateForm.get('id'))">Create Schedule</h5>
+        <h5 cModalTitle *ngIf="formService.isEdit(this.auditScheduleCreateForm.get('id'))">Update Schedule</h5>
         <button [cModalToggle]="verticallyCenteredModal.id" cButtonClose></button>
       </c-modal-header>
       <c-modal-body>
@@ -106,15 +106,15 @@
             <input type="text" class="form-control" formControlName="auditId" id="auditId" placeholder="Audit Id">
             <label for="floatingInput">Audit Id</label>
           </div>
-          <div cRow *ngIf="(auditForm.get('auditId')?.invalid && auditForm.get('auditId')?.errors) &&         
-          (auditForm.get('auditId')?.dirty || auditForm.get('auditId')?.touched)">
+          <div cRow *ngIf="(auditScheduleCreateForm.get('auditId')?.invalid && auditScheduleCreateForm.get('auditId')?.errors) &&         
+          (auditScheduleCreateForm.get('auditId')?.dirty || auditScheduleCreateForm.get('auditId')?.touched)">
           <small class="text-danger">
             This field is required.
           </small>                                 
           </div> 
           <br>
             <div cFormFloating>
-                <select aria-label="Floating label select example" cSelect id="countryId" formControlName="countryId" name="countryId" (change)="LoadAuditId()">
+                <select aria-label="Floating label select example" cSelect id="countryId" formControlName="countryId" name="countryId" >
                 <option value=null>Select Country</option>
                 <option *ngFor="let country of countries" [value]="country.id">
                     {{country.name}}
@@ -122,8 +122,8 @@
                 </select>
                 <label for="countryId" class="dropdownLabel">Country</label>
             </div>
-            <div cRow *ngIf="(auditForm.get('countryId')?.invalid && auditForm.get('countryId')?.errors) &&         
-                (auditForm.get('countryId')?.dirty || auditForm.get('countryId')?.touched)">
+            <div cRow *ngIf="(auditScheduleCreateForm.get('countryId')?.invalid && auditScheduleCreateForm.get('countryId')?.errors) &&         
+                (auditScheduleCreateForm.get('countryId')?.dirty || auditScheduleCreateForm.get('countryId')?.touched)">
                 <small class="text-danger">
                 This field is required.
                 </small>                                 
@@ -135,35 +135,35 @@
           </div>
           <br>
           <div class="form-floating">
-            <input class="form-control" placeholder="auditPeriodFrom" formControlName="auditPeriodFrom" id="auditPeriodFrom" type="date" >
-            <label for="auditPeriodFrom">Audit Review Period To</label>
-          </div>
-          <br>
-          <div class="form-floating">
-            <input class="form-control" placeholder="auditPeriodFrom" formControlName="auditPeriodFrom" id="auditPeriodFrom" type="date" >
-            <label for="auditPeriodFrom">Schedule Start Date</label>
-          </div>
-          <div cRow *ngIf="auditForm.get('auditPeriodFrom')?.invalid && auditForm.get('auditPeriodFrom')?.errors &&
-                (auditForm.get('auditPeriodFrom')?.dirty || auditForm.get('auditPeriodFrom')?.touched)">
-            <small class="text-danger" *ngIf="auditForm.get('auditPeriodFrom').hasError('required')">
-              This field is required.
-            </small>                                 
-          </div>
-          <br>
-          <div class="form-floating">
             <input class="form-control" placeholder="auditPeriodTo" formControlName="auditPeriodTo" id="auditPeriodTo" type="date" >
-            <label for="auditPeriodTo">Schedule Start Date</label>
+            <label for="auditPeriodTo">Audit Review Period To</label>
           </div>
-          <div cRow *ngIf="auditForm.get('auditPeriodTo')?.invalid && auditForm.get('auditPeriodTo')?.errors &&
-                (auditForm.get('auditPeriodTo')?.dirty || auditForm.get('auditPeriodTo')?.touched)">
-            <small class="text-danger" *ngIf="auditForm.get('auditPeriodTo').hasError('required')">
-              This field is required.
-            </small>                                                      
-          </div>
-          <small class="text-danger" *ngIf="auditForm.hasError('invalidDateRange')">
-            Effective from should be greater than effective to.
-          </small>          
-          <br> 
+          <br>
+        <div class="form-floating">
+          <input class="form-control" placeholder="scheduleStartDate" formControlName="scheduleStartDate" id="scheduleStartDate" type="date" >
+          <label for="scheduleStartDate">Schedule Start Date</label>
+        </div>
+        <div cRow *ngIf="auditScheduleCreateForm.get('scheduleStartDate')?.invalid && auditScheduleCreateForm.get('scheduleStartDate')?.errors &&
+              (auditScheduleCreateForm.get('scheduleStartDate')?.dirty || auditScheduleCreateForm.get('scheduleStartDate')?.touched)">
+          <small class="text-danger" *ngIf="auditScheduleCreateForm.get('scheduleStartDate').hasError('required')">
+            This field is required.
+          </small>                                 
+        </div>
+        <br>
+        <div class="form-floating">
+          <input class="form-control" placeholder="scheduleEndDate" formControlName="scheduleEndDate" id="scheduleEndDate" type="date" >
+          <label for="scheduleEndDate">Schedule End Date</label>
+        </div>
+        <div cRow *ngIf="auditScheduleCreateForm.get('scheduleEndDate')?.invalid && auditScheduleCreateForm.get('scheduleEndDate')?.errors &&
+              (auditScheduleCreateForm.get('scheduleEndDate')?.dirty || auditScheduleCreateForm.get('scheduleEndDate')?.touched)">
+          <small class="text-danger" *ngIf="auditScheduleCreateForm.get('scheduleEndDate').hasError('required')">
+            This field is required.
+          </small>                                                      
+        </div>
+        <small class="text-danger" *ngIf="auditScheduleCreateForm.hasError('invalidDateRange')">
+          Schedule Start Date should be greater than Schedule End Date.
+        </small>          
+        <br> 
           <c-col xs="12">
             <c-card class="mb-4">
               <c-card-header>
@@ -172,7 +172,7 @@
               <c-card-body>
                 <c-row [gutter]="{g: 2}">
                   <c-col md>
-                    <c-multi-select multiple>
+                    <c-multi-select multiple formControlName="branchList" name="branchList" required>
                       <c-multi-select-option *ngFor="let branch of branches" [value]="branch.id">{{branch.branchName}}
                       </c-multi-select-option>
                     </c-multi-select>
@@ -189,8 +189,8 @@
               <c-card-body>
                 <c-row [gutter]="{g: 2}">
                   <c-col md>
-                    <c-multi-select multiple>
-                      <c-multi-select-option *ngFor="let role of countries" [value]="role.id">{{role.name}}
+                    <c-multi-select multiple formControlName="approverList" name="approverList" required>
+                      <c-multi-select-option *ngFor="let user of users" [value]="user.id" >{{user.userName}}
                       </c-multi-select-option>
                     </c-multi-select>
                   </c-col>
@@ -198,8 +198,8 @@
               </c-card-body>
             </c-card>
           </c-col>
-         
-         <c-col xs="12">
+          
+          <c-col xs="12">
             <c-card class="mb-4">
               <c-card-header>
                 <strong>Team Leader</strong>
@@ -207,8 +207,8 @@
               <c-card-body>
                 <c-row [gutter]="{g: 2}">
                   <c-col md>
-                    <c-multi-select multiple>
-                      <c-multi-select-option *ngFor="let role of countries" [value]="role.id">{{role.name}}
+                    <c-multi-select multiple formControlName="teamLeaderList" name="teamLeaderList" required>
+                      <c-multi-select-option *ngFor="let user of users" [value]="user.id" >{{user.userName}}
                       </c-multi-select-option>
                     </c-multi-select>
                   </c-col>
@@ -216,8 +216,8 @@
               </c-card-body>
             </c-card>
           </c-col>
-
-         <c-col xs="12">
+  
+          <c-col xs="12">
             <c-card class="mb-4">
               <c-card-header>
                 <strong>Auditor</strong>
@@ -225,8 +225,8 @@
               <c-card-body>
                 <c-row [gutter]="{g: 2}">
                   <c-col md>
-                    <c-multi-select multiple>
-                      <c-multi-select-option *ngFor="let role of countries" [value]="role.id">{{role.name}}
+                    <c-multi-select multiple formControlName="auditorList" name="auditorList" required>
+                      <c-multi-select-option *ngFor="let user of users" [value]="user.id" >{{user.userName}}
                       </c-multi-select-option>
                     </c-multi-select>
                   </c-col>
@@ -247,4 +247,4 @@
         </button>
       </c-modal-footer>
     </c-modal>
-    </form> -->
+    </form> 

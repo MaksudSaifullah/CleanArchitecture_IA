@@ -15,6 +15,7 @@ import { RiskAssessmentComponent } from './risk-assessment/risk-assessment.compo
 import { AuditFrequencyComponent } from './audit-frequency/audit-frequency.component';
 import { AuditComponent } from './audit/audit.component';
 import { AuditScheduleComponent } from './audit-schedule/audit-schedule.component';
+import { AuditViewComponent } from './audit-view/audit-view.component';
 
 
 @NgModule({
@@ -25,7 +26,8 @@ import { AuditScheduleComponent } from './audit-schedule/audit-schedule.componen
     AuditFrequencyComponent,
 
     AuditComponent,
-      AuditScheduleComponent
+      AuditScheduleComponent,
+      AuditViewComponent
   ],
   imports: [
     CommonModule,

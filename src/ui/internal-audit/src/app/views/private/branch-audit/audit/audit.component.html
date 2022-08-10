@@ -28,37 +28,37 @@
             </div>
           </form>
           <div class="row overflow-auto">
-              <table datatable [dtOptions]="dtOptions" class="table table-bordered row-border hover datatableStyle" >
+              <table datatable [dtOptions]="dtOptions" class="table table-bordered row-border hover datatableStyle datatableStyleWithCursor" >
                 <thead>
                   <tr>
                     <th>Audit Id</th>
                     <th>Plan Id</th>
                     <th>Audit Name</th>
-                    <th>Year</th>
-                    <th>Audit Type Name</th>
+                    <!-- <th>Year</th> -->
+                    <th>Audit Type</th>
                     <th>Country</th>
-                    <th>Audit Period From</th>
+                    <!-- <th>Audit Period From</th>
                     <th>Audit Period To</th>
-                    <th>CreatedOn</th>
+                    <th>CreatedOn</th> -->
                     <th>Actions</th>
                   </tr>
                 </thead>
                 <tbody *ngIf="audits?.length != 0">
-                  <tr *ngFor="let audit of audits">
+                  <tr *ngFor="let audit of audits" (click)="OnRowClick(audit.id)">
                     <td>{{ audit.auditId }}</td>
                     <td>{{ audit.planId }}</td>
                     <td>{{ audit.auditName }}</td>
-                    <td>{{ audit.year }}</td>
+                    <!-- <td>{{ audit.year }}</td> -->
                     <td>{{ audit.auditTypeName }}</td>
                     <td>{{ audit.countryName }}</td>
-                    <td>{{ audit.auditPeriodFrom }}</td>
+                    <!-- <td>{{ audit.auditPeriodFrom }}</td>
                     <td>{{ audit.auditPeriodTo }}</td>
-                    <td>{{ audit.createdOn | date:'medium' }}</td>
+                    <td>{{ audit.createdOn | date:'medium' }}</td> -->
                     <td>
                       <div class="btn-group" role="group" aria-label="Basic example">
-                        <button [cModalToggle]="verticallyCenteredModalForSchedule.id" class="btn btn-secondary btnEditColor" [disabled]="true" (click)="resetScheduleForm(audit)" cButton>
+                        <!-- <button [cModalToggle]="verticallyCenteredModalForSchedule.id" class="btn btn-secondary btnEditColor" [disabled]="true" (click)="resetScheduleForm(audit)" cButton>
                           <svg cIcon name="cilClock" size="md" title="Add Button Icon"></svg>
-                        </button> 
+                        </button>  -->
                         <button type="button" class="btn btn-secondary btnEditColor" (click)="edit(verticallyCenteredModal,audit)">
                           <svg cIcon name="cilPencil" size="md" title="Edit Button icon"></svg>
                         </button>

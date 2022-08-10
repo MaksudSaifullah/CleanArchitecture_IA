@@ -16,6 +16,7 @@ import { paginatedResponseInterface } from 'src/app/core/interfaces/paginated.in
 import { commonValueAndType } from 'src/app/core/interfaces/configuration/commonValueAndType.interface';
 import { formatDate } from '@angular/common';
 import { Branch } from 'src/app/core/interfaces/branch-audit/branch.interface';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-audit',
@@ -40,7 +41,7 @@ export class AuditComponent implements OnInit {
   users: User[]=[];
   auditScheduleParticipants: AuditScheduleParticipant []=[];
 
-  constructor(private http: HttpService, private fb: FormBuilder, private AlertService: AlertService) {
+  constructor(private http: HttpService, private fb: FormBuilder, private AlertService: AlertService,private router: Router) {
     this.auditForm = this.fb.group({
       id: [''],
       auditTypeId: ["3ee0ab25-baf2-ec11-b3b0-00155d610b11"],
@@ -101,6 +102,12 @@ export class AuditComponent implements OnInit {
       },
     };
   }
+
+  OnRowClick(id:string){
+    //console.log(audit)
+    this.router.navigate(['branch-audit/audit-view'], {queryParams: {id:id}});
+  }
+
   search(){
      this.dataTableService.redraw(this.datatableElement);
    }

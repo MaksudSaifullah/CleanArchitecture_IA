@@ -1,4 +1,4 @@
-import { Component, OnInit, QueryList, ViewChildren } from '@angular/core';
+import { Component, OnInit, QueryList, ViewChild, ViewChildren } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { DataTableDirective } from 'angular-datatables';
 import { Subject } from 'rxjs';
@@ -16,8 +16,8 @@ import { paginatedResponseInterface } from 'src/app/core/interfaces/paginated.in
   styleUrls: ['./staff-turnover.component.scss']
 })
 export class StaffTurnoverComponent implements OnInit {
-  @ViewChildren(DataTableDirective)
-  dtElements: QueryList<DataTableDirective> | undefined;
+  @ViewChild(DataTableDirective, { static: false })
+  dtElement?: DataTableDirective;
   dtOptions: DataTables.Settings = {};
   riskAssesmentOverdue: riskAssessmentOverdue[] = [];
   pullFromAMBSForm: FormGroup;
@@ -44,13 +44,6 @@ export class StaffTurnoverComponent implements OnInit {
   };
 
 
-  ReloadAllDataTable() {
-    this.dtElements?.forEach((dtElement: DataTableDirective, index: number) => {
-      this.dataTableService.redraw(dtElement);
-    });
-  }
-
-
   LoadData() {
     this.dtOptions = {
       pagingType: 'full_numbers',
@@ -70,19 +63,11 @@ export class StaffTurnoverComponent implements OnInit {
       })
   }
 
-  onSubmit(modalId: any): void {
-    const localmodalId = modalId;
-    if (this.pullFromAMBSForm.valid) {
-      console.log(JSON.stringify(this.pullFromAMBSForm.value))
-      this.http.post('riskassessment', this.pullFromAMBSForm.value).subscribe(x => {
-        this.formService.onSaveSuccess(localmodalId, this.dtElements);
-        this.AlertService.success('Risk Assessment Saved Successfully');
-      });
-    }
-    else {
-      this.pullFromAMBSForm.markAllAsTouched();
-      return;
-    }
+  onSubmit(): void {
+    this.dtElement?.dtInstance.then((dtInstance: DataTables.Api) => console.log(dtInstance));
+    console.log(Object.assign({}, this.riskAssesmentOverdue, this.pullFromAMBSForm));
+    const tableData = [];
+    
   }
 
   LoadCountry() {

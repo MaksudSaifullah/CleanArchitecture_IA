@@ -19,7 +19,7 @@ import { formatDate } from '@angular/common';
 })
 export class OverdueTabComponentComponent implements OnInit {
   @ViewChild(DataTableDirective, { static: false })
-  dtElements: QueryList<DataTableDirective> | undefined;
+  dtElement?: DataTableDirective;
   dtOptions: DataTables.Settings = {};
   riskAssesmentOverdue: riskAssessmentOverdue[] = [];
   pullFromAMBSForm: FormGroup;
@@ -35,7 +35,6 @@ export class OverdueTabComponentComponent implements OnInit {
 
     this.LoadDropDownValues();
     this.pullFromAMBSForm = this.fb.group({
-      id: [''],
       countryId: [null, [Validators.required, Validators.pattern("^(?!null$).*$")]],
       conversionRate: [null, [Validators.required, Validators.pattern("^(?!null$).*$")]],
       effectiveTo: [Date, [Validators.required]],
@@ -44,7 +43,6 @@ export class OverdueTabComponentComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.LoadData();
     this.LoadRiskAssessment(this.id);
   };
 
@@ -54,25 +52,33 @@ export class OverdueTabComponentComponent implements OnInit {
     .getById('riskAssessment', id)
     .subscribe(res => {
         const riskAssessmentResponse = res as riskAssessment;
-        console.log(riskAssessmentResponse);
-        this.pullFromAMBSForm.patchValue({
-          id: riskAssessmentResponse.id,
-          coversionRate: 0,
+        this.pullFromAMBSForm.setValue({
           countryId: riskAssessmentResponse.countryId,
+          conversionRate: 88,
           effectiveTo: formatDate(riskAssessmentResponse.effectiveTo, 'yyyy-MM-dd', 'en'),
           effectiveFrom: formatDate(riskAssessmentResponse.effectiveFrom, 'yyyy-MM-dd', 'en')
         });
+        this.LoadData();
     });
+    
   }
 
-  ReloadAllDataTable() {
-    this.dtElements?.forEach((dtElement: DataTableDirective, index: number) => {
-      this.dataTableService.redraw(dtElement);
-    });
-  }
+  // ReloadAllDataTable() {
+  //   this.dtElements?.forEach((dtElement: DataTableDirective, index: number) => {
+  //     this.dataTableService.redraw(dtElement);
+  //   });
+  // }
 
 
   LoadData() {
+    console.log("LOGGGGGGGGGGG", Object.assign({}, this.pullFromAMBSForm.value, 
+      {
+        "typeId": 1,
+        "conversionRate": 88,
+        "pageNumber": 1,
+        "pageSize": -1
+      } 
+    ));
     this.dtOptions = {
       pagingType: 'full_numbers',
         pageLength: 10,
@@ -81,15 +87,16 @@ export class OverdueTabComponentComponent implements OnInit {
         searching: false,
         ordering: false,
     };
-    this.http.post('DataSync/getSyncData', {
+    this.http.post('DataSync/getSyncData', Object.assign({}, {
       "startDate": "2022-07-20T04:26:34.237Z",
      "endDate": "2022-07-25T04:26:34.237Z",
      "countryId": "8EB2932F-0DF6-EC11-B3B0-00155D610B18",
-     "typeId": 1,
-     "conversionRate": 88,
-      "pageNumber": 1,
-      "pageSize": 10 
+     "typeId": 1},
+     {"conversionRate": 88,
+     "pageNumber": 1,
+     "pageSize": -1
    })
+     )
       .subscribe(resp => {
         console.log(resp, this.pullFromAMBSForm.value);
         this.riskAssesmentOverdue = resp as riskAssessmentOverdue[];
@@ -98,16 +105,32 @@ export class OverdueTabComponentComponent implements OnInit {
   }
 
   onSubmit(): void {
-    console.log(Object.assign({}, this.pullFromAMBSForm.value, this.riskAssesmentOverdue[0].dataRequestQueueService))
-    if (this.pullFromAMBSForm.valid) {
-      this.http.post('riskassessment', Object.assign({}, this.pullFromAMBSForm.value, this.riskAssesmentOverdue[0].dataRequestQueueService)).subscribe(x => {
-        this.AlertService.success('Saved Successfully');
-      });
+    const tableData: Array<any> = [];
+    const temp = this.riskAssesmentOverdue;
+    console.log(this.riskAssesmentOverdue);
+    debugger;
+    this.dtElement?.dtInstance.then((dtInstance: DataTables.Api) => console.log(dtInstance.row));
+    for(const item of this.riskAssesmentOverdue){
+      const tableDataRow = [{
+        score: item.riskCriteria.commonValueRatingType.value,
+        rating: item.riskCriteria.commonValueRatingType.text,
+        value: item.amountConverted,
+        branchId: item.branchId,
+        isDraft: false
+      }];
+      tableData.push(tableDataRow);
     }
-    else {
-      this.pullFromAMBSForm.markAllAsTouched();
-      return;
-    }
+    console.log(Object.assign({}, this.pullFromAMBSForm.value, {riskAssesmentDataManagement: tableData}));
+      //     this.dataTableService.redraw(dtElement);
+    // if (this.pullFromAMBSForm.valid) {
+    //   this.http.post('riskassessment', Object.assign({}, this.pullFromAMBSForm.value, this.riskAssesmentOverdue[0].dataRequestQueueService)).subscribe(x => {
+    //     this.AlertService.success('Saved Successfully');
+    //   });
+    // }
+    // else {
+    //   this.pullFromAMBSForm.markAllAsTouched();
+    //   return;
+    // }
   }
 
   LoadCountry() {

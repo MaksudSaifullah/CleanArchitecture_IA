@@ -10,7 +10,6 @@
                 <div class="card-body">
                     <div class="container">
                         <form [formGroup]="pullFromAMBSForm">
-                            <input type="hidden" formControlName="id" />
                             <div class="col-md-6">
                                 <div cFormFloating>
                                     <select aria-label="Floating label select example" cSelect id="empDesignation"
@@ -28,8 +27,8 @@
                                     <label for="floatingInput">Conversion Rate</label>
                                 </div>
                                 <div class="form-floating" style="display: none;">
-                                    <input class="form-control" placeholder="effectiveForm" formControlName="effectiveForm"
-                                        id="effectiveForm" type="date">
+                                    <input class="form-control" placeholder="effectiveFrom" formControlName="effectiveFrom"
+                                        id="effectiveFrom" type="date">
                                     <label for="effectiveForm">Effective From</label>
                                 </div>
                                 <div class="form-floating">
@@ -46,7 +45,7 @@
             <br>
 
             <div class="row overflow-auto">
-                <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="table table-bordered row-border datatableStyle hover" visibility="false">
+                <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="table table-bordered row-border datatableStyle hover" id="mytable">
                     <thead>
                         <tr>
                             <th>SL No.</th>

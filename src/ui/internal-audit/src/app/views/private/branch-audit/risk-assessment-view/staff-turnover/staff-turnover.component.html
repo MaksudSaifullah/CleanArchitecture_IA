@@ -4,7 +4,7 @@
             <div class="card">
                 <div class="card-header">
                     <div class="fa fa-align-justify">
-                        <button class="btn btn-success"> Save </button>
+                        <button class="btn btn-success" (click)="onSubmit()"> Save </button>
                     </div>
                 </div>
                 <div class="card-body">
@@ -32,7 +32,7 @@
                                     <label for="AsOnDate">Effective From</label>
                                 </div>
                             </div>
-                            <button cButton class="btn btn-primary btnSaveColor mt-4 me-1" (click)="ReloadAllDataTable()">Pull Data From AMBS</button>
+                            <button cButton class="btn btn-primary btnSaveColor mt-4 me-1" (click)="LoadData()">Pull Data From AMBS</button>
                         </form>
                     </div>
                 </div>

@@ -40,7 +40,6 @@ const routes: Routes = [
     component: RiskAssessmentViewComponent
   },
   { path: 'userRegistration/:id', component: RiskAssessmentViewComponent },
-  },
   {
     path:'workpaper',
     component: WorkpaperComponent

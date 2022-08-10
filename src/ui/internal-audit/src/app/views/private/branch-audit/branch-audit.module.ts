@@ -39,7 +39,7 @@ import { WorkpaperComponent } from './workpaper/workpaper.component';
       AverageTabComponent,
       CollectionTabComponent,
     AuditComponent,
-      AuditScheduleComponent
+      AuditScheduleComponent,
     AuditScheduleComponent,
     IssueComponent,
     WorkpaperComponent

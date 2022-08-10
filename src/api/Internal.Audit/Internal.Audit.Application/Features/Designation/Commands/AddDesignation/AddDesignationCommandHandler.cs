@@ -22,9 +22,14 @@ public class AddDesignationCommandHandler : IRequestHandler<AddDesignationComman
         var designation = _mapper.Map<Domain.Entities.common.Designation>(request);
         designation.IsActive = true;
         var newDesignation = await _designationRepository.Add(designation);
-        var rowsAffected = await _unitOfWork.CommitAsync();
+        var rowsAffected = await _unitOfWork.CommitAsyncwithErrorMsg();
 
-        return new AddDesignationResponseDTO(newDesignation.Id, rowsAffected > 0, rowsAffected > 0 ? "Designation Added Successfully!" : "Error while creating Designation!");
+        if (rowsAffected.Item1 == -1)
+        {
+            return new AddDesignationResponseDTO(newDesignation.Id, false, rowsAffected.Item2);
+        }
+
+        return new AddDesignationResponseDTO(newDesignation.Id, rowsAffected.Item1 > 0, rowsAffected.Item1 > 0 ? "Designation Added Successfully!" : "Error while creating Designation!");
 
     }
 }

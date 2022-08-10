@@ -25,6 +25,17 @@ public class UpdateRiskProfileCommandHandler : IRequestHandler<UpdateRiskProfile
 
     public async Task<UpdateRiskProfileResponseDTO> Handle(UpdateRiskProfileCommand request, CancellationToken cancellationToken)
     {
+        var exists = await _riskProfileRepository.Get(x => (x.EffectiveFrom >= request.EffectiveFrom && x.EffectiveFrom <= request.EffectiveTo)
+                                                             || (x.EffectiveTo >= request.EffectiveFrom && x.EffectiveTo <= request.EffectiveTo)
+                                                             || (request.EffectiveTo >= x.EffectiveFrom && request.EffectiveTo <= x.EffectiveTo)
+                                                             || (request.EffectiveFrom >= x.EffectiveFrom && request.EffectiveFrom <= x.EffectiveTo));
+
+        var duplicateData = exists.Where(x => x.LikelihoodTypeId == request.LikelihoodTypeId && x.RatingTypeId == request.RatingTypeId && x.ImpactTypeId == request.ImpactTypeId && x.Id != request.Id);
+        if (duplicateData.Count() > 0)
+        {
+            return new UpdateRiskProfileResponseDTO(request.Id, false, "Duplicate Data Found in same Date Range");
+
+        }
         var riskProfile = await _riskProfileRepository.Get(request.Id);
         var mappedRiskProfile = _mapper.Map(request, riskProfile);
         var updatedRiskProfile =  await _riskProfileRepository.Update(mappedRiskProfile);

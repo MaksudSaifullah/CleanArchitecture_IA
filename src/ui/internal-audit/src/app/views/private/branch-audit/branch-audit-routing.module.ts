@@ -5,6 +5,7 @@ import { RiskAssessmentComponent } from './risk-assessment/risk-assessment.compo
 import { RiskCriteriaComponent } from './risk-criteria/risk-criteria.component';
 import { TopicHeadComponent } from './topic-head/topic-head.component';
 import { AuditComponent } from './audit/audit.component';
+import { AuditScheduleComponent } from './audit-schedule/audit-schedule.component';
 
 const routes: Routes = [
   {
@@ -27,6 +28,10 @@ const routes: Routes = [
   {
     path:'audit',
     component: AuditComponent
+  },
+  {
+    path:'audit-schedule',
+    component: AuditScheduleComponent
   }
 ];
 

@@ -15,10 +15,10 @@ namespace Internal.Audit.Infrastructure.Persistent.Repositories.Audit
 
         }
 
-        public async Task<(long, IEnumerable<AuditPlanCode>)> GetAll(int pageSize, int pageNumber)
+        public async Task<(long, IEnumerable<AuditPlanCode>)> GetAll(Guid countryId,Guid auditTypeId, int pageSize, int pageNumber)
         {
-            var query = "EXEC [dbo].[GetAuditPlanCodeListProcedure] @pageSize,@pageNumber";
-            var parameters = new Dictionary<string, object> { { "@pageSize", pageSize }, { "@pageNumber", pageNumber } };
+            var query = "EXEC [dbo].[GetAuditPlanCodeListProcedure] @pageSize,@pageNumber,@countryId,@auditTypeId";
+            var parameters = new Dictionary<string, object> { { "@countryId", countryId }, { "@auditTypeId", auditTypeId }, { "@pageSize", pageSize }, { "@pageNumber", pageNumber } };
             return await GetWithPagingInfo(query, parameters, false);
         }
     }

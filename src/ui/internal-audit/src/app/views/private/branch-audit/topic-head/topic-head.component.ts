@@ -12,6 +12,7 @@ import { country } from 'src/app/core/interfaces/configuration/country.interface
 import { paginatedResponseInterface } from 'src/app/core/interfaces/paginated.interface';
 import { formatDate } from '@angular/common';
 import { CutomvalidatorService } from 'src/app/core/services/cutomvalidator.service'
+import { CommonResponseInterface } from 'src/app/core/interfaces/common-response.interface';
 
 @Component({
   selector: 'app-topic-head',
@@ -188,7 +189,13 @@ export class TopicHeadComponent implements OnInit  {
     this.AlertService.confirmDialog().then(res => {
       if (res.isConfirmed) {
         this.http.delete('topicHead/id?Id=' + id, {}).subscribe(response => {
-          this.AlertService.successDialog('Deleted', 'Topic Head deleted successfully.');
+          let resp = response as CommonResponseInterface;
+          if(resp.success){
+            this.AlertService.successDialog('Deleted', resp.message);
+          }
+          else{
+            this.AlertService.errorDialog('Unsuccessful', resp.message);
+          }
           this.ReloadAllDataTable();
         })
       }
@@ -279,8 +286,14 @@ export class TopicHeadComponent implements OnInit  {
     this.AlertService.confirmDialog().then(res => {
       if (res.isConfirmed) {
         this.http.delete('questionnaire/id?Id=' + id, {}).subscribe(response => {
-          this.AlertService.successDialog('Deleted', 'Questionnaire deleted successfully.');
-          this.ReloadAllDataTable();
+          let resp = response as CommonResponseInterface;
+          if(resp.success){
+            this.AlertService.successDialog('Deleted', resp.message);
+          }
+          else{
+            this.AlertService.errorDialog('Unsuccessful', resp.message);
+          }
+          this.ReloadAllDataTable();          
         })
       }
     });
@@ -291,16 +304,16 @@ export class TopicHeadComponent implements OnInit  {
     //console.log(questionnaire);
     this.http
       .getById('questionnaire', 'id?Id='+ questionnaire.id)
-      .subscribe(res => {
-        const response = res as questionnaire;  
-        console.log(response);    
-        this.questionnaireForm.setValue({ id: response.id,
+      .subscribe(res => {        
+        const response = res as questionnaire;         
+        this.onChangeCountry(response.countryId == null ? "null" : response.countryId?.toString(), true);          
+        this.questionnaireForm.patchValue({ id: response.id,
           countryId: response.countryId,
           topicHeadId: response.topicHeadId,
           question: response.question, 
           effectiveFrom: formatDate(response.effectiveFrom, 'yyyy-MM-dd', 'en'), 
           effectiveTo: formatDate(response.effectiveTo , 'yyyy-MM-dd', 'en')
-        });
+        });       
       });
     localmodalId.visible = true;
 
@@ -368,7 +381,12 @@ LoadTestStepData(){
       .getById('test-step', 'id?Id='+ testStep.id)
       .subscribe(res => {
         const response = res as testStep;  
-        console.log(response);    
+        console.log(response);
+        //this.onChangeCountry("null")
+        this.onChangeCountry(response.countryId == null ? "null" : response.countryId?.toString(),true);
+        this.onChangeTopicHead(response.topicHeadId == null? "null" : response.topicHeadId?.toString());
+        console.log(this.topicheadDropdownList)
+        console.log(response.topicHeadId)
         this.testStepForm.patchValue({ id: response.id,
           countryId: response.countryId,
           topicHeadId: response.topicHeadId,
@@ -416,20 +434,26 @@ LoadTestStepData(){
     });
 
  }
-  onChangeCountry(filter:string):void
+  onChangeCountry(filter:string,isSystem:boolean=false):void
   {
-    if(filter=="null"){
-      this.topicheadDropdownList = [];
-      this.questionnaireDropdownList = [];
-      
+    this.topicheadDropdownList = [];
+    if(filter=="null"){           
+     // this.topicheadDropdownList = [];
+     //this.questionnaireDropdownList = [];
+
       this.questionnaireForm.patchValue({topicHeadId:"null"});
-      this.testStepForm.patchValue({topicHeadId:"null"});
+      this.testStepForm.patchValue({topicHeadId:"null"});      
     }    
-    else{         
+    else{     
       this.http.post('topicHead/filter', {FilterName: 'CountryId', FilterValue: filter}).subscribe(resp => {
         this.topicheadDropdownList = resp as topicHead[];
       })
+      if(!isSystem){
+        this.testStepForm.patchValue({topicHeadId:"null",questionnaireId:"null"});
+        this.questionnaireForm.patchValue({topicHeadId:"null"});
+      }
     }
+    this.onChangeTopicHead("null");
   }
   onChangeTopicHead(filter:string):void
   {

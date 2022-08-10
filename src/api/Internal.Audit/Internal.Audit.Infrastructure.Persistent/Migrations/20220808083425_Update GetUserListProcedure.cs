@@ -8,7 +8,7 @@ namespace Internal.Audit.Infrastructure.Persistent.Migrations
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.Sql(@"ALTER PROCEDURE [dbo].[GetUserListProcedure]
+            migrationBuilder.Sql(@"create or ALTER PROCEDURE [dbo].[GetUserListProcedure]
 			@userName nvarchar(50),
 			@employeeName nvarchar(50),
 			@roleName nvarchar(50),

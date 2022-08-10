@@ -404,6 +404,7 @@ public class MappingProfile : Profile
        
         CreateMap<RiskAssesmentDataManagementLog, AddRiskAssesmentDataManagementLogCommand>().ReverseMap();
         CreateMap<RiskAssesmentDataManagement, RiskAssesmentDataManagementCommand>().ReverseMap();
+        CreateMap<Branch, GetBranchListResponseDTORAW>().ReverseMap();
 
 
     }

@@ -7,5 +7,5 @@ using System.Threading.Tasks;
 
 namespace Internal.Audit.Application.Features.AuditSchedules.Queries.GetAuditScheduleByPlanId;
 
-public record GetAuditScheduleByPlanIdQuery(Guid? planId):IRequest<IEnumerable<AuditScheduleParticipantsDTO>>;
+public record GetAuditScheduleByPlanIdQuery(Guid? creationId):IRequest<IEnumerable<AuditScheduleParticipantsDTO>>;
 

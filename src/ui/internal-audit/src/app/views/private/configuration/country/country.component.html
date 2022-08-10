@@ -121,6 +121,10 @@
               *ngIf="countryForm.get('code').hasError('maxlength')">
               The maximum length for this field is {{countryForm.get('code').errors.maxlength.requiredLength}} characters.
           </small>
+          <small class="text-danger" 
+              *ngIf="countryForm.get('code').hasError('pattern')">
+               Code should be in ISO Alpha 2 format
+          </small>
       </div>
 
 

@@ -34,7 +34,7 @@ public class AuditCreationDTO
     public DateTime AuditPeriodTo { get; set; }   
     public virtual AuditTypeDTO AuditType { get; set; } = null!;
   
-    public virtual AuditPlanDTO AuditPlan { get; set; } = null!;
+    //public virtual AuditPlanDTO AuditPlan { get; set; } = null!;
 }
 
 public class AuditTypeDTO
@@ -43,12 +43,12 @@ public class AuditTypeDTO
     public string Name { get; set; } = null!;
 
 }
-public class AuditPlanDTO
-{
-    public Guid RiskAssessmentId { get; set; }   
-    public string PlanCode { get; set; } = null!;   
-    public Guid PlanningYearId { get; set; }  
-    public DateTime AssessmentFrom { get; set; }    
-    public DateTime AssessmentTo { get; set; }   
-    public virtual RiskAssessment RiskAssessment { get; set; } = null!;
-}
+//public class AuditPlanDTO
+//{
+//    public Guid RiskAssessmentId { get; set; }   
+//    public string PlanCode { get; set; } = null!;   
+//    public Guid PlanningYearId { get; set; }  
+//    public DateTime AssessmentFrom { get; set; }    
+//    public DateTime AssessmentTo { get; set; }   
+//    public virtual RiskAssessment RiskAssessment { get; set; } = null!;
+//}

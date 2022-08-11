@@ -11,6 +11,7 @@ public class GetAuditSchedulePlanIdResponseDTO
     public DateTime ScheduleEndDate { get; set; }
     public virtual AuditCreationDTO AuditCreation { get; set; } = null!;
     public virtual ICollection<AuditScheduleParticipantsDTO> AuditScheduleParticipants { get; set; } = null!;
+    public virtual ICollection<AuditScheduleBranch> AuditScheduleBranch { get; set; } = null!;
 }
 
 public class AuditScheduleParticipantsDTO
@@ -52,3 +53,55 @@ public class AuditTypeDTO
 //    public DateTime AssessmentTo { get; set; }   
 //    public virtual RiskAssessment RiskAssessment { get; set; } = null!;
 //}
+
+
+public class UserDTO
+{
+
+   
+    public string UserName { get; set; } = null!;  
+    public string? FullName { get; set; }   
+    public string? ProfileImageUrl { get; set; }  
+    public bool IsEnabled { get; set; }   
+    public bool IsAccountExpired { get; set; }   
+    public bool IsPasswordExpired { get; set; }    
+    public bool IsAccountLocked { get; set; }     
+    public virtual EmployeeDTO Employee { get; set; }
+
+}
+
+public class AuditScheduleBranch
+{
+   
+    public Guid AuditScheduleId { get; set; }
+ 
+    public Guid BranchId { get; set; }  
+  
+    public virtual BranchDTO Branch { get; set; } = null!;
+}
+
+public class BranchDTO
+{
+   
+    public Guid CountryId { get; set; }
+    public int BranchCode { get; set; }
+    public long BranchId { get; set; }
+   
+    public string? BranchName { get; set; }
+  
+}
+
+public class EmployeeDTO 
+{
+  
+    public Guid UserId { get; set; }   
+    
+    public Guid PhotoId { get; set; } //document foreign key
+
+    public string Name { get; set; } = null!;
+
+    public string Email { get; set; } = null!;
+
+    public bool IsActive { get; set; }      
+
+}

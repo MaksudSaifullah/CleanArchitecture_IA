@@ -10,9 +10,9 @@ namespace Internal.Audit.Application.Features.Branches.Commands.GetBranchList;
 
 public class GetBranchListResponseDTO
 {
-    public IList<GetBranchListResponseDTORAW> BranchList { get; set; }
+    public IList<GetBranchListResponseDTORAW> Items { get; set; }
     [NotMapped]
-    public virtual EfTotalCount TotalCount { get; set; }
+    public long TotalCount { get; set; }
 }
 public class GetBranchListResponseDTORAW
 {

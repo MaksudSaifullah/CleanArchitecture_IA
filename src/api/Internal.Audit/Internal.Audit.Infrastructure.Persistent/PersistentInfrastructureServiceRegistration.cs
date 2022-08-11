@@ -197,6 +197,7 @@ public static class PersistentInfrastructureServiceRegistration
 
         services.AddScoped<IAuditScheduleParticipantsCommandRepository, AuditScheduleparticipantsCommandRepository>();
         services.AddScoped<IAuditScheduleParticipantsQueryRepository>(s => new AuditScheduleParticipantsQueryRepository(configuration.GetConnectionString("InternalAuditDb")));
+        services.AddScoped<IAuditScheduleBaseQueryRepository>(s => new AuditScheduleBaseQueryRepository(configuration.GetConnectionString("InternalAuditDb")));
 
         services.AddScoped<IWorkPaperCommandRepository, WorkPaperCommandRepository>();
         services.AddScoped<IWorkPaperQueryRepository>(s => new WorkPaperQueryRepository(configuration.GetConnectionString("InternalAuditDb")));

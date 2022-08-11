@@ -27,8 +27,8 @@ public class GetBranchListCommandHandler : IRequestHandler<GetBranchListCommnad,
         var dataSet = branchList.OrderBy(x=>x.BranchCode).Skip(skip).Take(request.pageSize);
         GetBranchListResponseDTO result = new GetBranchListResponseDTO
         {
-            BranchList = _mapper.Map<IList<GetBranchListResponseDTORAW>>(dataSet),
-            TotalCount = new Domain.CompositeEntities.EfTotalCount { Tc = totalList }
+            Items = _mapper.Map<IList<GetBranchListResponseDTORAW>>(dataSet),
+            TotalCount = totalList 
         };
         return result; 
         

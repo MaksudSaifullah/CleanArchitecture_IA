@@ -162,7 +162,7 @@ Set-ExecutionPolicy RemoteSigned -Scope CurrentUser
 
 - Step 4: Open IIS in your desired server where you want to host the API
 - Step 5: Add a website by right click on sites with a application pool that contains .NET 6 sdk, you have to give a path while adding the website. Copy the files generated in Step 3 to this folder. You also need to specify the port number in this step.
-  - If there is no application pool with .NET 6 sdk, create one first as per the screenshot.
+  - If there is no application pool with .NET 6 sdk, create one first as per the screenshot. Also enable 32-bit applications for this application pool from advanced setting by right clicking the application pool.
   ![](img/apk_pool.png)
 - Step 6: Now just start the Site. You can verify by accessing http://serverIp:port/swagger/index.html if the swagger is kept on.
 

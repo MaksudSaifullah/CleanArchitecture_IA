@@ -53,9 +53,14 @@ public class InternalAuditContextSeed
             context.UserLockingPolicies.AddRange(GetSeedUserLockingPolicy());
             await context.SaveChangesAsync();
         }
+        if(!context.CommonValueAndTypes.Where(x=>x.Type== "RISKASSESMENT").Any())
+        {
+            context.CommonValueAndTypes.AddRange(RiskAssesmentType());
+            await context.SaveChangesAsync();
+        }
     }
-        
-    
+
+
 
     private static IEnumerable<User> GetSeedUsers()
     {
@@ -76,10 +81,10 @@ public class InternalAuditContextSeed
         {
             new PasswordPolicy
             {
-                MinLength = 8, MaxLength = 20, 
+                MinLength = 8, MaxLength = 20,
                 IsAlphabetMandatory = true, IsNumberMandatory = true, IsSpecialCharsMandatory = true,
                 AlphabetLength = 2, NumericLength = 1, SpecialCharsLength = 1,
-                IsPasswordChangeForcedOnFirstLogin = true, IsPasswordResetForcedPeriodically = true, 
+                IsPasswordChangeForcedOnFirstLogin = true, IsPasswordResetForcedPeriodically = true,
                 ForcePasswordResetDays = 100, NotifyPasswordResetDays = 90,
                 EffectiveFrom = new DateTime(2022, 01, 01), EffectiveTo = null
             }
@@ -510,5 +515,23 @@ public class InternalAuditContextSeed
                 IsActive = true,CreatedBy="admin",CreatedOn=DateTime.Now,Type="RISKRATINGNAME",SubType="",Value=6,Text="Fraud ",SortOrder=60,
             }
         };
-      }
+    }
+
+    private static IEnumerable<CommonValueAndType> RiskAssesmentType()
+    {
+        return new List<CommonValueAndType>
+        {
+            new CommonValueAndType
+            {
+                IsActive = true,CreatedBy="admin",CreatedOn=DateTime.Now,Type="RISKASSESMENT",SubType="",Value=1,Text="Low",SortOrder=10,
+            }
+            ,new CommonValueAndType
+            {
+                IsActive = true,CreatedBy="admin",CreatedOn=DateTime.Now,Type="RISKASSESMENT",SubType="",Value=2,Text="Medium",SortOrder=20,
+            },new CommonValueAndType
+            {
+                IsActive = true,CreatedBy="admin",CreatedOn=DateTime.Now,Type="RISKASSESMENT",SubType="",Value=3,Text="High ",SortOrder=30,
+            }
+        };
+    }
 }

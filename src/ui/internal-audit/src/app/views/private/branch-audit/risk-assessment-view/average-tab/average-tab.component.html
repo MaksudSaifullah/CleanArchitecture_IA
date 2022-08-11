@@ -1,0 +1,106 @@
+<div class="animated fadeIn">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="card">
+                <div class="card-header">
+                    <div class="fa fa-align-justify">
+                        <button class="btn btn-success"> Save </button>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="container">
+                        <form [formGroup]="pullFromAMBSForm">
+                            <input type="hidden" formControlName="id" />
+                            <div class="col-md-6">
+                                <div form-floating>
+                                    <select aria-label="Floating label select example" cSelect id="countryId"
+                                        formControlName="countryId" name="countryId">
+                                        <option value=null>Select Country</option>
+                                        <option *ngFor="let country of countries" [value]="country.id">
+                                            {{country.name}}
+                                        </option>
+                                    </select>
+                                </div>
+                                <div class="form-floating mb-3 mt-4">
+                                    <input type="text" class="form-control" formControlName="conversionRate"
+                                        id="conversionRate" placeholder="conversionRate">
+                                    <label for="floatingInput">Conversion Rate</label>
+                                </div>
+                                <div class="form-floating">
+                                    <input class="form-control" placeholder="AsOnDate" formControlName="AsOnDate"
+                                        id="AsOnDate" type="date">
+                                    <label for="AsOnDate">Effective From</label>
+                                </div>
+                            </div>
+                            <button cButton class="btn btn-primary btnSaveColor mt-4 me-1" (click)="LoadData()">Pull Data From AMBS</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <br>
+
+            <div class="row overflow-auto">
+                <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="table table-bordered row-border datatableStyle hover" visibility="false">
+                    <thead>
+                        <tr>
+                            <th rowspan="2">SL No.</th>
+                            <th rowspan="2">Branch Name</th>
+                            <th colspan="2">Overdue</th>
+                            <th colspan="2">Collection</th>
+                            <th colspan="2">Loan Disbursement</th>
+                            <th colspan="2">LO Productivity</th>
+                            <th colspan="2">Staff Turnover</th>
+                            <th colspan="2">Fraud And Misappropriation</th>
+                            <th colspan="3">Average</th>
+                        </tr>
+                        <tr>
+                            <th>Rating</th>
+                            <th>Score</th>
+                            <th>Rating</th>
+                            <th>Score</th>
+                            <th>Rating</th>
+                            <th>Score</th>
+                            <th>Rating</th>
+                            <th>Score</th>
+                            <th>Rating</th>
+                            <th>Score</th>
+                            <th>Rating</th>
+                            <th>Score</th>
+                            <th>Rating</th>
+                            <th>Score</th>
+                            <th>Frequency</th>
+                        </tr>
+
+                    </thead>
+                    <tbody *ngIf="riskAssesmentOverdue?.length != 0">
+                        
+                        <tr *ngFor="let riskAssessment of riskAssesmentOverdue; let i = index">
+                            <td> {{i + 1}} </td>
+                            <td>{{ riskAssessment.branchName }}</td>
+                            <td>{{ riskAssessment.amount }}</td>
+                            <td>{{ riskAssessment.amountConverted }}</td>
+                            <td> {{ riskAssessment.riskCriteria.commonValueRatingType.text }} </td>
+                            <td> {{ riskAssessment.riskCriteria.commonValueRatingType.value }} </td>
+                            <td> {{ tableTempData }}</td>
+                            <td> {{i + 1}} </td>
+                            <td>{{ riskAssessment.branchName }}</td>
+                            <td>{{ riskAssessment.amount }}</td>
+                            <td>{{ riskAssessment.amountConverted }}</td>
+                            <td> {{ riskAssessment.riskCriteria.commonValueRatingType.text }} </td>
+                            <td> {{ riskAssessment.riskCriteria.commonValueRatingType.value }} </td>
+                            <td> {{ tableTempData }}</td>
+                            <td> {{i + 1}} </td>
+                            <td>{{ riskAssessment.branchName }}</td>
+                            <td>{{ riskAssessment.amount }}</td>
+                        </tr>
+                    </tbody>
+                    <tbody *ngIf="riskAssesmentOverdue?.length == 0">
+                        <tr>
+                            <td colspan="5" class="no-data-available">Please pull data!</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

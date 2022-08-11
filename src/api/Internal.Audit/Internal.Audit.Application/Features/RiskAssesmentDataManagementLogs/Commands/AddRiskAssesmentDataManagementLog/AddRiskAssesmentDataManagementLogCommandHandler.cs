@@ -41,7 +41,7 @@ public class AddRiskAssesmentDataManagementLogCommandHandler : IRequestHandler<A
             }
         }
 
-
+       
         var riskdataManagementLog = _mapper.Map<RiskAssesmentDataManagementLog>(request);       
         var newRiskdataManagementLog= await _repository.Add(riskdataManagementLog);
         var rowsAffected = await _unitOfWork.CommitAsync();

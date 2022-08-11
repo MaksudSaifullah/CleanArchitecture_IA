@@ -192,9 +192,9 @@ namespace Internal.Audit.Api.Controllers
             return Ok(generictype);
         }
         [HttpGet("getBranch")]
-        public async Task<ActionResult<IEnumerable<GetCommonValueTypeGenericDTO>>> GetBranchListId(Guid countryId)
+        public async Task<ActionResult<IEnumerable<GetCommonValueTypeGenericDTO>>> GetBranchListId(Guid countryId,int pageNumber,int pageSize)
         {
-            var command = new GetBranchListCommnad(countryId);
+            var command = new GetBranchListCommnad(countryId,pageNumber,pageSize);
             var branchList = await _mediator.Send(command);
             return Ok(branchList);
         }

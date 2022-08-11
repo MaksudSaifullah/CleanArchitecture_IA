@@ -1,5 +1,6 @@
 ﻿
 using Internal.Audit.Domain.Entities;
+using Internal.Audit.Domain.Entities.Common;
 using Internal.Audit.Domain.Entities.config;
 using Internal.Audit.Domain.Entities.Config;
 using Internal.Audit.Domain.Entities.security;
@@ -56,6 +57,11 @@ public class InternalAuditContextSeed
         if(!context.CommonValueAndTypes.Where(x=>x.Type== "RISKASSESMENT").Any())
         {
             context.CommonValueAndTypes.AddRange(RiskAssesmentType());
+            await context.SaveChangesAsync();
+        }
+        if (!context.AuditModule.Any())
+        {
+            context.AuditModule.AddRange(AuditModuleAdd());
             await context.SaveChangesAsync();
         }
     }
@@ -531,6 +537,27 @@ public class InternalAuditContextSeed
             },new CommonValueAndType
             {
                 IsActive = true,CreatedBy="admin",CreatedOn=DateTime.Now,Type="RISKASSESMENT",SubType="",Value=3,Text="High ",SortOrder=30,
+            }
+        };
+    }
+    private static IEnumerable<AuditModule> AuditModuleAdd()
+    {
+        return new List<AuditModule>
+        {
+            new AuditModule
+            {
+                IsActive = true,CreatedBy="admin",CreatedOn=DateTime.Now,Name="COMMON",DisplayName="Common Configuration"
+            }
+            ,new AuditModule
+            {
+                IsActive = true,CreatedBy="admin",CreatedOn=DateTime.Now,Name="SECURITY",DisplayName="Security"
+            },new AuditModule
+            {
+                IsActive = true,CreatedBy="admin",CreatedOn=DateTime.Now,Name="BA",DisplayName="Branch Audit"
+            }
+            ,new AuditModule
+            {
+                IsActive = true,CreatedBy="admin",CreatedOn=DateTime.Now,Name="PA",DisplayName="Process & Control Audit"
             }
         };
     }

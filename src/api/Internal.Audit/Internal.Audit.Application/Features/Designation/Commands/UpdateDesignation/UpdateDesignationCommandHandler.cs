@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Internal.Audit.Application.Contracts.Persistent;
 using Internal.Audit.Application.Contracts.Persistent.Designations;
+using Internal.Audit.Application.Features.Designation.Commands.AddDesignation;
 using MediatR;
 
 namespace Internal.Audit.Application.Features.Designation.Commands.UpdateDesignation;
@@ -19,6 +20,13 @@ public class UpdateDesignationCommandHandler : IRequestHandler<UpdateDesignation
 
     public async Task<UpdateDesignationResponseDTO> Handle(UpdateDesignationCommand request, CancellationToken cancellationToken)
     {
+        var duplicateData = await _designationRepository.Get(x => (x.Name.Trim() == request.Name.Trim() && x.IsDeleted == false));
+
+        if (duplicateData.Count() > 0)
+        {
+            return new UpdateDesignationResponseDTO(request.Id, false, "Duplicate Data Found For Designation Name");
+        }
+
         var designation = await _designationRepository.Get(request.Id);
         designation = _mapper.Map(request, designation);
         await _designationRepository.Update(designation);

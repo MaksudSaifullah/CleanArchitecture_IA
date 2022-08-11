@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Internal.Audit.Application.Contracts.Persistent;
 using Internal.Audit.Application.Contracts.Persistent.Designations;
+using Internal.Audit.Application.Features.RiskProfiles.Commands.AddRiskProfile;
 using MediatR;
 
 namespace Internal.Audit.Application.Features.Designation.Commands.AddDesignation;
@@ -18,7 +19,13 @@ public class AddDesignationCommandHandler : IRequestHandler<AddDesignationComman
         _unitOfWork = unitOfWork ?? throw new ArgumentNullException(nameof(unitOfWork));
     }
     public async Task<AddDesignationResponseDTO> Handle(AddDesignationCommand request, CancellationToken cancellationToken)
-    {       
+    {
+        var duplicateData = await _designationRepository.Get(x => (x.Name.Trim() == request.Name.Trim() && x.IsDeleted==false));
+
+        if (duplicateData.Count() > 0)
+        {
+            return new AddDesignationResponseDTO(Guid.NewGuid(), false, "Duplicate Data Found For Designation Name");
+        }
         var designation = _mapper.Map<Domain.Entities.common.Designation>(request);
         designation.IsActive = true;
         var newDesignation = await _designationRepository.Add(designation);

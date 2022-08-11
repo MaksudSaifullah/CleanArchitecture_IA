@@ -1893,9 +1893,11 @@ namespace Internal.Audit.Infrastructure.Persistent.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CountryId");
+                    b.HasIndex("CountryId")
+                        .IsUnique();
 
-                    b.HasIndex("EmailTypeId");
+                    b.HasIndex("EmailTypeId")
+                        .IsUnique();
 
                     b.ToTable("EmailConfiguration", "Config");
                 });

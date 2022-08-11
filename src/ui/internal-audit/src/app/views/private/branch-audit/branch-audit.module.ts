@@ -17,6 +17,7 @@ import { AuditComponent } from './audit/audit.component';
 import { AuditScheduleComponent } from './audit-schedule/audit-schedule.component';
 import { IssueComponent } from './issue/issue.component';
 import { AuditViewComponent } from './audit-view/audit-view.component';
+import { ScheduleViewComponent } from './schedule-view/schedule-view.component';
 
 
 @NgModule({
@@ -28,9 +29,9 @@ import { AuditViewComponent } from './audit-view/audit-view.component';
 
     AuditComponent,
     AuditScheduleComponent,
-    IssueComponent
-
-      AuditViewComponent
+    IssueComponent,
+    AuditViewComponent,
+    ScheduleViewComponent
   ],
   imports: [
     CommonModule,

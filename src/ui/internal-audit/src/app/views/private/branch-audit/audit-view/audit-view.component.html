@@ -86,13 +86,15 @@
                 <table datatable [dtOptions]="dtOptions" class="table table-bordered row-border hover datatableStyle" >
                   <thead>
                     <tr>
+                      <th>SL</th>
                       <th>Country</th>
                       <th>Branch</th>
                      
                     </tr>
                   </thead>
                   <tbody *ngIf="branches?.length != 0">
-                    <tr *ngFor="let branch of branches" >
+                    <tr *ngFor="let branch of branches let i=index" >
+                      <td>{{ i+1 }}</td>
                       <td>{{ branch.auditId }}</td>
                       <td>{{ branch.planId }}</td>
                      

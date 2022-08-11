@@ -22,3 +22,16 @@ public class RiskAssesmentDataManagementLog:EntityBase
 
   
 }
+
+public class RiskAssesmentDataManagementdto
+{
+   
+    public Guid CountryId { get; set; }   
+    public string RequestType { get; set; }  
+    public DateTime FromDate { get; set; }   
+    public DateTime ToDate { get; set; }
+    public DateTime RequestedOn { get; set; }
+    public int Status { get; set; }    
+    public bool IsActive { get; set; }
+    //public virtual Country Country { get; set; }
+}

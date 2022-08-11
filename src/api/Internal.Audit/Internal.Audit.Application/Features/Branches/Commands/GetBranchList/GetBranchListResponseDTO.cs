@@ -20,4 +20,6 @@ public class GetBranchListResponseDTORAW
     public long BranchId { get; set; }
     public string? BranchName { get; set; }
     public Guid? Id { get; set; }
+    public Guid? CountryId { get; set; }
+    public string? CountryName { get; set; }
 }

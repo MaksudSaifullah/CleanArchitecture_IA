@@ -148,6 +148,8 @@ using Internal.Audit.Application.Features.WorkPapers.Commands.AddWorkPaper;
 using Internal.Audit.Application.Features.WorkPapers.Commands.UpdateWorkPaper;
 using Internal.Audit.Application.Features.WorkPapers.Commands.DeleteWorkPaper;
 using Internal.Audit.Application.Features.AuditSchedules.Queries.GetAuditScheduleList;
+using Internal.Audit.Application.Features.RiskAssesmentDataManagements.Commands.AddRiskAssesmentDataManagement;
+using Internal.Audit.Application.Features.RiskAssesmentDataManagementLogs.Commands.AddRiskAssesmentDataManagementLog;
 
 namespace Internal.Audit.Application.Mappings;
 
@@ -398,6 +400,12 @@ public class MappingProfile : Profile
         CreateMap<WorkPaper, UpdateWorkPaperCommand>().ReverseMap();
         CreateMap<WorkPaper, DeleteWorkPaperResponseDTO>().ReverseMap();
         CreateMap<WorkPaper, DeleteWorkPaperCommand>().ReverseMap();
+
+       
+        CreateMap<RiskAssesmentDataManagementLog, AddRiskAssesmentDataManagementLogCommand>().ReverseMap();
+        CreateMap<RiskAssesmentDataManagement, RiskAssesmentDataManagementCommand>().ReverseMap();
+        CreateMap<Branch, GetBranchListResponseDTORAW>().ReverseMap();
+
 
     }
 }

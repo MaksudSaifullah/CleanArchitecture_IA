@@ -7,5 +7,5 @@ using System.Threading.Tasks;
 
 namespace Internal.Audit.Application.Features.Branches.Commands.GetBranchList;
 
-public record GetBranchListCommnad(Guid? countyrId):IRequest<IEnumerable<GetBranchListResponseDTO>>;
+public record GetBranchListCommnad(Guid? countyrId,int pageNumber,int pageSize):IRequest<GetBranchListResponseDTO>;
 

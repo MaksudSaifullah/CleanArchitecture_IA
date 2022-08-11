@@ -12,6 +12,7 @@ import { userRegistrationRequestData, UserCountry, UserRole, UserResponse } from
 import {AlertService} from '../../../../core/services/alert.service';
 import { param } from 'jquery';
 import { cibToshiba } from '@coreui/icons';
+import {BaseResponse} from 'src/app/core/interfaces/common/base-response.interface'
 
 
 @Component({
@@ -188,6 +189,17 @@ export class UserRegistrationComponent implements OnInit {
 
     if (this.countryForm.valid) {     
 
+      this.userSelectedCountry=[];
+      this.formArray?.value.forEach((ctrl: any) => {    
+        let country: UserCountry = { countryId: ctrl.toString() ,isActive:true,userId:that.paramId==undefined?null:that.paramId}
+        this.userSelectedCountry.push(country);
+
+
+        //this.formArray?.push(new FormControl(ctrl.countryId));    
+        
+      });
+
+
       let useca: UserRole[] = this.countryForm.value.roleList as UserRole[];
 
       if (Array.isArray(useca)) {
@@ -197,75 +209,84 @@ export class UserRegistrationComponent implements OnInit {
         }); 
         
       }
-      this.userSelectedCountry=[];
-      this.formArray?.value.forEach((ctrl: any) => {    
-        let country: UserCountry = { countryId: ctrl.toString() ,isActive:true,userId:that.paramId==undefined?null:that.paramId}
-        this.userSelectedCountry.push(country);
-
-        //this.formArray?.push(new FormControl(ctrl.countryId));    
-        
-      });
-
-
-
 
      
-      const RequestModel = {
-        employee: {
-          userId: this.displayUserStatus == false ? null : this.countryForm.value.id,
-          id: this.displayUserStatus == false ? null : this.employeeId,
-          email: this.countryForm.value.empEmail,
-          designationId: this.countryForm.value.empDesignation,         
-          photoId: "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-          isActive: true,
-          name: this.countryForm.value.empName
-        },
-        user: { 
-          id: this.displayUserStatus == false ? null : this.countryForm.value.id,
-          isAccountExpired: this.displayUserStatus == false ? false : this.countryForm.value.accountExpired,
-          isAccountLocked: this.displayUserStatus == false ? false : this.countryForm.value.accountLocked,
-          isEnabled: this.displayUserStatus == false ? true : this.countryForm.value.isEnabled,
-          isPasswordExpired: this.displayUserStatus == false ? false : this.countryForm.value.passwordExpired,
-          password:this.countryForm.value.userPassword,
-          userName: this.countryForm.value.userName
-        },
-        userCountry: this.userSelectedCountry,
-        userRole: userList
-      };
-      //let registrationModel: userRegistrationRequestData = RequestModel;
-      console.log('requesat model')
-      console.log(JSON.stringify(RequestModel));
-
-      //console.log(paramId)
-      if(this.paramId === undefined){
-        console.log('add')
-        this.http.post('UserRegistration',RequestModel).subscribe(x=>{    
-          this.AlertService.success('User Saved Successful');
-          this.router.navigate(['security/userlist'], {
-            queryParams: {
-              myParam: 'inserted', 
-            },
-          });
-        })
+      if(this.userSelectedCountry.length==0){
+        this.countryForm.markAllAsTouched();
+        this.AlertService.error('Please select at least one country for user.');
+        return;
+      } else{
+        const RequestModel = {
+          employee: {
+            userId: this.displayUserStatus == false ? null : this.countryForm.value.id,
+            id: this.displayUserStatus == false ? null : this.employeeId,
+            email: this.countryForm.value.empEmail,
+            designationId: this.countryForm.value.empDesignation,         
+            photoId: "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+            isActive: true,
+            name: this.countryForm.value.empName
+          },
+          user: { 
+            id: this.displayUserStatus == false ? null : this.countryForm.value.id,
+            isAccountExpired: this.displayUserStatus == false ? false : this.countryForm.value.accountExpired,
+            isAccountLocked: this.displayUserStatus == false ? false : this.countryForm.value.accountLocked,
+            isEnabled: this.displayUserStatus == false ? true : this.countryForm.value.isEnabled,
+            isPasswordExpired: this.displayUserStatus == false ? false : this.countryForm.value.passwordExpired,
+            password:this.countryForm.value.userPassword,
+            userName: this.countryForm.value.userName
+          },
+          userCountry: this.userSelectedCountry,
+          userRole: userList
+        };
+        //let registrationModel: userRegistrationRequestData = RequestModel;
+        console.log('requesat model')
+        console.log(JSON.stringify(RequestModel));
+  
+        //console.log(paramId)
+        if(this.paramId === undefined){
+          console.log('add')
+          this.http.post('UserRegistration',RequestModel).subscribe(x=>{  
+            let resp = x as BaseResponse;
+            if(resp.success){
+              this.AlertService.success('User Saved Successful');
+              this.router.navigate(['security/userlist'], {
+                queryParams: {
+                  myParam: 'inserted', 
+                },
+              });
+            }else{
+              this.AlertService.errorDialog('User save failed',resp.message);
+            }
+         
+          })
+        }
+        else{
+          console.log('edit')
+          this.http.put('UserRegistration',RequestModel,this.paramId).subscribe(x=>{  
+            let resp = x as BaseResponse;  
+            if(resp.success){
+              this.AlertService.success('User Updated Successful');
+              this.router.navigate(['security/userlist'], {
+                queryParams: {
+                  myParam: 'updated', 
+                },
+              });
+            }
+         else{
+          this.AlertService.errorDialog('User Update failed',resp.message);
+         }
+          })
+        }
+  
       }
-      else{
-        console.log('edit')
-        this.http.put('UserRegistration',RequestModel,this.paramId).subscribe(x=>{    
-          this.AlertService.success('User Updated Successful');
-          this.router.navigate(['security/userlist'], {
-            queryParams: {
-              myParam: 'updated', 
-            },
-          });
-        })
-      }
 
+    
       
 
 
     }
     else {
-      console.log('immmm111111111')
+      //console.log('immmm111111111')
       this.countryForm.markAllAsTouched();
       return;
     }

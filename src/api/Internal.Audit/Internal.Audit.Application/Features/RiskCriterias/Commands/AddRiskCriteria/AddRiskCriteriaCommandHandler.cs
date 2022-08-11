@@ -27,17 +27,24 @@ public class AddRiskCriteriaCommandHandler : IRequestHandler<AddRiskCriteriaComm
     }
     public async Task<AddRiskCriteriaResponseDTO> Handle(AddRiskCriteriaCommand request, CancellationToken cancellationToken)
     {
-        var riskCriteria = _mapper.Map<RiskCriteria>(request);
-        var newriskCriteria = await _riskCriteriaRepository.Add(riskCriteria);
-        var rowsAffected = await _unitOfWork.CommitAsyncwithErrorMsg();
+        var exists = await _riskCriteriaRepository.Get(x => (x.EffectiveFrom >= request.EffectiveFrom && x.EffectiveFrom <= request.EffectiveTo)
+                                                            || (x.EffectiveTo >= request.EffectiveFrom && x.EffectiveTo <= request.EffectiveTo)
+                                                            || (request.EffectiveTo >= x.EffectiveFrom && request.EffectiveTo <= x.EffectiveTo)
+                                                            || (request.EffectiveFrom >= x.EffectiveFrom && request.EffectiveFrom <= x.EffectiveTo));
 
-        if (rowsAffected.Item1 == -1)
+        var duplicateData = exists.Where(x => x.CountryId == request.CountryId && x.RatingTypeId == request.RatingTypeId && x.RiskCriteriaTypeId == request.RiskCriteriaTypeId
+        && request.MinimumValue <= x.MinimumValue && request.MaximumValue >= x.MaximumValue);
+        if (duplicateData.Count() > 0)
         {
-            return new AddRiskCriteriaResponseDTO(newriskCriteria.Id, false, rowsAffected.Item2);
-        }
-        return new AddRiskCriteriaResponseDTO(newriskCriteria.Id, rowsAffected.Item1 > 0, rowsAffected.Item1 > 0 ? "Risk Criteria Added Successfully!" : "Error while creating Risk Criteria !");
+            return new AddRiskCriteriaResponseDTO(Guid.NewGuid(), false, "Duplicate Data Found in same Date Range");
 
-        // return new AddRiskCriteriaResponseDTO(newriskCriteria.Id, rowsAffected > 0, rowsAffected > 0 ? "Risk Criteria Added Successfully!" : "Error while creating Risk Criteria !");
+        }
+        var riskCriteria = _mapper.Map<RiskCriteria>(request);
+
+        var newriskCriteria = await _riskCriteriaRepository.Add(riskCriteria);
+        var rowsAffected = await _unitOfWork.CommitAsync();
+
+        return new AddRiskCriteriaResponseDTO(newriskCriteria.Id, rowsAffected > 0, rowsAffected > 0 ? "Risk Criteria Added Successfully!" : "Error while creating Risk Criteria !");
     }
 
 }

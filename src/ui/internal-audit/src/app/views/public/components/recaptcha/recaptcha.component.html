@@ -1,1 +1,14 @@
-<re-captcha  [siteKey]="captchaKey" (resolved)="resolved($event)"></re-captcha>
+<div class="row">
+  <div class="col-md-10">
+    <re-captcha #viewChild [siteKey]="captchaKey" (resolved)="resolved($event)">
+    </re-captcha>
+
+  </div>
+  <div class="col-md-2 m-auto">
+    <span (click)="reload()">
+      <svg cIcon name="cilShareBoxed" size="xxl"></svg>
+    </span>
+  </div>
+</div>
+
+

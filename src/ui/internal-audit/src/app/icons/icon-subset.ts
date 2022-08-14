@@ -94,7 +94,7 @@ import {
   cilX,
   cilXCircle,
   cilUserX,
-  cilClock
+  cilClock,
 
 } from '@coreui/icons';
 

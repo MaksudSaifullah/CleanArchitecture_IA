@@ -161,6 +161,36 @@
         </div>
 
         <div class="row">
+          <div class="col-md-4">
+            <div class="form-floating">
+              <input class="form-control" placeholder="testingDate" formControlName="testingDate" id="testingDate" type="date" >
+              <label for="testingDate">Testing Date</label>
+            </div>
+            <div cRow *ngIf="workpaperForm.get('testingDate')?.invalid && workpaperForm.get('testingDate')?.errors &&
+                  (workpaperForm.get('testingDate')?.dirty || workpaperForm.get('testingDate')?.touched)">
+              <small class="text-danger" *ngIf="workpaperForm.get('testingDate').hasError('required')">
+                This field is required.
+              </small>                                 
+            </div>
+            <br>
+          </div>
+          <div class="col-md-4">
+            <div class="form-floating">
+              <input class="form-control" placeholder="testingDate" formControlName="testingDate" id="testingDate" type="date" >
+              <label for="effectiveTo">Audit Schedule From</label>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="form-floating">
+              <input class="form-control" placeholder="testingDate" formControlName="testingDate" id="testingDate" type="date" >
+              <label for="effectiveTo">Audit Schedule To</label>
+            </div>
+          </div>
+        </div>
+
+
+
+        <div class="row">
           <div class="col-md-12">
             <div class="form-floating mb-3">
               <input type="text" class="form-control" formControlName="sampleName" id="sampleName" placeholder="sampleName">
@@ -179,7 +209,7 @@
         </div>
 
         <div class="row">
-          <div class="col-md-4">
+          <div class="col-md-6">
             <div form-floating>
               <select aria-label="Floating label select example" cSelect id="sampleMonthId"
                 formControlName="sampleMonthId" name="sampleMonthId">
@@ -197,7 +227,7 @@
           </div> 
            <br/>
           </div>
-          <div class="col-md-4">
+          <div class="col-md-6">
             <div form-floating>
               <select aria-label="Floating label select example" cSelect id="sampleSelectionMethodId"
                 formControlName="sampleSelectionMethodId" name="sampleSelectionMethodId">
@@ -215,6 +245,10 @@
           </div> 
            <br/>
           </div>
+         
+        </div>
+
+        <div class="row">
           <div class="col-md-4">
             <div form-floating>
               <select aria-label="Floating label select example" cSelect id="controlActivityNatureId"
@@ -233,10 +267,7 @@
           </div> 
            <br/>
           </div>
-        </div>
-
-        <div class="row">
-          <div class="col-md-6">
+          <div class="col-md-4">
             <div form-floating>
               <select aria-label="Floating label select example" cSelect id="controlFrequencyId"
                 formControlName="controlFrequencyId" name="controlFrequencyId">
@@ -254,7 +285,7 @@
           </div> 
            <br/>
           </div>
-          <div class="col-md-6">
+          <div class="col-md-4">
             <div form-floating>
               <select aria-label="Floating label select example" cSelect id="sampleSizeId"
                 formControlName="sampleSizeId" name="sampleSizeId">

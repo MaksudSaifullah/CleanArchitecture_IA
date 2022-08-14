@@ -3,7 +3,7 @@ import { NavigationCancel, NavigationEnd, NavigationError, NavigationStart, Rout
 import { filter } from 'rxjs';
 
 import { navItems } from './_nav';
-import {BreadcumbStore} from "../../shared/breedcumb.store";
+import {BreadcumbModel, BreadcumbStore} from "../../shared/breedcumb.store";
 @Component({
   selector: 'app-dashboard',
   templateUrl: './default-layout.component.html',
@@ -19,9 +19,6 @@ export class DefaultLayoutComponent implements OnInit,AfterViewInit {
   constructor(private router: Router,private renderer: Renderer2,private elementRef: ElementRef, private breadcumbStore : BreadcumbStore) {
 
   }
-  navItemClick(event:any){
-    alert('working');
-  }
   ngOnInit(): void {
 
   }
@@ -32,10 +29,12 @@ export class DefaultLayoutComponent implements OnInit,AfterViewInit {
     for(let i = 0; i < item.length;i++){
       var element = item[i] as HTMLElement;
       item[i].addEventListener('click',(x)=>{
-        debugger;
         let childNodeText = item[i].textContent;
         var childNodeUrl = item[i].getElementsByTagName('a')[0].href.split('#')[1];
-        let parentNodeText = item[i].parentElement?.parentElement?.firstChild?.textContent ?? '';
+        let parentNodeText = '';
+        if (item[i].parentElement?.classList.value.includes('nav-group-item')){
+          parentNodeText = item[i].parentElement?.parentElement?.firstChild?.textContent ?? '';
+        }
         this.breadcumbStore.update({
           breadcumbModel:[{
             displayName:parentNodeText,
@@ -43,7 +42,7 @@ export class DefaultLayoutComponent implements OnInit,AfterViewInit {
           },{
             displayName:childNodeText ?? '',
             routerLink: childNodeUrl
-          }]
+          }].filter(x=>x.displayName != '')
         });
       });
     }
@@ -60,7 +59,7 @@ export class DefaultLayoutComponent implements OnInit,AfterViewInit {
           {
             displayName:child?.name??'',
             routerLink:"#"
-          }]
+          }].filter(x=>x.displayName != '')
       });
     }
   }

@@ -61,7 +61,9 @@
   <c-container [fluid]="true">
     <nav aria-label="breadcrumb">
       <ul class="breadcrumb">
-        <li class="breadcrumb-item" *ngFor="let item of breadcumb$ | async">{{item.displayName}}</li>
+        <li class="breadcrumb-item" *ngFor="let item of breadcumb$ | async">
+          <a class="link-dark text-decoration-none" routerLink="{{item.routerLink}}">{{item.displayName}}</a>
+        </li>
       </ul>
     </nav>
   </c-container>

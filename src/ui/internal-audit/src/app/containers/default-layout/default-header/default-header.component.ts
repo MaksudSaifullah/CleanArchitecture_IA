@@ -38,14 +38,6 @@ export class DefaultHeaderComponent extends HeaderComponent {
 
   }
 
-  checkBreadcumb() {
-    debugger;
-    this.breadcumb$.subscribe(x=>{
-      debugger;
-      console.log(x);
-    })
-  }
-
   setState(text: string) {
     this.breedcumbStore.update({
       breadcumbModel: [{

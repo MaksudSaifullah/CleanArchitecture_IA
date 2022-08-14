@@ -14,6 +14,7 @@ import { paginatedResponseInterface } from 'src/app/core/interfaces/paginated.in
 import { formatDate } from '@angular/common';
 import { country } from 'src/app/core/interfaces/configuration/country.interface';
 import { CutomvalidatorService } from 'src/app/core/services/cutomvalidator.service';
+import { CommonResponseInterface } from 'src/app/core/interfaces/common-response.interface';
 
 
 @Component({
@@ -113,16 +114,26 @@ export class RiskCriteriaComponent implements OnInit {
     if (this.riskCriteriaForm.valid ){
       if(this.formService.isEdit(this.riskCriteriaForm.get('id') as FormControl)){
         this.http.put('riskCriteria',this.riskCriteriaForm.value,null).subscribe(x=>{
-            localmodalId.visible = false;
-            this.dataTableService.redraw(this.datatableElement);
-            this.AlertService.success('Risk Criteria Updated Successful');
-          });
+          let resp = x as CommonResponseInterface;
+          if(resp.success){
+            this.formService.onSaveSuccess(localmodalId,this.datatableElement);
+            this.AlertService.success(resp.message);
+          }
+          else{
+            this.AlertService.errorDialog('Unsuccessful', resp.message);
+          }
+        });
       }
       else {
-       // console.log(this.riskProfileForm.value);
         this.http.post('riskCriteria',this.riskCriteriaForm.value).subscribe(x=>{
-          this.formService.onSaveSuccess(localmodalId,this.datatableElement);
-          this.AlertService.success('Risk Criteria Saved successfully');
+          let resp = x as CommonResponseInterface;
+          if(resp.success){
+            this.formService.onSaveSuccess(localmodalId,this.datatableElement);
+            this.AlertService.success(resp.message);
+          }
+          else{
+            this.AlertService.errorDialog('Unsuccessful', resp.message);
+          }          
         });
       }      
     }
@@ -131,6 +142,7 @@ export class RiskCriteriaComponent implements OnInit {
       return;
     }    
   }
+ 
 
   edit(modalId:any, riskCriteria:any):void {
     const localmodalId = modalId;

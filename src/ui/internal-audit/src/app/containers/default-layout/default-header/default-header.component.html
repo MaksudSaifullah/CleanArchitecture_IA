@@ -59,11 +59,14 @@
   </c-container>
   <c-header-divider></c-header-divider>
   <c-container [fluid]="true">
-    <c-breadcrumb-router class="ms-2"></c-breadcrumb-router>
+    <nav aria-label="breadcrumb">
+      <ul class="breadcrumb">
+        <li class="breadcrumb-item" *ngFor="let item of breadcumb$ | async">{{item.displayName}}</li>
+      </ul>
+    </nav>
   </c-container>
 </ng-container>
 <!--</c-header>-->
-
 <ng-template #userDropdown>
   <c-dropdown alignment="end" variant="nav-item">
     <button
@@ -89,13 +92,13 @@
       </li>
       <li></li>
       <li>
-        <a [routerLink]="['/security/profile-update']" cDropdownItem>
+        <a [routerLink]="['/security/profile-update']" cDropdownItem (click)="setState('User Profile')">
           <svg cIcon class="me-2" name="cilUser"></svg>
           Profile
         </a>
       </li>
       <li>
-        <a [routerLink]="['/security/changepassword']" cDropdownItem>
+        <a [routerLink]="['/security/changepassword']" cDropdownItem (click)="setState('Change Password')">
           <svg cIcon class="me-2" name="cilSettings"></svg>
           Change Password
         </a>

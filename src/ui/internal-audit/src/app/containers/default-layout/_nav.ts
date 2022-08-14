@@ -1,4 +1,5 @@
 import { INavData } from '@coreui/angular-pro';
+import {INavAttributes} from "@coreui/angular-pro/lib/breadcrumb/breadcrumb-item/breadcrumb-item";
 
 export const navItems: INavData[] = [
   {
@@ -8,9 +9,9 @@ export const navItems: INavData[] = [
     badge: {
       color: 'info',
       text: ''
-    }
+    },
   },
-  
+
   // {
   //   name: 'Public',
   //   url: '/public',
@@ -96,7 +97,7 @@ export const navItems: INavData[] = [
         name: 'Designation',
         url: '/security/designation',
       },
-      
+
     ]
   },
   {
@@ -134,5 +135,5 @@ export const navItems: INavData[] = [
       }
     ]
   },
-  
+
 ];

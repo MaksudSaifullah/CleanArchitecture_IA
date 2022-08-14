@@ -9,15 +9,22 @@
           <div class="card-body">
             <form [formGroup]="searchForm">
               <div class="row" style="margin: 0 auto;">
-                <div class="col-md-6 mb-2">
+                <div class="col-md-8 mb-2">
                   <button [cModalToggle]="verticallyCenteredModal.id" class="btnCreateColor" (click)="reset()" cButton>
                     <svg cIcon name="cilPlus" size="md" title="Add Button Icon"></svg> Create
                   </button> 
                 </div>
-                <div class="col-md-5 mb-2 form-floating">
-                  <input type="text" formControlName="searchTerm" class="form-control searchInput"  placeholder="Search by Name or Code"/>
-                  <label class="searchLevel" for="floatingInput">Workpaper Name / Workpaper Code</label>
-                </div>
+                <div class="col-md-3 mb-2 form-floating">
+                  <select aria-label="Floating label select example" cSelect id="topicHeadId"
+                  formControlName="topicHeadId" name="topicHeadId"  style="height: 40px;">
+                  <option value="">Select Topic Head</option>
+                  <option *ngFor="let topicHead of topics" [value]="topicHead.name">
+                    {{topicHead.name}}
+                  </option>
+                </select>
+                  </div>
+
+
                 <div class="col-md-1 mb-2">
                   <button type="button" class="btn btn-secondary mr-1 btn-block searchBtn" data-toggle="modal" (click)="search()" >
                     Search
@@ -75,65 +82,169 @@
       <button [cModalToggle]="verticallyCenteredModal.id" cButtonClose></button>
     </c-modal-header>
     <c-modal-body>
-      <!-- <div class="col-md-12" >
+      <div class="col-md-12" >
         <input type="hidden" formControlName="id"/>
-  
+
+
+        <div class="row">
+          <div class="col-md-6">
+
+            <div class="form-floating mb-3">
+              <input type="text" class="form-control" formControlName="workPaperCode" id="workPaperCode" placeholder="workPaperCode" [readonly]="true">
+              <label for="floatingInput">Work Paper Code</label>
+            </div>
+          </div>
+          <div class="col-md-6">
+
+            <div class="form-floating mb-3">
+              <input type="text" class="form-control" formControlName="scheduleCode" id="scheduleCode" placeholder="scheduleCode" [readonly]="true">
+              <label for="floatingInput">Schedule Code</label>
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-4">
+            <div form-floating>
+              <select aria-label="Floating label select example" cSelect id="topicHeadId"
+                formControlName="topicHeadId" name="topicHeadId">
+                <option value=null>Select Topic Head</option>
+                <option *ngFor="let topicHead of topics" [value]="topicHead.id">
+                  {{topicHead.name}}
+                </option>
+              </select>
+            </div>
+    
+          </div>
+          <div class="col-md-4">
+            <div form-floating>
+              <select aria-label="Floating label select example" cSelect id="questionId"
+                formControlName="questionId" name="questionId">
+                <option value=null>Select Question</option>
+                <option *ngFor="let question of questions" [value]="question.id">
+                  {{question.question}}
+                </option>
+              </select>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div form-floating>
+              <select aria-label="Floating label select example" cSelect id="branchId"
+                formControlName="branchId" name="branchId">
+                <option value=null>Select Branch</option>
+                <option *ngFor="let branch of branches" [value]="branch.id">
+                  {{branch.name}}
+                </option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-6">
+            <div class="form-floating mb-3">
+              <input type="text" class="form-control" formControlName="sampleName" id="sampleName" placeholder="sampleName">
+              <label for="floatingInput">Sample Name</label>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div form-floating>
+              <select aria-label="Floating label select example" cSelect id="sampleMonthId"
+                formControlName="sampleMonthId" name="sampleMonthId">
+                <option value="null">Select Sample Month</option>
+                <option *ngFor="let commonValueAndType of sampledmonths" [value]="commonValueAndType.id">
+                  {{commonValueAndType.text}}
+                </option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-4">
+            <div form-floating>
+              <select aria-label="Floating label select example" cSelect id="sampleSelectionMethodId"
+                formControlName="sampleSelectionMethodId" name="sampleSelectionMethodId">
+                <option value="null">Select Sample Selection Method</option>
+                <option *ngFor="let commonValueAndType of sampleSelectionMethods" [value]="commonValueAndType.id">
+                  {{commonValueAndType.text}}
+                </option>
+              </select>
+            </div>
+              
+          </div>
+          <div class="col-md-4">
+            <div form-floating>
+              <select aria-label="Floating label select example" cSelect id="controlActivityNatureId"
+                formControlName="controlActivityNatureId" name="controlActivityNatureId">
+                <option value="null">Select Control Activity Nature</option>
+                <option *ngFor="let commonValueAndType of controlActivityNatures" [value]="commonValueAndType.id">
+                  {{commonValueAndType.text}}
+                </option>
+              </select>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div form-floating>
+              <select aria-label="Floating label select example" cSelect id="controlFrequencyId"
+                formControlName="controlFrequencyId" name="controlFrequencyId">
+                <option value="null">Select Control Freequency</option>
+                <option *ngFor="let commonValueAndType of controlFrequencies" [value]="commonValueAndType.id">
+                  {{commonValueAndType.text}}
+                </option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+
+
+
+
+          <div form-floating>
+            <select aria-label="Floating label select example" cSelect id="sampleSizeId"
+              formControlName="sampleSizeId" name="sampleSizeId">
+              <option value="null">Select Sample Size</option>
+              <option *ngFor="let commonValueAndType of sampleSizes" [value]="commonValueAndType.id">
+                {{commonValueAndType.text}}
+              </option>
+            </select>
+          </div>
+
           <div class="form-floating mb-3">
-            <input type="text" class="form-control" formControlName="name" id="name" placeholder="Name">
-            <label for="floatingInput">Name</label>
+            <input type="text" class="form-control" formControlName="testingDetails" id="testingDetails" placeholder="testingDetails">
+            <label for="floatingInput">Testing Details</label>
+          </div>
+
+
+          <div class="form-floating mb-3">
+            <input type="text" class="form-control" formControlName="testingResults" id="testingResults" placeholder="testingResults">
+            <label for="floatingInput">Testing Results</label>
+          </div>
+
+
+
+          <div form-floating>
+            <select aria-label="Floating label select example" cSelect id="testingConclusionId"
+              formControlName="testingConclusionId" name="testingConclusionId">
+              <option value="null">Select Testing Conclusion</option>
+              <option *ngFor="let commonValueAndType of testingConclusions" [value]="commonValueAndType.id">
+                {{commonValueAndType.text}}
+              </option>
+            </select>
+          </div>
+          <div class="form-floating mb-3">
+            <input type="file" class="form-control" formControlName="documentId" id="documentId" placeholder="documentId">
+            
+            <label for="floatingInput">Document</label>
           </div>
   
-  
-          <div cRow *ngIf="workpaperForm.get('name')?.invalid &&
-          countryForm.get('name')?.errors &&
-                (countryForm.get('name')?.dirty || countryForm.get('name')?.touched)">
-            <small class="text-danger"
-                *ngIf="countryForm.get('name').hasError('required')">
-                This field is required.
-            </small>
-            <small class="text-danger"
-                *ngIf="countryForm.get('name').hasError('minlength')">
-                The minimum length for this field is {{countryForm.get('name').errors.minlength.requiredLength}} characters.
-            </small>
-            <small class="text-danger"
-                *ngIf="countryForm.get('name').hasError('maxlength')">
-                The maximum length for this field is {{countryForm.get('name').errors.maxlength.requiredLength}} characters.
-            </small>
-        </div>
-  
-          <div class="form-floating mb-3">
-            <input type="text" class="form-control" formControlName="code" id="code" placeholder="Code">
-            <label for="floatingInput">Code</label>
-          </div>
-  
-          <div cRow *ngIf="countryForm.get('code')?.invalid &&
-          countryForm.get('code')?.errors &&
-                (countryForm.get('code')?.dirty || countryForm.get('code')?.touched)">
-            <small class="text-danger"
-                *ngIf="countryForm.get('code').hasError('required')">
-                This field is required.
-            </small>
-            <small class="text-danger"
-                *ngIf="countryForm.get('code').hasError('minlength')">
-                The minimum length for this field is {{countryForm.get('code').errors.minlength.requiredLength}} characters.
-            </small>
-            <small class="text-danger"
-                *ngIf="countryForm.get('code').hasError('maxlength')">
-                The maximum length for this field is {{countryForm.get('code').errors.maxlength.requiredLength}} characters.
-            </small>
-            <small class="text-danger" 
-                *ngIf="countryForm.get('code').hasError('pattern')">
-                 Code should be in ISO Alpha 2 format
-            </small>
-        </div>
-  
-  
-          <div class="form-floating">
+          <!-- <div class="form-floating">
             <textarea class="form-control" placeholder="Remarks" formControlName="remarks" id="remarks"></textarea>
             <label for="floatingTextarea">Remark</label>
-          </div>
+          </div> -->
   
-      </div> -->
+      </div>
     </c-modal-body>
     <c-modal-footer>
       <button cButton class="btn btn-primary btnSaveColor me-1" (click)="onSubmit(verticallyCenteredModal)">

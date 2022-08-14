@@ -7,6 +7,11 @@ import { HttpService } from 'src/app/core/services/http.service';
 import { workpaper } from '../../../../core/interfaces/branch-audit/workpaper.interface';
 import {AlertService} from '../../../../core/services/alert.service';
 import { Subject } from 'rxjs';
+import { paginatedResponseInterface } from 'src/app/core/interfaces/paginated.interface';
+import { topicHead } from 'src/app/core/interfaces/branch-audit/topicHead.interface';
+import { commonValueAndType } from 'src/app/core/interfaces/configuration/commonValueAndType.interface';
+import { questionnaire } from 'src/app/core/interfaces/branch-audit/questionnaire.interface';
+import { Branch } from 'src/app/core/interfaces/branch-audit/branch.interface';
 
 @Component({
   selector: 'app-workpaper',
@@ -19,6 +24,15 @@ export class WorkpaperComponent implements OnInit {
   datatableElement: DataTableDirective | undefined;
   dtOptions: DataTables.Settings = {};
   workpapers: workpaper[] = [];
+  topics: topicHead[] =[];
+  questions: questionnaire[] =[];
+  branches: Branch[] =[];
+  sampledmonths: commonValueAndType[] = [];
+  sampleSelectionMethods: commonValueAndType[] = [];
+  controlActivityNatures: commonValueAndType[] = [];
+  controlFrequencies: commonValueAndType[] = [];
+  sampleSizes: commonValueAndType[] = [];
+  testingConclusions: commonValueAndType[] = [];
   searchForm: FormGroup;
   workpaperForm: FormGroup;
   formService: FormService = new FormService();
@@ -27,19 +41,31 @@ export class WorkpaperComponent implements OnInit {
  
 
   constructor(private http: HttpService , private fb: FormBuilder, private AlertService: AlertService) {
+    this.loadDropDownValues();
     this.workpaperForm = this.fb.group({
       id: [''],
-      // name: ['',[Validators.required,Validators.maxLength(20),Validators.minLength(5)]],
-      // code: ['',[Validators.required,Validators.maxLength(2),Validators.minLength(2),Validators.pattern('^[A-Z ]*$')]],
-      // remarks: [''],
+      workPaperCode: [''],
+      auditScheduleId:[null,[Validators.required, Validators.pattern("^(?!null$).*$")]],
+      topicHeadId:[null,[Validators.required, Validators.pattern("^(?!null$).*$")]],
+      questionId:[null,[Validators.required, Validators.pattern("^(?!null$).*$")]],
+      branchId:[null,[Validators.required, Validators.pattern("^(?!null$).*$")]],
+      sampleName: [''],
+      sampleMonthId:[null,[Validators.required, Validators.pattern("^(?!null$).*$")]],
+      sampleSelectionMethodId:[null,[Validators.required, Validators.pattern("^(?!null$).*$")]],
+      controlActivityNatureId:[null,[Validators.required, Validators.pattern("^(?!null$).*$")]],
+      controlFrequencyId:[null,[Validators.required, Validators.pattern("^(?!null$).*$")]],
+      sampleSizeId:[null,[Validators.required, Validators.pattern("^(?!null$).*$")]],
+      testingDetails: [''],
+      testingResults: [''],
+      testingConclusionId:[null,[Validators.required, Validators.pattern("^(?!null$).*$")]],
+      documentId:[null,[Validators.required, Validators.pattern("^(?!null$).*$")]]
     });
     this.searchForm = this.fb.group(
       {
-        searchTerm: ['']
+        topicHeadId:[''],
       }
     )
   }
-
   ngOnInit(): void {
     this.LoadData();
   }
@@ -56,7 +82,7 @@ export class WorkpaperComponent implements OnInit {
       ajax: (dataTablesParameters: any, callback) => {
         this.http
           .paginatedPost(
-            'workpaper/paginated',dataTablesParameters.length,((dataTablesParameters.start/dataTablesParameters.length)+1), this.searchForm.get('searchTerm')?.value)
+            'workpaper/paginated',dataTablesParameters.length,((dataTablesParameters.start/dataTablesParameters.length)+1), this.searchForm.get('topicHeadId')?.value)
             .subscribe(resp => that.workpapers = this.dataTableService.datatableMap(resp,callback));
       },
     };
@@ -110,4 +136,98 @@ export class WorkpaperComponent implements OnInit {
   search(){
     this.dataTableService.redraw(this.datatableElement);
   }
+
+  // LoadTopicHeads() {
+  //   this.http.paginatedPost('topicHead/paginated', 100, 1, {}).subscribe(resp => {
+  //     let convertedResp = resp as paginatedResponseInterface<topicHead>;
+  //     this.topicheads = convertedResp.items;     
+  //   })
+  // }
+  // LoadYear() {
+  //   this.http.get('topicHead/paginated').subscribe(resp => {
+  //     let convertedResp = resp as commonValueAndType[];
+  //     this.year = convertedResp; 
+  //   })
+  // }
+  
+  // LoadTopics() {
+  //   this.http.paginatedPost('topicHead/paginated', 100, 1, {}).subscribe(resp => {
+  //     let convertedResp = resp as paginatedResponseInterface<topicHead>;
+  //     this.topics = convertedResp.items;
+  //     console.log(this.topics);
+  //   })
+  // }
+
+  LoadTopicHeadDropdownList() 
+  {
+    this.http.paginatedPost('topicHead/paginated', 1000, 1, '').subscribe(resp => {
+      let convertedResp = resp as paginatedResponseInterface<topicHead>;
+      this.topics = convertedResp.items;     
+    })
+  }
+    LoadQuestions() {
+    this.http.paginatedPost('questionnaire/paginated', 100, 1, {}).subscribe(resp => {
+      let convertedResp = resp as paginatedResponseInterface<questionnaire>;
+      this.questions = convertedResp.items;
+    })
+  }
+  LoadSampledMonths() {
+    this.http.get('commonValueAndType/sampledmonth').subscribe(resp => {
+      let convertedResp = resp as commonValueAndType[];
+      this.sampledmonths = convertedResp;
+    })
+  }
+  LoadSampledSelectionMethods() {
+    this.http.get('commonValueAndType/sampleselectionmethod').subscribe(resp => {
+      let convertedResp = resp as commonValueAndType[];
+      this.sampleSelectionMethods = convertedResp;
+    })
+  }
+  LoadControlActivityNatures() {
+    this.http.get('commonValueAndType/natureofcontrolactivity').subscribe(resp => {
+      let convertedResp = resp as commonValueAndType[];
+      this.controlActivityNatures = convertedResp;
+    })
+  }
+
+  LoadControlFrequencies() {
+    this.http.get('commonValueAndType/controlfrequency').subscribe(resp => {
+      let convertedResp = resp as commonValueAndType[];
+      this.controlFrequencies = convertedResp;
+    })
+  }
+  LoadSampleSizes() {
+    this.http.get('commonValueAndType/samplesize').subscribe(resp => {
+      let convertedResp = resp as commonValueAndType[];
+      this.sampleSizes = convertedResp;
+    })
+  }
+
+  LoadBranches() {
+    this.http.get('commonValueAndType/getBranch').subscribe(resp => {
+      let convertedResp = resp as Branch[];
+      this.branches = convertedResp;
+      console.log(this.branches);
+      
+    })
+  }
+  LoadTestingConclusions() {
+    this.http.get('commonValueAndType/detestconclusion').subscribe(resp => {
+      let convertedResp = resp as commonValueAndType[];
+      this.testingConclusions = convertedResp;
+    })
+  }
+  loadDropDownValues() 
+  {
+    this.LoadSampledMonths();
+    this.LoadSampledSelectionMethods();
+    this.LoadControlActivityNatures();
+    this.LoadControlFrequencies();
+    this.LoadSampleSizes();
+    this.LoadTestingConclusions();
+    this.LoadTopicHeadDropdownList();
+    this.LoadQuestions();
+    //this.LoadBranches();
+  }
+
 }

@@ -26,4 +26,5 @@ export interface workpaper {
     testingConclusion: string;
     documentId?: string;
     documentName: string;
+    testingDate: Date;
 }

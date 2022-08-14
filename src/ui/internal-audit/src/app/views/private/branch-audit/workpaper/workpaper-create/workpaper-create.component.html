@@ -1,0 +1,301 @@
+<c-col xs="12">
+    <c-card class="mb-4">
+      <c-card-header>
+        <strong>Work Paper Create</strong>
+      </c-card-header>
+      <c-card-body>
+        <form [formGroup]="workpaperForm" (ngSubmit)="onSubmit()" novalidate>
+            <div class="col-md-12" >
+                <input type="hidden" formControlName="id"/>
+        
+        
+                <div class="row">
+                  <div class="col-md-6">
+        
+                    <div class="form-floating mb-3">
+                      <input type="text" class="form-control" formControlName="workPaperCode" id="workPaperCode" placeholder="workPaperCode" [readonly]="true">
+                      <label for="floatingInput">Work Paper Id</label>
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+        
+                    <div class="form-floating mb-3">
+                      <input type="text" class="form-control" formControlName="auditScheduleId" id="auditScheduleId" placeholder="auditScheduleId" [readonly]="true">
+                      <label for="floatingInput">Schedule Id</label>
+                    </div>
+                  </div>
+                </div>
+        
+                <div class="row">
+                  <div class="col-md-4">
+                    <div form-floating>
+                      <select aria-label="Floating label select example" cSelect id="topicHeadId"
+                        formControlName="topicHeadId" name="topicHeadId">
+                        <option value=null>Select Topic Head</option>
+                        <option *ngFor="let topicHead of topics" [value]="topicHead.id">
+                          {{topicHead.name}}
+                        </option>
+                      </select>
+                    </div>
+                    <div cRow *ngIf="(workpaperForm.get('topicHeadId')?.invalid && workpaperForm.get('topicHeadId')?.errors) &&         
+                      (workpaperForm.get('topicHeadId')?.dirty || workpaperForm.get('topicHeadId')?.touched)">
+                      <small class="text-danger">
+                        This field is required.
+                      </small>                                 
+                    </div> 
+                     <br/>
+                  </div>
+                  <div class="col-md-4">
+                    <div form-floating>
+                      <select aria-label="Floating label select example" cSelect id="questionId"
+                        formControlName="questionId" name="questionId">
+                        <option value=null>Select Question</option>
+                        <option *ngFor="let question of questions" [value]="question.id">
+                          {{question.question}}
+                        </option>
+                      </select>
+                    </div>
+                    <div cRow *ngIf="(workpaperForm.get('questionId')?.invalid && workpaperForm.get('questionId')?.errors) &&         
+                    (workpaperForm.get('questionId')?.dirty || workpaperForm.get('questionId')?.touched)">
+                    <small class="text-danger">
+                      This field is required.
+                    </small>                                 
+                  </div> 
+                   <br/>
+                  </div>
+                  <div class="col-md-4">
+                    <div form-floating>
+                      <select aria-label="Floating label select example" cSelect id="branchId"
+                        formControlName="branchId" name="branchId">
+                        <option value=null>Select Branch</option>
+                        <option *ngFor="let branch of branches" [value]="branch.id">
+                          {{branch.name}}
+                        </option>
+                      </select>
+                    </div>
+                    <div cRow *ngIf="(workpaperForm.get('branchId')?.invalid && workpaperForm.get('branchId')?.errors) &&         
+                    (workpaperForm.get('branchId')?.dirty || workpaperForm.get('branchId')?.touched)">
+                    <small class="text-danger">
+                      This field is required.
+                    </small>                                 
+                  </div> 
+                   <br/>
+                  </div>
+                </div>
+        
+                <div class="row">
+                  <div class="col-md-4">
+                    <div class="form-floating">
+                      <input class="form-control" placeholder="testingDate" formControlName="testingDate" id="testingDate" type="date" >
+                      <label for="testingDate">Testing Date</label>
+                    </div>
+                    <div cRow *ngIf="workpaperForm.get('testingDate')?.invalid && workpaperForm.get('testingDate')?.errors &&
+                          (workpaperForm.get('testingDate')?.dirty || workpaperForm.get('testingDate')?.touched)">
+                      <small class="text-danger" *ngIf="workpaperForm.get('testingDate').hasError('required')">
+                        This field is required.
+                      </small>                                 
+                    </div>
+                    <br>
+                  </div>
+                  <div class="col-md-4">
+                    <div class="form-floating">
+                      <input class="form-control" placeholder="testingDate" formControlName="testingDate" id="testingDate" type="date" >
+                      <label for="effectiveTo">Audit Schedule From</label>
+                    </div>
+                  </div>
+                  <div class="col-md-4">
+                    <div class="form-floating">
+                      <input class="form-control" placeholder="testingDate" formControlName="testingDate" id="testingDate" type="date" >
+                      <label for="effectiveTo">Audit Schedule To</label>
+                    </div>
+                  </div>
+                </div>
+        
+        
+        
+                <div class="row">
+                  <div class="col-md-12">
+                    <div class="form-floating mb-3">
+                      <input type="text" class="form-control" formControlName="sampleName" id="sampleName" placeholder="sampleName">
+                      <label for="floatingInput">Sample Name</label>
+                    </div>
+                    <div cRow *ngIf="workpaperForm.get('sampleName')?.invalid &&
+                    workpaperForm.get('sampleName')?.errors &&
+                      (workpaperForm.get('sampleName')?.dirty || workpaperForm.get('sampleName')?.touched)">
+                  <small class="text-danger"
+                      *ngIf="workpaperForm.get('sampleName').hasError('required')">
+                      This field is required.
+                  </small>
+              </div>
+                  </div>
+                  
+                </div>
+        
+                <div class="row">
+                  <div class="col-md-6">
+                    <div form-floating>
+                      <select aria-label="Floating label select example" cSelect id="sampleMonthId"
+                        formControlName="sampleMonthId" name="sampleMonthId">
+                        <option value="null">Select Sample Month</option>
+                        <option *ngFor="let commonValueAndType of sampledmonths" [value]="commonValueAndType.id">
+                          {{commonValueAndType.text}}
+                        </option>
+                      </select>
+                    </div>
+                    <div cRow *ngIf="(workpaperForm.get('sampleMonthId')?.invalid && workpaperForm.get('sampleMonthId')?.errors) &&         
+                    (workpaperForm.get('sampleMonthId')?.dirty || workpaperForm.get('sampleMonthId')?.touched)">
+                    <small class="text-danger">
+                      This field is required.
+                    </small>                                 
+                  </div> 
+                   <br/>
+                  </div>
+                  <div class="col-md-6">
+                    <div form-floating>
+                      <select aria-label="Floating label select example" cSelect id="sampleSelectionMethodId"
+                        formControlName="sampleSelectionMethodId" name="sampleSelectionMethodId">
+                        <option value="null">Select Sample Selection Method</option>
+                        <option *ngFor="let commonValueAndType of sampleSelectionMethods" [value]="commonValueAndType.id">
+                          {{commonValueAndType.text}}
+                        </option>
+                      </select>
+                    </div>
+                    <div cRow *ngIf="(workpaperForm.get('sampleSelectionMethodId')?.invalid && workpaperForm.get('sampleSelectionMethodId')?.errors) &&         
+                    (workpaperForm.get('sampleSelectionMethodId')?.dirty || workpaperForm.get('sampleSelectionMethodId')?.touched)">
+                    <small class="text-danger">
+                      This field is required.
+                    </small>                                 
+                  </div> 
+                   <br/>
+                  </div>
+                 
+                </div>
+        
+                <div class="row">
+                  <div class="col-md-4">
+                    <div form-floating>
+                      <select aria-label="Floating label select example" cSelect id="controlActivityNatureId"
+                        formControlName="controlActivityNatureId" name="controlActivityNatureId">
+                        <option value="null">Select Control Activity Nature</option>
+                        <option *ngFor="let commonValueAndType of controlActivityNatures" [value]="commonValueAndType.id">
+                          {{commonValueAndType.text}}
+                        </option>
+                      </select>
+                    </div>
+                    <div cRow *ngIf="(workpaperForm.get('controlActivityNatureId')?.invalid && workpaperForm.get('controlActivityNatureId')?.errors) &&         
+                    (workpaperForm.get('controlActivityNatureId')?.dirty || workpaperForm.get('controlActivityNatureId')?.touched)">
+                    <small class="text-danger">
+                      This field is required.
+                    </small>                                 
+                  </div> 
+                   <br/>
+                  </div>
+                  <div class="col-md-4">
+                    <div form-floating>
+                      <select aria-label="Floating label select example" cSelect id="controlFrequencyId"
+                        formControlName="controlFrequencyId" name="controlFrequencyId">
+                        <option value="null">Select Control Freequency</option>
+                        <option *ngFor="let commonValueAndType of controlFrequencies" [value]="commonValueAndType.id">
+                          {{commonValueAndType.text}}
+                        </option>
+                      </select>
+                    </div>
+                    <div cRow *ngIf="(workpaperForm.get('controlFrequencyId')?.invalid && workpaperForm.get('controlFrequencyId')?.errors) &&         
+                    (workpaperForm.get('controlFrequencyId')?.dirty || workpaperForm.get('controlFrequencyId')?.touched)">
+                    <small class="text-danger">
+                      This field is required.
+                    </small>                                 
+                  </div> 
+                   <br/>
+                  </div>
+                  <div class="col-md-4">
+                    <div form-floating>
+                      <select aria-label="Floating label select example" cSelect id="sampleSizeId"
+                        formControlName="sampleSizeId" name="sampleSizeId">
+                        <option value="null">Select Sample Size</option>
+                        <option *ngFor="let commonValueAndType of sampleSizes" [value]="commonValueAndType.id">
+                          {{commonValueAndType.text}}
+                        </option>
+                      </select>
+                    </div>
+                    <div cRow *ngIf="(workpaperForm.get('sampleSizeId')?.invalid && workpaperForm.get('sampleSizeId')?.errors) &&         
+                    (workpaperForm.get('sampleSizeId')?.dirty || workpaperForm.get('sampleSizeId')?.touched)">
+                    <small class="text-danger">
+                      This field is required.
+                    </small>                                 
+                  </div> 
+                   <br/>
+                  </div>
+                </div>
+              
+                <div class="row">
+                  <div class="col-md-6">
+                    <div class="form-floating mb-3">
+                      <input type="text" class="form-control" formControlName="testingDetails" id="testingDetails" placeholder="testingDetails">
+                      <label for="floatingInput">Testing Details</label>
+                    </div>
+                    <div cRow *ngIf="workpaperForm.get('testingDetails')?.invalid &&
+                    workpaperForm.get('testingDetails')?.errors &&
+                      (workpaperForm.get('testingDetails')?.dirty || workpaperForm.get('testingDetails')?.touched)">
+                  <small class="text-danger"
+                      *ngIf="workpaperForm.get('testingDetails').hasError('required')">
+                      This field is required.
+                  </small>
+              </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="form-floating mb-3">
+                      <input type="text" class="form-control" formControlName="testingResults" id="testingResults" placeholder="testingResults">
+                      <label for="floatingInput">Testing Results</label>
+                    </div>
+                    <div cRow *ngIf="workpaperForm.get('testingResults')?.invalid &&
+                    workpaperForm.get('testingResults')?.errors &&
+                      (workpaperForm.get('testingResults')?.dirty || workpaperForm.get('testingResults')?.touched)">
+                  <small class="text-danger"
+                      *ngIf="workpaperForm.get('testingResults').hasError('required')">
+                      This field is required.
+                  </small>
+              </div>
+                  </div>
+                </div>
+        
+                <div class="row">
+                  <div class="col-md-6">
+                    <div form-floating>
+                      <select aria-label="Floating label select example" cSelect id="testingConclusionId"
+                        formControlName="testingConclusionId" name="testingConclusionId">
+                        <option value="null">Select Testing Conclusion</option>
+                        <option *ngFor="let commonValueAndType of testingConclusions" [value]="commonValueAndType.id">
+                          {{commonValueAndType.text}}
+                        </option>
+                      </select>
+                    </div>
+                    <div cRow *ngIf="(workpaperForm.get('testingConclusionId')?.invalid && workpaperForm.get('testingConclusionId')?.errors) &&         
+                    (workpaperForm.get('testingConclusionId')?.dirty || workpaperForm.get('testingConclusionId')?.touched)">
+                    <small class="text-danger">
+                      This field is required.
+                    </small>                                 
+                  </div> 
+                  <br>
+                  </div>
+                  <div class="col-md-6">
+                      <input type="file" class="form-control" formControlName="documentId" id="documentId" placeholder="documentId">
+                      <br>
+                  </div>
+                </div>
+              </div>
+              <c-col xs="12">
+                <c-col md>
+                  <button cButton class="btn btn-primary btnSaveColor me-1" (click)="onSubmit()">
+                    <svg cIcon name="cilSave" size="md" title="Save Button Icon"></svg> Save
+                  </button>
+                  <button cButton class="btn btn-danger btnCancelColor me-1" onclick=" window.location.reload();">
+                    <svg cIcon name="cilX" size="md" title="Close Button Icon"></svg>Cancel
+                  </button>
+      
+                </c-col>
+              </c-col>
+        </form>
+      </c-card-body>
+    </c-card>
+</c-col>

@@ -80,6 +80,8 @@ using Internal.Audit.Application.Contracts.Persistent.RiskAssesmentDataManagemen
 using Internal.Audit.Infrastructure.Persistent.Repositories.RiskAssesmentDataManagements;
 using Internal.Audit.Application.Contracts.Persistent.Issues;
 using Internal.Audit.Infrastructure.Persistent.Repositories.Issues;
+using Internal.Audit.Application.Contracts.Persistent.AuditScheduleBranches;
+using Internal.Audit.Infrastructure.Persistent.Repositories.AuditScheduleBranchs;
 
 namespace Internal.Audit.Infrastructure.Persistent;
 
@@ -211,6 +213,7 @@ public static class PersistentInfrastructureServiceRegistration
         services.AddScoped<IRiskAssesmentDataManagementCommandRepository, RiskAssesmentDataManagementCommandRepository>();
         services.AddScoped<IRiskAssesmentDataManagementQueryRepository>(s => new RiskAssesmentDataManagementQueryRepository(configuration.GetConnectionString("InternalAuditDb")));
 
+        services.AddScoped<IAuditScheduleBranchQueryRepository>(s => new AuditScheduleBranchQueryRepository(configuration.GetConnectionString("InternalAuditDb")));
         return services;
     }
 }

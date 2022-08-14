@@ -1,1 +1,259 @@
-<p>workpaper works!</p>
+
+<div class="animated fadeIn">
+    <div class="row">
+      <div class="col-lg-12">
+        <div class="card">
+          <div class="card-header">
+            <i class="fa fa-align-justify" ></i> Workpaper List
+          </div>
+          <div class="card-body">
+            <form [formGroup]="searchForm">
+              <div class="row" style="margin: 0 auto;">
+                <div class="col-md-8 mb-2">
+                  <button [cModalToggle]="verticallyCenteredModal.id" class="btnCreateColor" (click)="reset()" cButton>
+                    <svg cIcon name="cilPlus" size="md" title="Add Button Icon"></svg> Create
+                  </button> 
+                </div>
+                <div class="col-md-3 mb-2 form-floating">
+                  <select aria-label="Floating label select example" cSelect id="topicHeadId"
+                  formControlName="topicHeadId" name="topicHeadId"  style="height: 40px;">
+                  <option value="">Select Topic Head</option>
+                  <option *ngFor="let topicHead of topics" [value]="topicHead.name">
+                    {{topicHead.name}}
+                  </option>
+                </select>
+                  </div>
+
+
+                <div class="col-md-1 mb-2">
+                  <button type="button" class="btn btn-secondary mr-1 btn-block searchBtn" data-toggle="modal" (click)="search()" >
+                    Search
+                  </button>
+                </div>
+              </div>
+           </form>
+            <div class="row overflow-auto">
+                <table datatable [dtOptions]="dtOptions" class="table table-bordered row-border hover datatableStyle" >
+                  <thead>
+                    <tr>
+                      <th>Sample Name</th>
+                      <th>Topic Head</th>
+                      <th>Sample Month</th>
+                      <th>Testing Conclusion</th>
+                      <th class="col-1 text-center">Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody *ngIf="workpapers?.length != 0">
+                    <tr *ngFor="let workpaper of workpapers">
+                      <td>{{ workpaper.sampleName }}</td>
+                      <td>{{ workpaper.topicHeadName }}</td>
+                      <td>{{ workpaper.sampleMonth }}</td>
+                      <td>{{ workpaper.testingConclusion }}</td>
+                      <td class="text-center">
+                        <div class="btn-group" role="group" aria-label="Basic example">
+                          <button type="button" class="btn btn-secondary btnEditColor" (click)="edit(verticallyCenteredModal,workpaper)">
+                            <svg cIcon name="cilPencil" size="md" title="Edit Button icon"></svg>
+                          </button>
+                          <button type="button" class="btn btn-danger btnDeleteColor" (click)="delete(workpaper.id)">                          
+                            <svg cIcon name="cilTrash" size="md" title="Delete Button Icon"></svg>
+                          </button>
+                        </div>
+                      </td>
+                    </tr>
+                  </tbody>
+                  <tbody *ngIf="workpapers?.length == 0">
+                    <tr>
+                      <td colspan="5" class="no-data-available">No data!</td>
+                    </tr>
+                  </tbody>
+                </table>
+  
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <form [formGroup]="workpaperForm" (ngSubmit)="onSubmit(verticallyCenteredModal)" novalidate>
+  <c-modal #verticallyCenteredModal alignment="center" id="verticallyCenteredModal">
+    <c-modal-header>
+      <h5 cModalTitle *ngIf="!formService.isEdit(this.workpaperForm.get('id'))">Create Workpaper</h5>
+      <h5 cModalTitle *ngIf="formService.isEdit(this.workpaperForm.get('id'))">Update Workpaper</h5>
+      <button [cModalToggle]="verticallyCenteredModal.id" cButtonClose></button>
+    </c-modal-header>
+    <c-modal-body>
+      <div class="col-md-12" >
+        <input type="hidden" formControlName="id"/>
+
+
+        <div class="row">
+          <div class="col-md-6">
+
+            <div class="form-floating mb-3">
+              <input type="text" class="form-control" formControlName="workPaperCode" id="workPaperCode" placeholder="workPaperCode" [readonly]="true">
+              <label for="floatingInput">Work Paper Code</label>
+            </div>
+          </div>
+          <div class="col-md-6">
+
+            <div class="form-floating mb-3">
+              <input type="text" class="form-control" formControlName="scheduleCode" id="scheduleCode" placeholder="scheduleCode" [readonly]="true">
+              <label for="floatingInput">Schedule Code</label>
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-4">
+            <div form-floating>
+              <select aria-label="Floating label select example" cSelect id="topicHeadId"
+                formControlName="topicHeadId" name="topicHeadId">
+                <option value=null>Select Topic Head</option>
+                <option *ngFor="let topicHead of topics" [value]="topicHead.id">
+                  {{topicHead.name}}
+                </option>
+              </select>
+            </div>
+    
+          </div>
+          <div class="col-md-4">
+            <div form-floating>
+              <select aria-label="Floating label select example" cSelect id="questionId"
+                formControlName="questionId" name="questionId">
+                <option value=null>Select Question</option>
+                <option *ngFor="let question of questions" [value]="question.id">
+                  {{question.question}}
+                </option>
+              </select>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div form-floating>
+              <select aria-label="Floating label select example" cSelect id="branchId"
+                formControlName="branchId" name="branchId">
+                <option value=null>Select Branch</option>
+                <option *ngFor="let branch of branches" [value]="branch.id">
+                  {{branch.name}}
+                </option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-6">
+            <div class="form-floating mb-3">
+              <input type="text" class="form-control" formControlName="sampleName" id="sampleName" placeholder="sampleName">
+              <label for="floatingInput">Sample Name</label>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div form-floating>
+              <select aria-label="Floating label select example" cSelect id="sampleMonthId"
+                formControlName="sampleMonthId" name="sampleMonthId">
+                <option value="null">Select Sample Month</option>
+                <option *ngFor="let commonValueAndType of sampledmonths" [value]="commonValueAndType.id">
+                  {{commonValueAndType.text}}
+                </option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-4">
+            <div form-floating>
+              <select aria-label="Floating label select example" cSelect id="sampleSelectionMethodId"
+                formControlName="sampleSelectionMethodId" name="sampleSelectionMethodId">
+                <option value="null">Select Sample Selection Method</option>
+                <option *ngFor="let commonValueAndType of sampleSelectionMethods" [value]="commonValueAndType.id">
+                  {{commonValueAndType.text}}
+                </option>
+              </select>
+            </div>
+              
+          </div>
+          <div class="col-md-4">
+            <div form-floating>
+              <select aria-label="Floating label select example" cSelect id="controlActivityNatureId"
+                formControlName="controlActivityNatureId" name="controlActivityNatureId">
+                <option value="null">Select Control Activity Nature</option>
+                <option *ngFor="let commonValueAndType of controlActivityNatures" [value]="commonValueAndType.id">
+                  {{commonValueAndType.text}}
+                </option>
+              </select>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div form-floating>
+              <select aria-label="Floating label select example" cSelect id="controlFrequencyId"
+                formControlName="controlFrequencyId" name="controlFrequencyId">
+                <option value="null">Select Control Freequency</option>
+                <option *ngFor="let commonValueAndType of controlFrequencies" [value]="commonValueAndType.id">
+                  {{commonValueAndType.text}}
+                </option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+
+
+
+
+          <div form-floating>
+            <select aria-label="Floating label select example" cSelect id="sampleSizeId"
+              formControlName="sampleSizeId" name="sampleSizeId">
+              <option value="null">Select Sample Size</option>
+              <option *ngFor="let commonValueAndType of sampleSizes" [value]="commonValueAndType.id">
+                {{commonValueAndType.text}}
+              </option>
+            </select>
+          </div>
+
+          <div class="form-floating mb-3">
+            <input type="text" class="form-control" formControlName="testingDetails" id="testingDetails" placeholder="testingDetails">
+            <label for="floatingInput">Testing Details</label>
+          </div>
+
+
+          <div class="form-floating mb-3">
+            <input type="text" class="form-control" formControlName="testingResults" id="testingResults" placeholder="testingResults">
+            <label for="floatingInput">Testing Results</label>
+          </div>
+
+
+
+          <div form-floating>
+            <select aria-label="Floating label select example" cSelect id="testingConclusionId"
+              formControlName="testingConclusionId" name="testingConclusionId">
+              <option value="null">Select Testing Conclusion</option>
+              <option *ngFor="let commonValueAndType of testingConclusions" [value]="commonValueAndType.id">
+                {{commonValueAndType.text}}
+              </option>
+            </select>
+          </div>
+          <div class="form-floating mb-3">
+            <input type="file" class="form-control" formControlName="documentId" id="documentId" placeholder="documentId">
+            
+            <label for="floatingInput">Document</label>
+          </div>
+  
+          <!-- <div class="form-floating">
+            <textarea class="form-control" placeholder="Remarks" formControlName="remarks" id="remarks"></textarea>
+            <label for="floatingTextarea">Remark</label>
+          </div> -->
+  
+      </div>
+    </c-modal-body>
+    <c-modal-footer>
+      <button cButton class="btn btn-primary btnSaveColor me-1" (click)="onSubmit(verticallyCenteredModal)">
+        <svg cIcon name="cilSave" size="md" title="Save Button Icon"></svg> Save
+      </button>
+      <button [cModalToggle]="verticallyCenteredModal.id" cButton class="btn btn-danger btnCancelColor me-1">
+        <svg cIcon name="cilX" size="md" title="Close Button Icon"></svg> Close
+      </button>
+    </c-modal-footer>
+  </c-modal>
+  </form>
+  

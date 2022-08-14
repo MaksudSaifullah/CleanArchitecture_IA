@@ -3,6 +3,7 @@ using Internal.Audit.Application.Features.CommonValueAndTypes.Queries.GetAuditCo
 using Internal.Audit.Application.Features.CommonValueAndTypes.Queries.GetAuditFrequency;
 using Internal.Audit.Application.Features.CommonValueAndTypes.Queries.GetAuditScore;
 using Internal.Audit.Application.Features.CommonValueAndTypes.Queries.GetAuditType;
+using Internal.Audit.Application.Features.CommonValueAndTypes.Queries.GetBranchbyAuditSchedule;
 using Internal.Audit.Application.Features.CommonValueAndTypes.Queries.GetByIdCreationValue;
 using Internal.Audit.Application.Features.CommonValueAndTypes.Queries.GetCommonValueTypeGeneric;
 using Internal.Audit.Application.Features.CommonValueAndTypes.Queries.GetControlFrequency;
@@ -17,6 +18,7 @@ using Internal.Audit.Application.Features.CommonValueAndTypes.Queries.GetRiskRat
 using Internal.Audit.Application.Features.CommonValueAndTypes.Queries.GetRiskRatingName;
 using Internal.Audit.Application.Features.CommonValueAndTypes.Queries.GetSampledMonth;
 using Internal.Audit.Application.Features.CommonValueAndTypes.Queries.GetSampleSelectionMethod;
+using Internal.Audit.Application.Features.CommonValueAndTypes.Queries.GetSampleSize;
 using Internal.Audit.Application.Features.CommonValueAndTypes.Queries.GetYear;
 using Internal.Audit.Application.Features.CommonValueAndTypes.Queries.GetYesNo;
 using MediatR;
@@ -155,11 +157,19 @@ namespace Internal.Audit.Api.Controllers
         }
 
         [HttpGet("audittype")]
-        public async Task<ActionResult<IEnumerable<LevelOfImpactDTO>>> GetAllauditType()
+        public async Task<ActionResult<IEnumerable<AuditTypeDTO>>> GetAllauditType()
         {
             var query = new GetAuditTypeQuery();
             var audittype = await _mediator.Send(query);
             return Ok(audittype);
+        }
+
+        [HttpGet("samplesize")]
+        public async Task<ActionResult<IEnumerable<SampleSizeDTO>>> GetAllsampleSize()
+        {
+            var query = new GetSampleSizeQuery();
+            var samplesize = await _mediator.Send(query);
+            return Ok(samplesize);
         }
 
         [HttpGet("auditscore")]
@@ -192,11 +202,20 @@ namespace Internal.Audit.Api.Controllers
             return Ok(generictype);
         }
         [HttpGet("getBranch")]
-        public async Task<ActionResult<IEnumerable<GetCommonValueTypeGenericDTO>>> GetBranchListId(Guid countryId)
+        public async Task<ActionResult<IEnumerable<GetCommonValueTypeGenericDTO>>> GetBranchListId(Guid countryId,int pageNumber,int pageSize)
         {
-            var command = new GetBranchListCommnad(countryId);
+            var command = new GetBranchListCommnad(countryId,pageNumber,pageSize);
             var branchList = await _mediator.Send(command);
             return Ok(branchList);
+        }
+
+        [HttpGet("getAuditScheduleBranch")]
+        public async Task<ActionResult<BranchByScheduleIdDTO>> GetByScheduleId(Guid ScheduleId)
+        {
+            var query = new GetBranchByAuditScheduleQuery(ScheduleId);
+            var riskAssessments = await _mediator.Send(query);
+            return Ok(riskAssessments);
+
         }
     }
 }

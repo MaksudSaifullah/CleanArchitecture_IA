@@ -26,6 +26,34 @@ namespace Internal.Audit.Application.Features.UserRegistration.Commands.AddUserR
         }
         public async Task<AddUserRegistrationResponseDTO> Handle(AddUserRegistrationCommand request, CancellationToken cancellationToken)
         {
+            string errorMessage = string.Empty;
+            var existsEmail = _employeeRepository.Get(x=>x.Email==request.Employee.Email);
+            if (existsEmail.Result.Count() > 0)
+            {
+                errorMessage += "Email already in use ";
+               // return new AddUserRegistrationResponseDTO(Guid.NewGuid(), false, "This email already used");
+
+            }
+            var existsuser = _userRepository.Get(x => x.UserName == request.User.UserName && x.IsDeleted==false);
+            if (existsuser.Result.Count() > 0)
+            {
+                if (!string.IsNullOrWhiteSpace(errorMessage))
+                {
+                    errorMessage += " , This username already in use ";
+                }
+                else
+                {
+                    errorMessage += "This username already in use ";
+                }
+                    
+               // return new AddUserRegistrationResponseDTO(Guid.NewGuid(), false, "This username already used");
+
+            }
+            if (!string.IsNullOrWhiteSpace(errorMessage))
+            {
+                return new AddUserRegistrationResponseDTO(Guid.NewGuid(), false, errorMessage);
+            }
+
             var gid = Guid.NewGuid();
             request.User.Id = gid;
             var user = _mapper.Map<User>(request.User);

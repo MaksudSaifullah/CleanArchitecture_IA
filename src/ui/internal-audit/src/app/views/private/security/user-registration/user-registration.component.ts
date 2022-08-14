@@ -12,7 +12,7 @@ import { userRegistrationRequestData, UserCountry, UserRole, UserResponse } from
 import {AlertService} from '../../../../core/services/alert.service';
 import { param } from 'jquery';
 import { cibToshiba } from '@coreui/icons';
-import {BreadcumbStore} from "../../../../shared/breedcumb.store";
+import {BaseResponse} from 'src/app/core/interfaces/common/base-response.interface'
 
 
 @Component({
@@ -21,7 +21,7 @@ import {BreadcumbStore} from "../../../../shared/breedcumb.store";
   styleUrls: ['./user-registration.component.scss']
 })
 export class UserRegistrationComponent implements OnInit {
-
+  
   countries: country[] = [];
   designations: designation[] = [];
   roles: role[] = [];
@@ -40,8 +40,8 @@ export class UserRegistrationComponent implements OnInit {
   formArray: FormArray | undefined;
   pageName:string = '';
 
-  constructor(private breadcumbStore:BreadcumbStore,private http: HttpService, private router : Router, private fb: FormBuilder, private activateRoute: ActivatedRoute, private customValidator: CutomvalidatorService,private AlertService: AlertService) {
-
+  constructor(private http: HttpService, private router : Router, private fb: FormBuilder, private activateRoute: ActivatedRoute, private customValidator: CutomvalidatorService,private AlertService: AlertService) {
+    
     this.LoadDropDownValues();
     this.countryForm = this.fb.group({
       id: [''],
@@ -62,27 +62,27 @@ export class UserRegistrationComponent implements OnInit {
       {
         validator: this.customValidator.MatchPassword('userPassword', 'userConfirmPassword'),
       }
-
+      
     )
     this.formArray = this.countryForm.get('checkArray') as FormArray;
   }
-
+ 
   onCheckChange(event:any) {
     this.formArray = this.countryForm.get('checkArray') as FormArray;
     console.log(event.target);
     /* Selected */
-    if(event.target.checked){
-      this.formArray.push(new FormControl(event.target.id));
+    if(event.target.checked){      
+      this.formArray.push(new FormControl(event.target.id));     
     }
     /* unselected */
-    else{
-
-      let i: number = 0;
-      this.formArray.controls.forEach((ctrl: any) => {
-        if(ctrl.value == event.target.id) {
+    else{   
+      
+      let i: number = 0;   
+      this.formArray.controls.forEach((ctrl: any) => {       
+        if(ctrl.value == event.target.id) {        
           this.formArray?.removeAt(i);
           return;
-        }
+        }  
         i++;
       });
     }
@@ -90,6 +90,7 @@ export class UserRegistrationComponent implements OnInit {
   }
 
   ngOnInit(): void {
+
    this.paramId = this.activateRoute.snapshot.params['id'];
     //console.log(paramId)
     if(this.paramId === undefined){
@@ -101,7 +102,6 @@ export class UserRegistrationComponent implements OnInit {
       this.displayUserStatus = true;
       this.LoadUserById(this.paramId);
     }
-    this.breadcumbStore.addMore({displayName:'User Add',routerLink:'#'});
   }
   get countryFormControl() {
     return this.countryForm.controls;
@@ -112,7 +112,7 @@ export class UserRegistrationComponent implements OnInit {
       let convertedResp = resp as paginatedResponseInterface<country>;
       this.countries = convertedResp.items;
       this.Data=convertedResp.items;
-
+     
     })
   }
 
@@ -143,19 +143,19 @@ export class UserRegistrationComponent implements OnInit {
 
            this.selectedUserCountry = userData.userCountries;
            this.selectedUserRole = userData.userRoles;
-
+          
           //  console.log(this.selectedUserRole)
            this.countryForm.patchValue({id: userData.id,  empEmail:userData.employee?.email, empName: userData.employee?.name,empDesignation:userData.employee?.designationId,userName:userData.userName,userPassword:userData.password,userConfirmPassword:userData.password,
            roleList:userData.userRoles,countryListSelected:'', isEnabled:userData.isEnabled, accountExpired:userData.isAccountExpired, passwordExpired:userData.isPasswordExpired, accountLocked:userData.isAccountLocked});
 
-           this.selectedUserCountry.forEach((ctrl: any) => {
-
-            this.formArray?.push(new FormControl(ctrl.countryId));
-
+           this.selectedUserCountry.forEach((ctrl: any) => {    
+           
+            this.formArray?.push(new FormControl(ctrl.countryId));    
+            
           });
           console.log(this.formArray);
       });
-
+  
   }
 
   isChecked(id:any){
@@ -164,7 +164,7 @@ export class UserRegistrationComponent implements OnInit {
   //  console.log( this.selectedUserCountry)
      const that=this;
     for (let country of that.selectedUserCountry){
-      if(country.countryId == id){
+      if(country.countryId == id){    
         return true;
       }
      }
@@ -187,7 +187,18 @@ export class UserRegistrationComponent implements OnInit {
     const that=this;
     let userList: UserRole[] = [];
 
-    if (this.countryForm.valid) {
+    if (this.countryForm.valid) {     
+
+      this.userSelectedCountry=[];
+      this.formArray?.value.forEach((ctrl: any) => {    
+        let country: UserCountry = { countryId: ctrl.toString() ,isActive:true,userId:that.paramId==undefined?null:that.paramId}
+        this.userSelectedCountry.push(country);
+
+
+        //this.formArray?.push(new FormControl(ctrl.countryId));    
+        
+      });
+
 
       let useca: UserRole[] = this.countryForm.value.roleList as UserRole[];
 
@@ -195,89 +206,98 @@ export class UserRegistrationComponent implements OnInit {
         useca.forEach(function (value) {
           let urole: UserRole = { roleId: value.toString(),userId: that.paramId===undefined?null:that.paramId}
         userList.push(urole);
-        });
-
-      }
-      this.userSelectedCountry=[];
-      this.formArray?.value.forEach((ctrl: any) => {
-        let country: UserCountry = { countryId: ctrl.toString() ,isActive:true,userId:that.paramId==undefined?null:that.paramId}
-        this.userSelectedCountry.push(country);
-
-        //this.formArray?.push(new FormControl(ctrl.countryId));
-
-      });
-
-
-
-
-
-      const RequestModel = {
-        employee: {
-          userId: this.displayUserStatus == false ? null : this.countryForm.value.id,
-          id: this.displayUserStatus == false ? null : this.employeeId,
-          email: this.countryForm.value.empEmail,
-          designationId: this.countryForm.value.empDesignation,
-          photoId: "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-          isActive: true,
-          name: this.countryForm.value.empName
-        },
-        user: {
-          id: this.displayUserStatus == false ? null : this.countryForm.value.id,
-          isAccountExpired: this.displayUserStatus == false ? false : this.countryForm.value.accountExpired,
-          isAccountLocked: this.displayUserStatus == false ? false : this.countryForm.value.accountLocked,
-          isEnabled: this.displayUserStatus == false ? true : this.countryForm.value.isEnabled,
-          isPasswordExpired: this.displayUserStatus == false ? false : this.countryForm.value.passwordExpired,
-          password:this.countryForm.value.userPassword,
-          userName: this.countryForm.value.userName
-        },
-        userCountry: this.userSelectedCountry,
-        userRole: userList
-      };
-      //let registrationModel: userRegistrationRequestData = RequestModel;
-      console.log('requesat model')
-      console.log(JSON.stringify(RequestModel));
-
-      //console.log(paramId)
-      if(this.paramId === undefined){
-        console.log('add')
-        this.http.post('UserRegistration',RequestModel).subscribe(x=>{
-          this.AlertService.success('User Saved Successful');
-          this.router.navigate(['security/userlist'], {
-            queryParams: {
-              myParam: 'inserted',
-            },
-          });
-        })
-      }
-      else{
-        console.log('edit')
-        this.http.put('UserRegistration',RequestModel,this.paramId).subscribe(x=>{
-          this.AlertService.success('User Updated Successful');
-          this.router.navigate(['security/userlist'], {
-            queryParams: {
-              myParam: 'updated',
-            },
-          });
-        })
+        }); 
+        
       }
 
+     
+      if(this.userSelectedCountry.length==0){
+        this.countryForm.markAllAsTouched();
+        this.AlertService.error('Please select at least one country for user.');
+        return;
+      } else{
+        const RequestModel = {
+          employee: {
+            userId: this.displayUserStatus == false ? null : this.countryForm.value.id,
+            id: this.displayUserStatus == false ? null : this.employeeId,
+            email: this.countryForm.value.empEmail,
+            designationId: this.countryForm.value.empDesignation,         
+            photoId: "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+            isActive: true,
+            name: this.countryForm.value.empName
+          },
+          user: { 
+            id: this.displayUserStatus == false ? null : this.countryForm.value.id,
+            isAccountExpired: this.displayUserStatus == false ? false : this.countryForm.value.accountExpired,
+            isAccountLocked: this.displayUserStatus == false ? false : this.countryForm.value.accountLocked,
+            isEnabled: this.displayUserStatus == false ? true : this.countryForm.value.isEnabled,
+            isPasswordExpired: this.displayUserStatus == false ? false : this.countryForm.value.passwordExpired,
+            password:this.countryForm.value.userPassword,
+            userName: this.countryForm.value.userName
+          },
+          userCountry: this.userSelectedCountry,
+          userRole: userList
+        };
+        //let registrationModel: userRegistrationRequestData = RequestModel;
+        console.log('requesat model')
+        console.log(JSON.stringify(RequestModel));
+  
+        //console.log(paramId)
+        if(this.paramId === undefined){
+          console.log('add')
+          this.http.post('UserRegistration',RequestModel).subscribe(x=>{  
+            let resp = x as BaseResponse;
+            if(resp.success){
+              this.AlertService.success('User Saved Successful');
+              this.router.navigate(['security/userlist'], {
+                queryParams: {
+                  myParam: 'inserted', 
+                },
+              });
+            }else{
+              this.AlertService.errorDialog('User save failed',resp.message);
+            }
+         
+          })
+        }
+        else{
+          console.log('edit')
+          this.http.put('UserRegistration',RequestModel,this.paramId).subscribe(x=>{  
+            let resp = x as BaseResponse;  
+            if(resp.success){
+              this.AlertService.success('User Updated Successful');
+              this.router.navigate(['security/userlist'], {
+                queryParams: {
+                  myParam: 'updated', 
+                },
+              });
+            }
+         else{
+          this.AlertService.errorDialog('User Update failed',resp.message);
+         }
+          })
+        }
+  
+      }
 
+    
+      
 
 
     }
     else {
-      console.log('immmm111111111')
+      //console.log('immmm111111111')
       this.countryForm.markAllAsTouched();
       return;
     }
   }
-  // eventCheck(e:any) {
-  //  // debugger;
+  // eventCheck(e:any) { 
+  //  // debugger; 
   //   const that=this;
-
-  //   let exists = this.userCountry.includes(e.target.id.toString());
-  //   if (e.target.checked) {
-
+   
+  //   let exists = this.userCountry.includes(e.target.id.toString());   
+  //   if (e.target.checked) {    
+    
   //     let country: UserCountry = { countryId: e.target.id.toString() ,isActive:true,userId:that.paramId==undefined?'':that.paramId}
   //     console.log('pushing'+country.countryId)
   //     this.userCountry.push(country);
@@ -290,7 +310,7 @@ export class UserRegistrationComponent implements OnInit {
   //   console.log(that.userCountry);
   // }
 
-
+ 
 
 
 

@@ -13,8 +13,15 @@ import { RiskCriteriaComponent } from './risk-criteria/risk-criteria.component';
 import { IconModule } from '@coreui/icons-angular';
 import { RiskAssessmentComponent } from './risk-assessment/risk-assessment.component';
 import { AuditFrequencyComponent } from './audit-frequency/audit-frequency.component';
+import { RiskAssessmentViewComponent } from './risk-assessment-view/risk-assessment-view.component';
+import { OverdueTabComponentComponent } from './risk-assessment-view/overdue-tab/overdue-tab-component';
+import { StaffTurnoverComponent } from './risk-assessment-view/staff-turnover/staff-turnover.component';
 import { AuditComponent } from './audit/audit.component';
 import { AuditScheduleComponent } from './audit-schedule/audit-schedule.component';
+import { AverageTabComponent } from './risk-assessment-view/average-tab/average-tab.component';
+import { CollectionTabComponent } from './risk-assessment-view/collection-tab/collection-tab.component';
+import { IssueComponent } from './issue/issue.component';
+import { WorkpaperComponent } from './workpaper/workpaper.component';
 
 
 @NgModule({
@@ -23,9 +30,19 @@ import { AuditScheduleComponent } from './audit-schedule/audit-schedule.componen
     RiskCriteriaComponent,
     RiskAssessmentComponent,
     AuditFrequencyComponent,
+    RiskAssessmentViewComponent,
+    OverdueTabComponentComponent,
+    StaffTurnoverComponent,
+    AuditFrequencyComponent,
 
     AuditComponent,
-      AuditScheduleComponent
+      AverageTabComponent,
+      CollectionTabComponent,
+    AuditComponent,
+      AuditScheduleComponent,
+    AuditScheduleComponent,
+    IssueComponent,
+    WorkpaperComponent
   ],
   imports: [
     CommonModule,

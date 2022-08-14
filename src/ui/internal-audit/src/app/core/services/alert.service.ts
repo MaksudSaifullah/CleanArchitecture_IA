@@ -54,6 +54,17 @@ export class AlertService {
       confirmButtonText: 'Yes, delete it!'
     });
   }
+  confirmDialogForLockUser():Promise<SweetAlertResult<any>>{
+    return Swal.fire({
+      title: 'Are you sure?',
+      text: "You won't be able to revert this!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, lock user!'
+    });
+  }
   successDialog(type:string|undefined,message:string|undefined){
     Swal.fire(
       type?? 'Completed.',

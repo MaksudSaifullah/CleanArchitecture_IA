@@ -13,6 +13,8 @@ namespace Internal.Audit.Domain.CompositeEntities.BranchAudit
         public string Country { get; set; }
         public string Approver { get; set; }
         public string TeamLeader { get; set; }
+        public string ScheduleId { get; set; }
+        public int ScheduleState { get; set; }
         public string Auditor { get; set; }
         public string ExecutionStatus { get; set; }
         public string ScheduleStatus { get; set; }

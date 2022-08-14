@@ -15,6 +15,7 @@ import { paginatedResponseInterface } from 'src/app/core/interfaces/paginated.in
 import { event } from 'jquery';
 import { CutomvalidatorService } from 'src/app/core/services/cutomvalidator.service';
 import { CommonResponseInterface } from 'src/app/core/interfaces/common-response.interface';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-risk-assessment',
@@ -43,7 +44,7 @@ export class RiskAssessmentComponent implements OnInit {
   countries: country[] = [];
   Data: Array<any> = [];
 
-  constructor(private http: HttpService , private fb: FormBuilder, private AlertService: AlertService, private customValidator: CutomvalidatorService) { 
+  constructor(private http: HttpService , private fb: FormBuilder, private AlertService: AlertService, private customValidator: CutomvalidatorService, private router: Router) { 
 
     this.LoadDropDownValues();
     this.riskAssessmentForm = this.fb.group({

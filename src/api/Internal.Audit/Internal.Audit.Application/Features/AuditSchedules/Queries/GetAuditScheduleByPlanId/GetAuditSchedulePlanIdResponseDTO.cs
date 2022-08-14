@@ -9,8 +9,9 @@ public class GetAuditSchedulePlanIdResponseDTO
     public Guid AuditPlanId { get; set; }   
     public DateTime ScheduleStartDate { get; set; }   
     public DateTime ScheduleEndDate { get; set; }
-    public virtual AuditPlan AuditPlan { get; set; } = null!;
+    public virtual AuditCreationDTO AuditCreation { get; set; } = null!;
     public virtual ICollection<AuditScheduleParticipantsDTO> AuditScheduleParticipants { get; set; } = null!;
+    public virtual ICollection<AuditScheduleBranch> AuditScheduleBranch { get; set; } = null!;
 }
 
 public class AuditScheduleParticipantsDTO
@@ -20,4 +21,87 @@ public class AuditScheduleParticipantsDTO
     public int CommonValueParticipantId { get; set; }    
     public virtual User User { get; set; } = null!;   
     public virtual CommonValueAndTypeDTO CommonValueAndTypeParticipant { get; set; } = null!;
+}
+
+public class AuditCreationDTO 
+{
+
+    public Guid AuditTypeId { get; set; }  
+    public Guid AuditPlanId { get; set; }   
+    public string AuditId { get; set; }  
+    public Int32 Year { get; set; }   
+    public string AuditName { get; set; }  
+    public DateTime AuditPeriodFrom { get; set; }
+    public DateTime AuditPeriodTo { get; set; }   
+    public virtual AuditTypeDTO AuditType { get; set; } = null!;
+  
+    //public virtual AuditPlanDTO AuditPlan { get; set; } = null!;
+}
+
+public class AuditTypeDTO
+{
+
+    public string Name { get; set; } = null!;
+
+}
+//public class AuditPlanDTO
+//{
+//    public Guid RiskAssessmentId { get; set; }   
+//    public string PlanCode { get; set; } = null!;   
+//    public Guid PlanningYearId { get; set; }  
+//    public DateTime AssessmentFrom { get; set; }    
+//    public DateTime AssessmentTo { get; set; }   
+//    public virtual RiskAssessment RiskAssessment { get; set; } = null!;
+//}
+
+
+public class UserDTO
+{
+
+   
+    public string UserName { get; set; } = null!;  
+    public string? FullName { get; set; }   
+    public string? ProfileImageUrl { get; set; }  
+    public bool IsEnabled { get; set; }   
+    public bool IsAccountExpired { get; set; }   
+    public bool IsPasswordExpired { get; set; }    
+    public bool IsAccountLocked { get; set; }     
+    public virtual EmployeeDTO Employee { get; set; }
+
+}
+
+public class AuditScheduleBranch
+{
+   
+    public Guid AuditScheduleId { get; set; }
+ 
+    public Guid BranchId { get; set; }  
+  
+    public virtual BranchDTO Branch { get; set; } = null!;
+}
+
+public class BranchDTO
+{
+   
+    public Guid CountryId { get; set; }
+    public int BranchCode { get; set; }
+    public long BranchId { get; set; }
+   
+    public string? BranchName { get; set; }
+  
+}
+
+public class EmployeeDTO 
+{
+  
+    public Guid UserId { get; set; }   
+    
+    public Guid PhotoId { get; set; } //document foreign key
+
+    public string Name { get; set; } = null!;
+
+    public string Email { get; set; } = null!;
+
+    public bool IsActive { get; set; }      
+
 }

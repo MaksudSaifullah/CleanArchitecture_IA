@@ -1,7 +1,9 @@
 ﻿
 using Internal.Audit.Domain.Entities;
+using Internal.Audit.Domain.Entities.Common;
 using Internal.Audit.Domain.Entities.config;
 using Internal.Audit.Domain.Entities.Config;
+using Internal.Audit.Domain.Entities.security;
 using Internal.Audit.Domain.Entities.Security;
 
 namespace Internal.Audit.Infrastructure.Persistent;
@@ -25,7 +27,46 @@ public class InternalAuditContextSeed
             context.CommonValueAndTypes.AddRange(GetInitialCommonvalueAndType());
             await context.SaveChangesAsync();
         }
+        if (!context.EmailTypes.Any())
+        {
+            context.EmailTypes.AddRange(GetSeedEmailTypes());
+            await context.SaveChangesAsync();
+        }
+        if (context.CommonValueAndTypes.Count(x => x.Type == "RISKRATINGNAME") == 3)
+        {
+            context.CommonValueAndTypes.AddRange(RiskRatingNewTypes());
+            await context.SaveChangesAsync();
+        }
+
+
+        if (!context.PasswordPolicies.Any())
+        {
+            context.PasswordPolicies.AddRange(GetSeedPasswordPolicy());
+            await context.SaveChangesAsync();
+        }
+        if (!context.SessionPolicies.Any())
+        {
+            context.SessionPolicies.AddRange(GetSeedSessionPolicy());
+            await context.SaveChangesAsync();
+        }
+        if (!context.UserLockingPolicies.Any())
+        {
+            context.UserLockingPolicies.AddRange(GetSeedUserLockingPolicy());
+            await context.SaveChangesAsync();
+        }
+        if(!context.CommonValueAndTypes.Where(x=>x.Type== "RISKASSESMENT").Any())
+        {
+            context.CommonValueAndTypes.AddRange(RiskAssesmentType());
+            await context.SaveChangesAsync();
+        }
+        if (!context.AuditModule.Any())
+        {
+            context.AuditModule.AddRange(AuditModuleAdd());
+            await context.SaveChangesAsync();
+        }
     }
+
+
 
     private static IEnumerable<User> GetSeedUsers()
     {
@@ -36,6 +77,62 @@ public class InternalAuditContextSeed
                 UserName = "Admin", Password = "@dmin123", IsPasswordExpired = false, IsEnabled = true, IsDeleted = false,
                 IsAccountExpired = false, IsAccountLocked = false
             }
+
+        };
+    }
+
+    private static IEnumerable<PasswordPolicy> GetSeedPasswordPolicy()
+    {
+        return new List<PasswordPolicy>
+        {
+            new PasswordPolicy
+            {
+                MinLength = 8, MaxLength = 20,
+                IsAlphabetMandatory = true, IsNumberMandatory = true, IsSpecialCharsMandatory = true,
+                AlphabetLength = 2, NumericLength = 1, SpecialCharsLength = 1,
+                IsPasswordChangeForcedOnFirstLogin = true, IsPasswordResetForcedPeriodically = true,
+                ForcePasswordResetDays = 100, NotifyPasswordResetDays = 90,
+                EffectiveFrom = new DateTime(2022, 01, 01), EffectiveTo = null
+            }
+
+        };
+    }
+    private static IEnumerable<SessionPolicy> GetSeedSessionPolicy()
+    {
+        return new List<SessionPolicy>
+        {
+            new SessionPolicy
+            {
+                IsEnabled = true, Duration = 500,
+                EffectiveFrom = new DateTime(2022, 01, 01), EffectiveTo = null
+            }
+        };
+    }
+    private static IEnumerable<UserLockingPolicy> GetSeedUserLockingPolicy()
+    {
+        return new List<UserLockingPolicy>
+        {
+            new UserLockingPolicy
+            {
+                IsLockedOnNoLoginActivity = true, NoLoginActivityDays = 100, LockedOnFailedLoginAttempts = true,
+                NumberOfFailedLoginAttempts = 10, FailedLoginAttemptsDuration = 100, FailedLoginLockedDuration = 120,
+                UnlockedOnByAdmin = true, UnlockedOnByAdminDuration = 120,
+                EffectiveFrom = new DateTime(2022, 01, 01), EffectiveTo = null
+            }
+        };
+    }
+    private static IEnumerable<EmailType> GetSeedEmailTypes()
+    {
+        return new List<EmailType>
+        {
+            new EmailType
+            {
+                Name = "Commencement Letter (Branch Audit)", Status = true, CreatedBy="system",CreatedOn=DateTime.Now, IsDeleted = false
+            },
+            new EmailType
+            {
+                Name = "Commencement Letter (Process & Control)", Status = true, CreatedBy="system",CreatedOn=DateTime.Now, IsDeleted = false
+            },
 
         };
     }
@@ -164,6 +261,17 @@ public class InternalAuditContextSeed
             },new CommonValueAndType
             {
                 IsActive = true,CreatedBy="admin",CreatedOn=DateTime.Now,Type="RISKRATINGNAME",SubType="",Value=3,Text="Disbursement",SortOrder=30,
+            }
+            ,new CommonValueAndType
+            {
+                IsActive = true,CreatedBy="admin",CreatedOn=DateTime.Now,Type="RISKRATINGNAME",SubType="",Value=4,Text="Lo productivity",SortOrder=40,
+            }
+            ,new CommonValueAndType
+            {
+                IsActive = true,CreatedBy="admin",CreatedOn=DateTime.Now,Type="RISKRATINGNAME",SubType="",Value=5,Text="StaffTurn Over",SortOrder=50,
+            },new CommonValueAndType
+            {
+                IsActive = true,CreatedBy="admin",CreatedOn=DateTime.Now,Type="RISKRATINGNAME",SubType="",Value=6,Text="Fraud ",SortOrder=60,
             },new CommonValueAndType
             {
                 IsActive = true,CreatedBy="admin",CreatedOn=DateTime.Now,Type="LOPRODUCTIVITY",SubType="",Value=1,Text="Not Available",SortOrder=10,
@@ -396,4 +504,61 @@ public class InternalAuditContextSeed
         };
     }
     #endregion
+
+    private static IEnumerable<CommonValueAndType> RiskRatingNewTypes()
+    {
+        return new List<CommonValueAndType>
+        {
+            new CommonValueAndType
+            {
+                IsActive = true,CreatedBy="admin",CreatedOn=DateTime.Now,Type="RISKRATINGNAME",SubType="",Value=4,Text="Lo productivity",SortOrder=40,
+            }
+            ,new CommonValueAndType
+            {
+                IsActive = true,CreatedBy="admin",CreatedOn=DateTime.Now,Type="RISKRATINGNAME",SubType="",Value=5,Text="StaffTurn Over",SortOrder=50,
+            },new CommonValueAndType
+            {
+                IsActive = true,CreatedBy="admin",CreatedOn=DateTime.Now,Type="RISKRATINGNAME",SubType="",Value=6,Text="Fraud ",SortOrder=60,
+            }
+        };
+    }
+
+    private static IEnumerable<CommonValueAndType> RiskAssesmentType()
+    {
+        return new List<CommonValueAndType>
+        {
+            new CommonValueAndType
+            {
+                IsActive = true,CreatedBy="admin",CreatedOn=DateTime.Now,Type="RISKASSESMENT",SubType="",Value=1,Text="Low",SortOrder=10,
+            }
+            ,new CommonValueAndType
+            {
+                IsActive = true,CreatedBy="admin",CreatedOn=DateTime.Now,Type="RISKASSESMENT",SubType="",Value=2,Text="Medium",SortOrder=20,
+            },new CommonValueAndType
+            {
+                IsActive = true,CreatedBy="admin",CreatedOn=DateTime.Now,Type="RISKASSESMENT",SubType="",Value=3,Text="High ",SortOrder=30,
+            }
+        };
+    }
+    private static IEnumerable<AuditModule> AuditModuleAdd()
+    {
+        return new List<AuditModule>
+        {
+            new AuditModule
+            {
+                IsActive = true,CreatedBy="admin",CreatedOn=DateTime.Now,Name="COMMON",DisplayName="Common Configuration"
+            }
+            ,new AuditModule
+            {
+                IsActive = true,CreatedBy="admin",CreatedOn=DateTime.Now,Name="SECURITY",DisplayName="Security"
+            },new AuditModule
+            {
+                IsActive = true,CreatedBy="admin",CreatedOn=DateTime.Now,Name="BA",DisplayName="Branch Audit"
+            }
+            ,new AuditModule
+            {
+                IsActive = true,CreatedBy="admin",CreatedOn=DateTime.Now,Name="PA",DisplayName="Process & Control Audit"
+            }
+        };
+    }
 }

@@ -60,6 +60,9 @@ public class WorkPaper : EntityBase
     [Required]
     public Guid DocumentId { get; set; }
 
+    [Required]
+    public DateTime TestingDate { get; set; }
+
     [ForeignKey("AuditScheduleId")]
     public virtual AuditSchedule? AuditSchedule { get; set; }
 

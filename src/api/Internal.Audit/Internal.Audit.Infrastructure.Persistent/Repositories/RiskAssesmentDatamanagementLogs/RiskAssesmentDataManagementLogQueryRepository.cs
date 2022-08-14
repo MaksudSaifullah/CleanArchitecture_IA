@@ -9,7 +9,7 @@ public class RiskAssesmentDataManagementLogQueryRepository : QueryRepositoryBase
     {
     }
 
-    public Task<IEnumerable<RiskAssesmentDataManagementLog>> GetDataSyncList(Guid? countryId, DateTime? FromDate, DateTime? ToDate, int typeId, decimal conversionRate, int pageNumber, int pageSize)
+    public Task<IEnumerable<RiskAssesmentDataManagementLog>> GetDataSyncList(Guid? countryId, Guid? riskassesmentId, DateTime? FromDate, DateTime? ToDate, int typeId, decimal conversionRate, int pageNumber, int pageSize)
     {
         throw new NotImplementedException();
     }

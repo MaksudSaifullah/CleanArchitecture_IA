@@ -407,6 +407,11 @@ public class MappingProfile : Profile
         CreateMap<RiskAssesmentDataManagementLog, AddRiskAssesmentDataManagementLogCommand>().ReverseMap();
         CreateMap<RiskAssesmentDataManagement, RiskAssesmentDataManagementCommand>().ReverseMap();
         CreateMap<Branch, GetBranchListResponseDTORAW>().ReverseMap();
+        //CreateMap<Country, GetBranchListResponseDTORAW>().ReverseMap();
+
+        CreateMap<Branch, GetBranchListResponseDTORAW>() // needs `Inst` -> `InstDTO` map
+    .ForMember(dst => dst.CountryName, opt => opt.MapFrom(src => src.Country.Name)).ReverseMap();
+
         CreateMap<CommonValueAndType, SampleSizeDTO>().ReverseMap();
         CreateMap<CommonValueAndType, BranchByScheduleIdDTO>().ReverseMap();
         CreateMap<AuditScheduleBranch, BranchByScheduleIdDTO>().ReverseMap();

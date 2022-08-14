@@ -8,6 +8,6 @@ public class DesignationConfiguration : BaseTypeConfiguration<Designation>
     public override void Configure(EntityTypeBuilder<Designation> builder)
     {
         base.Configure(builder);
-        builder.HasIndex(c => c.Name).IsUnique();
+        //builder.HasIndex(c => c.Name).IsUnique();
     }
 }

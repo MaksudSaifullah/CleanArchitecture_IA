@@ -1,0 +1,58 @@
+<div class="card">
+  <div class="card-header">
+    <div class="row">
+      <div class="col-4">
+        <button class="ui-btn-left" (click)="goBack()"> &#8592; Back To Assessment List</button>
+      </div>
+      <div class="col-8 text-end">
+        <h2>Risk Assessment: RA/2022/01</h2>
+        <h5> Type: Branch Audit </h5>
+      </div>
+    </div>
+  </div>
+  <div class="card-body">
+    <div class="row m-2">
+      <div class="col-6 ml-2">
+        <div class="row">
+          Country: Tanzania
+        </div>
+        <div class="row">
+          Review Period To: 01 Jan 2021
+        </div>
+        <div class="row">
+          Review Period From: 01 December 2021
+        </div>
+      </div>
+      <div class="col-6">
+        <div class="row">
+          Created By: Tanzania
+        </div>
+        <div class="row">
+          Created Date: 01 Jan 2022
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<c-nav variant="tabs">
+  <a [active]="true" [cTabContent]="tabContent" [routerLink] [tabPaneIdx]="0" cNavLink>Overdue</a>
+  <a [cTabContent]="tabContent" [routerLink] [tabPaneIdx]="1" cNavLink>Staff Turnover</a>
+  <a [cTabContent]="tabContent" [routerLink] [tabPaneIdx]="2" cNavLink>Average</a>
+</c-nav>
+<c-col xs="12">
+  <c-card class="mb-4">
+    <c-tab-content #tabContent="cTabContent">
+      <c-tab-pane class="p-3">
+        <app-overdue-tab-component [id]="id"></app-overdue-tab-component>
+      </c-tab-pane>
+
+      <!-- staff turnover -->
+      <c-tab-pane class="p-3">
+        <app-staff-turnover> </app-staff-turnover>
+      </c-tab-pane>
+
+      <!-- average -->
+      <c-tab-pane class="p-3">
+        <app-average-tab> </app-average-tab>
+      </c-tab-pane>
+    </c-tab-content>

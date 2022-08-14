@@ -22,13 +22,13 @@ public class GetBranchListCommandHandler : IRequestHandler<GetBranchListCommnad,
     public async Task<GetBranchListResponseDTO> Handle(GetBranchListCommnad request, CancellationToken cancellationToken)
     {
         int skip = ((request.pageNumber - 1) * request.pageSize);
-        var branchList =await _commandRepository.Get(x => x.CountryId == request.countyrId);
+        var branchList =await _commandRepository.GetWithInclude(x => x.CountryId == request.countyrId);
         var totalList = branchList.ToList().Count();
         var dataSet = branchList.OrderBy(x=>x.BranchCode).Skip(skip).Take(request.pageSize);
         GetBranchListResponseDTO result = new GetBranchListResponseDTO
         {
-            BranchList = _mapper.Map<IList<GetBranchListResponseDTORAW>>(dataSet),
-            TotalCount = new Domain.CompositeEntities.EfTotalCount { Tc = totalList }
+            Items = _mapper.Map<IList<GetBranchListResponseDTORAW>>(dataSet),
+            TotalCount = totalList 
         };
         return result; 
         

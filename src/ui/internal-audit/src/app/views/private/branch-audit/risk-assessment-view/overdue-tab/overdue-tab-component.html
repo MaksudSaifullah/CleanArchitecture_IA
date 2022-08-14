@@ -1,0 +1,79 @@
+<div class="animated fadeIn">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="card">
+                <div class="card-header">
+                    <div class="fa fa-align-justify">
+                        <button class="btn btn-success" (click)="onSubmit()"> Save </button>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="container">
+                        <form [formGroup]="pullFromAMBSForm">
+                            <div class="col-md-6">
+                                <div cFormFloating>
+                                    <select aria-label="Floating label select example" cSelect id="empDesignation"
+                                      formControlName="countryId" name="countryId">
+                                      <option value=null>Select Country</option>
+                                        <option *ngFor="let country of countries" [value]="country.id">
+                                            {{country.name}}
+                                        </option>
+                                    </select>
+                                    <label for="countryId" class="dropdownLabel">Designation</label>
+                                  </div>
+                                <div class="form-floating mb-3 mt-4">
+                                    <input type="text" class="form-control" formControlName="conversionRate"
+                                        id="conversionRate" placeholder="conversionRate">
+                                    <label for="floatingInput">Conversion Rate</label>
+                                </div>
+                                <div class="form-floating" style="display: none;">
+                                    <input class="form-control" placeholder="effectiveFrom" formControlName="effectiveFrom"
+                                        id="effectiveFrom" type="date">
+                                    <label for="effectiveForm">Effective From</label>
+                                </div>
+                                <div class="form-floating">
+                                    <input class="form-control" placeholder="effectiveTo" formControlName="effectiveTo"
+                                        id="effectiveForm" type="date">
+                                    <label for="effectiveTo">As On Date</label>
+                                </div>
+                            </div>
+                            <button cButton class="btn btn-primary btnSaveColor mt-4 me-1" (click)="LoadData()">Pull Data From AMBS</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <br>
+
+            <div class="row overflow-auto">
+                <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="table table-bordered row-border datatableStyle hover" id="mytable">
+                    <thead>
+                        <tr>
+                            <th>SL No.</th>
+                            <th>Branch Name</th>
+                            <th>Average Overdue in  SLL</th>
+                            <th>Average Overdue in *$</th>
+                            <th>Rating</th>
+                            <th>Score</th>
+                        </tr>
+                    </thead>
+                    <tbody *ngIf="riskAssesmentOverdue?.length != 0">
+                        
+                        <tr *ngFor="let riskAssessment of riskAssesmentOverdue; let i = index" ng-click="rowClickHandler">
+                            <td> {{i + 1}} </td>
+                            <td>{{ riskAssessment.branchName }}</td>
+                            <td>{{ riskAssessment.amount }}</td>
+                            <td>{{ riskAssessment.amountConverted }}</td>
+                            <td> {{ riskAssessment.riskCriteria.commonValueRatingType.text }} </td>
+                            <td> {{ riskAssessment.riskCriteria.commonValueRatingType.value }} </td>
+                        </tr>
+                    </tbody>
+                    <tbody *ngIf="riskAssesmentOverdue?.length == 0">
+                        <tr>
+                            <td colspan="5" class="no-data-available">Please pull data!</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

@@ -27,7 +27,20 @@ public class AddRiskCriteriaCommandHandler : IRequestHandler<AddRiskCriteriaComm
     }
     public async Task<AddRiskCriteriaResponseDTO> Handle(AddRiskCriteriaCommand request, CancellationToken cancellationToken)
     {
+        var exists = await _riskCriteriaRepository.Get(x => (x.EffectiveFrom >= request.EffectiveFrom && x.EffectiveFrom <= request.EffectiveTo)
+                                                            || (x.EffectiveTo >= request.EffectiveFrom && x.EffectiveTo <= request.EffectiveTo)
+                                                            || (request.EffectiveTo >= x.EffectiveFrom && request.EffectiveTo <= x.EffectiveTo)
+                                                            || (request.EffectiveFrom >= x.EffectiveFrom && request.EffectiveFrom <= x.EffectiveTo));
+
+        var duplicateData = exists.Where(x => x.CountryId == request.CountryId && x.RatingTypeId == request.RatingTypeId && x.RiskCriteriaTypeId == request.RiskCriteriaTypeId
+        && request.MinimumValue <= x.MinimumValue && request.MaximumValue >= x.MaximumValue);
+        if (duplicateData.Count() > 0)
+        {
+            return new AddRiskCriteriaResponseDTO(Guid.NewGuid(), false, "Duplicate Data Found in same Date Range");
+
+        }
         var riskCriteria = _mapper.Map<RiskCriteria>(request);
+
         var newriskCriteria = await _riskCriteriaRepository.Add(riskCriteria);
         var rowsAffected = await _unitOfWork.CommitAsync();
 

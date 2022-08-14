@@ -58,7 +58,11 @@
                     </thead>
                     <tbody *ngIf="riskAssessments?.length != 0">
                       <tr *ngFor="let riskAssessment of riskAssessments">
-                        <td>{{ riskAssessment.assessmentCode }}</td>
+                        <td>
+                          <a [routerLink]="['/branch-audit/risk-assessment-view', riskAssessment.id]">
+                            {{ riskAssessment.assessmentCode }}
+                          </a>
+                        </td>
                         <td>{{ riskAssessment.countryName }}</td>
                         <td>{{ riskAssessment.auditTypeName }}</td>
                         <td>{{ riskAssessment.effectiveFrom | date:'medium' }}</td>

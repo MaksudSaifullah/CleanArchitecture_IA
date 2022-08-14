@@ -8,4 +8,9 @@ public class RiskAssesmentDataManagementLogQueryRepository : QueryRepositoryBase
     public RiskAssesmentDataManagementLogQueryRepository(string _connectionString) : base(_connectionString)
     {
     }
+
+    public Task<IEnumerable<RiskAssesmentDataManagementLog>> GetDataSyncList(Guid? countryId, DateTime? FromDate, DateTime? ToDate, int typeId, decimal conversionRate, int pageNumber, int pageSize)
+    {
+        throw new NotImplementedException();
+    }
 }

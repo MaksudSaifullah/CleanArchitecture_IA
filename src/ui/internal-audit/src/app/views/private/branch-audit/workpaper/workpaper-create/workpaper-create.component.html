@@ -135,7 +135,7 @@
                   <div class="col-md-6">
                     <div form-floating>
                       <select aria-label="Floating label select example" cSelect id="sampleMonthId"
-                        formControlName="sampleMonthId" name="sampleMonthId">
+                        formControlName="sampleMonthId" name="sampleMonthId" >
                         <option value="null">Select Sample Month</option>
                         <option *ngFor="let commonValueAndType of sampledmonths" [value]="commonValueAndType.id">
                           {{commonValueAndType.text}}
@@ -175,7 +175,7 @@
                   <div class="col-md-4">
                     <div form-floating>
                       <select aria-label="Floating label select example" cSelect id="controlActivityNatureId"
-                        formControlName="controlActivityNatureId" name="controlActivityNatureId">
+                        formControlName="controlActivityNatureId" name="controlActivityNatureId" (change)="LoadControlFrequency($event.target.value)">
                         <option value="null">Select Control Activity Nature</option>
                         <option *ngFor="let commonValueAndType of controlActivityNatures" [value]="commonValueAndType.id">
                           {{commonValueAndType.text}}

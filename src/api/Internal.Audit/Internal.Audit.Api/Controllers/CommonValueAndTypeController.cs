@@ -217,5 +217,13 @@ namespace Internal.Audit.Api.Controllers
             return Ok(riskAssessments);
 
         }
+        [HttpGet("ControlActivityId")]
+        public async Task<ActionResult<ControlFrequencyDTO>> GetByControlActivityId(Guid ControlActivityId)
+        {
+            var query = new GetFrequencyByNatureActivityQuery(ControlActivityId);
+            var riskAssessments = await _mediator.Send(query);
+            return Ok(riskAssessments);
+
+        }
     }
 }

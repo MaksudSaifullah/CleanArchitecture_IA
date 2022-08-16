@@ -1,5 +1,6 @@
 ﻿using Internal.Audit.Application.Features.AmbsDataSyncs.Command.AddAmbsDataSyncCommand;
 using Internal.Audit.Application.Features.AmbsDataSyncs.Queries.GetAmbsDataSyncDataByCountryAndDateInfo;
+using Internal.Audit.Application.Features.AmbsDataSyncs.Queries.GetRiskAssesmentData;
 using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -27,6 +28,14 @@ public class DataSyncController : ControllerBase
     }
     [HttpPost("getSyncData")]
     public async Task<ActionResult<GetAmbsDataSyncDataByCountryAndDateInfoDTO>> GetList(GetAmbsDataSyncDataByCountryAndDateInfoQuery command)
+    {
+        var result = await _mediator.Send(command);
+        return Ok(result);
+
+
+    }
+    [HttpPost("getSyncDataRiskAssesment")]
+    public async Task<ActionResult<GetRiskAssesmentDataQueryDTO>> GetSyncDataRiskAssesment(GetRiskAssesmentDataQuery command)
     {
         var result = await _mediator.Send(command);
         return Ok(result);

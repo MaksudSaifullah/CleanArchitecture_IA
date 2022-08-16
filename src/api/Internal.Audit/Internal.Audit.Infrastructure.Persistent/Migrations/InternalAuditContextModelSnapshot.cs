@@ -1040,6 +1040,9 @@ namespace Internal.Audit.Infrastructure.Persistent.Migrations
                     b.Property<Guid>("TestingConclusionId")
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<DateTime>("TestingDate")
+                        .HasColumnType("datetime2");
+
                     b.Property<string>("TestingDetails")
                         .IsRequired()
                         .HasMaxLength(300)
@@ -1378,9 +1381,6 @@ namespace Internal.Audit.Infrastructure.Persistent.Migrations
                         .HasColumnType("datetime2");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("Name")
-                        .IsUnique();
 
                     b.ToTable("Designation", "Common");
                 });

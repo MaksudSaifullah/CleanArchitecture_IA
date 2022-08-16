@@ -8,6 +8,7 @@ import { TopicHeadComponent } from './topic-head/topic-head.component';
 import { AuditComponent } from './audit/audit.component';
 import { AuditScheduleComponent } from './audit-schedule/audit-schedule.component';
 import { WorkpaperComponent } from './workpaper/workpaper.component';
+import { WorkpaperCreateComponent } from './workpaper/workpaper-create/workpaper-create.component';
 import { AuditViewComponent } from './audit-view/audit-view.component';
 import { ScheduleViewComponent } from './schedule-view/schedule-view.component';
 
@@ -45,6 +46,11 @@ const routes: Routes = [
   {
     path:'workpaper',
     component: WorkpaperComponent
+  },
+  {
+    path:'workpaperCreate',
+    component: WorkpaperCreateComponent
+  }
   },
   
   {

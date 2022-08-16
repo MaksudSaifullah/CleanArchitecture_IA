@@ -30,7 +30,7 @@ export class DesignationComponent implements OnInit {
   constructor(private http: HttpService , private fb: FormBuilder, private AlertService: AlertService) {
     this.designationForm = this.fb.group({
       id: [''],
-      name: ['',[Validators.required,Validators.maxLength(50),Validators.minLength(2)]],
+      name: ['',[Validators.required,Validators.maxLength(50),Validators.minLength(2), this.noWhitespaceValidator]],
       description: ['', [Validators.maxLength(300)]]      
     });
     this.searchForm = this.fb.group(
@@ -83,10 +83,10 @@ export class DesignationComponent implements OnInit {
             let resp = x as CommonResponseInterface;
             if(resp.success){
               this.formService.onSaveSuccess(localmodalId,this.datatableElement);
-              this.AlertService.success('Designation Updated Successfully');
+              this.AlertService.success(resp.message);
             }
             else{
-              this.AlertService.errorDialog('Unsuccessful', 'Duplicate Value Or Other Error');
+              this.AlertService.errorDialog('Unsuccessful', resp.message);
             }
           });
         }
@@ -96,10 +96,10 @@ export class DesignationComponent implements OnInit {
             if(resp.success){
               localmodalId.visible = false;
               this.dataTableService.redraw(this.datatableElement);
-              this.AlertService.success('Designation Saved Successfully');
+              this.AlertService.success(resp.message);
             }
             else{
-              this.AlertService.errorDialog('Unsuccessful', 'Duplicate Value Or Other Error');
+              this.AlertService.errorDialog('Unsuccessful', resp.message);
             }  
           });
         }
@@ -138,6 +138,11 @@ export class DesignationComponent implements OnInit {
   }
   search(){
     this.dataTableService.redraw(this.datatableElement);
+  }
+  noWhitespaceValidator(control: FormControl) {
+    const isWhitespace = (control.value || '').trim().length === 0;
+    const isValid = !isWhitespace;
+    return isValid ? null : { 'whitespace': true };
   }
 
 }

@@ -22,6 +22,7 @@ import { AverageTabComponent } from './risk-assessment-view/average-tab/average-
 import { CollectionTabComponent } from './risk-assessment-view/collection-tab/collection-tab.component';
 import { IssueComponent } from './issue/issue.component';
 import { WorkpaperComponent } from './workpaper/workpaper.component';
+import { WorkpaperCreateComponent } from './workpaper/workpaper-create/workpaper-create.component';
 import { AuditViewComponent } from './audit-view/audit-view.component';
 import { ScheduleViewComponent } from './schedule-view/schedule-view.component';
 
@@ -43,6 +44,8 @@ import { ScheduleViewComponent } from './schedule-view/schedule-view.component';
     AuditScheduleComponent,
     IssueComponent,
     WorkpaperComponent,
+    WorkpaperCreateComponent,
+   
     AuditViewComponent,
     ScheduleViewComponent,
   ],

@@ -150,6 +150,8 @@ using Internal.Audit.Application.Features.WorkPapers.Commands.DeleteWorkPaper;
 using Internal.Audit.Application.Features.AuditSchedules.Queries.GetAuditScheduleList;
 using Internal.Audit.Application.Features.RiskAssesmentDataManagements.Commands.AddRiskAssesmentDataManagement;
 using Internal.Audit.Application.Features.RiskAssesmentDataManagementLogs.Commands.AddRiskAssesmentDataManagementLog;
+using Internal.Audit.Application.Features.CommonValueAndTypes.Queries.GetSampleSize;
+using Internal.Audit.Application.Features.CommonValueAndTypes.Queries.GetBranchbyAuditSchedule;
 
 namespace Internal.Audit.Application.Mappings;
 
@@ -405,7 +407,15 @@ public class MappingProfile : Profile
         CreateMap<RiskAssesmentDataManagementLog, AddRiskAssesmentDataManagementLogCommand>().ReverseMap();
         CreateMap<RiskAssesmentDataManagement, RiskAssesmentDataManagementCommand>().ReverseMap();
         CreateMap<Branch, GetBranchListResponseDTORAW>().ReverseMap();
+        //CreateMap<Country, GetBranchListResponseDTORAW>().ReverseMap();
 
+        CreateMap<Branch, GetBranchListResponseDTORAW>() // needs `Inst` -> `InstDTO` map
+    .ForMember(dst => dst.CountryName, opt => opt.MapFrom(src => src.Country.Name)).ReverseMap();
+
+        CreateMap<CommonValueAndType, SampleSizeDTO>().ReverseMap();
+        CreateMap<CommonValueAndType, BranchByScheduleIdDTO>().ReverseMap();
+        CreateMap<AuditScheduleBranch, BranchByScheduleIdDTO>().ReverseMap();
+        CreateMap<Branch, BranchDTO>().ReverseMap();
 
     }
 }

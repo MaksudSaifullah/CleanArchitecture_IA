@@ -96,4 +96,28 @@ public class CommandRepositoryBase<TEntity> : IAsyncCommandRepository<TEntity> w
         await Task.CompletedTask;
         return true;
     }
+
+    public async Task<IReadOnlyList<TEntity>> Get(Expression<Func<TEntity, bool>> predicate=null, 
+        Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null,
+        params Expression<Func<TEntity, object>>[] includes)
+    {     
+        IQueryable<TEntity> query = _dbContext.Set<TEntity>(); ;
+        foreach (Expression<Func<TEntity, object>> include in includes)
+        {
+            query = query.Include(include);
+        }
+
+        if (predicate != null)
+        {
+            query = query.Where(predicate);
+        }
+
+        if (orderBy != null)
+        {
+            query = orderBy(query);
+        }
+
+        return await query.ToListAsync().ConfigureAwait(false);
+
+    }
 }

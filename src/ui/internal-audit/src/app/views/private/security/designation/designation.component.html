@@ -115,6 +115,9 @@
                     *ngIf="designationForm.get('name').hasError('maxlength')">
                     The maximum length for this field is {{designationForm.get('name').errors.maxlength.requiredLength}} characters.
                 </small>
+                <small class="text-danger" *ngIf="designationForm.get('name').hasError('whitespace')">
+                  Only whitespace not allowed. Please enter valid data.
+                </small>
               </div>
             </div>
             

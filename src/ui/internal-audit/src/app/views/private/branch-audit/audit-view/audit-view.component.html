@@ -89,20 +89,18 @@
                       <th>SL</th>
                       <th>Country</th>
                       <th>Branch</th>
-                     
                     </tr>
                   </thead>
                   <tbody *ngIf="branches?.length != 0">
                     <tr *ngFor="let branch of branches let i=index" >
                       <td>{{ i+1 }}</td>
-                      <td>{{ branch.auditId }}</td>
-                      <td>{{ branch.planId }}</td>
-                     
+                      <td>{{ branch.branchCode }}</td>
+                      <td>{{ branch.branchName }}</td>
                     </tr>
                   </tbody>
                   <tbody *ngIf="branches?.length == 0">
                     <tr>
-                      <td colspan="5" class="no-data-available">No data!</td>
+                      <td colspan="3" class="no-data-available">No data!</td>
                     </tr>
                   </tbody>
                 </table>

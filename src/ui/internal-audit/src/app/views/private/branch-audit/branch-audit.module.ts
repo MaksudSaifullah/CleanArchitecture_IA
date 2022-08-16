@@ -36,19 +36,15 @@ import { ScheduleViewComponent } from './schedule-view/schedule-view.component';
     OverdueTabComponentComponent,
     StaffTurnoverComponent,
     AuditFrequencyComponent,
-
     AuditComponent,
-      AverageTabComponent,
-      CollectionTabComponent,
+    AverageTabComponent,
+    CollectionTabComponent,
     AuditComponent,
-      AuditScheduleComponent,
-
+    AuditScheduleComponent,
     IssueComponent,
-    WorkpaperComponent
-
-
+    WorkpaperComponent,
     AuditViewComponent,
-    ScheduleViewComponent
+    ScheduleViewComponent,
   ],
   imports: [
     CommonModule,

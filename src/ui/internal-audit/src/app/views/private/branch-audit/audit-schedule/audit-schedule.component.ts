@@ -185,9 +185,9 @@ export class AuditScheduleComponent implements OnInit {
             
             this.auditCreationId=auditResponse.id;
 
-            this.http.get('commonValueAndType/getBranch?countryId='+auditResponse.countryId).subscribe(resp => {
-              let convertedResp = resp as Branch[];
-              this.branches = convertedResp;
+            this.http.get('commonValueAndType/getBranch?countryId='+auditResponse.countryId +'&pageNumber=1&pageSize=10000').subscribe(resp => {
+              let convertedResp = resp as paginatedResponseInterface<Branch>;
+              this.branches = convertedResp.items;
             })
 
       });

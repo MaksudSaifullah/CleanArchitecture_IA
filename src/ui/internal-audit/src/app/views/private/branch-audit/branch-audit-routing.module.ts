@@ -8,6 +8,7 @@ import { TopicHeadComponent } from './topic-head/topic-head.component';
 import { AuditComponent } from './audit/audit.component';
 import { AuditScheduleComponent } from './audit-schedule/audit-schedule.component';
 import { WorkpaperComponent } from './workpaper/workpaper.component';
+import { WorkpaperCreateComponent } from './workpaper/workpaper-create/workpaper-create.component';
 
 const routes: Routes = [
   {
@@ -43,6 +44,10 @@ const routes: Routes = [
   {
     path:'workpaper',
     component: WorkpaperComponent
+  },
+  {
+    path:'workpaperCreate',
+    component: WorkpaperCreateComponent
   }
 ];
 

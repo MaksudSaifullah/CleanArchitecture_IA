@@ -4,6 +4,7 @@ using Internal.Audit.Infrastructure.Persistent;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Internal.Audit.Infrastructure.Persistent.Migrations
 {
     [DbContext(typeof(InternalAuditContext))]
-    partial class InternalAuditContextModelSnapshot : ModelSnapshot
+    [Migration("20220814061509_TestingDate_WorkPaperSP")]
+    partial class TestingDate_WorkPaperSP
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -597,9 +599,6 @@ namespace Internal.Audit.Infrastructure.Persistent.Migrations
                     b.Property<DateTime?>("ReviewedOn")
                         .HasColumnType("datetime2");
 
-                    b.Property<Guid>("RiskAssessmentId")
-                        .HasColumnType("uniqueidentifier");
-
                     b.Property<int>("TypeId")
                         .HasColumnType("int");
 
@@ -613,8 +612,6 @@ namespace Internal.Audit.Infrastructure.Persistent.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("DataRequestQueueServiceId");
-
-                    b.HasIndex("RiskAssessmentId");
 
                     b.ToTable("RiskAssesmentDataManagementLog", "BranchAudit");
                 });
@@ -2039,10 +2036,10 @@ namespace Internal.Audit.Infrastructure.Persistent.Migrations
                         .HasDefaultValueSql("newsequentialid()");
 
                     b.Property<decimal>("Amount")
-                        .HasColumnType("decimal(30,4)");
+                        .HasColumnType("decimal(18,2)");
 
                     b.Property<decimal?>("AmountConverted")
-                        .HasColumnType("decimal(30,4)");
+                        .HasColumnType("decimal(18,2)");
 
                     b.Property<string>("ApprovedBy")
                         .HasMaxLength(10)
@@ -3275,15 +3272,7 @@ namespace Internal.Audit.Infrastructure.Persistent.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Internal.Audit.Domain.Entities.BranchAudit.RiskAssessment", "RiskAssessment")
-                        .WithMany()
-                        .HasForeignKey("RiskAssessmentId")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
-
                     b.Navigation("DataRequestQueueService");
-
-                    b.Navigation("RiskAssessment");
                 });
 
             modelBuilder.Entity("Internal.Audit.Domain.Entities.BranchAudit.RiskAssessment", b =>

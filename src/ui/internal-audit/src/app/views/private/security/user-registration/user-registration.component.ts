@@ -182,7 +182,7 @@ export class UserRegistrationComponent implements OnInit {
 
 
 
-  onSubmit(): void {
+onSubmit(): void {
     console.log(this.countryForm)
     const that=this;
     let userList: UserRole[] = [];

@@ -20,12 +20,12 @@ export const navItems: INavData[] = [
         url: '/configuration/country',
       },
       {
-        name: 'Risk Profile',
-        url: '/configuration/risk-profile',
+        name: 'Email Configuration',
+        url: '/configuration/emailConfig',
       },
       {
-        name: 'Email Config',
-        url: '/configuration/emailConfig',
+        name: 'Risk Profile',
+        url: '/configuration/risk-profile',
       },
     ]
   },
@@ -43,16 +43,16 @@ export const navItems: INavData[] = [
         url: '/security/userlist',
       },
       {
-        name: 'Role',
+        name: 'User Role',
         url: '/security/userrole',
-      },
-      {
-        name: 'Access Privilege Config',
-        url: '/security/access-privilege',
       },
       {
         name: 'Designation',
         url: '/security/designation',
+      },
+      {
+        name: 'Access Privilege Config',
+        url: '/security/access-privilege',
       },
 
     ]

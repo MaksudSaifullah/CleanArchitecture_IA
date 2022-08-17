@@ -4,7 +4,7 @@
     <div class="col-lg-12">
       <div class="card">
         <div class="card-header">
-          <i class="fa fa-align-justify" ></i> Country List
+          <i class="fa fa-align-justify" ></i> <strong>Country Creation</strong> 
         </div>
         <div class="card-body">
           <form [formGroup]="searchForm">
@@ -15,8 +15,8 @@
                 </button> 
               </div>
               <div class="col-md-5 mb-2 form-floating">
-                <input type="text" formControlName="searchTerm" class="form-control searchInput"  placeholder="Search by Name or Code"/>
-                <label class="searchLevel" for="floatingInput">Country Name / Country Code</label>
+                <input type="text" formControlName="searchTerm" class="form-control searchInput"  placeholder="Search by Country Code/Country Name  "/>
+                <label class="searchLevel" for="floatingInput">Search by Country Code/Country Name</label>
               </div>
               <div class="col-md-1 mb-2">
                 <button type="button" class="btn btn-secondary mr-1 btn-block searchBtn" data-toggle="modal" (click)="search()" >
@@ -29,17 +29,17 @@
               <table datatable [dtOptions]="dtOptions" class="table table-bordered row-border hover datatableStyle" >
                 <thead>
                   <tr>
-                    <th>Name</th>
-                    <th>Code</th>
-                    <th>Created On</th>
+                    <th>Country Code</th>
+                    <th>Country Name</th>
+                    <th>Creation Date</th>
                     <th>Remarks</th>
                     <th class="col-1 text-center">Actions</th>
                   </tr>
                 </thead>
                 <tbody *ngIf="countries?.length != 0">
                   <tr *ngFor="let country of countries">
-                    <td>{{ country.name }}</td>
                     <td>{{ country.code }}</td>
+                    <td>{{ country.name }}</td>
                     <td>{{ country.createdOn | date:'medium' }}</td>
                     <td>{{ country.remarks }}</td>
                     <td class="text-center">
@@ -70,17 +70,43 @@
 <form [formGroup]="countryForm" (ngSubmit)="onSubmit(verticallyCenteredModal)" novalidate>
 <c-modal #verticallyCenteredModal alignment="center" id="verticallyCenteredModal">
   <c-modal-header>
-    <h5 cModalTitle *ngIf="!formService.isEdit(this.countryForm.get('id'))">Create Country</h5>
-    <h5 cModalTitle *ngIf="formService.isEdit(this.countryForm.get('id'))">Update Country</h5>
+    <h5 cModalTitle *ngIf="!formService.isEdit(this.countryForm.get('id'))">New Country</h5>
+    <h5 cModalTitle *ngIf="formService.isEdit(this.countryForm.get('id'))">Edit Country</h5>
     <button [cModalToggle]="verticallyCenteredModal.id" cButtonClose></button>
   </c-modal-header>
   <c-modal-body>
     <div class="col-md-12" >
       <input type="hidden" formControlName="id"/>
 
+      <div class="form-floating mb-3">
+        <input type="text" class="form-control" formControlName="code" id="code" placeholder="Code">
+        <label for="floatingInput">Country Code</label>
+      </div>
+
+      <div cRow *ngIf="countryForm.get('code')?.invalid &&
+      countryForm.get('code')?.errors &&
+            (countryForm.get('code')?.dirty || countryForm.get('code')?.touched)">
+        <small class="text-danger"
+            *ngIf="countryForm.get('code').hasError('required')">
+            This field is required.
+        </small>
+        <small class="text-danger"
+            *ngIf="countryForm.get('code').hasError('minlength')">
+            The minimum length for this field is {{countryForm.get('code').errors.minlength.requiredLength}} characters.
+        </small>
+        <small class="text-danger"
+            *ngIf="countryForm.get('code').hasError('maxlength')">
+            The maximum length for this field is {{countryForm.get('code').errors.maxlength.requiredLength}} characters.
+        </small>
+        <small class="text-danger" 
+            *ngIf="countryForm.get('code').hasError('pattern')">
+             Code should be in ISO Alpha 2 format
+        </small>
+    </div>
+
         <div class="form-floating mb-3">
           <input type="text" class="form-control" formControlName="name" id="name" placeholder="Name">
-          <label for="floatingInput">Name</label>
+          <label for="floatingInput">Country Name</label>
         </div>
 
 
@@ -101,36 +127,11 @@
           </small>
       </div>
 
-        <div class="form-floating mb-3">
-          <input type="text" class="form-control" formControlName="code" id="code" placeholder="Code">
-          <label for="floatingInput">Code</label>
-        </div>
-
-        <div cRow *ngIf="countryForm.get('code')?.invalid &&
-        countryForm.get('code')?.errors &&
-              (countryForm.get('code')?.dirty || countryForm.get('code')?.touched)">
-          <small class="text-danger"
-              *ngIf="countryForm.get('code').hasError('required')">
-              This field is required.
-          </small>
-          <small class="text-danger"
-              *ngIf="countryForm.get('code').hasError('minlength')">
-              The minimum length for this field is {{countryForm.get('code').errors.minlength.requiredLength}} characters.
-          </small>
-          <small class="text-danger"
-              *ngIf="countryForm.get('code').hasError('maxlength')">
-              The maximum length for this field is {{countryForm.get('code').errors.maxlength.requiredLength}} characters.
-          </small>
-          <small class="text-danger" 
-              *ngIf="countryForm.get('code').hasError('pattern')">
-               Code should be in ISO Alpha 2 format
-          </small>
-      </div>
-
+        
 
         <div class="form-floating">
           <textarea class="form-control" placeholder="Remarks" formControlName="remarks" id="remarks"></textarea>
-          <label for="floatingTextarea">Remark</label>
+          <label for="floatingTextarea">Remarks</label>
         </div>
 
     </div>

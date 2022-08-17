@@ -1,7 +1,7 @@
 <div class="col-lg-4 m-auto">
 
 <c-card>
-  <c-card-header>Update Your Profile</c-card-header>
+  <c-card-header>Upload Your Photo</c-card-header>
   <c-card-body>
     <form [formGroup]="profileUpdateForm" (submit)="submit()">
         <div (click)="clickFileControl('profileImage')" class="w-50 m-auto profile-image-div">
@@ -26,7 +26,7 @@
             </small>
           </div>
         </div>
-        <button cButton class="mt-4" (click)="submit()">Update Profile</button>
+        <button cButton class="mt-4" (click)="submit()">Save</button>
     </form>
   </c-card-body>
 </c-card>

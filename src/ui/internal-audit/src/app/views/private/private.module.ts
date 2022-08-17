@@ -4,6 +4,7 @@ import { CommonModule } from '@angular/common';
 import { PrivateRoutingModule } from './private-routing.module';
 import {DashboardComponent} from './dashboard/dashboard.component';
 import { DataTablesModule } from "angular-datatables";
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import {
   ButtonModule,
   CardModule,
@@ -13,12 +14,13 @@ import {
   AccordionModule,
   AvatarModule
 } from '@coreui/angular-pro';
-import { FormsModule } from '@angular/forms';
 import { IconModule } from '@coreui/icons-angular';
 import { ChartjsModule } from '@coreui/angular-chartjs';
+import { UploadDocumentComponent } from './upload-document/upload-document/upload-document.component';
 @NgModule({
   declarations: [
-    DashboardComponent
+    DashboardComponent,
+    UploadDocumentComponent
   ],
   imports: [
     CommonModule,
@@ -28,6 +30,7 @@ import { ChartjsModule } from '@coreui/angular-chartjs';
     CardModule,
     FormModule,
     FormsModule,
+    ReactiveFormsModule,
     MultiSelectModule,
     GridModule,
     IconModule,

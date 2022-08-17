@@ -10,6 +10,7 @@ export const navItems: INavData[] = [
       text: ''
     },
   },
+
   {
     name: 'Configuration',
     url: '/configuration',
@@ -95,6 +96,15 @@ export const navItems: INavData[] = [
         url: '/branch-audit/workpaper'
       },
     ]
+  },
+  {
+    name: 'Upload Document',
+    url: '/upload-document',
+    iconComponent: { name: 'cil-arrow-circle-top' },
+    badge: {
+      color: 'info',
+      text: ''
+    },
   },
 
 ];

@@ -18,14 +18,7 @@ export interface riskAssessmentOverdue {
     amountConverted: string;
     branchId : string;
     averageOverdueinSLL: string;
-    dataRequestQueueService : {
-        id : any;
-    };
-    riskCriteria: {
-        commonValueRatingType: {
-            value : any;
-            text: any;
-        }
-    }
-
+    dataRequestQueueSErviceId : any;
+    score : any;
+    text: any;
 }

@@ -63,8 +63,8 @@
                             <td>{{ riskAssessment.branchName }}</td>
                             <td>{{ riskAssessment.amount }}</td>
                             <td>{{ riskAssessment.amountConverted }}</td>
-                            <td> {{ riskAssessment.riskCriteria.commonValueRatingType.text }} </td>
-                            <td> {{ riskAssessment.riskCriteria.commonValueRatingType.value }} </td>
+                            <td> {{ riskAssessment.text }} </td>
+                            <td> {{ riskAssessment.score }} </td>
                         </tr>
                     </tbody>
                     <tbody *ngIf="riskAssesmentOverdue?.length == 0">

@@ -1,0 +1,134 @@
+<c-col xs="12">
+    <div class="container">
+        <c-card class="mb-4">
+            <c-card-header>
+                <strong>Upload Document</strong>
+            </c-card-header>
+            <c-card-body>
+                <form [formGroup]="uploadDocumentForm">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-floating mb-3 mt-4">
+                                <input type="text" class="form-control" formControlName="documentName" id="documentName"
+                                    placeholder="Document Name">
+                                <label for="documentName">Document Name</label>
+                            </div>
+                            <div class="form-floating mb-3 mt-4">
+                                <input type="text" class="form-control" formControlName="documentVersion"
+                                    id="documentVersion" placeholder="Document Version">
+                                <label for="documentVersion">Document Version</label>
+                            </div>
+                            <div class="form-floating mb-3 mt-4">
+
+                                <c-multi-select multiple formControlName="multiSelect" name="multiSelect" multiple>
+                                    <c-multi-select-option>Bangladesh</c-multi-select-option>
+                                    <c-multi-select-option>India</c-multi-select-option>
+                                    <c-multi-select-option>Pakistan</c-multi-select-option>
+                                    <c-multi-select-option>Japan</c-multi-select-option>
+                                    <c-multi-select-option>Philipine</c-multi-select-option>
+                                </c-multi-select>
+
+                                <!-- 
+                            <c-multi-select formControlName="multiSelect" multiple>
+                                <c-multi-select-option>Angular</c-multi-select-option>
+                                <c-multi-select-option>Bootstrap</c-multi-select-option>
+                                <c-multi-select-option>React.js</c-multi-select-option>
+                                <c-multi-select-option>Vue.js</c-multi-select-option>
+                            </c-multi-select> -->
+
+                            </div>
+                            <div class="form-floating mb-3 mt-4">
+                                <input type="text" class="form-control" formControlName="description" id="description"
+                                    placeholder="Description">
+                                <label for="description">Description</label>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-floating mt-4">
+                                <input type="text" class="form-control" formControlName="approvedBy" id="approvedBy"
+                                    placeholder="Approved By">
+                                <label for="approvedBy">Approved By</label>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-floating mb-3 mt-4">
+                                        <input class="form-control" placeholder="activeFrom"
+                                            formControlName="activeFrom" id="activeFrom" type="date">
+                                        <label for="activeForm">Active From</label>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-floating mb-3 mt-4">
+                                        <input class="form-control" placeholder="activeTo" formControlName="activeTo"
+                                            id="activeForm" type="date">
+                                        <label for="activeTo">Active To</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-floating mt-2">
+                                <input type="text" class="form-control" formControlName="uploadeddBy" id="uploadedBy"
+                                    placeholder="Uploaded By">
+                                <label for="approvedBy">Uploaded By</label>
+                            </div>
+                            <br>
+                            <div>
+                                <input type="file" class="form-control" formControlName="documentId" id="documentId" placeholder="documentId">
+                                <br>
+                            </div>
+                            
+                        </div>
+                    </div>
+                    <button cButton class="btn btn-primary btnSaveColor mt-4 me-1">Save</button>
+                    <button cButton class="btn btn-primary btnSaveColor mt-4 me-1">Cancel</button>
+                </form>
+            </c-card-body>
+        </c-card>
+    </div>
+
+    <div class="row overflow-auto">
+        <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="table table-bordered row-border datatableStyle hover" id="mytable">
+            <thead>
+                <tr>
+                    <th>Document Name</th>
+                    <th>Description</th>
+                    <th>File & Version</th>
+                    <th>Approved By</th>
+                    <th>Notify To</th>
+                    <th>Uploaded On</th>
+                    <th>Uploaded By</th>
+                    <th>Active</th>
+                    <th class="col-1 text-center">Actions</th>
+                </tr>
+            </thead>
+            <tbody *ngIf="riskAssesmentOverdue?.length != 0">
+                
+                <tr *ngFor="let riskAssessment of riskAssesmentOverdue; let i = index" ng-click="rowClickHandler">
+                    <td> {{i + 1}} </td>
+                    <td>{{ riskAssessment.branchName }}</td>
+                    <td>{{ riskAssessment.amount }}</td>
+                    <td>{{ riskAssessment.amountConverted }}</td>
+                    <td> {{ riskAssessment.text }} </td>
+                    <td> {{ riskAssessment.score }} </td>
+                    <td> {{ riskAssessment.score }} </td>
+                    <td> {{ riskAssessment.score }} </td>
+                    <td class="text-center">
+                        <div class="btn-group" role="group" aria-label="Basic example">
+                          <button type="button" class="btn btn-secondary btnEditColor">
+                            <svg cIcon name="cilPencil" size="md" title="Edit Button icon"></svg>
+                          </button>
+                          <button type="button" class="btn btn-danger btnDeleteColor">
+                            <svg cIcon name="cilUserX" size="md" title="Delete Button Icon"></svg>
+                          </button>
+                        </div>
+                      </td>
+                </tr>
+            </tbody>
+            <tbody *ngIf="riskAssesmentOverdue?.length == 0">
+                <tr>
+                    <td colspan="5" class="no-data-available">Please pull data!</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+</c-col>`

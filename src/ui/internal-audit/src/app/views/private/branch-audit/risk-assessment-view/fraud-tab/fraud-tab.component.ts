@@ -70,15 +70,13 @@ export class FraudTabComponent implements OnInit {
         pageLength: 10,
         ordering: false
     };
-    this.http.post('DataSync/getSyncData', Object.assign({}, {
-      "effectiveFrom": "2022-07-20",
-     "effectiveTo": "2022-07-25",
-     "countryId": "8EB2932F-0DF6-EC11-B3B0-00155D610B18",
-     "typeId": 1},
-     {"conversionRate": 88,
-     "pageSize": -1,
-     "pageNumber": 1
-   }))
+    this.http.post('DataSync/getSyncDataRiskAssesment', Object.assign({}, this.pullFromAMBSForm.value,
+      {
+       riskAssesmentId: this.id,
+       typeId : 2,
+       pageSize: -1,
+       pageNumber: 0
+    }))
       .subscribe(resp => {
         this.riskAssesmentOverdue = resp as riskAssessmentOverdue[];
         this.dtTrigger.next(resp);
@@ -107,7 +105,7 @@ export class FraudTabComponent implements OnInit {
       {
         conversionRate: 88,
         typeId: 5,
-        dataRequestQueueServiceId: this.riskAssesmentOverdue[0].dataRequestQueueService.id,
+        dataRequestQueueServiceId: this.riskAssesmentOverdue[0].dataRequestQueueSErviceId,
         riskAssesmentDataManagement: tableData
       }).subscribe(x => {
         
@@ -140,7 +138,7 @@ export class FraudTabComponent implements OnInit {
       {
         conversionRate: 88,
         typeId: 5,
-        dataRequestQueueServiceId: this.riskAssesmentOverdue[0].dataRequestQueueService.id,
+        dataRequestQueueServiceId: this.riskAssesmentOverdue[0].dataRequestQueueSErviceId,
         riskAssesmentDataManagement: tableData
       }).subscribe(x => {
         

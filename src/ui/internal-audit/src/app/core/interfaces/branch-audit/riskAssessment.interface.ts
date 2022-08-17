@@ -6,10 +6,9 @@ export interface riskAssessment {
     countryName:      string;
     auditTypeId?:     string;
     auditTypeName:    string;
-    assessmentCode:    string;
+    assessmentCode?:    string;
     effectiveFrom:    Date;
     effectiveTo:      Date;
-
 }
 
 export interface riskAssessmentOverdue {

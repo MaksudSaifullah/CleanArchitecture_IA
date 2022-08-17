@@ -5,7 +5,7 @@
         <button class="ui-btn-left" (click)="goBack()"> &#8592; Back To Assessment List</button>
       </div>
       <div class="col-8 text-end">
-        <h2>Risk Assessment: RA/2022/01</h2>
+        <h2>Risk Assessment: {{riskAssessmentCode}}</h2>
         <h5> Type: Branch Audit </h5>
       </div>
     </div>
@@ -36,8 +36,12 @@
 </div>
 <c-nav variant="tabs">
   <a [active]="true" [cTabContent]="tabContent" [routerLink] [tabPaneIdx]="0" cNavLink>Overdue</a>
-  <a [cTabContent]="tabContent" [routerLink] [tabPaneIdx]="1" cNavLink>Staff Turnover</a>
-  <a [cTabContent]="tabContent" [routerLink] [tabPaneIdx]="2" cNavLink>Average</a>
+  <a [cTabContent]="tabContent" [routerLink] [tabPaneIdx]="1" cNavLink>Collection</a>
+  <a [cTabContent]="tabContent" [routerLink] [tabPaneIdx]="2" cNavLink>Loan Disbursement</a>
+  <a [cTabContent]="tabContent" [routerLink] [tabPaneIdx]="3" cNavLink>LO Productivity</a>
+  <a [cTabContent]="tabContent" [routerLink] [tabPaneIdx]="4" cNavLink>Staff Turnover</a>
+  <a [cTabContent]="tabContent" [routerLink] [tabPaneIdx]="5" cNavLink>Fraud & Misappropriation</a>
+  <a [cTabContent]="tabContent" [routerLink] [tabPaneIdx]="6" cNavLink>Average</a>
 </c-nav>
 <c-col xs="12">
   <c-card class="mb-4">
@@ -48,11 +52,31 @@
 
       <!-- staff turnover -->
       <c-tab-pane class="p-3">
-        <app-staff-turnover> </app-staff-turnover>
+        <app-collection-tab [id]="id"> </app-collection-tab>
       </c-tab-pane>
+
+      <!-- staff turnover -->
+      <c-tab-pane class="p-3">
+        <app-loan-disbursement-tab [id]="id"> </app-loan-disbursement-tab>>
+      </c-tab-pane>
+
+      <!-- staff turnover -->
+      <c-tab-pane class="p-3">
+        <app-lo-productivity-tab [id]="id"> </app-lo-productivity-tab>
+      </c-tab-pane>
+
+      <!-- staff turnover -->
+      <c-tab-pane class="p-3">
+        <app-staff-turnover [id]="id"> </app-staff-turnover>
+      </c-tab-pane>
+
+        <!-- staff turnover -->
+        <c-tab-pane class="p-3">
+          <app-fraud-tab [id]="id"> </app-fraud-tab>
+        </c-tab-pane>
 
       <!-- average -->
       <c-tab-pane class="p-3">
-        <app-average-tab> </app-average-tab>
+        <app-average-tab [id]="id"> </app-average-tab>
       </c-tab-pane>
     </c-tab-content>

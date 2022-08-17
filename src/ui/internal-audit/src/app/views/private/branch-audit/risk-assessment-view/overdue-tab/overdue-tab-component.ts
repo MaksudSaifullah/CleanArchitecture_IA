@@ -27,8 +27,6 @@ export class OverdueTabComponentComponent implements OnInit {
   dataTableService: DatatableService = new DatatableService();
   dtTrigger: Subject<any> = new Subject<any>();
   countries: country[] = [];
-  Data: Array<any> = [];
-  paramId : any;
   @Input() id: any;
 
   constructor(private http: HttpService, private fb: FormBuilder, private AlertService: AlertService, private activateRoute: ActivatedRoute) {
@@ -60,14 +58,7 @@ export class OverdueTabComponentComponent implements OnInit {
         });
         this.LoadData();
     });
-    
   }
-
-  // ReloadAllDataTable() {
-  //   this.dtElements?.forEach((dtElement: DataTableDirective, index: number) => {
-  //     this.dataTableService.redraw(dtElement);
-  //   });
-  // }
 
 
   LoadData() {
@@ -87,7 +78,6 @@ export class OverdueTabComponentComponent implements OnInit {
    })
      )
       .subscribe(resp => {
-        console.log(resp, this.pullFromAMBSForm.value);
         this.riskAssesmentOverdue = resp as riskAssessmentOverdue[];
         this.dtTrigger.next(resp);
       })
@@ -132,5 +122,4 @@ export class OverdueTabComponentComponent implements OnInit {
   LoadDropDownValues() {
     this.LoadCountry();
   }
-
 }

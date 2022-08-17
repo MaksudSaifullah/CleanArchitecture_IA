@@ -22,6 +22,9 @@ import { AverageTabComponent } from './risk-assessment-view/average-tab/average-
 import { CollectionTabComponent } from './risk-assessment-view/collection-tab/collection-tab.component';
 import { IssueComponent } from './issue/issue.component';
 import { WorkpaperComponent } from './workpaper/workpaper.component';
+import { LoProductivityTabComponent } from './risk-assessment-view/lo-productivity-tab/lo-productivity-tab.component';
+import { LoanDisbursementTabComponent } from './risk-assessment-view/loan-disbursement-tab/loan-disbursement-tab.component';
+import { FraudTabComponent } from './risk-assessment-view/fraud-tab/fraud-tab.component';
 
 
 @NgModule({
@@ -42,7 +45,10 @@ import { WorkpaperComponent } from './workpaper/workpaper.component';
       AuditScheduleComponent,
     AuditScheduleComponent,
     IssueComponent,
-    WorkpaperComponent
+    WorkpaperComponent,
+    LoProductivityTabComponent,
+    LoanDisbursementTabComponent,
+    FraudTabComponent
   ],
   imports: [
     CommonModule,

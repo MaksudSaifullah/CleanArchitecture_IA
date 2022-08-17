@@ -18,7 +18,7 @@ namespace Internal.Audit.Domain.Entities
         public string Code { get; set; } = null!;
 
         [MaxLength(200)]        
-        public string Remarks { get; set; } = null!;
+        public string? Remarks { get; set; }
 
         //Navigation properties
         public virtual ICollection<UserCountry> UserCountries { get; set; } = null!;

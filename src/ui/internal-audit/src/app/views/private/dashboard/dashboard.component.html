@@ -82,9 +82,10 @@
                             <table datatable [dtOptions]="dtOptions" class="table table-bordered row-border hover" >
                               <thead>
                                 <tr>
-                                  <th>Name</th>
-                                  <th>Code</th>
-                                  <th>Remarks</th>
+                                  <th>Document Name</th>
+                                  <th>File & Version</th>
+                                  <th>Approved By</th>
+                                  <th>Active Till</th>
                                 </tr>
                               </thead>
                               <tbody *ngIf="countries?.length != 0">
@@ -92,6 +93,7 @@
                                   <td>{{ country.name }}</td>
                                   <td>{{ country.code }}</td>
                                   <td>{{ country.remarks }}</td>
+                                  <td>{{ country.createdOn | date:'mediumDate' }}</td>
                                   
                                 </tr>
                               </tbody>
@@ -124,16 +126,16 @@
                               <table datatable [dtOptions]="dtOptions" class="table table-bordered row-border hover" >
                                 <thead>
                                   <tr>
-                                    <th>Name</th>
-                                    <th>Code</th>
-                                    <th>Remarks</th>
+                                    <th>Audit ID</th>
+                                    <th>Audit Type</th>
+                                    <th>Creation Date</th>
                                   </tr>
                                 </thead>
                                 <tbody *ngIf="countries?.length != 0">
                                   <tr *ngFor="let country of countries">
-                                    <td>{{ country.name }}</td>
                                     <td>{{ country.code }}</td>
-                                    <td>{{ country.remarks }}</td>
+                                    <td>{{ country.name }}</td>
+                                    <td>{{ country.createdOn | date:'mediumDate' }}</td>
                                     
                                   </tr>
                                 </tbody>
@@ -176,16 +178,18 @@
                               <table datatable [dtOptions]="dtOptions" class="table table-bordered row-border hover" >
                                 <thead>
                                   <tr>
-                                    <th>Name</th>
-                                    <th>Code</th>
-                                    <th>Remarks</th>
+                                    <th>Issue ID</th>
+                                    <th>Audit Type</th>
+                                    <th>Action ID</th>
+                                    <th>Action Owner</th>
                                   </tr>
                                 </thead>
                                 <tbody *ngIf="countries?.length != 0">
                                   <tr *ngFor="let country of countries">
+                                    <td>{{ country.code }}</td>
                                     <td>{{ country.name }}</td>
                                     <td>{{ country.code }}</td>
-                                    <td>{{ country.remarks }}</td>
+                                    <td>{{ country.name }}</td>
                                     
                                   </tr>
                                 </tbody>
@@ -229,15 +233,15 @@
                               <table datatable [dtOptions]="dtOptions" class="table table-bordered row-border hover" >
                                 <thead>
                                   <tr>
-                                    <th>Name</th>
-                                    <th>Code</th>
-                                    <th>Remarks</th>
+                                    <th>Issue ID</th>
+                                    <th>Audit Type</th>
+                                    <th>Issue Status</th>
                                   </tr>
                                 </thead>
                                 <tbody *ngIf="countries?.length != 0">
                                   <tr *ngFor="let country of countries">
-                                    <td>{{ country.name }}</td>
                                     <td>{{ country.code }}</td>
+                                    <td>{{ country.name }}</td>
                                     <td>{{ country.remarks }}</td>
                                     
                                   </tr>

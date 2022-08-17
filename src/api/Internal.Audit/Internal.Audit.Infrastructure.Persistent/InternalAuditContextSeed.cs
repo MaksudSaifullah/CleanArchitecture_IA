@@ -133,6 +133,10 @@ public class InternalAuditContextSeed
             {
                 Name = "Commencement Letter (Process & Control)", Status = true, CreatedBy="system",CreatedOn=DateTime.Now, IsDeleted = false
             },
+            new EmailType
+            {
+                Name = "ToR", Status = true, CreatedBy="system",CreatedOn=DateTime.Now, IsDeleted = false
+            },
 
         };
     }

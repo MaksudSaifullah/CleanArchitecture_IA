@@ -25,6 +25,7 @@ import { WorkpaperComponent } from './workpaper/workpaper.component';
 import { WorkpaperCreateComponent } from './workpaper/workpaper-create/workpaper-create.component';
 import { AuditViewComponent } from './audit-view/audit-view.component';
 import { ScheduleViewComponent } from './schedule-view/schedule-view.component';
+import { ScheduleConfigurationComponent } from './schedule-configuration/schedule-configuration.component';
 
 
 @NgModule({
@@ -48,6 +49,7 @@ import { ScheduleViewComponent } from './schedule-view/schedule-view.component';
    
     AuditViewComponent,
     ScheduleViewComponent,
+    ScheduleConfigurationComponent,
   ],
   imports: [
     CommonModule,

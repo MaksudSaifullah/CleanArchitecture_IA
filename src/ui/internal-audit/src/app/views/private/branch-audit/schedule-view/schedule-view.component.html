@@ -15,27 +15,45 @@
                                 Branch Audit List
                             </button> 
                         </div>
-                        <div class="col-md-2" >
-                            <button  class="btnCreateColor"  cButton (click)="RedirectToAuditList()">
-                                Schedule
+                        <div class="col-md-4" >
+                            <button  class="btnCreateColor"  cButton (click)="RedirectToAuditView()">
+                               Close Schedule
                             </button> 
+                        </div>
+                        <div class="col-md-2">
+                          <button  class="btnCreateColor"  cButton  (click)="RedirectToScheduelConfiguration()"> Configuration
+                          </button> 
                         </div>
                     </div>
                 </div>
                 <div class="col-md-6">
                   <div class="a row">
-                    <div class="col-md-3">
-                      <button  class="btnCreateColor"  cButton > Issue
+                   
+                    <div *ngIf="moveToInprogressDefault" class="col-md-5">
+                      <button  class="btnCreateColor" (click)="MoveToInprogressClick()" cButton > Move to Inprogress
                       </button> 
                     </div>
-                    <div class="col-md-3">
-                      <button  class="btnCreateColor"  cButton > Report
+                    <div *ngIf="moveToInprogress" class="col-md-3">
+                      <button  class="btnCreateColor"  cButton > Execution 
                       </button> 
                     </div>
-                    <div class="col-md-3">
-                      <button  class="btnCreateColor"  cButton (click)="RedirectToAuditView()"> Schedule 
+                    <div *ngIf="moveToInprogress" class="col-md-5">
+                      <button  class="btnCreateColor"   cButton  (click)="MoveToDoneClick()"> Move to Done 
                       </button> 
                     </div>
+                    <div *ngIf="moveToDone" class="col-md-5">
+                      <button  class="btnCreateColor"   cButton (click)="BackToInprogessClick()" > Back to Inprogress
+                      </button> 
+                    </div>
+                    <div *ngIf="moveToDone" class="col-md-5">
+                      <button  class="btnCreateColor"   cButton > View Execution
+                      </button> 
+                    </div>
+                    <div *ngIf="moveToDone" class="col-md-3">
+                      <button  class="btnCreateColor"   cButton > Done
+                      </button> 
+                    </div>
+
                   </div>
                 </div>
                 
@@ -80,6 +98,7 @@
                             <label for="auditPeriodTo">Audit Period To</label>
                           </div>
                         </div>
+                        <br>
                         <div class="row">
                             <div class="form-floating col-md-6">
                                 <input class="form-control" placeholder="scheduleStartDate" formControlName="scheduleStartDate" id="scheduleStartDate" type="date" >
@@ -146,8 +165,8 @@
                         <td>
                             {{i+1}}
                         </td>
-                      <td>{{ branch.auditId }}</td>
-                      <td>{{ branch.planId }}</td>
+                      <td>{{ branch.countryName }}</td>
+                      <td>{{ branch.branchName }}</td>
                      
                     </tr>
                   </tbody>

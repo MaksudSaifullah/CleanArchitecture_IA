@@ -11,6 +11,7 @@ import { WorkpaperComponent } from './workpaper/workpaper.component';
 import { WorkpaperCreateComponent } from './workpaper/workpaper-create/workpaper-create.component';
 import { AuditViewComponent } from './audit-view/audit-view.component';
 import { ScheduleViewComponent } from './schedule-view/schedule-view.component';
+import { ScheduleConfigurationComponent } from './schedule-configuration/schedule-configuration.component';
 
 const routes: Routes = [
   {
@@ -50,13 +51,14 @@ const routes: Routes = [
   {
     path:'workpaperCreate',
     component: WorkpaperCreateComponent
-  }
   },
-  
   {
     path:'audit-view',
     component: AuditViewComponent
   },
+  { 
+    path: 'audit-view/:id', 
+    component: AuditViewComponent },
   { 
     path: 'audit/:id', 
     component: AuditComponent 
@@ -64,6 +66,14 @@ const routes: Routes = [
    { 
     path: 'schedule-view', 
     component: ScheduleViewComponent 
+   },
+   { 
+    path: 'schedule-view/:id', 
+    component: ScheduleViewComponent 
+   },
+   { 
+    path: 'schedule-configuration', 
+    component: ScheduleConfigurationComponent 
    },
 ];
 

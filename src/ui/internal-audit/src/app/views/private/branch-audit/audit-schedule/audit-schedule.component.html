@@ -44,8 +44,8 @@
                     </tr>
                   </thead>
                   <tbody *ngIf="auditSchedules?.length != 0">
-                    <tr *ngFor="let auditSchedule of auditSchedules" (click)="OnRowClick(auditSchedule.id)">
-                      <td>{{ auditSchedule.scheduleId }}</td>
+                    <tr *ngFor="let auditSchedule of auditSchedules">
+                      <td><a [routerLink]="['/branch-audit/schedule-view',auditSchedule.id]"> {{ auditSchedule.scheduleId }}</a></td>
                       <td>{{ auditSchedule.country }}</td>
                       <td>{{ auditSchedule.teamLeader }}</td>
                       <td>{{ auditSchedule.auditor }}</td>

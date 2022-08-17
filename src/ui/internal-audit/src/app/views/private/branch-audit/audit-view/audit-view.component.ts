@@ -45,7 +45,7 @@ export class AuditViewComponent implements OnInit {
 
   ngOnInit(): void {
     this.LoadData();
-    this.paramId = this.activateRoute.snapshot.queryParams['id'];
+    this.paramId = this.activateRoute.snapshot.params['id'];//this.activateRoute.snapshot.queryParams['id']; 
     this.getAuditById(this.paramId);
     // this.LoadData();
 
@@ -97,7 +97,6 @@ export class AuditViewComponent implements OnInit {
     })
   }
   RedirectToAuditList() {
-    console.log("sldjflsdf")
     this.router.navigate(['branch-audit/audit']);
   }
   RedirectToScheduleList() {

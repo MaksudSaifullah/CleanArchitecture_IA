@@ -28,7 +28,7 @@
             </div>
           </form>
           <div class="row overflow-auto">
-              <table datatable [dtOptions]="dtOptions" class="table table-bordered row-border hover datatableStyle datatableStyleWithCursor" >
+              <table datatable [dtOptions]="dtOptions" class="table table-bordered row-border hover datatableStyle" >
                 <thead>
                   <tr>
                     <th>Audit Id</th>
@@ -44,8 +44,8 @@
                   </tr>
                 </thead>
                 <tbody *ngIf="audits?.length != 0">
-                  <tr *ngFor="let audit of audits" (click)="OnRowClick(audit.id)">
-                    <td>{{ audit.auditId }}</td>
+                  <tr *ngFor="let audit of audits"> <!--(click)="OnRowClick(audit.id)"-->
+                    <td><a [routerLink]="['/branch-audit/audit-view',audit.id]">{{ audit.auditId }}</a></td>
                     <td>{{ audit.planId }}</td>
                     <td>{{ audit.auditName }}</td>
                     <!-- <td>{{ audit.year }}</td> -->
@@ -228,7 +228,7 @@
   </form>
 
 
-<form [formGroup]="auditScheduleForm" (ngSubmit)="onSubmitAuditSchedule(verticallyCenteredModalForSchedule)" novalidate>
+<!-- <form [formGroup]="auditScheduleForm" (ngSubmit)="onSubmitAuditSchedule(verticallyCenteredModalForSchedule)" novalidate>
   <c-modal #verticallyCenteredModalForSchedule alignment="center" id="verticallyCenteredModalForSchedule">
     <c-modal-header>
       <h5 cModalTitle *ngIf="!formService.isEdit(this.auditScheduleForm.get('id'))">Create Schedule</h5>
@@ -395,4 +395,4 @@
       </button>
     </c-modal-footer>
   </c-modal>
-  </form>
+  </form> -->

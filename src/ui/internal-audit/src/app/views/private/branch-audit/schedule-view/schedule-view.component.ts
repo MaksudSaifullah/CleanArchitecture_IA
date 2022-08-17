@@ -1,3 +1,4 @@
+import { formatDate } from '@angular/common';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
@@ -22,6 +23,12 @@ export class ScheduleViewComponent implements OnInit {
   auditScheduleViewForm: FormGroup;
   branches: Branch[] = [];
   users: User[]=[];
+  countryIdGlobal: any = '00000000-0000-0000-0000-000000000000';
+  moveToInprogressDefault=true;
+  moveToInprogress=false;
+  moveToDone=false;
+  paramId: string = '';
+
 
   constructor(private http: HttpService, private fb: FormBuilder, private AlertService: AlertService, private router: Router,private activateRoute: ActivatedRoute) {
     this.auditScheduleViewForm = this.fb.group({
@@ -42,22 +49,21 @@ export class ScheduleViewComponent implements OnInit {
    }
 
   ngOnInit(): void {
+    this.paramId = this.activateRoute.snapshot.params['id'];
+    this.LoadData();
   }
 
-LoadData() {
+  LoadData() {
     const that = this;
-    var formValue=this.auditScheduleViewForm.getRawValue();
-   // console.log(formValue.auditId)
-    const countryId=this.auditScheduleViewForm.value.countryId;
     this.dtOptions = {
       pagingType: 'full_numbers',
       pageLength: 10,
       serverSide: true,
       processing: true,
       searching: false,
-      ordering:false,
+      ordering: false,
       ajax: (dataTablesParameters: any, callback) => {
-        this.http.get('commonValueAndType/getBranch?countryId='+'3ee0ab25-baf2-ec11-b3b0-00155d610b18').subscribe(resp => that.branches = this.dataTableService.datatableMap(resp,callback));
+        this.http.get('commonValueAndType/getBranch?countryId=' + this.countryIdGlobal + '&pageNumber=1&pageSize=10000').subscribe(resp => that.branches = this.dataTableService.datatableMap(resp, callback));
       },
     };
   }
@@ -70,7 +76,25 @@ LoadData() {
   RedirectToAuditList(){
     this.router.navigate(['branch-audit/audit']);
   }
-  RedirectToAuditView(){
+  RedirectToAuditView(){   
     this.router.navigate(['branch-audit/audit-view']);
+  }
+  RedirectToScheduelConfiguration(){
+    this.router.navigate(['branch-audit/schedule-configuration']);
+  }
+  MoveToInprogressClick(){
+    this.moveToInprogressDefault=false;
+    this.moveToInprogress=true;
+    this.moveToDone=false;
+  }
+  MoveToDoneClick(){
+    this.moveToInprogress=false;
+    this.moveToDone=true;
+    this.moveToInprogressDefault=false;
+  }
+  BackToInprogessClick(){
+    
+    this.moveToInprogress=true;
+    this.moveToDone=false;
   }
 }

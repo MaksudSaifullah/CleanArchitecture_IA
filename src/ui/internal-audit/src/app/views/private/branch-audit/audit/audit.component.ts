@@ -31,7 +31,7 @@ export class AuditComponent implements OnInit {
   audits: Audit[] = [];
   formService: FormService = new FormService();
   auditForm: FormGroup;
-  auditScheduleForm: FormGroup;
+  //auditScheduleForm: FormGroup;
   auditSearchForm: FormGroup;
   countries: country[] = [];
   auditTypes: commonValueAndType[] = [];
@@ -54,21 +54,21 @@ export class AuditComponent implements OnInit {
       auditPeriodTo: ['',[Validators.required]],
       
     })
-    this.auditScheduleForm = this.fb.group({
-      id: [''],
-      auditTypeId: ["3ee0ab25-baf2-ec11-b3b0-00155d610b11"],
-      countryId: [null,[Validators.required]],
-      auditId: ['',[Validators.required]],
-      auditPeriodFrom: ['',[Validators.required]],
-      auditPeriodTo: ['',[Validators.required]],
-      scheduleStartDate: ['',[Validators.required]],
-      scheduleEndDate: ['',[Validators.required]],
-      branchList:['',[Validators.required]],
-      approverList:['',[Validators.required]],
-      teamLeaderList:['',[Validators.required]],
-      auditorList:['',[Validators.required]]
+    // this.auditScheduleForm = this.fb.group({
+    //   id: [''],
+    //   auditTypeId: ["3ee0ab25-baf2-ec11-b3b0-00155d610b11"],
+    //   countryId: [null,[Validators.required]],
+    //   auditId: ['',[Validators.required]],
+    //   auditPeriodFrom: ['',[Validators.required]],
+    //   auditPeriodTo: ['',[Validators.required]],
+    //   scheduleStartDate: ['',[Validators.required]],
+    //   scheduleEndDate: ['',[Validators.required]],
+    //   branchList:['',[Validators.required]],
+    //   approverList:['',[Validators.required]],
+    //   teamLeaderList:['',[Validators.required]],
+    //   auditorList:['',[Validators.required]]
       
-    })
+    // })
 
     this.auditSearchForm = this.fb.group({
       searchText:['']
@@ -131,62 +131,62 @@ export class AuditComponent implements OnInit {
         }
       }
   }
-  onSubmitAuditSchedule(modalId:any):void{
-   // console.log(this.auditScheduleForm.getRawValue())
+  // onSubmitAuditSchedule(modalId:any):void{
+  //  // console.log(this.auditScheduleForm.getRawValue())
 
-    const localmodalId = modalId;
-    let auditParticipantList: AuditScheduleParticipant[] = [];
-    let auditBranchList: AuditScheduleBranch[] = [];
+  //   const localmodalId = modalId;
+  //   let auditParticipantList: AuditScheduleParticipant[] = [];
+  //   let auditBranchList: AuditScheduleBranch[] = [];
 
-    if (this.auditScheduleForm.valid) {  
+  //   if (this.auditScheduleForm.valid) {  
 
-      let branches: AuditScheduleBranch[] = this.auditScheduleForm.value.branchList as AuditScheduleBranch[];
-      if (Array.isArray(branches)) {
-        branches.forEach(function (value) {
-          let branch: AuditScheduleBranch = { auditScheduleId : null as any, branchId: value.toString()}
-          auditBranchList.push(branch);
-        }); 
-      }
+  //     let branches: AuditScheduleBranch[] = this.auditScheduleForm.value.branchList as AuditScheduleBranch[];
+  //     if (Array.isArray(branches)) {
+  //       branches.forEach(function (value) {
+  //         let branch: AuditScheduleBranch = { auditScheduleId : null as any, branchId: value.toString()}
+  //         auditBranchList.push(branch);
+  //       }); 
+  //     }
 
-      let approvers: AuditScheduleParticipant[] = this.auditScheduleForm.value.approverList as AuditScheduleParticipant[];
-      if (Array.isArray(approvers)) {
-        approvers.forEach(function (value) {
-          let user: AuditScheduleParticipant = { auditScheduleId :null as any, userId: value.toString(),commonValueParticipantId:1}
-          auditParticipantList.push(user);
-        }); 
-      }
-      let teamLeaders: AuditScheduleParticipant[] = this.auditScheduleForm.value.teamLeaderList as AuditScheduleParticipant[];
-      if (Array.isArray(teamLeaders)) {
-        teamLeaders.forEach(function (value) {
-          let user: AuditScheduleParticipant = { auditScheduleId : null as any, userId: value.toString(),commonValueParticipantId:2}
-          auditParticipantList.push(user);
-        }); 
-      }
-      let auditors: AuditScheduleParticipant[] = this.auditScheduleForm.value.auditorList as AuditScheduleParticipant[];
-      if (Array.isArray(auditors)) {
-        auditors.forEach(function (value) {
-          let user: AuditScheduleParticipant = { auditScheduleId : null as any, userId: value.toString(),commonValueParticipantId:3}
-          auditParticipantList.push(user);
-        }); 
-      }
-      const auditScheudleFormValue = this.auditScheduleForm.getRawValue();
-      const RequestModelForSchedule = {
+  //     let approvers: AuditScheduleParticipant[] = this.auditScheduleForm.value.approverList as AuditScheduleParticipant[];
+  //     if (Array.isArray(approvers)) {
+  //       approvers.forEach(function (value) {
+  //         let user: AuditScheduleParticipant = { auditScheduleId :null as any, userId: value.toString(),commonValueParticipantId:1}
+  //         auditParticipantList.push(user);
+  //       }); 
+  //     }
+  //     let teamLeaders: AuditScheduleParticipant[] = this.auditScheduleForm.value.teamLeaderList as AuditScheduleParticipant[];
+  //     if (Array.isArray(teamLeaders)) {
+  //       teamLeaders.forEach(function (value) {
+  //         let user: AuditScheduleParticipant = { auditScheduleId : null as any, userId: value.toString(),commonValueParticipantId:2}
+  //         auditParticipantList.push(user);
+  //       }); 
+  //     }
+  //     let auditors: AuditScheduleParticipant[] = this.auditScheduleForm.value.auditorList as AuditScheduleParticipant[];
+  //     if (Array.isArray(auditors)) {
+  //       auditors.forEach(function (value) {
+  //         let user: AuditScheduleParticipant = { auditScheduleId : null as any, userId: value.toString(),commonValueParticipantId:3}
+  //         auditParticipantList.push(user);
+  //       }); 
+  //     }
+  //     const auditScheudleFormValue = this.auditScheduleForm.getRawValue();
+  //     const RequestModelForSchedule = {
         
-        id:  null as any,
-        auditCreationId: auditScheudleFormValue.id,
-        scheduleStartDate: auditScheudleFormValue.scheduleStartDate,   
-        scheduleEndDate: auditScheudleFormValue.scheduleEndDate,
-        auditScheduleParticipants : auditParticipantList,
-        auditScheduleBranch : auditBranchList
+  //       id:  null as any,
+  //       auditCreationId: auditScheudleFormValue.id,
+  //       scheduleStartDate: auditScheudleFormValue.scheduleStartDate,   
+  //       scheduleEndDate: auditScheudleFormValue.scheduleEndDate,
+  //       auditScheduleParticipants : auditParticipantList,
+  //       auditScheduleBranch : auditBranchList
         
-      };
-      console.log(RequestModelForSchedule);
-      this.http.post('AuditSchedule',RequestModelForSchedule).subscribe(x=>{
-          this.formService.onSaveSuccess(localmodalId,this.datatableElement);
-          this.AlertService.success('Audit Schedule Saved Successful');
-      });
-    }
-  }
+  //     };
+  //     console.log(RequestModelForSchedule);
+  //     this.http.post('AuditSchedule',RequestModelForSchedule).subscribe(x=>{
+  //         this.formService.onSaveSuccess(localmodalId,this.datatableElement);
+  //         this.AlertService.success('Audit Schedule Saved Successful');
+  //     });
+  //   }
+  // }
 
   edit(modalId:any, audit:any):void {
   
@@ -252,15 +252,15 @@ export class AuditComponent implements OnInit {
     })
   }
 
-  LoadBranch(){
-    this.branches=[];
-    var scheduleFormValue=this.auditScheduleForm.getRawValue();
-   // console.log(scheduleFormValue.countryId)
-    this.http.get('commonValueAndType/getBranch?countryId='+scheduleFormValue.countryId).subscribe(resp => {
-      let convertedResp = resp as Branch[];
-      this.branches = convertedResp;
-    })
-  }
+  // LoadBranch(){
+  //   this.branches=[];
+  //   var scheduleFormValue=this.auditScheduleForm.getRawValue();
+  //  // console.log(scheduleFormValue.countryId)
+  //   this.http.get('commonValueAndType/getBranch?countryId='+scheduleFormValue.countryId).subscribe(resp => {
+  //     let convertedResp = resp as Branch[];
+  //     this.branches = convertedResp;
+  //   })
+  // }
   LoadUser() {
     this.http.paginatedPost('userlist/Paginated', 100, 1, {"userName": "","employeeName": "","userRole": ""}).subscribe(resp => {
       let convertedResp = resp as paginatedResponseInterface<User>;
@@ -276,21 +276,21 @@ export class AuditComponent implements OnInit {
      this.auditForm.controls['auditTypeId'].disable();
      this.auditForm.controls['auditId'].disable();
   }
-  resetScheduleForm(audit:any){
-    this.auditScheduleForm.reset();
-    this.auditScheduleForm.patchValue({countryId : audit.countryId, auditTypeId: audit.auditTypeId, auditId: audit.auditId, 
-            auditPeriodFrom: formatDate(audit.auditPeriodFrom, 'yyyy-MM-dd', 'en'),
-            auditPeriodTo: formatDate(audit.auditPeriodTo, 'yyyy-MM-dd', 'en')})
+  // resetScheduleForm(audit:any){
+  //   this.auditScheduleForm.reset();
+  //   this.auditScheduleForm.patchValue({countryId : audit.countryId, auditTypeId: audit.auditTypeId, auditId: audit.auditId, 
+  //           auditPeriodFrom: formatDate(audit.auditPeriodFrom, 'yyyy-MM-dd', 'en'),
+  //           auditPeriodTo: formatDate(audit.auditPeriodTo, 'yyyy-MM-dd', 'en')})
 
-     this.LoadBranch();
-     this.users=[];
-     this.LoadUser();
-    // this.auditScheduleForm.patchValue({id:""})
-     this.auditScheduleForm.controls['auditTypeId'].disable();
-     this.auditScheduleForm.controls['auditId'].disable();
-     this.auditScheduleForm.controls['countryId'].disable();
-     this.auditScheduleForm.controls['auditPeriodFrom'].disable();
-     this.auditScheduleForm.controls['auditPeriodTo'].disable();
-  }
+  //    this.LoadBranch();
+  //    this.users=[];
+  //    this.LoadUser();
+  //   // this.auditScheduleForm.patchValue({id:""})
+  //    this.auditScheduleForm.controls['auditTypeId'].disable();
+  //    this.auditScheduleForm.controls['auditId'].disable();
+  //    this.auditScheduleForm.controls['countryId'].disable();
+  //    this.auditScheduleForm.controls['auditPeriodFrom'].disable();
+  //    this.auditScheduleForm.controls['auditPeriodTo'].disable();
+  // }
   
 }

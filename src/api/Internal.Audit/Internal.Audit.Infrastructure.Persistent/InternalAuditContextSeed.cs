@@ -64,6 +64,11 @@ public class InternalAuditContextSeed
             context.AuditModule.AddRange(AuditModuleAdd());
             await context.SaveChangesAsync();
         }
+        if (context.DocumentSources.ToList().Count()==5)
+        {
+            context.DocumentSources.AddRange(GetDocumentSourceNewAdded());
+            await context.SaveChangesAsync();
+        }
     }
 
 
@@ -160,6 +165,18 @@ public class InternalAuditContextSeed
             {
                Name ="Evidence_Details",CreatedBy="system",CreatedOn=DateTime.Now
             },
+
+        };
+    }
+    private static IEnumerable<DocumentSource> GetDocumentSourceNewAdded()
+    {
+        return new List<DocumentSource>
+        {
+            new DocumentSource
+            {
+               Name ="Upload_All_Document",CreatedBy="system",CreatedOn=DateTime.Now
+            },
+            
 
         };
     }

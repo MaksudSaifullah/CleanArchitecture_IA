@@ -14,7 +14,7 @@
           <div class="col-lg-12">
             <div class="card">
               <div class="card-header">
-                <i class="fa fa-align-justify" ></i> Role List
+                <i class="fa fa-align-justify" ></i> <strong>User Role</strong> 
               </div>
               <div class="card-body">
                 <form [formGroup]="searchForm">
@@ -25,8 +25,8 @@
                       </button> 
                     </div>
                     <div class="col-md-5 mb-2 form-floating">
-                      <input type="text" formControlName="searchTerm" class="form-control searchInput"  placeholder="Search by Name or Description"/>
-                      <label class="searchLevel" for="floatingInput">Role Name / Description</label>
+                      <input type="text" formControlName="searchTerm" class="form-control searchInput"  placeholder="Search by Role or Description"/>
+                      <label class="searchLevel" for="floatingInput">Search by Role / Description</label>
                     </div>
                     <div class="col-md-1 mb-2">
                       <button type="button" class="btn btn-secondary mr-1 btn-block searchBtn" data-toggle="modal" (click)="search()" >
@@ -39,17 +39,17 @@
                     <table datatable [dtOptions]="dtOptions[1]" id="DataTables_Table_1"  class="table table-bordered row-border hover datatableStyle" >
                       <thead>
                         <tr>
-                          <th>Name</th>
+                          <th>Role</th>
                           <th>Description</th>
-                          <th>Active</th>
-                          <th class="col-1 text-center">Action</th>
+                          <!-- <th>Active</th> -->
+                          <th class="col-1 text-center">Actions</th>
                         </tr>
                       </thead>
                       <tbody *ngIf="roles?.length != 0">
                         <tr *ngFor="let role of roles">
                           <td>{{ role.name }}</td>
                           <td>{{ role.description }}</td>
-                          <td>{{ role.isActive }}</td>
+                          <!-- <td>{{ role.isActive }}</td> -->
                           <td class="text-center">
                             <div class="btn-group" role="group" aria-label="Basic example">
                               <button type="button" class="btn btn-secondary btnEditColor" (click)="edit(verticallyCenteredModal,role)">
@@ -91,7 +91,7 @@
 
             <div class="form-floating mb-3">
               <input type="text" class="form-control" formControlName="name" id="name" placeholder="Name">
-              <label for="floatingInput">Name</label>
+              <label for="floatingInput">Role</label>
             </div>
 
 
@@ -229,7 +229,7 @@
                       <tr>
                         <th>Module</th>
                         <th>Feature</th>                        
-                        <th>Action</th>
+                        <th>Actions</th>
                       </tr>
                     </thead>
                     <tbody *ngIf="userPrivilegeList?.length != 0">

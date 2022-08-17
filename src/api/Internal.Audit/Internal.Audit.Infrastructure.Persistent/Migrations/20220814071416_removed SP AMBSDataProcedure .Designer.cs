@@ -4,6 +4,7 @@ using Internal.Audit.Infrastructure.Persistent;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Internal.Audit.Infrastructure.Persistent.Migrations
 {
     [DbContext(typeof(InternalAuditContext))]
-    partial class InternalAuditContextModelSnapshot : ModelSnapshot
+    [Migration("20220814071416_removed SP AMBSDataProcedure ")]
+    partial class removedSPAMBSDataProcedure
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -1045,9 +1047,6 @@ namespace Internal.Audit.Infrastructure.Persistent.Migrations
                     b.Property<Guid>("TestingConclusionId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<DateTime>("TestingDate")
-                        .HasColumnType("datetime2");
-
                     b.Property<string>("TestingDetails")
                         .IsRequired()
                         .HasMaxLength(300)
@@ -1898,11 +1897,9 @@ namespace Internal.Audit.Infrastructure.Persistent.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CountryId")
-                        .IsUnique();
+                    b.HasIndex("CountryId");
 
-                    b.HasIndex("EmailTypeId")
-                        .IsUnique();
+                    b.HasIndex("EmailTypeId");
 
                     b.ToTable("EmailConfiguration", "Config");
                 });
@@ -2041,10 +2038,10 @@ namespace Internal.Audit.Infrastructure.Persistent.Migrations
                         .HasDefaultValueSql("newsequentialid()");
 
                     b.Property<decimal>("Amount")
-                        .HasColumnType("decimal(30,4)");
+                        .HasColumnType("decimal(18,2)");
 
                     b.Property<decimal?>("AmountConverted")
-                        .HasColumnType("decimal(30,4)");
+                        .HasColumnType("decimal(18,2)");
 
                     b.Property<string>("ApprovedBy")
                         .HasMaxLength(10)

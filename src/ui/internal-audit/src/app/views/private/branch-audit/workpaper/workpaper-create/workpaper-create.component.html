@@ -193,7 +193,7 @@
                   <div class="col-md-4">
                     <div form-floating>
                       <select aria-label="Floating label select example" cSelect id="controlFrequencyId"
-                        formControlName="controlFrequencyId" name="controlFrequencyId">
+                        formControlName="controlFrequencyId" name="controlFrequencyId" (change)="LoadSampleSize($event.target.value)">
                         <option value="null">Select Control Freequency</option>
                         <option *ngFor="let commonValueAndType of controlFrequencies" [value]="commonValueAndType.id">
                           {{commonValueAndType.text}}
@@ -218,12 +218,20 @@
                         </option>
                       </select>
                     </div>
-                    <div cRow *ngIf="(workpaperForm.get('sampleSizeId')?.invalid && workpaperForm.get('sampleSizeId')?.errors) &&         
+
+
+                    <!-- <div class="form-floating mb-3">
+                      <input type="text" class="form-control" formControlName="sampleSizeId" id="sampleSizeId" placeholder="sampleSizeId" [readonly]="true">
+                      <label for="floatingInput">Sample Size</label>
+                    </div> -->
+
+
+                    <!-- <div cRow *ngIf="(workpaperForm.get('sampleSizeId')?.invalid && workpaperForm.get('sampleSizeId')?.errors) &&         
                     (workpaperForm.get('sampleSizeId')?.dirty || workpaperForm.get('sampleSizeId')?.touched)">
                     <small class="text-danger">
                       This field is required.
                     </small>                                 
-                  </div> 
+                  </div>  -->
                    <br/>
                   </div>
                 </div>

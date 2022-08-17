@@ -152,6 +152,7 @@ using Internal.Audit.Application.Features.RiskAssesmentDataManagements.Commands.
 using Internal.Audit.Application.Features.RiskAssesmentDataManagementLogs.Commands.AddRiskAssesmentDataManagementLog;
 using Internal.Audit.Application.Features.CommonValueAndTypes.Queries.GetSampleSize;
 using Internal.Audit.Application.Features.CommonValueAndTypes.Queries.GetBranchbyAuditSchedule;
+using Internal.Audit.Application.Features.AmbsDataSyncs.Queries.GetRiskAssesmentData;
 
 namespace Internal.Audit.Application.Mappings;
 
@@ -416,6 +417,7 @@ public class MappingProfile : Profile
         CreateMap<CommonValueAndType, BranchByScheduleIdDTO>().ReverseMap();
         CreateMap<AuditScheduleBranch, BranchByScheduleIdDTO>().ReverseMap();
         CreateMap<Branch, BranchDTO>().ReverseMap();
+        CreateMap<GetRiskAssesmentDataQueryDTO,CompositeRiskAssesmentData>().ReverseMap();
 
     }
 }

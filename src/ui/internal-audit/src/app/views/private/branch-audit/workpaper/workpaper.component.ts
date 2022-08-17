@@ -58,7 +58,8 @@ export class WorkpaperComponent implements OnInit {
       testingDetails: [''],
       testingResults: [''],
       testingConclusionId:[null,[Validators.required, Validators.pattern("^(?!null$).*$")]],
-      documentId:[null,[Validators.required, Validators.pattern("^(?!null$).*$")]]
+      documentId:[null,[Validators.required, Validators.pattern("^(?!null$).*$")]],
+      testingDate: [Date,[Validators.required]],
     });
     this.searchForm = this.fb.group(
       {

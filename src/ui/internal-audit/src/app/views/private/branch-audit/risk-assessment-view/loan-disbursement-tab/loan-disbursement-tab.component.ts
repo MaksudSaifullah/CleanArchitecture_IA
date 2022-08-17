@@ -9,16 +9,18 @@ import { country } from 'src/app/core/interfaces/configuration/country.interface
 import { HttpService } from 'src/app/core/services/http.service';
 import { AlertService } from '../../../../../core/services/alert.service';
 import { paginatedResponseInterface } from 'src/app/core/interfaces/paginated.interface';
+import { ActivatedRoute } from '@angular/router';
 import { formatDate } from '@angular/common';
 
 @Component({
-  selector: 'app-average-tab',
-  templateUrl: './average-tab.component.html',
-  styleUrls: ['./average-tab.component.scss']
+  selector: 'app-loan-disbursement-tab',
+  templateUrl: './loan-disbursement-tab.component.html',
+  styleUrls: ['./loan-disbursement-tab.component.scss']
 })
-export class AverageTabComponent implements OnInit {
+export class LoanDisbursementTabComponent implements OnInit {
+
   @ViewChild(DataTableDirective, { static: false })
-  dtElements: QueryList<DataTableDirective> | undefined;
+  dtElement?: DataTableDirective;
   dtOptions: DataTables.Settings = {};
   riskAssesmentOverdue: riskAssessmentOverdue[] = [];
   pullFromAMBSForm: FormGroup;
@@ -26,11 +28,9 @@ export class AverageTabComponent implements OnInit {
   dataTableService: DatatableService = new DatatableService();
   dtTrigger: Subject<any> = new Subject<any>();
   countries: country[] = [];
-  Data: Array<any> = [];
-  tableTempData: any;
   @Input() id: any;
 
-  constructor(private http: HttpService, private fb: FormBuilder, private AlertService: AlertService) {
+  constructor(private http: HttpService, private fb: FormBuilder, private AlertService: AlertService, private activateRoute: ActivatedRoute) {
 
     this.LoadDropDownValues();
     this.pullFromAMBSForm = this.fb.group({
@@ -40,6 +40,7 @@ export class AverageTabComponent implements OnInit {
       effectiveFrom: [Date, [Validators.required]],
     });
   }
+
   ngOnInit(): void {
     this.LoadRiskAssessment(this.id);
   };
@@ -83,17 +84,27 @@ export class AverageTabComponent implements OnInit {
       })
   }
 
-  onConsolidate(): void {
-    this.tableTempData = "abcd";
-  }
-
-  onSubmit(modalId: any): void {
-    const localmodalId = modalId;
+  onSubmit(): void {
+    const tableData: Array<any> = [];
+    for(const item of this.riskAssesmentOverdue){
+      const tableDataRow = {
+        score: item.riskCriteria.commonValueRatingType.value,
+        rating: item.riskCriteria.commonValueRatingType.text,
+        value: item.amountConverted,
+        branchId: item.branchId,
+        isDraft: false
+      };
+      tableData.push(tableDataRow);
+    }
     if (this.pullFromAMBSForm.valid) {
-      console.log(JSON.stringify(this.pullFromAMBSForm.value))
-      this.http.post('riskassessment', this.pullFromAMBSForm.value).subscribe(x => {
-        this.formService.onSaveSuccess(localmodalId, this.dtElements);
-        this.AlertService.success('Risk Assessment Saved Successfully');
+      this.http.post('riskassesmentdatamanagement', 
+      {
+        conversionRate: 88,
+        typeId: 3,
+        dataRequestQueueServiceId: this.riskAssesmentOverdue[0].dataRequestQueueService.id,
+        riskAssesmentDataManagement: tableData
+      }).subscribe(x => {
+        this.AlertService.success('Saved Successfully');
       });
     }
     else {
@@ -112,5 +123,4 @@ export class AverageTabComponent implements OnInit {
   LoadDropDownValues() {
     this.LoadCountry();
   }
-
 }

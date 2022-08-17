@@ -10,26 +10,31 @@
                 <div class="card-body">
                     <div class="container">
                         <form [formGroup]="pullFromAMBSForm">
-                            <input type="hidden" formControlName="id" />
                             <div class="col-md-6">
-                                <div form-floating>
-                                    <select aria-label="Floating label select example" cSelect id="countryId"
-                                        formControlName="countryId" name="countryId">
-                                        <option value=null>Select Country</option>
+                                <div cFormFloating>
+                                    <select aria-label="Floating label select example" cSelect id="empDesignation"
+                                      formControlName="countryId" name="countryId">
+                                      <option value=null>Select Country</option>
                                         <option *ngFor="let country of countries" [value]="country.id">
                                             {{country.name}}
                                         </option>
                                     </select>
-                                </div>
+                                    <label for="countryId" class="dropdownLabel">Country</label>
+                                  </div>
                                 <div class="form-floating mb-3 mt-4">
                                     <input type="text" class="form-control" formControlName="conversionRate"
                                         id="conversionRate" placeholder="conversionRate">
                                     <label for="floatingInput">Conversion Rate</label>
                                 </div>
+                                <div class="form-floating mb-3 mt-4">
+                                    <input class="form-control" placeholder="effectiveFrom" formControlName="effectiveFrom"
+                                        id="effectiveFrom" type="date">
+                                    <label for="effectiveForm">Review Period From</label>
+                                </div>
                                 <div class="form-floating">
-                                    <input class="form-control" placeholder="AsOnDate" formControlName="AsOnDate"
-                                        id="AsOnDate" type="date">
-                                    <label for="AsOnDate">Effective From</label>
+                                    <input class="form-control" placeholder="effectiveTo" formControlName="effectiveTo"
+                                        id="effectiveForm" type="date">
+                                    <label for="effectiveTo">Review Period To</label>
                                 </div>
                             </div>
                             <button cButton class="btn btn-primary btnSaveColor mt-4 me-1" (click)="LoadData()">Pull Data From AMBS</button>
@@ -38,7 +43,7 @@
                 </div>
             </div>
             <br>
-
+            <button class="btn btn-success text-end" (click)="onConsolidate()"> Consolidate Score </button>
             <div class="row overflow-auto">
                 <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="table table-bordered row-border datatableStyle hover" visibility="false">
                     <thead>

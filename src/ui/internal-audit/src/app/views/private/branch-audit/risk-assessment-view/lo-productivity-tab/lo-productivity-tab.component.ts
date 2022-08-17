@@ -12,11 +12,11 @@ import { paginatedResponseInterface } from 'src/app/core/interfaces/paginated.in
 import { formatDate } from '@angular/common';
 
 @Component({
-  selector: 'app-staff-turnover',
-  templateUrl: './staff-turnover.component.html',
-  styleUrls: ['./staff-turnover.component.scss']
+  selector: 'app-lo-productivity-tab',
+  templateUrl: './lo-productivity-tab.component.html',
+  styleUrls: ['./lo-productivity-tab.component.scss']
 })
-export class StaffTurnoverComponent implements OnInit {
+export class LoProductivityTabComponent implements OnInit {
   @ViewChild(DataTableDirective, { static: false })
   dtElement?: DataTableDirective;
   dtOptions: DataTables.Settings = {};
@@ -27,6 +27,7 @@ export class StaffTurnoverComponent implements OnInit {
   dtTrigger: Subject<any> = new Subject<any>();
   countries: country[] = [];
   scores: any[] = [];
+  loProductivity: any[] = [];
   selectedRating : any[] = [];
   selectedScore : any[] = [];
   LoProductivity: any[] = [];
@@ -161,10 +162,18 @@ export class StaffTurnoverComponent implements OnInit {
     })
   }
 
+  LoadLoProds() {
+    this.http.get('commonValueAndType/generictype?type=LOPRODUCTIVITY').subscribe(resp => {
+      let convertedResp = resp as any[];
+      this.loProductivity = convertedResp;
+    })
+  }
+
 
   LoadDropDownValues() {
     this.LoadCountry();
     this.LoadScores();
+    this.LoadLoProds();
   }
   GetRating(event: any, i : any): void{
     console.log(event);
@@ -184,7 +193,7 @@ export class StaffTurnoverComponent implements OnInit {
     }
   }
 
-  GetProductivity(event: any, i : any): void{
+  GetloProd(event: any, i : any): void{
     if(event.target.value != "null"){
       this.LoProductivity[i] = event.target.value;
     }

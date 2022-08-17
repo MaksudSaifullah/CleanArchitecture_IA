@@ -187,9 +187,7 @@ onSubmit(): void {
     const that=this;
     let userList: UserRole[] = [];
 
-    if (this.countryForm.valid) {   
-      console.log('inside')  
-return;
+    if (this.countryForm.valid) {  
       this.userSelectedCountry=[];
       this.formArray?.value.forEach((ctrl: any) => {    
         let country: UserCountry = { countryId: ctrl.toString() ,isActive:true,userId:that.paramId==undefined?null:that.paramId}

@@ -117,6 +117,12 @@
                       The maximum length for this field is
                       {{countryForm.get('userName').errors.maxlength.requiredLength}} characters.
                     </small>
+                   
+                  </div>
+                  <div>
+                    <small class="text-danger" *ngIf="countryForm.hasError('containsSpace')">
+                      User Name can't contain space.
+                    </small>
                   </div>
                 </c-col>
                 <c-col md>

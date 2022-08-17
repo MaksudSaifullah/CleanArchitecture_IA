@@ -60,7 +60,7 @@ export class UserRegistrationComponent implements OnInit {
       //userRoleList:[this.selectedUserRole]
     },
       {
-        validator: this.customValidator.MatchPassword('userPassword', 'userConfirmPassword'),
+        validator: [this.customValidator.MatchPassword('userPassword', 'userConfirmPassword'),this.customValidator.checkIfFieldContainsSpace('userName')],
       }
       
     )
@@ -187,8 +187,9 @@ onSubmit(): void {
     const that=this;
     let userList: UserRole[] = [];
 
-    if (this.countryForm.valid) {     
-
+    if (this.countryForm.valid) {   
+      console.log('inside')  
+return;
       this.userSelectedCountry=[];
       this.formArray?.value.forEach((ctrl: any) => {    
         let country: UserCountry = { countryId: ctrl.toString() ,isActive:true,userId:that.paramId==undefined?null:that.paramId}
@@ -220,11 +221,11 @@ onSubmit(): void {
           employee: {
             userId: this.displayUserStatus == false ? null : this.countryForm.value.id,
             id: this.displayUserStatus == false ? null : this.employeeId,
-            email: this.countryForm.value.empEmail,
+            email: this.countryForm.value.empEmail.trim(),
             designationId: this.countryForm.value.empDesignation,         
             photoId: "3fa85f64-5717-4562-b3fc-2c963f66afa6",
             isActive: true,
-            name: this.countryForm.value.empName
+            name: this.countryForm.value.empName.trim()
           },
           user: { 
             id: this.displayUserStatus == false ? null : this.countryForm.value.id,
@@ -233,7 +234,7 @@ onSubmit(): void {
             isEnabled: this.displayUserStatus == false ? true : this.countryForm.value.isEnabled,
             isPasswordExpired: this.displayUserStatus == false ? false : this.countryForm.value.passwordExpired,
             password:this.countryForm.value.userPassword,
-            userName: this.countryForm.value.userName
+            userName: this.countryForm.value.userName.trim()
           },
           userCountry: this.userSelectedCountry,
           userRole: userList
@@ -286,7 +287,7 @@ onSubmit(): void {
 
     }
     else {
-      //console.log('immmm111111111')
+    console.log('immmm111111111')
       this.countryForm.markAllAsTouched();
       return;
     }

@@ -11,12 +11,11 @@ public class AddUploadDocumentCommand:IRequest<AddUploadDocumentResponseDTO>
     public DateTime ActiveFrom { get; set; }
     public DateTime ActiveTo { get; set; }
     public string UploadedBy { get; set; }
-    public virtual ICollection<UploadedDocumentsNotifyCommand> UploadedDocumentsNotify { get; set; }
+    public List<UploadedDocumentsNotifyCommand> UploadedDocumentsNotify { get; set; }
 }
 
 public class UploadedDocumentsNotifyCommand
 { 
-    public Guid RoleId { get; set; }
-    public bool IsMailSent { get; set; } = false;  
+    public Guid RoleId { get; set; }   
 
 }

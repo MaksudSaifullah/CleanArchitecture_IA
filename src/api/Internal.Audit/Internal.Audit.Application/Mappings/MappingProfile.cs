@@ -421,6 +421,7 @@ public class MappingProfile : Profile
         CreateMap<Branch, BranchDTO>().ReverseMap();
         CreateMap<GetRiskAssesmentDataQueryDTO, CompositeRiskAssesmentData>().ReverseMap();
         CreateMap<UploadDocument, AddUploadDocumentCommand>().ReverseMap();
+        CreateMap<UploadedDocumentsNotify, UploadedDocumentsNotifyCommand>().ReverseMap();
         CreateMap<UploadDocument, GetUploadedDocumentLstByRoleIdDTO>().ReverseMap();
 
 

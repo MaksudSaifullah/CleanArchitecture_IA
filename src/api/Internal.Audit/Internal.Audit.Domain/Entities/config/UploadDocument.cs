@@ -19,7 +19,7 @@ public class UploadDocument:EntityBase
     public DateTime ActiveFrom { get; set; }
     public DateTime ActiveTo { get; set; }
     public string UploadedBy { get; set; }
-    public virtual  ICollection<UploadedDocumentsNotify> UploadedDocumentsNotify { get; set; }
+    public virtual  List<UploadedDocumentsNotify> UploadedDocumentsNotify { get; set; }
     [NotMapped]
     public virtual  Document Document { get; set; }
 

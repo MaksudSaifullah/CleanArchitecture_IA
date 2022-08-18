@@ -25,10 +25,11 @@ public class DeleteUploadDocumentCommandHandler : IRequestHandler<DeleteUploadDo
     }
     public async Task<DeleteUploadDocumentResponseDTO> Handle(DeleteUploadDocumentCommand request, CancellationToken cancellationToken)
     {
-        var existsData = await _repository.Get(x => x.Id == request.Id);
+        var existsData = await _repository.Get(x => x.Id == request.Id && x.IsDeleted==false,null,x=>x.UploadedDocumentsNotify);
         if (existsData.FirstOrDefault() != null)
         {
             existsData.FirstOrDefault().IsDeleted = true;
+            existsData.FirstOrDefault().UploadedDocumentsNotify.ForEach(i => i.IsDeleted = true);
             await _repository.Update(existsData);
             var rowsAffected = await _unitOfWork.CommitAsync();
             return new DeleteUploadDocumentResponseDTO(request.Id, rowsAffected > 0, rowsAffected > 0 ? "Document Deleted Successfully!" : "Error while deleting document!");

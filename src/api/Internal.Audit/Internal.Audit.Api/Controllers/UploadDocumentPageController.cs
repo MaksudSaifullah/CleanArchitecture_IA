@@ -1,5 +1,6 @@
 ﻿using Internal.Audit.Application.Features.UploadDocuments.Commands.AddUploadDocument;
 using Internal.Audit.Application.Features.UploadDocuments.Commands.DeleteUploadDocument;
+using Internal.Audit.Application.Features.UploadDocuments.Queries.GetUploadedDocumentListByRoled;
 using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -27,6 +28,13 @@ namespace Internal.Audit.Api.Controllers
         public async Task<ActionResult<DeleteUploadDocumentResponseDTO>> Delete(Guid Id)
         {
             var command = new DeleteUploadDocumentCommand(Id);
+            var result = await _mediator.Send(command);
+            return Ok(result);
+        }
+        [HttpGet("roleid")]
+        public async Task<ActionResult<GetUploadedDocumentLstByRoleIdDTO>> Get(Guid roleid)
+        {
+            var command = new GetUploadedDocumentListByRoleIdQuery(roleid);
             var result = await _mediator.Send(command);
             return Ok(result);
         }

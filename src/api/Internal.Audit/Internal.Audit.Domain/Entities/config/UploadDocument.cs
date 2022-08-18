@@ -1,4 +1,5 @@
 ﻿using Internal.Audit.Domain.Common;
+using Internal.Audit.Domain.CompositeEntities;
 using Internal.Audit.Domain.Entities.common;
 using System;
 using System.Collections.Generic;
@@ -22,6 +23,8 @@ public class UploadDocument:EntityBase
     public virtual  List<UploadedDocumentsNotify> UploadedDocumentsNotify { get; set; }
     [NotMapped]
     public virtual  Document Document { get; set; }
+    [NotMapped]
+    public virtual EfTotalCount TotalCount { get; set; }
 
 
 }

@@ -423,6 +423,9 @@ public class MappingProfile : Profile
         CreateMap<UploadDocument, AddUploadDocumentCommand>().ReverseMap();
         CreateMap<UploadedDocumentsNotify, UploadedDocumentsNotifyCommand>().ReverseMap();
         CreateMap<UploadDocument, GetUploadedDocumentLstByRoleIdDTO>().ReverseMap();
+        CreateMap<UploadedDocumentsNotify, UploadedDocumentsNotifyDTO>().ReverseMap();
+        CreateMap<Document, DocumentDTOc>().ReverseMap();
+
 
 
     }

@@ -17,5 +17,5 @@ public class UploadedDocumentsNotify:EntityBase
     [DefaultValue("0")]
     public bool IsMailSent { get; set; }
     [ForeignKey("RoleId")]
-    public virtual Role DocumentSource { get; set; } = null!;
+    public virtual Role UploadDocumentRoleList { get; set; } = null!;
 }

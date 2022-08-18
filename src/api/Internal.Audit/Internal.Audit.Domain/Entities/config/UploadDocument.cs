@@ -1,4 +1,5 @@
 ﻿using Internal.Audit.Domain.Common;
+using Internal.Audit.Domain.Entities.common;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -12,12 +13,15 @@ namespace Internal.Audit.Domain.Entities.config;
 public class UploadDocument:EntityBase
 {
     public string DocumentVersion { get; set; }
+    public Guid  DocumentId { get; set; }
     public string Description { get; set; }
     public string ApprovedBy { get; set; }
     public DateTime ActiveFrom { get; set; }
     public DateTime ActiveTo { get; set; }
     public string UploadedBy { get; set; }
     public virtual  ICollection<UploadedDocumentsNotify> UploadedDocumentsNotify { get; set; }
+    [NotMapped]
+    public virtual  Document Document { get; set; }
 
 
 }

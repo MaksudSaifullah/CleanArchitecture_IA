@@ -17,7 +17,7 @@ public class GetUploadedDocumentListByRoleIdQueryHandler : IRequestHandler<GetUp
 
     public async Task<IEnumerable<GetUploadedDocumentLstByRoleIdDTO>> Handle(GetUploadedDocumentListByRoleIdQuery request, CancellationToken cancellationToken)
     {
-        var result =await _repository.GetAllAsyncByRoleId(request.RoleId);
+        var result =await _repository.GetAllAsyncByRoleId(request.RoleId,request.pageSize,request.pageNumber);
         return _mapper.Map<IEnumerable<GetUploadedDocumentLstByRoleIdDTO>>(result);
     }
 }

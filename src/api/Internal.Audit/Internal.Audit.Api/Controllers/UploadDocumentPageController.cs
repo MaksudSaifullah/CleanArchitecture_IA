@@ -32,9 +32,9 @@ namespace Internal.Audit.Api.Controllers
             return Ok(result);
         }
         [HttpGet("roleid")]
-        public async Task<ActionResult<GetUploadedDocumentLstByRoleIdDTO>> Get(Guid roleid)
+        public async Task<ActionResult<GetUploadedDocumentLstByRoleIdDTO>> Get(Guid roleid, int pageNumber, int pageSize)
         {
-            var command = new GetUploadedDocumentListByRoleIdQuery(roleid);
+            var command = new GetUploadedDocumentListByRoleIdQuery(roleid, pageNumber, pageSize);
             var result = await _mediator.Send(command);
             return Ok(result);
         }

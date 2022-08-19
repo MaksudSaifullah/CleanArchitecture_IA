@@ -16,7 +16,7 @@ public class GetUploadedDocumentLstByRoleIdDTO
     public DateTime ActiveFrom { get; set; }
     public DateTime ActiveTo { get; set; }
     public string UploadedBy { get; set; }
-    public virtual ICollection<UploadedDocumentsNotifyDTO> UploadedDocumentsNotify { get; set; }   
+    //public virtual ICollection<UploadedDocumentsNotifyDTO> UploadedDocumentsNotify { get; set; }   
     public virtual DocumentDTOc Document { get; set; }
     public virtual EfTotalCount TotalCount { get; set; }
 }

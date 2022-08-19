@@ -9,5 +9,5 @@ namespace Internal.Audit.Application.Contracts.Persistent.UploadDocuments;
 
 public interface IUploadDocumentQueryRepository : IAsyncQueryRepository<UploadDocument>
 {
-    Task<IEnumerable<UploadDocument>> GetAllAsyncByRoleId(Guid RoleId);
+    Task<IEnumerable<UploadDocument>> GetAllAsyncByRoleId(Guid RoleId, int pageSize, int pageNumber);
 }

@@ -137,7 +137,7 @@
                     <c-row [gutter]="{g: 2}">
                          <c-col md>
                             <c-multi-select multiple formControlName="roleList" name="roleList" required>
-                              <c-multi-select-option *ngFor="let role of roles" [value]="role.id" [selected]="isSelected(role.id)" >{{role.name}}
+                              <c-multi-select-option *ngFor="let role of roles" [value]="role.id">{{role.name}}
                               </c-multi-select-option>
                             </c-multi-select>
                             <div cRow *ngIf="uploadDocumentForm.get('roleList')?.invalid &&
@@ -179,7 +179,7 @@
 
     <div class="row overflow-auto">
         <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger"
-            class="table table-bordered row-border datatableStyle hover" id="mytable">
+            class="table table-bordered row-border hover datatableStyle" id="mytable" style="width: 100%;!important">
             <thead>
                 <tr>
                     <th>Document Name</th>
@@ -189,21 +189,22 @@
                     <th>Notify To</th>
                     <th>Uploaded On</th>
                     <th>Uploaded By</th>
-                    <th>Active</th>
+                    <!-- <th>Active</th> -->
                     <th class="col-1 text-center">Actions</th>
                 </tr>
             </thead>
-            <tbody *ngIf="riskAssesmentOverdue?.length != 0">
+            <tbody *ngIf="uploadedDocumentList?.length != 0">
 
-                <tr *ngFor="let riskAssessment of riskAssesmentOverdue; let i = index" ng-click="rowClickHandler">
-                    <td> {{i + 1}} </td>
-                    <td>{{ riskAssessment.branchName }}</td>
-                    <td>{{ riskAssessment.amount }}</td>
-                    <td>{{ riskAssessment.amountConverted }}</td>
-                    <td> {{ riskAssessment.text }} </td>
-                    <td> {{ riskAssessment.score }} </td>
-                    <td> {{ riskAssessment.score }} </td>
-                    <td> {{ riskAssessment.score }} </td>
+                <tr *ngFor="let documentList of uploadedDocumentList; let i = index" ng-click="rowClickHandler">
+                    
+                    <td (click)="fileDownLoad(documentList.documentId)" style="color:blue;cursor: pointer;">{{ documentList.document.name }}</td>
+                    <td>{{ documentList.description }}</td>
+                    <td (click)="fileDownLoad(documentList.documentId)" style="color:blue;cursor: pointer;"><svg cIcon name="cilCopy" size="xl"></svg>&nbsp; {{ documentList.documentVersion }}</td>
+                    <td> {{ documentList.approvedBy }} </td>
+                    <td> {{ documentList.notifyList }} </td>
+                    <td> {{ documentList.uploadedBy }} </td>
+                    <td> {{ documentList.uploadedBy }} </td>
+                    <!-- <td> {{ documentList.score }} </td> -->
                     <td class="text-center">
                         <div class="btn-group" role="group" aria-label="Basic example">
                             <button type="button" class="btn btn-secondary btnEditColor">
@@ -216,7 +217,7 @@
                     </td>
                 </tr>
             </tbody>
-            <tbody *ngIf="riskAssesmentOverdue?.length == 0">
+            <tbody *ngIf="uploadedDocumentList?.length == 0">
                 <tr>
                     <td colspan="5" class="no-data-available">Please pull data!</td>
                 </tr>

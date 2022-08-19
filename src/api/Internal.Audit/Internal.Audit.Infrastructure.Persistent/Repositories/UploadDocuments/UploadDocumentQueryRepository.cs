@@ -45,7 +45,13 @@ public class UploadDocumentQueryRepository : QueryRepositoryBase<UploadDocument>
                     where x.IsDeleted=0
                     and  CAST(GETDATE()  as date) between CAST(ActiveFrom as  date) and CAST(ActiveTo as date)
 
-                    select x.*,z.*,@totalcount TC FROM [Config].[UploadDocument] x
+                     select x.*,(SELECT
+			        STUFF((SELECT ', ' + CAST(y.name AS nVARCHAR(max))
+			        FROM   [confIg].UploadedDocumentsNotify z
+			        INNER JOIN [security].[Role] y on z.RoleId=y.Id
+			        where UploadDocumentId=x.Id
+			        FOR XML PATH(''), TYPE)
+			        .value('.', 'NVARCHAR(MAX)'), 1, 2, ' '))as NotifyList,z.*,@totalcount TC FROM [Config].[UploadDocument] x
                     --inner join [Config].[UploadedDocumentsNotify]  y
                     --on x.id=y.UploadDocumentId
                     inner join [common].Document z

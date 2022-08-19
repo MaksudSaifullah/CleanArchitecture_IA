@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Internal.Audit.Api.Controllers
 {
-    [Route("api/v{version:apiVersion}/ UploadDocumentPage")]
+    [Route("api/v{version:apiVersion}/UploadDocumentPage")]
     [ApiController]
     public class UploadDocumentPageController : ControllerBase
     {

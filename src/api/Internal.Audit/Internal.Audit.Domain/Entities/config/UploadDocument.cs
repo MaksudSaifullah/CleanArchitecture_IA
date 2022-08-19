@@ -24,6 +24,8 @@ public class UploadDocument:EntityBase
     [NotMapped]
     public virtual  Document Document { get; set; }
     [NotMapped]
+    public string NotifyList { get; set; }
+    [NotMapped]
     public virtual EfTotalCount TotalCount { get; set; }
 
 

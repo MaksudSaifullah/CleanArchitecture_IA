@@ -6,6 +6,7 @@ import { AlertService } from '../../../../core/services/alert.service';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { DataTableDirective } from 'angular-datatables';
 import { riskAssessmentOverdue } from 'src/app/core/interfaces/branch-audit/riskAssessment.interface';
+import { UploadedDocumentList,DocumentGet } from 'src/app/core/interfaces/uploaded-document.interface';
 import { DatatableService } from 'src/app/core/services/datatable.service';
 import { Subject } from 'rxjs';
 import { role } from 'src/app/core/interfaces/security/role.interface';
@@ -21,13 +22,16 @@ export class UploadDocumentComponent implements OnInit {
   dtElement?: DataTableDirective;
   dtOptions: DataTables.Settings = {};
   riskAssesmentOverdue: riskAssessmentOverdue[] = [];
+  uploadedDocumentList: UploadedDocumentList[] = [];
   formService: FormService = new FormService();
   dataTableService: DatatableService = new DatatableService();
   dtTrigger: Subject<any> = new Subject<any>();
   uploadDocumentForm: FormGroup;
   roles: role[] = [];
+  docu :DocumentGet={};
 
   constructor(private http: HttpService, private fb: FormBuilder, private AlertService: AlertService) { 
+    this.LoadRole();
     this.uploadDocumentForm = this.fb.group({
       documentVersion: [null, [Validators.required]],
       description: [null, [Validators.required]],
@@ -38,6 +42,8 @@ export class UploadDocumentComponent implements OnInit {
       multiSelect: [null, [Validators.required]],
       documentName: [null, [Validators.required]],
       choosefile: [Date, [Validators.required]],
+      documentId: ['', [Validators.required]],
+      roleList: ['',[Validators.required]],
     });
   }
 
@@ -47,9 +53,29 @@ export class UploadDocumentComponent implements OnInit {
   LoadRole() {
     this.http.paginatedPost('role/paginated', 100, 1, {}).subscribe(resp => {
       let convertedResp = resp as paginatedResponseInterface<role>;
-      this.roles = convertedResp.items;
+      console.log(convertedResp);
+     this.roles = convertedResp.items;
     })
   }
+  fileDownLoad(d:any){
+    console.log(d);
+    //Document/get-file-stream?Id=1f72aaed-1c1e-ed11-b3b2-00155d610b18
+    // this.http.get('Document/get-file-stream?Id='+'601d81e6-ac1f-ed11-b3b2-00155d610b18',
+    this.http.get('Document?Id='+'601d81e6-ac1f-ed11-b3b2-00155d610b18',
+    )
+     .subscribe(resp => {
+      console.log(resp);
+      var s=resp as DocumentGet;
+      console.log(s);
+      console.log(s.path);
+      
+     })
+  }
+  // downloadFile(data: Response) {
+  //   const blob = new Blob([data], { type: 'text/csv' });
+  //   const url= window.URL.createObjectURL(blob);
+  //   window.open(url);
+  // }
   LoadData() {
     this.dtOptions = {
       pagingType: 'full_numbers',
@@ -59,19 +85,11 @@ export class UploadDocumentComponent implements OnInit {
         searching: false,
         ordering: false,
     };
-    this.http.post('DataSync/getSyncDataRiskAssesment', {
-      countryId: "8eb2932f-0df6-ec11-b3b0-00155d610b18",
-      conversionRate: 88,
-      effectiveTo: "2022-07-25",
-      effectiveFrom: "2022-07-20",
-      riskAssesmentId: "78675595-8f18-ed11-b3b2-00155d610b18",
-      typeId: 1,
-      pageSize: 10,
-      pageNumber: 1
-  }
+    this.http.get('UploadDocumentPage/roleid?roleid=DD0F5C2E-2D1F-ED11-B3B2-00155D610B18&pageNumber=1&pageSize=-1',
      )
       .subscribe(resp => {
-        this.riskAssesmentOverdue = resp as riskAssessmentOverdue[];
+        this.uploadedDocumentList = resp as UploadedDocumentList[];
+        console.log(this.uploadedDocumentList);
         this.dtTrigger.next(resp);
       })
   }

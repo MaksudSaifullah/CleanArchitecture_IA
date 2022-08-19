@@ -8,6 +8,8 @@ import { DataTableDirective } from 'angular-datatables';
 import { riskAssessmentOverdue } from 'src/app/core/interfaces/branch-audit/riskAssessment.interface';
 import { DatatableService } from 'src/app/core/services/datatable.service';
 import { Subject } from 'rxjs';
+import { role } from 'src/app/core/interfaces/security/role.interface';
+import { paginatedResponseInterface } from 'src/app/core/interfaces/paginated.interface';
 
 @Component({
   selector: 'app-upload-document',
@@ -23,6 +25,7 @@ export class UploadDocumentComponent implements OnInit {
   dataTableService: DatatableService = new DatatableService();
   dtTrigger: Subject<any> = new Subject<any>();
   uploadDocumentForm: FormGroup;
+  roles: role[] = [];
 
   constructor(private http: HttpService, private fb: FormBuilder, private AlertService: AlertService) { 
     this.uploadDocumentForm = this.fb.group({
@@ -41,7 +44,12 @@ export class UploadDocumentComponent implements OnInit {
   ngOnInit(): void {
     this.LoadData();
   }
-
+  LoadRole() {
+    this.http.paginatedPost('role/paginated', 100, 1, {}).subscribe(resp => {
+      let convertedResp = resp as paginatedResponseInterface<role>;
+      this.roles = convertedResp.items;
+    })
+  }
   LoadData() {
     this.dtOptions = {
       pagingType: 'full_numbers',

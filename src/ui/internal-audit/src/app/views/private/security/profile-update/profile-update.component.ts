@@ -5,6 +5,7 @@ import {environment} from "../../../../../environments/environment";
 import {FileResponseInterface} from "../../../../core/interfaces/file-response.interface";
 import {AlertService} from "../../../../core/services/alert.service";
 import {ProfileUpdateResponse} from "../../../../core/interfaces/security/user-registration.interface";
+import {HelperService} from 'src/app/core/services/helper.service'
 
 @Component({
   selector: 'app-profile-update',
@@ -16,7 +17,7 @@ export class ProfileUpdateComponent implements OnInit {
   fileValue:any;
 
   imageUrl:any = '';
-  constructor(private fb:FormBuilder, private httpService: HttpService,private alertService: AlertService) {
+  constructor(private fb:FormBuilder, private httpService: HttpService,private alertService: AlertService,private helper:HelperService) {
     this.profileUpdateForm = fb.group({
       fullName:['', [Validators.required,Validators.minLength(5),Validators.maxLength(50)]],
       ProfileImageUrl: ['']
@@ -36,9 +37,10 @@ export class ProfileUpdateComponent implements OnInit {
   }
   onFileChange(event:any) {
     if (event.target.files.length > 0) {
+      let doc=this.helper.getDocumentSource('Profile_Picture');
       let _file: File = event.target.files[0] as File;
       const file = event.target.files[0];
-      this.httpService.postFile(environment.upload_file_configuration.id,environment.upload_file_configuration.name,'user.png',_file).subscribe(x=>{
+      this.httpService.postFile(doc.id,doc.name,'Document','user.png',_file).subscribe(x=>{
         let response = x as FileResponseInterface;
         this.imageUrl = environment.file_host+`/api/v1/document/get-file-stream?Id=${response.id}`;
         this.profileUpdateForm.controls['ProfileImageUrl'].setValue(`/api/v1/document/get-file-stream?Id=${response.id}`);

@@ -22,12 +22,15 @@ export class HttpService {
   filePostHttpOptions = {
     headers: new HttpHeaders({'enctype': 'multipart/form-data'})
   }
+
+
   paginatedPost<T>(endpoint:string,_pageSize:number,_pageNumber:number,_searchItem: any): Observable<T> {
     let requestObject : paginatedModelInterface = {
       pageNumber:_pageNumber,
       pagesize:_pageSize,
       searchTerm:_searchItem
     }
+    console.log(requestObject)
     return this.httpClient.post<T>(`${this.hostName}/${endpoint}`, JSON.stringify(requestObject), this.httpOptions)
       .pipe(
         retry(0),
@@ -79,7 +82,7 @@ export class HttpService {
       )
   }
 
-  postFile(documentSourceId:string,documentSourceName: string, name:string, file :any){
+  postFile(documentSourceId:string,documentSourceName: string, name:string, file :any,fileUploadUrl:any){
     // appending form data
     let formData:FormData = new FormData();
     formData.append('documentSourceId',documentSourceId);
@@ -87,8 +90,25 @@ export class HttpService {
     formData.append('Name',name);
     formData.append('file',file);
     // appending form data end
-    return this.httpClient.post(`${`${this.hostName}/${environment.file_upload_url}`}`, formData,this.filePostHttpOptions).pipe(retry(0),catchError(this.handleError));
+    return this.httpClient.post(`${`${this.hostName}/${fileUploadUrl}`}`, formData,this.filePostHttpOptions).pipe(retry(0),catchError(this.handleError));
   }
+
+  // postAsBlob<T>(endpoint:string,item:any): Observable<T> {
+  //   return this.httpClient
+  //     .post<T>(`${this.hostName}/${endpoint}`,JSON.stringify(item),this.httpOptions)
+  //     .pipe(
+  //       retry(0),
+  //       catchError(this.handleError)
+  //     )
+  // }
+
+
+  getFilesAsBlob(endpoint:any): any  {
+    
+      return this.httpClient.get(`${this.hostName}/${endpoint}`, { responseType: 'blob',  observe: 'response'});
+  }
+
+
   //#endregion
 
   //#region [ Private ]

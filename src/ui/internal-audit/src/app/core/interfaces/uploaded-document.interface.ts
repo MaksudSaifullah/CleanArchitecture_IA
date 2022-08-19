@@ -29,20 +29,28 @@ export interface DocumentGet {
     path?:             string;
     name?:             string;
     format?:           string;
-    documentSource?:   DocumentSource;
+   
 }
 
-export interface DocumentSource {
-    name?:       string;
-    isActive?:   boolean;
-    id?:         string;
-    createdBy?:  string;
-    createdOn?:  Date;
-    updatedBy?:  null;
-    updatedOn?:  null;
-    reviewedBy?: null;
-    reviewedOn?: null;
-    approvedBy?: null;
-    approvedOn?: null;
-    isDeleted?:  boolean;
+
+
+
+export interface UploadDocumentRequest {
+    documentVersion:         string;
+    documentId:              string;
+    description:             string;
+    approvedBy:              string;
+    activeFrom:              Date;
+    activeTo:                Date;
+    uploadedBy:              string;
+    uploadedDocumentsNotify: UploadedDocumentsNotify[];
 }
+
+export interface UploadedDocumentsNotify {
+    roleId: string;
+}
+export interface DocumentSource {
+    id?:   string;
+    name?: string;
+}
+

@@ -1,5 +1,6 @@
 ﻿using Internal.Audit.Application.Features.UploadDocuments.Commands.AddUploadDocument;
 using Internal.Audit.Application.Features.UploadDocuments.Commands.DeleteUploadDocument;
+using Internal.Audit.Application.Features.UploadDocuments.Queries.GerttUploadedDocumentListPagingFormat;
 using Internal.Audit.Application.Features.UploadDocuments.Queries.GetUploadedDocumentListByRoled;
 using MediatR;
 using Microsoft.AspNetCore.Http;
@@ -31,11 +32,10 @@ namespace Internal.Audit.Api.Controllers
             var result = await _mediator.Send(command);
             return Ok(result);
         }
-        [HttpGet("roleid")]
-        public async Task<ActionResult<GetUploadedDocumentLstByRoleIdDTO>> Get(Guid roleid, int pageNumber, int pageSize)
+        [HttpPost("roleid")]
+        public async Task<ActionResult<GerttUploadedDocumentListPagingFormatDTO>> Get(GetUploadDocumentListPagingFormatQuery query)
         {
-            var command = new GetUploadedDocumentListByRoleIdQuery(roleid, pageNumber, pageSize);
-            var result = await _mediator.Send(command);
+            var result = await _mediator.Send(query);
             return Ok(result);
         }
 

@@ -42,6 +42,26 @@
                         </c-col>
 
                     </c-row>
+
+                    <br>
+                    <c-row [gutter]="{g: 2}">
+                        <c-col md>
+                            <div cFormFloating>
+                                <input type="text" class="form-control" formControlName="description" name="description" id="description"
+                                  placeholder="Name">
+                                <label cLabel for="description">Document Descrption</label>
+                              </div>
+                              <div cRow *ngIf="uploadDocumentForm.get('description')?.invalid &&
+                              uploadDocumentForm.get('description')?.errors &&
+                                    (uploadDocumentForm.get('description')?.dirty || uploadDocumentForm.get('description')?.touched)">
+                                  <small class="text-danger" *ngIf="uploadDocumentForm.get('description').hasError('required')">
+                                      This field is required.
+                                  </small>
+                                
+                              </div>
+                        </c-col>
+
+                    </c-row>
                     <br>
                     <c-row [gutter]="{g: 2}">
                         
@@ -62,36 +82,25 @@
                               </div>
                         </c-col>
 
-
-                        <!-- <c-col md>
-                            <c-multi-select multiple formControlName="roleList" name="roleList" required>
-                              <c-multi-select-option *ngFor="let role of roles" [value]="role.id" [selected]="isSelected(role.id)" >{{role.name}}
-                              </c-multi-select-option>
-                            </c-multi-select>
-                            <div cRow *ngIf="uploadDocumentForm.get('roleList')?.invalid &&
-                            uploadDocumentForm.get('roleList')?.errors &&
-                                  (uploadDocumentForm.get('roleList')?.dirty || uploadDocumentForm.get('roleList')?.touched)">
-                              <small class="text-danger" *ngIf="uploadDocumentForm.get('roleList').hasError('required')">
-                                This field is required.
-                              </small>
-                            </div>
-                          </c-col> -->
-
-                          <c-col md>
+                        <c-col md>
                             <div cFormFloating>
-                                <input type="text" class="form-control" formControlName="description" name="description" id="description"
+                                <input type="text" class="form-control" formControlName="uploadeddBy" name="uploadeddBy" id="uploadeddBy"
                                   placeholder="Name">
-                                <label cLabel for="description">Document Descrption</label>
+                                <label cLabel for="uploadeddBy">Uploaded By</label>
                               </div>
-                              <div cRow *ngIf="uploadDocumentForm.get('description')?.invalid &&
-                              uploadDocumentForm.get('description')?.errors &&
-                                    (uploadDocumentForm.get('description')?.dirty || uploadDocumentForm.get('description')?.touched)">
-                                  <small class="text-danger" *ngIf="uploadDocumentForm.get('description').hasError('required')">
+                              <div cRow *ngIf="uploadDocumentForm.get('uploadeddBy')?.invalid &&
+                              uploadDocumentForm.get('uploadeddBy')?.errors &&
+                                    (uploadDocumentForm.get('uploadeddBy')?.dirty || uploadDocumentForm.get('uploadeddBy')?.touched)">
+                                  <small class="text-danger" *ngIf="uploadDocumentForm.get('uploadeddBy').hasError('required')">
                                       This field is required.
                                   </small>
                                 
                               </div>
                         </c-col>
+
+                    
+
+                         
                     </c-row>
                     <br>
 
@@ -154,7 +163,7 @@
                         <c-col md>
                             <div>
                                 <input type="file" class="form-control" formControlName="documentId" id="documentId"
-                                    placeholder="documentId">
+                                    placeholder="documentId" (change)="onFileChange($event)">
                                 <br>
                             </div>
                               <div cRow *ngIf="uploadDocumentForm.get('documentId')?.invalid &&
@@ -170,16 +179,15 @@
                     </c-row>
 
                    
-                    <button cButton class="btn btn-primary btnSaveColor mt-4 me-1">Save</button>
-                    <button cButton class="btn btn-primary btnSaveColor mt-4 me-1">Cancel</button>
+                    <button cButton class="btn btn-primary btnSaveColor mt-4 me-1" (click)="onSubmit()">Save</button>
+                    <button cButton class="btn btn-primary btnSaveColor mt-4 me-1" (click)="onCancel()">Cancel</button>
                 </form>
             </c-card-body>
         </c-card>
     </div>
 
     <div class="row overflow-auto">
-        <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger"
-            class="table table-bordered row-border hover datatableStyle" id="mytable" style="width: 100%;!important">
+        <table datatable [dtOptions]="dtOptions" class="table table-bordered row-border hover datatableStyle" id="mytable" style="width: 100%;">
             <thead>
                 <tr>
                     <th>Document Name</th>
@@ -207,11 +215,9 @@
                     <!-- <td> {{ documentList.score }} </td> -->
                     <td class="text-center">
                         <div class="btn-group" role="group" aria-label="Basic example">
-                            <button type="button" class="btn btn-secondary btnEditColor">
-                                <svg cIcon name="cilPencil" size="md" title="Edit Button icon"></svg>
-                            </button>
-                            <button type="button" class="btn btn-danger btnDeleteColor">
-                                <svg cIcon name="cilUserX" size="md" title="Delete Button Icon"></svg>
+                          
+                            <button type="button" class="btn btn-danger btnDeleteColor" (click)="delete(documentList.id)">
+                                <svg cIcon name="cilTrash" size="md" title="Delete Button Icon"></svg>
                             </button>
                         </div>
                     </td>

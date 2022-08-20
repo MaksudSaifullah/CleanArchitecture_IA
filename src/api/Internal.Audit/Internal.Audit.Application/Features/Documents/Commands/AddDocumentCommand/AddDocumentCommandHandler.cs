@@ -27,6 +27,7 @@ public class AddDocumentCommandHandler : IRequestHandler<AddDocumentCommand, Add
     public async Task<AddDocumentCommandResponseDTO> Handle(AddDocumentCommand request, CancellationToken cancellationToken)
     {
         var (isUploaded,path,format) =await _documentRepository.UploadFile(request.File,request.DocumentSourceName);
+        //request.Name = request.Name.Replace(" ", "%20");
         if (isUploaded)
         {
             var documentModel = _mapper.Map<Document>(request);

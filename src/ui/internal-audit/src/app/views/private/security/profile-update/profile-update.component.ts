@@ -6,6 +6,7 @@ import {FileResponseInterface} from "../../../../core/interfaces/file-response.i
 import {AlertService} from "../../../../core/services/alert.service";
 import {ProfileUpdateResponse} from "../../../../core/interfaces/security/user-registration.interface";
 import {HelperService} from 'src/app/core/services/helper.service'
+import { UploadedDocumentList, DocumentGet, UploadDocumentRequest, UploadedDocumentsNotify, DocumentSource } from 'src/app/core/interfaces/uploaded-document.interface';
 
 @Component({
   selector: 'app-profile-update',
@@ -15,6 +16,7 @@ import {HelperService} from 'src/app/core/services/helper.service'
 export class ProfileUpdateComponent implements OnInit {
   profileUpdateForm: FormGroup;
   fileValue:any;
+  documentRawSourceInfo: DocumentSource = {};
 
   imageUrl:any = '';
   constructor(private fb:FormBuilder, private httpService: HttpService,private alertService: AlertService,private helper:HelperService) {
@@ -24,23 +26,24 @@ export class ProfileUpdateComponent implements OnInit {
     })
   }
 
-  ngOnInit(): void {
+  async ngOnInit() {
     this.httpService.get<any>('UserRegistration/GetUserProfile').subscribe(x=>{
       let convertedResponse = x as ProfileUpdateResponse;
       this.profileUpdateForm.patchValue(convertedResponse);
      // this.profileUpdateForm.controls['ProfileImageUrl'].setValue(`/api/v1/document/get-file-stream?Id=${environment.file_host+ convertedResponse.profileImageUrl}`);
       this.imageUrl =  convertedResponse.profileImageUrl;
     })
+    this.documentRawSourceInfo=await this.helper.getDocumentSource('Profile_Picture') as DocumentSource;
   }
   clickFileControl(controlId:any){
     document.getElementById(controlId)?.click();
   }
   onFileChange(event:any) {
     if (event.target.files.length > 0) {
-      let doc=this.helper.getDocumentSource('Profile_Picture');
+      let doc=this.documentRawSourceInfo;
       let _file: File = event.target.files[0] as File;
       const file = event.target.files[0];
-      this.httpService.postFile(doc.id,doc.name,'Document','user.png',_file).subscribe(x=>{
+      this.httpService.postFile(doc.id == null ? '':doc.id,doc.name== null ? '':doc.name,'user.png',_file,'Document').subscribe(x=>{
         let response = x as FileResponseInterface;
         this.imageUrl = environment.file_host+`/api/v1/document/get-file-stream?Id=${response.id}`;
         this.profileUpdateForm.controls['ProfileImageUrl'].setValue(`/api/v1/document/get-file-stream?Id=${response.id}`);

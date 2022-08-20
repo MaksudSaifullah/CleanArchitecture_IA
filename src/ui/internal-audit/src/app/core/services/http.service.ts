@@ -1,12 +1,16 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
-import {Observable, pipe, throwError} from 'rxjs';
+import {Observable, pipe, throwError,isObservable, firstValueFrom} from 'rxjs';
 import { retry, catchError } from 'rxjs/operators';
 import { environment } from '../../../environments/environment';
 import {paginatedModelInterface} from './../interfaces/paginated.interface'
+
 @Injectable({
   providedIn: 'root',
 })
+
+
+
 export class HttpService {
   hostName:string | undefined = environment.hostName;
   constructor(
@@ -84,6 +88,7 @@ export class HttpService {
 
   postFile(documentSourceId:string,documentSourceName: string, name:string, file :any,fileUploadUrl:any){
     // appending form data
+    console.log(fileUploadUrl);
     let formData:FormData = new FormData();
     formData.append('documentSourceId',documentSourceId);
     formData.append('DocumentSourceName',documentSourceName);
@@ -93,14 +98,6 @@ export class HttpService {
     return this.httpClient.post(`${`${this.hostName}/${fileUploadUrl}`}`, formData,this.filePostHttpOptions).pipe(retry(0),catchError(this.handleError));
   }
 
-  // postAsBlob<T>(endpoint:string,item:any): Observable<T> {
-  //   return this.httpClient
-  //     .post<T>(`${this.hostName}/${endpoint}`,JSON.stringify(item),this.httpOptions)
-  //     .pipe(
-  //       retry(0),
-  //       catchError(this.handleError)
-  //     )
-  // }
 
 
   getFilesAsBlob(endpoint:any): any  {

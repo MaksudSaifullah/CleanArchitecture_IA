@@ -55,7 +55,7 @@ namespace Internal.Audit.Api.Controllers
             string contentType = "application/octet-stream";
 
             var bytes = await System.IO.File.ReadAllBytesAsync(Path.Combine(doc.Path));
-            return File(bytes, contentType, doc.Name+"."+doc.Format);
+            return File(bytes, contentType, doc.Name+doc.Format);
      
         }
     }

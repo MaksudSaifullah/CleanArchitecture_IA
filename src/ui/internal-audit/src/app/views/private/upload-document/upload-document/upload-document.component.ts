@@ -8,7 +8,7 @@ import { DataTableDirective } from 'angular-datatables';
 import { riskAssessmentOverdue } from 'src/app/core/interfaces/branch-audit/riskAssessment.interface';
 import { UploadedDocumentList, DocumentGet, UploadDocumentRequest, UploadedDocumentsNotify, DocumentSource } from 'src/app/core/interfaces/uploaded-document.interface';
 import { DatatableService } from 'src/app/core/services/datatable.service';
-import { Subject } from 'rxjs';
+import { firstValueFrom, Subject } from 'rxjs';
 import { role } from 'src/app/core/interfaces/security/role.interface';
 import { paginatedResponseInterface } from 'src/app/core/interfaces/paginated.interface';
 import { HelperService } from 'src/app/core/services/helper.service'
@@ -34,7 +34,8 @@ export class UploadDocumentComponent implements OnInit {
   roles: role[] = [];
   docu: DocumentGet = {};
   globalFileValue: any;
-  documentRawSource: DocumentSource = {};
+  globalFile: File | any = null;
+  documentRawSourceInfo: DocumentSource = {};
 
   constructor(private http: HttpService, private fb: FormBuilder, private AlertService: AlertService, private helper: HelperService) {
     this.LoadRole();
@@ -50,15 +51,37 @@ export class UploadDocumentComponent implements OnInit {
       documentId: ['', [Validators.required]],
       roleList: ['', [Validators.required]],
     });
+
+    // const p = this.helper.getDocumentSource('Upload_All_Document');
+    // let yy=this.http.waitFor(p) ;
+    // console.log( yy);
   }
 
-  ngOnInit(): void {
+  async ngOnInit() {
     this.LoadData();
-    this.LoadDocumentUploadConfig();
+
+    try {
+
+      console.log('-----------------------------')
+      this.documentRawSourceInfo = await this.helper.getDocumentSource('Upload_All_Document') as DocumentSource;
+      console.log(this.documentRawSourceInfo)
+      console.log('-----------------------------')
+
+    } catch (error) {
+      console.log(error);
+    }
+
+    //  this.LoadDocumentUploadConfig();
   }
-  LoadDocumentUploadConfig() {
-    this.documentRawSource = this.helper.getDocumentSource('Upload_All_Document');
-    console.log(this.documentRawSource);
+  async LoadDocumentUploadConfig() {
+    //  let t= firstValueFrom(this.helper.getDocumentSource('Upload_All_Document')).then(c=>{
+    //   this.documentRawSource=c as DocumentSource;
+    //  });
+
+    console.log('hiiiii');
+
+    console.log(this.documentRawSourceInfo);
+    console.log('hiiiii');
   }
   LoadRole() {
     this.http.paginatedPost('role/paginated', 100, 1, {}).subscribe(resp => {
@@ -70,15 +93,8 @@ export class UploadDocumentComponent implements OnInit {
   onFileChange(event: any) {
     if (event.target.files.length > 0) {
 
-      let doc = this.documentRawSource as DocumentSource;
-      console.log(doc)
-        return;
-      let _file: File = event.target.files[0] as File;
-      // const file = event.target.files[0];
-      this.http.postFile(doc.id == undefined ? '':'', doc.name==undefined ? '':'', 'Document', _file.name, _file).subscribe(x => {
-        let response = x as FileResponseInterface;
-        this.globalFileValue = response.id;
-      });
+      let doc = this.documentRawSourceInfo;    
+      this.globalFile = event.target.files[0] as File;    
     }
 
   }
@@ -132,26 +148,9 @@ export class UploadDocumentComponent implements OnInit {
     });
   }
   onSubmit(): void {
+
     const that = this;
     if (this.uploadDocumentForm.valid) {
-
-
-
-
-      // let doc = this.helper.getDocumentSource('Upload_All_Document');
-      // let _file: File = this.filestore as File;
-
-      // this.http.postFile(doc.id, doc.name, 'Document', 'user.png', _file).subscribe(x => {
-      //   let response = x as FileResponseInterface;
-      //   globalFileValue = response.id;
-      // });
-
-
-
-
-
-
-
 
 
       let roleList: UploadedDocumentsNotify[] = [];
@@ -166,16 +165,42 @@ export class UploadDocumentComponent implements OnInit {
 
       }
 
-      const requestModel = {
-        documentVersion: this.uploadDocumentForm.value.documentVersion.trim(),
-        documentId: this.globalFileValue,
-        description: this.uploadDocumentForm.value.description.trim(),
-        approvedBy: this.uploadDocumentForm.value.approvedBy.trim(),
-        activeFrom: this.uploadDocumentForm.value.activeFrom,
-        activeTo: this.uploadDocumentForm.value.activeTo,
-        uploadedBy: this.uploadDocumentForm.value.uploadedBy.trim(),
-        uploadedDocumentsNotify: roleList
-      }
+      let doc = this.documentRawSourceInfo;
+      const file = this.globalFile as File;
+      this.http.postFile(doc.id == null ? '' : doc.id, doc.name == null ? '' : doc.name, this.uploadDocumentForm.value.documentName.trim(), file, 'Document').subscribe(x => {
+        let response = x as FileResponseInterface;
+        this.globalFileValue = response.id;
+
+        const requestModel = {
+          documentVersion: this.uploadDocumentForm.value.documentVersion,
+          documentId: this.globalFileValue,
+          description: this.uploadDocumentForm.value.description,
+          approvedBy: this.uploadDocumentForm.value.approvedBy.trim(),
+          activeFrom: this.uploadDocumentForm.value.activeFrom,
+          activeTo: this.uploadDocumentForm.value.activeTo,
+          uploadedBy: this.uploadDocumentForm.value.uploadeddBy.trim(),
+          uploadedDocumentsNotify: roleList
+        }
+
+        this.http.post('UploadDocumentPage',requestModel).subscribe(x=>{
+          this.AlertService.successDialog('Success','Document uploaded successfully.');
+          this.uploadDocumentForm.patchValue({roleList:null});
+          this.uploadDocumentForm.get('roleList')?.setValue([]);
+          this.uploadDocumentForm.reset();
+          // this.uploadDocumentForm.get('roleList')?.setValue([]);
+          this.dataTableService.redraw(this.datatableElement);
+
+        })
+       // console.log(requestModel)
+      });
+
+      // let doc = this.helper.getDocumentSource('Upload_All_Document');
+      // let _file: File = this.filestore as File;
+
+      // this.http.postFile(doc.id, doc.name, 'Document', 'user.png', _file).subscribe(x => {
+      //   let response = x as FileResponseInterface;
+      //   globalFileValue = response.id;
+      // });
 
     }
     else {
@@ -184,6 +209,8 @@ export class UploadDocumentComponent implements OnInit {
     }
   }
   onCancel(): void {
+    this.uploadDocumentForm.get('roleList')?.setValue([]);
+    this.uploadDocumentForm.patchValue({roleList:null});
     this.uploadDocumentForm.reset();
   }
 

@@ -65,10 +65,10 @@
                       <td>{{ user.entity }}</td>
                       <td>{{ user.employeeName }}</td>
                       <td>{{ user.userRole }}</td>
-                      <td>{{ user.isEnabled }}</td>
-                      <td>{{ user.isAccountExpired }}</td>
-                      <td>{{ user.isAccountLocked }}</td>
-                      <!-- <td>{{ user.isPasswordExpired }}</td> -->
+                      <td>{{ user.isEnabled ? 'Yes':'No'}}</td>
+                      <td>{{ user.isAccountLocked ? 'Yes':'No' }}</td>
+                      <td>{{ user.isAccountExpired ? 'Yes':'No'}}</td>
+                      <!-- <td>{{ user.isPasswordExpired ? 'Yes':'No'}}</td> -->
                       <td class="text-center">
                         <div class="btn-group" role="group" aria-label="Basic example">
                           <button type="button" class="btn btn-secondary btnEditColor" [routerLink]="['/security/userRegistration',user.id]">

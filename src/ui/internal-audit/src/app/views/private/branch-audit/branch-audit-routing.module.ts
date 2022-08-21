@@ -9,6 +9,10 @@ import { AuditComponent } from './audit/audit.component';
 import { AuditScheduleComponent } from './audit-schedule/audit-schedule.component';
 import { WorkpaperComponent } from './workpaper/workpaper.component';
 import { WorkpaperCreateComponent } from './workpaper/workpaper-create/workpaper-create.component';
+import { AuditViewComponent } from './audit-view/audit-view.component';
+import { ScheduleViewComponent } from './schedule-view/schedule-view.component';
+import { ScheduleConfigurationComponent } from './schedule-configuration/schedule-configuration.component';
+import { ScheduleExecutionComponent } from './schedule-execution/schedule-execution.component';
 
 const routes: Routes = [
   {
@@ -48,7 +52,34 @@ const routes: Routes = [
   {
     path:'workpaperCreate',
     component: WorkpaperCreateComponent
-  }
+  },
+  {
+    path:'audit-view',
+    component: AuditViewComponent
+  },
+  { 
+    path: 'audit-view/:id', 
+    component: AuditViewComponent },
+  { 
+    path: 'audit/:id', 
+    component: AuditComponent 
+   },
+   { 
+    path: 'schedule-view', 
+    component: ScheduleViewComponent 
+   },
+   { 
+    path: 'schedule-view/:id', 
+    component: ScheduleViewComponent 
+   },
+   { 
+    path: 'schedule-configuration', 
+    component: ScheduleConfigurationComponent 
+   },
+   { 
+    path: 'schedule-execution', 
+    component: ScheduleExecutionComponent 
+   },
 ];
 
 @NgModule({

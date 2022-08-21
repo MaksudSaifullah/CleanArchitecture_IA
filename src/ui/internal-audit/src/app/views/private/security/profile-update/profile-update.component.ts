@@ -7,6 +7,7 @@ import {AlertService} from "../../../../core/services/alert.service";
 import {ProfileUpdateResponse} from "../../../../core/interfaces/security/user-registration.interface";
 import {HelperService} from 'src/app/core/services/helper.service'
 import { UploadedDocumentList, DocumentGet, UploadDocumentRequest, UploadedDocumentsNotify, DocumentSource } from 'src/app/core/interfaces/uploaded-document.interface';
+import {UserStore} from "../../../../shared/user.store";
 
 @Component({
   selector: 'app-profile-update',
@@ -19,7 +20,8 @@ export class ProfileUpdateComponent implements OnInit {
   documentRawSourceInfo: DocumentSource = {};
 
   imageUrl:any = '';
-  constructor(private fb:FormBuilder, private httpService: HttpService,private alertService: AlertService,private helper:HelperService) {
+  designation: string | undefined;
+  constructor(private helper:HelperService,private userStore:UserStore,private fb:FormBuilder, private httpService: HttpService,private alertService: AlertService) {
     this.profileUpdateForm = fb.group({
       fullName:['', [Validators.required,Validators.minLength(5),Validators.maxLength(50)]],
       ProfileImageUrl: ['']
@@ -32,6 +34,7 @@ export class ProfileUpdateComponent implements OnInit {
       this.profileUpdateForm.patchValue(convertedResponse);
      // this.profileUpdateForm.controls['ProfileImageUrl'].setValue(`/api/v1/document/get-file-stream?Id=${environment.file_host+ convertedResponse.profileImageUrl}`);
       this.imageUrl =  convertedResponse.profileImageUrl;
+      this.designation = convertedResponse.designationName;
     })
     this.documentRawSourceInfo=await this.helper.getDocumentSource('Profile_Picture') as DocumentSource;
   }
@@ -58,6 +61,13 @@ export class ProfileUpdateComponent implements OnInit {
         if(x == true){
           this.alertService.success('Profile update successful');
         }
+        this.httpService.get<any>('UserRegistration/GetUserProfile').subscribe(x=>{
+          let convertedResponse = x as ProfileUpdateResponse;
+          this.userStore.update({
+            fullName: convertedResponse.fullName,
+            profileImage:convertedResponse.profileImageUrl
+          });
+        })
       });
     }
 

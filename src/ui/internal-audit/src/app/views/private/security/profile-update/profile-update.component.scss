@@ -1,5 +1,4 @@
 .profile-image{
-  width:150px;
   border-radius: 100%;
   padding:5px;
   border:1px solid #dddddd;
@@ -8,16 +7,16 @@
   -o-transition: opacity 800ms linear;
   -ms-transition: opacity 800ms linear;
   transition: opacity 800ms linear;
-
+  width:100px;
+  height: 100px;
 }
 .profile-image:hover{
   opacity: 0.4;
 }
 .profile-image-div:hover{
   background-image: url("/assets/images/image-upload.png");
-  background-size: 120px;
+  background-size: 100px;
   opacity: 0.7;
-  background-position: center;
   background-repeat: no-repeat;
   z-index: 99999;
   border-radius: 100%;
@@ -26,5 +25,6 @@
   -o-transition: opacity 800ms linear;
   -ms-transition: opacity 800ms linear;
   transition: opacity 800ms linear;
-
+  width: 100px;
+  height: 100px;
 }

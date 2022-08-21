@@ -187,6 +187,7 @@ export class UploadDocumentComponent implements OnInit {
           this.uploadDocumentForm.patchValue({roleList:null});
           this.uploadDocumentForm.get('roleList')?.setValue([]);
           this.uploadDocumentForm.reset();
+          this.ResetForm();
           // this.uploadDocumentForm.get('roleList')?.setValue([]);
           this.dataTableService.redraw(this.datatableElement);
 
@@ -209,9 +210,22 @@ export class UploadDocumentComponent implements OnInit {
     }
   }
   onCancel(): void {
-    this.uploadDocumentForm.get('roleList')?.setValue([]);
-    this.uploadDocumentForm.patchValue({roleList:null});
-    this.uploadDocumentForm.reset();
+    // this.uploadDocumentForm.get('roleList')?.setValue([]);
+    // this.uploadDocumentForm.patchValue({roleList:null});
+   
+    this.ResetForm();
   }
 
+
+  private ResetForm() {
+    this.uploadDocumentForm.reset();
+    $('.form-multi-select-selection-cleaner').prop("disabled", false);
+    $('.form-multi-select-selection-cleaner').trigger('click');
+    setTimeout(() => {
+      $('.form-multi-select').removeClass('show');
+      $('.form-multi-select').removeClass('cdk-focused');
+      $('.form-multi-select').removeClass('cdk-mouse-focused');
+      this.uploadDocumentForm.reset();
+    }, 300);
+  }
 }

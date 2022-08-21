@@ -26,6 +26,10 @@ import { LoProductivityTabComponent } from './risk-assessment-view/lo-productivi
 import { LoanDisbursementTabComponent } from './risk-assessment-view/loan-disbursement-tab/loan-disbursement-tab.component';
 import { FraudTabComponent } from './risk-assessment-view/fraud-tab/fraud-tab.component';
 import { WorkpaperCreateComponent } from './workpaper/workpaper-create/workpaper-create.component';
+import { AuditViewComponent } from './audit-view/audit-view.component';
+import { ScheduleViewComponent } from './schedule-view/schedule-view.component';
+import { ScheduleConfigurationComponent } from './schedule-configuration/schedule-configuration.component';
+import { ScheduleExecutionComponent } from './schedule-execution/schedule-execution.component';
 
 
 @NgModule({
@@ -38,12 +42,10 @@ import { WorkpaperCreateComponent } from './workpaper/workpaper-create/workpaper
     OverdueTabComponentComponent,
     StaffTurnoverComponent,
     AuditFrequencyComponent,
-
     AuditComponent,
-      AverageTabComponent,
-      CollectionTabComponent,
+    AverageTabComponent,
+    CollectionTabComponent,
     AuditComponent,
-      AuditScheduleComponent,
     AuditScheduleComponent,
     IssueComponent,
     WorkpaperComponent,
@@ -51,7 +53,13 @@ import { WorkpaperCreateComponent } from './workpaper/workpaper-create/workpaper
     LoanDisbursementTabComponent,
     FraudTabComponent,
     WorkpaperComponent,
-    WorkpaperCreateComponent
+    
+    WorkpaperCreateComponent,
+   
+    AuditViewComponent,
+    ScheduleViewComponent,
+    ScheduleConfigurationComponent,
+    ScheduleExecutionComponent,
   ],
   imports: [
     CommonModule,

@@ -22,7 +22,10 @@ namespace Internal.Audit.Application.Features.UserRegistration.Queries.GetUserPr
             return new UserProfileQueryResponseDTO
             {
                 ProfileImageUrl = user.ProfileImageUrl,
-                FullName = user.FullName,
+                FullName = user.Employee.Name,
+                DesignationName=user.Employee.Designation.Name,
+                Id = user.Id,
+                UserName=user.UserName,
             };
         }
     }

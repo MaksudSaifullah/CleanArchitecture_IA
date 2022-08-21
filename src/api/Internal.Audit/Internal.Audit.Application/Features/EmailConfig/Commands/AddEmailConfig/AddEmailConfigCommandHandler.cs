@@ -26,8 +26,12 @@ public class AddEmailConfigCommandHandler : IRequestHandler<AddEmailConfigComman
     {
         var emailConfig = _mapper.Map<EmailConfiguration>(request);
         var newEmailConfig = await _emailConfigRepository.Add(emailConfig);
-        var rowsAffected = await _unitOfWork.CommitAsync();
+        var rowsAffected = await _unitOfWork.CommitAsyncwithErrorMsg();
+        if (rowsAffected.Item1 == -1)
+        {
+            return new AddEmailConfigResponseDTO(newEmailConfig.Id, false, rowsAffected.Item2);
+        }
 
-        return new AddEmailConfigResponseDTO(newEmailConfig.Id, rowsAffected > 0, rowsAffected > 0 ? "Email Configuration Added Successfully!" : "Error while creating Email Configuration!");
+        return new AddEmailConfigResponseDTO(newEmailConfig.Id, rowsAffected.Item1 > 0, rowsAffected.Item1 > 0 ? "Email Configuration Added Successfully!" : "Error while creating Email Configuration!");
     }
 }

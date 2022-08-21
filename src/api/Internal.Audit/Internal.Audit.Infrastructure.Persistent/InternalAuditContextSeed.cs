@@ -69,6 +69,12 @@ public class InternalAuditContextSeed
             context.DocumentSources.AddRange(GetDocumentSourceNewAdded());
             await context.SaveChangesAsync();
         }
+        if (!context.AuditModule.Any())
+        {
+            //AuditModeulAdd
+            context.AuditModule.AddRange(AuditModeulAdd());
+            await context.SaveChangesAsync();
+        }
     }
 
 
@@ -137,6 +143,10 @@ public class InternalAuditContextSeed
             new EmailType
             {
                 Name = "Commencement Letter (Process & Control)", Status = true, CreatedBy="system",CreatedOn=DateTime.Now, IsDeleted = false
+            },
+            new EmailType
+            {
+                Name = "ToR", Status = true, CreatedBy="system",CreatedOn=DateTime.Now, IsDeleted = false
             },
 
         };
@@ -578,4 +588,26 @@ public class InternalAuditContextSeed
             }
         };
     }
+    private static IEnumerable<AuditModule> AuditModeulAdd()
+    {
+        return new List<AuditModule>
+        {
+            new AuditModule
+            {
+                IsActive = true,CreatedBy="admin",CreatedOn=DateTime.Now,Name="COMMON",DisplayName ="Common Configuration"
+            }
+            ,new AuditModule
+            {
+                IsActive = true,CreatedBy="admin",CreatedOn=DateTime.Now,Name="SECURITY",DisplayName ="Security"
+            },new AuditModule
+            {
+                IsActive = true,CreatedBy="admin",CreatedOn=DateTime.Now,Name="BA",DisplayName ="Branch Audit"
+            },
+            new AuditModule
+            {
+                IsActive = true,CreatedBy="admin",CreatedOn=DateTime.Now,Name="PA",DisplayName ="Process & Control Audit"
+            }
+        };
+    }
+
 }

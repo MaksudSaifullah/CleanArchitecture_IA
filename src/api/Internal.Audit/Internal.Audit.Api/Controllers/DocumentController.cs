@@ -46,7 +46,7 @@ namespace Internal.Audit.Api.Controllers
             return Ok(doc);
 
         }
-
+        
         [HttpGet("get-file-stream")]
         public async Task<IActionResult> File(Guid Id)
         {
@@ -55,7 +55,7 @@ namespace Internal.Audit.Api.Controllers
             string contentType = "application/octet-stream";
 
             var bytes = await System.IO.File.ReadAllBytesAsync(Path.Combine(doc.Path));
-            return File(bytes, contentType, Path.GetFileName(Path.Combine(doc.Path)));
+            return File(bytes, contentType, doc.Name+doc.Format);
      
         }
     }

@@ -12,11 +12,15 @@ namespace Internal.Audit.Domain.Entities.BranchAudit;
 public class RiskAssesmentDataManagementLog:EntityBase
 {
     public Guid DataRequestQueueServiceId { get; set; }
+    public Guid RiskAssessmentId { get; set; }
     public decimal ConversionRate { get; set; }
     public int TypeId { get; set; }
    
     [ForeignKey("DataRequestQueueServiceId")]
     public virtual DataRequestQueueService DataRequestQueueService { get; set; } = null!;
+
+    [ForeignKey("RiskAssessmentId")]
+    public virtual RiskAssessment RiskAssessment { get; set; } = null!;
 
     public virtual ICollection<RiskAssesmentDataManagement> RiskAssesmentDataManagement { get; set; }=null!;
 

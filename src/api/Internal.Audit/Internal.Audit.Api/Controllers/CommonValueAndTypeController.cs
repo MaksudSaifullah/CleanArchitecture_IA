@@ -213,8 +213,25 @@ namespace Internal.Audit.Api.Controllers
         public async Task<ActionResult<BranchByScheduleIdDTO>> GetByScheduleId(Guid ScheduleId)
         {
             var query = new GetBranchByAuditScheduleQuery(ScheduleId);
-            var riskAssessments = await _mediator.Send(query);
-            return Ok(riskAssessments);
+            var scheduleBranchList = await _mediator.Send(query);
+            return Ok(scheduleBranchList);
+
+        }
+        [HttpGet("ControlActivityId")]
+        public async Task<ActionResult<ControlFrequencyDTO>> GetByControlActivityId(Guid ControlActivityId)
+        {
+            var query = new GetFrequencyByNatureActivityQuery(ControlActivityId);
+            var controlFrequencyList = await _mediator.Send(query);
+            return Ok(controlFrequencyList);
+
+        }
+
+        [HttpGet("ControlFrequencyId")]
+        public async Task<ActionResult<SampleSizeDTO>> GetByControlFrequencyId(Guid ControlFrequencyId)
+        {
+            var query = new GetSizeByFrequencyQuery(ControlFrequencyId);
+            var sampleSizeList = await _mediator.Send(query);
+            return Ok(sampleSizeList);
 
         }
     }

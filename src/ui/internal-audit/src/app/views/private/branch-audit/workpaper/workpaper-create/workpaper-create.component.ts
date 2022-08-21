@@ -59,8 +59,8 @@ export class WorkpaperCreateComponent implements OnInit {
 
   ngOnInit(): void {
     //this.paramId = this.activateRoute.snapshot.params['A1812E6F-098A-46EB-90F1-6508C8A8A6D2'];
-    this.paramId = '1C67DC41-9E18-ED11-B3B2-00155D610B18';
-    this.LoadScheduleData(this.paramId);
+    //this.paramId = '1C67DC41-9E18-ED11-B3B2-00155D610B18';
+    //this.LoadScheduleData(this.paramId);
   }
 
   LoadScheduleData(Id:any):void {
@@ -124,18 +124,18 @@ export class WorkpaperCreateComponent implements OnInit {
     })
   }
 
-  LoadControlFrequencies() {
-    this.http.get('commonValueAndType/controlfrequency').subscribe(resp => {
-      let convertedResp = resp as commonValueAndType[];
-      this.controlFrequencies = convertedResp;
-    })
-  }
-  LoadSampleSizes() {
-    this.http.get('commonValueAndType/samplesize').subscribe(resp => {
-      let convertedResp = resp as commonValueAndType[];
-      this.sampleSizes = convertedResp;
-    })
-  }
+  // LoadControlFrequencies() {
+  //   this.http.get('commonValueAndType/controlfrequency').subscribe(resp => {
+  //     let convertedResp = resp as commonValueAndType[];
+  //     this.controlFrequencies = convertedResp;
+  //   })
+  // }
+  // LoadSampleSizes() {
+  //   this.http.get('commonValueAndType/samplesize').subscribe(resp => {
+  //     let convertedResp = resp as commonValueAndType[];
+  //     this.sampleSizes = convertedResp;
+  //   })
+  // }
 
   LoadBranches() {
     this.http.get('commonValueAndType/getBranch').subscribe(resp => {
@@ -156,12 +156,40 @@ export class WorkpaperCreateComponent implements OnInit {
     this.LoadSampledMonths();
     this.LoadSampledSelectionMethods();
     this.LoadControlActivityNatures();
-    this.LoadControlFrequencies();
-    this.LoadSampleSizes();
+   // this.LoadControlFrequencies();
+   // this.LoadSampleSizes();
     this.LoadTestingConclusions();
     this.LoadTopicHeadDropdownList();
     this.LoadQuestions();
     //this.LoadBranches();
+  }
+
+  // GetCode(event: string,isUser:boolean=false): void{
+  //   if(event != "null" || event != null){
+  //     this.LoadControlFrequency(event);
+      
+  //   // if(!isUser){
+  //   //   this.auditPlanForm.patchValue({riskAssessmentId:"null" });
+  //   // }
+  //   }
+  // }
+
+  LoadControlFrequency(event: any): void {
+    this.http.get('commonValueAndType/ControlActivityId?ControlActivityId='+ event +'').subscribe(resp => {
+      let convertedResp = resp as commonValueAndType[];
+      this.controlFrequencies = convertedResp;
+    })
+  }
+
+  LoadSampleSize(event: any): void {
+    this.http.get('commonValueAndType/ControlFrequencyId?ControlFrequencyId='+ event +'').subscribe(resp => {
+      let convertedResp = resp as commonValueAndType[];
+      this.sampleSizes = convertedResp;
+    //  this.workpaperForm.patchValue({
+    //   sampleSizeId : convertedResp.text,
+     
+    // });
+    })
   }
 
 }

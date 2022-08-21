@@ -10,6 +10,7 @@ namespace Internal.Audit.Application.Features.RiskAssesmentDataManagementLogs.Co
 public class AddRiskAssesmentDataManagementLogCommand:IRequest<AddRiskAssesmentDataManagementLogResponseDTO>
 {
     public Guid DataRequestQueueServiceId { get; set; }
+    public Guid RiskAssessmentId { get; set; }
     public decimal ConversionRate { get; set; }
     public int TypeId { get; set; }
 

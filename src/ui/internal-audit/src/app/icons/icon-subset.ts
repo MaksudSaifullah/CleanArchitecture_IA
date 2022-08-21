@@ -95,6 +95,8 @@ import {
   cilXCircle,
   cilUserX,
   cilClock,
+  cilArrowCircleTop,
+  cilCopy
 
 } from '@coreui/icons';
 
@@ -194,7 +196,9 @@ export const iconSubset = {
   cilX,
   cilXCircle,
   cilUserX,
-  cilClock
+  cilClock,
+  cilArrowCircleTop,
+  cilCopy
 };
 
 export enum IconSubset {
@@ -293,7 +297,9 @@ export enum IconSubset {
   cilX = 'cilX',
   cilXCircle = 'cilXCircle',
   cilUserX='cilUserX',
-  cilClock='cilClock'
+  cilClock='cilClock',
+  cilArrowCircleTop='cilArrowCircleTop',
+  cilCopy='cilCopy'
 
 
 }

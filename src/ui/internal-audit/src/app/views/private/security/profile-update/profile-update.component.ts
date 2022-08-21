@@ -20,7 +20,8 @@ export class ProfileUpdateComponent implements OnInit {
   documentRawSourceInfo: DocumentSource = {};
 
   imageUrl:any = '';
-  constructor(private userStore:UserStore,private fb:FormBuilder, private httpService: HttpService,private alertService: AlertService) {
+  designation: string | undefined;
+  constructor(private helper:HelperService,private userStore:UserStore,private fb:FormBuilder, private httpService: HttpService,private alertService: AlertService) {
     this.profileUpdateForm = fb.group({
       fullName:['', [Validators.required,Validators.minLength(5),Validators.maxLength(50)]],
       ProfileImageUrl: ['']
@@ -33,6 +34,7 @@ export class ProfileUpdateComponent implements OnInit {
       this.profileUpdateForm.patchValue(convertedResponse);
      // this.profileUpdateForm.controls['ProfileImageUrl'].setValue(`/api/v1/document/get-file-stream?Id=${environment.file_host+ convertedResponse.profileImageUrl}`);
       this.imageUrl =  convertedResponse.profileImageUrl;
+      this.designation = convertedResponse.designationName;
     })
     this.documentRawSourceInfo=await this.helper.getDocumentSource('Profile_Picture') as DocumentSource;
   }

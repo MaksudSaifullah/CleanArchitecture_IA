@@ -4,12 +4,14 @@ import {Injectable} from "@angular/core";
 export interface UserState {
   profileImage: string;
   fullName: string;
+  designation:string
 }
 
 export function createInitialState(): UserState {
   return {
     profileImage:'',
-    fullName : ''
+    fullName : '',
+    designation:''
   }
 }
 

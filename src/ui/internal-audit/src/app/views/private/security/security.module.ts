@@ -18,7 +18,7 @@ import {
   NavModule,
   TabsModule,
   AccordionModule,
-  AvatarModule
+  AvatarModule, BadgeModule
 } from '@coreui/angular-pro';
 import { ReactiveFormsModule,FormsModule } from '@angular/forms';
 import { AccessPrivilegeComponent } from './access-privilege/access-privilege.component';
@@ -58,7 +58,8 @@ import { IconModule } from '@coreui/icons-angular';
     AccordionModule,
     CdkAccordionModule,
     AvatarModule,
-    IconModule
+    IconModule,
+    BadgeModule
   ],
   providers:[
   ]

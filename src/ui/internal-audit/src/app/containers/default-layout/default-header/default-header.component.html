@@ -51,7 +51,7 @@
     </c-header-nav>
 
     <!-- todo: header nav dropdown menus  -->
-    <c-header-nav class="ms-3 me-sm-4">
+    <c-header-nav>
       <ng-container *ngTemplateOutlet="userDropdown"></ng-container>
     </c-header-nav>
 
@@ -69,7 +69,8 @@
   </c-container>
 </ng-container>
 <!--</c-header>-->
-<ng-template #userDropdown>
+
+<ng-template #userDropdown class="col-md-4">
   <c-dropdown alignment="end" variant="nav-item">
     <button
       cButton
@@ -82,7 +83,7 @@
         cTextColor="primary"
         shape="rounded-1"
         size="md"
-        src="./assets/img/avatars/user.png"
+        src="{{(user$ | async)?.profileImage}}"
         status="success"
       >
       </c-avatar>

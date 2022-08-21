@@ -6,6 +6,8 @@ import { RoutingService } from 'src/app/core/services/routing.service';
 import {BreadcumbQuery} from "../../../shared/breadcumb.query";
 import {BehaviorSubject, Observable} from "rxjs";
 import {BreadcumbModel, BreadCumbState, BreadcumbStore} from "../../../shared/breedcumb.store";
+import {UserState} from "../../../shared/user.store";
+import {UserQuery} from "../../../shared/user.query";
 
 @Component({
   selector: 'app-default-header',
@@ -13,6 +15,7 @@ import {BreadcumbModel, BreadCumbState, BreadcumbStore} from "../../../shared/br
 })
 export class DefaultHeaderComponent extends HeaderComponent {
   public breadcumb$: Observable<BreadcumbModel[]>;
+  public user$: Observable<UserState>;
   @Input() sidebarId: string = "sidebar1";
 
   public newMessages = new Array(4)
@@ -23,9 +26,10 @@ export class DefaultHeaderComponent extends HeaderComponent {
     themeSwitchRadio: new FormControl('light'),
   });
 
-  constructor(private classToggler: ClassToggleService,private route : RoutingService, private breadcumbQuery : BreadcumbQuery, private breedcumbStore:BreadcumbStore) {
+  constructor(private userQuery: UserQuery,private classToggler: ClassToggleService,private route : RoutingService, private breadcumbQuery : BreadcumbQuery, private breedcumbStore:BreadcumbStore) {
     super();
     this.breadcumb$ = breadcumbQuery.activeBreadcumb$;
+    this.user$ = userQuery.activeUser$;
   }
 
   setTheme(value: string): void {

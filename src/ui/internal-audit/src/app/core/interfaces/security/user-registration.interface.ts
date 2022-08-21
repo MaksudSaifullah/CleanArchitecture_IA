@@ -44,6 +44,7 @@ export interface UserRole {
 export interface ProfileUpdateResponse {
   fullName: string;
   profileImageUrl: string;
+  designationName:string;
 }
 
 

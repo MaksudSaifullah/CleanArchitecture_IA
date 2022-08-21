@@ -23,6 +23,9 @@ namespace Internal.Audit.Application.Features.UserRegistration.Queries.GetUserPr
             {
                 ProfileImageUrl = user.ProfileImageUrl,
                 FullName = user.FullName,
+                DesignationName=user.Employee.Designation.Name,
+                Id = user.Id,
+                UserName=user.UserName,
             };
         }
     }

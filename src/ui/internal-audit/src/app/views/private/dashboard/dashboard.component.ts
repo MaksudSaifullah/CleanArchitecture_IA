@@ -1,6 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, QueryList, ViewChildren } from '@angular/core';
+import { DataTableDirective } from 'angular-datatables';
 import { country } from 'src/app/core/interfaces/configuration/country.interface';
+import { UploadedDocumentList } from 'src/app/core/interfaces/uploaded-document.interface';
 import { DatatableService } from 'src/app/core/services/datatable.service';
+import { HelperService } from 'src/app/core/services/helper.service';
 import { HttpService } from 'src/app/core/services/http.service';
 
 @Component({
@@ -9,35 +12,78 @@ import { HttpService } from 'src/app/core/services/http.service';
   styleUrls: ['./dashboard.component.scss']
 })
 export class DashboardComponent implements OnInit {
-
-  dtOptions: DataTables.Settings = {};
+  @ViewChildren(DataTableDirective)
+  dtElements: QueryList<DataTableDirective> | undefined;
+  dtOptions: DataTables.Settings[] = [];
   countries: country[] = [];
+  documents: UploadedDocumentList[] = [];
   dataTableService: DatatableService = new DatatableService();
-  constructor(private http: HttpService ) { }
+  
+  constructor(private http: HttpService, private helper: HelperService ) { }
 
-  ngOnInit(): void {
-    this.LoadData();
-    };
-  LoadData() {
-    const that = this;
-
-    this.dtOptions = {
-      pagingType: 'full_numbers',
-      pageLength: 5,
-      serverSide: true,
-      processing: true,
-      searching: false,
-      lengthChange: false,
-      info: false,
-      ajax: (dataTablesParameters: any, callback) => {
-        this.http
-          .paginatedPost(
-            'country/paginated',dataTablesParameters.length,((dataTablesParameters.start/dataTablesParameters.length)+1),{}
-          ).subscribe(resp => that.countries = this.dataTableService.datatableMap(resp,callback));
-      },
-    };
+  ngOnDestroy(): void {
 
   }
+  ngOnInit(): void {
+    this.LoadDocument();
+
+    };
+    LoadDocument() {
+      const that = this;
+  
+      this.dtOptions[0]= {
+        pagingType: 'full_numbers',
+        pageLength: 5,
+        serverSide: true,
+        processing: true,
+        searching: false,
+        lengthChange: false,
+        ordering: false,
+        info: false,
+        ajax: (dataTablesParameters: any, callback) => {
+          this.http
+            .paginatedPost(
+              'UploadDocumentPage/roleid', dataTablesParameters.length, ((dataTablesParameters.start / dataTablesParameters.length) + 1), { "roleid": 'dd0f5c2e-2d1f-ed11-b3b2-00155d610b18' }
+            ).subscribe(resp => that.documents = this.dataTableService.datatableMap(resp, callback));
+        },
+      };
+  
+    }
+
+    LoadAudit() {
+      const that = this;
+  
+      this.dtOptions[1]= {
+        pagingType: 'full_numbers',
+        pageLength: 5,
+        serverSide: true,
+        processing: true,
+        searching: false,
+        lengthChange: false,
+        ordering: false,
+        info: false,
+        ajax: (dataTablesParameters: any, callback) => {
+          this.http
+            .paginatedPost(
+              'UploadDocumentPage/roleid', dataTablesParameters.length, ((dataTablesParameters.start / dataTablesParameters.length) + 1), { "roleid": 'dd0f5c2e-2d1f-ed11-b3b2-00155d610b18' }
+            ).subscribe(resp => that.documents = this.dataTableService.datatableMap(resp, callback));
+        },
+      };
+  
+    }
+
+  fileDownLoad(d: any) {
+    console.log(d);
+    this.http.getFilesAsBlob('Document/get-file-stream?Id=' + d,
+    )
+      .subscribe((resp: any) => {
+        let fileName = resp.headers.get('content-disposition');
+        console.log(fileName);
+        this.helper.downloadFile(resp);
+      }), (error: any) => console.log('Error downloading the file'),
+      () => console.info('File downloaded successfully');
+  }
+
   
   data = {
     type: 'line',

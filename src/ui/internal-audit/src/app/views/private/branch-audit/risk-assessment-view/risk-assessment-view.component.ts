@@ -21,19 +21,7 @@ import { ActivatedRoute } from '@angular/router';
 export class RiskAssessmentViewComponent implements OnInit {
 
   @ViewChild(DataTableDirective, {static: false})
-  country: any;
-  reviewPeriodTo: any;
-  reviewPeriodFrom: any;
-  createdBy: any;
-  createdDate: any;
-  datatableElement: DataTableDirective | undefined;
-  dtOptions: DataTables.Settings = {};
-  ambsData: riskAssessment[] = [];
-  formService: FormService = new FormService();
-  dataTableService: DatatableService = new DatatableService();
-  dtTrigger: Subject<any> = new Subject<any>();
-  countries: country[] = [];
-  Data: Array<any> = [];
+  riskAssessmentCode: any;
   id : any;
 
   constructor(private http: HttpService , private fb: FormBuilder, private activateRoute: ActivatedRoute, private AlertService: AlertService, private location: Location) { 
@@ -48,5 +36,18 @@ export class RiskAssessmentViewComponent implements OnInit {
   }
   ngOnInit(): void {   
     this.id = this.activateRoute.snapshot.params['id'];
+    this.LoadRiskAssessment(this.id);
   };
+
+  LoadRiskAssessment(id : any)
+  {
+    this.http
+    .getById('riskAssessment', id)
+    .subscribe(res => {
+        const result = res as riskAssessment;
+        this.riskAssessmentCode = result.assessmentCode;
+
+    });
+  }
+
 }

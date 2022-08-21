@@ -64,6 +64,17 @@ public class InternalAuditContextSeed
             context.AuditModule.AddRange(AuditModuleAdd());
             await context.SaveChangesAsync();
         }
+        if (context.DocumentSources.ToList().Count()==5)
+        {
+            context.DocumentSources.AddRange(GetDocumentSourceNewAdded());
+            await context.SaveChangesAsync();
+        }
+        if (!context.AuditModule.Any())
+        {
+            //AuditModeulAdd
+            context.AuditModule.AddRange(AuditModeulAdd());
+            await context.SaveChangesAsync();
+        }
     }
 
 
@@ -164,6 +175,18 @@ public class InternalAuditContextSeed
             {
                Name ="Evidence_Details",CreatedBy="system",CreatedOn=DateTime.Now
             },
+
+        };
+    }
+    private static IEnumerable<DocumentSource> GetDocumentSourceNewAdded()
+    {
+        return new List<DocumentSource>
+        {
+            new DocumentSource
+            {
+               Name ="Upload_All_Document",CreatedBy="system",CreatedOn=DateTime.Now
+            },
+            
 
         };
     }
@@ -565,4 +588,26 @@ public class InternalAuditContextSeed
             }
         };
     }
+    private static IEnumerable<AuditModule> AuditModeulAdd()
+    {
+        return new List<AuditModule>
+        {
+            new AuditModule
+            {
+                IsActive = true,CreatedBy="admin",CreatedOn=DateTime.Now,Name="COMMON",DisplayName ="Common Configuration"
+            }
+            ,new AuditModule
+            {
+                IsActive = true,CreatedBy="admin",CreatedOn=DateTime.Now,Name="SECURITY",DisplayName ="Security"
+            },new AuditModule
+            {
+                IsActive = true,CreatedBy="admin",CreatedOn=DateTime.Now,Name="BA",DisplayName ="Branch Audit"
+            },
+            new AuditModule
+            {
+                IsActive = true,CreatedBy="admin",CreatedOn=DateTime.Now,Name="PA",DisplayName ="Process & Control Audit"
+            }
+        };
+    }
+
 }

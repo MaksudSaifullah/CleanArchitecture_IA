@@ -28,7 +28,7 @@ builder.Logging.AddSerilog(logger);
 builder.Services.AddCors(c =>
 {
     c.AddPolicy("AllowOrigin", options => options.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader()
-     .WithHeaders(HeaderNames.ContentType));
+     .WithHeaders(HeaderNames.ContentType).WithExposedHeaders("content-disposition"));
 });
 #region fileuploadconfig
 

@@ -21,9 +21,9 @@ namespace Internal.Audit.Application.Features.UserRegistration.Queries.GetUserPr
             var user = await _userProfileRepository.GetByEmail(currentUserEmail);
             return new UserProfileQueryResponseDTO
             {
-                ProfileImageUrl = user.ProfileImageUrl,
-                FullName = user.Employee.Name,
-                DesignationName=user.Employee.Designation.Name,
+                ProfileImageUrl = user == null? "": user.ProfileImageUrl,
+                FullName = user == null ? ""  : user.Employee == null ? "": user.Employee.Name,
+                DesignationName= user == null ? "" : user.Employee == null ? "" : user.Employee.Designation == null? "": user.Employee.Designation.Name,
                 Id = user.Id,
                 UserName=user.UserName,
             };

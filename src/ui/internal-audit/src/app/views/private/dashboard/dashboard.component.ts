@@ -1,5 +1,6 @@
 import { Component, OnInit, QueryList, ViewChildren } from '@angular/core';
 import { DataTableDirective } from 'angular-datatables';
+import { Audit } from 'src/app/core/interfaces/branch-audit/audit.interface';
 import { country } from 'src/app/core/interfaces/configuration/country.interface';
 import { UploadedDocumentList } from 'src/app/core/interfaces/uploaded-document.interface';
 import { DatatableService } from 'src/app/core/services/datatable.service';
@@ -17,6 +18,7 @@ export class DashboardComponent implements OnInit {
   dtOptions: DataTables.Settings[] = [];
   countries: country[] = [];
   documents: UploadedDocumentList[] = [];
+  audits: Audit[] = [];
   dataTableService: DatatableService = new DatatableService();
   
   constructor(private http: HttpService, private helper: HelperService ) { }
@@ -26,7 +28,7 @@ export class DashboardComponent implements OnInit {
   }
   ngOnInit(): void {
     this.LoadDocument();
-
+    this.LoadAudit();
     };
     LoadDocument() {
       const that = this;
@@ -65,8 +67,8 @@ export class DashboardComponent implements OnInit {
         ajax: (dataTablesParameters: any, callback) => {
           this.http
             .paginatedPost(
-              'UploadDocumentPage/roleid', dataTablesParameters.length, ((dataTablesParameters.start / dataTablesParameters.length) + 1), { "roleid": 'dd0f5c2e-2d1f-ed11-b3b2-00155d610b18' }
-            ).subscribe(resp => that.documents = this.dataTableService.datatableMap(resp, callback));
+              'audit/paginated',dataTablesParameters.length,((dataTablesParameters.start/dataTablesParameters.length)+1),{"auditId": ""}
+            ).subscribe(resp => that.audits = this.dataTableService.datatableMap(resp,callback));
         },
       };
   

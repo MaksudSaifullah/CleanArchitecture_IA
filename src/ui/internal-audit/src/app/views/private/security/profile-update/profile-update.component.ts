@@ -5,6 +5,7 @@ import {environment} from "../../../../../environments/environment";
 import {FileResponseInterface} from "../../../../core/interfaces/file-response.interface";
 import {AlertService} from "../../../../core/services/alert.service";
 import {ProfileUpdateResponse} from "../../../../core/interfaces/security/user-registration.interface";
+import {UserStore} from "../../../../shared/user.store";
 
 @Component({
   selector: 'app-profile-update',
@@ -16,7 +17,7 @@ export class ProfileUpdateComponent implements OnInit {
   fileValue:any;
 
   imageUrl:any = '';
-  constructor(private fb:FormBuilder, private httpService: HttpService,private alertService: AlertService) {
+  constructor(private userStore:UserStore,private fb:FormBuilder, private httpService: HttpService,private alertService: AlertService) {
     this.profileUpdateForm = fb.group({
       fullName:['', [Validators.required,Validators.minLength(5),Validators.maxLength(50)]],
       ProfileImageUrl: ['']
@@ -53,6 +54,13 @@ export class ProfileUpdateComponent implements OnInit {
         if(x == true){
           this.alertService.success('Profile update successful');
         }
+        this.httpService.get<any>('UserRegistration/GetUserProfile').subscribe(x=>{
+          let convertedResponse = x as ProfileUpdateResponse;
+          this.userStore.update({
+            fullName: convertedResponse.fullName,
+            profileImage:convertedResponse.profileImageUrl
+          });
+        })
       });
     }
 

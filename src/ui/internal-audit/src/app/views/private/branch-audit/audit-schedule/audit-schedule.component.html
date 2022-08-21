@@ -162,7 +162,17 @@
         </div>
         <small class="text-danger" *ngIf="auditScheduleCreateForm.hasError('invalidDateRange')">
           Schedule Start Date should be greater than Schedule End Date.
-        </small>          
+        </small> 
+        <br>
+        <div cFormFloating *ngIf="formService.isEdit(this.auditScheduleCreateForm.get('id'))">
+          <select aria-label="Floating label select example" cSelect id="executionStatusId" formControlName="executionStatusId" name="executionStatusId" >
+            <option value=null>Execution Status</option>
+            <option value=0>Not Started</option>
+            <option value=1>In Progress</option>
+            <option value=3>Done</option>
+          </select>
+          <label for="countryId" class="dropdownLabel">Country</label>
+        </div>         
         <br> 
           <c-col xs="12">
             <c-card class="mb-4">

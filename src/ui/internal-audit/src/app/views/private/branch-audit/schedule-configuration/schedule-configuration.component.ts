@@ -29,10 +29,8 @@ export class ScheduleConfigurationComponent implements OnInit {
   constructor(private http: HttpService, private fb: FormBuilder, private AlertService: AlertService, private router: Router, private activateRoute: ActivatedRoute) {
     this.scheduleConfigForm = this.fb.group({
       id: [''],
-      branchId: [''],
-      branchName: [''],
-      
-      riskOwnerList:['']
+      branchId: [null],
+      riskOwners: this.fb.array([]) 
     })
     //this.scheduleConfigForm =this.fb.group({});
   }
@@ -40,12 +38,10 @@ export class ScheduleConfigurationComponent implements OnInit {
     this.LoadData();
     this.LoadUser();
     this.LoadBranch();
-    // this.branches.map((x, i) => {
-    //   this.scheduleConfigForm.addControl('branchId'+i, this.fb.control(x.branchId))
-    //   this.scheduleConfigForm.addControl('branchName'+i, this.fb.control(x.branchName))
-    //   this.scheduleConfigForm.addControl('riskOwnerList'+i, this.fb.control(x.branchName))
-    // })
-    
+  }
+
+  get riskOwners(){
+    return this.scheduleConfigForm.controls["riskOwners"] as FormArray;
   }
 
   LoadData() {
@@ -69,7 +65,7 @@ export class ScheduleConfigurationComponent implements OnInit {
     })
   }
 LoadBranch(){
-  console.log(';lsdjfl')
+ // console.log(';lsdjfl')
   this.http.get('commonValueAndType/getBranch?countryId='+'414d221c-0df6-ec11-b3b0-00155d610b18' +'&pageNumber=1&pageSize=10000').subscribe(resp => {
     let convertedResp = resp as paginatedResponseInterface<Branch>;
     this.branches = convertedResp.items;
@@ -77,14 +73,45 @@ LoadBranch(){
     this.dataTableService.redraw(this.datatableElement);
   })
 }
-LoadRiskOwner(){
- 
-}
-setBranchId(){
-  this.scheduleConfigForm.patchValue({branchId: this.scheduleConfigForm.value.branchId});
+// LoadPopUpData(){
+//   this.branches.forEach(x=>{
+//     const riskOwnerForm=this.fb.group({
+//       branchId:[''],
+//       branchName:[''],
+//       riskOwnerId:['']
+//     })
+
+//     this.riskOwners.push(riskOwnerForm)
+//   })
+// }
+reset(){
+
+// for(let branch of this.branches){
+//   const riskOwnerForm=this.fb.group({
+//     branchId:[branch.branchId],
+//     branchName:[branch.branchName],
+//     riskOwnerId:['']
+//   })
+
+//   this.riskOwners.push(riskOwnerForm)
+// }
+
+  // this.branches.forEach(x=>{
+  //   const riskOwnerForm=this.fb.group({
+  //     branchId:[''],
+  //     branchName:[''],
+  //     riskOwnerId:['']
+  //   })
+
+  //   this.riskOwners.push(riskOwnerForm)
+  // })
 }
 
 onSubmit(modalId:any){
+
+}
+
+edit(){
 
 }
 

@@ -12,18 +12,18 @@
                     <div class="row">
                         <div class="col-md-5" >
                             <button  class="btnCreateColor"  cButton (click)="RedirectToAuditList()">
-                                Branch Audit List
+                              &#8592; Branch Audit List
                             </button> 
-                        </div>
-                        <div class="col-md-4" >
+                         </div>  
+                         <div class="col-md-4">
                             <button  class="btnCreateColor"  cButton (click)="RedirectToAuditView()">
-                               Close Schedule
+                              <svg cIcon name="cilX" size="md" title="Close Button Icon"></svg> Schedule
                             </button> 
-                        </div>
-                        <div class="col-md-2">
-                          <button  class="btnCreateColor"  cButton  (click)="RedirectToScheduelConfiguration()"> Configuration
-                          </button> 
-                        </div>
+                         </div>  
+                         <div class="col-md-3">
+                            <button  class="btnCreateColor"  cButton  (click)="RedirectToScheduelConfiguration()"> Configuration
+                            </button> 
+                         </div>  
                     </div>
                 </div>
                 <div class="col-md-6">
@@ -34,7 +34,7 @@
                       </button> 
                     </div>
                     <div *ngIf="moveToInprogress" class="col-md-3">
-                      <button  class="btnCreateColor"  cButton > Execution 
+                      <button  class="btnCreateColor"  cButton [routerLink]="['/branch-audit/schedule-execution']"> Execution 
                       </button> 
                     </div>
                     <div *ngIf="moveToInprogress" class="col-md-5">
@@ -46,7 +46,7 @@
                       </button> 
                     </div>
                     <div *ngIf="moveToDone" class="col-md-5">
-                      <button  class="btnCreateColor"   cButton > View Execution
+                      <button  class="btnCreateColor"   cButton [routerLink]="['/branch-audit/schedule-execution']"> View Execution
                       </button> 
                     </div>
                     <div *ngIf="moveToDone" class="col-md-3">

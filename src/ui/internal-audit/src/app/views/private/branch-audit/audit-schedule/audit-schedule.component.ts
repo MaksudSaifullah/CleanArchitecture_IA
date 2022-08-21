@@ -53,6 +53,7 @@ export class AuditScheduleComponent implements OnInit {
       auditPeriodTo: [''],
       scheduleStartDate:[''],
       scheduleEndDate:[''],
+      executionStatusId:[''],
       branchList:['',[Validators.required]],
       approverList:['',[Validators.required]],
       teamLeaderList:['',[Validators.required]],

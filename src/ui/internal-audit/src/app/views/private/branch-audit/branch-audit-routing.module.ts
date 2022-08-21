@@ -12,6 +12,7 @@ import { WorkpaperCreateComponent } from './workpaper/workpaper-create/workpaper
 import { AuditViewComponent } from './audit-view/audit-view.component';
 import { ScheduleViewComponent } from './schedule-view/schedule-view.component';
 import { ScheduleConfigurationComponent } from './schedule-configuration/schedule-configuration.component';
+import { ScheduleExecutionComponent } from './schedule-execution/schedule-execution.component';
 
 const routes: Routes = [
   {
@@ -74,6 +75,10 @@ const routes: Routes = [
    { 
     path: 'schedule-configuration', 
     component: ScheduleConfigurationComponent 
+   },
+   { 
+    path: 'schedule-execution', 
+    component: ScheduleExecutionComponent 
    },
 ];
 

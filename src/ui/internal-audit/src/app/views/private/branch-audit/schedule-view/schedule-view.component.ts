@@ -51,6 +51,7 @@ export class ScheduleViewComponent implements OnInit {
   ngOnInit(): void {
     this.paramId = this.activateRoute.snapshot.params['id'];
     this.LoadData();
+    this.LoadBranch();
   }
 
   LoadData() {
@@ -73,6 +74,15 @@ export class ScheduleViewComponent implements OnInit {
       this.users = convertedResp.items;
     })
   }
+  LoadBranch(){
+    // console.log(';lsdjfl')
+     this.http.get('commonValueAndType/getBranch?countryId='+'414d221c-0df6-ec11-b3b0-00155d610b18' +'&pageNumber=1&pageSize=10000').subscribe(resp => {
+       let convertedResp = resp as paginatedResponseInterface<Branch>;
+       this.branches = convertedResp.items;
+       this.countryIdGlobal = '414d221c-0df6-ec11-b3b0-00155d610b18'
+       this.dataTableService.redraw(this.datatableElement);
+     })
+   }
   RedirectToAuditList(){
     this.router.navigate(['branch-audit/audit']);
   }

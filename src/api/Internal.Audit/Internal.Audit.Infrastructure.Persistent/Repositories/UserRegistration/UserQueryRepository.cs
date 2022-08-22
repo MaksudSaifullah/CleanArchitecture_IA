@@ -128,7 +128,7 @@ namespace Internal.Audit.Infrastructure.Persistent.Repositories.UserRegistration
 
         public async Task<User> GetByUserEmail(string email, string password)
         {
-            var query = "SELECT * FROM [Security].[User] WHERE [Username] = @email AND [Password] = @password";
+            var query = "SELECT * FROM [Security].[User] WHERE [Username] = @email AND [Password] = @password AND IsAccountLocked = 0";
             var parameters = new Dictionary<string, object> { { "email", email }, { "password", password } };
 
             return await Single(query, parameters);

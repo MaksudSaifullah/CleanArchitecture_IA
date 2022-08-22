@@ -81,6 +81,11 @@ public class InternalAuditContextSeed
             context.AuditFeature.AddRange(AuditFeatureAdd());
             await context.SaveChangesAsync();
         }
+        if (!context.ModuleFeatures.Any())
+        {
+            context.ModuleFeatures.AddRange(ModuleFeatureTypes(context));
+            await context.SaveChangesAsync(); ;
+        }
     }
 
 
@@ -645,16 +650,33 @@ public class InternalAuditContextSeed
     }
 
 
-    private static IEnumerable<ModuleFeature> ModuleFeatureTypes()
+    private static IEnumerable<ModuleFeature> ModuleFeatureTypes(InternalAuditContext context)
     {
-        return new List<ModuleFeature>
+
+        List<ModuleFeature> moduleFeatures = new List<ModuleFeature>();
+
+
+        var auditModuleList = context.AuditModule.ToList();
+        string[] auditFeatureListForBA = new string []{ "NOTIFICATION", "CREATESCHEDULE" };// []
+        string[] auditFeatureListForCommon = new string []{ "RISKPROFILE" };// []
+        string[] auditFeatureListForPNA = new string []{ "RISKASSESMENT", "PLANCREATION" };// []
+        var listofAuditFeatureBA = context.AuditFeature.Where(x => auditFeatureListForBA.Contains(x.Name)).Select(x=>x.Id).ToList();
+        foreach (var item in listofAuditFeatureBA)
+        {            
+            moduleFeatures.Add(new ModuleFeature { IsActive = true, CreatedBy = "admin", CreatedOn = DateTime.Now, ModuleId = auditModuleList.Where(x => x.Name == "BA").FirstOrDefault().Id, FeatureId = item });
+        }
+        var listofAuditFeatureCommon = context.AuditFeature.Where(x => auditFeatureListForCommon.Contains(x.Name)).Select(x => x.Id).ToList();
+        foreach (var item in listofAuditFeatureCommon)
         {
-            //new ModuleFeature
-            //{
-            //    IsActive = true,CreatedBy="admin",CreatedOn=DateTime.Now,Type="RISKRATINGNAME",SubType="",Value=4,Text="Lo productivity",SortOrder=40,
-            //}
-            
-        };
+            moduleFeatures.Add(new ModuleFeature { IsActive = true, CreatedBy = "admin", CreatedOn = DateTime.Now, ModuleId = auditModuleList.Where(x => x.Name == "COMMON").FirstOrDefault().Id, FeatureId = item });
+        }
+        var listofAuditFeaturePNA = context.AuditFeature.Where(x => auditFeatureListForPNA.Contains(x.Name)).Select(x => x.Id).ToList();
+        foreach (var item in listofAuditFeaturePNA)
+        {
+            moduleFeatures.Add(new ModuleFeature { IsActive = true, CreatedBy = "admin", CreatedOn = DateTime.Now, ModuleId = auditModuleList.Where(x => x.Name == "PA").FirstOrDefault().Id, FeatureId = item });
+        }
+
+        return moduleFeatures;
     }
 
 

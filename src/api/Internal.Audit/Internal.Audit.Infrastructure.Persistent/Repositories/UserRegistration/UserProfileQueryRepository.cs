@@ -28,7 +28,11 @@ namespace Internal.Audit.Infrastructure.Persistent.Repositories.UserRegistration
                 User u;
                 u = user;
                 u.Employee = employee;
-                u.Employee.Designation = designation;
+                if (designation != null)
+                {
+                    u.Employee.Designation = designation;
+                }
+                
                 return u;
             }, parameters, splitters, false);
 

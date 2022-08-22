@@ -75,6 +75,12 @@ public class InternalAuditContextSeed
             context.AuditModule.AddRange(AuditModeulAdd());
             await context.SaveChangesAsync();
         }
+        if (!context.AuditFeature.Any())
+        {
+            //AuditModeulAdd
+            context.AuditFeature.AddRange(AuditFeatureAdd());
+            await context.SaveChangesAsync();
+        }
     }
 
 
@@ -609,5 +615,47 @@ public class InternalAuditContextSeed
             }
         };
     }
+
+    private static IEnumerable<AuditFeature> AuditFeatureAdd()
+    {
+        return new List<AuditFeature>
+        {
+            new AuditFeature
+            {
+                IsActive = true,CreatedBy="admin",CreatedOn=DateTime.Now,Name="CREATESCHEDULE",DisplayName ="Create Schedule"
+            },
+             new AuditFeature
+            {
+                IsActive = true,CreatedBy="admin",CreatedOn=DateTime.Now,Name="NOTIFICATION",DisplayName ="Notification to Auditee"
+            },
+              new AuditFeature
+            {
+                IsActive = true,CreatedBy="admin",CreatedOn=DateTime.Now,Name="RISKASSESMENT",DisplayName ="Risk Assesment"
+            },
+               new AuditFeature
+            {
+                IsActive = true,CreatedBy="admin",CreatedOn=DateTime.Now,Name="RISKPROFILE",DisplayName ="Risk Profile"
+            },
+                new AuditFeature
+            {
+                IsActive = true,CreatedBy="admin",CreatedOn=DateTime.Now,Name="PLANCREATION",DisplayName ="Plan Creation"
+            },
+
+        };
+    }
+
+
+    private static IEnumerable<ModuleFeature> ModuleFeatureTypes()
+    {
+        return new List<ModuleFeature>
+        {
+            //new ModuleFeature
+            //{
+            //    IsActive = true,CreatedBy="admin",CreatedOn=DateTime.Now,Type="RISKRATINGNAME",SubType="",Value=4,Text="Lo productivity",SortOrder=40,
+            //}
+            
+        };
+    }
+
 
 }

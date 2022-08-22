@@ -19,7 +19,9 @@ public class ModuleFeature : EntityBase
 
     [Required]
     public Guid FeatureId { get; set; }
-
+    [Required]
+    [DefaultValue("0")]
+    public bool IsActive { get; set; }
 
     [ForeignKey("ModuleId")]
     public virtual AuditModule Module { get; set; } = null!;

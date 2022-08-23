@@ -4,6 +4,7 @@ using Internal.Audit.Infrastructure.Persistent;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Internal.Audit.Infrastructure.Persistent.Migrations
 {
     [DbContext(typeof(InternalAuditContext))]
-    partial class InternalAuditContextModelSnapshot : ModelSnapshot
+    [Migration("20220814120501_create issue")]
+    partial class createissue
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -720,9 +722,6 @@ namespace Internal.Audit.Infrastructure.Persistent.Migrations
                     b.Property<DateTime?>("ReviewedOn")
                         .HasColumnType("datetime2");
 
-                    b.Property<Guid>("RiskAssessmentId")
-                        .HasColumnType("uniqueidentifier");
-
                     b.Property<int>("TypeId")
                         .HasColumnType("int");
 
@@ -736,8 +735,6 @@ namespace Internal.Audit.Infrastructure.Persistent.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("DataRequestQueueServiceId");
-
-                    b.HasIndex("RiskAssessmentId");
 
                     b.ToTable("RiskAssesmentDataManagementLog", "BranchAudit");
                 });
@@ -1168,9 +1165,6 @@ namespace Internal.Audit.Infrastructure.Persistent.Migrations
                     b.Property<Guid>("TestingConclusionId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<DateTime>("TestingDate")
-                        .HasColumnType("datetime2");
-
                     b.Property<string>("TestingDetails")
                         .IsRequired()
                         .HasMaxLength(300)
@@ -1575,6 +1569,8 @@ namespace Internal.Audit.Infrastructure.Persistent.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("DocumentSourceId");
+
                     b.ToTable("Document", "Common");
                 });
 
@@ -1665,11 +1661,6 @@ namespace Internal.Audit.Infrastructure.Persistent.Migrations
 
                     b.Property<Guid>("FeatureId")
                         .HasColumnType("uniqueidentifier");
-
-                    b.Property<bool>("IsActive")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bit")
-                        .HasDefaultValueSql("0");
 
                     b.Property<bool>("IsDeleted")
                         .ValueGeneratedOnAdd()
@@ -2024,11 +2015,9 @@ namespace Internal.Audit.Infrastructure.Persistent.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CountryId")
-                        .IsUnique();
+                    b.HasIndex("CountryId");
 
-                    b.HasIndex("EmailTypeId")
-                        .IsUnique();
+                    b.HasIndex("EmailTypeId");
 
                     b.ToTable("EmailConfiguration", "Config");
                 });
@@ -2090,198 +2079,6 @@ namespace Internal.Audit.Infrastructure.Persistent.Migrations
                     b.ToTable("EmailType", "Config");
                 });
 
-            modelBuilder.Entity("Internal.Audit.Domain.Entities.config.UploadDocument", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier")
-                        .HasColumnName("Id")
-                        .HasDefaultValueSql("newsequentialid()");
-
-                    b.Property<DateTime>("ActiveFrom")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime>("ActiveTo")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("ApprovedBy")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime?>("ApprovedOn")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("CreatedBy")
-                        .IsRequired()
-                        .HasMaxLength(10)
-                        .HasColumnType("nvarchar(10)");
-
-                    b.Property<DateTime>("CreatedOn")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Description")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<Guid>("DocumentId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("DocumentVersion")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("IsDeleted")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bit")
-                        .HasDefaultValueSql("0");
-
-                    b.Property<string>("ReviewedBy")
-                        .HasMaxLength(10)
-                        .HasColumnType("nvarchar(10)");
-
-                    b.Property<DateTime?>("ReviewedOn")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("UpdatedBy")
-                        .HasMaxLength(10)
-                        .HasColumnType("nvarchar(10)");
-
-                    b.Property<DateTime?>("UpdatedOn")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("UploadedBy")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("UploadDocument", "Config");
-                });
-
-            modelBuilder.Entity("Internal.Audit.Domain.Entities.config.UploadedDocumentsNotify", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier")
-                        .HasColumnName("Id")
-                        .HasDefaultValueSql("newsequentialid()");
-
-                    b.Property<string>("ApprovedBy")
-                        .HasMaxLength(10)
-                        .HasColumnType("nvarchar(10)");
-
-                    b.Property<DateTime?>("ApprovedOn")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("CreatedBy")
-                        .IsRequired()
-                        .HasMaxLength(10)
-                        .HasColumnType("nvarchar(10)");
-
-                    b.Property<DateTime>("CreatedOn")
-                        .HasColumnType("datetime2");
-
-                    b.Property<bool>("IsDeleted")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bit")
-                        .HasDefaultValueSql("0");
-
-                    b.Property<bool>("IsMailSent")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bit")
-                        .HasDefaultValueSql("0");
-
-                    b.Property<string>("ReviewedBy")
-                        .HasMaxLength(10)
-                        .HasColumnType("nvarchar(10)");
-
-                    b.Property<DateTime?>("ReviewedOn")
-                        .HasColumnType("datetime2");
-
-                    b.Property<Guid>("RoleId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("UpdatedBy")
-                        .HasMaxLength(10)
-                        .HasColumnType("nvarchar(10)");
-
-                    b.Property<DateTime?>("UpdatedOn")
-                        .HasColumnType("datetime2");
-
-                    b.Property<Guid?>("UploadDocumentId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("RoleId");
-
-                    b.HasIndex("UploadDocumentId");
-
-                    b.ToTable("UploadedDocumentsNotify", "Config");
-                });
-
-            modelBuilder.Entity("Internal.Audit.Domain.Entities.Config.IssueOwner", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier")
-                        .HasColumnName("Id")
-                        .HasDefaultValueSql("newsequentialid()");
-
-                    b.Property<string>("ApprovedBy")
-                        .HasMaxLength(10)
-                        .HasColumnType("nvarchar(10)");
-
-                    b.Property<DateTime?>("ApprovedOn")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("CreatedBy")
-                        .IsRequired()
-                        .HasMaxLength(10)
-                        .HasColumnType("nvarchar(10)");
-
-                    b.Property<DateTime>("CreatedOn")
-                        .HasColumnType("datetime2");
-
-                    b.Property<bool>("IsActive")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bit")
-                        .HasDefaultValueSql("1");
-
-                    b.Property<bool>("IsDeleted")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bit")
-                        .HasDefaultValueSql("0");
-
-                    b.Property<Guid>("IssueId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("OwnerId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("ReviewedBy")
-                        .HasMaxLength(10)
-                        .HasColumnType("nvarchar(10)");
-
-                    b.Property<DateTime?>("ReviewedOn")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("UpdatedBy")
-                        .HasMaxLength(10)
-                        .HasColumnType("nvarchar(10)");
-
-                    b.Property<DateTime?>("UpdatedOn")
-                        .HasColumnType("datetime2");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("IssueId");
-
-                    b.HasIndex("OwnerId");
-
-                    b.ToTable("IssueOwner", "Config");
-                });
-
             modelBuilder.Entity("Internal.Audit.Domain.Entities.Country", b =>
                 {
                     b.Property<Guid>("Id")
@@ -2321,6 +2118,7 @@ namespace Internal.Audit.Infrastructure.Persistent.Migrations
                         .HasColumnType("nvarchar(20)");
 
                     b.Property<string>("Remarks")
+                        .IsRequired()
                         .HasMaxLength(200)
                         .HasColumnType("nvarchar(200)");
 
@@ -2358,10 +2156,10 @@ namespace Internal.Audit.Infrastructure.Persistent.Migrations
                         .HasDefaultValueSql("newsequentialid()");
 
                     b.Property<decimal>("Amount")
-                        .HasColumnType("decimal(30,4)");
+                        .HasColumnType("decimal(18,2)");
 
                     b.Property<decimal?>("AmountConverted")
-                        .HasColumnType("decimal(30,4)");
+                        .HasColumnType("decimal(18,2)");
 
                     b.Property<string>("ApprovedBy")
                         .HasMaxLength(10)
@@ -3637,15 +3435,7 @@ namespace Internal.Audit.Infrastructure.Persistent.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Internal.Audit.Domain.Entities.BranchAudit.RiskAssessment", "RiskAssessment")
-                        .WithMany()
-                        .HasForeignKey("RiskAssessmentId")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
-
                     b.Navigation("DataRequestQueueService");
-
-                    b.Navigation("RiskAssessment");
                 });
 
             modelBuilder.Entity("Internal.Audit.Domain.Entities.BranchAudit.RiskAssessment", b =>
@@ -3764,6 +3554,17 @@ namespace Internal.Audit.Infrastructure.Persistent.Migrations
                     b.Navigation("TopicHead");
                 });
 
+            modelBuilder.Entity("Internal.Audit.Domain.Entities.common.Document", b =>
+                {
+                    b.HasOne("Internal.Audit.Domain.Entities.config.DocumentSource", "DocumentSource")
+                        .WithMany()
+                        .HasForeignKey("DocumentSourceId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("DocumentSource");
+                });
+
             modelBuilder.Entity("Internal.Audit.Domain.Entities.Common.FeatureAction", b =>
                 {
                     b.HasOne("Internal.Audit.Domain.Entities.Common.AuditAction", "Action")
@@ -3858,40 +3659,6 @@ namespace Internal.Audit.Infrastructure.Persistent.Migrations
                     b.Navigation("Country");
 
                     b.Navigation("EmailType");
-                });
-
-            modelBuilder.Entity("Internal.Audit.Domain.Entities.config.UploadedDocumentsNotify", b =>
-                {
-                    b.HasOne("Internal.Audit.Domain.Entities.Security.Role", "UploadDocumentRoleList")
-                        .WithMany()
-                        .HasForeignKey("RoleId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Internal.Audit.Domain.Entities.config.UploadDocument", null)
-                        .WithMany("UploadedDocumentsNotify")
-                        .HasForeignKey("UploadDocumentId");
-
-                    b.Navigation("UploadDocumentRoleList");
-                });
-
-            modelBuilder.Entity("Internal.Audit.Domain.Entities.Config.IssueOwner", b =>
-                {
-                    b.HasOne("Internal.Audit.Domain.Entities.BranchAudit.Issue", "Issue")
-                        .WithMany()
-                        .HasForeignKey("IssueId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Internal.Audit.Domain.Entities.Security.Employee", "Employee")
-                        .WithMany()
-                        .HasForeignKey("OwnerId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Employee");
-
-                    b.Navigation("Issue");
                 });
 
             modelBuilder.Entity("Internal.Audit.Domain.Entities.security.AmbsDataSync", b =>
@@ -4105,11 +3872,6 @@ namespace Internal.Audit.Infrastructure.Persistent.Migrations
                     b.Navigation("RiskCriteria");
 
                     b.Navigation("RiskProfile");
-                });
-
-            modelBuilder.Entity("Internal.Audit.Domain.Entities.config.UploadDocument", b =>
-                {
-                    b.Navigation("UploadedDocumentsNotify");
                 });
 
             modelBuilder.Entity("Internal.Audit.Domain.Entities.Country", b =>

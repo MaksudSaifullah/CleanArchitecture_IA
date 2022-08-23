@@ -150,6 +150,7 @@ using Internal.Audit.Application.Features.WorkPapers.Commands.DeleteWorkPaper;
 using Internal.Audit.Application.Features.AuditSchedules.Queries.GetAuditScheduleList;
 using Internal.Audit.Application.Features.RiskAssesmentDataManagements.Commands.AddRiskAssesmentDataManagement;
 using Internal.Audit.Application.Features.RiskAssesmentDataManagementLogs.Commands.AddRiskAssesmentDataManagementLog;
+using Internal.Audit.Application.Features.Issues.Queries.GetIssueList;
 
 namespace Internal.Audit.Application.Mappings;
 
@@ -406,6 +407,8 @@ public class MappingProfile : Profile
         CreateMap<RiskAssesmentDataManagement, RiskAssesmentDataManagementCommand>().ReverseMap();
         CreateMap<Branch, GetBranchListResponseDTORAW>().ReverseMap();
         //CreateMap<Country, GetBranchListResponseDTORAW>().ReverseMap();
+
+        CreateMap<Issue, GetIssueListResponseDTO>().ReverseMap();
 
         CreateMap<Branch, GetBranchListResponseDTORAW>() // needs `Inst` -> `InstDTO` map
     .ForMember(dst => dst.CountryName, opt => opt.MapFrom(src => src.Country.Name)).ReverseMap();

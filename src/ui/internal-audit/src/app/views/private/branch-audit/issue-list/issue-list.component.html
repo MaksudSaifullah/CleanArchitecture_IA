@@ -1,0 +1,78 @@
+<div class="animated fadeIn">
+    <div class="row">
+      <div class="col-lg-12">
+        <div class="card">
+            <div class="card-header">
+            <div class="fa fa-align-justify"><strong>Issue List</strong></div> 
+            </div>
+            <div class="card-body">
+                <form [formGroup]="searchForm">
+                    <div class="row" style="margin: 0 auto;">
+                      <div class="col-md-6 mb-2">
+                        <!-- <button [cModalToggle]="verticallyCenteredModal.id" class="btnCreateColor" (click)="reset()" cButton>
+                          <svg cIcon name="cilPlus" size="md" title="Add Button Icon"></svg> Create
+                        </button>  -->
+                        <button  class="btnCreateColor" (click)="createNewIssue()" cButton>
+                          <svg cIcon name="cilPlus" size="md" title="Add Button Icon"></svg> Create
+                        </button>
+                      </div>
+                      <div class="col-md-5 mb-2 form-floating">
+                        <input type="text" formControlName="searchTerm" class="form-control searchInput"  placeholder="search by issue"/>
+                        <label class="searchLevel" for="floatingInput"> Search by Issue Id/Title</label>
+                      </div>
+                      <div class="col-md-1 mb-2">
+                        <button type="button" class="btn btn-secondary mr-1 btn-block " data-toggle="modal" (click)="search()" >
+                          Search
+                        </button>
+                      </div>
+                    </div>
+                 </form>
+
+                 <div class="row overflow-auto">
+                  <table datatable [dtOptions]="dtOptions" class="table table-bordered row-border hover datatableStyle" >
+                    <thead>
+                      <tr>
+                        <th>Issue ID</th>
+                        <th>Issue Title</th>
+                        <th>Issue Owner</th>
+                        <th>Issue Rating</th>
+                        <th>Action Owner</th>
+                        <th>Issue Traget Date</th>  
+                        <th>Status</th>  
+                        <th class="col-1 text-center">Actions</th>                   
+                      </tr>
+                    </thead>                  
+                    <tbody *ngIf="issues?.length != 0">
+                      <tr *ngFor="let issue of issues">
+                        <td>{{ issue.code }}</td>
+                        <td>{{ issue.issueTitle }}</td>
+                        <td>{{ issue.owner }}</td>
+                        <td>{{ issue.rating }}</td>
+                        <td>{{ issue.actionOwner }}</td>
+                        <td>{{ issue.targetDate | date:'medium' }}</td>
+                        <td>{{ issue.status }}</td>
+                        <td class="text-center">
+                          <div class="btn-group" role="group" aria-label="Basic example">
+                            <button type="button" class="btn btn-secondary btnEditColor" [routerLink]="['/branch-audit/new-issue',issue.id]">
+                              <svg cIcon name="cilPencil" size="md" title="Edit Button icon"></svg>
+                            </button>
+                            <button type="button" class="btn btn-danger btnDeleteColor" (click)="delete(issue.id)">
+                              <svg cIcon name="cilTrash" size="md" title="Delete Button Icon"></svg>
+                            </button>
+                          </div>
+                        </td>
+                      </tr>
+                    </tbody>
+                    <tbody *ngIf="issues?.length == 0">
+                      <tr>
+                        <td colspan="8" class="no-data-available">No data!</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                 </div>
+            </div>
+        </div>
+      </div>
+    </div>
+</div>
+

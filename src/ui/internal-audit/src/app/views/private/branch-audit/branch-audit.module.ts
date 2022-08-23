@@ -20,8 +20,9 @@ import { AuditComponent } from './audit/audit.component';
 import { AuditScheduleComponent } from './audit-schedule/audit-schedule.component';
 import { AverageTabComponent } from './risk-assessment-view/average-tab/average-tab.component';
 import { CollectionTabComponent } from './risk-assessment-view/collection-tab/collection-tab.component';
-import { IssueComponent } from './issue/issue.component';
 import { WorkpaperComponent } from './workpaper/workpaper.component';
+import { NewIssueComponent } from './new-issue/new-issue.component';
+import { IssueListComponent } from './issue-list/issue-list.component';
 
 
 @NgModule({
@@ -41,8 +42,9 @@ import { WorkpaperComponent } from './workpaper/workpaper.component';
     AuditComponent,
       AuditScheduleComponent,
     AuditScheduleComponent,
-    IssueComponent,
-    WorkpaperComponent
+    WorkpaperComponent,
+    NewIssueComponent,
+    IssueListComponent
   ],
   imports: [
     CommonModule,

@@ -82,7 +82,6 @@ const routes: Routes = [
     path: 'schedule-execution', 
     component: ScheduleExecutionComponent 
    },
-  },
   {
     path:'issue-list',
     component:IssueListComponent

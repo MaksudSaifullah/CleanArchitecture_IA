@@ -3,7 +3,9 @@
     <div class="col-lg-12">
       <div class="card">
         <div class="card-header">
-          <div class="fa fa-align-justify" >Risk Criteria List</div> 
+          <div class="fa fa-align-justify" >
+            <strong>Risk Criteria List</strong> 
+          </div> 
         </div>
         <div class="card-body">
           
@@ -51,8 +53,8 @@
                       <td>{{ riskCriteria.maximumValue }}</td>
                       <td>{{ riskCriteria.ratingType }}</td>
                       <td>{{ riskCriteria.score }}</td>
-                      <td>{{ riskCriteria.effectiveFrom | date:'medium' }}</td>
-                      <td>{{ riskCriteria.effectiveTo | date:'medium' }}</td>
+                      <td>{{ riskCriteria.effectiveFrom | date:'mediumDate' }}</td>
+                      <td>{{ riskCriteria.effectiveTo | date:'mediumDate' }}</td>
                       <td>{{ riskCriteria.description }}</td>
                       <td>
                         <div class="btn-group" role="group" aria-label="Basic example">
@@ -129,7 +131,7 @@
 
             <div style="padding-bottom: 2%;">
               <div class="form-floating">
-                <input type="number" class="form-control" formControlName="minimumValue" id="minimumValue" placeholder="MinimumValue">
+                <input type="number" min="0" class="form-control" formControlName="minimumValue" id="minimumValue" placeholder="MinimumValue">
                 <label for="floatingInput">Minimum Value</label>
               </div>         
               <div cRow *ngIf="riskCriteriaForm.get('minimumValue')?.invalid &&
@@ -144,7 +146,7 @@
       
             <div style="padding-bottom: 2%;">
               <div class="form-floating">
-                <input type="number" class="form-control" formControlName="maximumValue" id="code" placeholder="Maximum Value">
+                <input type="number" min="0" class="form-control" formControlName="maximumValue" id="code" placeholder="Maximum Value">
                 <label for="floatingInput">Maximum Value</label>
               </div>
       
@@ -181,7 +183,7 @@
 
             <div style="padding-bottom: 2%;">
               <div class="form-floating">
-              <input type="number" class="form-control" formControlName="score" id="score" placeholder="Score">
+              <input type="number" min="1" class="form-control" formControlName="score" id="score" placeholder="Score">
               <label for="floatingInput">Score</label>
             </div>     
             <div cRow *ngIf="riskCriteriaForm.get('score')?.invalid &&

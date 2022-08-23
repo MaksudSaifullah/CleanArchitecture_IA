@@ -8,7 +8,11 @@ namespace Internal.Audit.Application.Features.UserRegistration.Queries.GetUserPr
 {
     public class UserProfileQueryResponseDTO
     {
+        public Guid Id { get; set; }
         public string FullName { get; set; } = string.Empty;
         public string ProfileImageUrl { get; set; } = string.Empty;
+        public string UserName { get; set; } = string.Empty;
+        public string DesignationName { get; set; } = string.Empty;
+
     }
 }

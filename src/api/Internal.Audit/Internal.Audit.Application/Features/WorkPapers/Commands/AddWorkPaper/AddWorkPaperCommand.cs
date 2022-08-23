@@ -24,4 +24,5 @@ public class AddWorkPaperCommand : IRequest<AddWorkPaperResponseDTO>
     public string? TestingResults { get; set; } = null!;
     public Guid TestingConclusionId { get; set; }
     public Guid DocumentId { get; set; }
+    public DateTime TestingDate { get; set; }
 }

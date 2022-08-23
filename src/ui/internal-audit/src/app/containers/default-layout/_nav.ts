@@ -8,50 +8,9 @@ export const navItems: INavData[] = [
     badge: {
       color: 'info',
       text: ''
-    }
+    },
   },
-  
-  // {
-  //   name: 'Public',
-  //   url: '/public',
-  //   iconComponent: { name: 'cil-puzzle' },
-  //   children: [
-  //     {
-  //       name: 'about',
-  //       url: '/public/about'
-  //     }
-  //   ]
-  // },
-  // {
-  //   name: 'Pages',
-  //   url: '/login',
-  //   iconComponent: { name: 'cil-star' },
-  //   children: [
-  //     {
-  //       name: 'Error 404',
-  //       url: '/404'
-  //     },
-  //     {
-  //       name: 'Error 500',
-  //       url: '/500'
-  //     }
-  //   ]
-  // },
-  // {
-  //   name: 'Public',
-  //   url: '/about',
-  //   iconComponent: { name: 'cilPaperPlane' },
-  //   children: [
-  //     {
-  //       name: 'About',
-  //       url: '/about'
-  //     },
-  //     {
-  //       name: 'Login',
-  //       url: '/login'
-  //     },
-  //   ]
-  // },
+
   {
     name: 'Configuration',
     url: '/configuration',
@@ -62,12 +21,12 @@ export const navItems: INavData[] = [
         url: '/configuration/country',
       },
       {
-        name: 'Risk Profile',
-        url: '/configuration/risk-profile',
+        name: 'Email Configuration',
+        url: '/configuration/emailConfig',
       },
       {
-        name: 'Email Config',
-        url: '/configuration/emailConfig',
+        name: 'Risk Profile',
+        url: '/configuration/risk-profile',
       },
     ]
   },
@@ -85,18 +44,18 @@ export const navItems: INavData[] = [
         url: '/security/userlist',
       },
       {
-        name: 'Role',
+        name: 'User Role',
         url: '/security/userrole',
-      },
-      {
-        name: 'Access Privilege Config',
-        url: '/security/access-privilege',
       },
       {
         name: 'Designation',
         url: '/security/designation',
       },
-      
+      {
+        name: 'Access Privilege Config',
+        url: '/security/access-privilege',
+      },
+
     ]
   },
   {
@@ -129,11 +88,15 @@ export const navItems: INavData[] = [
         url: '/branch-audit/audit'
       },
       {
+        name: 'Audit View',
+        url: '/branch-audit/audit-view'
+      },
+      {
         name: 'Audit Schedule',
         url: '/branch-audit/audit-schedule'
       },
       {
-        name: 'WorkPaper',
+        name: 'Work Paper',
         url: '/branch-audit/workpaper'
       },
       {
@@ -142,5 +105,14 @@ export const navItems: INavData[] = [
       },
     ]
   },
-  
+  {
+    name: 'Upload Document',
+    url: '/upload-document',
+    iconComponent: { name: 'cil-arrow-circle-top' },
+    badge: {
+      color: 'info',
+      text: ''
+    },
+  },
+
 ];

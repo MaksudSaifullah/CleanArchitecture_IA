@@ -16,13 +16,13 @@
               
               <c-card class="mb-4">
                   <c-card-header>
-                      Password Length
+                    <strong> Password Length: </strong>
                   </c-card-header>
                   <c-card-body class="form-inline" >
                                           
-                    <label for="minLength"> Minimum Length :</label>
+                    <label for="minLength"> Minimum:</label>
                     <input id="minLength" type="number" min="1" formControlName="minLength" name="minLength"  (keyup)="numberOnly($event,'minLength')" (keydown)="numberOnly($event, 'minLength')">                    
-                    <label for="maxLength">Maximum Length :</label>
+                    <label for="maxLength">Maximum:</label>
                     <input id="maxLength" type="number" min="1" formControlName="maxLength" name="maxLength" (keyup)="numberOnly($event,'maxLength')" (keydown)="numberOnly($event, 'maxLength')">
                     <div>
                     <div cRow *ngIf="accessPrivilegeForm.get('minLength')?.invalid && accessPrivilegeForm.get('minLength')?.errors &&
@@ -44,7 +44,7 @@
               <c-col xs="12">
                 <c-card class="mb-4">
                   <c-card-header>
-                      Combination Of Password
+                    <strong>Combination Of Password:</strong>  
                   </c-card-header>
                   <c-card-body >
                     <c-row><c-form-check>
@@ -109,7 +109,7 @@
                   <input type="number" min="1" id="failedLoginAttemptsDuration" name="failedLoginAttemptsDuration" class="inline-textbox" formControlName="failedLoginAttemptsDuration" (keypress)="numberOnly($event)">
                   minutes. Later user will be locked for next
                   <input type="number" min="1" id="failedLoginLockedDuration" name="failedLoginLockedDuration" class="inline-textbox" formControlName="failedLoginLockedDuration" (keypress)="numberOnly($event)">
-                  hour.                      
+                  hours.                      
                 </label><br>
 
                 <input type="checkbox" name="cbUnlocking" formControlName="isUnlockedOnByAdmin" (change)="true" #cbUnlocking>

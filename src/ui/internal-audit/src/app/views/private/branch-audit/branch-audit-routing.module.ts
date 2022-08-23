@@ -8,6 +8,11 @@ import { TopicHeadComponent } from './topic-head/topic-head.component';
 import { AuditComponent } from './audit/audit.component';
 import { AuditScheduleComponent } from './audit-schedule/audit-schedule.component';
 import { WorkpaperComponent } from './workpaper/workpaper.component';
+import { WorkpaperCreateComponent } from './workpaper/workpaper-create/workpaper-create.component';
+import { AuditViewComponent } from './audit-view/audit-view.component';
+import { ScheduleViewComponent } from './schedule-view/schedule-view.component';
+import { ScheduleConfigurationComponent } from './schedule-configuration/schedule-configuration.component';
+import { ScheduleExecutionComponent } from './schedule-execution/schedule-execution.component';
 import { NewIssueComponent } from './new-issue/new-issue.component';
 import { IssueListComponent } from './issue-list/issue-list.component';
 
@@ -45,6 +50,38 @@ const routes: Routes = [
   {
     path:'workpaper',
     component: WorkpaperComponent
+  },
+  {
+    path:'workpaperCreate',
+    component: WorkpaperCreateComponent
+  },
+  {
+    path:'audit-view',
+    component: AuditViewComponent
+  },
+  { 
+    path: 'audit-view/:id', 
+    component: AuditViewComponent },
+  { 
+    path: 'audit/:id', 
+    component: AuditComponent 
+   },
+   { 
+    path: 'schedule-view', 
+    component: ScheduleViewComponent 
+   },
+   { 
+    path: 'schedule-view/:id', 
+    component: ScheduleViewComponent 
+   },
+   { 
+    path: 'schedule-configuration', 
+    component: ScheduleConfigurationComponent 
+   },
+   { 
+    path: 'schedule-execution', 
+    component: ScheduleExecutionComponent 
+   },
   },
   {
     path:'issue-list',

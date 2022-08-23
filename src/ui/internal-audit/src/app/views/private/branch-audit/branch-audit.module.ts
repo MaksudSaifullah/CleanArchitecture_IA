@@ -21,6 +21,14 @@ import { AuditScheduleComponent } from './audit-schedule/audit-schedule.componen
 import { AverageTabComponent } from './risk-assessment-view/average-tab/average-tab.component';
 import { CollectionTabComponent } from './risk-assessment-view/collection-tab/collection-tab.component';
 import { WorkpaperComponent } from './workpaper/workpaper.component';
+import { LoProductivityTabComponent } from './risk-assessment-view/lo-productivity-tab/lo-productivity-tab.component';
+import { LoanDisbursementTabComponent } from './risk-assessment-view/loan-disbursement-tab/loan-disbursement-tab.component';
+import { FraudTabComponent } from './risk-assessment-view/fraud-tab/fraud-tab.component';
+import { WorkpaperCreateComponent } from './workpaper/workpaper-create/workpaper-create.component';
+import { AuditViewComponent } from './audit-view/audit-view.component';
+import { ScheduleViewComponent } from './schedule-view/schedule-view.component';
+import { ScheduleConfigurationComponent } from './schedule-configuration/schedule-configuration.component';
+import { ScheduleExecutionComponent } from './schedule-execution/schedule-execution.component';
 import { NewIssueComponent } from './new-issue/new-issue.component';
 import { IssueListComponent } from './issue-list/issue-list.component';
 
@@ -35,11 +43,24 @@ import { IssueListComponent } from './issue-list/issue-list.component';
     OverdueTabComponentComponent,
     StaffTurnoverComponent,
     AuditFrequencyComponent,
-
     AuditComponent,
-      AverageTabComponent,
-      CollectionTabComponent,
+    AverageTabComponent,
+    CollectionTabComponent,
     AuditComponent,
+    AuditScheduleComponent,
+    IssueComponent,
+    WorkpaperComponent,
+    LoProductivityTabComponent,
+    LoanDisbursementTabComponent,
+    FraudTabComponent,
+    WorkpaperComponent,
+    
+    WorkpaperCreateComponent,
+   
+    AuditViewComponent,
+    ScheduleViewComponent,
+    ScheduleConfigurationComponent,
+    ScheduleExecutionComponent,
       AuditScheduleComponent,
     AuditScheduleComponent,
     WorkpaperComponent,

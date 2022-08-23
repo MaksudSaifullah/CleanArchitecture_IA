@@ -21,10 +21,12 @@ public class GetBranchListCommandHandler : IRequestHandler<GetBranchListCommnad,
     }
     public async Task<GetBranchListResponseDTO> Handle(GetBranchListCommnad request, CancellationToken cancellationToken)
     {
+       // var blist = await _commandRepository.Get(x => x.CountryId == request.countyrId,x=>x.);
         int skip = ((request.pageNumber - 1) * request.pageSize);
-        var branchList =await _commandRepository.GetWithInclude(x => x.CountryId == request.countyrId);
-        var totalList = branchList.ToList().Count();
-        var dataSet = branchList.OrderBy(x=>x.BranchCode).Skip(skip).Take(request.pageSize);
+       // var branchList =await _commandRepository.GetWithInclude(x => x.CountryId == request.countyrId);
+        var branchListGeneric =await _commandRepository.Get(x => x.CountryId == request.countyrId,x=>x.OrderByDescending(u=>u.BranchCode),x=>x.Country);
+        var totalList = branchListGeneric.ToList().Count();
+        var dataSet = branchListGeneric.Skip(skip).Take(request.pageSize);
         GetBranchListResponseDTO result = new GetBranchListResponseDTO
         {
             Items = _mapper.Map<IList<GetBranchListResponseDTORAW>>(dataSet),

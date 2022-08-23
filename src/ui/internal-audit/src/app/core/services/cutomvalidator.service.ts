@@ -31,9 +31,9 @@ export class CutomvalidatorService {
   checkEffectiveDateToAfterFrom(effectiveFrom:string, effectiveTo: string){
     return (formGroup: FormGroup)=>
     {   
-      console.log('hhhhhhhhh')   
-      const from = formGroup.controls['effectiveFrom'];
-      const to = formGroup.controls['effectiveTo'];
+     
+      const from = formGroup.controls[effectiveFrom];
+      const to = formGroup.controls[effectiveTo];
       if (!from || !to) {
         return null;
       }
@@ -60,6 +60,30 @@ export class CutomvalidatorService {
       }
       return null;
 
+    }
+
+  }
+
+  checkIfFieldContainsSpace(userName:string){
+    
+    return (formGroup: FormGroup)=>
+    {    
+      try{
+        const valueToCheck = formGroup.controls[userName];
+     
+        if (!valueToCheck) {
+          return null;
+        }
+        if((valueToCheck.value.indexOf(' ') >= 0)){  
+          console.log('sdds');    
+          return { containsSpace : true };
+        }
+        return null;
+      }
+     
+catch{
+  return null;
+}
     }
 
   }

@@ -1,0 +1,240 @@
+<c-col xs="12">
+    <div class="container">
+        <c-card class="mb-4">
+            <c-card-header>
+                <strong>Upload Document</strong>
+            </c-card-header>
+            <c-card-body>
+                <form [formGroup]="uploadDocumentForm">
+                    <c-row [gutter]="{g: 2}">
+                        <c-col md>
+                            <div cFormFloating>
+                                <input type="text" class="form-control" formControlName="documentName" name="documentName" id="documentName"
+                                  placeholder="Name" value="">
+                                <label cLabel for="empName">Document Name</label>
+                              </div>
+                              <div cRow *ngIf="uploadDocumentForm.get('documentName')?.invalid &&
+                              uploadDocumentForm.get('documentName')?.errors &&
+                                    (uploadDocumentForm.get('documentName')?.dirty || uploadDocumentForm.get('documentName')?.touched)">
+                                  <small class="text-danger" *ngIf="uploadDocumentForm.get('documentName').hasError('required')">
+                                      This field is required.
+                                  </small>
+                                
+                              </div>
+                              <small class="text-danger" *ngIf="uploadDocumentForm.hasError('containsSpace')">
+                                Document name can't contain space.
+                              </small>
+                        </c-col>
+
+
+
+                        <c-col md>
+                            <div cFormFloating>
+                                <input type="text" class="form-control" formControlName="documentVersion" name="documentVersion" id="documentVersion"
+                                  placeholder="Name">
+                                <label cLabel for="documentVersion">Document Version</label>
+                              </div>
+                              <div cRow *ngIf="uploadDocumentForm.get('documentVersion')?.invalid &&
+                              uploadDocumentForm.get('documentVersion')?.errors &&
+                                    (uploadDocumentForm.get('documentVersion')?.dirty || uploadDocumentForm.get('documentVersion')?.touched)">
+                                  <small class="text-danger" *ngIf="uploadDocumentForm.get('documentVersion').hasError('required')">
+                                      This field is required.
+                                  </small>
+                                
+                              </div>
+                        </c-col>
+
+                    </c-row>
+
+                    <br>
+                    <c-row [gutter]="{g: 2}">
+                        <c-col md>
+                            <div cFormFloating>
+                                <input type="text" class="form-control" formControlName="description" name="description" id="description"
+                                  placeholder="Name">
+                                <label cLabel for="description">Document Descrption</label>
+                              </div>
+                              <div cRow *ngIf="uploadDocumentForm.get('description')?.invalid &&
+                              uploadDocumentForm.get('description')?.errors &&
+                                    (uploadDocumentForm.get('description')?.dirty || uploadDocumentForm.get('description')?.touched)">
+                                  <small class="text-danger" *ngIf="uploadDocumentForm.get('description').hasError('required')">
+                                      This field is required.
+                                  </small>
+                                
+                              </div>
+                        </c-col>
+
+                    </c-row>
+                    <br>
+                    <c-row [gutter]="{g: 2}">
+                        
+
+                        <c-col md>
+                            <div cFormFloating>
+                                <input type="text" class="form-control" formControlName="approvedBy" name="approvedBy" id="approvedBy"
+                                  placeholder="Name">
+                                <label cLabel for="approvedBy">Approved By</label>
+                              </div>
+                              <div cRow *ngIf="uploadDocumentForm.get('approvedBy')?.invalid &&
+                              uploadDocumentForm.get('approvedBy')?.errors &&
+                                    (uploadDocumentForm.get('approvedBy')?.dirty || uploadDocumentForm.get('approvedBy')?.touched)">
+                                  <small class="text-danger" *ngIf="uploadDocumentForm.get('approvedBy').hasError('required')">
+                                      This field is required.
+                                  </small>
+                                
+                              </div>
+                        </c-col>
+
+                        <c-col md>
+                            <div cFormFloating>
+                                <input type="text" class="form-control" formControlName="uploadeddBy" name="uploadeddBy" id="uploadeddBy"
+                                  placeholder="Name" disabled="disabled">
+                                <label cLabel for="uploadeddBy">Uploaded By</label>
+                              </div>
+                              <div cRow *ngIf="uploadDocumentForm.get('uploadeddBy')?.invalid &&
+                              uploadDocumentForm.get('uploadeddBy')?.errors &&
+                                    (uploadDocumentForm.get('uploadeddBy')?.dirty || uploadDocumentForm.get('uploadeddBy')?.touched)">
+                                  <small class="text-danger" *ngIf="uploadDocumentForm.get('uploadeddBy').hasError('required')">
+                                      This field is required.
+                                  </small>
+                                
+                              </div>
+                        </c-col>
+
+                    
+
+                         
+                    </c-row>
+                    <br>
+
+                    <c-row [gutter]="{g: 2}">
+                        <c-col md>
+                            <div cFormFloating>
+                                <input type="text" class="form-control" formControlName="activeFrom" name="activeFrom" id="activeFrom"
+                                  placeholder="activeFrom" type="date">
+                                <label cLabel for="empName">Active From</label>
+                              </div>
+                              <div cRow *ngIf="uploadDocumentForm.get('activeFrom')?.invalid &&
+                              uploadDocumentForm.get('activeFrom')?.errors &&
+                                    (uploadDocumentForm.get('activeFrom')?.dirty || uploadDocumentForm.get('activeFrom')?.touched)">
+                                  <small class="text-danger" *ngIf="uploadDocumentForm.get('activeFrom').hasError('required')">
+                                      This field is required.
+                                  </small>
+                                
+                              </div>
+                        </c-col>
+
+
+
+                        <c-col md>
+                            <div cFormFloating>
+                                <input type="text" class="form-control" formControlName="activeTo" name="activeTo" id="activeTo"
+                                  placeholder="activeTo" type="date">
+                                <label cLabel for="activeTo">Active To</label>
+                              </div>
+                              <div cRow *ngIf="uploadDocumentForm.get('activeTo')?.invalid &&
+                              uploadDocumentForm.get('activeTo')?.errors &&
+                                    (uploadDocumentForm.get('activeTo')?.dirty || uploadDocumentForm.get('activeTo')?.touched)">
+                                  <small class="text-danger" *ngIf="uploadDocumentForm.get('activeTo').hasError('required')">
+                                      This field is required.
+                                  </small>
+                                
+                              </div>
+                              <small class="text-danger" *ngIf="uploadDocumentForm.hasError('invalidDateRange')">
+                                Effective To should be greater than Effective From.
+                              </small>
+                        </c-col>
+
+                    </c-row>
+
+                    <br>
+
+                    <c-row [gutter]="{g: 2}">
+                         <c-col md>
+                            <c-multi-select multiple formControlName="roleList" name="roleList" required>
+                              <c-multi-select-option *ngFor="let role of roles" [value]="role.id">{{role.name}}
+                              </c-multi-select-option>
+                            </c-multi-select>
+                            <div cRow *ngIf="uploadDocumentForm.get('roleList')?.invalid &&
+                            uploadDocumentForm.get('roleList')?.errors &&
+                                  (uploadDocumentForm.get('roleList')?.dirty || uploadDocumentForm.get('roleList')?.touched)">
+                              <small class="text-danger" *ngIf="uploadDocumentForm.get('roleList').hasError('required')">
+                                This field is required.
+                              </small>
+                            </div>
+                          </c-col>
+
+
+
+                        <c-col md>
+                            <div>
+                                <input type="file" class="form-control" formControlName="documentId" id="documentId"
+                                    placeholder="documentId" (change)="onFileChange($event)">
+                                <br>
+                            </div>
+                              <div cRow *ngIf="uploadDocumentForm.get('documentId')?.invalid &&
+                              uploadDocumentForm.get('documentId')?.errors &&
+                                    (uploadDocumentForm.get('documentId')?.dirty || uploadDocumentForm.get('documentId')?.touched)">
+                                  <small class="text-danger" *ngIf="uploadDocumentForm.get('documentId').hasError('required')">
+                                      This field is required.
+                                  </small>
+                                
+                              </div>
+                        </c-col>
+
+                    </c-row>
+
+                   
+                    <button cButton class="btn btn-primary btnSaveColor mt-4 me-1" (click)="onSubmit()">Save</button>
+                    <button cButton class="btn btn-primary btnSaveColor mt-4 me-1" (click)="onCancel()">Cancel</button>
+                </form>
+            </c-card-body>
+        </c-card>
+    </div>
+
+    <div class="row overflow-auto">
+        <table datatable [dtOptions]="dtOptions" class="table table-bordered row-border hover datatableStyle" id="mytable" style="width: 100%;">
+            <thead>
+                <tr>
+                    <th>Document Name</th>
+                    <th>Description</th>
+                    <th>File & Version</th>
+                    <th>Approved By</th>
+                    <th>Notify To</th>
+                    <th>Uploaded On</th>
+                    <th>Uploaded By</th>
+                    <!-- <th>Active</th> -->
+                    <th class="col-1 text-center">Actions</th>
+                </tr>
+            </thead>
+            <tbody *ngIf="uploadedDocumentList?.length != 0">
+
+                <tr *ngFor="let documentList of uploadedDocumentList; let i = index" ng-click="rowClickHandler">
+                    
+                    <td (click)="fileDownLoad(documentList.documentId)" style="color:blue;cursor: pointer;">{{ documentList.document.name }}</td>
+                    <td>{{ documentList.description }}</td>
+                    <td (click)="fileDownLoad(documentList.documentId)" style="color:blue;cursor: pointer;"><svg cIcon name="cilCopy" size="xl"></svg>&nbsp; {{ documentList.documentVersion }}</td>
+                    <td> {{ documentList.approvedBy }} </td>
+                    <td> {{ documentList.notifyList }} </td>
+                    <td> {{ documentList.uploadedBy }} </td>
+                    <td> {{ documentList.uploadedBy }} </td>
+                    <!-- <td> {{ documentList.score }} </td> -->
+                    <td class="text-center">
+                        <div class="btn-group" role="group" aria-label="Basic example">
+                          
+                            <button type="button" class="btn btn-danger btnDeleteColor" (click)="delete(documentList.id)">
+                                <svg cIcon name="cilTrash" size="md" title="Delete Button Icon"></svg>
+                            </button>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+            <tbody *ngIf="uploadedDocumentList?.length == 0">
+                <tr>
+                    <td colspan="5" class="no-data-available">Please pull data!</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+</c-col>`

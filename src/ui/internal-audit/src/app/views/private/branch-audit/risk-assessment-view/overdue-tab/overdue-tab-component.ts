@@ -27,8 +27,6 @@ export class OverdueTabComponentComponent implements OnInit {
   dataTableService: DatatableService = new DatatableService();
   dtTrigger: Subject<any> = new Subject<any>();
   countries: country[] = [];
-  Data: Array<any> = [];
-  paramId : any;
   @Input() id: any;
 
   constructor(private http: HttpService, private fb: FormBuilder, private AlertService: AlertService, private activateRoute: ActivatedRoute) {
@@ -60,14 +58,7 @@ export class OverdueTabComponentComponent implements OnInit {
         });
         this.LoadData();
     });
-    
   }
-
-  // ReloadAllDataTable() {
-  //   this.dtElements?.forEach((dtElement: DataTableDirective, index: number) => {
-  //     this.dataTableService.redraw(dtElement);
-  //   });
-  // }
 
 
   LoadData() {
@@ -79,15 +70,15 @@ export class OverdueTabComponentComponent implements OnInit {
         searching: false,
         ordering: false,
     };
-    this.http.post('DataSync/getSyncData', Object.assign({}, this.pullFromAMBSForm.value,
+    this.http.post('DataSync/getSyncDataRiskAssesment', Object.assign({}, this.pullFromAMBSForm.value,
      {
       typeId : 1,
       pageSize: -1,
-      pageNumber: 0
+      pageNumber: 0,
+      riskAssesmentId: this.id
    })
      )
       .subscribe(resp => {
-        console.log(resp, this.pullFromAMBSForm.value);
         this.riskAssesmentOverdue = resp as riskAssessmentOverdue[];
         this.dtTrigger.next(resp);
       })
@@ -97,8 +88,8 @@ export class OverdueTabComponentComponent implements OnInit {
     const tableData: Array<any> = [];
     for(const item of this.riskAssesmentOverdue){
       const tableDataRow = {
-        score: item.riskCriteria.commonValueRatingType.value,
-        rating: item.riskCriteria.commonValueRatingType.text,
+        score: item.score,
+        rating: item.text,
         value: item.amountConverted,
         branchId: item.branchId,
         isDraft: false
@@ -108,9 +99,10 @@ export class OverdueTabComponentComponent implements OnInit {
     if (this.pullFromAMBSForm.valid) {
       this.http.post('riskassesmentdatamanagement', 
       {
+        riskAssessmentId: this.id,
         conversionRate: 88,
         typeId: 1,
-        dataRequestQueueServiceId: this.riskAssesmentOverdue[0].dataRequestQueueService.id,
+        dataRequestQueueServiceId: this.riskAssesmentOverdue[0].dataRequestQueueSErviceId,
         riskAssesmentDataManagement: tableData
       }).subscribe(x => {
         this.AlertService.success('Saved Successfully');
@@ -132,5 +124,4 @@ export class OverdueTabComponentComponent implements OnInit {
   LoadDropDownValues() {
     this.LoadCountry();
   }
-
 }

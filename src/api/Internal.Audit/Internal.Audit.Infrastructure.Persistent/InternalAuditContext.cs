@@ -66,6 +66,8 @@ public class InternalAuditContext: DbContext
     public DbSet<WorkPaper> WorkPapers { get; set; }
     public DbSet<RiskAssesmentDataManagementLog> RiskAssesmentDataManagementLogs { get; set; }
     public DbSet<RiskAssesmentDataManagement> RiskAssesmentDataManagements { get; set; }
+    public DbSet<UploadDocument> UploadDocuments { get; set; }
+    public DbSet<UploadedDocumentsNotify> UploadedDocumentsNotifys { get; set; }
     public DbSet<Issue> Issues { get; set; }
     public DbSet<IssueOwner> IssueOwners { get; set; }
 

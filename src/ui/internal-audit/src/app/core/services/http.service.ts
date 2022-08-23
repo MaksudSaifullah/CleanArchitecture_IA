@@ -1,12 +1,16 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
-import {Observable, pipe, throwError} from 'rxjs';
+import {Observable, pipe, throwError,isObservable, firstValueFrom} from 'rxjs';
 import { retry, catchError } from 'rxjs/operators';
 import { environment } from '../../../environments/environment';
 import {paginatedModelInterface} from './../interfaces/paginated.interface'
+
 @Injectable({
   providedIn: 'root',
 })
+
+
+
 export class HttpService {
   hostName:string | undefined = environment.hostName;
   constructor(
@@ -22,6 +26,8 @@ export class HttpService {
   filePostHttpOptions = {
     headers: new HttpHeaders({'enctype': 'multipart/form-data'})
   }
+
+
   paginatedPost<T>(endpoint:string,_pageSize:number,_pageNumber:number,_searchItem: any): Observable<T> {
     let requestObject : paginatedModelInterface = {
       pageNumber:_pageNumber,
@@ -79,16 +85,26 @@ export class HttpService {
       )
   }
 
-  postFile(documentSourceId:string,documentSourceName: string, name:string, file :any){
+  postFile(documentSourceId:string,documentSourceName: string, name:string, file :any,fileUploadUrl:any){
     // appending form data
+    console.log(fileUploadUrl);
     let formData:FormData = new FormData();
     formData.append('documentSourceId',documentSourceId);
     formData.append('DocumentSourceName',documentSourceName);
     formData.append('Name',name);
     formData.append('file',file);
     // appending form data end
-    return this.httpClient.post(`${`${this.hostName}/${environment.file_upload_url}`}`, formData,this.filePostHttpOptions).pipe(retry(0),catchError(this.handleError));
+    return this.httpClient.post(`${`${this.hostName}/${fileUploadUrl}`}`, formData,this.filePostHttpOptions).pipe(retry(0),catchError(this.handleError));
   }
+
+
+
+  getFilesAsBlob(endpoint:any): any  {
+    
+      return this.httpClient.get(`${this.hostName}/${endpoint}`, { responseType: 'blob',  observe: 'response'});
+  }
+
+
   //#endregion
 
   //#region [ Private ]

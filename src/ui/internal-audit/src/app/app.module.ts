@@ -8,7 +8,6 @@ import {
   PerfectScrollbarConfigInterface,
   PerfectScrollbarModule,
 } from 'ngx-perfect-scrollbar';
-
 // Import routing module
 import { AppRoutingModule } from './app-routing.module';
 import {CoreModule} from './core/core.module'
@@ -61,6 +60,7 @@ import {
 } from "ng-recaptcha";
 import {environment} from "../environments/environment";
 
+
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
   suppressScrollX: true,
 };
@@ -107,7 +107,7 @@ const APP_CONTAINERS = [
     HotToastModule.forRoot(),
     SpinnerModule,
     NgxUiLoaderModule,
-    RecaptchaV3Module
+    RecaptchaV3Module,
 
   ],
   providers: [

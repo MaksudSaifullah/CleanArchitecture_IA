@@ -11,6 +11,7 @@ export const environment = {
     "name": "Profile_Picture"
   },
   file_upload_url: 'Document',
+  file_upload_page_url: 'Upload_All_Document',
   file_host: 'https://localhost:7049'
 };
 

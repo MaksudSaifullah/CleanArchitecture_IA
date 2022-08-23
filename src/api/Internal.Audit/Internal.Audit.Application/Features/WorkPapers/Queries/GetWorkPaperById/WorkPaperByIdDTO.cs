@@ -34,4 +34,5 @@ public record WorkPaperByIdDTO
     public Guid TestingConclusionId { get; set; }
     public string? DocumentName { get; set; }
     public Guid DocumentId { get; set; }
+    public DateTime TestingDate { get; set; }
 }

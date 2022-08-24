@@ -72,7 +72,7 @@ export class StaffTurnoverComponent implements OnInit {
     this.http.post('DataSync/getSyncDataRiskAssesment', Object.assign({}, this.pullFromAMBSForm.value,
       {
        riskAssesmentId: this.id,
-       typeId : 2,
+       typeId : 5,
        pageSize: -1,
        pageNumber: 0
     }))
@@ -87,9 +87,9 @@ export class StaffTurnoverComponent implements OnInit {
     var i = 0;
     for(const item of this.riskAssesmentOverdue){
       const tableDataRow = {
-        score: this.selectedScore[i],
-        rating: this.selectedRating[i],
-        value: this.LoProductivity[i],
+        score: this.riskAssesmentOverdue[i].score,
+        rating: this.riskAssesmentOverdue[i].text,
+        value: this.riskAssesmentOverdue[i].amountConverted,
         branchId: item.branchId,
         isDraft: true
       };
@@ -117,9 +117,9 @@ export class StaffTurnoverComponent implements OnInit {
     var i = 0;
     for(const item of this.riskAssesmentOverdue){
       const tableDataRow = {
-        score: this.selectedScore[i],
-        rating: this.selectedRating[i],
-        value: this.LoProductivity[i],
+        score: this.riskAssesmentOverdue[i].score,
+        rating: this.riskAssesmentOverdue[i].text,
+        value: this.riskAssesmentOverdue[i].amountConverted,
         branchId: item.branchId,
         isDraft: false
       };
@@ -168,24 +168,24 @@ export class StaffTurnoverComponent implements OnInit {
   GetRating(event: any, i : any): void{
     console.log(event);
     if(event.target.value != "null"){
-      this.selectedRating[i] = event.target.value;
-      this.selectedScore[i] = event.target.options[event.target.options.selectedIndex].text;
+      this.riskAssesmentOverdue[i].text = event.target.value;
+      this.riskAssesmentOverdue[i].score = event.target.options[event.target.options.selectedIndex].text;
     }
     else{
-      this.selectedRating[i] = undefined;
-      this.selectedScore[i] = undefined;
+      this.riskAssesmentOverdue[i].text = undefined;
+      this.riskAssesmentOverdue[i].score = undefined;
     }
   }
 
   GetScore(event: any, i : any): void{
     if(event.target.value != "null"){
-      this.selectedScore[i] = event.target.value;
+      this.riskAssesmentOverdue[i].score = event.target.value;
     }
   }
 
   GetProductivity(event: any, i : any): void{
     if(event.target.value != "null"){
-      this.LoProductivity[i] = event.target.value;
+      this.riskAssesmentOverdue[i].amountConverted = event.target.value;
     }
   }
 

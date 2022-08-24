@@ -69,6 +69,7 @@ export class AuditFrequencyComponent implements OnInit {
       serverSide: true,
       processing: true,
       searching: false,
+      ordering: false,
       ajax: (dataTablesParameters: any, callback) => {
         this.http
           .paginatedPost(

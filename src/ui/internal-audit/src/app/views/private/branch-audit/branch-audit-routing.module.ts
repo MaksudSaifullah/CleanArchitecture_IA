@@ -13,6 +13,8 @@ import { AuditViewComponent } from './audit-view/audit-view.component';
 import { ScheduleViewComponent } from './schedule-view/schedule-view.component';
 import { ScheduleConfigurationComponent } from './schedule-configuration/schedule-configuration.component';
 import { ScheduleExecutionComponent } from './schedule-execution/schedule-execution.component';
+import { NewIssueComponent } from './new-issue/new-issue.component';
+import { IssueListComponent } from './issue-list/issue-list.component';
 
 const routes: Routes = [
   {
@@ -80,6 +82,14 @@ const routes: Routes = [
     path: 'schedule-execution', 
     component: ScheduleExecutionComponent 
    },
+  {
+    path:'issue-list',
+    component:IssueListComponent
+  },
+  {
+    path:'new-issue',
+    component:NewIssueComponent
+  }
 ];
 
 @NgModule({

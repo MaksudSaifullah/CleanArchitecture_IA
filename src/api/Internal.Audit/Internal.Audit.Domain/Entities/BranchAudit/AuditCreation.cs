@@ -32,5 +32,7 @@ namespace Internal.Audit.Domain.Entities.BranchAudit
         public virtual AuditType AuditType { get; set; } = null!;
         [ForeignKey("AuditPlanId")]
         public virtual AuditPlan AuditPlan { get; set; } = null!;
+        [NotMapped]
+        public string AuditTypeName { get; set; }
     }
 }

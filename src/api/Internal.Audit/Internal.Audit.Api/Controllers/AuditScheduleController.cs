@@ -1,4 +1,5 @@
 ﻿using Internal.Audit.Application.Features.AuditSchedules.Commands.AddAuditSchedule;
+using Internal.Audit.Application.Features.AuditSchedules.Queries.GetAuditScheduleById;
 using Internal.Audit.Application.Features.AuditSchedules.Queries.GetAuditScheduleList;
 using MediatR;
 using Microsoft.AspNetCore.Http;
@@ -19,6 +20,14 @@ public class AuditScheduleController : ControllerBase
     public async Task<ActionResult<GetAuditScheduleListPagingDTO>> GetList(GetAuditScheduleListQuery getAuditScheduleListQuery)
     {
         var auditSchedules = await _mediator.Send(getAuditScheduleListQuery);
+        return Ok(auditSchedules);
+
+    }
+    [HttpGet("{Id}")]
+    public async Task<ActionResult<AuditScheduleByIdDTO>> GetById(Guid Id)
+    {
+        var query = new GetAuditScheduleQuery(Id);
+        var auditSchedules = await _mediator.Send(query);
         return Ok(auditSchedules);
 
     }

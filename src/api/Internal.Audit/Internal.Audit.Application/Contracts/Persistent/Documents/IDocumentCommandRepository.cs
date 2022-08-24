@@ -6,5 +6,5 @@ namespace Internal.Audit.Application.Contracts.Persistent.Documents;
 
 public interface IDocumentCommandRepository : IAsyncCommandRepository<Document>
 {
-    Task<(bool,string,string)> UploadFile(IFormFile file,string sourceName);
+    Task<(bool,string,string,string)> UploadFile(IFormFile file,string sourceName);
 }

@@ -155,6 +155,7 @@ using Internal.Audit.Application.Features.CommonValueAndTypes.Queries.GetBranchb
 using Internal.Audit.Application.Features.AmbsDataSyncs.Queries.GetRiskAssesmentData;
 using Internal.Audit.Application.Features.UploadDocuments.Commands.AddUploadDocument;
 using Internal.Audit.Application.Features.UploadDocuments.Queries.GetUploadedDocumentListByRoled;
+using Internal.Audit.Application.Features.AuditSchedules.Queries.GetAuditScheduleById;
 
 namespace Internal.Audit.Application.Mappings;
 
@@ -426,7 +427,8 @@ public class MappingProfile : Profile
         CreateMap<UploadedDocumentsNotify, UploadedDocumentsNotifyDTO>().ReverseMap();
         CreateMap<Document, DocumentDTOc>().ReverseMap();
 
-
+        CreateMap<CompositAuditSchedule, AuditScheduleByIdDTO>().ReverseMap();
+        CreateMap<AuditSchedule, AuditScheduleByIdDTO>().ReverseMap();
 
     }
 }

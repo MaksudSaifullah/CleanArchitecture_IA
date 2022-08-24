@@ -23,25 +23,40 @@ public class AuditScheduleQueryrepository : QueryRepositoryBase<CompositAuditSch
     }
     public async Task<CompositAuditSchedule> GetById(Guid id)
     {
-        var query = @"SELECT ap.[Id]
-      ,ap.[RiskAssessmentId]
-      ,ra.[AssessmentCode]
-      ,ap.[PlanCode]
-	  ,cnt.Id As CountryId
-	  ,cvt.Id As AuditTypeId
-	  ,cnt.Name As CountryName
-	  ,cvt.Text As AuditTypeName
-      ,ap.PlanningYearId
-	  ,cvta.Text As YearName
-      ,ap.[AssessmentFrom]
-      ,ap.[AssessmentTo]
-      ,ap.[IsDeleted]
-  FROM [BranchAudit].[AuditPlan] AS ap
-  Inner Join [BranchAudit].[RiskAssessment] as ra on ap.RiskAssessmentId = ra.Id
-  Inner Join [common].[Country] as cnt on ra.CountryId = cnt.Id
-  Inner Join [Config].[CommonValueAndType] as cvt on ra.AuditTypeId = cvt.Id
-  Inner Join [Config].[CommonValueAndType] as cvta on ap.PlanningYearId = cvta.Id
-  WHERE  ap.[Id] = @id AND ap.IsDeleted = 0 ";
+        var query = @"SELECT distinct  a.Id,c.Id CountryId ,c.Name Country,a.ScheduleId,a.ScheduleState,
+(SELECT
+	STUFF((SELECT ', ' + CAST(y.UserName AS nVARCHAR(max)) 
+	FROM [BranchAudit].[AuditScheduleParticipants] x
+	INNER JOIN [security].[User]  y on x.UserId=y.Id
+	WHERE x.UserId=y.Id and x.CommonValueParticipantId=1
+	FOR XML PATH(''), TYPE)
+	.value('.','NVARCHAR(MAX)'),1,2,' ')) Approver,
+(SELECT
+	STUFF((SELECT ', ' + CAST(y.UserName AS nVARCHAR(max)) 
+	FROM [BranchAudit].[AuditScheduleParticipants] x
+	INNER JOIN [security].[User]  y on x.UserId=y.Id
+	WHERE x.UserId=y.Id and x.CommonValueParticipantId=2
+	FOR XML PATH(''), TYPE)
+	.value('.','NVARCHAR(MAX)'),1,2,' ')) TeamLeader,
+(SELECT
+	STUFF((SELECT ', ' + CAST(y.UserName AS nVARCHAR(max)) 
+	FROM [BranchAudit].[AuditScheduleParticipants] x
+	INNER JOIN [security].[User]  y on x.UserId=y.Id
+	WHERE x.UserId=y.Id and x.CommonValueParticipantId=3
+	FOR XML PATH(''), TYPE)
+	.value('.','NVARCHAR(MAX)'),1,2,' ')) Auditor,
+	a.ScheduleStartDate,
+	a.ScheduleEndDate,
+a.CreatedOn
+FROM [BranchAudit].AuditSchedule a
+INNER JOIN [BranchAudit].[AuditCreation] ac on a.AuditCreationId=ac.Id
+INNER JOIN [BranchAudit].[AuditPlan] ap on ac.AuditPlanId=ap.Id
+INNER JOIN [BranchAudit].[RiskAssessment] ra on ap.RiskAssessmentId=ra.Id
+INNER JOIN [common].[Country] c on ra.CountryId=c.Id
+INNER JOIN [BranchAudit].[AuditScheduleParticipants] asp on a.Id=asp.AuditScheduleId
+INNER JOIN [security].[User] u on asp.UserId=u.Id
+Where a.[Id] =  @id AND a.IsDeleted = 0 
+ ";
         var parameters = new Dictionary<string, object> { { "id", id } };
 
         return await Single(query, parameters);

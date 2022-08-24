@@ -91,8 +91,7 @@ public class InternalAuditContextSeed
             context.ModuleFeatures.AddRange(ModuleFeatureTypes(context));
             await context.SaveChangesAsync(); ;
         }
-    }
-        if (!context.DocumentSources.Where(x=>x.Name == "Work_Paper").Any())
+        if (!context.DocumentSources.Where(x => x.Name == "Work_Paper").Any())
         {
             context.DocumentSources.AddRange(GetWorkPaperDocumentSource());
             await context.SaveChangesAsync();

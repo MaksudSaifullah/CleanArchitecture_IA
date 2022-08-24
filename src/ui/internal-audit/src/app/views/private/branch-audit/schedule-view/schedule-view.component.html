@@ -67,10 +67,18 @@
                     <input type="hidden" formControlName="auditTypeId"/>
                       <div cFormFloating>
                         <div class="row">
-                            <div class="form-floating col-md-6">
+                            <!-- <div class="form-floating col-md-6">
                                 <input type="text" class="form-control" formControlName="auditType" id="auditType" placeholder="Audit Type">
                                 <label for="floatingInput">Audit Type</label>
-                              </div>
+                            </div> -->
+                            <div class="col-md-6 form-floating">
+                              <select aria-label="Floating label select example" cSelect id="auditTypeId" formControlName="auditTypeId" name="auditTypeId" >
+                                <option *ngFor="let auditType of auditTypes" [value]="auditType.id">
+                                  {{auditType.text}}
+                                </option>
+                              </select>
+                              <label for="auditTypeId" class="dropdownLabel">Audit Type</label>
+                            </div>
                             <div class="form-floating col-md-6">
                                 <input type="text" class="form-control" formControlName="auditId" id="auditId" placeholder="Audit Id">
                                 <label for="floatingInput">Audit Id</label> 

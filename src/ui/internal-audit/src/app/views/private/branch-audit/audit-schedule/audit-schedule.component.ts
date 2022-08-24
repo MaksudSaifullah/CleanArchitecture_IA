@@ -158,42 +158,53 @@ export class AuditScheduleComponent implements OnInit {
   edit(modalId:any, id:string):void {
     const localmodalId = modalId;
     console.log(id)
-    // this.http
-    //   .getById('scheduel',id)
-    //   .subscribe(res => {
-    //       const auditScheduleResponse = res as AuditScheduleResponse;
-    //       this.auditScheduleCreateForm.setValue({id : auditScheduleResponse.id,  auditName: auditScheduleResponse.auditName, year:auditScheduleResponse.year, auditTypeId: auditScheduleResponse.auditTypeId, planId: auditScheduleResponse.planId, auditId: auditScheduleResponse.auditId, 
-    //         auditPeriodFrom: formatDate(auditScheduleResponse.scheduleStartDate, 'yyyy-MM-dd', 'en'),
-    //         auditPeriodTo: formatDate(auditScheduleResponse.scheduleEndDate, 'yyyy-MM-dd', 'en')});
-    //   });
+    this.http
+      .getById('scheduel',id)
+      .subscribe(res => {
+          const auditScheduleResponse = res as AuditScheduleResponse;
+          this.auditScheduleCreateForm.patchValue({id : auditScheduleResponse.id,  
+            auditId:auditScheduleResponse.auditId, 
+            scheduleId: auditScheduleResponse.scheduleId,
+            auditTypeId: auditScheduleResponse.auditTypeId, 
+            countryName: auditScheduleResponse.country,
+            executionStatusId: auditScheduleResponse.executionStatus,
+            auditPeriodFrom: formatDate(auditScheduleResponse.auditPeriodFrom, 'yyyy-MM-dd', 'en'),
+            auditPeriodTo: formatDate(auditScheduleResponse.auditPeriodTo, 'yyyy-MM-dd', 'en'),
+            scheduleStartDate: formatDate(auditScheduleResponse.scheduleStartDate, 'yyyy-MM-dd', 'en'),
+            scheduleEndDate: formatDate(auditScheduleResponse.scheduleEndDate, 'yyyy-MM-dd', 'en'),
+            teamLeaderList: auditScheduleResponse.participantList,
+            auditorList: auditScheduleResponse.participantList,
+            branchList: auditScheduleResponse.branchList
+          });
+      });
       localmodalId.visible = true;
   }
 
-  getAuditById():void {
-    this.http
-      .getById('audit',this.paramId)
-      .subscribe(res => {
-          const auditResponse = res as Audit;
-          this.auditScheduleCreateForm.setValue({id:'', countryId : auditResponse.countryId, auditTypeId: auditResponse.auditTypeId, auditId: auditResponse.auditId, 
-            auditPeriodFrom: formatDate(auditResponse.auditPeriodFrom, 'yyyy-MM-dd', 'en'),
-            auditPeriodTo: formatDate(auditResponse.auditPeriodTo, 'yyyy-MM-dd', 'en'),
-            scheduleStartDate: '',
-            scheduleEndDate: '',
-            branchList:'',
-            approverList:'',
-            teamLeaderList:'',
-            auditorList:''});
+  // getAuditById():void {
+  //   this.http
+  //     .getById('audit',this.paramId)
+  //     .subscribe(res => {
+  //         const auditResponse = res as Audit;
+  //         this.auditScheduleCreateForm.setValue({id:'', countryId : auditResponse.countryId, auditTypeId: auditResponse.auditTypeId, auditId: auditResponse.auditId, 
+  //           auditPeriodFrom: formatDate(auditResponse.auditPeriodFrom, 'yyyy-MM-dd', 'en'),
+  //           auditPeriodTo: formatDate(auditResponse.auditPeriodTo, 'yyyy-MM-dd', 'en'),
+  //           scheduleStartDate: '',
+  //           scheduleEndDate: '',
+  //           branchList:'',
+  //           approverList:'',
+  //           teamLeaderList:'',
+  //           auditorList:''});
             
-            this.auditCreationId=auditResponse.id;
+  //           this.auditCreationId=auditResponse.id;
 
-            this.http.get('commonValueAndType/getBranch?countryId='+auditResponse.countryId +'&pageNumber=1&pageSize=10000').subscribe(resp => {
-              let convertedResp = resp as paginatedResponseInterface<Branch>;
-              this.branches = convertedResp.items;
-            })
+  //           this.http.get('commonValueAndType/getBranch?countryId='+auditResponse.countryId +'&pageNumber=1&pageSize=10000').subscribe(resp => {
+  //             let convertedResp = resp as paginatedResponseInterface<Branch>;
+  //             this.branches = convertedResp.items;
+  //           })
 
-      });
-      this.disabledInputField();
-  }
+  //     });
+  //     this.disabledInputField();
+  // }
 
   LoadUser() {
     this.http.paginatedPost('userlist/Paginated', 100, 1, {"userName": "","employeeName": "","userRole": ""}).subscribe(resp => {

@@ -4,6 +4,7 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { DataTableDirective } from 'angular-datatables';
 import { Branch } from 'src/app/core/interfaces/branch-audit/branch.interface';
+import { commonValueAndType } from 'src/app/core/interfaces/configuration/commonValueAndType.interface';
 import { paginatedResponseInterface } from 'src/app/core/interfaces/paginated.interface';
 import { User } from 'src/app/core/interfaces/security/user-registration.interface';
 import { DatatableService } from 'src/app/core/services/datatable.service';
@@ -28,6 +29,7 @@ export class ScheduleViewComponent implements OnInit {
   moveToInprogress=false;
   moveToDone=false;
   paramId: string = '';
+  auditTypes: commonValueAndType[] = [];
 
 
   constructor(private http: HttpService, private fb: FormBuilder, private AlertService: AlertService, private router: Router,private activateRoute: ActivatedRoute) {
@@ -52,6 +54,7 @@ export class ScheduleViewComponent implements OnInit {
     this.paramId = this.activateRoute.snapshot.params['id'];
     this.LoadData();
     this.LoadBranch();
+    this.LoadAuditType();
   }
 
   LoadData() {
@@ -83,6 +86,13 @@ export class ScheduleViewComponent implements OnInit {
        this.dataTableService.redraw(this.datatableElement);
      })
    }
+   LoadAuditType() {
+    this.http.get('commonValueAndType/audittype').subscribe(resp => {
+      let convertedResp = resp as commonValueAndType[];
+      this.auditTypes = convertedResp;
+    })
+  }
+
   RedirectToAuditList(){
     this.router.navigate(['branch-audit/audit']);
   }

@@ -1,12 +1,16 @@
 export interface AuditScheduleResponse {
     id: string,
-    scheduleId:string
+    auditId: string,
+    scheduleId:string,
+    auditTypeId: string,
     country : string,
     approver : string,
     teamLeader : string,
     auditor : string,
     executionStatus : string
     scheduleState : string,
+    auditPeriodFrom: Date,
+    auditPeriodTo: Date,
     scheduleStartDate : Date
     scheduleEndDate : Date
     branchList: AuditScheduleBranch []

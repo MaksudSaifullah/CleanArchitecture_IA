@@ -47,7 +47,7 @@ export class RiskCriteriaComponent implements OnInit {
       minimumValue: ['',[Validators.required]],
       maximumValue: ['',[Validators.required]],
       ratingTypeId: [null,[Validators.required, Validators.pattern("^(?!null$).*$")]],
-      score: ['',[Validators.required,Validators.maxLength(10),Validators.minLength(1)]],
+      score: ['',[Validators.required]],
       effectiveFrom: [Date,[Validators.required]],
       effectiveTo: [Date, [Validators.required]],
       description: ['']
@@ -75,6 +75,7 @@ export class RiskCriteriaComponent implements OnInit {
       serverSide: true,
       processing: true,
       searching: false,
+      ordering: false,
       ajax: (dataTablesParameters: any, callback) => {
         this.http
           .paginatedPost(

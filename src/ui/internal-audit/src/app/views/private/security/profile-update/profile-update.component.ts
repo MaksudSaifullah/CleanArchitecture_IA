@@ -65,7 +65,8 @@ export class ProfileUpdateComponent implements OnInit {
           let convertedResponse = x as ProfileUpdateResponse;
           this.userStore.update({
             fullName: convertedResponse.fullName,
-            profileImage:convertedResponse.profileImageUrl
+            profileImage:convertedResponse.profileImageUrl,
+            designation:convertedResponse.designationName
           });
         })
       });

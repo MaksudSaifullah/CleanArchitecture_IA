@@ -12,8 +12,9 @@ import { firstValueFrom, Subject } from 'rxjs';
 import { role } from 'src/app/core/interfaces/security/role.interface';
 import { paginatedResponseInterface } from 'src/app/core/interfaces/paginated.interface';
 import { HelperService } from 'src/app/core/services/helper.service'
-import { userRegistrationRequestData, UserCountry, UserRole, UserResponse } from 'src/app/core/interfaces/security/user-registration.interface'
+import { userRegistrationRequestData, UserCountry, UserRole, UserResponse, ProfileUpdateResponse } from 'src/app/core/interfaces/security/user-registration.interface'
 import { FileResponseInterface } from 'src/app/core/interfaces/file-response.interface';
+import { CutomvalidatorService } from 'src/app/core/services/cutomvalidator.service';
 
 @Component({
   selector: 'app-upload-document',
@@ -36,8 +37,9 @@ export class UploadDocumentComponent implements OnInit {
   globalFileValue: any;
   globalFile: File | any = null;
   documentRawSourceInfo: DocumentSource = {};
+  globalFullName: string = '';
 
-  constructor(private http: HttpService, private fb: FormBuilder, private AlertService: AlertService, private helper: HelperService) {
+  constructor(private http: HttpService, private fb: FormBuilder, private AlertService: AlertService, private helper: HelperService, private customValidator: CutomvalidatorService) {
     this.LoadRole();
     this.uploadDocumentForm = this.fb.group({
       documentVersion: [null, [Validators.required]],
@@ -46,11 +48,14 @@ export class UploadDocumentComponent implements OnInit {
       activeFrom: [null, [Validators.required]],
       activeTo: [null, [Validators.required]],
       uploadeddBy: [null, [Validators.required]],
-      documentName: [null, [Validators.required]],
+      documentName: ['', [Validators.required]],
 
       documentId: ['', [Validators.required]],
       roleList: ['', [Validators.required]],
-    });
+    },
+      {
+        validator: [this.customValidator.checkIfFieldContainsSpace('documentName'),this.customValidator.checkEffectiveDateToAfterFrom('activeFrom', 'activeTo')],
+      });
 
     // const p = this.helper.getDocumentSource('Upload_All_Document');
     // let yy=this.http.waitFor(p) ;
@@ -61,11 +66,8 @@ export class UploadDocumentComponent implements OnInit {
     this.LoadData();
 
     try {
-
-      console.log('-----------------------------')
       this.documentRawSourceInfo = await this.helper.getDocumentSource('Upload_All_Document') as DocumentSource;
-      console.log(this.documentRawSourceInfo)
-      console.log('-----------------------------')
+      this.SetUploaderName();
 
     } catch (error) {
       console.log(error);
@@ -73,16 +75,17 @@ export class UploadDocumentComponent implements OnInit {
 
     //  this.LoadDocumentUploadConfig();
   }
-  async LoadDocumentUploadConfig() {
-    //  let t= firstValueFrom(this.helper.getDocumentSource('Upload_All_Document')).then(c=>{
-    //   this.documentRawSource=c as DocumentSource;
-    //  });
-
-    console.log('hiiiii');
-
-    console.log(this.documentRawSourceInfo);
-    console.log('hiiiii');
+  private SetUploaderName() {
+    this.http.get<any>('UserRegistration/GetUserProfile').subscribe(x => {
+      console.log('--------------------------')
+      console.log(x)
+      console.log('--------------------------')
+      let convertedResponse = x as ProfileUpdateResponse;
+      this.globalFullName = convertedResponse.fullName;
+      this.uploadDocumentForm.patchValue({ uploadeddBy: convertedResponse.fullName });
+    });
   }
+
   LoadRole() {
     this.http.paginatedPost('role/paginated', 100, 1, {}).subscribe(resp => {
       let convertedResp = resp as paginatedResponseInterface<role>;
@@ -93,8 +96,8 @@ export class UploadDocumentComponent implements OnInit {
   onFileChange(event: any) {
     if (event.target.files.length > 0) {
 
-      let doc = this.documentRawSourceInfo;    
-      this.globalFile = event.target.files[0] as File;    
+      let doc = this.documentRawSourceInfo;
+      this.globalFile = event.target.files[0] as File;
     }
 
   }
@@ -182,17 +185,18 @@ export class UploadDocumentComponent implements OnInit {
           uploadedDocumentsNotify: roleList
         }
 
-        this.http.post('UploadDocumentPage',requestModel).subscribe(x=>{
-          this.AlertService.successDialog('Success','Document uploaded successfully.');
-          this.uploadDocumentForm.patchValue({roleList:null});
+        this.http.post('UploadDocumentPage', requestModel).subscribe(x => {
+          this.AlertService.successDialog('Success', 'Document uploaded successfully.');
+          this.uploadDocumentForm.patchValue({ roleList: null });
           this.uploadDocumentForm.get('roleList')?.setValue([]);
           this.uploadDocumentForm.reset();
           this.ResetForm();
+
           // this.uploadDocumentForm.get('roleList')?.setValue([]);
           this.dataTableService.redraw(this.datatableElement);
 
         })
-       // console.log(requestModel)
+        // console.log(requestModel)
       });
 
       // let doc = this.helper.getDocumentSource('Upload_All_Document');
@@ -212,13 +216,14 @@ export class UploadDocumentComponent implements OnInit {
   onCancel(): void {
     // this.uploadDocumentForm.get('roleList')?.setValue([]);
     // this.uploadDocumentForm.patchValue({roleList:null});
-   
+
     this.ResetForm();
+
   }
 
 
   private ResetForm() {
-    this.uploadDocumentForm.reset();
+    //  this.uploadDocumentForm.reset();
     $('.form-multi-select-selection-cleaner').prop("disabled", false);
     $('.form-multi-select-selection-cleaner').trigger('click');
     setTimeout(() => {
@@ -226,6 +231,8 @@ export class UploadDocumentComponent implements OnInit {
       $('.form-multi-select').removeClass('cdk-focused');
       $('.form-multi-select').removeClass('cdk-mouse-focused');
       this.uploadDocumentForm.reset();
-    }, 300);
+      // this.globalFullName = convertedResponse.fullName ;
+      this.uploadDocumentForm.patchValue({ uploadeddBy: this.globalFullName });
+    }, 200);
   }
 }

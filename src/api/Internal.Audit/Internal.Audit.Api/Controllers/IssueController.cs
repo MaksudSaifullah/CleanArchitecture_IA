@@ -19,12 +19,12 @@ public class IssueController : ControllerBase
         _mediator = madiator ?? throw new ArgumentNullException(nameof(madiator));
     }
 
-    //[HttpPost("paginated")]
-    //public async Task<ActionResult<GetIssueListPagingDTO>> GetList(GetIssueListQuery getIssueListQuery)
-    //{
-    //    var result = await _mediator.Send(getIssueListQuery);
-    //    return Ok(result);
-    //}
+    [HttpPost("paginated")]
+    public async Task<ActionResult<GetIssueListPagingDTO>> GetList(GetIssueListQuery getIssueListQuery)
+    {
+        var result = await _mediator.Send(getIssueListQuery);
+        return Ok(result);
+    }
 
     ////[HttpPost("filter")]
     ////public async Task<ActionResult<IEnumerable<GetQuestionnaireByFilterResponseDTO>>> GetByFilter(GetQuestionnaireFilterDTO Filter)

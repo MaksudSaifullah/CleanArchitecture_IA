@@ -32,8 +32,8 @@ export class CutomvalidatorService {
     return (formGroup: FormGroup)=>
     {   
      
-      const from = formGroup.controls['effectiveFrom'];
-      const to = formGroup.controls['effectiveTo'];
+      const from = formGroup.controls[effectiveFrom];
+      const to = formGroup.controls[effectiveTo];
       if (!from || !to) {
         return null;
       }
@@ -65,20 +65,25 @@ export class CutomvalidatorService {
   }
 
   checkIfFieldContainsSpace(userName:string){
+    
     return (formGroup: FormGroup)=>
     {    
-      
-      const valueToCheck = formGroup.controls['userName'];
+      try{
+        const valueToCheck = formGroup.controls[userName];
      
-      if (!valueToCheck) {
+        if (!valueToCheck) {
+          return null;
+        }
+        if((valueToCheck.value.indexOf(' ') >= 0)){  
+          console.log('sdds');    
+          return { containsSpace : true };
+        }
         return null;
       }
-      if((valueToCheck.value.indexOf(' ') >= 0)){  
-        console.log('sdds');    
-        return { containsSpace : true };
-      }
-      return null;
-
+     
+catch{
+  return null;
+}
     }
 
   }

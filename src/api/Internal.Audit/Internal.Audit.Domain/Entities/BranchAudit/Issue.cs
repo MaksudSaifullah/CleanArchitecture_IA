@@ -28,7 +28,7 @@ public class Issue : EntityBase
 	[Required]
 	public Guid StatusTypeId { get; set; }
 	[Required]
-	[MaxLength(100)]
+	[MaxLength(300)]
 	public string IssueTitle { get; set; } = null!;
 	[Required]	
 	public string Policy { get; set; } = null!;
@@ -62,6 +62,4 @@ public class Issue : EntityBase
 	public virtual CommonValueAndType CommonValueStatusType { get; set; } = null!;
 	public virtual ICollection<AuditScheduleParticipants> AuditScheduleParticipants { get; set; } = null!;
 	public virtual ICollection<AuditScheduleBranch> AuditScheduleBranch { get; set; } = null!;
-
-
 }

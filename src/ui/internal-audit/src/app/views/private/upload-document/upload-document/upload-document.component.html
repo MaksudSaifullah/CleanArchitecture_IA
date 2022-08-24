@@ -10,7 +10,7 @@
                         <c-col md>
                             <div cFormFloating>
                                 <input type="text" class="form-control" formControlName="documentName" name="documentName" id="documentName"
-                                  placeholder="Name">
+                                  placeholder="Name" value="">
                                 <label cLabel for="empName">Document Name</label>
                               </div>
                               <div cRow *ngIf="uploadDocumentForm.get('documentName')?.invalid &&
@@ -21,6 +21,9 @@
                                   </small>
                                 
                               </div>
+                              <small class="text-danger" *ngIf="uploadDocumentForm.hasError('containsSpace')">
+                                Document name can't contain space.
+                              </small>
                         </c-col>
 
 
@@ -85,7 +88,7 @@
                         <c-col md>
                             <div cFormFloating>
                                 <input type="text" class="form-control" formControlName="uploadeddBy" name="uploadeddBy" id="uploadeddBy"
-                                  placeholder="Name">
+                                  placeholder="Name" disabled="disabled">
                                 <label cLabel for="uploadeddBy">Uploaded By</label>
                               </div>
                               <div cRow *ngIf="uploadDocumentForm.get('uploadeddBy')?.invalid &&
@@ -137,6 +140,9 @@
                                   </small>
                                 
                               </div>
+                              <small class="text-danger" *ngIf="uploadDocumentForm.hasError('invalidDateRange')">
+                                Effective To should be greater than Effective From.
+                              </small>
                         </c-col>
 
                     </c-row>

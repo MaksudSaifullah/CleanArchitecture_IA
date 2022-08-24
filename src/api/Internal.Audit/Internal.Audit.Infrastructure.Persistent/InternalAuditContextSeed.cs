@@ -80,6 +80,18 @@ public class InternalAuditContextSeed
             context.AuditModule.AddRange(AuditModeulAdd());
             await context.SaveChangesAsync();
         }
+        if (!context.AuditFeature.Any())
+        {
+            //AuditModeulAdd
+            context.AuditFeature.AddRange(AuditFeatureAdd());
+            await context.SaveChangesAsync();
+        }
+        if (!context.ModuleFeatures.Any())
+        {
+            context.ModuleFeatures.AddRange(ModuleFeatureTypes(context));
+            await context.SaveChangesAsync(); ;
+        }
+    }
         if (!context.DocumentSources.Where(x=>x.Name == "Work_Paper").Any())
         {
             context.DocumentSources.AddRange(GetWorkPaperDocumentSource());
@@ -643,5 +655,64 @@ public class InternalAuditContextSeed
             }
         };
     }
+
+    private static IEnumerable<AuditFeature> AuditFeatureAdd()
+    {
+        return new List<AuditFeature>
+        {
+            new AuditFeature
+            {
+                IsActive = true,CreatedBy="admin",CreatedOn=DateTime.Now,Name="CREATESCHEDULE",DisplayName ="Create Schedule"
+            },
+             new AuditFeature
+            {
+                IsActive = true,CreatedBy="admin",CreatedOn=DateTime.Now,Name="NOTIFICATION",DisplayName ="Notification to Auditee"
+            },
+              new AuditFeature
+            {
+                IsActive = true,CreatedBy="admin",CreatedOn=DateTime.Now,Name="RISKASSESMENT",DisplayName ="Risk Assesment"
+            },
+               new AuditFeature
+            {
+                IsActive = true,CreatedBy="admin",CreatedOn=DateTime.Now,Name="RISKPROFILE",DisplayName ="Risk Profile"
+            },
+                new AuditFeature
+            {
+                IsActive = true,CreatedBy="admin",CreatedOn=DateTime.Now,Name="PLANCREATION",DisplayName ="Plan Creation"
+            },
+
+        };
+    }
+
+
+    private static IEnumerable<ModuleFeature> ModuleFeatureTypes(InternalAuditContext context)
+    {
+
+        List<ModuleFeature> moduleFeatures = new List<ModuleFeature>();
+
+
+        var auditModuleList = context.AuditModule.ToList();
+        string[] auditFeatureListForBA = new string []{ "NOTIFICATION", "CREATESCHEDULE" };// []
+        string[] auditFeatureListForCommon = new string []{ "RISKPROFILE" };// []
+        string[] auditFeatureListForPNA = new string []{ "RISKASSESMENT", "PLANCREATION" };// []
+        var listofAuditFeatureBA = context.AuditFeature.Where(x => auditFeatureListForBA.Contains(x.Name)).Select(x=>x.Id).ToList();
+        foreach (var item in listofAuditFeatureBA)
+        {            
+            moduleFeatures.Add(new ModuleFeature { IsActive = true, CreatedBy = "admin", CreatedOn = DateTime.Now, ModuleId = auditModuleList.Where(x => x.Name == "BA").FirstOrDefault().Id, FeatureId = item });
+        }
+        var listofAuditFeatureCommon = context.AuditFeature.Where(x => auditFeatureListForCommon.Contains(x.Name)).Select(x => x.Id).ToList();
+        foreach (var item in listofAuditFeatureCommon)
+        {
+            moduleFeatures.Add(new ModuleFeature { IsActive = true, CreatedBy = "admin", CreatedOn = DateTime.Now, ModuleId = auditModuleList.Where(x => x.Name == "COMMON").FirstOrDefault().Id, FeatureId = item });
+        }
+        var listofAuditFeaturePNA = context.AuditFeature.Where(x => auditFeatureListForPNA.Contains(x.Name)).Select(x => x.Id).ToList();
+        foreach (var item in listofAuditFeaturePNA)
+        {
+            moduleFeatures.Add(new ModuleFeature { IsActive = true, CreatedBy = "admin", CreatedOn = DateTime.Now, ModuleId = auditModuleList.Where(x => x.Name == "PA").FirstOrDefault().Id, FeatureId = item });
+        }
+
+        return moduleFeatures;
+    }
+
 
 }

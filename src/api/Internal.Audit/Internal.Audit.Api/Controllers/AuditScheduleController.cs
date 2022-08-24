@@ -1,4 +1,5 @@
 ﻿using Internal.Audit.Application.Features.AuditSchedules.Commands.AddAuditSchedule;
+using Internal.Audit.Application.Features.AuditSchedules.Queries.GetAuditScheduleByPlanId;
 using Internal.Audit.Application.Features.AuditSchedules.Queries.GetAuditScheduleById;
 using Internal.Audit.Application.Features.AuditSchedules.Queries.GetAuditScheduleList;
 using MediatR;
@@ -33,6 +34,12 @@ public class AuditScheduleController : ControllerBase
     }
     [HttpPost]
     public async Task<ActionResult<AddAuditScheduleResponseDTO>> Add(AddAuditScheduleCommand command)
+    {
+        var result = await _mediator.Send(command);
+        return Ok(result);
+    }
+    [HttpPost("getScheduleId")]
+    public async Task<ActionResult<GetAuditSchedulePlanIdResponseDTO>> GetScheduleId(GetAuditScheduleByPlanIdQuery command)
     {
         var result = await _mediator.Send(command);
         return Ok(result);

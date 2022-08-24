@@ -16,9 +16,9 @@ namespace Internal.Audit.Infrastructure.Persistent.Repositories.UserRegistration
             //return await Single($"SELECT * FROM [security].[User] where Username = '{email}'", false);
             //usr.UserName ,usr.FullName,usr.ProfileImageUrl,dsg.Name,dsg.Name as DesignationName,usr.Id as userId
             var query = @"SELECT * FROM [security].[User] usr
-                                    inner join   security.Employee emp
+                                    left join   security.Employee emp
                                     on usr.Id = emp.UserId
-                                    inner join common.Designation dsg
+                                    left join common.Designation dsg
                                     on dsg.Id = emp.DesignationId
                                     where usr.UserName = @email";
             var parameters = new Dictionary<string, object> { { "email", email } };
@@ -28,7 +28,11 @@ namespace Internal.Audit.Infrastructure.Persistent.Repositories.UserRegistration
                 User u;
                 u = user;
                 u.Employee = employee;
-                u.Employee.Designation = designation;
+                if (designation != null)
+                {
+                    u.Employee.Designation = designation;
+                }
+                
                 return u;
             }, parameters, splitters, false);
 

@@ -155,6 +155,8 @@ using Internal.Audit.Application.Features.CommonValueAndTypes.Queries.GetBranchb
 using Internal.Audit.Application.Features.AmbsDataSyncs.Queries.GetRiskAssesmentData;
 using Internal.Audit.Application.Features.UploadDocuments.Commands.AddUploadDocument;
 using Internal.Audit.Application.Features.UploadDocuments.Queries.GetUploadedDocumentListByRoled;
+using Internal.Audit.Application.Features.AuditSchedules.Queries.GetAuditScheduleByPlanId;
+using Internal.Audit.Application.Features.Issues.Queries.GetIssueList;
 using Internal.Audit.Application.Features.AuditSchedules.Queries.GetAuditScheduleById;
 
 namespace Internal.Audit.Application.Mappings;
@@ -413,6 +415,8 @@ public class MappingProfile : Profile
         CreateMap<Branch, GetBranchListResponseDTORAW>().ReverseMap();
         //CreateMap<Country, GetBranchListResponseDTORAW>().ReverseMap();
 
+        CreateMap<Issue, GetIssueListResponseDTO>().ReverseMap();
+
         CreateMap<Branch, GetBranchListResponseDTORAW>() // needs `Inst` -> `InstDTO` map
     .ForMember(dst => dst.CountryName, opt => opt.MapFrom(src => src.Country.Name)).ReverseMap();
 
@@ -425,7 +429,14 @@ public class MappingProfile : Profile
         CreateMap<UploadedDocumentsNotify, UploadedDocumentsNotifyCommand>().ReverseMap();
         CreateMap<UploadDocument, GetUploadedDocumentLstByRoleIdDTO>().ReverseMap();
         CreateMap<UploadedDocumentsNotify, UploadedDocumentsNotifyDTO>().ReverseMap();
-        CreateMap<Document, DocumentDTOc>().ReverseMap();
+        CreateMap<Document, DocumentDTOc>().ReverseMap();//
+        CreateMap<AuditCreationDTOs, AuditCreation>().ReverseMap();//
+        CreateMap<AuditScheduleParticipantsDTOs, AuditScheduleParticipants>().ReverseMap();//AuditScheduleBranchs
+        CreateMap<AuditScheduleBranchs, AuditScheduleBranch>().ReverseMap();//AuditTypeDTOs
+        CreateMap<AuditTypeDTOs, AuditType>().ReverseMap();//AuditTypeDTOs
+        CreateMap<UserDTOs, User>().ReverseMap();//EmployeeDTOs
+        CreateMap<EmployeeDTOs, Employee>().ReverseMap();//EmployeeDTOs
+        CreateMap<GetAuditSchedulePlanIdResponseDTO, AuditSchedule>().ReverseMap();//GetAuditSchedulePlanIdResponseDTO
 
         CreateMap<CompositAuditSchedule, AuditScheduleByIdDTO>().ReverseMap();
         CreateMap<AuditSchedule, AuditScheduleByIdDTO>().ReverseMap();

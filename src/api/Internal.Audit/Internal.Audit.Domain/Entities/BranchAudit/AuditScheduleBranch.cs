@@ -20,4 +20,7 @@ public class AuditScheduleBranch : EntityBase
     public virtual AuditSchedule AuditSchedule { get; set; } = null!;
     [NotMapped]
     public virtual Branch Branch { get; set; } = null!;
+    [NotMapped]
+    public string BranchName { get; set; }
+
 }

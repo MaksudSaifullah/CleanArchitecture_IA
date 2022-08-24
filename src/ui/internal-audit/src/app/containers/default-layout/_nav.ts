@@ -103,6 +103,10 @@ export const navItems: INavData[] = [
         name: 'Work Paper',
         url: '/branch-audit/workpaper'
       },
+      {
+        name: 'Issue',
+        url: '/branch-audit/issue-list'
+      },
     ]
   },
   {

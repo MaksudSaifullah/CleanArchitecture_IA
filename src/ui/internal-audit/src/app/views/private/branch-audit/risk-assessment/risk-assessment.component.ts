@@ -137,7 +137,6 @@ export class RiskAssessmentComponent implements OnInit {
       .getById('riskAssessment', riskAssessment.id)
       .subscribe(res => {
           const riskAssessmentResponse = res as riskAssessment;
-          console.log('RiskAssessment', riskAssessment);
           this.riskAssessmentForm.setValue({
             id : riskAssessmentResponse.id, 
             countryId : riskAssessmentResponse.countryId, 

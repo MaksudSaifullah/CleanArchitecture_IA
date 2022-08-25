@@ -27,21 +27,49 @@ public class WorkPaperQueryRepository : QueryRepositoryBase<CompositeWorkPaper>,
     }
     public async Task<CompositeWorkPaper> GetById(Guid id)
     {
-        var query = @"SELECT wp.[Id]
+        var query = @"Select wp.[Id]
       ,wp.[WorkPaperCode]
-	  ,th.Name
+	  ,adtsdl.ScheduleId as ScheduleCode
+	  ,adtsdl.ScheduleStartDate as ScheduleStartDate
+	  ,adtsdl.ScheduleEndDate as ScheduleEndDate
+      ,wp.[AuditScheduleId]
       ,wp.[TopicHeadId]
+	  ,th.Name as TopicHeadName
+	  ,wp.[QuestionId]
+	  ,qus.Question as QuestionName
+	  ,th.Name as TopicHeadName
+      ,wp.[BranchId] as AuditScheduleBranchId
+	  ,brnc.BranchName 
       ,wp.[SampleName]
-	  ,cvtsm.Text As SampleMonth
       ,wp.[SampleMonthId]
-	  ,cvttc.Text As TestingConclusion
+	  ,cvtsm.Text as SampleMonth
+      ,wp.[SampleSelectionMethodId]
+	  ,smpl.Text as SampleSelectionMethod
+      ,wp.[ControlActivityNatureId]
+	  ,cntrl.Text as ControlActivityNature
+      ,wp.[ControlFrequencyId]
+	  ,frqn.Text as ControlFrequency
+      ,wp.[SampleSizeId]
+	  ,smplsz.Text as SampleSize
+      ,wp.[TestingDetails]
+      ,wp.[TestingResults]
       ,wp.[TestingConclusionId]
-	  ,dcmnt.Name As DocumentName
+	  ,cvttc.Text As TestingConclusion
       ,wp.[DocumentId]
+	  ,dcmnt.Name As DocumentName
+	  ,wp.TestingDate
       ,wp.[CommonValueAndTypeId]
+      ,wp.[IsDeleted]
   FROM [BranchAudit].[WorkPaper] as wp
-  Inner Join BranchAudit.TopicHead th on wp.TopicHeadId = th.Id
+  Inner Join BranchAudit.AuditSchedule as adtsdl on wp.AuditScheduleId = adtsdl.Id
+  Inner Join BranchAudit.TopicHead as th on wp.TopicHeadId = th.Id
+  Inner Join BranchAudit.Questionnaire as qus on wp.QuestionId = qus.Id
+  Inner Join security.Branch as brnc on wp.BranchId = brnc.Id
   Inner Join Config.CommonValueAndType cvtsm on wp.SampleMonthId = cvtsm.Id
+  Inner Join Config.CommonValueAndType smpl on wp.SampleSelectionMethodId = smpl.Id
+  Inner Join Config.CommonValueAndType cntrl on wp.ControlActivityNatureId = cntrl.Id
+  Inner Join Config.CommonValueAndType frqn on wp.ControlFrequencyId = frqn.Id
+  Inner Join Config.CommonValueAndType smplsz on wp.SampleSizeId = smplsz.Id
   Inner Join Config.CommonValueAndType cvttc on wp.TestingConclusionId = cvttc.Id
   Inner Join common.Document dcmnt on wp.DocumentId = dcmnt.Id
   WHERE  wp.[Id] = @id AND wp.IsDeleted = 0 ";

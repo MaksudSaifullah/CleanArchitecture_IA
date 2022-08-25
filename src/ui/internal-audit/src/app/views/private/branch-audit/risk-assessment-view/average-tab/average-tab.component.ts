@@ -72,7 +72,7 @@ export class AverageTabComponent implements OnInit {
     };
     this.http.post('DataSync/getSyncData', Object.assign({}, this.pullFromAMBSForm.value,
      {
-      typeId : 3,
+      typeId : 9,
       pageSize: -1,
       pageNumber: 0
    })

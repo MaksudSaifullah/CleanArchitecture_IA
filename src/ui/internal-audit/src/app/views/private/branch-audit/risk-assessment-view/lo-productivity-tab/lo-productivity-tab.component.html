@@ -63,8 +63,8 @@
                             <td>{{ riskAssessment.branchName }}</td>
                             <td>
                                 <div form-floating>
-                                    <select aria-label="Floating label select example" (change)="GetloProd($event, i)" cSelect id="fraudFound" name="loProductivity">
-                                        <option value=null title="null">Select</option>
+                                    <select [(ngModel)]='riskAssessment.amountConverted' aria-label="Floating label select example" (change)="GetloProd($event, i)" cSelect id="loProductivity" name="loProductivity">
+                                        <option value="-1">SELECT</option>
                                         <option *ngFor="let loProd of loProductivity" [value]="loProd.value">
                                             {{loProd.text}}
                                         </option>
@@ -73,8 +73,8 @@
                             </td>
                             <td>
                                 <div form-floating>
-                                    <select aria-label="Floating label select example" (change)="GetRating($event, i)" cSelect id="Score" name="Score" [selected]="selectedScore[i]">
-                                        <option value=null title="null">Select</option>
+                                    <select [(ngModel)]='riskAssessment.text' aria-label="Floating label select example" (change)="GetRating($event, i)" cSelect id="Score" name="Score" [selected]="selectedScore[i]">
+                                        <option value="SELECT">SELECT</option>
                                         <option *ngFor="let score of scores" [value]="score.text">
                                             {{score.value}}
                                         </option>
@@ -84,7 +84,7 @@
                             <td> 
                                 <div form-floating>
                                     <select aria-label="Floating label select example" cSelect id="Rating" name="Rating">
-                                        <option value={{selectedRating[i]}}>{{selectedRating[i]}}</option>
+                                        <option *ngIf="riskAssessment.text != undefined" value={{riskAssessment.text}}>{{riskAssessment.text}}</option>
                                     </select>
                                 </div>
                             </td>

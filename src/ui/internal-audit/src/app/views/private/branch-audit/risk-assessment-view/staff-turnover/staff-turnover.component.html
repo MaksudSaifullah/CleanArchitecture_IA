@@ -62,14 +62,20 @@
                             <td> {{i + 1}} </td>
                             <td>{{ riskAssessment.branchName }}</td>
                             <td>
-                                <div>
+                                <div *ngIf="riskAssessment.amountConverted != -1; else elseBlock">
                                     <input type="number" class="form-control" id="staffTurnover" placeholder="Staff TurnOver" (change)="GetProductivity($event, i)" value={{riskAssessment.amountConverted}}/>
                                 </div>
+                                <ng-template #elseBlock>
+                                    <input type="number" class="form-control" id="staffTurnover" placeholder="Staff TurnOver" (change)="GetProductivity($event, i)"/>
+                                </ng-template>
+                                <!-- <div>
+                                    <input type="number" class="form-control" id="staffTurnover" placeholder="Staff TurnOver" (change)="GetProductivity($event, i)" value={{riskAssessment.amountConverted}}/>
+                                </div> -->
                             </td>
                             <td>
                                 <div form-floating>
                                     <select [(ngModel)]='riskAssessment.text' aria-label="Floating label select example" (change)="GetRating($event, i)" cSelect id="Score" name="Score">
-                                        <option value=null>Select</option>
+                                        <option value="SELECT">SELECT</option>
                                         <option *ngFor="let score of scores" [value]="score.text">
                                             {{score.value}}
                                         </option>

@@ -94,7 +94,7 @@ export class StaffTurnoverComponent implements OnInit {
         isDraft: true
       };
       i++;
-      if (tableDataRow.score !== undefined && tableDataRow.rating !== undefined && tableDataRow.value !== undefined && tableDataRow.branchId !== undefined && tableDataRow.value !== "")
+      if (tableDataRow.score != -1 && tableDataRow.rating != "SELECT" && tableDataRow.value != "-1" && tableDataRow.branchId != undefined && tableDataRow.value != "")
       {
         tableData.push(tableDataRow);
       }
@@ -124,7 +124,7 @@ export class StaffTurnoverComponent implements OnInit {
         isDraft: false
       };
       i++;
-      if (tableDataRow.score === undefined || tableDataRow.rating === undefined || tableDataRow.value === undefined || tableDataRow.branchId === undefined || tableDataRow.value === "")
+      if (tableDataRow.score == -1 || tableDataRow.rating == "SELECT" || tableDataRow.value == "-1" || tableDataRow.branchId == undefined || tableDataRow.value == "")
       {
         this.AlertService.error('Please fill all the required fields.');
         return;
@@ -166,25 +166,24 @@ export class StaffTurnoverComponent implements OnInit {
     this.LoadScores();
   }
   GetRating(event: any, i : any): void{
-    console.log(event);
-    if(event.target.value != "null"){
+    if(event.target.value != "SELECT"){
       this.riskAssesmentOverdue[i].text = event.target.value;
       this.riskAssesmentOverdue[i].score = event.target.options[event.target.options.selectedIndex].text;
     }
     else{
-      this.riskAssesmentOverdue[i].text = undefined;
-      this.riskAssesmentOverdue[i].score = undefined;
+      this.riskAssesmentOverdue[i].text = "SELECT";
+      this.riskAssesmentOverdue[i].score = -1;
     }
   }
 
   GetScore(event: any, i : any): void{
-    if(event.target.value != "null"){
+    if(event.target.value != "SELECT"){
       this.riskAssesmentOverdue[i].score = event.target.value;
     }
   }
 
   GetProductivity(event: any, i : any): void{
-    if(event.target.value != "null"){
+    if(event.target.value != "-1"){
       this.riskAssesmentOverdue[i].amountConverted = event.target.value;
     }
   }

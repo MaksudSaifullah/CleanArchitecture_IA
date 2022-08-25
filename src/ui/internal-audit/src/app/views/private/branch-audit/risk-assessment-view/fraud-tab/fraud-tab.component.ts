@@ -73,7 +73,7 @@ export class FraudTabComponent implements OnInit {
     this.http.post('DataSync/getSyncDataRiskAssesment', Object.assign({}, this.pullFromAMBSForm.value,
       {
        riskAssesmentId: this.id,
-       typeId : 2,
+       typeId : 6,
        pageSize: -1,
        pageNumber: 0
     }))
@@ -86,25 +86,25 @@ export class FraudTabComponent implements OnInit {
   onSubmitDraft(): void {
     const tableData: Array<any> = [];
     var i = 0;
-    for(const item of this.riskAssesmentOverdue){
-      console.log(this.selectedRating[i]);
+   for(const item of this.riskAssesmentOverdue){
       const tableDataRow = {
-        score: this.selectedScore[i],
-        rating: this.selectedRating[i],
-        value: this.LoProductivity[i],
+        score: this.riskAssesmentOverdue[i].score,
+        rating: this.riskAssesmentOverdue[i].text,
+        value: this.riskAssesmentOverdue[i].amountConverted,
         branchId: item.branchId,
         isDraft: true
       };
       i++;
-      if (tableDataRow.score !== undefined && tableDataRow.rating !== undefined && tableDataRow.value !== undefined && tableDataRow.branchId !== undefined && tableDataRow.value !== "")
+      if (tableDataRow.score != -1 && tableDataRow.rating != "SELECT" && tableDataRow.value != "-1" && tableDataRow.branchId != undefined && tableDataRow.value != "")
       {
         tableData.push(tableDataRow);
       }
     }
       this.http.post('RiskAssesmentDataManagement', 
       {
+        riskAssessmentId: this.id,
         conversionRate: 88,
-        typeId: 5,
+        typeId: 6,
         dataRequestQueueServiceId: this.riskAssesmentOverdue[0].dataRequestQueueSErviceId,
         riskAssesmentDataManagement: tableData
       }).subscribe(x => {
@@ -118,14 +118,14 @@ export class FraudTabComponent implements OnInit {
     var i = 0;
     for(const item of this.riskAssesmentOverdue){
       const tableDataRow = {
-        score: this.selectedScore[i],
-        rating: this.selectedRating[i],
-        value: this.LoProductivity[i],
+        score: this.riskAssesmentOverdue[i].score,
+        rating: this.riskAssesmentOverdue[i].text,
+        value: this.riskAssesmentOverdue[i].amountConverted,
         branchId: item.branchId,
         isDraft: false
       };
       i++;
-      if (tableDataRow.score === undefined || tableDataRow.rating === undefined || tableDataRow.value === undefined || tableDataRow.branchId === undefined || tableDataRow.value === "")
+      if (tableDataRow.score == -1 || tableDataRow.rating == "SELECT" || tableDataRow.value == "-1" || tableDataRow.branchId == undefined || tableDataRow.value == "")
       {
         this.AlertService.error('Please fill all the required fields.');
         return;
@@ -136,8 +136,9 @@ export class FraudTabComponent implements OnInit {
     }
       this.http.post('RiskAssesmentDataManagement', 
       {
+        riskAssessmentId: this.id,
         conversionRate: 88,
-        typeId: 5,
+        typeId: 6,
         dataRequestQueueServiceId: this.riskAssesmentOverdue[0].dataRequestQueueSErviceId,
         riskAssesmentDataManagement: tableData
       }).subscribe(x => {
@@ -175,30 +176,29 @@ export class FraudTabComponent implements OnInit {
     this.LoadFraudFounds();
   }
   GetRating(event: any, i : any): void{
-    console.log(event);
-    if(event.target.value != "null"){
-      this.selectedRating[i] = event.target.value;
-      this.selectedScore[i] = event.target.options[event.target.options.selectedIndex].text;
+    if(event.target.value != "SELECT"){
+      this.riskAssesmentOverdue[i].text = event.target.value;
+      this.riskAssesmentOverdue[i].score = event.target.options[event.target.options.selectedIndex].text;
     }
     else{
-      this.selectedRating[i] = undefined;
-      this.selectedScore[i] = undefined;
+      this.riskAssesmentOverdue[i].text = "SELECT";
+      this.riskAssesmentOverdue[i].score = -1;
     }
   }
 
   GetScore(event: any, i : any): void{
-    if(event.target.value != "null"){
-      this.selectedScore[i] = event.target.value;
+    if(event.target.value != "SELECT"){
+      this.riskAssesmentOverdue[i].score = event.target.value;
     }
   }
 
   GetFraudFound(event: any, i : any): void{
-    if(event.target.value != "null"){
-      this.LoProductivity[i] = event.target.value;
+    if(event.target.value != "-1"){
+      this.riskAssesmentOverdue[i].amountConverted = event.target.value;
     }
     this.LoadScores();
-    this.selectedRating[i] = undefined;
-    this.selectedScore[i] = undefined;
+    this.riskAssesmentOverdue[i].text = "SELECT";
+    this.riskAssesmentOverdue[i].score = -1;
   }
 
 }

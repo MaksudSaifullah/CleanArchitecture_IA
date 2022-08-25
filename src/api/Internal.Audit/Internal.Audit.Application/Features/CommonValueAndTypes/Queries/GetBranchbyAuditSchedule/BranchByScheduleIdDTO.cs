@@ -15,6 +15,7 @@ public record BranchByScheduleIdDTO
 }
 public class BranchDTO
 {
+    public Guid Id { get; set; }
     public long BranchId { get; set; }
     public int BranchCode { get; set; }
     public string? BranchName { get; set; }

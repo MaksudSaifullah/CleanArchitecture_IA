@@ -157,6 +157,9 @@ using Internal.Audit.Application.Features.UploadDocuments.Commands.AddUploadDocu
 using Internal.Audit.Application.Features.UploadDocuments.Queries.GetUploadedDocumentListByRoled;
 using Internal.Audit.Application.Features.AuditSchedules.Queries.GetAuditScheduleByPlanId;
 using Internal.Audit.Application.Features.Issues.Queries.GetIssueList;
+using Internal.Audit.Application.Features.AuditSchedules.Queries.GetAuditScheduleById;
+using Internal.Audit.Application.Features.RiskAssesmentConsolidateDatas.Commands.AddConsolidateData;
+using Internal.Audit.Application.Features.RiskAssesmentConsolidateDatas.Queries;
 
 namespace Internal.Audit.Application.Mappings;
 
@@ -437,7 +440,9 @@ public class MappingProfile : Profile
         CreateMap<EmployeeDTOs, Employee>().ReverseMap();//EmployeeDTOs
         CreateMap<GetAuditSchedulePlanIdResponseDTO, AuditSchedule>().ReverseMap();//GetAuditSchedulePlanIdResponseDTO
 
-
-
+        CreateMap<CompositAuditSchedule, AuditScheduleByIdDTO>().ReverseMap();
+        CreateMap<AuditSchedule, AuditScheduleByIdDTO>().ReverseMap();
+        CreateMap<RiskAssesmentConsolidateData, AddConsolidateDataCommand>().ReverseMap();
+        CreateMap<RiskAssesmentConsolidateData, RiskConsolidateDataGetQueryResponseDTO>().ReverseMap();
     }
 }

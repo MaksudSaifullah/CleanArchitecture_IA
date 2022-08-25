@@ -70,6 +70,7 @@ public class InternalAuditContext: DbContext
     public DbSet<UploadedDocumentsNotify> UploadedDocumentsNotifys { get; set; }
     public DbSet<Issue> Issues { get; set; }
     public DbSet<IssueOwner> IssueOwners { get; set; }
+    public DbSet<RiskAssesmentConsolidateData> RiskAssesmentConsolidateDatas { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

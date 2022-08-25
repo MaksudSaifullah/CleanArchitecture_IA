@@ -84,6 +84,8 @@ using Internal.Audit.Application.Contracts.Persistent.AuditScheduleBranches;
 using Internal.Audit.Infrastructure.Persistent.Repositories.AuditScheduleBranchs;
 using Internal.Audit.Application.Contracts.Persistent.UploadDocuments;
 using Internal.Audit.Infrastructure.Persistent.Repositories.UploadDocuments;
+using Internal.Audit.Infrastructure.Persistent.Repositories.RiskAssesmentConsolidateDatas;
+using Internal.Audit.Application.Contracts.Persistent.RiskAssesmentConsolidateDatas;
 
 namespace Internal.Audit.Infrastructure.Persistent;
 
@@ -218,7 +220,10 @@ public static class PersistentInfrastructureServiceRegistration
         services.AddScoped<IAuditScheduleBranchQueryRepository>(s => new AuditScheduleBranchQueryRepository(configuration.GetConnectionString("InternalAuditDb")));
 
         services.AddScoped<IUploadDocumentCommandRepository, UploadDocumentCommandRepository>();
-        services.AddScoped<IUploadDocumentQueryRepository>(s => new UploadDocumentQueryRepository(configuration.GetConnectionString("InternalAuditDb")));
+        services.AddScoped<IUploadDocumentQueryRepository>(s => new RiskAssesmentConsolidateDataQueryrepository(configuration.GetConnectionString("InternalAuditDb")));
+
+        services.AddScoped<IRiskAssesmentConsolidateDataCommandRepository, RiskAssesmentConsolidateDataCommandRepository>();
+        services.AddScoped<IRiskAssesmentConsolidateDataQueryrepository>(s => new RiskAssesmentConsolidateDataQueryRepository(configuration.GetConnectionString("InternalAuditDb")));
 
 
         return services;

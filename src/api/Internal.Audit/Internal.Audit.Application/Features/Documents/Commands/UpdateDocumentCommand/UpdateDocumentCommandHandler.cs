@@ -26,9 +26,13 @@ public class UpdateDocumentCommandHandler : IRequestHandler<UpdateDocumentComman
         {
             if(request.File?.Length > 0)
             {
-                var (isUploaded, path, format) = await _documentRepository.UploadFile(request.File, request.DocumentSourceName);
+                var (isUploaded, path, format, fileName) = await _documentRepository.UploadFile(request.File, request.DocumentSourceName);
                 if (isUploaded)
                 {
+                    if (string.IsNullOrWhiteSpace(request.Name))
+                    {
+                        request.Name = fileName;
+                    }
                     mappeddocument.Path = path;
                     mappeddocument.Format = format;                   
                 }

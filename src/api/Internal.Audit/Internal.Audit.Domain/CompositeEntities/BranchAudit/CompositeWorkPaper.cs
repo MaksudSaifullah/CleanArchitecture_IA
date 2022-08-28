@@ -14,8 +14,9 @@ public class CompositeWorkPaper : EntityBase
     public string? TopicHeadName { get; set; }
     public string? QuestionName { get; set; }
     public Guid TopicHeadId { get; set; }
+    public Guid QuestionId { get; set; }
     public string? BranchName { get; set; }
-    public Guid BranchId { get; set; }
+    public Guid AuditScheduleBranchId { get; set; }
     public string? SampleName { get; set; }
     public string? SampleMonth { get; set; }
     public Guid SampleMonthId { get; set; }
@@ -34,5 +35,7 @@ public class CompositeWorkPaper : EntityBase
     public string? DocumentName { get; set; }
     public Guid DocumentId { get; set; }
     public DateTime TestingDate { get; set; }
+    public DateTime ScheduleStartDate { get; set; }
+    public DateTime ScheduleEndDate { get; set; }
 
 }

@@ -18,7 +18,7 @@ public class AuditScheduleBaseQueryRepository : QueryRepositoryBase<AuditSchedul
 
     public async Task<IEnumerable<AuditSchedule>> GetAuditScheduleById(Guid? Id)
     {
-        var query = @"select sch.Id,sch.AuditCreationId,sch.ScheduleStartDate,sch.ScheduleEndDate,cra.Id,cra.AuditPlanId,cra.AuditId,cra.Year,cra.AuditName,cra.AuditTypeId,
+        var query = @"select sch.Id,sch.AuditCreationId,sch.ScheduleStartDate,sch.ScheduleEndDate,sch.ScheduleId,cra.Id,cra.AuditPlanId,cra.AuditId,cra.Year,cra.AuditName,cra.AuditTypeId,
 cra.AuditPeriodFrom,cra.AuditPeriodTo,auType.Name as AuditTypeName,participants.*,usr.*,emp.*,asBranch.*,branch.BranchName
 
 from BranchAudit.AuditSchedule sch
@@ -38,7 +38,7 @@ inner JOIN BranchAudit.AuditScheduleBranch asBranch
 on asBranch.AuditScheduleId=sch.Id
 INNER JOIN security.Branch branch
 on asBranch.BranchId=branch.Id
-                    where sch.Id=@auditscheduleid";
+                    where sch.Id=@auditscheduleid and sch.[IsDeleted]=0";
 
         string splitters = "Id, Id, Id, Id, Id";
         var parameters = new Dictionary<string, object> { { "auditscheduleid", Id} };

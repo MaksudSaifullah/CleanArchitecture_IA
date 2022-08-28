@@ -7,7 +7,7 @@ import { DatatableService } from 'src/app/core/services/datatable.service';
 import { FormService } from 'src/app/core/services/form.service';
 import { country } from 'src/app/core/interfaces/configuration/country.interface';
 import { HttpService } from 'src/app/core/services/http.service';
-import {AlertService} from '../../../../../core/services/alert.service';
+import { AlertService } from '../../../../../core/services/alert.service';
 import { paginatedResponseInterface } from 'src/app/core/interfaces/paginated.interface';
 import { formatDate } from '@angular/common';
 
@@ -27,8 +27,8 @@ export class StaffTurnoverComponent implements OnInit {
   dtTrigger: Subject<any> = new Subject<any>();
   countries: country[] = [];
   scores: any[] = [];
-  selectedRating : any[] = [];
-  selectedScore : any[] = [];
+  selectedRating: any[] = [];
+  selectedScore: any[] = [];
   LoProductivity: any[] = [];
   @Input() id: any;
 
@@ -47,11 +47,10 @@ export class StaffTurnoverComponent implements OnInit {
     this.LoadRiskAssessment(this.id);
   };
 
-  LoadRiskAssessment(id : any)
-  {
+  LoadRiskAssessment(id: any) {
     this.http
-    .getById('riskAssessment', id)
-    .subscribe(res => {
+      .getById('riskAssessment', id)
+      .subscribe(res => {
         const riskAssessmentResponse = res as riskAssessment;
         this.pullFromAMBSForm.setValue({
           countryId: riskAssessmentResponse.countryId,
@@ -60,22 +59,22 @@ export class StaffTurnoverComponent implements OnInit {
           effectiveFrom: formatDate(riskAssessmentResponse.effectiveFrom, 'yyyy-MM-dd', 'en')
         });
         this.LoadData();
-    });
+      });
   }
 
   LoadData() {
     this.dtOptions = {
       pagingType: 'full_numbers',
-        pageLength: 10,
-        ordering: false
+      pageLength: 10,
+      ordering: false
     };
     this.http.post('DataSync/getSyncDataRiskAssesment', Object.assign({}, this.pullFromAMBSForm.value,
       {
-       riskAssesmentId: this.id,
-       typeId : 2,
-       pageSize: -1,
-       pageNumber: 0
-    }))
+        riskAssesmentId: this.id,
+        typeId: 5,
+        pageSize: -1,
+        pageNumber: 0
+      }))
       .subscribe(resp => {
         this.riskAssesmentOverdue = resp as riskAssessmentOverdue[];
         this.dtTrigger.next(resp);
@@ -85,21 +84,20 @@ export class StaffTurnoverComponent implements OnInit {
   onSubmitDraft(): void {
     const tableData: Array<any> = [];
     var i = 0;
-    for(const item of this.riskAssesmentOverdue){
+    for (const item of this.riskAssesmentOverdue) {
       const tableDataRow = {
-        score: this.selectedScore[i],
-        rating: this.selectedRating[i],
-        value: this.LoProductivity[i],
+        score: this.riskAssesmentOverdue[i].score,
+        rating: this.riskAssesmentOverdue[i].text,
+        value: this.riskAssesmentOverdue[i].amountConverted,
         branchId: item.branchId,
         isDraft: true
       };
       i++;
-      if (tableDataRow.score !== undefined && tableDataRow.rating !== undefined && tableDataRow.value !== undefined && tableDataRow.branchId !== undefined && tableDataRow.value !== "")
-      {
+      if (tableDataRow.score != -1 && tableDataRow.rating != "SELECT" && tableDataRow.value != "-1" && tableDataRow.branchId != undefined && tableDataRow.value != "") {
         tableData.push(tableDataRow);
       }
     }
-      this.http.post('RiskAssesmentDataManagement', 
+    this.http.post('RiskAssesmentDataManagement',
       {
         riskAssessmentId: this.id,
         conversionRate: 88,
@@ -107,7 +105,7 @@ export class StaffTurnoverComponent implements OnInit {
         dataRequestQueueServiceId: this.riskAssesmentOverdue[0].dataRequestQueueSErviceId,
         riskAssesmentDataManagement: tableData
       }).subscribe(x => {
-        
+
         this.AlertService.success('Saved Successfully');
       });
   }
@@ -115,25 +113,24 @@ export class StaffTurnoverComponent implements OnInit {
   onSubmit(): void {
     const tableData: Array<any> = [];
     var i = 0;
-    for(const item of this.riskAssesmentOverdue){
+    for (const item of this.riskAssesmentOverdue) {
       const tableDataRow = {
-        score: this.selectedScore[i],
-        rating: this.selectedRating[i],
-        value: this.LoProductivity[i],
+        score: this.riskAssesmentOverdue[i].score,
+        rating: this.riskAssesmentOverdue[i].text,
+        value: this.riskAssesmentOverdue[i].amountConverted,
         branchId: item.branchId,
         isDraft: false
       };
       i++;
-      if (tableDataRow.score === undefined || tableDataRow.rating === undefined || tableDataRow.value === undefined || tableDataRow.branchId === undefined || tableDataRow.value === "")
-      {
+      if (tableDataRow.score == -1 || tableDataRow.rating == "SELECT" || tableDataRow.value == "-1" || tableDataRow.branchId == undefined || tableDataRow.value == "") {
         this.AlertService.error('Please fill all the required fields.');
         return;
       }
-      else{
+      else {
         tableData.push(tableDataRow);
       }
     }
-      this.http.post('RiskAssesmentDataManagement', 
+    this.http.post('RiskAssesmentDataManagement',
       {
         riskAssessmentId: this.id,
         conversionRate: 88,
@@ -141,7 +138,7 @@ export class StaffTurnoverComponent implements OnInit {
         dataRequestQueueServiceId: this.riskAssesmentOverdue[0].dataRequestQueueSErviceId,
         riskAssesmentDataManagement: tableData
       }).subscribe(x => {
-        
+
         this.AlertService.success('Saved Successfully');
       });
   }
@@ -165,28 +162,26 @@ export class StaffTurnoverComponent implements OnInit {
     this.LoadCountry();
     this.LoadScores();
   }
-  GetRating(event: any, i : any): void{
-    console.log(event);
-    if(event.target.value != "null"){
-      this.selectedRating[i] = event.target.value;
-      this.selectedScore[i] = event.target.options[event.target.options.selectedIndex].text;
+  GetRating(event: any, i: any): void {
+    if (event.target.value != "SELECT") {
+      this.riskAssesmentOverdue[i].text = event.target.value;
+      this.riskAssesmentOverdue[i].score = event.target.options[event.target.options.selectedIndex].text;
     }
-    else{
-      this.selectedRating[i] = undefined;
-      this.selectedScore[i] = undefined;
-    }
-  }
-
-  GetScore(event: any, i : any): void{
-    if(event.target.value != "null"){
-      this.selectedScore[i] = event.target.value;
+    else {
+      this.riskAssesmentOverdue[i].text = "SELECT";
+      this.riskAssesmentOverdue[i].score = -1;
     }
   }
 
-  GetProductivity(event: any, i : any): void{
-    if(event.target.value != "null"){
-      this.LoProductivity[i] = event.target.value;
+  GetScore(event: any, i: any): void {
+    if (event.target.value != "SELECT") {
+      this.riskAssesmentOverdue[i].score = event.target.value;
     }
   }
 
+  GetProductivity(event: any, i: any): void {
+    if (event.target.value != "-1") {
+      this.riskAssesmentOverdue[i].amountConverted = event.target.value;
+    }
+  }
 }

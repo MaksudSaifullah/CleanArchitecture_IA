@@ -1,1 +1,263 @@
-<p>new-issue works!</p>
+<c-nav variant="tabs">
+    <a [active]="true" [cTabContent]="tabContent" [routerLink] [tabPaneIdx]="0" cNavLink>Issue</a>
+    <a [cTabContent]="tabContent" [routerLink] [tabPaneIdx]="1" cNavLink>Action Plan</a>
+  </c-nav>
+
+<c-col xs="12">
+<c-card class="mb-4"> 
+  
+  <c-tab-content #tabContent="cTabContent">
+    <c-tab-pane class="p-3"> 
+      <div class="animated fadeIn">
+        <div class="row">
+          <div class="col-lg-12">
+            <div class="card">
+              <div class="card-header">
+                <div class="fa fa-align-justify" >
+                    <strong *ngIf="!formService.isEdit(this.issueForm.get('id'))">New Issue</strong>
+                    <strong *ngIf="formService.isEdit(this.issueForm.get('id'))">Edit Issue</strong>
+                </div> 
+              </div>
+              <div class="card-body">
+               
+                <form [formGroup]="issueForm" (ngSubmit)="onSubmit()" novalidate>                
+                    
+                        <div class="form-floating mb-3">
+                            <input type="text" class="form-control" formControlName="code" id="code" placeholder="code">
+                            <label for="floatingInput">Issue Id</label>
+                        </div>
+                        
+                        <div class="form-floating mb-3">
+                            <!-- <textarea class="form-control" placeholder="Audit Id" formControlName="auditId" id="auditId"></textarea> -->
+                            <input type="text" class="form-control" formControlName="auditId" id="auditId" placeholder="Audit Id">
+                            <label for="floatingInput">Audit Id</label>
+                        </div> 
+
+                        <div class="form-floating mb-3">
+                            <input type="text" class="form-control" formControlName="issueTitle" id="issueTitle" placeholder="issueTitle" style="height: 70px;">
+                            <label for="floatingInput">Issue Title</label>
+                            <div cRow *ngIf="issueForm.get('issueTitle')?.invalid && issueForm.get('issueTitle')?.errors &&
+                                            (issueForm.get('issueTitle')?.dirty || issueForm.get('issueTitle')?.touched)">
+                              <small class="text-danger"
+                                  *ngIf="issueForm.get('issueTitle').hasError('required')">
+                                  This field is required.
+                              </small>
+                              <small class="text-danger"
+                                  *ngIf="issueForm.get('issueTitle').hasError('minlength')">
+                                  The minimum length for this field is {{issueForm.get('issueTitle').errors.minlength.requiredLength}} characters.
+                              </small>
+                              <small class="text-danger"
+                                  *ngIf="issueForm.get('issueTitle').hasError('maxlength')">
+                                  The maximum length for this field is {{issueForm.get('issueTitle').errors.maxlength.requiredLength}} characters.
+                              </small>
+                            </div>
+                        </div>
+
+                        <div class="form-floating mb-3">
+                          <select aria-label="Floating label select example" cSelect id="auditScheduleId"
+                            formControlName="auditScheduleId" name="auditScheduleId" style="height: 70px;">
+                            <option value="null">Select Schedule</option>
+                            <option *ngFor="let schedule of auditSchedules" [value]="schedule.id">
+                              {{schedule.name}}
+                            </option>                  
+                          </select>
+                          <label for="auditScheduleId" >Schedule</label>          
+                          <div cRow *ngIf="((issueForm.get('auditScheduleId')?.invalid && issueForm.get('auditScheduleId')?.errors)) &&
+                            (issueForm.get('auditScheduleId')?.dirty || issueForm.get('auditScheduleId')?.touched)">
+                            <small class="text-danger">
+                              This field is required.
+                            </small>                                 
+                          </div>
+                        </div>
+                        <!-- <div class="form-floating mb-3">
+                            <textarea class="form-control" formControlName="description" id="description" placeholder="description"></textarea>
+                            <label for="floatingInput">Branches</label>
+                        </div>   -->
+                        <!-- <div class="form-floating mb-3">
+                            <textarea class="form-control" formControlName="description" id="description" placeholder="description"></textarea>
+                            <label for="floatingInput">Issue Owner</label>
+                        </div>   -->
+                        <div class="form-floating mb-3">
+                          <input type="text" class="form-control" formControlName="policy" id="policy" placeholder="policy" style="height: 70px;">
+                          <label for="floatingInput">Policy/ Guidelines/ SOPs Reference</label>
+                          <div cRow *ngIf="issueForm.get('policy')?.invalid && issueForm.get('policy')?.errors &&
+                                          (issueForm.get('policy')?.dirty || issueForm.get('policy')?.touched)">
+                            <small class="text-danger"
+                                *ngIf="issueForm.get('policy').hasError('required')">
+                                This field is required.
+                            </small>
+                            <small class="text-danger"
+                                *ngIf="issueForm.get('policy').hasError('minlength')">
+                                The minimum length for this field is {{issueForm.get('policy').errors.minlength.requiredLength}} characters.
+                            </small>
+                            <small class="text-danger"
+                                *ngIf="issueForm.get('policy').hasError('maxlength')">
+                                The maximum length for this field is {{issueForm.get('policy').errors.maxlength.requiredLength}} characters.
+                            </small>
+                          </div>
+                        </div>
+
+                        <div class="form-floating mb-3">
+                          <select aria-label="Floating label select example" cSelect id="impactTypeId"
+                            formControlName="impactTypeId" name="impactTypeId" style="height: 70px;">
+                            <option value="null">Select Impact</option>
+                            <option *ngFor="let commonValueAndType of impactType" [value]="commonValueAndType.id">
+                              {{commonValueAndType.text}}
+                            </option>                  
+                          </select>
+                          <label for="impactTypeId" >Impact</label>          
+                          <div cRow *ngIf="((issueForm.get('impactTypeId')?.invalid && issueForm.get('impactTypeId')?.errors)) &&
+                            (issueForm.get('impactTypeId')?.dirty || issueForm.get('impactTypeId')?.touched)">
+                            <small class="text-danger">
+                              This field is required.
+                            </small>                                 
+                          </div>
+                        </div>
+
+                        <div class="form-floating mb-3">
+                          <select aria-label="Floating label select example" cSelect id="likelihoodTypeId"
+                            formControlName="likelihoodTypeId" name="likelihoodTypeId" style="height: 70px;">
+                            <option value="null">Select Likelihood</option>
+                            <option *ngFor="let commonValueAndType of likelihoodType" [value]="commonValueAndType.id">
+                              {{commonValueAndType.text}}
+                            </option>                  
+                          </select>
+                          <label for="likelihoodTypeId" >Likelihood</label>          
+                          <div cRow *ngIf="((issueForm.get('likelihoodTypeId')?.invalid && issueForm.get('likelihoodTypeId')?.errors)) &&
+                            (issueForm.get('likelihoodTypeId')?.dirty || issueForm.get('likelihoodTypeId')?.touched)">
+                            <small class="text-danger">
+                              This field is required.
+                            </small>                                 
+                          </div>
+                        </div>                       
+
+                        <!-- <div class="form-floating mb-3">
+                            <textarea class="form-control" formControlName="description" id="description" placeholder="description"></textarea>
+                            <label for="floatingInput">Rating</label>
+                        </div>    -->
+                        <div class="form-floating mb-3">
+                          <input class="form-control" placeholder="targetDate" formControlName="targetDate" id="targetDate" type="date" >
+                          <label for="floatingInput">Issue Target Date</label>
+
+                          <div cRow *ngIf="issueForm.get('targetDate')?.invalid && issueForm.get('targetDate')?.errors &&
+                                (issueForm.get('targetDate')?.dirty || issueForm.get('targetDate')?.touched)">
+                            <small class="text-danger" *ngIf="issueForm.get('targetDate').hasError('required')">
+                              This field is required.
+                            </small>                                 
+                          </div>
+                        </div>
+                        
+                        <div class="form-floating mb-3">
+                            <textarea class="form-control" formControlName="details" id="details" placeholder="details" style="height: 70px;"></textarea>
+                            <label for="floatingInput">Issue Details</label>
+                            <div cRow *ngIf="issueForm.get('details')?.invalid && issueForm.get('details')?.errors &&
+                                          (issueForm.get('details')?.dirty || issueForm.get('details')?.touched)">
+                              <small class="text-danger"
+                                  *ngIf="issueForm.get('details').hasError('required')">
+                                  This field is required.
+                              </small>
+                              <small class="text-danger"
+                                  *ngIf="issueForm.get('details').hasError('minlength')">
+                                  The minimum length for this field is {{issueForm.get('details').errors.minlength.requiredLength}} characters.
+                              </small>
+                            </div>
+                        </div>
+
+                        <div class="form-floating mb-3">
+                            <textarea class="form-control" formControlName="rootCause" id="rootCause" placeholder="rootCause" style="height: 70px;"></textarea>
+                            <label for="floatingInput">Root Cause</label>
+                            <div cRow *ngIf="issueForm.get('rootCause')?.invalid && issueForm.get('rootCause')?.errors &&
+                                          (issueForm.get('rootCause')?.dirty || issueForm.get('rootCause')?.touched)">
+                              <small class="text-danger"
+                                  *ngIf="issueForm.get('rootCause').hasError('required')">
+                                  This field is required.
+                              </small>
+                              <small class="text-danger"
+                                  *ngIf="issueForm.get('rootCause').hasError('minlength')">
+                                  The minimum length for this field is {{issueForm.get('rootCause').errors.minlength.requiredLength}} characters.
+                              </small>
+                            </div>
+                        </div>  
+
+                        <div class="form-floating mb-3">
+                            <textarea class="form-control" formControlName="businessImpact" id="businessImpact" placeholder="businessImpact" style="height: 70px;"></textarea>
+                            <label for="floatingInput">Potential Business Impact</label>
+                            <div cRow *ngIf="issueForm.get('businessImpact')?.invalid && issueForm.get('businessImpact')?.errors &&
+                                          (issueForm.get('businessImpact')?.dirty || issueForm.get('businessImpact')?.touched)">
+                              <small class="text-danger"
+                                  *ngIf="issueForm.get('businessImpact').hasError('required')">
+                                  This field is required.
+                              </small>
+                              <small class="text-danger"
+                                  *ngIf="issueForm.get('businessImpact').hasError('minlength')">
+                                  The minimum length for this field is {{issueForm.get('businessImpact').errors.minlength.requiredLength}} characters.
+                              </small>
+                            </div>
+                        </div>
+
+                        <div class="form-floating mb-3">
+                            <textarea class="form-control" formControlName="potentialRisk" id="potentialRisk" placeholder="potentialRisk" style="height: 70px;"></textarea>
+                            <label for="floatingInput">Potential Risk</label>
+                            <div cRow *ngIf="issueForm.get('potentialRisk')?.invalid && issueForm.get('potentialRisk')?.errors &&
+                                          (issueForm.get('potentialRisk')?.dirty || issueForm.get('potentialRisk')?.touched)">
+                              <small class="text-danger"
+                                  *ngIf="issueForm.get('potentialRisk').hasError('required')">
+                                  This field is required.
+                              </small>
+                              <small class="text-danger"
+                                  *ngIf="issueForm.get('potentialRisk').hasError('minlength')">
+                                  The minimum length for this field is {{issueForm.get('potentialRisk').errors.minlength.requiredLength}} characters.
+                              </small>
+                            </div>
+                        </div>
+
+                        <div class="form-floating mb-3">
+                            <textarea class="form-control" formControlName="auditorRecommendation" id="auditorRecommendation" placeholder="auditorRecommendation" style="height: 70px;"></textarea>
+                            <label for="floatingInput">Auditors Recommendations</label>
+                            <div cRow *ngIf="issueForm.get('auditorRecommendation')?.invalid && issueForm.get('auditorRecommendation')?.errors &&
+                                          (issueForm.get('auditorRecommendation')?.dirty || issueForm.get('auditorRecommendation')?.touched)">
+                              <small class="text-danger"
+                                  *ngIf="issueForm.get('auditorRecommendation').hasError('required')">
+                                  This field is required.
+                              </small>
+                              <small class="text-danger"
+                                  *ngIf="issueForm.get('auditorRecommendation').hasError('minlength')">
+                                  The minimum length for this field is {{issueForm.get('auditorRecommendation').errors.minlength.requiredLength}} characters.
+                              </small>
+                            </div>
+                        </div> 
+                   
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </c-tab-pane>
+  </c-tab-content>
+</c-card>
+</c-col>
+  
+
+
+
+
+
+
+
+
+
+
+<!-- 
+
+
+  <c-tab-content #tabContent="cTabContent">
+    <c-tab-pane class="p-3">
+
+        
+    </c-tab-pane>
+
+    <c-tab-pane class="p-3">
+        
+    </c-tab-pane>
+  </c-tab-content> -->

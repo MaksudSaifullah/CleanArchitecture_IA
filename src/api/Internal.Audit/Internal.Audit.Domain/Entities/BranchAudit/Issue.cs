@@ -1,6 +1,5 @@
 ﻿using Internal.Audit.Domain.Common;
 using Internal.Audit.Domain.Entities.Config;
-using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -28,7 +27,7 @@ public class Issue : EntityBase
 	[Required]
 	public Guid StatusTypeId { get; set; }
 	[Required]
-	[MaxLength(300)]
+	[MaxLength(500)]
 	public string IssueTitle { get; set; } = null!;
 	[Required]	
 	public string Policy { get; set; } = null!;
@@ -45,21 +44,39 @@ public class Issue : EntityBase
 	[Required]
 	public string AuditorRecommendation { get; set; } = null!;	
 	public string? Remarks { get; set; }
-	//[Required]
-	//[DefaultValue("1")]
-	//public bool IsActive { get; set; }
+
+
+    [NotMapped]
+    public string AuditCode { get; set; } = null!;
+    [NotMapped]
+    public string IssueOwners { get; set; } = null!;
+    [NotMapped]
+    public string ActionOwners { get; set; } = null!;
+    [NotMapped]
+    public string? RatingType { get; set; }
+    [NotMapped]
+    public string? StatusType { get; set; }
+    [NotMapped]
+    public string? LikelihoodType { get; set; }
+    [NotMapped]
+    public string? ImpactType { get; set; }
+    [NotMapped]
+    public string? Branch { get; set; }
+
 
 	//TODO
-	//[ForeignKey("AuditCreationId")]
-	//public virtual AuditCreation AuditCreation { get; set; } = null!;
-	//[ForeignKey("AuditScheduleId")]
-	//public virtual AuditSchedule AuditSchedule { get; set; } = null!;
+	[ForeignKey("AuditCreationId")]
+	public virtual AuditCreation AuditCreation { get; set; } = null!;
+	[ForeignKey("AuditScheduleId")]
+	public virtual AuditSchedule AuditSchedule { get; set; } = null!;
 	//[ForeignKey("BranchId")]
 	//public virtual Branch Branch { get; set; } = null!;
 	public virtual CommonValueAndType CommonValueImpactType { get; set; }
 	public virtual CommonValueAndType CommonValueLikelihoodType { get; set; }
 	public virtual CommonValueAndType CommonValueRatingType { get; set; }
 	public virtual CommonValueAndType CommonValueStatusType { get; set; } = null!;
-	public virtual ICollection<AuditScheduleParticipants> AuditScheduleParticipants { get; set; } = null!;
-	public virtual ICollection<AuditScheduleBranch> AuditScheduleBranch { get; set; } = null!;
+	public virtual ICollection<IssueOwner> IssueOwnerList { get; set; } = null!;
+    public virtual ICollection<IssueBranch> IssueBranchList { get; set; } = null!;
+    //public virtual ICollection<AuditScheduleBranch> AuditScheduleBranch { get; set; } = null!;
+   // public virtual ICollection<ActionPlan> ActionPlanList { get; set; } = null!;
 }

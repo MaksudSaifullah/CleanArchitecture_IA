@@ -156,6 +156,7 @@ using Internal.Audit.Application.Features.AmbsDataSyncs.Queries.GetRiskAssesment
 using Internal.Audit.Application.Features.UploadDocuments.Commands.AddUploadDocument;
 using Internal.Audit.Application.Features.UploadDocuments.Queries.GetUploadedDocumentListByRoled;
 using Internal.Audit.Application.Features.Issues.Queries.GetIssueList;
+using Internal.Audit.Application.Features.Issues.Queries.GetIssueById;
 
 namespace Internal.Audit.Application.Mappings;
 
@@ -414,6 +415,7 @@ public class MappingProfile : Profile
         //CreateMap<Country, GetBranchListResponseDTORAW>().ReverseMap();
 
         CreateMap<Issue, GetIssueListResponseDTO>().ReverseMap();
+        CreateMap<Issue, GetIssueByIdResponseDTO>().ReverseMap();
 
         CreateMap<Branch, GetBranchListResponseDTORAW>() // needs `Inst` -> `InstDTO` map
     .ForMember(dst => dst.CountryName, opt => opt.MapFrom(src => src.Country.Name)).ReverseMap();

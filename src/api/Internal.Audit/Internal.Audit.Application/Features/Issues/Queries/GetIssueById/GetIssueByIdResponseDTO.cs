@@ -7,8 +7,25 @@ using System.Threading.Tasks;
 namespace Internal.Audit.Application.Features.Issues.Queries.GetIssueById;
 public record GetIssueByIdResponseDTO
 {
+
     public Guid Id { get; set; }
-    public DateTime EffectiveFrom { get; set; }
-    public DateTime EffectiveTo { get; set; }
-    public string Description { get; set; } = null!;
+    public string Code { get; set; }
+    public string IssueTitle { get; set; } = null!;
+    public DateTime TargetDate { get; set; }
+
+    public string Policy { get; set; } = null!;
+    public string Details { get; set; } = null!;
+    public string RootCause { get; set; } = null!;
+    public string BusinessImpact { get; set; } = null!;
+    public string PotentialRisk { get; set; } = null!;
+    public string AuditorRecommendation { get; set; } = null!;
+    public string? Remarks { get; set; }
+    public string? AuditScheduleName { get; set; }
+    public string? Branch { get; set; }
+    public string? ImpactType { get; set; }
+    public string? LikelihoodType { get; set; }
+    public string? RatingType { get; set; }
+    public string? StatusType { get; set; }
+    public string IssueOwners { get; set; } = null!;
+    public string ActionOwners { get; set; } = null!;
 }

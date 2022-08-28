@@ -20,7 +20,7 @@ export class AverageTabComponent implements OnInit {
   @ViewChild(DataTableDirective, { static: false })
   dtElements: QueryList<DataTableDirective> | undefined;
   dtOptions: DataTables.Settings = {};
-  riskAssesmentOverdue: riskAssessmentOverdue[] = [];
+  riskAssesmentOverdue: any[] = [];
   pullFromAMBSForm: FormGroup;
   formService: FormService = new FormService();
   dataTableService: DatatableService = new DatatableService();
@@ -70,15 +70,10 @@ export class AverageTabComponent implements OnInit {
         searching: false,
         ordering: false,
     };
-    this.http.post('DataSync/getSyncData', Object.assign({}, this.pullFromAMBSForm.value,
-     {
-      typeId : 9,
-      pageSize: -1,
-      pageNumber: 0
-   })
+    this.http.post('DataSync/getSyncDataRiskAssesmentAvg', {countryId: this.pullFromAMBSForm.value.countryId, riskAssesmentId: this.id}
      )
       .subscribe(resp => {
-        this.riskAssesmentOverdue = resp as riskAssessmentOverdue[];
+        this.riskAssesmentOverdue = resp as any[];
         this.dtTrigger.next(resp);
       })
   }

@@ -82,21 +82,18 @@
                         <tr *ngFor="let riskAssessment of riskAssesmentOverdue; let i = index">
                             <td> {{i + 1}} </td>
                             <td>{{ riskAssessment.branchName }}</td>
-                            <td>{{ riskAssessment.amount }}</td>
-                            <td>{{ riskAssessment.amountConverted }}</td>
-                            <td> {{ riskAssessment.text }} </td>
-                            <td> {{ riskAssessment.score }} </td>
-                            <td> {{ tableTempData }}</td>
-                            <td> {{i + 1}} </td>
-                            <td>{{ riskAssessment.branchName }}</td>
-                            <td>{{ riskAssessment.amount }}</td>
-                            <td>{{ riskAssessment.amountConverted }}</td>
-                            <td> {{ riskAssessment.riskCriteria.commonValueRatingType.text }} </td>
-                            <td> {{ riskAssessment.riskCriteria.commonValueRatingType.value }} </td>
-                            <td> {{ tableTempData }}</td>
-                            <td> {{i + 1}} </td>
-                            <td>{{ riskAssessment.branchName }}</td>
-                            <td>{{ riskAssessment.amount }}</td>
+                            <td>{{ riskAssessment.overDue_Rating }}</td>
+                            <td>{{ riskAssessment.overDue_Score }}</td>
+                            <td>{{ riskAssessment.collection_Rating }}</td>
+                            <td>{{ riskAssessment.collection_Score }}</td>
+                            <td>{{ riskAssessment.disbursement_Rating }}</td>
+                            <td>{{ riskAssessment.disbursement_Score }}</td>
+                            <td>{{ riskAssessment.loproductivity_Rating }}</td>
+                            <td>{{ riskAssessment.loproductivity_Score }}</td>
+                            <td>{{ riskAssessment.staffTurnOver_Rating }}</td>
+                            <td>{{ riskAssessment.staffTurnOver_Score }}</td>
+                            <td>{{ riskAssessment.fraud_Rating }}</td>
+                            <td>{{ riskAssessment.fraud_Score }}</td>
                         </tr>
                     </tbody>
                     <tbody *ngIf="riskAssesmentOverdue?.length == 0">

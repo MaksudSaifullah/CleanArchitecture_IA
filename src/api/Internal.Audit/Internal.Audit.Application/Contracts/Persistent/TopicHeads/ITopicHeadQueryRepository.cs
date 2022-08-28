@@ -12,5 +12,6 @@ public interface ITopicHeadQueryRepository : IAsyncQueryRepository<TopicHead>
     Task<(long, IEnumerable<TopicHead>)> GetAll(int pageSize, int pageNumber, string searchTerm);
     Task<TopicHead> GetById(Guid id);
     Task<IEnumerable<TopicHead>> GetByFilter(string FilterName, Guid FilterValue);
+    Task<IEnumerable<TopicHead>> GetByCountryIdAnddateRange(Guid? CountryId,DateTime? FromDate,DateTime? ToDate);
 }
 

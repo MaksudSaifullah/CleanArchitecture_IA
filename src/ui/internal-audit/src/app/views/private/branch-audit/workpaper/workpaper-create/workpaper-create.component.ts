@@ -47,6 +47,8 @@ export class WorkpaperCreateComponent implements OnInit {
   documentRawSourceInfo: DocumentSource = {};
   uploadDocumentForm: FormGroup | undefined;
   pageName:string = '';
+  isRequired: boolean = false;
+  editDocId:string|undefined='';
 
   constructor(private http: HttpService ,private router : Router, private fb: FormBuilder, private activateRoute: ActivatedRoute, private AlertService: AlertService, private helper: HelperService) {
     this.loadDropDownValues();
@@ -60,14 +62,14 @@ export class WorkpaperCreateComponent implements OnInit {
       testingDate: [Date,[Validators.required]],
       scheduleStartDate:[Date],
       scheduleEndDate:[Date],
-      sampleName: [''],
+      sampleName: [null,[Validators.required, Validators.pattern("^(?!null$).*$")]],
       sampleMonthId:[null,[Validators.required, Validators.pattern("^(?!null$).*$")]],
       sampleSelectionMethodId:[null,[Validators.required, Validators.pattern("^(?!null$).*$")]],
       controlActivityNatureId:[null,[Validators.required, Validators.pattern("^(?!null$).*$")]],
       controlFrequencyId:[null,[Validators.required, Validators.pattern("^(?!null$).*$")]],
       sampleSizeId:[null,[Validators.required, Validators.pattern("^(?!null$).*$")]],
-      testingDetails: [''],
-      testingResults: [''],
+      testingDetails: [null,[Validators.required, Validators.pattern("^(?!null$).*$")]],
+      testingResults: [null,[Validators.required, Validators.pattern("^(?!null$).*$")]],
       testingConclusionId:[null,[Validators.required, Validators.pattern("^(?!null$).*$")]],
       documentId:[null,[Validators.required, Validators.pattern("^(?!null$).*$")]],
       
@@ -85,6 +87,8 @@ export class WorkpaperCreateComponent implements OnInit {
     }
     else{
       this.pageName='Edit';
+      this.workpaperForm.get('documentId')?.clearValidators();//clearValidators
+      this.workpaperForm.get('documentId')?.updateValueAndValidity();//updateValueAndValidity
       this.LoadWorkpaperById(this.workpaperId);
     }
   }
@@ -98,7 +102,7 @@ export class WorkpaperCreateComponent implements OnInit {
            this.LoadControlFrequency(workpaperData.controlActivityNatureId == null? null : workpaperData.controlActivityNatureId);
            this.LoadSampleSize(workpaperData.controlFrequencyId == null?  null : workpaperData.controlFrequencyId);
             this.LoadBranches(workpaperData.auditScheduleId);
-            console.log("dddddddddd", res);
+            this.editDocId=workpaperData.documentId;
            this.workpaperForm.patchValue({
 
             id: workpaperData.id,
@@ -154,90 +158,103 @@ export class WorkpaperCreateComponent implements OnInit {
     
   }
 
-  onSubmit():void{
+ async onSubmit(){
+ 
     if(this.workpaperForm.valid){
       console.log(this.pageName);
       let doc = this.documentRawSourceInfo;
       const file = this.globalFile as File;
-      this.http.postFile(doc.id == null ? '' : doc.id, doc.name == null ? '' : doc.name, '', file, 'Document').subscribe(x => {
-    
-        let response = x as FileResponseInterface;
-       
-        if(this.pageName== 'Create'){
-          const requestModel = {
-            workPaperCode: this.workpaperForm.value?.workPaperCode,
-            auditScheduleId: this.paramId,
-            topicHeadId: this.workpaperForm.value.topicHeadId,
-            questionId: this.workpaperForm.value.questionId,
-            auditScheduleBranchId: this.workpaperForm.value.auditScheduleBranchId,
-            sampleName: this.workpaperForm.value.sampleName,
-            sampleMonthId: this.workpaperForm.value.sampleMonthId,
-            sampleSelectionMethodId: this.workpaperForm.value.sampleSelectionMethodId,
-            controlActivityNatureId: this.workpaperForm.value.controlActivityNatureId,
-            controlFrequencyId: this.workpaperForm.value.controlFrequencyId,
-            sampleSizeId: this.workpaperForm.value.sampleSizeId,
-            testingDetails: this.workpaperForm.value.testingDetails,
-            testingResults: this.workpaperForm.value.testingResults,
-            testingConclusionId: this.workpaperForm.value.testingConclusionId,
-            documentId: response.id,
-            testingDate: this.workpaperForm.value.testingDate,
-          }
-          this.http.post('workpaper',requestModel).subscribe(x=>{ 
-            let resp = x as BaseResponse;
-              if(resp.success){
-                this.AlertService.success('Work Paper Saved Successful');
-                this.router.navigate(['branch-audit/workpaper'], {
-                  // queryParams: {
-                  //   myParam: 'inserted', 
-                  // },
-                });
-              }else{
-                this.AlertService.errorDialog('Work Paper Save Failed',resp.message);
-              }
-          }); 
+      let docId = null;
+      if(this.isRequired){
+        docId =await this.PostDocument(doc, file, docId);
+       this.editDocId=docId;
+      }
+      if(this.pageName== 'Create'){
+        const requestModel = {
+          workPaperCode: this.workpaperForm.value?.workPaperCode,
+          auditScheduleId: this.paramId,
+          topicHeadId: this.workpaperForm.value.topicHeadId,
+          questionId: this.workpaperForm.value.questionId,
+          auditScheduleBranchId: this.workpaperForm.value.auditScheduleBranchId,
+          sampleName: this.workpaperForm.value.sampleName,
+          sampleMonthId: this.workpaperForm.value.sampleMonthId,
+          sampleSelectionMethodId: this.workpaperForm.value.sampleSelectionMethodId,
+          controlActivityNatureId: this.workpaperForm.value.controlActivityNatureId,
+          controlFrequencyId: this.workpaperForm.value.controlFrequencyId,
+          sampleSizeId: this.workpaperForm.value.sampleSizeId,
+          testingDetails: this.workpaperForm.value.testingDetails,
+          testingResults: this.workpaperForm.value.testingResults,
+          testingConclusionId: this.workpaperForm.value.testingConclusionId,
+          documentId: docId,
+          testingDate: this.workpaperForm.value.testingDate,
         }
-        else{
-          const requestModel = {
-            id:  this.workpaperForm.value?.id,
-            workPaperCode: this.workpaperForm.value?.workPaperCode,
-            auditScheduleId: this.paramId,
-            topicHeadId: this.workpaperForm.value.topicHeadId,
-            questionId: this.workpaperForm.value.questionId,
-            auditScheduleBranchId: this.workpaperForm.value.auditScheduleBranchId,
-            sampleName: this.workpaperForm.value.sampleName,
-            sampleMonthId: this.workpaperForm.value.sampleMonthId,
-            sampleSelectionMethodId: this.workpaperForm.value.sampleSelectionMethodId,
-            controlActivityNatureId: this.workpaperForm.value.controlActivityNatureId,
-            controlFrequencyId: this.workpaperForm.value.controlFrequencyId,
-            sampleSizeId: this.workpaperForm.value.sampleSizeId,
-            testingDetails: this.workpaperForm.value.testingDetails,
-            testingResults: this.workpaperForm.value.testingResults,
-            testingConclusionId: this.workpaperForm.value.testingConclusionId,
-            documentId: response.id,
-            testingDate: this.workpaperForm.value.testingDate,
-          }
-          this.http.put('workpaper',requestModel,null).subscribe(x=>{ 
-            let resp = x as BaseResponse;
-              if(resp.success){
-                this.AlertService.success('Work Paper Updated Successful');
-                this.router.navigate(['branch-audit/workpaper'], {
-                  // queryParams: {
-                  //   myParam: 'inserted', 
-                  // },
-                });
-              }else{
-                this.AlertService.errorDialog('Work Paper Updated Failed',resp.message);
-              }
-          }); 
+        this.http.post('workpaper',requestModel).subscribe(x=>{ 
+          let resp = x as BaseResponse;
+            if(resp.success){
+              this.AlertService.success('Work Paper Saved Successful');
+              this.router.navigate(['branch-audit/workpaper'], {
+                // queryParams: {
+                //   myParam: 'inserted', 
+                // },
+              });
+            }else{
+              this.AlertService.errorDialog('Work Paper Save Failed',resp.message);
+            }
+        }); 
+      }
+      else{
+        const requestModel = {
+          id:  this.workpaperForm.value?.id,
+          workPaperCode: this.workpaperForm.value?.workPaperCode,
+          auditScheduleId: this.paramId,
+          topicHeadId: this.workpaperForm.value.topicHeadId,
+          questionId: this.workpaperForm.value.questionId,
+          auditScheduleBranchId: this.workpaperForm.value.auditScheduleBranchId,
+          sampleName: this.workpaperForm.value.sampleName,
+          sampleMonthId: this.workpaperForm.value.sampleMonthId,
+          sampleSelectionMethodId: this.workpaperForm.value.sampleSelectionMethodId,
+          controlActivityNatureId: this.workpaperForm.value.controlActivityNatureId,
+          controlFrequencyId: this.workpaperForm.value.controlFrequencyId,
+          sampleSizeId: this.workpaperForm.value.sampleSizeId,
+          testingDetails: this.workpaperForm.value.testingDetails,
+          testingResults: this.workpaperForm.value.testingResults,
+          testingConclusionId: this.workpaperForm.value.testingConclusionId,
+          documentId:this.editDocId,
+          testingDate: this.workpaperForm.value.testingDate,
         }
-       
-      })
-        
+        console.log(requestModel)
+       // return;
+        this.http.put('workpaper',requestModel,null).subscribe(x=>{ 
+          let resp = x as BaseResponse;
+            if(resp.success){
+              this.AlertService.success('Work Paper Updated Successful');
+              this.router.navigate(['branch-audit/workpaper'], {
+                // queryParams: {
+                //   myParam: 'inserted', 
+                // },
+              });
+            }else{
+              this.AlertService.errorDialog('Work Paper Updated Failed',resp.message);
+            }
+        }); 
+      }
+
     }
     else{
       this.AlertService.error('Please fill all the data');
       this.workpaperForm.markAllAsTouched();
     }
+  }
+
+  async PostDocument(doc: DocumentSource, file: File, docId: any): Promise<any> {
+   let v = await firstValueFrom(this.http.postFile(doc.id == null ? '' : doc.id, doc.name == null ? '' : doc.name, '', file, 'Document')) as FileResponseInterface;   
+ 
+
+      let response = v as FileResponseInterface;
+      docId = response.id;
+
+   
+    return docId;
   }
 
   edit():void{
@@ -251,12 +268,26 @@ export class WorkpaperCreateComponent implements OnInit {
       this.topics = convertedResp.items;     
     })
   }
-    LoadQuestions() {
-    this.http.paginatedPost('questionnaire/paginated', 100, 1, {}).subscribe(resp => {
-      let convertedResp = resp as paginatedResponseInterface<questionnaire>;
-      this.questions = convertedResp.items;
-    })
+
+  onChangeTopicHeadDropdownList(filter:string){
+    if(filter=="null"){
+      this.questions = [];
+      this.workpaperForm.patchValue({questionId:"null"});
+    }
+    else{
+      this.http.post('questionnaire/filter', {FilterName: 'TopicHeadId', FilterValue: filter}).subscribe(resp => {
+        this.questions = resp as questionnaire[];
+      })
+    }
+   
   }
+
+  //   LoadQuestions() {
+  //   this.http.paginatedPost('questionnaire/paginated', 100, 1, {}).subscribe(resp => {
+  //     let convertedResp = resp as paginatedResponseInterface<questionnaire>;
+  //     this.questions = convertedResp.items;
+  //   })
+  // }
   LoadSampledMonths() {
     this.http.get('commonValueAndType/sampledmonth').subscribe(resp => {
       let convertedResp = resp as commonValueAndType[];
@@ -269,12 +300,9 @@ export class WorkpaperCreateComponent implements OnInit {
       this.sampleSelectionMethods = convertedResp;
     })
   }
-  LoadControlActivityNatures() {
-    this.http.get('commonValueAndType/natureofcontrolactivity').subscribe(resp => {
-      let convertedResp = resp as commonValueAndType[];
-      this.controlActivityNatures = convertedResp;
-    })
-  }
+
+
+  
 
    LoadBranches(scheduleId:any) {
     this.http.get('commonValueAndType/getAuditScheduleBranch?ScheduleId='+ scheduleId +'').subscribe(resp => {
@@ -300,9 +328,42 @@ export class WorkpaperCreateComponent implements OnInit {
     this.LoadControlActivityNatures();
     this.LoadTestingConclusions();
     this.LoadTopicHeadDropdownList();
-    this.LoadQuestions();   
+    //this.LoadQuestions();   
   }
 
+
+  LoadControlActivityNatures() {
+    this.http.get('commonValueAndType/natureofcontrolactivity').subscribe(resp => {
+      let convertedResp = resp as commonValueAndType[];
+      this.controlActivityNatures = convertedResp;
+    })
+  }
+
+  onChangeControlActivityNatures(isNull: string,event: any) {
+    if(isNull == "null"){
+      this.controlFrequencies = [];
+      this.sampleSizes = [];
+      this.workpaperForm.patchValue({controlFrequencyId:"null"});
+      this.workpaperForm.patchValue({sampleSizeId:"null"});     
+    }
+    else{
+      this.LoadControlFrequency(event);
+    }
+  }
+
+  onChnageLoadControlFrequency(isNull: string,event: any): void {
+    if(isNull == "null"){
+      this.sampleSizes = [];
+      this.workpaperForm.patchValue({sampleSizeId:"null"});
+    }
+    else{
+      this.http.get('commonValueAndType/ControlFrequencyId?ControlFrequencyId='+ event +'').subscribe(resp => {
+        let convertedResp = resp as commonValueAndType[];
+        this.sampleSizes = convertedResp;
+      })
+    }
+   
+  }
 
   LoadControlFrequency(event: any): void {
     this.http.get('commonValueAndType/ControlActivityId?ControlActivityId='+ event +'').subscribe(resp => {
@@ -315,19 +376,18 @@ export class WorkpaperCreateComponent implements OnInit {
     this.http.get('commonValueAndType/ControlFrequencyId?ControlFrequencyId='+ event +'').subscribe(resp => {
       let convertedResp = resp as commonValueAndType[];
       this.sampleSizes = convertedResp;
-    //  this.workpaperForm.patchValue({
-    //   sampleSizeId : convertedResp.text,
-     
-    // });
     })
   }
   onFileChange(event: any) {
     if (event.target.files.length > 0) {
-
+      this.isRequired=true;
       let doc = this.documentRawSourceInfo;    
       this.globalFile = event.target.files[0] as File;    
     }
 
+  }
+  onCancel(){
+    this.router.navigate(['branch-audit/workpaper']);
   }
 
 }

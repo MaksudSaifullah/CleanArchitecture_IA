@@ -162,6 +162,7 @@ using Internal.Audit.Application.Features.RiskAssesmentConsolidateDatas.Commands
 using Internal.Audit.Application.Features.RiskAssesmentConsolidateDatas.Queries;
 using Internal.Audit.Application.Features.AuditSchedules.Commands.UpdateSchedule;
 using Internal.Audit.Application.Features.AuditSchedules.Commands.DeleteAuditSchedule;
+using Internal.Audit.Application.Features.TopicHeads.Queries.GetTopicHeadByCountryIdAndDateRange;
 
 namespace Internal.Audit.Application.Mappings;
 
@@ -448,5 +449,6 @@ public class MappingProfile : Profile
         CreateMap<RiskAssesmentConsolidateData, RiskConsolidateDataGetQueryResponseDTO>().ReverseMap();
         CreateMap<AuditSchedule, UpdateScheduleCommand>().ReverseMap();
         CreateMap<AuditSchedule, DeleteAuditScheduleCommand>().ReverseMap();
+        CreateMap<TopicHead, TopicHeadByCountryIdAndDateRangeDTO>().ReverseMap();
     }
 }

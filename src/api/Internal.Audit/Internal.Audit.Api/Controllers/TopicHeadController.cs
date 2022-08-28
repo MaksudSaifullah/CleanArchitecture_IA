@@ -1,6 +1,7 @@
 ﻿using Internal.Audit.Application.Features.TopicHeads.Commands.AddTopicHead;
 using Internal.Audit.Application.Features.TopicHeads.Commands.DeleteTopicHead;
 using Internal.Audit.Application.Features.TopicHeads.Commands.UpdateTopicHead;
+using Internal.Audit.Application.Features.TopicHeads.Queries.GetTopicHeadByCountryIdAndDateRange;
 using Internal.Audit.Application.Features.TopicHeads.Queries.GetTopicHeadByFilter;
 using Internal.Audit.Application.Features.TopicHeads.Queries.GetTopicHeadById;
 using Internal.Audit.Application.Features.TopicHeads.Queries.GetTopicHeadList;
@@ -63,6 +64,13 @@ namespace Internal.Audit.Api.Controllers
             var result = await _mediator.Send(command);
             return Ok(result);
         }
+        [HttpPost("GetByCountryIdAndDateRange")]
+        public async Task<ActionResult<TopicHeadByCountryIdAndDateRangeDTO>> GetByCountryIdAndDateRange(TopicHeadByCountryIdAndDateRangeQuery query)
+        {
+            var result = await _mediator.Send(query);
+            return Ok(result);
+        }
+
 
     }
 

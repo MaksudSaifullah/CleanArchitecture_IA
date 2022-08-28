@@ -57,7 +57,6 @@ public class WorkPaper : EntityBase
     [Required]
     public Guid TestingConclusionId { get; set; }
 
-    [Required]
     public Guid DocumentId { get; set; }
 
     [Required]

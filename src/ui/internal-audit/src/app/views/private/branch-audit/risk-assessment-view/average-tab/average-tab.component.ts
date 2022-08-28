@@ -20,7 +20,7 @@ export class AverageTabComponent implements OnInit {
   @ViewChild(DataTableDirective, { static: false })
   dtElements: QueryList<DataTableDirective> | undefined;
   dtOptions: DataTables.Settings = {};
-  riskAssesmentOverdue: riskAssessmentOverdue[] = [];
+  riskAssesmentOverdue: any[] = [];
   pullFromAMBSForm: FormGroup;
   formService: FormService = new FormService();
   dataTableService: DatatableService = new DatatableService();
@@ -70,15 +70,10 @@ export class AverageTabComponent implements OnInit {
         searching: false,
         ordering: false,
     };
-    this.http.post('DataSync/getSyncData', Object.assign({}, this.pullFromAMBSForm.value,
-     {
-      typeId : 3,
-      pageSize: -1,
-      pageNumber: 0
-   })
+    this.http.post('DataSync/getSyncDataRiskAssesmentAvg', {countryId: this.pullFromAMBSForm.value.countryId, riskAssesmentId: this.id}
      )
       .subscribe(resp => {
-        this.riskAssesmentOverdue = resp as riskAssessmentOverdue[];
+        this.riskAssesmentOverdue = resp as any[];
         this.dtTrigger.next(resp);
       })
   }
@@ -87,19 +82,12 @@ export class AverageTabComponent implements OnInit {
     this.tableTempData = "abcd";
   }
 
-  onSubmit(modalId: any): void {
-    const localmodalId = modalId;
-    if (this.pullFromAMBSForm.valid) {
-      console.log(JSON.stringify(this.pullFromAMBSForm.value))
-      this.http.post('riskassessment', this.pullFromAMBSForm.value).subscribe(x => {
-        this.formService.onSaveSuccess(localmodalId, this.dtElements);
-        this.AlertService.success('Risk Assessment Saved Successfully');
-      });
-    }
-    else {
-      this.pullFromAMBSForm.markAllAsTouched();
-      return;
-    }
+  onSubmit(): void {
+    this.http.post('DataSync/getSyncDataRiskAssesmentAvgPost', {countryId: this.pullFromAMBSForm.value.countryId, riskAssesmentId: this.id}
+     )
+      .subscribe(resp => {
+        this.AlertService.success('Saved Successfully');
+      })
   }
 
   LoadCountry() {

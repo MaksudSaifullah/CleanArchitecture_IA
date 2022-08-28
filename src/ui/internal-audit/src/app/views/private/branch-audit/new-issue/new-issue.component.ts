@@ -63,6 +63,7 @@ export class NewIssueComponent implements OnInit {
     this.countryId = "3EE0AB25-BAF2-EC11-B3B0-00155D610B18"; //need to implement LoadCountryId()
     this.LoadAuditId();
     this.LoadIssueCode();
+    this.LoadAuditSchedules();
     this.LoadLikelihoodLevel();
     this.LoadImpactLevel();
   }
@@ -78,7 +79,7 @@ export class NewIssueComponent implements OnInit {
     })    
   }
   LoadCountryId(){
-//TODO: need to implement
+    //TODO: need to implement
   }
   LoadAuditId(){
     this.auditId = "BAudit10020220814130201"; //TODO: need to be received from audit view page
@@ -86,9 +87,15 @@ export class NewIssueComponent implements OnInit {
   }
   LoadAuditSchedules() 
   {
-    this.http.paginatedPost('country/paginated', 1000, 1, {}).subscribe(resp => {
-      let convertedResp = resp as paginatedResponseInterface<AuditSchedule>;
-      this.auditSchedules = convertedResp.items;     
+    const request={
+      creationId: "2C830294-8E18-ED11-B3B2-00155D610B18"
+    }
+    console.log(request)
+    this.http.post('AuditSchedule/getByAuditCreationId', request).subscribe(resp => {
+      let convertedResp = resp as AuditSchedule[];
+      
+      this.auditSchedules = convertedResp;     
+      console.log( this.auditSchedules)
     })
   }
   LoadLikelihoodLevel() {

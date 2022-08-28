@@ -58,8 +58,8 @@
                             formControlName="auditScheduleId" name="auditScheduleId" style="height: 70px;">
                             <option value="null">Select Schedule</option>
                             <option *ngFor="let schedule of auditSchedules" [value]="schedule.id">
-                              {{schedule.name}}
-                            </option>                  
+                              {{schedule.scheduleId}}
+                            </option>
                           </select>
                           <label for="auditScheduleId" >Schedule</label>          
                           <div cRow *ngIf="((issueForm.get('auditScheduleId')?.invalid && issueForm.get('auditScheduleId')?.errors)) &&

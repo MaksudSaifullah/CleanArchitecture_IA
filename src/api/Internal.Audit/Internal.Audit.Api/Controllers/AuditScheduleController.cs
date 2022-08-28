@@ -60,8 +60,8 @@ public class AuditScheduleController : ControllerBase
         return Ok(result);
     }
 
-    [HttpPost("getByCreationId")]
-    public async Task<ActionResult<GetAuditSchedulePlanIdResponseDTO>> GetByCreationId(GetAuditScheduleByCreationIdQuery query)
+    [HttpPost("getByAuditCreationId")]
+    public async Task<ActionResult<GetAuditSchedulePlanIdResponseDTO>> GetByAuditCreationId(GetAuditScheduleByCreationIdQuery query)
     {
         var result = await _mediator.Send(query);
         return Ok(result);

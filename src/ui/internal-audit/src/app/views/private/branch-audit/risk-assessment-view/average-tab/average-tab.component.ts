@@ -82,19 +82,12 @@ export class AverageTabComponent implements OnInit {
     this.tableTempData = "abcd";
   }
 
-  onSubmit(modalId: any): void {
-    const localmodalId = modalId;
-    if (this.pullFromAMBSForm.valid) {
-      console.log(JSON.stringify(this.pullFromAMBSForm.value))
-      this.http.post('riskassessment', this.pullFromAMBSForm.value).subscribe(x => {
-        this.formService.onSaveSuccess(localmodalId, this.dtElements);
-        this.AlertService.success('Risk Assessment Saved Successfully');
-      });
-    }
-    else {
-      this.pullFromAMBSForm.markAllAsTouched();
-      return;
-    }
+  onSubmit(): void {
+    this.http.post('DataSync/getSyncDataRiskAssesmentAvgPost', {countryId: this.pullFromAMBSForm.value.countryId, riskAssesmentId: this.id}
+     )
+      .subscribe(resp => {
+        this.AlertService.success('Saved Successfully');
+      })
   }
 
   LoadCountry() {

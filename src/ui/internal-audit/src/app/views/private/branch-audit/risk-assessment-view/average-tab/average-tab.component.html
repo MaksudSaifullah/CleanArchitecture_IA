@@ -4,7 +4,7 @@
             <div class="card">
                 <div class="card-header">
                     <div class="fa fa-align-justify">
-                        <button class="btn btn-success"> Save </button>
+                        <button class="btn btn-success" (click)="onSubmit()"> Save </button>
                     </div>
                 </div>
                 <div class="card-body">
@@ -43,7 +43,7 @@
                 </div>
             </div>
             <br>
-            <button class="btn btn-success text-end" (click)="onConsolidate()"> Consolidate Score </button>
+            <!-- <button class="btn btn-success text-end" (click)="onConsolidate()"> Consolidate Score </button> -->
             <div class="row overflow-auto">
                 <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="table table-bordered row-border datatableStyle hover" visibility="false">
                     <thead>
@@ -94,11 +94,15 @@
                             <td>{{ riskAssessment.staffTurnOver_Score }}</td>
                             <td>{{ riskAssessment.fraud_Rating }}</td>
                             <td>{{ riskAssessment.fraud_Score }}</td>
+                            <td>{{ riskAssessment.avg_Rating }}</td>
+                            <td>{{ riskAssessment.avg_Score }}</td>
+                            <td>{{ riskAssessment.auditFrequency_Type }}</td>
+                            
                         </tr>
                     </tbody>
                     <tbody *ngIf="riskAssesmentOverdue?.length == 0">
                         <tr>
-                            <td colspan="5" class="no-data-available">Please pull data!</td>
+                            <td colspan="5" class="no-data-available">Please fill up previous data!</td>
                         </tr>
                     </tbody>
                 </table>

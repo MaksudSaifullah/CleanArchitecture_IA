@@ -37,6 +37,7 @@
                   <thead>
                     <tr>
                       <th>Sample Name</th>
+                      <th>Document Name</th>
                       <th>Topic Head</th>
                       <th>Sample Month</th>
                       <th>Testing Conclusion</th>
@@ -46,6 +47,7 @@
                   <tbody *ngIf="workpapers?.length != 0">
                     <tr *ngFor="let workpaper of workpapers">
                       <td>{{ workpaper.sampleName }}</td>
+                      <td (click)="fileDownLoad(workpaper.documentId)" style="color:blue;cursor: pointer;">{{ workpaper.documentName }}</td>
                       <td>{{ workpaper.topicHeadName }}</td>
                       <td>{{ workpaper.sampleMonth }}</td>
                       <td>{{ workpaper.testingConclusion }}</td>

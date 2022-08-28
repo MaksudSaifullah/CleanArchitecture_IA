@@ -27,19 +27,17 @@ public class WorkPaperQueryRepository : QueryRepositoryBase<CompositeWorkPaper>,
     }
     public async Task<CompositeWorkPaper> GetById(Guid id)
     {
-        var query = @"Select wp.[Id]
+        var query = @"SELECT wp.[Id]
       ,wp.[WorkPaperCode]
-	  ,adtsdl.ScheduleId as ScheduleCode
-	  ,adtsdl.ScheduleStartDate as ScheduleStartDate
-	  ,adtsdl.ScheduleEndDate as ScheduleEndDate
+	  ,dcmnt.Name as DocumentName 
       ,wp.[AuditScheduleId]
+      ,wp.AuditScheduleBranchId
       ,wp.[TopicHeadId]
 	  ,th.Name as TopicHeadName
 	  ,wp.[QuestionId]
 	  ,qus.Question as QuestionName
 	  ,th.Name as TopicHeadName
-      ,wp.[BranchId] as AuditScheduleBranchId
-	  ,brnc.BranchName 
+	  , brn.BranchName
       ,wp.[SampleName]
       ,wp.[SampleMonthId]
 	  ,cvtsm.Text as SampleMonth
@@ -59,19 +57,28 @@ public class WorkPaperQueryRepository : QueryRepositoryBase<CompositeWorkPaper>,
 	  ,dcmnt.Name As DocumentName
 	  ,wp.TestingDate
       ,wp.[CommonValueAndTypeId]
+      ,wp.[CreatedBy]
+      ,wp.[CreatedOn]
+      ,wp.[UpdatedBy]
+      ,wp.[UpdatedOn]
+      ,wp.[ReviewedBy]
+      ,wp.[ReviewedOn]
+      ,wp.[ApprovedBy]
+      ,wp.[ApprovedOn]
       ,wp.[IsDeleted]
   FROM [BranchAudit].[WorkPaper] as wp
   Inner Join BranchAudit.AuditSchedule as adtsdl on wp.AuditScheduleId = adtsdl.Id
   Inner Join BranchAudit.TopicHead as th on wp.TopicHeadId = th.Id
   Inner Join BranchAudit.Questionnaire as qus on wp.QuestionId = qus.Id
-  Inner Join security.Branch as brnc on wp.BranchId = brnc.Id
+  --Inner Join BranchAudit.AuditScheduleBranch as adtbr on wp.AuditScheduleBranchId = adtbr.BranchId
+  Inner Join security.Branch as brn on  wp.AuditScheduleBranchId = brn.Id 
   Inner Join Config.CommonValueAndType cvtsm on wp.SampleMonthId = cvtsm.Id
   Inner Join Config.CommonValueAndType smpl on wp.SampleSelectionMethodId = smpl.Id
   Inner Join Config.CommonValueAndType cntrl on wp.ControlActivityNatureId = cntrl.Id
   Inner Join Config.CommonValueAndType frqn on wp.ControlFrequencyId = frqn.Id
   Inner Join Config.CommonValueAndType smplsz on wp.SampleSizeId = smplsz.Id
   Inner Join Config.CommonValueAndType cvttc on wp.TestingConclusionId = cvttc.Id
-  Inner Join common.Document dcmnt on wp.DocumentId = dcmnt.Id
+  INNER Join common.Document dcmnt on wp.DocumentId = dcmnt.Id
   WHERE  wp.[Id] = @id AND wp.IsDeleted = 0 ";
         var parameters = new Dictionary<string, object> { { "id", id } };
 

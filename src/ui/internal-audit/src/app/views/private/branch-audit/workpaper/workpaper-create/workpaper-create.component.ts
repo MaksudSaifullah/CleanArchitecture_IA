@@ -98,6 +98,7 @@ export class WorkpaperCreateComponent implements OnInit {
            this.LoadControlFrequency(workpaperData.controlActivityNatureId == null? null : workpaperData.controlActivityNatureId);
            this.LoadSampleSize(workpaperData.controlFrequencyId == null?  null : workpaperData.controlFrequencyId);
             this.LoadBranches(workpaperData.auditScheduleId);
+            console.log("dddddddddd", res);
            this.workpaperForm.patchValue({
 
             id: workpaperData.id,
@@ -161,26 +162,26 @@ export class WorkpaperCreateComponent implements OnInit {
       this.http.postFile(doc.id == null ? '' : doc.id, doc.name == null ? '' : doc.name, '', file, 'Document').subscribe(x => {
     
         let response = x as FileResponseInterface;
-        console.log("DDDDDDDDDDDDDDDDDDDDDD",this.workpaperForm.value);
-        const requestModel = {
-          workPaperCode: this.workpaperForm.value?.workPaperCode,
-          auditScheduleId: this.paramId,
-          topicHeadId: this.workpaperForm.value.topicHeadId,
-          questionId: this.workpaperForm.value.questionId,
-          auditScheduleBranchId: this.workpaperForm.value.auditScheduleBranchId,
-          sampleName: this.workpaperForm.value.sampleName,
-          sampleMonthId: this.workpaperForm.value.sampleMonthId,
-          sampleSelectionMethodId: this.workpaperForm.value.sampleSelectionMethodId,
-          controlActivityNatureId: this.workpaperForm.value.controlActivityNatureId,
-          controlFrequencyId: this.workpaperForm.value.controlFrequencyId,
-          sampleSizeId: this.workpaperForm.value.sampleSizeId,
-          testingDetails: this.workpaperForm.value.testingDetails,
-          testingResults: this.workpaperForm.value.testingResults,
-          testingConclusionId: this.workpaperForm.value.testingConclusionId,
-          documentId: response.id,
-          testingDate: this.workpaperForm.value.testingDate,
-        }
+       
         if(this.pageName== 'Create'){
+          const requestModel = {
+            workPaperCode: this.workpaperForm.value?.workPaperCode,
+            auditScheduleId: this.paramId,
+            topicHeadId: this.workpaperForm.value.topicHeadId,
+            questionId: this.workpaperForm.value.questionId,
+            auditScheduleBranchId: this.workpaperForm.value.auditScheduleBranchId,
+            sampleName: this.workpaperForm.value.sampleName,
+            sampleMonthId: this.workpaperForm.value.sampleMonthId,
+            sampleSelectionMethodId: this.workpaperForm.value.sampleSelectionMethodId,
+            controlActivityNatureId: this.workpaperForm.value.controlActivityNatureId,
+            controlFrequencyId: this.workpaperForm.value.controlFrequencyId,
+            sampleSizeId: this.workpaperForm.value.sampleSizeId,
+            testingDetails: this.workpaperForm.value.testingDetails,
+            testingResults: this.workpaperForm.value.testingResults,
+            testingConclusionId: this.workpaperForm.value.testingConclusionId,
+            documentId: response.id,
+            testingDate: this.workpaperForm.value.testingDate,
+          }
           this.http.post('workpaper',requestModel).subscribe(x=>{ 
             let resp = x as BaseResponse;
               if(resp.success){
@@ -196,7 +197,25 @@ export class WorkpaperCreateComponent implements OnInit {
           }); 
         }
         else{
-        
+          const requestModel = {
+            id:  this.workpaperForm.value?.id,
+            workPaperCode: this.workpaperForm.value?.workPaperCode,
+            auditScheduleId: this.paramId,
+            topicHeadId: this.workpaperForm.value.topicHeadId,
+            questionId: this.workpaperForm.value.questionId,
+            auditScheduleBranchId: this.workpaperForm.value.auditScheduleBranchId,
+            sampleName: this.workpaperForm.value.sampleName,
+            sampleMonthId: this.workpaperForm.value.sampleMonthId,
+            sampleSelectionMethodId: this.workpaperForm.value.sampleSelectionMethodId,
+            controlActivityNatureId: this.workpaperForm.value.controlActivityNatureId,
+            controlFrequencyId: this.workpaperForm.value.controlFrequencyId,
+            sampleSizeId: this.workpaperForm.value.sampleSizeId,
+            testingDetails: this.workpaperForm.value.testingDetails,
+            testingResults: this.workpaperForm.value.testingResults,
+            testingConclusionId: this.workpaperForm.value.testingConclusionId,
+            documentId: response.id,
+            testingDate: this.workpaperForm.value.testingDate,
+          }
           this.http.put('workpaper',requestModel,null).subscribe(x=>{ 
             let resp = x as BaseResponse;
               if(resp.success){

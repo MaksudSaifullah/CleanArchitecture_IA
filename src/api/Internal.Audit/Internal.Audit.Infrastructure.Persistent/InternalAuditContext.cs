@@ -72,6 +72,11 @@ public class InternalAuditContext: DbContext
     public DbSet<IssueOwner> IssueOwners { get; set; }
     public DbSet<RiskAssesmentConsolidateData> RiskAssesmentConsolidateDatas { get; set; }
 
+    public DbSet<ClosingMeetingMinute> ClosingMeetingMinutes { get; set; }
+    public DbSet<ClosingMeetingPresent> ClosingMeetingPresents { get; set; }
+    public DbSet<ClosingMeetingSubject> ClosingMeetingSubjects { get; set; }
+    public DbSet<ClosingMeetingApology> ClosingMeetingApologies { get; set; }
+
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         foreach (var entityType in modelBuilder.Model.GetEntityTypes())

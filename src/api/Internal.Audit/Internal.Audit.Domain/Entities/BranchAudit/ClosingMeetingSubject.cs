@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace Internal.Audit.Domain.Entities.BranchAudit;
 
-[Table("ClosingMeetingSubject", Schema = "BranchAudit")]
+[Table("ClosingMeetingSubjects", Schema = "BranchAudit")]
 public class ClosingMeetingSubject : EntityBase
 {
     public Guid UserId { get; set; }

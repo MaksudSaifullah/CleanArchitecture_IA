@@ -7,9 +7,9 @@ using System.Threading.Tasks;
 
 namespace Internal.Audit.Application.Contracts.Persistent.ClosingMeetingMinutes;
 
-public interface IClosingMeetingMinutesQueryRepository : IAsyncQueryRepository<CompositeClosingMeetingMinutes>
+public interface IClosingMeetingMinutesQueryRepository : IAsyncQueryRepository<CompositeClosingMeetingMinute>
 {
-    Task<(long, IEnumerable<CompositeClosingMeetingMinutes>)> GetAll(int pageSize, int pageNumber, dynamic search = null!);
+    Task<(long, IEnumerable<CompositeClosingMeetingMinute>)> GetAll(int pageSize, int pageNumber, dynamic search = null!);
 
-    Task<CompositeClosingMeetingMinutes> GetById(Guid id);
+    Task<CompositeClosingMeetingMinute> GetById(Guid id);
 }

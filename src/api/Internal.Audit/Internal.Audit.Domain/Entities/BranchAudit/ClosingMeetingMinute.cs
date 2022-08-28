@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 namespace Internal.Audit.Domain.Entities.BranchAudit;
 
 [Table("ClosingMeetingMinutes", Schema = "BranchAudit")]
-public class ClosingMeetingMinutes : EntityBase
+public class ClosingMeetingMinute : EntityBase
 {
     [Required]
     [MaxLength(100)]
@@ -44,6 +44,9 @@ public class ClosingMeetingMinutes : EntityBase
 
     [Required]
     public Guid AgreedByUserId { get; set; }
+
+    [Required]
+    public Guid MeetingSubjectId { get; set; }
 
     public virtual ICollection<ClosingMeetingPresent> UserPresents { get; set; } = null!;
     public virtual ICollection<ClosingMeetingApology> UserApologies { get; set; } = null!;

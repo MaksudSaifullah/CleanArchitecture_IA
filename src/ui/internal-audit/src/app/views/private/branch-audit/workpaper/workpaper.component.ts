@@ -12,6 +12,8 @@ import { topicHead } from 'src/app/core/interfaces/branch-audit/topicHead.interf
 import { commonValueAndType } from 'src/app/core/interfaces/configuration/commonValueAndType.interface';
 import { questionnaire } from 'src/app/core/interfaces/branch-audit/questionnaire.interface';
 import { Branch } from 'src/app/core/interfaces/branch-audit/branch.interface';
+import { Router } from '@angular/router';
+import { HelperService } from 'src/app/core/services/helper.service';
 
 @Component({
   selector: 'app-workpaper',
@@ -34,33 +36,14 @@ export class WorkpaperComponent implements OnInit {
   sampleSizes: commonValueAndType[] = [];
   testingConclusions: commonValueAndType[] = [];
   searchForm: FormGroup;
-  workpaperForm: FormGroup;
   formService: FormService = new FormService();
   dataTableService: DatatableService = new DatatableService();
   dtTrigger: Subject<any> = new Subject<any>();
  
 
-  constructor(private http: HttpService , private fb: FormBuilder, private AlertService: AlertService) {
-    this.loadDropDownValues();
-    this.workpaperForm = this.fb.group({
-      id: [''],
-      workPaperCode: [''],
-      auditScheduleId:[null,[Validators.required, Validators.pattern("^(?!null$).*$")]],
-      topicHeadId:[null,[Validators.required, Validators.pattern("^(?!null$).*$")]],
-      questionId:[null,[Validators.required, Validators.pattern("^(?!null$).*$")]],
-      branchId:[null,[Validators.required, Validators.pattern("^(?!null$).*$")]],
-      sampleName: [''],
-      sampleMonthId:[null,[Validators.required, Validators.pattern("^(?!null$).*$")]],
-      sampleSelectionMethodId:[null,[Validators.required, Validators.pattern("^(?!null$).*$")]],
-      controlActivityNatureId:[null,[Validators.required, Validators.pattern("^(?!null$).*$")]],
-      controlFrequencyId:[null,[Validators.required, Validators.pattern("^(?!null$).*$")]],
-      sampleSizeId:[null,[Validators.required, Validators.pattern("^(?!null$).*$")]],
-      testingDetails: [''],
-      testingResults: [''],
-      testingConclusionId:[null,[Validators.required, Validators.pattern("^(?!null$).*$")]],
-      documentId:[null,[Validators.required, Validators.pattern("^(?!null$).*$")]],
-      testingDate: [Date,[Validators.required]],
-    });
+  constructor(private http: HttpService,private router: Router, private helper: HelperService , private fb: FormBuilder, private AlertService: AlertService) {
+   this.loadDropDownValues();
+
     this.searchForm = this.fb.group(
       {
         topicHeadId:[''],
@@ -90,36 +73,38 @@ export class WorkpaperComponent implements OnInit {
 
   }
 
-  onSubmit(modalId:any):void{
-    const localmodalId = modalId;
-      if(this.workpaperForm.valid){
-        if(this.formService.isEdit(this.workpaperForm.get('id') as FormControl)){
-          this.http.put('workpaper',this.workpaperForm.value,null).subscribe(x=>{
-            this.formService.onSaveSuccess(localmodalId,this.datatableElement);
-            this.AlertService.success('Workpaper Updated Successfully');
-            });
-        }
-        else{
-          this.http.post('workpaper',this.workpaperForm.value).subscribe(x=>{ 
-            this.formService.onSaveSuccess(localmodalId, this.datatableElement);
-            this.AlertService.success('Workpaper Saved Successfully');
-          }); 
+  // onSubmit(modalId:any):void{
+  //   const localmodalId = modalId;
+  //     if(this.workpaperForm.valid){
+  //       if(this.formService.isEdit(this.workpaperForm.get('id') as FormControl)){
+  //         this.http.put('workpaper',this.workpaperForm.value,null).subscribe(x=>{
+  //           this.formService.onSaveSuccess(localmodalId,this.datatableElement);
+  //           this.AlertService.success('Workpaper Updated Successfully');
+  //           });
+  //       }
+  //       else{
+  //         this.http.post('workpaper',this.workpaperForm.value).subscribe(x=>{ 
+  //           this.formService.onSaveSuccess(localmodalId, this.datatableElement);
+  //           this.AlertService.success('Workpaper Saved Successfully');
+  //         }); 
           
-        }
-      }
+  //       }
+  //     }
+  // }
+
+  // edit(id: any):void {
+  //   this.http
+  //     .getById('workpaper',id)
+  //     .subscribe(res => {
+  //         const workpaperResponse = res as workpaper;
+  //        //this.workpaperForm.setValue({id : workpaperResponse.id, name : workpaperResponse.name, remarks: countryResponse.remarks, code: countryResponse.code});
+  //     });
+  // }
+
+  edit(id:string){
+    this.router.navigate(['/branch-audit/workpaperCreate/'+ id] );
   }
 
-  edit(modalId:any, workpaper:any):void {
-    const localmodalId = modalId;
-    console.log(workpaper.id)
-    this.http
-      .getById('workpaper',workpaper.id)
-      .subscribe(res => {
-          const workpaperResponse = res as workpaper;
-         // this.workpaperForm.setValue({id : workpaperResponse.id, name : workpaperResponse.name, remarks: countryResponse.remarks, code: countryResponse.code});
-      });
-      localmodalId.visible = true;
-  }
   delete(id:string){
     const that = this;
     this.AlertService.confirmDialog().then(res =>{
@@ -131,33 +116,28 @@ export class WorkpaperComponent implements OnInit {
       }
     });
   }
-  reset(){
-    this.workpaperForm.reset();
-  }
+  // reset(){
+  //   this.workpaperForm.reset();
+  // }
   search(){
     this.dataTableService.redraw(this.datatableElement);
   }
 
-  // LoadTopicHeads() {
-  //   this.http.paginatedPost('topicHead/paginated', 100, 1, {}).subscribe(resp => {
-  //     let convertedResp = resp as paginatedResponseInterface<topicHead>;
-  //     this.topicheads = convertedResp.items;     
-  //   })
-  // }
-  // LoadYear() {
-  //   this.http.get('topicHead/paginated').subscribe(resp => {
-  //     let convertedResp = resp as commonValueAndType[];
-  //     this.year = convertedResp; 
-  //   })
-  // }
-  
-  // LoadTopics() {
-  //   this.http.paginatedPost('topicHead/paginated', 100, 1, {}).subscribe(resp => {
-  //     let convertedResp = resp as paginatedResponseInterface<topicHead>;
-  //     this.topics = convertedResp.items;
-  //     console.log(this.topics);
-  //   })
-  // }
+  fileDownLoad(d: any) {
+    console.log(d);
+    this.http.getFilesAsBlob('Document/get-file-stream?Id=' + d,
+    )
+      .subscribe((resp: any) => {
+        let fileName = resp.headers.get('content-disposition');
+        console.log(fileName);
+        //  return;
+
+
+        this.helper.downloadFile(resp);
+
+      }), (error: any) => console.log('Error downloading the file'),
+      () => console.info('File downloaded successfully');
+  }
 
   LoadTopicHeadDropdownList() 
   {
@@ -166,69 +146,10 @@ export class WorkpaperComponent implements OnInit {
       this.topics = convertedResp.items;     
     })
   }
-    LoadQuestions() {
-    this.http.paginatedPost('questionnaire/paginated', 100, 1, {}).subscribe(resp => {
-      let convertedResp = resp as paginatedResponseInterface<questionnaire>;
-      this.questions = convertedResp.items;
-    })
-  }
-  LoadSampledMonths() {
-    this.http.get('commonValueAndType/sampledmonth').subscribe(resp => {
-      let convertedResp = resp as commonValueAndType[];
-      this.sampledmonths = convertedResp;
-    })
-  }
-  LoadSampledSelectionMethods() {
-    this.http.get('commonValueAndType/sampleselectionmethod').subscribe(resp => {
-      let convertedResp = resp as commonValueAndType[];
-      this.sampleSelectionMethods = convertedResp;
-    })
-  }
-  LoadControlActivityNatures() {
-    this.http.get('commonValueAndType/natureofcontrolactivity').subscribe(resp => {
-      let convertedResp = resp as commonValueAndType[];
-      this.controlActivityNatures = convertedResp;
-    })
-  }
 
-  LoadControlFrequencies() {
-    this.http.get('commonValueAndType/controlfrequency').subscribe(resp => {
-      let convertedResp = resp as commonValueAndType[];
-      this.controlFrequencies = convertedResp;
-    })
-  }
-  LoadSampleSizes() {
-    this.http.get('commonValueAndType/samplesize').subscribe(resp => {
-      let convertedResp = resp as commonValueAndType[];
-      this.sampleSizes = convertedResp;
-    })
-  }
-
-  LoadBranches() {
-    this.http.get('commonValueAndType/getBranch').subscribe(resp => {
-      let convertedResp = resp as Branch[];
-      this.branches = convertedResp;
-      console.log(this.branches);
-      
-    })
-  }
-  LoadTestingConclusions() {
-    this.http.get('commonValueAndType/detestconclusion').subscribe(resp => {
-      let convertedResp = resp as commonValueAndType[];
-      this.testingConclusions = convertedResp;
-    })
-  }
   loadDropDownValues() 
   {
-    this.LoadSampledMonths();
-    this.LoadSampledSelectionMethods();
-    this.LoadControlActivityNatures();
-    this.LoadControlFrequencies();
-    this.LoadSampleSizes();
-    this.LoadTestingConclusions();
     this.LoadTopicHeadDropdownList();
-    this.LoadQuestions();
-    //this.LoadBranches();
   }
 
 }

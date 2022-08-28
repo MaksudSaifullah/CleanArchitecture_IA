@@ -10,9 +10,9 @@ using System.Threading.Tasks;
 
 namespace Internal.Audit.Infrastructure.Persistent.Repositories.UploadDocuments;
 
-public class UploadDocumentQueryRepository : QueryRepositoryBase<UploadDocument>, IUploadDocumentQueryRepository
+public class RiskAssesmentConsolidateDataQueryrepository : QueryRepositoryBase<UploadDocument>, IUploadDocumentQueryRepository
 {
-    public UploadDocumentQueryRepository(string _connectionString) : base(_connectionString)
+    public RiskAssesmentConsolidateDataQueryrepository(string _connectionString) : base(_connectionString)
     {
     }
 

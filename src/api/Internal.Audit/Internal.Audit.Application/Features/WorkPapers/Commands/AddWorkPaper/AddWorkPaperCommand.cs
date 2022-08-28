@@ -13,7 +13,7 @@ public class AddWorkPaperCommand : IRequest<AddWorkPaperResponseDTO>
     public Guid AuditScheduleId { get; set; }
     public Guid TopicHeadId { get; set; }
     public Guid QuestionId { get; set; }
-    public Guid BranchId { get; set; }
+    public Guid AuditScheduleBranchId { get; set; }
     public string? SampleName { get; set; }
     public Guid SampleMonthId { get; set; }
     public Guid SampleSelectionMethodId { get; set; }
@@ -23,6 +23,6 @@ public class AddWorkPaperCommand : IRequest<AddWorkPaperResponseDTO>
     public string? TestingDetails { get; set; } = null!;
     public string? TestingResults { get; set; } = null!;
     public Guid TestingConclusionId { get; set; }
-    public Guid DocumentId { get; set; }
+    public Guid? DocumentId { get; set; } = null;
     public DateTime TestingDate { get; set; }
 }

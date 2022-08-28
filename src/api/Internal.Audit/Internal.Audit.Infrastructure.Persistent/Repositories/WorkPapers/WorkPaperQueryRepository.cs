@@ -29,21 +29,56 @@ public class WorkPaperQueryRepository : QueryRepositoryBase<CompositeWorkPaper>,
     {
         var query = @"SELECT wp.[Id]
       ,wp.[WorkPaperCode]
-	  ,th.Name
+	  ,dcmnt.Name as DocumentName 
+      ,wp.[AuditScheduleId]
+      ,wp.AuditScheduleBranchId
       ,wp.[TopicHeadId]
+	  ,th.Name as TopicHeadName
+	  ,wp.[QuestionId]
+	  ,qus.Question as QuestionName
+	  ,th.Name as TopicHeadName
+	  , brn.BranchName
       ,wp.[SampleName]
-	  ,cvtsm.Text As SampleMonth
       ,wp.[SampleMonthId]
-	  ,cvttc.Text As TestingConclusion
+	  ,cvtsm.Text as SampleMonth
+      ,wp.[SampleSelectionMethodId]
+	  ,smpl.Text as SampleSelectionMethod
+      ,wp.[ControlActivityNatureId]
+	  ,cntrl.Text as ControlActivityNature
+      ,wp.[ControlFrequencyId]
+	  ,frqn.Text as ControlFrequency
+      ,wp.[SampleSizeId]
+	  ,smplsz.Text as SampleSize
+      ,wp.[TestingDetails]
+      ,wp.[TestingResults]
       ,wp.[TestingConclusionId]
-	  ,dcmnt.Name As DocumentName
+	  ,cvttc.Text As TestingConclusion
       ,wp.[DocumentId]
+	  ,dcmnt.Name As DocumentName
+	  ,wp.TestingDate
       ,wp.[CommonValueAndTypeId]
+      ,wp.[CreatedBy]
+      ,wp.[CreatedOn]
+      ,wp.[UpdatedBy]
+      ,wp.[UpdatedOn]
+      ,wp.[ReviewedBy]
+      ,wp.[ReviewedOn]
+      ,wp.[ApprovedBy]
+      ,wp.[ApprovedOn]
+      ,wp.[IsDeleted]
   FROM [BranchAudit].[WorkPaper] as wp
-  Inner Join BranchAudit.TopicHead th on wp.TopicHeadId = th.Id
+  Inner Join BranchAudit.AuditSchedule as adtsdl on wp.AuditScheduleId = adtsdl.Id
+  Inner Join BranchAudit.TopicHead as th on wp.TopicHeadId = th.Id
+  Inner Join BranchAudit.Questionnaire as qus on wp.QuestionId = qus.Id
+  --Inner Join BranchAudit.AuditScheduleBranch as adtbr on wp.AuditScheduleBranchId = adtbr.BranchId
+  Inner Join security.Branch as brn on  wp.AuditScheduleBranchId = brn.Id 
   Inner Join Config.CommonValueAndType cvtsm on wp.SampleMonthId = cvtsm.Id
+  Inner Join Config.CommonValueAndType smpl on wp.SampleSelectionMethodId = smpl.Id
+  Inner Join Config.CommonValueAndType cntrl on wp.ControlActivityNatureId = cntrl.Id
+  Inner Join Config.CommonValueAndType frqn on wp.ControlFrequencyId = frqn.Id
+  Inner Join Config.CommonValueAndType smplsz on wp.SampleSizeId = smplsz.Id
   Inner Join Config.CommonValueAndType cvttc on wp.TestingConclusionId = cvttc.Id
-  Inner Join common.Document dcmnt on wp.DocumentId = dcmnt.Id
+  INNER Join common.Document dcmnt on wp.DocumentId = dcmnt.Id
   WHERE  wp.[Id] = @id AND wp.IsDeleted = 0 ";
         var parameters = new Dictionary<string, object> { { "id", id } };
 

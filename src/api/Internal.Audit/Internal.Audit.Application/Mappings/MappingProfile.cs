@@ -155,7 +155,14 @@ using Internal.Audit.Application.Features.CommonValueAndTypes.Queries.GetBranchb
 using Internal.Audit.Application.Features.AmbsDataSyncs.Queries.GetRiskAssesmentData;
 using Internal.Audit.Application.Features.UploadDocuments.Commands.AddUploadDocument;
 using Internal.Audit.Application.Features.UploadDocuments.Queries.GetUploadedDocumentListByRoled;
+using Internal.Audit.Application.Features.AuditSchedules.Queries.GetAuditScheduleByPlanId;
 using Internal.Audit.Application.Features.Issues.Queries.GetIssueList;
+using Internal.Audit.Application.Features.AuditSchedules.Queries.GetAuditScheduleById;
+using Internal.Audit.Application.Features.RiskAssesmentConsolidateDatas.Commands.AddConsolidateData;
+using Internal.Audit.Application.Features.RiskAssesmentConsolidateDatas.Queries;
+using Internal.Audit.Application.Features.AuditSchedules.Commands.UpdateSchedule;
+using Internal.Audit.Application.Features.AuditSchedules.Commands.DeleteAuditSchedule;
+using Internal.Audit.Application.Features.TopicHeads.Queries.GetTopicHeadByCountryIdAndDateRange;
 using Internal.Audit.Application.Features.Issues.Queries.GetIssueById;
 
 namespace Internal.Audit.Application.Mappings;
@@ -430,8 +437,20 @@ public class MappingProfile : Profile
         CreateMap<UploadDocument, GetUploadedDocumentLstByRoleIdDTO>().ReverseMap();
         CreateMap<UploadedDocumentsNotify, UploadedDocumentsNotifyDTO>().ReverseMap();
         CreateMap<Document, DocumentDTOc>().ReverseMap();
+        CreateMap<AuditCreationDTOs, AuditCreation>().ReverseMap();
+        CreateMap<AuditScheduleParticipantsDTOs, AuditScheduleParticipants>().ReverseMap();
+        CreateMap<AuditScheduleBranchs, AuditScheduleBranch>().ReverseMap();
+        CreateMap<AuditTypeDTOs, AuditType>().ReverseMap();
+        CreateMap<UserDTOs, User>().ReverseMap();
+        CreateMap<EmployeeDTOs, Employee>().ReverseMap();
+        CreateMap<GetAuditSchedulePlanIdResponseDTO, AuditSchedule>().ReverseMap();
 
-
-
+        CreateMap<CompositAuditSchedule, AuditScheduleByIdDTO>().ReverseMap();
+        CreateMap<AuditSchedule, AuditScheduleByIdDTO>().ReverseMap();
+        CreateMap<RiskAssesmentConsolidateData, AddConsolidateDataCommand>().ReverseMap();
+        CreateMap<RiskAssesmentConsolidateData, RiskConsolidateDataGetQueryResponseDTO>().ReverseMap();
+        CreateMap<AuditSchedule, UpdateScheduleCommand>().ReverseMap();
+        CreateMap<AuditSchedule, DeleteAuditScheduleCommand>().ReverseMap();
+        CreateMap<TopicHead, TopicHeadByCountryIdAndDateRangeDTO>().ReverseMap();
     }
 }

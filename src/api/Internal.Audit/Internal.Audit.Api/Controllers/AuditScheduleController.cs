@@ -5,6 +5,8 @@ using Internal.Audit.Application.Features.AuditSchedules.Queries.GetAuditSchedul
 using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Internal.Audit.Application.Features.AuditSchedules.Commands.UpdateSchedule;
+using Internal.Audit.Application.Features.AuditSchedules.Commands.DeleteAuditSchedule;
 
 namespace Internal.Audit.Api.Controllers;
 
@@ -34,6 +36,18 @@ public class AuditScheduleController : ControllerBase
     }
     [HttpPost]
     public async Task<ActionResult<AddAuditScheduleResponseDTO>> Add(AddAuditScheduleCommand command)
+    {
+        var result = await _mediator.Send(command);
+        return Ok(result);
+    }
+    [HttpPut]
+    public async Task<ActionResult<UpdateScheduleResponseDTO>> Update(UpdateScheduleCommand command)
+    {
+        var result = await _mediator.Send(command);
+        return Ok(result);
+    }
+    [HttpDelete]
+    public async Task<ActionResult<DeleteAuditScheduleResponseDTO>> Delete(DeleteAuditScheduleCommand command)
     {
         var result = await _mediator.Send(command);
         return Ok(result);

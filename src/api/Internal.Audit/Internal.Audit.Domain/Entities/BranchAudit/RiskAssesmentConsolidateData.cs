@@ -25,5 +25,8 @@ public class RiskAssesmentConsolidateData : EntityBase
     public string Collection_Rating { get; set; }
     public string Disbursement_Score { get; set; }
     public string Disbursement_Rating { get; set; }
+    public string Avg_Score { get; set; }
+    public string Avg_Rating { get; set; }
+    public string AuditFrequency_Type { get; set; }
 
 }

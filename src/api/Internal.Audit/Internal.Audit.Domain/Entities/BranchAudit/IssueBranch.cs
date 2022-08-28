@@ -18,7 +18,7 @@ public class IssueBranch : EntityBase
 
     [ForeignKey("IssueId")]
     public virtual Issue Issue { get; set; } = null!;
-    [ForeignKey("BranchId")]
+    [NotMapped]
     public virtual Branch Branch { get; set; } = null!;
 }
 

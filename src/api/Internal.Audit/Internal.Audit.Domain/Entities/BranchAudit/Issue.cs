@@ -64,9 +64,7 @@ public class Issue : EntityBase
     public string? Branch { get; set; }
 
 
-	//TODO
-	[ForeignKey("AuditCreationId")]
-	public virtual AuditCreation AuditCreation { get; set; } = null!;
+
 	[ForeignKey("AuditScheduleId")]
 	public virtual AuditSchedule AuditSchedule { get; set; } = null!;
 	//[ForeignKey("BranchId")]
@@ -76,7 +74,7 @@ public class Issue : EntityBase
 	public virtual CommonValueAndType CommonValueRatingType { get; set; }
 	public virtual CommonValueAndType CommonValueStatusType { get; set; } = null!;
 	public virtual ICollection<IssueOwner> IssueOwnerList { get; set; } = null!;
-    public virtual ICollection<IssueBranch> IssueBranchList { get; set; } = null!;
-    //public virtual ICollection<AuditScheduleBranch> AuditScheduleBranch { get; set; } = null!;
-   // public virtual ICollection<ActionPlan> ActionPlanList { get; set; } = null!;
+	public virtual ICollection<IssueBranch> IssueBranchList { get; set; } = null!;
+	//public virtual ICollection<AuditScheduleBranch> AuditScheduleBranch { get; set; } = null!;
+	// public virtual ICollection<ActionPlan> ActionPlanList { get; set; } = null!;
 }

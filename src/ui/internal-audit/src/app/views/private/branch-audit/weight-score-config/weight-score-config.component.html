@@ -1,0 +1,86 @@
+<c-col xs="12">
+    <c-card class="mb-4">
+        <c-card-header>
+            <strong>Weight Score Configuraiton</strong>
+        </c-card-header>
+        <c-card-body>
+            <form [formGroup]="weightConfigForm" (ngSubmit)="onSubmit()" novalidate>
+
+                <c-row [gutter]="{g: 4}">
+
+                    <c-col md>
+                        <div cFormFloating>
+                          <select aria-label="Floating label select example" cSelect id="countryId"
+                            formControlName="countryId" name="countryId">
+                            <option value="null">Select Country</option>
+                            <option *ngFor="let country of countries" [value]="country.id">
+                              {{country.name}}
+                            </option>
+                          </select>
+                          <label for="countryId" class="dropdownLabel">Country</label>
+                        </div>
+      
+                        <div cRow *ngIf="weightConfigForm.get('countryId')?.invalid &&
+                        weightConfigForm.get('countryId')?.errors &&
+                              (weightConfigForm.get('countryId')?.dirty || weightConfigForm.get('countryId')?.touched)">
+                          <small class="text-danger" *ngIf="weightConfigForm.get('countryId').hasError('required')">
+                            This field is required.
+                          </small>
+      
+      
+                        </div>
+                      </c-col>
+                      <c-col md>
+                        <div cFormFloating>
+                            <input class="form-control" placeholder="effectiveFrom" formControlName="effectiveFrom" id="effectiveFrom" type="date" >
+                            <label for="effectiveFrom">Effective From</label>               
+                            <div cRow *ngIf="weightConfigForm.get('effectiveTo')?.invalid &&
+                            weightConfigForm.get('effectiveFrom')?.errors &&
+                                  (weightConfigForm.get('effectiveFrom')?.dirty || weightConfigForm.get('effectiveFrom')?.touched)">
+                              <small class="text-danger"
+                                  *ngIf="weightConfigForm.get('effectiveFrom').hasError('required')"
+                                  >
+                                  This field is required.
+                              </small>
+                            </div>
+                            </div>                        
+                        </c-col>
+
+
+                        <c-col md>
+                            <div cFormFloating>
+                                <input class="form-control" placeholder="effectiveTo" formControlName="effectiveTo" id="effectiveTo" type="date" >
+                                <label for="effectiveTo">Effective To</label>               
+                                <div cRow *ngIf="weightConfigForm.get('effectiveTo')?.invalid &&
+                                weightConfigForm.get('effectiveTo')?.errors &&
+                                      (weightConfigForm.get('effectiveTo')?.dirty || weightConfigForm.get('effectiveTo')?.touched)">
+                                  <small class="text-danger"
+                                      *ngIf="weightConfigForm.get('effectiveTo').hasError('required')"
+                                      >
+                                      This field is required.
+                                  </small>
+                                </div>
+                                <small class="text-danger" *ngIf="weightConfigForm.hasError('invalidDateRange')">
+                                    Effective To should be greater than Effective From.
+                                  </small>
+                                </div>   
+                        </c-col>
+
+                </c-row>
+                <br>
+                <c-col xs="12">
+                    <c-col md>
+                      <button cButton class="btn btn-primary btnSaveColor me-1" (click)="onSearch()">
+                         Search
+                      </button>
+                      <button cButton class="btn btn-danger btnCancelColor me-1" (click)="onCancel()" >
+                        <svg cIcon name="cilX" size="md" title="Close Button Icon"></svg>Cancel
+                      </button>
+          
+                    </c-col>
+                </c-col>
+            </form>
+
+        </c-card-body>
+    </c-card>
+</c-col>

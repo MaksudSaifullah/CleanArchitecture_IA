@@ -107,6 +107,10 @@ export const navItems: INavData[] = [
         name: 'Issue',
         url: '/branch-audit/issue-list'
       },
+      {
+        name: 'Weight Score Config',
+        url: '/branch-audit/weight-score-config'
+      },
     ]
   },
   {

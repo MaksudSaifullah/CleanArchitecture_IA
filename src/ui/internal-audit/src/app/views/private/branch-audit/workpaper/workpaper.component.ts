@@ -42,7 +42,7 @@ export class WorkpaperComponent implements OnInit {
  
 
   constructor(private http: HttpService,private router: Router, private helper: HelperService , private fb: FormBuilder, private AlertService: AlertService) {
-   //this.loadDropDownValues();
+   this.loadDropDownValues();
 
     this.searchForm = this.fb.group(
       {
@@ -139,5 +139,17 @@ export class WorkpaperComponent implements OnInit {
       () => console.info('File downloaded successfully');
   }
 
+  LoadTopicHeadDropdownList() 
+  {
+    this.http.paginatedPost('topicHead/paginated', 1000, 1, '').subscribe(resp => {
+      let convertedResp = resp as paginatedResponseInterface<topicHead>;
+      this.topics = convertedResp.items;     
+    })
+  }
+
+  loadDropDownValues() 
+  {
+    this.LoadTopicHeadDropdownList();
+  }
 
 }

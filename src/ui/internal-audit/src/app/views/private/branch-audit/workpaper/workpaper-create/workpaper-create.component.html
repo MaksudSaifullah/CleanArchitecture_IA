@@ -30,7 +30,7 @@
                   <div class="col-md-4">
                     <div form-floating>
                       <select aria-label="Floating label select example" cSelect id="topicHeadId"
-                        formControlName="topicHeadId" name="topicHeadId">
+                        formControlName="topicHeadId" name="topicHeadId"  (change) = "onChangeTopicHeadDropdownList(topic.value)" #topic>
                         <option value=null>Select Topic Head</option>
                         <option *ngFor="let topicHead of topics" [value]="topicHead.id">
                           {{topicHead.name}}
@@ -73,8 +73,8 @@
                         </option>
                       </select>
                     </div>
-                    <div cRow *ngIf="(workpaperForm.get('branchId')?.invalid && workpaperForm.get('branchId')?.errors) &&         
-                    (workpaperForm.get('branchId')?.dirty || workpaperForm.get('branchId')?.touched)">
+                    <div cRow *ngIf="(workpaperForm.get('auditScheduleBranchId')?.invalid && workpaperForm.get('auditScheduleBranchId')?.errors) &&         
+                    (workpaperForm.get('auditScheduleBranchId')?.dirty || workpaperForm.get('auditScheduleBranchId')?.touched)">
                     <small class="text-danger">
                       This field is required.
                     </small>                                 
@@ -84,25 +84,30 @@
                 </div>
         
                 <div class="row">
+
                   <div class="col-md-4">
                     <div class="form-floating">
                       <input class="form-control" placeholder="testingDate" formControlName="testingDate" id="testingDate" type="date" >
                       <label for="testingDate">Testing Date</label>
                     </div>
-                    <div cRow *ngIf="workpaperForm.get('testingDate')?.invalid && workpaperForm.get('testingDate')?.errors &&
+                    <div cRow *ngIf="workpaperForm.get('testingDate')?.invalid &&
+                    workpaperForm.get('testingDate')?.errors &&
                           (workpaperForm.get('testingDate')?.dirty || workpaperForm.get('testingDate')?.touched)">
-                      <small class="text-danger" *ngIf="workpaperForm.get('testingDate').hasError('required')">
-                        This field is required.
-                      </small>                                 
+                      <small class="text-danger"
+                          *ngIf="workpaperForm.get('testingDate').hasError('required')">
+                          This field is required.
+                      </small>
                     </div>
                     <br>
                   </div>
+
                   <div class="col-md-4">
                     <div class="form-floating">
                       <input class="form-control" placeholder="scheduleStartDate" formControlName="scheduleStartDate" id="scheduleStartDate" type="date" [readonly]="true" >
                       <label for="effectiveTo">Audit Schedule From</label>
                     </div>
                   </div>
+
                   <br>
                   <div class="col-md-4">
                     <div class="form-floating">
@@ -110,6 +115,7 @@
                       <label for="effectiveTo">Audit Schedule To</label>
                     </div>
                   </div>
+
                 </div>
         
                 <div class="row">
@@ -174,7 +180,8 @@
                   <div class="col-md-4">
                     <div form-floating>
                       <select aria-label="Floating label select example" cSelect id="controlActivityNatureId"
-                        formControlName="controlActivityNatureId" name="controlActivityNatureId" (change)="LoadControlFrequency($event.target.value)">
+                        formControlName="controlActivityNatureId" name="controlActivityNatureId" 
+                        (change)="onChangeControlActivityNatures( commonValueAndType.value ,$event.target.value)" #commonValueAndType>
                         <option value="null">Select Control Activity Nature</option>
                         <option *ngFor="let commonValueAndType of controlActivityNatures" [value]="commonValueAndType.id">
                           {{commonValueAndType.text}}
@@ -192,7 +199,8 @@
                   <div class="col-md-4">
                     <div form-floating>
                       <select aria-label="Floating label select example" cSelect id="controlFrequencyId"
-                        formControlName="controlFrequencyId" name="controlFrequencyId" (change)="LoadSampleSize($event.target.value)">
+                        formControlName="controlFrequencyId" name="controlFrequencyId" 
+                        (change)="onChnageLoadControlFrequency(commonValueAndTypeCF.value, $event.target.value)" #commonValueAndTypeCF>
                         <option value="null">Select Control Freequency</option>
                         <option *ngFor="let commonValueAndType of controlFrequencies" [value]="commonValueAndType.id">
                           {{commonValueAndType.text}}
@@ -217,6 +225,12 @@
                         </option>
                       </select>
                     </div>
+                    <div cRow *ngIf="(workpaperForm.get('sampleSizeId')?.invalid && workpaperForm.get('sampleSizeId')?.errors) &&         
+                    (workpaperForm.get('sampleSizeId')?.dirty || workpaperForm.get('sampleSizeId')?.touched)">
+                    <small class="text-danger">
+                      This field is required.
+                    </small>                                 
+                  </div> 
                    <br/>
                   </div>
                 </div>
@@ -274,6 +288,15 @@
                   <div class="col-md-6">
                       <input type="file" class="form-control" formControlName="documentId" id="documentId" placeholder="documentId" (change)="onFileChange($event)">
                       <br>
+
+                      <div cRow *ngIf="workpaperForm.get('documentId')?.invalid &&
+                      workpaperForm.get('documentId')?.errors &&
+                            (workpaperForm.get('documentId')?.dirty || workpaperForm.get('documentId')?.touched)">
+                          <small class="text-danger" *ngIf="workpaperForm.get('documentId').hasError('required')">
+                              This field is required.
+                          </small>
+                        
+                      </div>
                   </div>
                 </div>
               </div>
@@ -282,7 +305,7 @@
                   <button cButton class="btn btn-primary btnSaveColor me-1" (click)="onSubmit()">
                     <svg cIcon name="cilSave" size="md" title="Save Button Icon"></svg> Save
                   </button>
-                  <button cButton class="btn btn-danger btnCancelColor me-1" onclick=" window.location.reload();">
+                  <button cButton class="btn btn-danger btnCancelColor me-1" (click)="onCancel()">
                     <svg cIcon name="cilX" size="md" title="Close Button Icon"></svg>Cancel
                   </button>
       

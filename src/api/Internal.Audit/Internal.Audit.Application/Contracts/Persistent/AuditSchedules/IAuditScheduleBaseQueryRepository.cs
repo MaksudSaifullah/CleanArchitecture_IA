@@ -10,4 +10,5 @@ namespace Internal.Audit.Application.Contracts.Persistent.AuditSchedules;
 public interface IAuditScheduleBaseQueryRepository:IAsyncQueryRepository<AuditSchedule>
 {
     Task<IEnumerable<AuditSchedule>> GetAuditScheduleById(Guid? Id);
+    Task<IEnumerable<AuditSchedule>> GetAuditScheduleByCreationId(Guid? Id);
 }

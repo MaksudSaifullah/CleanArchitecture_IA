@@ -1,47 +1,71 @@
 # Internal Audit
 
-Internal audits evaluate a company’s internal controls, including its corporate governance and accounting processes. These audits ensure compliance with laws and regulations and help to maintain accurate and timely financial reporting and data collection.  
+Internal audits evaluate a company's internal controls, including its corporate governance and accounting processes. These audits ensure compliance with laws and regulations and help to maintain accurate and timely financial reporting and data collection.  
 
 Internal audits also provide management with the tools necessary to attain operational efficiency by identifying problems and correcting lapses before they are discovered in an external audit. 
 
 ## Getting started
 
-To make it easy for you to get started with GitLab, here's a list of recommended next steps.
+### Choose a terminal
+To execute Git commands on your computer, you must open a terminal (also known as command prompt, command shell, and command line). Here are some options:
+
+- For macOS users:
+  - Built-in Terminal. Press ⌘ command + space and type terminal.
+  - iTerm2. You can integrate it with Zsh and Oh My Zsh for color highlighting and other advanced features.
+- For Windows users:
+  - Built-in command line. On the Windows taskbar, select the search icon and type cmd.
+  - PowerShell.
+  - Git Bash. It is built into Git for Windows.
+- For Linux users:
+  - Built-in Linux Terminal
+
+### Confirm Git is installed
+You can determine if Git is already installed on your computer by opening a terminal and running this command:
+``` git --version ```
+
+If Git is installed, the output is:
+``` git version X.Y.Z ```
+
+If your computer doesn't recognize git as a command, you must install Git.
+### Configure Git
+To start using Git from your computer, you must enter your credentials to identify yourself as the author of your work. The username and email address should match the ones you use in GitLab.
+- In your shell, add your user name:
+``` git config --global user.name "your_username" ```
+- Add your email address:
+``` git config --global user.email "your_email_address@example.com" ```
+- To check the configuration, run:
+``` git config --global --list ```
+
+The ```--global``` option tells Git to always use this information for anything you do on your system. If you omit ```--global``` or use ```--local```, the configuration applies only to the current repository.
+You can read more on how Git manages configurations in the Git configuration documentation.
 
 
-## Add your files
+### Clone a repository
+When you clone a repository, the files from the remote repository are downloaded to your computer, and a connection is created.
 
-- [ ] [Create](https://docs.gitlab.com/ee/user/project/repository/web_editor.html#create-a-file) or [upload](https://docs.gitlab.com/ee/user/project/repository/web_editor.html#upload-a-file) files
-- [ ] [Add files using the command line](https://docs.gitlab.com/ee/gitlab-basics/add-file.html#add-a-file-using-the-command-line) or push an existing Git repository with the following command:
+This connection requires you to add credentials. You can either use SSH or HTTPS. SSH is recommended.
 
-```
-cd existing_repo
-git remote add origin http://192.168.100.42/team-ia/internal-audit.git
-git branch -M master
-git push -uf origin master
-```
+#### Clone with SSH
+Clone with SSH when you want to authenticate only one time.
 
-## Integrate with your tools
+- Authenticate with GitLab by following the instructions in the SSH documentation.
+- Go to your project’s landing page and select Clone. Copy the URL for Clone with SSH.
+- Open a terminal and go to the directory where you want to clone the files. Git automatically creates a folder with the repository name and downloads the files there.
+- Run this command: ``` git clone git@gitlab.com:gitlab-tests/sample-project.git ```
+- To view the files, go to the new directory: ``` cd sample-project ```
 
-- [ ] [Set up project integrations](http://192.168.100.42/team-ia/internal-audit/-/settings/integrations)
+You can also clone a repository and open it directly in Visual Studio Code.
 
-## Collaborate with your team
+#### Clone with HTTPS
+Clone with HTTPS when you want to authenticate each time you perform an operation between your computer and GitLab.
 
-- [ ] [Invite team members and collaborators](https://docs.gitlab.com/ee/user/project/members/)
-- [ ] [Create a new merge request](https://docs.gitlab.com/ee/user/project/merge_requests/creating_merge_requests.html)
-- [ ] [Automatically close issues from merge requests](https://docs.gitlab.com/ee/user/project/issues/managing_issues.html#closing-issues-automatically)
-- [ ] [Enable merge request approvals](https://docs.gitlab.com/ee/user/project/merge_requests/approvals/)
-- [ ] [Automatically merge when pipeline succeeds](https://docs.gitlab.com/ee/user/project/merge_requests/merge_when_pipeline_succeeds.html)
-
-## Test and Deploy
-
-Use the built-in continuous integration in GitLab.
-
-- [ ] [Get started with GitLab CI/CD](https://docs.gitlab.com/ee/ci/quick_start/index.html)
-- [ ] [Analyze your code for known vulnerabilities with Static Application Security Testing(SAST)](https://docs.gitlab.com/ee/user/application_security/sast/)
-- [ ] [Deploy to Kubernetes, Amazon EC2, or Amazon ECS using Auto Deploy](https://docs.gitlab.com/ee/topics/autodevops/requirements.html)
-- [ ] [Use pull-based deployments for improved Kubernetes management](https://docs.gitlab.com/ee/user/clusters/agent/)
-- [ ] [Set up protected environments](https://docs.gitlab.com/ee/ci/environments/protected_environments.html)
+- Go to your project’s landing page and select Clone. Copy the URL for Clone with HTTPS.
+- Open a terminal and go to the directory where you want to clone the files.
+- Run the following command. Git automatically creates a folder with the repository name and downloads the files there. ``` git clone https://gitlab.com/gitlab-tests/sample-project.git ```
+- GitLab requests your username and password:
+  - If you have 2FA enabled for your account, you must use a Personal Access Token with read_repository or write_repository permissions instead of your account’s password.
+  - If you don’t have 2FA enabled, use your account’s password.
+- To view the files, go to the new directory: ``` cd sample-project ```
 
 
 # Development Guidelines

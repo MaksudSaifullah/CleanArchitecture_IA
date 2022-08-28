@@ -4,6 +4,9 @@ import { filter } from 'rxjs';
 
 import { navItems } from './_nav';
 import {BreadcumbModel, BreadcumbStore} from "../../shared/breedcumb.store";
+import {ProfileUpdateResponse} from "../../core/interfaces/security/user-registration.interface";
+import {HttpService} from "../../core/services/http.service";
+import {UserStore} from "../../shared/user.store";
 @Component({
   selector: 'app-dashboard',
   templateUrl: './default-layout.component.html',
@@ -16,7 +19,7 @@ export class DefaultLayoutComponent implements OnInit,AfterViewInit {
     suppressScrollX: true,
   };
 
-  constructor(private router: Router,private renderer: Renderer2,private elementRef: ElementRef, private breadcumbStore : BreadcumbStore) {
+  constructor(private userStore:UserStore,private httpService:HttpService,private router: Router,private renderer: Renderer2,private elementRef: ElementRef, private breadcumbStore : BreadcumbStore) {
 
   }
   ngOnInit(): void {
@@ -24,6 +27,14 @@ export class DefaultLayoutComponent implements OnInit,AfterViewInit {
   }
 
   ngAfterViewInit(): void {
+    this.httpService.get<any>('UserRegistration/GetUserProfile').subscribe(x=>{
+      let convertedResponse = x as ProfileUpdateResponse;
+      this.userStore.update({
+        fullName: convertedResponse.fullName,
+        profileImage:convertedResponse.profileImageUrl,
+        designation:convertedResponse.designationName
+      });
+    })
     this.nativeElement = document.getElementById('sidebar1') as HTMLElement;
     let item = this.nativeElement?.getElementsByTagName('c-sidebar-nav-link') as HTMLCollectionOf<Element>;
     for(let i = 0; i < item.length;i++){
@@ -37,7 +48,7 @@ export class DefaultLayoutComponent implements OnInit,AfterViewInit {
         }
         this.breadcumbStore.update({
           breadcumbModel:[{
-            displayName:parentNodeText,
+            displayName:parentNodeText ?? '',
             routerLink: '#'
           },{
             displayName:childNodeText ?? '',

@@ -5,31 +5,37 @@
                 <div class="card-header">
                     <div class="fa fa-align-justify">
                         <button class="btn btn-success" (click)="onSubmit()"> Save </button>
+                        <button class="btn btn-success" style="margin-left: 5px;" (click)="onSubmitDraft()"> Save As Draft</button>
                     </div>
                 </div>
                 <div class="card-body">
                     <div class="container">
                         <form [formGroup]="pullFromAMBSForm">
-                            <input type="hidden" formControlName="id" />
                             <div class="col-md-6">
-                                <div form-floating>
-                                    <select aria-label="Floating label select example" cSelect id="countryId"
-                                        formControlName="countryId" name="countryId">
-                                        <option value=null>Select Country</option>
+                                <div cFormFloating>
+                                    <select aria-label="Floating label select example" cSelect id="empDesignation"
+                                      formControlName="countryId" name="countryId">
+                                      <option value=null>Select Country</option>
                                         <option *ngFor="let country of countries" [value]="country.id">
                                             {{country.name}}
                                         </option>
                                     </select>
-                                </div>
+                                    <label for="countryId" class="dropdownLabel">Country</label>
+                                  </div>
                                 <div class="form-floating mb-3 mt-4">
                                     <input type="text" class="form-control" formControlName="conversionRate"
                                         id="conversionRate" placeholder="conversionRate">
                                     <label for="floatingInput">Conversion Rate</label>
                                 </div>
+                                <div class="form-floating mb-3 mt-4" style="display: none;">
+                                    <input class="form-control" placeholder="effectiveFrom" formControlName="effectiveFrom"
+                                        id="effectiveFrom" type="date">
+                                    <label for="effectiveForm">Effective From</label>
+                                </div>
                                 <div class="form-floating">
-                                    <input class="form-control" placeholder="AsOnDate" formControlName="AsOnDate"
-                                        id="AsOnDate" type="date">
-                                    <label for="AsOnDate">Effective From</label>
+                                    <input class="form-control" placeholder="effectiveTo" formControlName="effectiveTo"
+                                        id="effectiveForm" type="date">
+                                    <label for="effectiveTo">Review Period To</label>
                                 </div>
                             </div>
                             <button cButton class="btn btn-primary btnSaveColor mt-4 me-1" (click)="LoadData()">Pull Data From AMBS</button>
@@ -57,23 +63,23 @@
                             <td>{{ riskAssessment.branchName }}</td>
                             <td>
                                 <div>
-                                    <input type="text" class="form-control" id="conversionRate" placeholder="conversionRate">
+                                    <input type="number" class="form-control" id="staffTurnover" placeholder="Staff TurnOver" (change)="GetProductivity($event, i)">
                                 </div>
                             </td>
                             <td>
                                 <div form-floating>
                                     <select aria-label="Floating label select example" (change)="GetRating($event, i)" cSelect id="Score" name="Score">
-                                        <option value=null>Select</option>
-                                        <option value="Low"> 1 </option>
-                                        <option value="Medium"> 2 </option>
-                                        <option value="High"> 3 </option>
+                                        <option value=null title="null">Select</option>
+                                        <option *ngFor="let score of scores" [value]="score.text">
+                                            {{score.value}}
+                                        </option>
                                     </select>
                                 </div>
                             </td>
                             <td> 
                                 <div form-floating>
                                     <select aria-label="Floating label select example" cSelect id="Rating" name="Rating">
-                                        <option value=null>{{selectedValue[i]}}</option>
+                                        <option value={{selectedRating[i]}}>{{selectedRating[i]}}</option>
                                     </select>
                                 </div>
                             </td>

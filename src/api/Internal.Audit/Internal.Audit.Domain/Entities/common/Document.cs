@@ -22,6 +22,7 @@ public class Document: EntityBase
     [Required]
     [MaxLength(50)]
     public string Format { get; set; } = null!;
+    [NotMapped]
 
     [ForeignKey("DocumentSourceId")]
     public virtual DocumentSource DocumentSource { get; set; } = null!;

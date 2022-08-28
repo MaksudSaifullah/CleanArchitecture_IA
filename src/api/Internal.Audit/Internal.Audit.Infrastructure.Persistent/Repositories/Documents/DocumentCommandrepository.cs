@@ -17,7 +17,7 @@ public class DocumentCommandrepository : CommandRepositoryBase<Document>, IDocum
     {
     }
 
-    public async Task<(bool,string,string)> UploadFile(IFormFile file,string sourceName)
+    public async Task<(bool,string,string,string)> UploadFile(IFormFile file,string sourceName)
     {
         string path = "";
         string pathUpload = "UploadedFiles/" + sourceName;
@@ -37,11 +37,11 @@ public class DocumentCommandrepository : CommandRepositoryBase<Document>, IDocum
                 {
                     await file.CopyToAsync(fileStream);
                 }
-                return (true,pathUpload, ext);
+                return (true,pathUpload, ext, file.FileName.Split('.')[0]);
             }
             else
             {
-                return (false, "","");
+                return (false, "","","");
             }
         }
         catch (Exception ex)

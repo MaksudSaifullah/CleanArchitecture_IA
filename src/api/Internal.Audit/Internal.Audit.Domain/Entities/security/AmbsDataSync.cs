@@ -16,7 +16,9 @@ public class AmbsDataSync : EntityBase
     [Required]
     [MaxLength(50)]
     public string? BranchName { get; set; }
+    [Column(TypeName = "decimal(30,4)")]
     public decimal Amount { get; set; }
+    [Column(TypeName = "decimal(30,4)")]
     public decimal? AmountConverted { get; set; }
     [Required]
     [DefaultValue("1")]

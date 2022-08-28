@@ -19,7 +19,16 @@ public class GetAuthUserQueryHandler : IRequestHandler<GetAuthUserQuery, AuthUse
         var user = await _userRepository.GetByUserEmail(request.Email, request.Password);
         if (user == null)
             return new AuthUserDTO { Success = false, Message = "Invalid Username or Password." };
-
+        if (user.IsAccountLocked)
+        {
+            return new AuthUserDTO { Success = false, Message = "User Locked, Contact with System Admin" };
+           
+        }
+        if (user.IsAccountExpired)
+        {
+            return new AuthUserDTO { Success = false, Message = "User Expired, Contact with System Admin" };
+           
+        }
         var token = _jwtTokenService.GenerateJwtToken(user.UserName, "ADMIN");
 
         return new AuthUserDTO { Success = true, UserName = user.UserName, Name = "", Role = "ADMIN", Token = token };

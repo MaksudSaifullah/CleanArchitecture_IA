@@ -3,11 +3,13 @@ export interface workpaper {
     workPaperCode: string;
     auditScheduleId?: string;
     scheduleCode: string;
+    scheduleStartDate: string;
+    scheduleEndDate: string;
     topicHeadId?: string;
     topicHeadName: string;
     questionId?: string;
     questionName: string;
-    branchId?: string;
+    auditScheduleBranchId?: string;
     branchName: string;
     sampleName: string;
     sampleMonthId?: string;

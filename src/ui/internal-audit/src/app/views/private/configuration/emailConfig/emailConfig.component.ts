@@ -9,6 +9,7 @@ import {AlertService} from '../../../../core/services/alert.service';
 import { country } from 'src/app/core/interfaces/configuration/country.interface';
 import { EmailType } from 'src/app/core/interfaces/configuration/emailType.interface';
 import { paginatedResponseInterface } from 'src/app/core/interfaces/paginated.interface';
+import { CommonResponseInterface } from 'src/app/core/interfaces/common-response.interface';
 
 
 @Component({
@@ -82,16 +83,28 @@ export class EmailConfigComponent implements OnInit {
       if(this.emailConfigForm.valid){
         if(this.formService.isEdit(this.emailConfigForm.get('id') as FormControl)){
           this.http.put('emailconfig',this.emailConfigForm.value,null).subscribe(x=>{
-            this.formService.onSaveSuccess(localmodalId,this.datatableElement);
-            this.AlertService.success('Email Configuration Saved Successful');
+            let resp = x as CommonResponseInterface;
+              if(resp.success){
+                this.formService.onSaveSuccess(localmodalId,this.datatableElement);
+                this.AlertService.success('Email Configuration Saved Successful');
+              }
+              else{
+                this.AlertService.errorDialog('Unsuccessful', 'Duplicate Value ');
+              }
 
           });
         }
         else{
          // console.log(this.emailConfigForm.value);
           this.http.post('emailconfig',this.emailConfigForm.value).subscribe(x=>{
-            this.formService.onSaveSuccess(localmodalId,this.datatableElement);
-            this.AlertService.success('Email Configuration Saved Successful');
+            let resp = x as CommonResponseInterface;
+              if(resp.success){
+                this.formService.onSaveSuccess(localmodalId,this.datatableElement);
+                this.AlertService.success('Email Configuration Saved Successful');
+              }
+              else{
+                this.AlertService.errorDialog('Unsuccessful', 'Duplicate Value ');
+              }
           });
         }
       }

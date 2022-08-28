@@ -60,6 +60,7 @@ import {
 } from "ng-recaptcha";
 import {environment} from "../environments/environment";
 
+
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
   suppressScrollX: true,
 };

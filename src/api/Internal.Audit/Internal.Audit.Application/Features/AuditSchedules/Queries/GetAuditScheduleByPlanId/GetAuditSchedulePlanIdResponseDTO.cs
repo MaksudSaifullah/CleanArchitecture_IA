@@ -6,24 +6,29 @@ namespace Internal.Audit.Application.Features.AuditSchedules.Queries.GetAuditSch
 
 public class GetAuditSchedulePlanIdResponseDTO
 {
-    public Guid AuditPlanId { get; set; }   
+    //public Guid AuditPlanId { get; set; }   
+    public Guid Id { get; set; }   
     public DateTime ScheduleStartDate { get; set; }   
     public DateTime ScheduleEndDate { get; set; }
-    public virtual AuditCreationDTO AuditCreation { get; set; } = null!;
-    public virtual ICollection<AuditScheduleParticipantsDTO> AuditScheduleParticipants { get; set; } = null!;
-    public virtual ICollection<AuditScheduleBranch> AuditScheduleBranch { get; set; } = null!;
+    public string? ScheduleId { get; set; }
+
+    public int ScheduleState { get; set; } = -1;
+    public int ExecutionState { get; set; } = -1;
+    public virtual AuditCreationDTOs AuditCreation { get; set; } = null!;
+    public virtual ICollection<AuditScheduleParticipantsDTOs> AuditScheduleParticipants { get; set; } = null!;
+    public virtual ICollection<AuditScheduleBranchs> AuditScheduleBranch { get; set; } = null!;
 }
 
-public class AuditScheduleParticipantsDTO
+public class AuditScheduleParticipantsDTOs
 {  
     public Guid AuditScheduleId { get; set; } 
     public Guid UserId { get; set; }   
     public int CommonValueParticipantId { get; set; }    
-    public virtual User User { get; set; } = null!;   
-    public virtual CommonValueAndTypeDTO CommonValueAndTypeParticipant { get; set; } = null!;
+    public virtual UserDTOs User { get; set; } = null!;   
+  //  public virtual CommonValueAndTypeDTO CommonValueAndTypeParticipant { get; set; } = null!;
 }
 
-public class AuditCreationDTO 
+public class AuditCreationDTOs
 {
 
     public Guid AuditTypeId { get; set; }  
@@ -32,13 +37,14 @@ public class AuditCreationDTO
     public Int32 Year { get; set; }   
     public string AuditName { get; set; }  
     public DateTime AuditPeriodFrom { get; set; }
-    public DateTime AuditPeriodTo { get; set; }   
-    public virtual AuditTypeDTO AuditType { get; set; } = null!;
-  
-    //public virtual AuditPlanDTO AuditPlan { get; set; } = null!;
+    public DateTime AuditPeriodTo { get; set; }
+    public string AuditTypeName { get; set; }
+    //  public virtual AuditTypeDTOs AuditType { get; set; } = null!;
+
+  //  public virtual AuditPlanDTO AuditPlan { get; set; } = null!;
 }
 
-public class AuditTypeDTO
+public class AuditTypeDTOs
 {
 
     public string Name { get; set; } = null!;
@@ -55,7 +61,7 @@ public class AuditTypeDTO
 //}
 
 
-public class UserDTO
+public class UserDTOs
 {
 
    
@@ -66,21 +72,22 @@ public class UserDTO
     public bool IsAccountExpired { get; set; }   
     public bool IsPasswordExpired { get; set; }    
     public bool IsAccountLocked { get; set; }     
-    public virtual EmployeeDTO Employee { get; set; }
+    public virtual EmployeeDTOs Employee { get; set; }
 
 }
 
-public class AuditScheduleBranch
+public class AuditScheduleBranchs
 {
    
     public Guid AuditScheduleId { get; set; }
  
-    public Guid BranchId { get; set; }  
-  
-    public virtual BranchDTO Branch { get; set; } = null!;
+    public Guid BranchId { get; set; }
+
+    public string BranchName { get; set; }
+    // public virtual BranchDTOs Branch { get; set; } = null!;
 }
 
-public class BranchDTO
+public class BranchDTOs
 {
    
     public Guid CountryId { get; set; }
@@ -91,7 +98,7 @@ public class BranchDTO
   
 }
 
-public class EmployeeDTO 
+public class EmployeeDTOs
 {
   
     public Guid UserId { get; set; }   

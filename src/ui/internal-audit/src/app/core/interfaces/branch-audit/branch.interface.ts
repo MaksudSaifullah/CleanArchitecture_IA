@@ -2,5 +2,7 @@ export interface Branch {
     id: string,
     branchId: string,
     branchCode: string,
-    branchName: string
+    branchName: string,
+    countryId: string,
+    countryName: string
 }

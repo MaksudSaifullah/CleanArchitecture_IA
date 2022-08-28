@@ -1,37 +1,23 @@
-﻿using Internal.Audit.Application.Contracts.Persistent.WorkPapers;
-using Internal.Audit.Domain.CompositeEntities.BranchAudit;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace Internal.Audit.Infrastructure.Persistent.Repositories.WorkPapers;
+#nullable disable
 
-public class WorkPaperQueryRepository : QueryRepositoryBase<CompositeWorkPaper>, IWorkPaperQueryRepository
+namespace Internal.Audit.Infrastructure.Persistent.Migrations
 {
-    public WorkPaperQueryRepository(string _connectionString) : base(_connectionString)
+    public partial class GetWorkPaperListSP_Updated : Migration
     {
-    }
-
-    public async Task<(long, IEnumerable<CompositeWorkPaper>)> GetAll(int pageSize, int pageNumber, dynamic searchTerm = null)
-    {
-        string searchTermConverted = (object)searchTerm == null ? null : Convert.ToString(searchTerm);
-        if (!string.IsNullOrWhiteSpace(searchTermConverted))
+        protected override void Up(MigrationBuilder migrationBuilder)
         {
-            searchTermConverted = searchTermConverted.Replace("{", "").Replace("}", "");
-        }
-        var query = "EXEC [dbo].[GetWorkPaperListProcedure] @pageSize,@pageNumber,@searchTerm";
-        var parameters = new Dictionary<string, object> { { "@pageSize", pageSize }, { "@pageNumber", pageNumber }, { "@searchTerm", searchTermConverted } };
-        return await GetWithPagingInfo(query, parameters, false);
-    }
-    public async Task<CompositeWorkPaper> GetById(Guid id)
-    {
-        var query = @"SELECT wp.[Id]
+            migrationBuilder.Sql(@"CREATE or ALTER Procedure [dbo].[GetWorkPaperListProcedure]
+@pageSize int,
+     @pageNumber int,
+	 @searchTerm nvarchar(100)
+AS
+BEGIN
+SELECT wp.[Id]
       ,wp.[WorkPaperCode]
 	  ,dcmnt.Name as DocumentName 
       ,wp.[AuditScheduleId]
-      ,wp.AuditScheduleBranchId
       ,wp.[TopicHeadId]
 	  ,th.Name as TopicHeadName
 	  ,wp.[QuestionId]
@@ -79,10 +65,23 @@ public class WorkPaperQueryRepository : QueryRepositoryBase<CompositeWorkPaper>,
   Inner Join Config.CommonValueAndType smplsz on wp.SampleSizeId = smplsz.Id
   Inner Join Config.CommonValueAndType cvttc on wp.TestingConclusionId = cvttc.Id
   INNER Join common.Document dcmnt on wp.DocumentId = dcmnt.Id
-  WHERE  wp.[Id] = @id AND wp.IsDeleted = 0 ";
-        var parameters = new Dictionary<string, object> { { "id", id } };
+   WHERE wp.[IsDeleted] = 0
+	 AND ((@searchTerm IS NULL OR @searchTerm = '') OR (th.Name like '%'+@searchTerm+'%'))
+     ORDER BY wp.[CreatedOn] DESC
+     OFFSET((@pageNumber - 1) * @pageSize) ROWS
+     FETCH NEXT @pageSize ROWS ONLY;
 
-        return await Single(query, parameters);
+	SELECT cast(count(*) as bigint) as TotalCount from[BranchAudit].[WorkPaper] as wp
+		  Inner Join BranchAudit.TopicHead th on wp.TopicHeadId = th.Id
+		where wp.[IsDeleted] = 0
+		AND ((@searchTerm IS NULL OR @searchTerm = '') OR (th.Name like '%'+@searchTerm+'%'))
+
+		END");
+        }
+
+        protected override void Down(MigrationBuilder migrationBuilder)
+        {
+            migrationBuilder.Sql(@"DROP Procedure [dbo].[GetWorkPaperListProcedure]");
+        }
     }
-
 }

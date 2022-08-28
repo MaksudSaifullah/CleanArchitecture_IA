@@ -13,6 +13,7 @@ import { commonValueAndType } from 'src/app/core/interfaces/configuration/common
 import { questionnaire } from 'src/app/core/interfaces/branch-audit/questionnaire.interface';
 import { Branch } from 'src/app/core/interfaces/branch-audit/branch.interface';
 import { Router } from '@angular/router';
+import { HelperService } from 'src/app/core/services/helper.service';
 
 @Component({
   selector: 'app-workpaper',
@@ -40,8 +41,8 @@ export class WorkpaperComponent implements OnInit {
   dtTrigger: Subject<any> = new Subject<any>();
  
 
-  constructor(private http: HttpService,private router: Router , private fb: FormBuilder, private AlertService: AlertService) {
-   //this.loadDropDownValues();
+  constructor(private http: HttpService,private router: Router, private helper: HelperService , private fb: FormBuilder, private AlertService: AlertService) {
+   this.loadDropDownValues();
 
     this.searchForm = this.fb.group(
       {
@@ -122,5 +123,33 @@ export class WorkpaperComponent implements OnInit {
     this.dataTableService.redraw(this.datatableElement);
   }
 
+  fileDownLoad(d: any) {
+    console.log(d);
+    this.http.getFilesAsBlob('Document/get-file-stream?Id=' + d,
+    )
+      .subscribe((resp: any) => {
+        let fileName = resp.headers.get('content-disposition');
+        console.log(fileName);
+        //  return;
+
+
+        this.helper.downloadFile(resp);
+
+      }), (error: any) => console.log('Error downloading the file'),
+      () => console.info('File downloaded successfully');
+  }
+
+  LoadTopicHeadDropdownList() 
+  {
+    this.http.paginatedPost('topicHead/paginated', 1000, 1, '').subscribe(resp => {
+      let convertedResp = resp as paginatedResponseInterface<topicHead>;
+      this.topics = convertedResp.items;     
+    })
+  }
+
+  loadDropDownValues() 
+  {
+    this.LoadTopicHeadDropdownList();
+  }
 
 }

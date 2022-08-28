@@ -29,4 +29,12 @@ public class TopicHeadQueryRepository : QueryRepositoryBase<TopicHead>, ITopicHe
 
         return await Get(query, parameters);
     }
+
+    public async Task<IEnumerable<TopicHead>> GetByCountryIdAnddateRange(Guid? CountryId, DateTime? FromDate, DateTime? ToDate)
+    {
+        var query = "SELECT [Id],[CountryId],[Name],[EffectiveFrom],[EffectiveTo],[Description] FROM [BranchAudit].[TopicHead] WHERE countryId = @CountryId AND [IsDeleted] = 0 and CAST(EffectiveFrom as DATE)>=CAST(@FromDate as date) and CAST(EffectiveTo as DATE)<=CAST(@ToDate as date) ";
+        var parameters = new Dictionary<string, object> { { "CountryId", CountryId }, { "FromDate", FromDate }, { "ToDate", ToDate } };
+
+        return await Get(query, parameters);
+    }
 }

@@ -24,7 +24,7 @@ public class WorkPaper : EntityBase
     [Required]
     public Guid QuestionId { get; set; }
     [Required]
-    public Guid BranchId { get; set; }
+    public Guid AuditScheduleBranchId { get; set; }
 
     [Required]
     [MaxLength(300)]
@@ -57,7 +57,6 @@ public class WorkPaper : EntityBase
     [Required]
     public Guid TestingConclusionId { get; set; }
 
-    [Required]
     public Guid DocumentId { get; set; }
 
     [Required]
@@ -69,8 +68,8 @@ public class WorkPaper : EntityBase
     [ForeignKey("TopicHeadId")]
     public virtual TopicHead TopicHead { get; set; }
 
-    [ForeignKey("DocumentId")]
-    public virtual Document? Document { get; set; }
+    //[ForeignKey("DocumentId")]
+    //public virtual Document? Document { get; set; }
 
     public virtual CommonValueAndType? CommonValueAndType { get; set; }
 

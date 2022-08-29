@@ -28,7 +28,7 @@
               </div>
            </form>
             <div class="row overflow-auto">
-                <table datatable [dtOptions]="dtOptions" class="table table-bordered row-border hover datatableStyle" >
+                <table datatable [dtOptions]="dtOptions" class="table table-bordered row-border hover datatableStyle" style="width: 100%;" >
                   <thead>
                     <tr>
                       <th>Country</th>
@@ -196,7 +196,7 @@
       <button cButton class="btn btn-primary btnSaveColor me-1" (click)="onSubmit(verticallyCenteredModal)">
         <svg cIcon name="cilSave" size="md" title="Save Button Icon"></svg> Save
       </button>
-      <button [cModalToggle]="verticallyCenteredModal.id" cButton class="btn btn-danger btnCancelColor me-1"> 
+      <button [cModalToggle]="verticallyCenteredModal.id" cButton class="btn btn-danger btnCancelColor me-1" (click)="reset()"> 
         <svg cIcon name="cilX" size="md" title="Close Button Icon"></svg> Close
       </button> 
     </c-modal-footer> 

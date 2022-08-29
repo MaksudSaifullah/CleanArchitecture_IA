@@ -14,7 +14,7 @@ public class UpdateScheduleCommand:IRequest<UpdateScheduleResponseDTO>
     public Guid AuditCreationId { get; set; }
     public DateTime ScheduleStartDate { get; set; }
     public DateTime ScheduleEndDate { get; set; }
-    public string? ScheduleId { get; set; }
+    //public string? ScheduleId { get; set; }
     public int ScheduleState { get; set; }
     public int ExecutionState { get; set; }
     public List<AuditScheduleParticipantsCommand> AuditScheduleParticipants { get; set; }

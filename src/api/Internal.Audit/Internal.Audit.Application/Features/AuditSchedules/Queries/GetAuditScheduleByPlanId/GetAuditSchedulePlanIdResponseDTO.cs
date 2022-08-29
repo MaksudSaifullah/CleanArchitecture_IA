@@ -10,6 +10,10 @@ public class GetAuditSchedulePlanIdResponseDTO
     public Guid Id { get; set; }   
     public DateTime ScheduleStartDate { get; set; }   
     public DateTime ScheduleEndDate { get; set; }
+    public string? ScheduleId { get; set; }
+
+    public int ScheduleState { get; set; } = -1;
+    public int ExecutionState { get; set; } = -1;
     public virtual AuditCreationDTOs AuditCreation { get; set; } = null!;
     public virtual ICollection<AuditScheduleParticipantsDTOs> AuditScheduleParticipants { get; set; } = null!;
     public virtual ICollection<AuditScheduleBranchs> AuditScheduleBranch { get; set; } = null!;

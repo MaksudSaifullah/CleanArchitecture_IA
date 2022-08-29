@@ -55,6 +55,9 @@ const routes: Routes = [
     path:'workpaperCreate',
     component: WorkpaperCreateComponent
   },
+  { path: 'workpaperCreate/:id', 
+    component: WorkpaperCreateComponent 
+  },
   {
     path:'audit-view',
     component: AuditViewComponent

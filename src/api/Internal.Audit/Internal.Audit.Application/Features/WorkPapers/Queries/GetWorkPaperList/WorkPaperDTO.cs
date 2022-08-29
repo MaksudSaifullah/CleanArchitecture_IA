@@ -16,7 +16,7 @@ public record WorkPaperDTO
     public string? QuestionName { get; set; }
     public Guid TopicHeadId { get; set; }
     public string? BranchName { get; set; }
-    public Guid BranchId { get; set; }
+    public Guid AuditScheduleBranchId { get; set; }
     public string? SampleName { get; set; }
     public string? SampleMonth { get; set; }
     public Guid SampleMonthId { get; set; }

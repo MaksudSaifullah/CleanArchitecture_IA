@@ -101,6 +101,7 @@ export class LoanDisbursementTabComponent implements OnInit {
     if (this.pullFromAMBSForm.valid) {
       this.http.post('riskassesmentdatamanagement', 
       {
+        riskAssessmentId: this.id,
         conversionRate: 88,
         typeId: 3,
         dataRequestQueueServiceId: this.riskAssesmentOverdue[0].dataRequestQueueSErviceId,

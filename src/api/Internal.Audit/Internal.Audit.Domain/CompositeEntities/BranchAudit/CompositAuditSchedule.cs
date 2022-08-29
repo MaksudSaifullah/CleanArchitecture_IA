@@ -10,6 +10,7 @@ namespace Internal.Audit.Domain.CompositeEntities.BranchAudit
     public class CompositAuditSchedule: EntityBase
     {
         public Guid Id { get; set; }
+        public Guid CountryId { get; set; }
         public string Country { get; set; }
         public string Approver { get; set; }
         public string TeamLeader { get; set; }

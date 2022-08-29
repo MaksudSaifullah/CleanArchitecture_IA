@@ -4,7 +4,8 @@ public record GetIssueListResponseDTO
     public Guid Id { get; set; }
     public string Code { get; set; }
     public string IssueTitle { get; set; } = null!;
-    
+    public DateTime TargetDate { get; set; }
+
     //public string Policy { get; set; } = null!;
     //public string Details { get; set; } = null!;
     //public string RootCause { get; set; } = null!;
@@ -17,9 +18,8 @@ public record GetIssueListResponseDTO
     //public string? ImpactTypeName { get; set; }
     //public string? LikelihoodTypeName { get; set; }
 
-    //public string IssueOwner { get; set; } = null!;
-    //public string ActionOwner { get; set; } = null!;
-    //public string? RatingType { get; set; }
-    public DateTime TargetDate { get; set; }
+    public string IssueOwners { get; set; } = null!;
+    public string ActionOwners { get; set; } = null!;
+    public string? RatingType { get; set; }    
     public string? StatusType { get; set; }
 }

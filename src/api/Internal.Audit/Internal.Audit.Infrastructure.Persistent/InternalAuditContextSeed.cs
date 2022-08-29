@@ -27,6 +27,11 @@ public class InternalAuditContextSeed
             context.CommonValueAndTypes.AddRange(GetInitialCommonvalueAndType());
             await context.SaveChangesAsync();
         }
+        if (context.CommonValueAndTypes.Count(x=>x.Type=="IDCREATION") ==16)
+        {
+            context.CommonValueAndTypes.AddRange(InsertWorkpaperIdCreationCommonvalueAndType());
+            await context.SaveChangesAsync();
+        }
         if (!context.EmailTypes.Any())
         {
             context.EmailTypes.AddRange(GetSeedEmailTypes());
@@ -85,6 +90,11 @@ public class InternalAuditContextSeed
         {
             context.ModuleFeatures.AddRange(ModuleFeatureTypes(context));
             await context.SaveChangesAsync(); ;
+        }
+        if (!context.DocumentSources.Where(x => x.Name == "Work_Paper").Any())
+        {
+            context.DocumentSources.AddRange(GetWorkPaperDocumentSource());
+            await context.SaveChangesAsync();
         }
     }
 
@@ -186,6 +196,18 @@ public class InternalAuditContextSeed
             {
                Name ="Evidence_Details",CreatedBy="system",CreatedOn=DateTime.Now
             },
+
+        };
+    }
+
+    private static IEnumerable<DocumentSource> GetWorkPaperDocumentSource()
+    {
+        return new List<DocumentSource>
+        {
+            new DocumentSource
+            {
+               Name ="Work_Paper",CreatedBy="system",CreatedOn=DateTime.Now
+            }
 
         };
     }
@@ -538,6 +560,18 @@ public class InternalAuditContextSeed
             {
                 IsActive = true,CreatedBy="admin",CreatedOn=DateTime.Now,Type="AUDITSCHEDULELISTTYPE",SubType="",Value=3,Text="NameOfAuditor",SortOrder=30,
             },
+
+        };
+    }
+
+    private static IEnumerable<CommonValueAndType> InsertWorkpaperIdCreationCommonvalueAndType()
+    {
+        return new List<CommonValueAndType>
+        {
+            new CommonValueAndType
+            {
+                 IsActive = true,CreatedBy="admin",CreatedOn=DateTime.Now,Type="IDCREATION",SubType="",Value=17,Text="WP- Work Paper",SortOrder=170,
+            }
 
         };
     }

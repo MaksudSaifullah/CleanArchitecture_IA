@@ -1,6 +1,8 @@
 ﻿using Internal.Audit.Application.Features.AmbsDataSyncs.Command.AddAmbsDataSyncCommand;
 using Internal.Audit.Application.Features.AmbsDataSyncs.Queries.GetAmbsDataSyncDataByCountryAndDateInfo;
 using Internal.Audit.Application.Features.AmbsDataSyncs.Queries.GetRiskAssesmentData;
+using Internal.Audit.Application.Features.RiskAssesmentConsolidateDatas.Commands.AddConsolidateData;
+using Internal.Audit.Application.Features.RiskAssesmentConsolidateDatas.Queries;
 using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -36,6 +38,22 @@ public class DataSyncController : ControllerBase
     }
     [HttpPost("getSyncDataRiskAssesment")]
     public async Task<ActionResult<GetRiskAssesmentDataQueryDTO>> GetSyncDataRiskAssesment(GetRiskAssesmentDataQuery command)
+    {
+        var result = await _mediator.Send(command);
+        return Ok(result);
+
+
+    }
+    [HttpPost("getSyncDataRiskAssesmentAvg")]
+    public async Task<ActionResult<RiskConsolidateDataGetQueryResponseDTO>> GetSyncDataRiskAssesmentAvg(RiskConsolidateDataGetQuery command)
+    {
+        var result = await _mediator.Send(command);
+        return Ok(result);
+
+
+    }
+    [HttpPost("PostAvgData")]
+    public async Task<ActionResult<AddConsolidateDataResponseDTO>> PostAvgData(AddConsolidateDataCommand command)
     {
         var result = await _mediator.Send(command);
         return Ok(result);

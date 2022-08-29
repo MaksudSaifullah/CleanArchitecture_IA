@@ -92,7 +92,7 @@ export class UserRegistrationComponent implements OnInit {
   ngOnInit(): void {
 
    this.paramId = this.activateRoute.snapshot.params['id'];
-    //console.log(paramId)
+    console.log(this.paramId);
     if(this.paramId === undefined){
       this.pageName='Registration';
       console.log("user add method called")

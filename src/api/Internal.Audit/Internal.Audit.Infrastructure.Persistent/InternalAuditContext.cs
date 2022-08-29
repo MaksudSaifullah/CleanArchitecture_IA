@@ -69,7 +69,13 @@ public class InternalAuditContext: DbContext
     public DbSet<UploadDocument> UploadDocuments { get; set; }
     public DbSet<UploadedDocumentsNotify> UploadedDocumentsNotifys { get; set; }
     public DbSet<Issue> Issues { get; set; }
-    public DbSet<IssueOwner> IssueOwners { get; set; }
+    //public DbSet<IssueOwner> IssueOwners { get; set; }
+    public DbSet<RiskAssesmentConsolidateData> RiskAssesmentConsolidateDatas { get; set; }
+
+    public DbSet<ClosingMeetingMinute> ClosingMeetingMinutes { get; set; }
+    public DbSet<ClosingMeetingPresent> ClosingMeetingPresents { get; set; }
+    public DbSet<ClosingMeetingSubject> ClosingMeetingSubjects { get; set; }
+    public DbSet<ClosingMeetingApology> ClosingMeetingApologies { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

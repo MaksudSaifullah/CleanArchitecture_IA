@@ -118,6 +118,23 @@
                             </div>
                         </div>
                         <br>
+                        <div class="row">
+                          <div class="form-floating col-md-6">
+                            <div cFormFloating >
+                              <select aria-label="Floating label select example" cSelect id="executionStatusId" formControlName="executionStatusId" name="executionStatusId" >
+                                <option value=null>Execution Status</option>
+                                <option value=-1>Not Started</option>
+                                <option value=2>In Progress</option>
+                                <option value=3>Done</option>
+                              </select>
+                              <label for="executionStatusId" class="dropdownLabel">Execution Status</label>
+                            </div>    
+                          </div>
+                          <div class="form-floating col-md-6">
+                              
+                          </div>
+                      </div>
+                        <br>
                         <c-col xs="12">
                             <c-card class="mb-4">
                               <c-card-header>
@@ -153,6 +170,7 @@
                               </c-card-body>
                             </c-card>
                           </c-col>
+                          
                   
                  </div>
                </div> 
@@ -168,17 +186,17 @@
                      
                     </tr>
                   </thead>
-                  <tbody *ngIf="branches?.length != 0">
-                    <tr *ngFor="let branch of selectedScheduleBranch let i =index" >
+                  <tbody *ngIf="scheduledBranch?.length != 0">
+                    <tr *ngFor="let branch of scheduledBranch let i =index" >
                         <td>
                             {{i+1}}
                         </td>
-                      <td>{{ branch.branchId }}</td>
+                      <td>{{ branch.countryName }}</td>
                       <td>{{ branch.branchName }}</td>
                      
                     </tr>
                   </tbody>
-                  <tbody *ngIf="branches?.length == 0">
+                  <tbody *ngIf="scheduledBranch?.length == 0">
                     <tr>
                       <td colspan="5" class="no-data-available">No data!</td>
                     </tr>

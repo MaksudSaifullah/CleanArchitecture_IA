@@ -10,8 +10,9 @@ using System.Threading.Tasks;
 namespace Internal.Audit.Domain.Entities.BranchAudit;
 [Table("RiskAssesmentDataManagement", Schema = "BranchAudit")]
 public class RiskAssesmentDataManagement:EntityBase
-{   
-    public float Value { get; set; }
+{
+    [Column(TypeName = "decimal(38, 2)")]
+    public decimal Value { get; set; }
     public int Score { get; set; }
     public string Rating { get; set; }
     public bool IsDraft { get; set; }

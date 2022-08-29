@@ -27,9 +27,9 @@ public class AddConsolidateDataCommandHandler : IRequestHandler<AddConsolidateDa
     public async Task<AddConsolidateDataResponseDTO> Handle(AddConsolidateDataCommand request, CancellationToken cancellationToken)
     {
        
-        var newRiskdataConsolidate = await _repository.Add(_mapper.Map<RiskAssesmentConsolidateData>(request));
+        var newRiskdataConsolidate = await _repository.Add(_mapper.Map<IEnumerable<RiskAssesmentConsolidateData>>(request.Datas));
         var rowsAffected = await _unitOfWork.CommitAsync();
-        return new AddConsolidateDataResponseDTO(newRiskdataConsolidate.Id, rowsAffected > 0, rowsAffected > 0 ? "RiskAssesment consolidate  created Successfully!" : "Error while creating iskAssesment consolidate!");
+        return new AddConsolidateDataResponseDTO(Guid.NewGuid(), rowsAffected > 0, rowsAffected > 0 ? "RiskAssesment consolidate  created Successfully!" : "Error while creating iskAssesment consolidate!");
 
     }
 }

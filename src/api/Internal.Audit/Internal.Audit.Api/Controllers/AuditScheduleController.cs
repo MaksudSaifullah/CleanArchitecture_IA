@@ -1,4 +1,5 @@
 ﻿using Internal.Audit.Application.Features.AuditSchedules.Commands.AddAuditSchedule;
+using Internal.Audit.Application.Features.AuditSchedules.Queries.GetAuditScheduleBranchList;
 using Internal.Audit.Application.Features.AuditSchedules.Queries.GetAuditScheduleByPlanId;
 using Internal.Audit.Application.Features.AuditSchedules.Queries.GetAuditScheduleList;
 using MediatR;
@@ -21,6 +22,13 @@ public class AuditScheduleController : ControllerBase
     {
         var auditSchedules = await _mediator.Send(getAuditScheduleListQuery);
         return Ok(auditSchedules);
+
+    }
+    [HttpPost("paginatedScheduleBranch")]
+    public async Task<ActionResult<GetAuditScheduleListPagingDTO>> GetScheduleBranch(GetAuditScheduleBranchListQuery getAuditScheduleBranchListQuery)
+    {
+        var auditScheduleBranches = await _mediator.Send(getAuditScheduleBranchListQuery);
+        return Ok(auditScheduleBranches);
 
     }
     [HttpPost]

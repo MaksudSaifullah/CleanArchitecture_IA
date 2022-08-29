@@ -74,7 +74,7 @@
                             <div class="col-md-6 form-floating">
                               <select aria-label="Floating label select example" cSelect id="auditTypeId" formControlName="auditTypeId" name="auditTypeId" >
                                 <option *ngFor="let auditType of auditTypes" [value]="auditType.id">
-                                  {{auditType.text}}
+                                  {{auditType.name}}
                                 </option>
                               </select>
                               <label for="auditTypeId" class="dropdownLabel">Audit Type</label>
@@ -127,7 +127,7 @@
                                 <c-row [gutter]="{g: 2}">
                                   <c-col md>
                                     <c-multi-select multiple formControlName="teamLeaderList" name="teamLeaderList" required>
-                                      <c-multi-select-option *ngFor="let user of users" [value]="user.id" >{{user.userName}}
+                                      <c-multi-select-option *ngFor="let user of users" [value]="user.id" [selected]="isSelectedTeamLeader(user.id)">{{user.userName}}
                                       </c-multi-select-option>
                                     </c-multi-select>
                                   </c-col>
@@ -145,7 +145,7 @@
                                 <c-row [gutter]="{g: 2}">
                                   <c-col md>
                                     <c-multi-select multiple formControlName="auditorList" name="auditorList" required>
-                                      <c-multi-select-option *ngFor="let user of users" [value]="user.id" >{{user.userName}}
+                                      <c-multi-select-option *ngFor="let user of users" [value]="user.id" [selected]="isSelectedAuditor(user.id)" >{{user.userName}}
                                       </c-multi-select-option>
                                     </c-multi-select>
                                   </c-col>
@@ -169,11 +169,11 @@
                     </tr>
                   </thead>
                   <tbody *ngIf="branches?.length != 0">
-                    <tr *ngFor="let branch of branches let i =index" >
+                    <tr *ngFor="let branch of selectedScheduleBranch let i =index" >
                         <td>
                             {{i+1}}
                         </td>
-                      <td>{{ branch.countryName }}</td>
+                      <td>{{ branch.branchId }}</td>
                       <td>{{ branch.branchName }}</td>
                      
                     </tr>

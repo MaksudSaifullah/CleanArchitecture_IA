@@ -220,6 +220,10 @@ public static class PersistentInfrastructureServiceRegistration
         services.AddScoped<IUploadDocumentCommandRepository, UploadDocumentCommandRepository>();
         services.AddScoped<IUploadDocumentQueryRepository>(s => new UploadDocumentQueryRepository(configuration.GetConnectionString("InternalAuditDb")));
 
+        services.AddScoped<IAuditTypeQueryRepository>(s => new AuditTypeQueryRepository(configuration.GetConnectionString("InternalAuditDb")));
+
+        services.AddScoped<IAuditScheduleBranchListQueryRepository>(s => new AuditScheduleBranchListQueryRepository(configuration.GetConnectionString("InternalAuditDb")));
+
 
         return services;
     }

@@ -34,6 +34,8 @@ export class ScheduleConfigurationComponent implements OnInit {
   scheduleConfigSetDateForm: FormGroup;
   users: User[]=[];
   formService: FormService = new FormService();
+  scheduleParamId: string='';
+  auditParamId: string='';
 
   constructor(private http: HttpService, private fb: FormBuilder, private AlertService: AlertService, private router: Router, private activateRoute: ActivatedRoute) {
     this.scheduleConfigRiskOwnerForm = this.fb.group({
@@ -61,6 +63,8 @@ export class ScheduleConfigurationComponent implements OnInit {
 
   }
   ngOnInit(): void {
+    this.scheduleParamId=this.activateRoute.snapshot.queryParams['sId']; 
+    this.auditParamId=this.activateRoute.snapshot.queryParams['aId']; 
     this.LoadDataRiskOwner();
     this.LoadDataActionOwner();
     this.LoadUser();
@@ -73,7 +77,9 @@ export class ScheduleConfigurationComponent implements OnInit {
       this.users = convertedResp.items;
     })
   }
-
+  RedirectToScheduleView(){
+    this.router.navigate(['branch-audit/schedule-view'],{ queryParams: { sId: this.scheduleParamId,aId:this.auditParamId } });
+  }
 //   LoadBranch(){
 //   this.http.get('commonValueAndType/getBranch?countryId='+'414d221c-0df6-ec11-b3b0-00155d610b18' +'&pageNumber=1&pageSize=10000').subscribe(resp => {
 //     let convertedResp = resp as paginatedResponseInterface<Branch>;

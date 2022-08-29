@@ -157,6 +157,8 @@ using Internal.Audit.Application.Features.UploadDocuments.Commands.AddUploadDocu
 using Internal.Audit.Application.Features.UploadDocuments.Queries.GetUploadedDocumentListByRoled;
 using Internal.Audit.Application.Features.AuditSchedules.Queries.GetAuditScheduleByPlanId;
 using Internal.Audit.Application.Features.Issues.Queries.GetIssueList;
+using Internal.Audit.Application.Features.Audit.Queries.GetAuditType;
+using Internal.Audit.Application.Features.AuditSchedules.Queries.GetAuditScheduleBranchList;
 
 namespace Internal.Audit.Application.Mappings;
 
@@ -436,6 +438,8 @@ public class MappingProfile : Profile
         CreateMap<UserDTOs, User>().ReverseMap();//EmployeeDTOs
         CreateMap<EmployeeDTOs, Employee>().ReverseMap();//EmployeeDTOs
         CreateMap<GetAuditSchedulePlanIdResponseDTO, AuditSchedule>().ReverseMap();//GetAuditSchedulePlanIdResponseDTO
+        CreateMap<AuditType, GetAuditTypeResponseDTO>().ReverseMap();
+        CreateMap<CompositAuditScheduleBranch, GetAuditScheduleBranchListResponseDTO>().ReverseMap();
 
 
 

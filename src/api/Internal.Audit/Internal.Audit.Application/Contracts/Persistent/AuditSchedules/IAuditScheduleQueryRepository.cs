@@ -10,5 +10,5 @@ namespace Internal.Audit.Application.Contracts.Persistent.AuditSchedules;
 
 public interface IAuditScheduleQueryRepository:IAsyncQueryRepository<CompositAuditSchedule>
 {
-    Task<(long, IEnumerable<CompositAuditSchedule>)> GetAll(string searchTerm, int pageSize, int pageNumber);
+    Task<(long, IEnumerable<CompositAuditSchedule>)> GetAll(string scheduleId, Guid auditCreationId, int pageSize, int pageNumber);
 }

@@ -15,10 +15,10 @@ public class AuditScheduleQueryrepository : QueryRepositoryBase<CompositAuditSch
     {
     }
 
-    public async Task<(long, IEnumerable<CompositAuditSchedule>)> GetAll(string searchTerm, int pageSize, int pageNumber)
+    public async Task<(long, IEnumerable<CompositAuditSchedule>)> GetAll(string scheduleId, Guid auditCreationId, int pageSize, int pageNumber)
     {
-        var query = "EXEC [dbo].[GetAuditScheduleListProcedure] @pageSize,@pageNumber,@searchTerm";
-        var parameters = new Dictionary<string, object> { { "@pageSize", pageSize }, { "@pageNumber", pageNumber }, { "@searchTerm", searchTerm } };
+        var query = "EXEC [dbo].[GetAuditScheduleListProcedure] @pageSize,@pageNumber,@scheduleId,@auditCreationId";
+        var parameters = new Dictionary<string, object> { { "@pageSize", pageSize }, { "@pageNumber", pageNumber }, { "@scheduleId", scheduleId }, { "@auditCreationId", auditCreationId } };
         return await GetWithPagingInfo(query, parameters, false);
     }
 }

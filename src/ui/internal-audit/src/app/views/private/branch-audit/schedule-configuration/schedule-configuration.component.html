@@ -19,7 +19,7 @@
               <div class="card-body">
                 <div class="row">
                     <div class="col-md-6"> 
-                      <button class="btnCreateColor"  cButton>&#8592; Schedule View </button> 
+                      <button class="btnCreateColor"  cButton (click)="RedirectToScheduleView()">&#8592; Schedule View </button> 
                     </div>
                     <div class="col-md-6">
                         <div class="a row">
@@ -107,7 +107,7 @@
                       <c-card-body>
                         <c-row [gutter]="{g: 2}">
                           <c-col md>
-                            <c-multi-select multiple formControlName="riskOwnerId" name="riskOwnerId" required>
+                            <c-multi-select multiple formControlName="riskOwnerList" name="riskOwnerList" required>
                               <c-multi-select-option *ngFor="let user of users" [value]="user.id" >{{user.userName}}
                               </c-multi-select-option>
                             </c-multi-select>

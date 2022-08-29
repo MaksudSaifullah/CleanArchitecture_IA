@@ -12,5 +12,6 @@ export interface Audit {
     countryName: string;
     auditPeriodFrom: string;
     auditPeriodTo: string;
+    executionStatusId : string
     createdOn: Date;
 }

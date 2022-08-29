@@ -1,4 +1,5 @@
-﻿using MediatR;
+﻿using Internal.Audit.Application.Features.AuditSchedules.Queries.GetAuditScheduleBranchList;
+using MediatR;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,5 +17,6 @@ namespace Internal.Audit.Application.Features.AuditSchedules.Queries.GetAuditSch
     public class ScheduleSearchTerm
     {
         public string scheduleId { get; set; }
+        public Guid auditCreationId { get; set; }
     }
 }

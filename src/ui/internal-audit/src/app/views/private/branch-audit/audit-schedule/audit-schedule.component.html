@@ -10,7 +10,7 @@
               <div class="row">
                 <div class="row" style="margin: 0 auto;">
                   <div  class="col-md-6 mb-2">
-                    <button *ngIf="paramId" [cModalToggle]="verticallyCenteredModal.id" class="btnCreateColor" (click)="getAuditById()" cButton>
+                    <button *ngIf="auditParamId" [cModalToggle]="verticallyCenteredModal.id" class="btnCreateColor" (click)="getAuditById()" cButton>
                       <svg cIcon name="cilPlus" size="md" title="Add Button Icon"></svg> Create
                     </button> 
                   </div>
@@ -45,7 +45,7 @@
                   </thead>
                   <tbody *ngIf="auditSchedules?.length != 0">
                     <tr *ngFor="let auditSchedule of auditSchedules">
-                      <td><a [routerLink]="['/branch-audit/schedule-view',auditSchedule.id]"> {{ auditSchedule.scheduleId }}</a></td>
+                      <td><a [routerLink]="['/branch-audit/schedule-view',auditSchedule.id,auditParamId]"> {{ auditSchedule.scheduleId }}</a></td>
                       <td>{{ auditSchedule.country }}</td>
                       <td>{{ auditSchedule.teamLeader }}</td>
                       <td>{{ auditSchedule.auditor }}</td>
@@ -95,7 +95,7 @@
             <select aria-label="Floating label select example" cSelect id="auditTypeId" formControlName="auditTypeId" name="auditTypeId" >
               <option value=null>Select Audit</option>
               <option *ngFor="let auditType of auditTypes" [value]="auditType.id">
-                {{auditType.text}}
+                {{auditType.name}}
               </option>
             </select>
             <label for="auditTypeId" class="dropdownLabel">Audit Type</label>
@@ -169,9 +169,9 @@
             <option value=null>Execution Status</option>
             <option value=0>Not Started</option>
             <option value=1>In Progress</option>
-            <option value=3>Done</option>
+            <option value=2>Done</option>
           </select>
-          <label for="countryId" class="dropdownLabel">Country</label>
+          <label for="executionStatusId" class="dropdownLabel">Execution Status</label>
         </div>         
         <br> 
           <c-col xs="12">
@@ -182,8 +182,8 @@
               <c-card-body>
                 <c-row [gutter]="{g: 2}">
                   <c-col md>
-                    <c-multi-select multiple formControlName="branchList" name="branchList" required>
-                      <c-multi-select-option *ngFor="let branch of branches" [value]="branch.id">{{branch.branchName}}
+                    <c-multi-select multiple formControlName="branchList" name="branchList"  required>
+                      <c-multi-select-option *ngFor="let branch of branches" [value]="branch.id" [selected]="isSelectedBranch(branch.id)">{{branch.branchName}}
                       </c-multi-select-option>
                     </c-multi-select>
                   </c-col>
@@ -200,7 +200,7 @@
                 <c-row [gutter]="{g: 2}">
                   <c-col md>
                     <c-multi-select multiple formControlName="approverList" name="approverList" required>
-                      <c-multi-select-option *ngFor="let user of users" [value]="user.id" >{{user.userName}}
+                      <c-multi-select-option *ngFor="let user of users" [value]="user.id" [selected]="isSelectedApprover(user.id)" >{{user.userName}}
                       </c-multi-select-option>
                     </c-multi-select>
                   </c-col>
@@ -218,7 +218,7 @@
                 <c-row [gutter]="{g: 2}">
                   <c-col md>
                     <c-multi-select multiple formControlName="teamLeaderList" name="teamLeaderList" required>
-                      <c-multi-select-option *ngFor="let user of users" [value]="user.id" >{{user.userName}}
+                      <c-multi-select-option *ngFor="let user of users" [value]="user.id" [selected]="isSelectedTeamLeader(user.id)">{{user.userName}}
                       </c-multi-select-option>
                     </c-multi-select>
                   </c-col>
@@ -236,7 +236,7 @@
                 <c-row [gutter]="{g: 2}">
                   <c-col md>
                     <c-multi-select multiple formControlName="auditorList" name="auditorList" required>
-                      <c-multi-select-option *ngFor="let user of users" [value]="user.id" >{{user.userName}}
+                      <c-multi-select-option *ngFor="let user of users" [value]="user.id" [selected]="isSelectedAuditor(user.id)">{{user.userName}}
                       </c-multi-select-option>
                     </c-multi-select>
                   </c-col>

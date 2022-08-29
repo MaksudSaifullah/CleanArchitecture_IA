@@ -226,6 +226,10 @@ public static class PersistentInfrastructureServiceRegistration
         services.AddScoped<IRiskAssesmentConsolidateDataQueryrepository>(s => new RiskAssesmentConsolidateDataQueryRepository(configuration.GetConnectionString("InternalAuditDb")));
         services.AddScoped<IAuditScheduleBranchCommandRepository, AuditScheduleBranchCommandRepository>();
 
+        services.AddScoped<IAuditTypeQueryRepository>(s => new AuditTypeQueryRepository(configuration.GetConnectionString("InternalAuditDb")));
+
+        services.AddScoped<IAuditScheduleBranchListQueryRepository>(s => new AuditScheduleBranchListQueryRepository(configuration.GetConnectionString("InternalAuditDb")));
+
 
         return services;
     }

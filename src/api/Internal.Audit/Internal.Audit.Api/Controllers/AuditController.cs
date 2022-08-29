@@ -4,6 +4,7 @@ using Internal.Audit.Application.Features.Audit.Commands.UpdateAudit;
 using Internal.Audit.Application.Features.Audit.Queries.GetAuditById;
 using Internal.Audit.Application.Features.Audit.Queries.GetAuditList;
 using Internal.Audit.Application.Features.Audit.Queries.GetAuditPlanCodeList;
+using Internal.Audit.Application.Features.Audit.Queries.GetAuditType;
 using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -31,6 +32,13 @@ public class AuditController : ControllerBase
     {
         var auditPlanCodes = await _mediator.Send(getAuditPlanCodeListQuery);
         return Ok(auditPlanCodes);
+
+    }
+    [HttpPost("paginatedAuditType")]
+    public async Task<ActionResult<AuditTypePagingDTO>> GetAuditTypeList(GetAuditTypeQuery getAuditTypeQuery)
+    {
+        var auditTypes = await _mediator.Send(getAuditTypeQuery);
+        return Ok(auditTypes);
 
     }
     [HttpGet("{Id}")]

@@ -163,6 +163,15 @@ using Internal.Audit.Application.Features.RiskAssesmentConsolidateDatas.Queries;
 using Internal.Audit.Application.Features.AuditSchedules.Commands.UpdateSchedule;
 using Internal.Audit.Application.Features.AuditSchedules.Commands.DeleteAuditSchedule;
 using Internal.Audit.Application.Features.TopicHeads.Queries.GetTopicHeadByCountryIdAndDateRange;
+using Internal.Audit.Application.Features.AuditSchedules.Queries.GetAuditScheduleById;
+using Internal.Audit.Application.Features.RiskAssesmentConsolidateDatas.Commands.AddConsolidateData;
+using Internal.Audit.Application.Features.RiskAssesmentConsolidateDatas.Queries;
+using Internal.Audit.Application.Features.AuditSchedules.Commands.UpdateSchedule;
+using Internal.Audit.Application.Features.AuditSchedules.Commands.DeleteAuditSchedule;
+using Internal.Audit.Application.Features.TopicHeads.Queries.GetTopicHeadByCountryIdAndDateRange;
+using Internal.Audit.Application.Features.Issues.Queries.GetIssueById;
+using Internal.Audit.Application.Features.Audit.Queries.GetAuditType;
+using Internal.Audit.Application.Features.AuditSchedules.Queries.GetAuditScheduleBranchList;
 
 namespace Internal.Audit.Application.Mappings;
 
@@ -421,6 +430,7 @@ public class MappingProfile : Profile
         //CreateMap<Country, GetBranchListResponseDTORAW>().ReverseMap();
 
         CreateMap<Issue, GetIssueListResponseDTO>().ReverseMap();
+        CreateMap<Issue, GetIssueByIdResponseDTO>().ReverseMap();
 
         CreateMap<Branch, GetBranchListResponseDTORAW>() // needs `Inst` -> `InstDTO` map
     .ForMember(dst => dst.CountryName, opt => opt.MapFrom(src => src.Country.Name)).ReverseMap();
@@ -442,10 +452,13 @@ public class MappingProfile : Profile
         CreateMap<UserDTOs, User>().ReverseMap();
         CreateMap<EmployeeDTOs, Employee>().ReverseMap();
         CreateMap<GetAuditSchedulePlanIdResponseDTO, AuditSchedule>().ReverseMap();
+        CreateMap<AuditType, GetAuditTypeResponseDTO>().ReverseMap();
+        CreateMap<CompositAuditScheduleBranch, GetAuditScheduleBranchListResponseDTO>().ReverseMap();
 
         CreateMap<CompositAuditSchedule, AuditScheduleByIdDTO>().ReverseMap();
         CreateMap<AuditSchedule, AuditScheduleByIdDTO>().ReverseMap();
         CreateMap<RiskAssesmentConsolidateData, AddConsolidateDataCommand>().ReverseMap();
+        CreateMap<RiskAssesmentConsolidateData, AddConsolidateDataCommandObject>().ReverseMap();
         CreateMap<RiskAssesmentConsolidateData, RiskConsolidateDataGetQueryResponseDTO>().ReverseMap();
         CreateMap<AuditSchedule, UpdateScheduleCommand>().ReverseMap();
         CreateMap<AuditSchedule, DeleteAuditScheduleCommand>().ReverseMap();

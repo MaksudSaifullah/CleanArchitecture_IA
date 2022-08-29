@@ -19,15 +19,12 @@
               <div class="card-body">
                 <div class="row">
                     <div class="col-md-6"> 
-                      <button class="btnCreateColor"  cButton>&#8592; Schedule View </button> 
+                      <button class="btnCreateColor"  cButton (click)="RedirectToScheduleView()">&#8592; Schedule View </button> 
                     </div>
                     <div class="col-md-6">
                         <div class="a row">
                             <div class="col-md-6">
-                                <button [cModalToggle]="verticallyCenteredModal.id" class="btnUpdateColor"  cButton (click)="edit()" > Update </button> 
-                            </div>
-                            <div class="col-md-6">
-                                <button [cModalToggle]="verticallyCenteredModal.id" class="btnCreateColor"  cButton (click)="reset()"> Add </button> 
+                                <button [cModalToggle]="verticallyCenteredModalRiskOwner.id" class="btnCreateColor"  cButton > Add </button> 
                             </div>
                         </div>
                     </div>
@@ -35,22 +32,28 @@
                 <br>
                 <br>
                 <div class="row overflow-auto">
-                    <table datatable [dtOptions]="dtOptions" class="table table-bordered row-border hover datatableStyle" >
+                    <table datatable [dtOptions]="dtOptions[0]" class="table table-bordered row-border hover datatableStyle" >
                       <thead>
                         <tr>
                           <th>SL</th>
                           <th>Branch Name</th>
                           <th>Risk Owner</th>
+                          <th>Action</th>
                         </tr>
                       </thead>
-                      <tbody *ngIf="branches?.length != 0">
-                        <tr *ngFor="let branch of branches let i=index" >
+                      <tbody *ngIf="brancheWithRiskOwner?.length != 0">
+                        <tr *ngFor="let branch of brancheWithRiskOwner let i=index" >
                           <td>{{ i+1 }}</td>
                           <td>{{ branch.countryName }}</td>
                           <td>{{ branch.branchName }}</td>
+                          <td>
+                            <button type="button" class="btn btn-secondary btnEditColor" (click)="editRiskOwner(verticallyCenteredModalRiskOwner,config)">
+                              <svg cIcon name="cilPencil" size="md" title="Edit Button icon"></svg>
+                            </button>
+                          </td>
                         </tr>
                       </tbody>
-                      <tbody *ngIf="branches?.length == 0">
+                      <tbody *ngIf="brancheWithRiskOwner?.length == 0">
                         <tr>
                           <td colspan="3" class="no-data-available">No data!</td>
                         </tr>
@@ -59,127 +62,96 @@
       
                 </div>
                
+
+                
+
               </div>
             </div>
           </div>
         </div>
-    </div>
-    
+      </div>
+      <form [formGroup]="scheduleConfigRiskOwnerForm" (ngSubmit)="onSubmitRiskOwner(verticallyCenteredModalRiskOwner)" novalidate>
+      <c-modal #verticallyCenteredModalRiskOwner alignment="center" id="verticallyCenteredModalRiskOwner">
+        <c-modal-header>
+          <h5 cModalTitle *ngIf="!formService.isEdit(this.scheduleConfigRiskOwnerForm.get('id'))">Add Risk Owner</h5>
+          <h5 cModalTitle *ngIf="formService.isEdit(this.scheduleConfigRiskOwnerForm.get('id'))">Update Risk Owner</h5>
+          <button [cModalToggle]="verticallyCenteredModalRiskOwner.id" cButtonClose></button>
+        </c-modal-header>
+        <c-modal-body>
+          <div class="col-lg-12" >
+            <input type="hidden" formControlName="id"/>
+
+                           
+             <div cFormFloating>
+              <select aria-label="Floating label select example" cSelect id="branchId" formControlName="branchId" name="branchId">
+                <option value=null>Select Branch</option>
+                <option *ngFor="let branch of brancheWithRiskOwner" [value]="branch.id">
+                  {{branch.branchName}}
+                </option>
+              </select>
+              <label for="branchId" class="dropdownLabel">Branch</label>
+            </div>
+            <div cRow *ngIf="(scheduleConfigRiskOwnerForm.get('branchId')?.invalid && scheduleConfigRiskOwnerForm.get('branchId')?.errors) &&         
+              (scheduleConfigRiskOwnerForm.get('branchId')?.dirty || scheduleConfigRiskOwnerForm.get('branchId')?.touched)">
+              <small class="text-danger">
+                This field is required.
+              </small>                                 
+            </div> 
+            <br>
+            <div class="col-md-12">
+                <c-col xs="12">
+                    <c-card class="mb-4">
+                      <c-card-header>
+                        <strong>Risk Owner</strong>
+                      </c-card-header>
+                      <c-card-body>
+                        <c-row [gutter]="{g: 2}">
+                          <c-col md>
+                            <c-multi-select multiple formControlName="riskOwnerList" name="riskOwnerList" required>
+                              <c-multi-select-option *ngFor="let user of users" [value]="user.id" >{{user.userName}}
+                              </c-multi-select-option>
+                            </c-multi-select>
+                          </c-col>
+                        </c-row>
+                      </c-card-body>
+                    </c-card>
+                  </c-col>
+            </div>
+            
+                   
+          </div>
+        </c-modal-body>
+        <c-modal-footer>
+          <button cButton class="btn btn-primary btnSaveColor me-1"  (click)="onSubmitRiskOwner(verticallyCenteredModalRiskOwner)">
+            <svg cIcon name="cilSave" size="md" title="Save Button Icon"></svg> Save
+          </button>
+          <button [cModalToggle]="verticallyCenteredModalRiskOwner.id" cButton class="btn btn-danger btnCancelColor me-1">
+            <svg cIcon name="cilX" size="md" title="Close Button Icon"></svg> Close
+          </button>
+        </c-modal-footer>
+      </c-modal>
+      </form>
     </c-tab-pane>
   
-    <form [formGroup]="scheduleConfigForm" (ngSubmit)="onSubmit(verticallyCenteredModal)" novalidate>
-        <c-modal #verticallyCenteredModal alignment="center" id="verticallyCenteredModal">
-          <c-modal-header>
-            <h5 cModalTitle *ngIf="!formService.isEdit(this.scheduleConfigForm.get('id'))">Add Risk Owner</h5>
-            <h5 cModalTitle *ngIf="formService.isEdit(this.scheduleConfigForm.get('id'))">Update Risk Owner</h5>
-            <button [cModalToggle]="verticallyCenteredModal.id" cButtonClose></button>
-          </c-modal-header>
-          <c-modal-body>
-            <div class="col-lg-12" >
-              <input type="hidden" formControlName="id"/>
 
-              <!-- <div formArrayName="riskOwners">
-                
-                <div *ngFor="let riskOwner of scheduleConfigForm.get('riskOwners')['controls'] " cFormFloating>
-                  <div class="row" [formGroup]="actionOwner">
-                    <div class="col-md-6 form-floating">
-                      
-                        <input type="hidden" formControlName="branchId" />
-                        <input type="text" class="form-control" formControlName="branchName" >
-                        <label for="floatingInput">Branch Name</label>
-                    </div>
-                    <div class="col-md-6">
-                        <c-col xs="12">
-                            <c-card class="mb-4">
-                              <c-card-header>
-                                <strong>Risk Owner</strong>
-                              </c-card-header>
-                              <c-card-body>
-                                <c-row [gutter]="{g: 2}">
-                                  <c-col md>
-                                    <c-multi-select multiple formControlName="riskOwnerId" name="riskOwnerId" required>
-                                      <c-multi-select-option *ngFor="let user of users" [value]="user.id" >{{user.userName}}
-                                      </c-multi-select-option>
-                                    </c-multi-select>
-                                  </c-col>
-                                </c-row>
-                              </c-card-body>
-                            </c-card>
-                          </c-col>
-                      </div>
-                    </div>
-                </div>
-              </div> -->
-                
-                  <!-- <div cFormFloating>
-                <select aria-label="Floating label select example" cSelect id="branchId" formControlName="branchId" name="branchId">
-                  <option value=null>Select Branch</option>
-                  <option *ngFor="let branch of branches" [value]="branch.id">
-                    {{branch.branchName}}
-                  </option>
-                </select>
-                <label for="branchId" class="dropdownLabel">Branch</label>
-              </div>
-              <div cRow *ngIf="(scheduleConfigForm.get('branchId')?.invalid && scheduleConfigForm.get('branchId')?.errors) &&         
-                (scheduleConfigForm.get('branchId')?.dirty || scheduleConfigForm.get('branchId')?.touched)">
-                <small class="text-danger">
-                  This field is required.
-                </small>                                 
-              </div> 
-              <br>
-              <div class="col-md-12">
-                  <c-col xs="12">
-                      <c-card class="mb-4">
-                        <c-card-header>
-                          <strong>Risk Owner</strong>
-                        </c-card-header>
-                        <c-card-body>
-                          <c-row [gutter]="{g: 2}">
-                            <c-col md>
-                              <c-multi-select multiple formControlName="riskOwnerList" name="riskOwnerList" required>
-                                <c-multi-select-option *ngFor="let user of users" [value]="user.id" >{{user.userName}}
-                                </c-multi-select-option>
-                              </c-multi-select>
-                            </c-col>
-                          </c-row>
-                        </c-card-body>
-                      </c-card>
-                    </c-col>
-              </div> -->
-              
-                     
-            </div>
-          </c-modal-body>
-          <c-modal-footer>
-            <button cButton class="btn btn-primary btnSaveColor me-1"  (click)="onSubmit(verticallyCenteredModal)">
-              <svg cIcon name="cilSave" size="md" title="Save Button Icon"></svg> Save
-            </button>
-            <button [cModalToggle]="verticallyCenteredModal.id" cButton class="btn btn-danger btnCancelColor me-1">
-              <svg cIcon name="cilX" size="md" title="Close Button Icon"></svg> Close
-            </button>
-          </c-modal-footer>
-        </c-modal>
-        </form>
-  
-    <!-- <c-tab-pane class="p-3"> 
+    <c-tab-pane class="p-3"> 
       <div class="animated fadeIn">
         <div class="row">
           <div class="col-lg-12">
             <div class="card">
               <div class="card-header">
-                <div class="fa fa-align-justify" >Action Ower List</div> 
+                <div class="fa fa-align-justify" >Action Owner List</div> 
               </div>
               <div class="card-body">
                 <div class="row">
                     <div class="col-md-6"> 
+                      <button class="btnCreateColor"  cButton>&#8592; Schedule View </button> 
                     </div>
                     <div class="col-md-6">
                         <div class="a row">
+                            
                             <div class="col-md-6">
-                                <button  class="btnUpdateColor"  cButton > Update </button> 
-                            </div>
-                            <div class="col-md-6">
-                                <button  class="btnCreateColor"  cButton > Add </button> 
+                                <button [cModalToggle]="verticallyCenteredModalActionOwner.id" class="btnCreateColor"  cButton > Add </button> 
                             </div>
                         </div>
                     </div>
@@ -187,22 +159,155 @@
                 <br>
                 <br>
                 <div class="row overflow-auto">
-                    <table datatable [dtOptions]="dtOptions" class="table table-bordered row-border hover datatableStyle" >
+                    <table datatable [dtOptions]="dtOptions[1]" class="table table-bordered row-border hover datatableStyle" style="width: 100%;">
                       <thead>
                         <tr>
                           <th>SL</th>
                           <th>Branch Name</th>
                           <th>Action Owner</th>
+                          <th>Action</th>
                         </tr>
                       </thead>
-                      <tbody *ngIf="branches?.length != 0">
-                        <tr *ngFor="let branch of branches let i=index" >
+                      <tbody *ngIf="brancheWithActionOwner?.length != 0">
+                        <tr *ngFor="let branch of brancheWithActionOwner let i=index" >
                           <td>{{ i+1 }}</td>
                           <td>{{ branch.countryName }}</td>
                           <td>{{ branch.branchName }}</td>
+                          <td>
+                            <button type="button" class="btn btn-secondary btnEditColor" (click)="editActionOwner(verticallyCenteredModalActionOwner,config)">
+                              <svg cIcon name="cilPencil" size="md" title="Edit Button icon"></svg>
+                            </button>
+                          </td>
                         </tr>
                       </tbody>
-                      <tbody *ngIf="branches?.length == 0">
+                      <tbody *ngIf="brancheWithActionOwner?.length == 0">
+                        <tr>
+                          <td colspan="3" class="no-data-available">No data!</td>
+                        </tr>
+                      </tbody>
+                    </table>
+      
+                </div>
+               
+
+           
+
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <form [formGroup]="scheduleConfigActionOwnerForm" (ngSubmit)="onSubmitActionOwner(verticallyCenteredModalActionOwner)" novalidate>
+      <c-modal #verticallyCenteredModalActionOwner alignment="center" id="verticallyCenteredModalActionOwner">
+        <c-modal-header>
+          <h5 cModalTitle *ngIf="!formService.isEdit(this.scheduleConfigActionOwnerForm.get('id'))">Add Action Owner</h5>
+          <h5 cModalTitle *ngIf="formService.isEdit(this.scheduleConfigActionOwnerForm.get('id'))">Update Action Owner</h5>
+          <button [cModalToggle]="verticallyCenteredModalActionOwner.id" cButtonClose></button>
+        </c-modal-header>
+        <c-modal-body>
+          <div class="col-lg-12" >
+            <input type="hidden" formControlName="id"/>
+
+                           
+             <div cFormFloating>
+              <select aria-label="Floating label select example" cSelect id="branchId" formControlName="branchId" name="branchId">
+                <option value=null>Select Branch</option>
+                <option *ngFor="let branch of brancheWithActionOwner" [value]="branch.id">
+                  {{branch.branchName}}
+                </option>
+              </select>
+              <label for="branchId" class="dropdownLabel">Branch</label>
+            </div>
+            <div cRow *ngIf="(scheduleConfigActionOwnerForm.get('branchId')?.invalid && scheduleConfigActionOwnerForm.get('branchId')?.errors) &&         
+              (scheduleConfigActionOwnerForm.get('branchId')?.dirty || scheduleConfigActionOwnerForm.get('branchId')?.touched)">
+              <small class="text-danger">
+                This field is required.
+              </small>                                 
+            </div> 
+            <br>
+            <div class="col-md-12">
+                <c-col xs="12">
+                    <c-card class="mb-4">
+                      <c-card-header>
+                        <strong>Action Owner</strong>
+                      </c-card-header>
+                      <c-card-body>
+                        <c-row [gutter]="{g: 2}">
+                          <c-col md>
+                            <c-multi-select multiple formControlName="actionOwnerId" name="actionOwnerId" required>
+                              <c-multi-select-option *ngFor="let user of users" [value]="user.id" >{{user.userName}}
+                              </c-multi-select-option>
+                            </c-multi-select>
+                          </c-col>
+                        </c-row>
+                      </c-card-body>
+                    </c-card>
+                  </c-col>
+            </div>
+            
+                   
+          </div>
+        </c-modal-body>
+        <c-modal-footer>
+          <button cButton class="btn btn-primary btnSaveColor me-1"  (click)="onSubmitActionOwner(verticallyCenteredModalActionOwner)">
+            <svg cIcon name="cilSave" size="md" title="Save Button Icon"></svg> Save
+          </button>
+          <button [cModalToggle]="verticallyCenteredModalActionOwner.id" cButton class="btn btn-danger btnCancelColor me-1">
+            <svg cIcon name="cilX" size="md" title="Close Button Icon"></svg> Close
+          </button>
+        </c-modal-footer>
+      </c-modal>
+      </form>
+    </c-tab-pane>
+    
+    <c-tab-pane class="p-3"> 
+      <div class="animated fadeIn">
+        <div class="row">
+          <div class="col-lg-12">
+            <div class="card">
+              <div class="card-header">
+                <div class="fa fa-align-justify" >Set Date</div> 
+              </div>
+              <div class="card-body">
+                <div class="row">
+                    <div class="col-md-6"> 
+                      <button class="btnCreateColor"  cButton>&#8592; Schedule View </button> 
+                    </div>
+                    <div class="col-md-6">
+                        <div class="a row">
+                            <div class="col-md-6">
+                                <button [cModalToggle]="verticallyCenteredModalSetDate.id" class="btnCreateColor"  cButton > Add </button> 
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <br>
+                <br>
+                <div class="row overflow-auto">
+                    <table datatable [dtOptions]="dtOptions[0]" class="table table-bordered row-border hover datatableStyle" style="width: 100%;">
+                      <thead>
+                        <tr>
+                          <th>SL</th>
+                          <th>Date Type</th>
+                          <th>Set Date</th>
+                          <th>Action</th>
+                        </tr>
+                      </thead>
+                      <tbody *ngIf="brancheWithRiskOwner?.length != 0">
+                        <tr *ngFor="let branch of brancheWithRiskOwner let i=index" >
+                          <td>{{ i+1 }}</td>
+                          <td>{{ branch.countryName }}</td>
+                          <td>{{ branch.branchName }}</td>
+                          <td>
+                            <button type="button" class="btn btn-secondary btnEditColor" (click)="editRiskOwner(verticallyCenteredModalSetDate,config)">
+                              <svg cIcon name="cilPencil" size="md" title="Edit Button icon"></svg>
+                            </button>
+                          </td>
+                        </tr>
+                      </tbody>
+                      <tbody *ngIf="brancheWithRiskOwner?.length == 0">
                         <tr>
                           <td colspan="3" class="no-data-available">No data!</td>
                         </tr>
@@ -216,65 +321,68 @@
           </div>
         </div>
       </div>
-    </c-tab-pane>
+      <form [formGroup]="scheduleConfigSetDateForm" (ngSubmit)="onSubmitSetDate(verticallyCenteredModalSetDate)" novalidate>
+      <c-modal #verticallyCenteredModalSetDate alignment="center" id="verticallyCenteredModalSetDate">
+        <c-modal-header>
+          <h5 cModalTitle *ngIf="!formService.isEdit(this.scheduleConfigSetDateForm.get('id'))">Add Action Owner</h5>
+          <h5 cModalTitle *ngIf="formService.isEdit(this.scheduleConfigSetDateForm.get('id'))">Update Action Owner</h5>
+          <button [cModalToggle]="verticallyCenteredModalActionOwner.id" cButtonClose></button>
+        </c-modal-header>
+        <c-modal-body>
+          <div class="col-lg-12" >
+            <input type="hidden" formControlName="id"/>
 
-    <c-tab-pane class="p-3"> 
-        <div class="animated fadeIn">
-          <div class="row">
-            <div class="col-lg-12">
-              <div class="card">
-                <div class="card-header">
-                  <div class="fa fa-align-justify" >Set Date List</div> 
-                </div>
-                
-                <div class="card-body">
-                    <div class="row">
-                        <div class="col-md-6"> 
-                        </div>
-                        <div class="col-md-6">
-                            <div class="a row">
-                                <div class="col-md-6">
-                                    <button  class="btnUpdateColor"  cButton > Update </button> 
-                                </div>
-                                <div class="col-md-6">
-                                    <button  class="btnCreateColor"  cButton > Add </button> 
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <br>
-                    <br>
-                    <div class="row overflow-auto">
-                        <table datatable [dtOptions]="dtOptions" class="table table-bordered row-border hover datatableStyle" >
-                          <thead>
-                            <tr>
-                              <th>SL</th>
-                              <th>Branch Name</th>
-                              <th>Set Date</th>
-                            </tr>
-                          </thead>
-                          <tbody *ngIf="branches?.length != 0">
-                            <tr *ngFor="let branch of branches let i=index" >
-                              <td>{{ i+1 }}</td>
-                              <td>{{ branch.countryName }}</td>
-                              <td>{{ branch.branchName }}</td>
-                            </tr>
-                          </tbody>
-                          <tbody *ngIf="branches?.length == 0">
-                            <tr>
-                              <td colspan="3" class="no-data-available">No data!</td>
-                            </tr>
-                          </tbody>
-                        </table>
-          
-                    </div>
-                   
-                  </div>
-
-              </div>
+                           
+             <div cFormFloating>
+              <select aria-label="Floating label select example" cSelect id="branchId" formControlName="branchId" name="branchId">
+                <option value=null>Select Branch</option>
+                <option *ngFor="let branch of brancheWithActionOwner" [value]="branch.id">
+                  {{branch.branchName}}
+                </option>
+              </select>
+              <label for="branchId" class="dropdownLabel">Branch</label>
             </div>
+            <div cRow *ngIf="(scheduleConfigSetDateForm.get('branchId')?.invalid && scheduleConfigSetDateForm.get('branchId')?.errors) &&         
+              (scheduleConfigSetDateForm.get('branchId')?.dirty || scheduleConfigSetDateForm.get('branchId')?.touched)">
+              <small class="text-danger">
+                This field is required.
+              </small>                                 
+            </div> 
+            <br>
+            <div class="col-md-12">
+                <c-col xs="12">
+                    <c-card class="mb-4">
+                      <c-card-header>
+                        <strong>Action Owner</strong>
+                      </c-card-header>
+                      <c-card-body>
+                        <c-row [gutter]="{g: 2}">
+                          <c-col md>
+                            <c-multi-select multiple formControlName="actionOwnerId" name="actionOwnerId" required>
+                              <c-multi-select-option *ngFor="let user of users" [value]="user.id" >{{user.userName}}
+                              </c-multi-select-option>
+                            </c-multi-select>
+                          </c-col>
+                        </c-row>
+                      </c-card-body>
+                    </c-card>
+                  </c-col>
+            </div>
+            
+                   
           </div>
-        </div>
-      </c-tab-pane> -->
+        </c-modal-body>
+        <c-modal-footer>
+          <button cButton class="btn btn-primary btnSaveColor me-1"  (click)="onSubmitActionOwner(verticallyCenteredModalSetDate)">
+            <svg cIcon name="cilSave" size="md" title="Save Button Icon"></svg> Save
+          </button>
+          <button [cModalToggle]="verticallyCenteredModalSetDate.id" cButton class="btn btn-danger btnCancelColor me-1">
+            <svg cIcon name="cilX" size="md" title="Close Button Icon"></svg> Close
+          </button>
+        </c-modal-footer>
+      </c-modal>
+      </form>
+    </c-tab-pane>
+       
 
   </c-tab-content>

@@ -144,7 +144,7 @@ export class UserRegistrationComponent implements OnInit {
            this.selectedUserCountry = userData.userCountries;
            this.selectedUserRole = userData.userRoles;
           
-          //  console.log(this.selectedUserRole)
+          console.log(userData)
            this.countryForm.patchValue({id: userData.id,  empEmail:userData.employee?.email, empName: userData.employee?.name,empDesignation:userData.employee?.designationId,userName:userData.userName,userPassword:userData.password,userConfirmPassword:userData.password,
            roleList:userData.userRoles,countryListSelected:'', isEnabled:userData.isEnabled, accountExpired:userData.isAccountExpired, passwordExpired:userData.isPasswordExpired, accountLocked:userData.isAccountLocked});
 

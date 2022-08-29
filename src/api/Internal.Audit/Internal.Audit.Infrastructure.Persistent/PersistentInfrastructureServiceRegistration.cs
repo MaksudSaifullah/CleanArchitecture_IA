@@ -86,6 +86,8 @@ using Internal.Audit.Application.Contracts.Persistent.UploadDocuments;
 using Internal.Audit.Infrastructure.Persistent.Repositories.UploadDocuments;
 using Internal.Audit.Infrastructure.Persistent.Repositories.RiskAssesmentConsolidateDatas;
 using Internal.Audit.Application.Contracts.Persistent.RiskAssesmentConsolidateDatas;
+using Internal.Audit.Application.Contracts.Persistent.ClosingMeetingMinutes;
+using Internal.Audit.Infrastructure.Persistent.Repositories.ClosingMeetingMinutes;
 
 namespace Internal.Audit.Infrastructure.Persistent;
 
@@ -229,6 +231,14 @@ public static class PersistentInfrastructureServiceRegistration
         services.AddScoped<IAuditTypeQueryRepository>(s => new AuditTypeQueryRepository(configuration.GetConnectionString("InternalAuditDb")));
 
         services.AddScoped<IAuditScheduleBranchListQueryRepository>(s => new AuditScheduleBranchListQueryRepository(configuration.GetConnectionString("InternalAuditDb")));
+
+       
+        services.AddScoped<IClosingMeetingMinutesQueryRepository>(s => new ClosingMeetingMinuteQueryRepository(configuration.GetConnectionString("InternalAuditDb")));
+        services.AddScoped<IClosingMeetingMinutesCommandRepository, ClosingMeetingMinuteCommandRepository>();
+        services.AddScoped<IClosingMeetingApologyCommandRepository, ClosingMeetingApologyCommandRepository>();
+        services.AddScoped<IClosingMeetingPresentCommandRepository, ClosingMeetingPresentCommandRepository>();
+        services.AddScoped<IClosingMeetingSubjectCommandRepository, ClosingMeetingSubjectCommandRepository>();
+
 
 
         return services;

@@ -23,6 +23,7 @@ export class AuditViewComponent implements OnInit {
   dtOptions: DataTables.Settings = {};
   dataTableService: DatatableService = new DatatableService();
   paramId: string = '';
+  auditIdFromSchedule: string='';
   auditViewForm: FormGroup;
   auditPlanCodes: AuditPlanCode[] = [];
   branches: Branch[] = [];
@@ -45,8 +46,17 @@ export class AuditViewComponent implements OnInit {
 
   ngOnInit(): void {
     this.LoadData();
-    this.paramId = this.activateRoute.snapshot.params['id'];//this.activateRoute.snapshot.queryParams['id']; 
-    this.getAuditById(this.paramId);
+    this.paramId = this.activateRoute.snapshot.params['id'];
+    this.auditIdFromSchedule=this.activateRoute.snapshot.queryParams['id']; 
+    if(this.paramId!=undefined){
+      console.log('paramId')
+      this.getAuditById(this.paramId);
+    }
+    if(this.auditIdFromSchedule!=undefined){
+      console.log('auditIdFromSchedule')
+      this.getAuditById(this.auditIdFromSchedule);
+    }
+    
     // this.LoadData();
 
   }

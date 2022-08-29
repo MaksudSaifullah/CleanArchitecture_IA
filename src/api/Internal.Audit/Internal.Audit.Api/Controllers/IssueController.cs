@@ -34,13 +34,13 @@ public class IssueController : ControllerBase
     ////    return Ok(result);
     ////}
 
-    //[HttpGet("id")]
-    //public async Task<ActionResult<GetIssueByIdResponseDTO>> GetById(Guid Id)
-    //{
-    //    var query = new GetIssueByIdQuery(Id);
-    //    var result = await _mediator.Send(query);
-    //    return Ok(result);
-    //}
+    [HttpGet("id")]
+    public async Task<ActionResult<GetIssueByIdResponseDTO>> GetById(Guid Id)
+    {
+        var query = new GetIssueByIdQuery(Id);
+        var result = await _mediator.Send(query);
+        return Ok(result);
+    }
 
     //[HttpPost]
     //public async Task<ActionResult<AddIssueResponseDTO>> Add(AddIssueCommand command)

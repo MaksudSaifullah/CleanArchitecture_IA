@@ -1,4 +1,5 @@
 ﻿using Internal.Audit.Application.Features.AuditSchedules.Commands.AddAuditSchedule;
+using Internal.Audit.Application.Features.AuditSchedules.Queries.GetAuditScheduleBranchList;
 using Internal.Audit.Application.Features.AuditSchedules.Queries.GetAuditScheduleByPlanId;
 using Internal.Audit.Application.Features.AuditSchedules.Queries.GetAuditScheduleById;
 using Internal.Audit.Application.Features.AuditSchedules.Queries.GetAuditScheduleList;
@@ -35,6 +36,13 @@ public class AuditScheduleController : ControllerBase
         return Ok(auditSchedules);
 
     }
+    [HttpPost("paginatedScheduleBranch")]
+    public async Task<ActionResult<GetAuditScheduleListPagingDTO>> GetScheduleBranch(GetAuditScheduleBranchListQuery getAuditScheduleBranchListQuery)
+    {
+        var auditScheduleBranches = await _mediator.Send(getAuditScheduleBranchListQuery);
+        return Ok(auditScheduleBranches);
+
+    }
     [HttpPost]
     public async Task<ActionResult<AddAuditScheduleResponseDTO>> Add(AddAuditScheduleCommand command)
     {
@@ -48,8 +56,9 @@ public class AuditScheduleController : ControllerBase
         return Ok(result);
     }
     [HttpDelete]
-    public async Task<ActionResult<DeleteAuditScheduleResponseDTO>> Delete(DeleteAuditScheduleCommand command)
+    public async Task<ActionResult<DeleteAuditScheduleResponseDTO>> Delete(Guid Id)
     {
+        DeleteAuditScheduleCommand command = new DeleteAuditScheduleCommand(Id);
         var result = await _mediator.Send(command);
         return Ok(result);
     }
@@ -60,8 +69,8 @@ public class AuditScheduleController : ControllerBase
         return Ok(result);
     }
 
-    [HttpPost("getByCreationId")]
-    public async Task<ActionResult<GetAuditSchedulePlanIdResponseDTO>> GetByCreationId(GetAuditScheduleByCreationIdQuery query)
+    [HttpPost("getByAuditCreationId")]
+    public async Task<ActionResult<GetAuditSchedulePlanIdResponseDTO>> GetByAuditCreationId(GetAuditScheduleByCreationIdQuery query)
     {
         var result = await _mediator.Send(query);
         return Ok(result);

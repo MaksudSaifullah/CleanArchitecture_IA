@@ -22,7 +22,7 @@ namespace Internal.Audit.Application.Features.AuditSchedules.Queries.GetAuditSch
         }
         public async Task<GetAuditScheduleListPagingDTO> Handle(GetAuditScheduleListQuery request, CancellationToken cancellationToken)
         {
-            var (count, result) = await _auditScheduleueryRepository.GetAll(request.searchTerm.scheduleId, request.pageSize, request.pageNumber);
+            var (count, result) = await _auditScheduleueryRepository.GetAll(request.searchTerm.scheduleId, request.searchTerm.auditCreationId, request.pageSize, request.pageNumber);
             var auditScheduleList = _mapper.Map<IEnumerable<CompositAuditSchedule>, IEnumerable<GetAuditScheduleListResponseDTO>>(result).ToList();
 
             return new GetAuditScheduleListPagingDTO { Items = auditScheduleList, TotalCount = count };

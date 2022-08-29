@@ -75,7 +75,7 @@ const routes: Routes = [
     component: ScheduleViewComponent 
    },
    { 
-    path: 'schedule-view/:id', 
+    path: 'schedule-view/:id/:auditParamId', 
     component: ScheduleViewComponent 
    },
    { 

@@ -1,3 +1,13 @@
+<c-nav variant="tabs">
+  <a [active]="true" [cTabContent]="tabContent" [routerLink] [tabPaneIdx]="0" cNavLink>Risk Criteria</a>
+  <a  [cTabContent]="tabContent" [routerLink] [tabPaneIdx]="1" cNavLink>Audit Frequency</a>
+</c-nav>
+<c-col xs="12">
+  <c-card class="mb-4"> 
+
+<c-tab-content #tabContent="cTabContent">
+  <c-tab-pane class="p-3">
+
 <div class="animated fadeIn">
   <div class="row">
     <div class="col-lg-12">
@@ -29,7 +39,7 @@
          </form>
             <div class="row overflow-auto">
                 <!-- <table datatable [dtOptions]="dtOptions" class="table table-bordered row-border hover" >        -->
-                  <table datatable [dtOptions]="dtOptions[0]" id="DataTables_Table_1"  class="table table-bordered row-border hover datatableStyle" >    
+                  <table datatable [dtOptions]="dtOptions[0]" id="DataTables_Table_1"  class="table table-bordered row-border hover datatableStyle" style="width: 100%;">    
                   <thead>
                     <tr>
                        <th>Country</th>
@@ -81,7 +91,6 @@
     </div>
   </div>
 
-  <form>
   <form [formGroup]="riskCriteriaForm" (ngSubmit)="onSubmit(verticallyCenteredModal)" novalidate>
     <c-modal #verticallyCenteredModal alignment="center" id="verticallyCenteredModal">
       <c-modal-header>
@@ -240,9 +249,16 @@
       </c-modal-body> 
        <c-modal-footer>
         <button cButton class="btn btn-primary btnSaveColor me-1" (click)="onSubmit(verticallyCenteredModal)">Save</button>
-             <button [cModalToggle]="verticallyCenteredModal.id" cButton class="btn btn-danger btnCancelColor me-1"> 
+             <button [cModalToggle]="verticallyCenteredModal.id" cButton class="btn btn-danger btnCancelColor me-1" (click)="reset()"> 
               Close
          </button> 
       </c-modal-footer> 
     </c-modal>
     </form>
+  </c-tab-pane>
+
+  <c-tab-pane class="p-3"> 
+    <app-audit-frequency> </app-audit-frequency>
+  </c-tab-pane>
+
+  </c-tab-content>

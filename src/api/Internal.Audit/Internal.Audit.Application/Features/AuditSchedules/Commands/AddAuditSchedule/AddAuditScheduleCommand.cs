@@ -16,7 +16,8 @@ public class AddAuditScheduleCommand:IRequest<AddAuditScheduleResponseDTO>
     public DateTime ScheduleStartDate { get; set; }    
     public DateTime ScheduleEndDate { get; set; }
     public string? ScheduleId { get; set; }
-    public int ScheduleState { get; set; }
+    public int ScheduleState { get; set; } = 0;
+    public int ExecutionState { get; set; } = 0;
     public List<AuditScheduleParticipantsCommand> AuditScheduleParticipants { get; set; }
     public List<AuditScheduleBranchCommand> AuditScheduleBranch { get; set; }
 

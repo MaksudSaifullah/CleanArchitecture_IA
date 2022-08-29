@@ -20,8 +20,8 @@ public class AuditSchedule : EntityBase
     [MaxLength(10)]
     public string? ScheduleId { get; set; }
 
-    public int ScheduleState { get; set; } = -1;
-    public int ExecutionState { get; set; } = -1;
+    public int ScheduleState { get; set; } = 0;
+    public int ExecutionState { get; set; } = 0;
 
     //[ForeignKey("AuditPlanId")]
     //public virtual AuditPlan AuditPlan { get; set; } = null!;

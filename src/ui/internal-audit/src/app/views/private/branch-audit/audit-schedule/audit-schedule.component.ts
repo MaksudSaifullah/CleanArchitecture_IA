@@ -154,7 +154,7 @@ export class AuditScheduleComponent implements OnInit {
          auditCreationId: this.auditCreationId,
          scheduleStartDate: auditScheudleFormValue.scheduleStartDate,   
          scheduleEndDate: auditScheudleFormValue.scheduleEndDate,
-         executionState: 0,
+         executionState: -1,
          auditScheduleParticipants : auditParticipantList,
          auditScheduleBranch : auditBranchList
          
@@ -164,7 +164,7 @@ export class AuditScheduleComponent implements OnInit {
         auditCreationId: this.auditCreationId,
         scheduleStartDate: auditScheudleFormValue.scheduleStartDate,   
         scheduleEndDate: auditScheudleFormValue.scheduleEndDate,
-        //scheduleState:auditScheudleFormValue.scheduleState,
+        scheduleState:auditScheudleFormValue.scheduleState,
         executionState:auditScheudleFormValue.executionStatusId,
         auditScheduleParticipants : auditParticipantList,
         auditScheduleBranch : auditBranchList
@@ -235,7 +235,7 @@ export class AuditScheduleComponent implements OnInit {
     //let deleteObject={"id":id};
     this.AlertService.confirmDialog().then(res =>{
       if(res.isConfirmed){
-          this.http.delete('AuditSchedule' ,{"id":id}).subscribe(response=>{
+          this.http.delete('AuditSchedule/'+id,{}).subscribe(response=>{
           this.AlertService.successDialog('Deleted','Audit Schedule deleted successfully.');
           this.dataTableService.redraw(that.datatableElement);
         })
@@ -254,7 +254,7 @@ export class AuditScheduleComponent implements OnInit {
             auditPeriodTo: formatDate(auditResponse.auditPeriodTo, 'yyyy-MM-dd', 'en'),
             scheduleStartDate: '',
             scheduleEndDate: '',
-           // executionStatusId : auditResponse.executionStatusId,
+            executionStatusId : auditResponse.executionState,
             branchList:'',
             approverList:'',
             teamLeaderList:'',

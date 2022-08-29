@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, OnDestroy, OnInit, QueryList, ViewChild } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ModalComponent } from '@coreui/angular-pro';
 import { DataTableDirective } from 'angular-datatables';
@@ -25,6 +25,7 @@ import { CommonResponseInterface } from 'src/app/core/interfaces/common-response
 export class RiskCriteriaComponent implements OnInit {
   @ViewChild(DataTableDirective, {static: false})
   datatableElement: DataTableDirective | undefined;
+  dtElements: QueryList<DataTableDirective> | undefined;
   dtOptions: DataTables.Settings[] = [];
   // dtOptions: DataTables.Settings = {};
   riskCriteriaType: commonValueAndType[] = [];
@@ -109,7 +110,11 @@ export class RiskCriteriaComponent implements OnInit {
     this.LoadRiskCriteriaName();
     this.LoadRiskRating();
   }
-
+  private ReloadAllDataTable() {
+    this.dtElements?.forEach((dtElement: DataTableDirective, index: number) => {
+      this.dataTableService.redraw(dtElement);
+    });
+  }
   onSubmit(modalId:any):void{
     const localmodalId = modalId;
     if (this.riskCriteriaForm.valid ){
@@ -117,7 +122,7 @@ export class RiskCriteriaComponent implements OnInit {
         this.http.put('riskCriteria',this.riskCriteriaForm.value,null).subscribe(x=>{
           let resp = x as CommonResponseInterface;
           if(resp.success){
-            this.formService.onSaveSuccess(localmodalId,this.datatableElement);
+            this.formService.onSaveSuccess(localmodalId,this.ReloadAllDataTable());
             this.AlertService.success(resp.message);
           }
           else{
@@ -129,7 +134,7 @@ export class RiskCriteriaComponent implements OnInit {
         this.http.post('riskCriteria',this.riskCriteriaForm.value).subscribe(x=>{
           let resp = x as CommonResponseInterface;
           if(resp.success){
-            this.formService.onSaveSuccess(localmodalId,this.datatableElement);
+            this.formService.onSaveSuccess(localmodalId,this.ReloadAllDataTable());
             this.AlertService.success(resp.message);
           }
           else{

@@ -150,11 +150,11 @@ export class AuditScheduleComponent implements OnInit {
        }
        
        const RequestModelForScheduleAdd = {
-         id:  auditScheduleId,
+        // id:  null as any,
          auditCreationId: this.auditCreationId,
          scheduleStartDate: auditScheudleFormValue.scheduleStartDate,   
          scheduleEndDate: auditScheudleFormValue.scheduleEndDate,
-         executionState: -1,
+         //executionState: -1,
          auditScheduleParticipants : auditParticipantList,
          auditScheduleBranch : auditBranchList
          

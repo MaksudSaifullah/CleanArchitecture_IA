@@ -458,6 +458,7 @@ public class MappingProfile : Profile
         CreateMap<CompositAuditSchedule, AuditScheduleByIdDTO>().ReverseMap();
         CreateMap<AuditSchedule, AuditScheduleByIdDTO>().ReverseMap();
         CreateMap<RiskAssesmentConsolidateData, AddConsolidateDataCommand>().ReverseMap();
+        CreateMap<RiskAssesmentConsolidateData, AddConsolidateDataCommandObject>().ReverseMap();
         CreateMap<RiskAssesmentConsolidateData, RiskConsolidateDataGetQueryResponseDTO>().ReverseMap();
         CreateMap<AuditSchedule, UpdateScheduleCommand>().ReverseMap();
         CreateMap<AuditSchedule, DeleteAuditScheduleCommand>().ReverseMap();

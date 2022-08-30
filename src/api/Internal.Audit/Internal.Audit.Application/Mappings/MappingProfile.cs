@@ -471,6 +471,9 @@ public class MappingProfile : Profile
 
         CreateMap<ClosingMeetingMinute, ClosingMeetingMinuteDTO>().ReverseMap();
         CreateMap<CompositeClosingMeetingMinute, ClosingMeetingMinuteDTO>().ReverseMap();
+        CreateMap<AddMeetingPresent, ClosingMeetingPresent>().ReverseMap();
+        CreateMap<AddMeetingApology, ClosingMeetingApology>().ReverseMap();
+        CreateMap<AddMeetingSubject, ClosingMeetingSubject>().ReverseMap();
         //CreateMap<CompositeClosingMeetingMinute, AuditPlanByIdDTO>().ReverseMap();
         //CreateMap<AuditPlan, AuditPlanByIdDTO>().ReverseMap();
         CreateMap<ClosingMeetingMinute, AddClosingMeetingMinuteResponseDTO>().ReverseMap();

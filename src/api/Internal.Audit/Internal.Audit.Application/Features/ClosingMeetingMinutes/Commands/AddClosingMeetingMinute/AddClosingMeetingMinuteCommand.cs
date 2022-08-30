@@ -10,15 +10,6 @@ namespace Internal.Audit.Application.Features.ClosingMeetingMinutes.Commands.Add
 
 public class AddClosingMeetingMinuteCommand : IRequest<AddClosingMeetingMinuteResponseDTO>
 {
-    public AddMeetingMinute ClosingMeetingMinute { get; set; }
-    public List<AddMeetingPresent> ClosingMeetingPresent { get; set; }
-    public List<AddMeetingApology> ClosingMeetingApology { get; set; }
-    public List<AddMeetingSubject>  ClosingMeetingSubject { get; set; }
-
-}
-
-public record AddMeetingMinute
-{
     public Guid? Id { get; set; }
     public string? MeetingMinutesCode { get; set; }
     public Guid AuditScheduleId { get; set; }
@@ -30,8 +21,13 @@ public record AddMeetingMinute
     public Guid PreparedByUserId { get; set; }
     public Guid AgreedByUserId { get; set; }
     public string? SubjectMatter { get; set; }
-    public Guid MeetingSubjectId { get; set; }
+
+    public List<AddMeetingPresent> ClosingMeetingPresent { get; set; }
+    public List<AddMeetingApology> ClosingMeetingApology { get; set; }
+    public List<AddMeetingSubject>  ClosingMeetingSubject { get; set; }
+
 }
+
 
 public record AddMeetingPresent
 {

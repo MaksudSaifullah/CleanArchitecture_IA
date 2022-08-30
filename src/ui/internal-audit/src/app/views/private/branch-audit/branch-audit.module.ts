@@ -31,6 +31,7 @@ import { ScheduleConfigurationComponent } from './schedule-configuration/schedul
 import { ScheduleExecutionComponent } from './schedule-execution/schedule-execution.component';
 import { NewIssueComponent } from './new-issue/new-issue.component';
 import { IssueListComponent } from './issue-list/issue-list.component';
+import { ClosingMeetingMinutesComponent } from './closing-meeting-minutes/closing-meeting-minutes.component';
 import { WeightScoreConfigComponent } from './weight-score-config/weight-score-config.component';
 
 
@@ -54,17 +55,17 @@ import { WeightScoreConfigComponent } from './weight-score-config/weight-score-c
     LoanDisbursementTabComponent,
     FraudTabComponent,
     WorkpaperComponent,
-    
     WorkpaperCreateComponent,
-   
     AuditViewComponent,
     ScheduleViewComponent,
     ScheduleConfigurationComponent,
     ScheduleExecutionComponent,
-      AuditScheduleComponent,
+    AuditScheduleComponent,
     AuditScheduleComponent,
     WorkpaperComponent,
     NewIssueComponent,
+    IssueListComponent,
+    ClosingMeetingMinutesComponent,
     IssueListComponent,
     WeightScoreConfigComponent
   ],

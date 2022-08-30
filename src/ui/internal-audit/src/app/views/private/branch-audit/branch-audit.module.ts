@@ -65,7 +65,7 @@ import { WeightScoreConfigComponent } from './weight-score-config/weight-score-c
     WorkpaperComponent,
     NewIssueComponent,
     IssueListComponent,
-    ClosingMeetingMinutesComponent
+    ClosingMeetingMinutesComponent,
     IssueListComponent,
     WeightScoreConfigComponent
   ],

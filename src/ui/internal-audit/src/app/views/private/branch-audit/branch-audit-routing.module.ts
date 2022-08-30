@@ -99,7 +99,6 @@ const routes: Routes = [
     path:'closing-meeting-minutes',
     component: ClosingMeetingMinutesComponent
   },
-  },
   {
     path:'weight-score-config',
     component:WeightScoreConfigComponent

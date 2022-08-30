@@ -22,11 +22,11 @@ public class UpdateDesignationCommandHandler : IRequestHandler<UpdateDesignation
     {
         var duplicateData = await _designationRepository.Get(x => (x.Name.Trim() == request.Name.Trim() && x.IsDeleted == false));
 
-        if (duplicateData.Count() > 0)
+        if (duplicateData.Count() > 1 || (duplicateData.Count() == 1 && duplicateData.FirstOrDefault().Id != request.Id))
         {
             return new UpdateDesignationResponseDTO(request.Id, false, "Duplicate Data Found For Designation Name");
         }
-
+       
         var designation = await _designationRepository.Get(request.Id);
         designation = _mapper.Map(request, designation);
         await _designationRepository.Update(designation);

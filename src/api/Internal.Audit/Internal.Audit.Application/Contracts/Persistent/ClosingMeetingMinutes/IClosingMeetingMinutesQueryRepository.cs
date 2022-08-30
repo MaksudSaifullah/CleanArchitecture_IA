@@ -11,5 +11,5 @@ public interface IClosingMeetingMinutesQueryRepository : IAsyncQueryRepository<C
 {
     Task<(long, IEnumerable<CompositeClosingMeetingMinute>)> GetAll(int pageSize, int pageNumber, dynamic search = null!);
 
-    Task<CompositeClosingMeetingMinute> GetById(Guid id);
+  // Task<CompositeClosingMeetingMinute> GetById(Guid id);
 }

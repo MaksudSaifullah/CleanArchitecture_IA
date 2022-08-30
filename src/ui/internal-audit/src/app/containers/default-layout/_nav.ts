@@ -79,10 +79,10 @@ export const navItems: INavData[] = [
         name: 'Risk Assessment',
         url: '/branch-audit/risk-assessment'
       },
-      {
-        name: 'Audit Fequency',
-        url: '/branch-audit/audit-frequency'
-      },
+      // {
+      //   name: 'Audit Fequency',
+      //   url: '/branch-audit/audit-frequency'
+      // },
       {
         name: 'Audit Creation',
         url: '/branch-audit/audit'
@@ -104,8 +104,20 @@ export const navItems: INavData[] = [
         url: '/branch-audit/workpaper'
       },
       {
+        name: 'Work Paper Create',
+        url: '/branch-audit/workpaperCreate'
+      },
+      {
+        name: 'Closing Meeting Minutes',
+        url: '/branch-audit/closing-meeting-minutes'
+      },
+      {
         name: 'Issue',
         url: '/branch-audit/issue-list'
+      },
+      {
+        name: 'Weight Score Config',
+        url: '/branch-audit/weight-score-config'
       },
     ]
   },

@@ -32,6 +32,8 @@ import { ScheduleExecutionComponent } from './schedule-execution/schedule-execut
 import { NewIssueComponent } from './new-issue/new-issue.component';
 import { IssueListComponent } from './issue-list/issue-list.component';
 import { AuditPlanViewComponent } from './audit-plan-view/audit-plan-view.component';
+import { ClosingMeetingMinutesComponent } from './closing-meeting-minutes/closing-meeting-minutes.component';
+import { WeightScoreConfigComponent } from './weight-score-config/weight-score-config.component';
 
 
 @NgModule({
@@ -54,19 +56,21 @@ import { AuditPlanViewComponent } from './audit-plan-view/audit-plan-view.compon
     LoanDisbursementTabComponent,
     FraudTabComponent,
     WorkpaperComponent,
-    
     WorkpaperCreateComponent,
-   
     AuditViewComponent,
     ScheduleViewComponent,
     ScheduleConfigurationComponent,
     ScheduleExecutionComponent,
-      AuditScheduleComponent,
+    AuditScheduleComponent,
     AuditScheduleComponent,
     WorkpaperComponent,
     NewIssueComponent,
     IssueListComponent,
-    AuditPlanViewComponent
+    AuditPlanViewComponent,
+    IssueListComponent,
+    ClosingMeetingMinutesComponent,
+    IssueListComponent,
+    WeightScoreConfigComponent
   ],
   imports: [
     CommonModule,

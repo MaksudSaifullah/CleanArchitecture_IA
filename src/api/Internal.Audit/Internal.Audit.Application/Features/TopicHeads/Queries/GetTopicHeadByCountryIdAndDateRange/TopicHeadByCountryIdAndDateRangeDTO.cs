@@ -14,4 +14,5 @@ public record TopicHeadByCountryIdAndDateRangeDTO
     public DateTime EffectiveFrom { get; set; }
     public DateTime EffectiveTo { get; set; }
     public string? Description { get; set; }
+    public decimal WeightScore { get; set; }
 }

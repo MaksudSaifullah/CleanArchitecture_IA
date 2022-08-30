@@ -4,7 +4,7 @@
             <strong>Weight Score Configuraiton</strong>
         </c-card-header>
         <c-card-body>
-            <form [formGroup]="weightConfigForm" (ngSubmit)="onSubmit()" novalidate>
+            <form [formGroup]="weightConfigForm" novalidate>
 
                 <c-row [gutter]="{g: 4}">
 
@@ -86,7 +86,7 @@
                 <thead>
                   <tr>
                     <th>Topic Head Name</th>
-                    <th>Topic Head id</th>
+                    <!-- <th>Topic Head id</th> -->
                     <th> Weight Score</th>
                    
                  
@@ -95,7 +95,7 @@
                 <tbody *ngIf="topicHeads?.length != 0">
                   <tr *ngFor="let topic of topicHeads">
                     <td>{{ topic.name }}</td>
-                    <td>{{ topic.id }}</td>
+                    <!-- <td>{{ topic.id }}</td> -->
                     <td><input type="text" value="" class="form-control" style="max-width: 200px;" [value]="0" (keyup)="numberOnly($event,'maxLength')" (keydown)="numberOnly($event, 'maxLength')" (change)="GetDatas($event,  topic.id )" ></td>
                    
                    
@@ -108,9 +108,23 @@
                 </tbody>
               </table>
 
+              <div>
+                <c-col xs="12">
+                  <c-col md>
+                    <button cButton class="btn btn-primary btnSaveColor me-1" (click)="onSubmit()">
+                      <svg cIcon name="cilSave" size="md" title="Save Button Icon"></svg> Save
+                    </button>
+                    <button cButton class="btn btn-danger btnCancelColor me-1" (click)="onCancel()">
+                      <svg cIcon name="cilX" size="md" title="Close Button Icon"></svg>Cancel
+                    </button>
+        
+                  </c-col>
+                </c-col>
+              </div>
+              
           </div>
 
-
+         
 
         </c-card-body>
     </c-card>

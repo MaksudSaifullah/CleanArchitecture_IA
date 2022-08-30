@@ -1,4 +1,5 @@
-﻿using Internal.Audit.Application.Features.WeightScoreConfigurations.Queries.WeightScoreByCountryId;
+﻿using Internal.Audit.Application.Features.WeightScoreConfigurations.Commands.AddWeightScoreCommand;
+using Internal.Audit.Application.Features.WeightScoreConfigurations.Queries.WeightScoreByCountryId;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -23,6 +24,12 @@ namespace Internal.Audit.Api.Controllers
             var designation = await _mediator.Send(query);
             return Ok(designation);
 
+        }
+        [HttpPost]
+        public async Task<ActionResult<AddWeightScoreResponseDTO>> Add(AddweightScoreCommand command)
+        {
+            var result = await _mediator.Send(command);
+            return Ok(result);
         }
     }
 }

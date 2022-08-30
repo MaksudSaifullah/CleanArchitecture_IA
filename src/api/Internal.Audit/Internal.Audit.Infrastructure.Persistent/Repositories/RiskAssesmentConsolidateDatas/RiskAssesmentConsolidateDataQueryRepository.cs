@@ -15,7 +15,7 @@ public class RiskAssesmentConsolidateDataQueryRepository : QueryRepositoryBase<R
     {
     }
 
-    public async  Task<IEnumerable<RiskAssesmentConsolidateData>> GetAllAsync(Guid RiskAssesmentId,Guid CountryId,int PageNumber,int PageSize)
+    public async  Task<IEnumerable<RiskAssesmentConsolidateData>> GetAllAsync(Guid? RiskAssesmentId,Guid? CountryId,int PageNumber,int PageSize)
     {
         var query = "EXEC [dbo].[BA_RiskAssesment_Consolidate] @countryid,@riskassesmentid,@pageNumber,@pageSize";
         var parameters = new Dictionary<string, object> { { "countryid", CountryId }, { "riskassesmentid", RiskAssesmentId }, { "pageNumber", PageNumber }, { "pageSize", PageSize } };

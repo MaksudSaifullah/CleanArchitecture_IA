@@ -118,11 +118,12 @@ export class RiskAssessmentComponent implements OnInit {
       searching: false,
       ordering: false,
       ajax: (dataTablesParameters: any, callback) => {
-        this.http.post('DataSync/getSyncDataRiskAssesmentAvg', { "countryId": this.auditPlanForm?.value.countryId, "riskAssesmentId": this.auditPlanForm?.value.riskAssessmentId }
+        this.http.post('DataSync/getSyncDataRiskAssesmentAvg', { "countryId": this.auditPlanForm?.value.countryId, "riskAssesmentId": this.auditPlanForm?.value.riskAssessmentId,
+      "pageNumber": 0, "pageSize": -1 }
         )
           .subscribe(resp => 
             {
-              that.auditPlanCreateTable = this.dataTableService.datatableMap(resp, callback)
+              that.auditPlanCreateTable = this.dataTableService.datatableMap(resp, callback, 'apt')
               console.log( that.auditPlanCreateTable );
             }
             );

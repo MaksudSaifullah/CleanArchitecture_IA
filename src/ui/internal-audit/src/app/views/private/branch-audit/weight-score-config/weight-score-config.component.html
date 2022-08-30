@@ -80,6 +80,44 @@
                     </c-col>
                 </c-col>
             </form>
+            <br>
+            <!-- <div class="row overflow-auto">
+              <table datatable [dtOptions]="dtOptions"  class="table table-bordered row-border hover datatableStyle" >
+                <thead>
+                  <tr>
+                    <th>Role</th>
+                    <th>Description</th>
+                   
+                    <th class="col-1 text-center">Actions</th>
+                  </tr>
+                </thead>
+                <tbody *ngIf="roles?.length != 0">
+                  <tr *ngFor="let role of roles">
+                    <td>{{ role.name }}</td>
+                    <td>{{ role.description }}</td>
+                   
+                    <td class="text-center">
+                      <div class="btn-group" role="group" aria-label="Basic example">
+                        <button type="button" class="btn btn-secondary btnEditColor" (click)="edit(verticallyCenteredModal,role)">
+                          <svg cIcon name="cilPencil" size="md" title="Edit Button icon"></svg>
+                        </button>
+                        <button type="button" class="btn btn-danger btnDeleteColor" (click)="delete(role.id)">
+                          <svg cIcon name="cilTrash" size="md" title="Delete Button Icon"></svg>
+                        </button>
+                      </div>
+                    </td>
+                  </tr>
+                </tbody>
+                <tbody *ngIf="roles?.length == 0">
+                  <tr>
+                    <td colspan="5" class="no-data-available">No data!</td>
+                  </tr>
+                </tbody>
+              </table>
+
+          </div> -->
+
+
 
         </c-card-body>
     </c-card>

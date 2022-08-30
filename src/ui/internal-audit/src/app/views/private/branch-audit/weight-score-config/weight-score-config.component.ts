@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormService } from 'src/app/core/services/form.service';
 import { HttpService } from 'src/app/core/services/http.service';
 import { AlertService } from '../../../../core/services/alert.service';
@@ -7,6 +7,7 @@ import { country } from 'src/app/core/interfaces/configuration/country.interface
 import { paginatedResponseInterface } from 'src/app/core/interfaces/paginated.interface';
 import { CutomvalidatorService } from 'src/app/core/services/cutomvalidator.service'
 import { topicHead } from 'src/app/core/interfaces/branch-audit/topicHead.interface';
+import { DataTableDirective } from 'angular-datatables';
 
 @Component({
   selector: 'app-weight-score-config',
@@ -14,9 +15,12 @@ import { topicHead } from 'src/app/core/interfaces/branch-audit/topicHead.interf
   styleUrls: ['./weight-score-config.component.scss']
 })
 export class WeightScoreConfigComponent implements OnInit {
+  @ViewChild(DataTableDirective, {static: false})
+  datatableElement: DataTableDirective | undefined;
+  dtOptions: DataTables.Settings = {};
   countries: country[] = [];
   weightConfigForm!: FormGroup;
-
+ topicHeads:topicHead[]=[];
   constructor(private http: HttpService, private fb: FormBuilder, private AlertService: AlertService, private customValidator: CutomvalidatorService) { }
 
   ngOnInit(): void {
@@ -35,6 +39,33 @@ export class WeightScoreConfigComponent implements OnInit {
       this.countries = convertedResp.items;
     })
   }
+  // LoadTable(){
+  //   const that=this;
+  //   this.dtOptions = {
+  //     pagingType: 'full_numbers',
+  //     pageLength: 10,
+  //     serverSide: true,
+  //     processing: true,
+  //     searching: false,
+  //     ordering: false,
+  //     ajax: (dataTablesParameters: any, callback) => {
+  //       console.log('hellllo:' );
+  //       this.http
+  //         .paginatedPost(
+  //           'designation/paginated', dataTablesParameters.length,((dataTablesParameters.start/dataTablesParameters.length)+1), this.searchForm.get('searchTerm')?.value
+  //         ).subscribe(resp => {
+  //           let convertedResp = resp as paginatedResponseInterface<designation>;
+  //           console.log(convertedResp);
+  //          // that.designations = convertedResp.items;
+  //           callback({
+  //             recordsTotal: convertedResp.totalCount,
+  //             recordsFiltered: convertedResp.totalCount,
+  //             data: []
+  //           });
+  //         });
+  //     },
+  //   };
+  // }
   onSubmit() {
 
   }

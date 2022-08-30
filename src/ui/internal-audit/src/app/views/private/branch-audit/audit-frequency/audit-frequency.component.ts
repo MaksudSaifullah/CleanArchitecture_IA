@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, OnDestroy, OnInit, QueryList, ViewChild } from '@angular/core';
 import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ModalComponent } from '@coreui/angular-pro';
 import { DataTableDirective } from 'angular-datatables';
@@ -14,6 +14,7 @@ import {AlertService} from '../../../../core/services/alert.service';
 import { paginatedResponseInterface } from 'src/app/core/interfaces/paginated.interface';
 import { formatDate } from '@angular/common';
 import { CutomvalidatorService } from 'src/app/core/services/cutomvalidator.service'
+import { CommonResponseInterface } from 'src/app/core/interfaces/common-response.interface';
 
 @Component({
   selector: 'app-audit-frequency',
@@ -23,6 +24,7 @@ import { CutomvalidatorService } from 'src/app/core/services/cutomvalidator.serv
 export class AuditFrequencyComponent implements OnInit {
   @ViewChild(DataTableDirective, {static: false})
   datatableElement: DataTableDirective | undefined;
+  dtElements: QueryList<DataTableDirective> | undefined;
   dtOptions: DataTables.Settings = {};
   auditScore: commonValueAndType[] = [];
   ratingType: commonValueAndType[] = [];
@@ -34,7 +36,7 @@ export class AuditFrequencyComponent implements OnInit {
   formService: FormService = new FormService();
   dataTableService: DatatableService = new DatatableService();
   dtTrigger: Subject<any> = new Subject<any>();
-  //effectiveFrom: any;
+  effectiveFrom: any;
 
   constructor(private http: HttpService , private fb: FormBuilder, private AlertService: AlertService, private customValidator: CutomvalidatorService,) {
     this.LoadDropDownValues();
@@ -113,32 +115,38 @@ export class AuditFrequencyComponent implements OnInit {
     this.LoadAuditFrequencyType();
     this.LoadRatingType();
   }
-
-//   checkIfEndDateAfterStartDate (c: AbstractControl) {
-//     //safety check
-//     if (!c.get('effectiveFrom').value || !c.get('effectiveTo').value) { return null }
-//     // carry out the actual date checks here for is-endDate-after-startDate
-//     // if valid, return null,
-//     // if invalid, return an error object (any arbitrary name), like, return { invalidEndDate: true }
-//     // make sure it always returns a 'null' for valid or non-relevant cases, and a 'non-null' object for when an error should be raised on the formGroup
-// }
-
+  private ReloadAllDataTable() {
+    this.dtElements?.forEach((dtElement: DataTableDirective, index: number) => {
+      this.dataTableService.redraw(dtElement);
+    });
+  }
 
   onSubmit(modalId:any):void{
     const localmodalId = modalId;
     if (this.auditFrequencyForm.valid ){
       if(this.formService.isEdit(this.auditFrequencyForm.get('id') as FormControl)){
         this.http.put('auditFrequency',this.auditFrequencyForm.value,null).subscribe(x=>{
-            localmodalId.visible = false;
-            this.dataTableService.redraw(this.datatableElement);
-            this.AlertService.success('Audit Frequency Updated Successfully');
-          });
+        let resp = x as CommonResponseInterface;
+          if(resp.success){
+            this.formService.onSaveSuccess(localmodalId,this.ReloadAllDataTable());
+            this.AlertService.success(resp.message);
+          }
+          else{
+            this.AlertService.errorDialog('Unsuccessful', resp.message);
+          }
+        });
       }
       else {
        // console.log(this.riskProfileForm.value);
         this.http.post('auditFrequency',this.auditFrequencyForm.value).subscribe(x=>{
-          this.formService.onSaveSuccess(localmodalId,this.datatableElement);
-          this.AlertService.success('Audit Frequency Saved Successfully');
+        let resp = x as CommonResponseInterface;
+          if(resp.success){
+            this.formService.onSaveSuccess(localmodalId,this.ReloadAllDataTable());
+            this.AlertService.success(resp.message);
+          }
+          else{
+            this.AlertService.errorDialog('Unsuccessful', resp.message);
+          }          
         });
       }      
     }
@@ -147,6 +155,7 @@ export class AuditFrequencyComponent implements OnInit {
       return;
     }    
   }
+ 
 
   edit(modalId:any, auditFrequency:any):void {
     const localmodalId = modalId;
@@ -155,19 +164,20 @@ export class AuditFrequencyComponent implements OnInit {
       .getById('auditFrequency', auditFrequency.id)
       .subscribe(res => {
           const auditFrequencyResponse = res as auditFrequency;
-          //this.effectiveFrom = riskProfileResponse.effectiveFrom;
-          //console.log(riskProfileResponse);
-          this.auditFrequencyForm.setValue({id : auditFrequencyResponse.id, countryId : auditFrequencyResponse.countryId, 
-            auditScoreId: auditFrequencyResponse.auditScoreId, ratingTypeId: auditFrequencyResponse.ratingTypeId, 
-            auditFrequencyTypeId: auditFrequencyResponse.auditFrequencyTypeId,
-            effectiveFrom: formatDate(auditFrequencyResponse.effectiveFrom, 'yyyy-MM-dd', 'en'), 
-            effectiveTo: formatDate(auditFrequencyResponse.effectiveTo, 'yyyy-MM-dd', 'en')
+          this.effectiveFrom = auditFrequencyResponse.effectiveFrom;
+              //console.log(riskProfileResponse);
+              this.auditFrequencyForm.setValue({id : auditFrequencyResponse.id, countryId : auditFrequencyResponse.countryId, 
+              auditScoreId: auditFrequencyResponse.auditScoreId, ratingTypeId: auditFrequencyResponse.ratingTypeId, 
+              auditFrequencyTypeId: auditFrequencyResponse.auditFrequencyTypeId,
+              effectiveFrom: formatDate(auditFrequencyResponse.effectiveFrom, 'yyyy-MM-dd', 'en'), 
+              effectiveTo: formatDate(auditFrequencyResponse.effectiveTo, 'yyyy-MM-dd', 'en')
+              
+               });
+            });
+            localmodalId.visible = true;
 
-          });
-      });
-      localmodalId.visible = true;
-      
-  }
+            }
+
 
   delete(id:string){
     const that = this;

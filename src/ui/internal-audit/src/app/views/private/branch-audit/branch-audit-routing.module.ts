@@ -16,6 +16,7 @@ import { ScheduleExecutionComponent } from './schedule-execution/schedule-execut
 import { NewIssueComponent } from './new-issue/new-issue.component';
 import { IssueListComponent } from './issue-list/issue-list.component';
 import { ClosingMeetingMinutesComponent } from './closing-meeting-minutes/closing-meeting-minutes.component';
+import { WeightScoreConfigComponent } from './weight-score-config/weight-score-config.component';
 
 const routes: Routes = [
   {
@@ -98,6 +99,11 @@ const routes: Routes = [
     path:'closing-meeting-minutes',
     component: ClosingMeetingMinutesComponent
   },
+  },
+  {
+    path:'weight-score-config',
+    component:WeightScoreConfigComponent
+  }
 ];
 
 @NgModule({

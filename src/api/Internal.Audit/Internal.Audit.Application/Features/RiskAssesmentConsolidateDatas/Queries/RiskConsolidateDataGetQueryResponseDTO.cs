@@ -1,4 +1,6 @@
-﻿namespace Internal.Audit.Application.Features.RiskAssesmentConsolidateDatas.Queries;
+﻿using Internal.Audit.Domain.CompositeEntities;
+
+namespace Internal.Audit.Application.Features.RiskAssesmentConsolidateDatas.Queries;
 
 public class RiskConsolidateDataGetQueryResponseDTO
 {
@@ -20,4 +22,5 @@ public class RiskConsolidateDataGetQueryResponseDTO
     public string Avg_Score { get; set; }
     public string Avg_Rating { get; set; }
     public string AuditFrequency_Type { get; set; }
+    public virtual EfTotalCount TotalCount { get; set; }
 }

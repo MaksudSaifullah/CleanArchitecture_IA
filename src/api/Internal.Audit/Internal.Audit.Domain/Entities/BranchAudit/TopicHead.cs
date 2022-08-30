@@ -40,5 +40,7 @@ public class TopicHead : EntityBase
     public virtual Country Country { get; set; } = null!;
     [NotMapped]
     public virtual ICollection<WorkPaper> WorkPaperList { get; set; } = null!;
+    [NotMapped]
+    public decimal WeightScore { get; set; }
 
 }

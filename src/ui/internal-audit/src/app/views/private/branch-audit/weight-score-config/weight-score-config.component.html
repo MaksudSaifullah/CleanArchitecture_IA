@@ -1,0 +1,124 @@
+<c-col xs="12">
+    <c-card class="mb-4">
+        <c-card-header>
+            <strong>Weight Score Configuraiton</strong>
+        </c-card-header>
+        <c-card-body>
+            <form [formGroup]="weightConfigForm" (ngSubmit)="onSubmit()" novalidate>
+
+                <c-row [gutter]="{g: 4}">
+
+                    <c-col md>
+                        <div cFormFloating>
+                          <select aria-label="Floating label select example" cSelect id="countryId"
+                            formControlName="countryId" name="countryId">
+                            <option value="null">Select Country</option>
+                            <option *ngFor="let country of countries" [value]="country.id">
+                              {{country.name}}
+                            </option>
+                          </select>
+                          <label for="countryId" class="dropdownLabel">Country</label>
+                        </div>
+      
+                        <div cRow *ngIf="weightConfigForm.get('countryId')?.invalid &&
+                        weightConfigForm.get('countryId')?.errors &&
+                              (weightConfigForm.get('countryId')?.dirty || weightConfigForm.get('countryId')?.touched)">
+                          <small class="text-danger" *ngIf="weightConfigForm.get('countryId').hasError('required')">
+                            This field is required.
+                          </small>
+      
+      
+                        </div>
+                      </c-col>
+                      <c-col md>
+                        <div cFormFloating>
+                            <input class="form-control" placeholder="effectiveFrom" formControlName="effectiveFrom" id="effectiveFrom" type="date" >
+                            <label for="effectiveFrom">Effective From</label>               
+                            <div cRow *ngIf="weightConfigForm.get('effectiveTo')?.invalid &&
+                            weightConfigForm.get('effectiveFrom')?.errors &&
+                                  (weightConfigForm.get('effectiveFrom')?.dirty || weightConfigForm.get('effectiveFrom')?.touched)">
+                              <small class="text-danger"
+                                  *ngIf="weightConfigForm.get('effectiveFrom').hasError('required')"
+                                  >
+                                  This field is required.
+                              </small>
+                            </div>
+                            </div>                        
+                        </c-col>
+
+
+                        <c-col md>
+                            <div cFormFloating>
+                                <input class="form-control" placeholder="effectiveTo" formControlName="effectiveTo" id="effectiveTo" type="date" >
+                                <label for="effectiveTo">Effective To</label>               
+                                <div cRow *ngIf="weightConfigForm.get('effectiveTo')?.invalid &&
+                                weightConfigForm.get('effectiveTo')?.errors &&
+                                      (weightConfigForm.get('effectiveTo')?.dirty || weightConfigForm.get('effectiveTo')?.touched)">
+                                  <small class="text-danger"
+                                      *ngIf="weightConfigForm.get('effectiveTo').hasError('required')"
+                                      >
+                                      This field is required.
+                                  </small>
+                                </div>
+                                <small class="text-danger" *ngIf="weightConfigForm.hasError('invalidDateRange')">
+                                    Effective To should be greater than Effective From.
+                                  </small>
+                                </div>   
+                        </c-col>
+
+                </c-row>
+                <br>
+                <c-col xs="12">
+                    <c-col md>
+                      <button cButton class="btn btn-primary btnSaveColor me-1" (click)="onSearch()">
+                         Search
+                      </button>
+                      <button cButton class="btn btn-danger btnCancelColor me-1" (click)="onCancel()" >
+                        <svg cIcon name="cilX" size="md" title="Close Button Icon"></svg>Cancel
+                      </button>
+          
+                    </c-col>
+                </c-col>
+            </form>
+            <br>
+            <!-- <div class="row overflow-auto">
+              <table datatable [dtOptions]="dtOptions"  class="table table-bordered row-border hover datatableStyle" >
+                <thead>
+                  <tr>
+                    <th>Role</th>
+                    <th>Description</th>
+                   
+                    <th class="col-1 text-center">Actions</th>
+                  </tr>
+                </thead>
+                <tbody *ngIf="roles?.length != 0">
+                  <tr *ngFor="let role of roles">
+                    <td>{{ role.name }}</td>
+                    <td>{{ role.description }}</td>
+                   
+                    <td class="text-center">
+                      <div class="btn-group" role="group" aria-label="Basic example">
+                        <button type="button" class="btn btn-secondary btnEditColor" (click)="edit(verticallyCenteredModal,role)">
+                          <svg cIcon name="cilPencil" size="md" title="Edit Button icon"></svg>
+                        </button>
+                        <button type="button" class="btn btn-danger btnDeleteColor" (click)="delete(role.id)">
+                          <svg cIcon name="cilTrash" size="md" title="Delete Button Icon"></svg>
+                        </button>
+                      </div>
+                    </td>
+                  </tr>
+                </tbody>
+                <tbody *ngIf="roles?.length == 0">
+                  <tr>
+                    <td colspan="5" class="no-data-available">No data!</td>
+                  </tr>
+                </tbody>
+              </table>
+
+          </div> -->
+
+
+
+        </c-card-body>
+    </c-card>
+</c-col>

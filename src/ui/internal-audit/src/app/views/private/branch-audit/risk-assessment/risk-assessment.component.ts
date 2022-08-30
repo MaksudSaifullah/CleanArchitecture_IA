@@ -9,7 +9,7 @@ import { auditPlan } from 'src/app/core/interfaces/branch-audit/auditPlan.interf
 import { DatatableService } from 'src/app/core/services/datatable.service';
 import { FormService } from 'src/app/core/services/form.service';
 import { HttpService } from 'src/app/core/services/http.service';
-import {AlertService} from '../../../../core/services/alert.service';
+import { AlertService } from '../../../../core/services/alert.service';
 import { formatDate } from '@angular/common';
 import { paginatedResponseInterface } from 'src/app/core/interfaces/paginated.interface';
 import { event } from 'jquery';
@@ -25,13 +25,14 @@ import { Router } from '@angular/router';
 export class RiskAssessmentComponent implements OnInit {
   @ViewChildren(DataTableDirective)
   dtElements: QueryList<DataTableDirective> | undefined;
- // datatableElement: DataTableDirective | undefined;
+  // datatableElement: DataTableDirective | undefined;
   dtOptions: DataTables.Settings[] = [];
   auditType: commonValueAndType[] = [];
   year: commonValueAndType[] = [];
   planningYear: commonValueAndType[] = [];
   riskAssessments: riskAssessment[] = [];
-  auditPlanRiskAssessments:  riskAssessment[] = [];
+  auditPlanRiskAssessments: riskAssessment[] = [];
+  auditPlanCreateTable: any[] = [];
   auditPlans: auditPlan[] = [];
   riskAssessmentForm: FormGroup;
   auditPlanForm: FormGroup;
@@ -44,32 +45,32 @@ export class RiskAssessmentComponent implements OnInit {
   countries: country[] = [];
   Data: Array<any> = [];
 
-  constructor(private http: HttpService , private fb: FormBuilder, private AlertService: AlertService, private customValidator: CutomvalidatorService, private router: Router) { 
+  constructor(private http: HttpService, private fb: FormBuilder, private AlertService: AlertService, private customValidator: CutomvalidatorService, private router: Router) {
 
     this.LoadDropDownValues();
     this.riskAssessmentForm = this.fb.group({
       id: [''],
-      countryId:[null,[Validators.required, Validators.pattern("^(?!null$).*$")]],
-      auditTypeId: [null,[Validators.required, Validators.pattern("^(?!null$).*$")]],
+      countryId: [null, [Validators.required, Validators.pattern("^(?!null$).*$")]],
+      auditTypeId: [null, [Validators.required, Validators.pattern("^(?!null$).*$")]],
       assessmentCode: [''],
-      effectiveFrom: [Date,[Validators.required]],
+      effectiveFrom: [Date, [Validators.required]],
       effectiveTo: [Date, [Validators.required]],
-      
+
     }, { validator: this.customValidator.checkEffectiveDateToAfterFrom('effectiveFrom', 'effectiveTo') });
     this.searchForm = this.fb.group(
       {
         searchTerm: [''],
-        year:['']
+        year: ['']
       }
     );
     this.auditPlanForm = this.fb.group({
       id: [''],
       planCode: [''],
-      countryId:[null,[Validators.required, Validators.pattern("^(?!null$).*$")]],
-      auditTypeId:[null,[Validators.required, Validators.pattern("^(?!null$).*$")]],
-      planningYearId:[null,[Validators.required, Validators.pattern("^(?!null$).*$")]],
-      riskAssessmentId:[null,[Validators.required, Validators.pattern("^(?!null$).*$")]],
-      assessmentFrom: [Date,[Validators.required]],
+      countryId: ['00000000-0000-0000-0000-000000000000', [Validators.required, Validators.pattern("^(?!null$).*$")]],
+      auditTypeId: [null, [Validators.required, Validators.pattern("^(?!null$).*$")]],
+      planningYearId: [null, [Validators.required, Validators.pattern("^(?!null$).*$")]],
+      riskAssessmentId: ['00000000-0000-0000-0000-000000000000', [Validators.required, Validators.pattern("^(?!null$).*$")]],
+      assessmentFrom: [Date, [Validators.required]],
       assessmentTo: [Date, [Validators.required]],
     });
     this.searchForm1 = this.fb.group(
@@ -82,9 +83,10 @@ export class RiskAssessmentComponent implements OnInit {
   ngOnDestroy(): void {
 
   }
-  ngOnInit(): void {   
+  ngOnInit(): void {
     this.LoadData();
     this.LoadAuditPlanData();
+    this.InitiateAuditPlanCreateTable();
   };
 
   LoadData() {
@@ -99,83 +101,106 @@ export class RiskAssessmentComponent implements OnInit {
       ajax: (dataTablesParameters: any, callback) => {
         this.http
           .paginatedPost(
-            'riskassessment/paginated',dataTablesParameters.length,((dataTablesParameters.start/dataTablesParameters.length)+1),
-            {"searchTerm" : this.searchForm.get('searchTerm')?.value, "year" : this.searchForm.get('year')?.value } )
-            .subscribe(resp => that.riskAssessments = this.dataTableService.datatableMap(resp,callback));
+            'riskassessment/paginated', dataTablesParameters.length, ((dataTablesParameters.start / dataTablesParameters.length) + 1),
+            { "searchTerm": this.searchForm.get('searchTerm')?.value, "year": this.searchForm.get('year')?.value })
+          .subscribe(resp => that.riskAssessments = this.dataTableService.datatableMap(resp, callback));
       },
     };
-
   }
 
-  onSubmit(modalId:any):void{
+  InitiateAuditPlanCreateTable() {
+    const that = this;
+    this.dtOptions[2] = {
+      pagingType: 'full_numbers',
+      pageLength: 10,
+      serverSide: true,
+      processing: true,
+      searching: false,
+      ordering: false,
+      ajax: (dataTablesParameters: any, callback) => {
+        this.http.post('DataSync/getSyncDataRiskAssesmentAvg', { "countryId": this.auditPlanForm?.value.countryId, "riskAssesmentId": this.auditPlanForm?.value.riskAssessmentId }
+        )
+          .subscribe(resp => 
+            {
+              that.auditPlanCreateTable = this.dataTableService.datatableMap(resp, callback)
+              console.log( that.auditPlanCreateTable );
+            }
+            );
+      },
+    };
+  }
+
+
+
+  onSubmit(modalId: any): void {
     const localmodalId = modalId;
-    if (this.riskAssessmentForm.valid ){
-      if(this.formService.isEdit(this.riskAssessmentForm.get('id') as FormControl)){
-        this.http.put('riskassessment',this.riskAssessmentForm.value,null).subscribe(x=>{
-          this.formService.onSaveSuccess(localmodalId,this.ReloadAllDataTable());
-            this.AlertService.success('Risk Assessment Updated Successfully');
-          });
+    if (this.riskAssessmentForm.valid) {
+      if (this.formService.isEdit(this.riskAssessmentForm.get('id') as FormControl)) {
+        this.http.put('riskassessment', this.riskAssessmentForm.value, null).subscribe(x => {
+          this.formService.onSaveSuccess(localmodalId, this.ReloadAllDataTable());
+          this.AlertService.success('Risk Assessment Updated Successfully');
+        });
       }
       else {
         console.log(JSON.stringify(this.riskAssessmentForm.value))
-        this.http.post('riskassessment',this.riskAssessmentForm.value).subscribe(x=>{ 
+        this.http.post('riskassessment', this.riskAssessmentForm.value).subscribe(x => {
           this.formService.onSaveSuccess(localmodalId, this.ReloadAllDataTable());
           this.AlertService.success('Risk Assessment Saved Successfully');
         });
-      }      
+      }
     }
-    else {     
+    else {
       this.riskAssessmentForm.markAllAsTouched();
       return;
-    }    
+    }
   }
 
 
-  edit(modalId:any, riskAssessment:any):void {
+  edit(modalId: any, riskAssessment: any): void {
     const localmodalId = modalId;
     this.http
       .getById('riskAssessment', riskAssessment.id)
       .subscribe(res => {
-          const riskAssessmentResponse = res as riskAssessment;
-          this.riskAssessmentForm.setValue({
-            id : riskAssessmentResponse.id, 
-            countryId : riskAssessmentResponse.countryId, 
-            auditTypeId: riskAssessmentResponse.auditTypeId, 
-            assessmentCode: riskAssessmentResponse.assessmentCode, 
-            effectiveFrom: formatDate(riskAssessmentResponse.effectiveFrom, 'yyyy-MM-dd', 'en'), 
-            effectiveTo: formatDate(riskAssessmentResponse.effectiveTo, 'yyyy-MM-dd', 'en')
-          });
+        const riskAssessmentResponse = res as riskAssessment;
+        this.riskAssessmentForm.setValue({
+          id: riskAssessmentResponse.id,
+          countryId: riskAssessmentResponse.countryId,
+          auditTypeId: riskAssessmentResponse.auditTypeId,
+          assessmentCode: riskAssessmentResponse.assessmentCode,
+          effectiveFrom: formatDate(riskAssessmentResponse.effectiveFrom, 'yyyy-MM-dd', 'en'),
+          effectiveTo: formatDate(riskAssessmentResponse.effectiveTo, 'yyyy-MM-dd', 'en')
+        });
       });
-      localmodalId.visible = true;
-      
+    localmodalId.visible = true;
+
   }
 
-  delete(id:string){
+  delete(id: string) {
     const that = this;
-    this.AlertService.confirmDialog().then(res =>{
-      if(res.isConfirmed){
-          this.http.delete('riskAssessment/'+ id ,{}).subscribe(response=>{
-            let resp = response as CommonResponseInterface;
-            if(resp.success){
-              this.AlertService.successDialog('Deleted','Risk Assessment deleted successfully.');
-            }
-            else{
-              this.AlertService.errorDialog('Unsuccessful', 'It has dependency. Try to delete child first');
-            }      
-          
+    this.AlertService.confirmDialog().then(res => {
+      if (res.isConfirmed) {
+        this.http.delete('riskAssessment/' + id, {}).subscribe(response => {
+          let resp = response as CommonResponseInterface;
+          if (resp.success) {
+            this.AlertService.successDialog('Deleted', 'Risk Assessment deleted successfully.');
+          }
+          else {
+            this.AlertService.errorDialog('Unsuccessful', 'It has dependency. Try to delete child first');
+          }
+
           this.ReloadAllDataTable();
         })
       }
     });
   }
-  reset(){
+  reset() {
     this.riskAssessmentForm.reset();
     this.auditPlanForm.reset();
-   // this.auditPlanForm.patchValue({riskAssessmentId:"null" });
+    // this.auditPlanForm.patchValue({riskAssessmentId:"null" });
   }
 
-  
-  search(){
+
+  search() {
     this.ReloadAllDataTable();
   }
 
@@ -212,139 +237,140 @@ export class RiskAssessmentComponent implements OnInit {
     });
   }
 
-  GetRiskAssessmentCode(event: any) :void {
-    if( event.target.value !="null"){
-      this.http.get('commonValueAndType/idcreation?idcreationValue=1&auditType=1&countryId='+ event.target.value +'')
-    .subscribe(resp => {
-      const convertedResp = resp as commonValueAndType;
-      this.riskAssessmentForm.patchValue({
-        assessmentCode : convertedResp.text,
-      });
-    })
+  GetRiskAssessmentCode(event: any): void {
+    if (event.target.value != "null") {
+      this.http.get('commonValueAndType/idcreation?idcreationValue=1&auditType=1&countryId=' + event.target.value + '')
+        .subscribe(resp => {
+          const convertedResp = resp as commonValueAndType;
+          this.riskAssessmentForm.patchValue({
+            assessmentCode: convertedResp.text,
+          });
+        })
     }
-    
+
   }
 
- // #Region AuditType
+  // #Region AuditType
 
-    LoadAuditPlanData() {
-      const that = this;
-      this.dtOptions[1] = {
-        pagingType: 'full_numbers',
-        pageLength: 10,
-        serverSide: true,
-        processing: true,
-        searching: false,
-        ordering: false,
-        ajax: (dataTablesParameters: any, callback) => {
-          this.http
-            .paginatedPost(
-              'auditplan/paginated',dataTablesParameters.length,((dataTablesParameters.start/dataTablesParameters.length)+1),
-               this.searchForm1.get('searchTerm')?.value)
-              .subscribe(resp => that.auditPlans = this.dataTableService.datatableMap(resp,callback));
-        },
-      };
-  
-    }
-    
-    onAuditPlanSubmit(modalId:any):void{
-      console.log('auditPlanForm', this.auditPlanForm);
-      const localmodalId = modalId;
-      if (this.auditPlanForm.valid ){
-        if(this.formService.isEdit(this.auditPlanForm.get('id') as FormControl)){
-          this.http.put('auditplan',this.auditPlanForm.value,null).subscribe(x=>{
-            this.formService.onSaveSuccess(localmodalId,this.ReloadAllDataTable());
-              this.AlertService.success('Audit Plan Updated Successfully');
-            });
-        }
-        else {
-          this.http.post('auditplan',this.auditPlanForm.value).subscribe(x=>{ 
-            this.formService.onSaveSuccess(localmodalId, this.ReloadAllDataTable());
-            this.AlertService.success('Audit Plan Saved Successfully');
-          });
-        }      
-      }
-      else {     
-        this.auditPlanForm.markAllAsTouched();
-        return;
-      }    
-    }
+  LoadAuditPlanData() {
+    const that = this;
+    this.dtOptions[1] = {
+      pagingType: 'full_numbers',
+      pageLength: 10,
+      serverSide: true,
+      processing: true,
+      searching: false,
+      ordering: false,
+      ajax: (dataTablesParameters: any, callback) => {
+        this.http
+          .paginatedPost(
+            'auditplan/paginated', dataTablesParameters.length, ((dataTablesParameters.start / dataTablesParameters.length) + 1),
+            this.searchForm1.get('searchTerm')?.value)
+          .subscribe(resp => that.auditPlans = this.dataTableService.datatableMap(resp, callback));
+      },
+    };
 
-    GetCode(event: string,isUser:boolean=false): void{
-      if(event != "null" || event != null){
-        this.LoadAssessmentCode(event);
-      this.GetAuditPlanCode(event);
-      if(!isUser){
-        this.auditPlanForm.patchValue({riskAssessmentId:"null" });
-      }
-      }
-    }
+  }
 
-    GetRiskAssessmentDateRange(event: any): void{
-      console.log(' event.target.value', event.target.value);
-      this.http.get('riskassessment/'+ event.target.value+'').subscribe(resp => {
-        let convertedResp = resp as riskAssessment;
-        this.auditPlanForm.patchValue({
-          assessmentFrom : formatDate(convertedResp.effectiveFrom, 'yyyy-MM-dd', 'en'),
-          assessmentTo :  formatDate(convertedResp.effectiveTo, 'yyyy-MM-dd', 'en'),
+  onAuditPlanSubmit(modalId: any): void {
+    console.log('auditPlanForm', this.auditPlanForm);
+    const localmodalId = modalId;
+    if (this.auditPlanForm.valid) {
+      if (this.formService.isEdit(this.auditPlanForm.get('id') as FormControl)) {
+        this.http.put('auditplan', this.auditPlanForm.value, null).subscribe(x => {
+          this.formService.onSaveSuccess(localmodalId, this.ReloadAllDataTable());
+          this.AlertService.success('Audit Plan Updated Successfully');
         });
+      }
+      else {
+        this.http.post('auditplan', this.auditPlanForm.value).subscribe(x => {
+          this.formService.onSaveSuccess(localmodalId, this.ReloadAllDataTable());
+          this.AlertService.success('Audit Plan Saved Successfully');
+        });
+      }
+    }
+    else {
+      this.auditPlanForm.markAllAsTouched();
+      return;
+    }
+  }
 
-      })
+  GetCode(event: string, isUser: boolean = false): void {
+    if (event != "null" || event != null) {
+      this.LoadAssessmentCode(event);
+      this.GetAuditPlanCode(event);
+      if (!isUser) {
+        this.auditPlanForm.patchValue({ riskAssessmentId: "null" });
+      }
     }
-    LoadAssessmentCode(event: any): void {
-      this.http.get('riskassessment/CountryId?CountryId='+ event +'').subscribe(resp => {
-        let convertedResp = resp as riskAssessment[];
-        this.auditPlanRiskAssessments = convertedResp;
-      })
-    }
-    
-    GetAuditPlanCode(event: any) :void {
-      this.http.get('commonValueAndType/idcreation?idcreationValue=2&auditType=1&countryId='+ event +'')
+  }
+
+  GetRiskAssessmentDateRange(event: any): void {
+    console.log(' event.target.value', event.target.value);
+    this.http.get('riskassessment/' + event.target.value + '').subscribe(resp => {
+      let convertedResp = resp as riskAssessment;
+      this.auditPlanForm.patchValue({
+        assessmentFrom: formatDate(convertedResp.effectiveFrom, 'yyyy-MM-dd', 'en'),
+        assessmentTo: formatDate(convertedResp.effectiveTo, 'yyyy-MM-dd', 'en'),
+      });
+
+    })
+    this.ReloadAllDataTable();
+  }
+  LoadAssessmentCode(event: any): void {
+    this.http.get('riskassessment/CountryId?CountryId=' + event + '').subscribe(resp => {
+      let convertedResp = resp as riskAssessment[];
+      this.auditPlanRiskAssessments = convertedResp;
+    })
+  }
+
+  GetAuditPlanCode(event: any): void {
+    this.http.get('commonValueAndType/idcreation?idcreationValue=2&auditType=1&countryId=' + event + '')
       .subscribe(resp => {
         const convertedResp = resp as commonValueAndType;
         this.auditPlanForm.patchValue({
-          planCode : convertedResp.text,
+          planCode: convertedResp.text,
         });
       })
-    }
-  
-    deleteAuditPlan(id: string) {
-      const that = this;
-      this.AlertService.confirmDialog().then(res => {
-        if (res.isConfirmed) {
-          this.http.delete('auditplan/' + id, {}).subscribe(response => {
-            this.AlertService.successDialog('Deleted', 'Audit Plan deleted successfully.');
-            this.ReloadAllDataTable();
-          })
-        }
+  }
+
+  deleteAuditPlan(id: string) {
+    const that = this;
+    this.AlertService.confirmDialog().then(res => {
+      if (res.isConfirmed) {
+        this.http.delete('auditplan/' + id, {}).subscribe(response => {
+          this.AlertService.successDialog('Deleted', 'Audit Plan deleted successfully.');
+          this.ReloadAllDataTable();
+        })
+      }
+    });
+  }
+
+  editAuditPlan(modalId: any, auditplan: any): void {
+    const localmodalId = modalId;
+    this.http
+      .getById('auditplan', auditplan.id)
+      .subscribe(res => {
+        const auditplanResponse = res as auditPlan;
+        this.auditPlanRiskAssessments = [];
+        this.GetCode(auditplanResponse.countryId == null ? "null" : auditplanResponse.countryId.toString(), true);
+
+        this.auditPlanForm.patchValue({
+          id: auditplanResponse.id,
+          planCode: auditplanResponse.planCode,
+          countryId: auditplanResponse.countryId,
+          auditTypeId: auditplanResponse.auditTypeId,
+          planningYearId: auditplanResponse.planningYearId,
+          riskAssessmentId: auditplanResponse.riskAssessmentId,
+          assessmentFrom: formatDate(auditplanResponse.assessmentFrom, 'yyyy-MM-dd', 'en'),
+          assessmentTo: formatDate(auditplanResponse.assessmentTo, 'yyyy-MM-dd', 'en')
+        });
       });
-    }
 
-    editAuditPlan(modalId: any, auditplan: any): void {
-      const localmodalId = modalId;
-      this.http
-        .getById('auditplan', auditplan.id)
-        .subscribe(res => {
-          const auditplanResponse = res as auditPlan;
-          this.auditPlanRiskAssessments =[];
-          this.GetCode(auditplanResponse.countryId == null ? "null": auditplanResponse.countryId.toString(),true) ; 
 
-          this.auditPlanForm.patchValue({ 
-            id: auditplanResponse.id,
-             planCode: auditplanResponse.planCode, 
-             countryId: auditplanResponse.countryId,
-             auditTypeId: auditplanResponse.auditTypeId,
-             planningYearId: auditplanResponse.planningYearId, 
-             riskAssessmentId : auditplanResponse.riskAssessmentId, 
-            assessmentFrom: formatDate(auditplanResponse.assessmentFrom, 'yyyy-MM-dd', 'en'),
-            assessmentTo: formatDate(auditplanResponse.assessmentTo, 'yyyy-MM-dd', 'en')
-            });
-         });
-        
-        
-      localmodalId.visible = true;
-    }
+    localmodalId.visible = true;
+  }
 
- // #EndRegion AuditType
-  
+  // #EndRegion AuditType
+
 }

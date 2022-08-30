@@ -52,6 +52,7 @@ export class HttpService {
   }
 
   getById<T>(endpoint:string,id: string): Observable<T> {
+    console.log("getByID", `${this.hostName}/${endpoint}/${id}`)
     return this.httpClient
       .get<T>(`${this.hostName}/${endpoint}/${id}`)
       .pipe(

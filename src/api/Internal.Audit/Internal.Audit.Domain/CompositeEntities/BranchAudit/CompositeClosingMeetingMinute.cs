@@ -19,6 +19,5 @@ public class CompositeClosingMeetingMinute : EntityBase
     public Guid PreparedByUserId { get; set; }
     public Guid AgreedByUserId { get; set; }
     public string? SubjectMatter { get; set; }
-    public Guid MeetingSubjectId { get; set; }
 
 }

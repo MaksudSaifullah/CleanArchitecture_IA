@@ -15,6 +15,7 @@ import { ScheduleConfigurationComponent } from './schedule-configuration/schedul
 import { ScheduleExecutionComponent } from './schedule-execution/schedule-execution.component';
 import { NewIssueComponent } from './new-issue/new-issue.component';
 import { IssueListComponent } from './issue-list/issue-list.component';
+import { ClosingMeetingMinutesComponent } from './closing-meeting-minutes/closing-meeting-minutes.component';
 
 const routes: Routes = [
   {
@@ -92,7 +93,11 @@ const routes: Routes = [
   {
     path:'new-issue',
     component:NewIssueComponent
-  }
+  },
+  {
+    path:'closing-meeting-minutes',
+    component: ClosingMeetingMinutesComponent
+  },
 ];
 
 @NgModule({

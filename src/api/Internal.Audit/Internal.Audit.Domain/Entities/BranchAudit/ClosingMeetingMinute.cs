@@ -45,8 +45,6 @@ public class ClosingMeetingMinute : EntityBase
     [Required]
     public Guid AgreedByUserId { get; set; }
 
-    [Required]
-    public Guid MeetingSubjectId { get; set; }
 
     public virtual ICollection<ClosingMeetingPresent> UserPresents { get; set; } = null!;
     public virtual ICollection<ClosingMeetingApology> UserApologies { get; set; } = null!;

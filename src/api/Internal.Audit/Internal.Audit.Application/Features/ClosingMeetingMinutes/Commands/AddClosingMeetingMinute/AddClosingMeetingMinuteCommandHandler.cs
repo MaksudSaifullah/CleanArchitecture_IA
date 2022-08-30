@@ -35,9 +35,9 @@ public class AddClosingMeetingMinuteCommandHandler : IRequestHandler<AddClosingM
     public async Task<AddClosingMeetingMinuteResponseDTO> Handle(AddClosingMeetingMinuteCommand request, CancellationToken cancellationToken)
     {
         var gid = Guid.NewGuid();
-        request.ClosingMeetingMinute.Id = gid;
+        request.Id = gid;
 
-        var closingMeetingMinute = _mapper.Map<ClosingMeetingMinute>(request.ClosingMeetingMinute);
+        var closingMeetingMinute = _mapper.Map<ClosingMeetingMinute>(request);
         var closingMeetingMinuteAdd = await _closingMeetingMinutesRepository.Add(closingMeetingMinute);
 
         request.ClosingMeetingPresent.ForEach(i => i.ClosingMeetingMinutesId = gid);

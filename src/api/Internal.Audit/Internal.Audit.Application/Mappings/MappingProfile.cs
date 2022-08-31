@@ -176,6 +176,7 @@ using Internal.Audit.Application.Features.ClosingMeetingMinutes.Queries.GetClosi
 using Internal.Audit.Application.Features.ClosingMeetingMinutes.Commands.AddClosingMeetingMinute;
 using Internal.Audit.Application.Features.ClosingMeetingMinutes.Commands.UpdateClosingMeetingMinute;
 using Internal.Audit.Application.Features.ClosingMeetingMinutes.Commands.DeleteClosingMeetingMinute;
+using Internal.Audit.Application.Features.WeightScoreConfigurations.Commands.AddWeightScoreCommand;
 
 namespace Internal.Audit.Application.Mappings;
 
@@ -482,5 +483,7 @@ public class MappingProfile : Profile
         CreateMap<ClosingMeetingMinute, UpdateClosingMeetingMinuteCommand>().ReverseMap();
         CreateMap<ClosingMeetingMinute, DeleteClosingMeetingMinuteResponseDTO>().ReverseMap();
         CreateMap<ClosingMeetingMinute, DeleteClosingMeetingMinuteCommand>().ReverseMap();
+        CreateMap<WeightScore, AddweightScoreCommand>().ReverseMap();
+        CreateMap<WeightScore, AddweightScoreCommandRaw>().ReverseMap();
     }
 }

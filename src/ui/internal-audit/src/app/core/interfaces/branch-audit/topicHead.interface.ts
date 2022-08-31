@@ -8,3 +8,7 @@ export interface topicHead {
     isActive?: boolean;
     countryName?: string;    
 }
+export interface topicHeadCal {
+    id: string;
+    value:string 
+}

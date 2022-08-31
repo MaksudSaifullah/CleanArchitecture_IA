@@ -12,6 +12,7 @@ export interface Audit {
     countryName: string;
     auditPeriodFrom: string;
     auditPeriodTo: string;
-    executionStatusId : string
+    scheduleState : string
+    executionState : string,
     createdOn: Date;
 }

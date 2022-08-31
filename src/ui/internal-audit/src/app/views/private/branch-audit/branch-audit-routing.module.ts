@@ -107,7 +107,12 @@ const routes: Routes = [
   {
     path:'weight-score-config',
     component:WeightScoreConfigComponent
-  }
+  },
+  { 
+    path: 'schedule-execution/:scheduleParamId/:auditParamId', 
+    component: ScheduleExecutionComponent 
+   }
+
 ];
 
 @NgModule({

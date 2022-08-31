@@ -1,4 +1,5 @@
 ﻿using Internal.Audit.Application.Contracts.Persistent.TopicHeads;
+using Internal.Audit.Domain.CompositeEntities;
 using Internal.Audit.Domain.Entities.BranchAudit;
 
 namespace Internal.Audit.Infrastructure.Persistent.Repositories.TopicHeads;
@@ -32,14 +33,35 @@ public class TopicHeadQueryRepository : QueryRepositoryBase<TopicHead>, ITopicHe
 
     public async Task<IEnumerable<TopicHead>> GetByCountryIdAnddateRange(Guid? CountryId, DateTime? FromDate, DateTime? ToDate)
     {
-        var query = @"SELECT  x.[Id],x.[CountryId],x.[Name],x.[EffectiveFrom],x.[EffectiveTo],x.[Description],Convert(decimal(18,2),isnull(y.Score,0))WeightScore
+        var query = @"
+
+                     DECLARE @totalCount int
+                    SELECT  @totalCount=count(*) 
                     FROM[InternalAuditDb].[BranchAudit].[TopicHead] x
                     left join BranchAudit.WeightScore y
                     on x.CountryId = y.CountryId and x.id = y.TopicHeadId WHERE x.countryId = @CountryId 
                     AND x.[IsDeleted] = 0 and CAST(x.EffectiveFrom as DATE)>=CAST(@FromDate as date) 
-                    and CAST(x.EffectiveTo as DATE)<=CAST(@ToDate as date) ";
+                    and CAST(x.EffectiveTo as DATE)<=CAST(@ToDate as date)
+                    
+                    SELECT  x.[Id],x.[CountryId],x.[Name],x.[EffectiveFrom],x.[EffectiveTo],x.[Description],Convert(decimal(18,2),isnull(y.Score,0))WeightScore,@totalCount as TC
+                    FROM[InternalAuditDb].[BranchAudit].[TopicHead] x
+                    left join BranchAudit.WeightScore y
+                    on x.CountryId = y.CountryId and x.id = y.TopicHeadId WHERE x.countryId = @CountryId 
+                    AND x.[IsDeleted] = 0 and CAST(x.EffectiveFrom as DATE)>=CAST(@FromDate as date) 
+                    and CAST(x.EffectiveTo as DATE)<=CAST(@ToDate as date)  ";
         var parameters = new Dictionary<string, object> { { "CountryId", CountryId }, { "FromDate", FromDate }, { "ToDate", ToDate } };
+        string splitters = "TC";
 
-        return await Get(query, parameters);
+        var data = await Get<TopicHead, EfTotalCount, TopicHead>(query, (topicheaddata, totalcount) =>
+        {
+            TopicHead u;
+            u = topicheaddata;
+            u.TotalCount = totalcount;
+            return u;
+        }, parameters, splitters, false);
+        var final = data.Distinct();
+        return final;
+
+       // return await Get(query, parameters);
     }
 }

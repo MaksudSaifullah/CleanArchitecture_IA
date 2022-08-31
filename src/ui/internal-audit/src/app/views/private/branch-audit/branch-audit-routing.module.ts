@@ -17,6 +17,7 @@ import { NewIssueComponent } from './new-issue/new-issue.component';
 import { IssueListComponent } from './issue-list/issue-list.component';
 import { ClosingMeetingMinutesComponent } from './closing-meeting-minutes/closing-meeting-minutes.component';
 import { WeightScoreConfigComponent } from './weight-score-config/weight-score-config.component';
+import { ClosingMeetingMinutesCreateComponent } from './closing-meeting-minutes/closing-meeting-minutes-create/closing-meeting-minutes-create.component';
 
 const routes: Routes = [
   {
@@ -98,6 +99,10 @@ const routes: Routes = [
   {
     path:'closing-meeting-minutes',
     component: ClosingMeetingMinutesComponent
+  },
+  {
+    path:'closing-meeting-minutes-create',
+    component: ClosingMeetingMinutesCreateComponent
   },
   {
     path:'weight-score-config',

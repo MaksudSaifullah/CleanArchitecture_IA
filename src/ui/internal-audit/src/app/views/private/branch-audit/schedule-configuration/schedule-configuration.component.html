@@ -47,7 +47,7 @@
                           <td>{{ branch.countryName }}</td>
                           <td>{{ branch.branchName }}</td>
                           <td>
-                            <button type="button" class="btn btn-secondary btnEditColor" (click)="editRiskOwner(verticallyCenteredModalRiskOwner,config)">
+                            <button type="button" class="btn btn-secondary btnEditColor" (click)="editRiskOwner(verticallyCenteredModalRiskOwner,branch.id)">
                               <svg cIcon name="cilPencil" size="md" title="Edit Button icon"></svg>
                             </button>
                           </td>
@@ -61,9 +61,6 @@
                     </table>
       
                 </div>
-               
-
-                
 
               </div>
             </div>
@@ -117,8 +114,7 @@
                     </c-card>
                   </c-col>
             </div>
-            
-                   
+                     
           </div>
         </c-modal-body>
         <c-modal-footer>
@@ -145,7 +141,7 @@
               <div class="card-body">
                 <div class="row">
                     <div class="col-md-6"> 
-                      <button class="btnCreateColor"  cButton>&#8592; Schedule View </button> 
+                      <button class="btnCreateColor"  cButton (click)="RedirectToScheduleView()">&#8592; Schedule View </button> 
                     </div>
                     <div class="col-md-6">
                         <div class="a row">
@@ -174,7 +170,7 @@
                           <td>{{ branch.countryName }}</td>
                           <td>{{ branch.branchName }}</td>
                           <td>
-                            <button type="button" class="btn btn-secondary btnEditColor" (click)="editActionOwner(verticallyCenteredModalActionOwner,config)">
+                            <button type="button" class="btn btn-secondary btnEditColor" (click)="editActionOwner(verticallyCenteredModalActionOwner,branch.id)">
                               <svg cIcon name="cilPencil" size="md" title="Edit Button icon"></svg>
                             </button>
                           </td>
@@ -188,10 +184,6 @@
                     </table>
       
                 </div>
-               
-
-           
-
 
               </div>
             </div>
@@ -272,15 +264,21 @@
               <div class="card-body">
                 <div class="row">
                     <div class="col-md-6"> 
-                      <button class="btnCreateColor"  cButton>&#8592; Schedule View </button> 
+                      <button class="btnCreateColor"  cButton (click)="RedirectToScheduleView()">&#8592; Schedule View </button> 
                     </div>
                     <div class="col-md-6">
-                        <div class="a row">
+                      <div class="a btn-group" role="group" aria-label="Basic example">
+                        <button [cModalToggle]="verticallyCenteredModalSetDate.id" class="btn btnCreateColor"  cButton > Add </button> 
+                        <button  class="btn btnCreateColor"  cButton (click)="editSetDate(verticallyCenteredModalSetDate.id)">Update</button> 
+                        
+                      </div>
+                        <!-- <div class="a row">
                             <div class="col-md-6">
                                 <button [cModalToggle]="verticallyCenteredModalSetDate.id" class="btnCreateColor"  cButton > Add </button> 
                             </div>
-                        </div>
+                        </div> -->
                     </div>
+                    
                 </div>
                 
                 <br>
@@ -292,7 +290,7 @@
                           <th>SL</th>
                           <th>Date Type</th>
                           <th>Set Date</th>
-                          <th>Action</th>
+                         
                         </tr>
                       </thead>
                       <tbody *ngIf="brancheWithRiskOwner?.length != 0">
@@ -300,11 +298,6 @@
                           <td>{{ i+1 }}</td>
                           <td>{{ branch.countryName }}</td>
                           <td>{{ branch.branchName }}</td>
-                          <td>
-                            <button type="button" class="btn btn-secondary btnEditColor" (click)="editRiskOwner(verticallyCenteredModalSetDate,config)">
-                              <svg cIcon name="cilPencil" size="md" title="Edit Button icon"></svg>
-                            </button>
-                          </td>
                         </tr>
                       </tbody>
                       <tbody *ngIf="brancheWithRiskOwner?.length == 0">
@@ -332,42 +325,61 @@
           <div class="col-lg-12" >
             <input type="hidden" formControlName="id"/>
 
-                           
-             <div cFormFloating>
-              <select aria-label="Floating label select example" cSelect id="branchId" formControlName="branchId" name="branchId">
-                <option value=null>Select Branch</option>
-                <option *ngFor="let branch of brancheWithActionOwner" [value]="branch.id">
-                  {{branch.branchName}}
-                </option>
-              </select>
-              <label for="branchId" class="dropdownLabel">Branch</label>
+            <div class="form-floating">
+              <input class="form-control" placeholder="auditInitiationDate" formControlName="auditInitiationDate" id="auditInitiationDate" type="date" >
+              <label for="auditInitiationDate">Audit Initiation Date</label>
             </div>
-            <div cRow *ngIf="(scheduleConfigSetDateForm.get('branchId')?.invalid && scheduleConfigSetDateForm.get('branchId')?.errors) &&         
-              (scheduleConfigSetDateForm.get('branchId')?.dirty || scheduleConfigSetDateForm.get('branchId')?.touched)">
-              <small class="text-danger">
+            <div cRow *ngIf="scheduleConfigSetDateForm.get('auditInitiationDate')?.invalid && scheduleConfigSetDateForm.get('auditInitiationDate')?.errors &&
+                  (scheduleConfigSetDateForm.get('auditInitiationDate')?.dirty || scheduleConfigSetDateForm.get('auditInitiationDate')?.touched)">
+              <small class="text-danger" *ngIf="auditForm.get('auditInitiationDate').hasError('required')">
                 This field is required.
               </small>                                 
-            </div> 
-            <br>
-            <div class="col-md-12">
-                <c-col xs="12">
-                    <c-card class="mb-4">
-                      <c-card-header>
-                        <strong>Action Owner</strong>
-                      </c-card-header>
-                      <c-card-body>
-                        <c-row [gutter]="{g: 2}">
-                          <c-col md>
-                            <c-multi-select multiple formControlName="actionOwnerId" name="actionOwnerId" required>
-                              <c-multi-select-option *ngFor="let user of users" [value]="user.id" >{{user.userName}}
-                              </c-multi-select-option>
-                            </c-multi-select>
-                          </c-col>
-                        </c-row>
-                      </c-card-body>
-                    </c-card>
-                  </c-col>
             </div>
+            <br>   
+            <div class="form-floating">
+              <input class="form-control" placeholder="planningAndScopingStartDate" formControlName="planningAndScopingStartDate" id="planningAndScopingStartDate" type="date" >
+              <label for="planningAndScopingStartDate">Planning And Scoping Start Date</label>
+            </div>
+            <div cRow *ngIf="scheduleConfigSetDateForm.get('planningAndScopingStartDate')?.invalid && scheduleConfigSetDateForm.get('planningAndScopingStartDate')?.errors &&
+                  (scheduleConfigSetDateForm.get('planningAndScopingStartDate')?.dirty || scheduleConfigSetDateForm.get('planningAndScopingStartDate')?.touched)">
+              <small class="text-danger" *ngIf="auditForm.get('planningAndScopingStartDate').hasError('required')">
+                This field is required.
+              </small>                                 
+            </div>
+            <br>                   
+            <div class="form-floating">
+              <input class="form-control" placeholder="planningAndScopingEndDate" formControlName="planningAndScopingEndtDate" id="planningAndScopingEndDate" type="date" >
+              <label for="planningAndScopingEndDate">Planning And Scoping End Date</label>
+            </div>
+            <div cRow *ngIf="scheduleConfigSetDateForm.get('planningAndScopingEndDate')?.invalid && scheduleConfigSetDateForm.get('planningAndScopingEndDate')?.errors &&
+                  (scheduleConfigSetDateForm.get('planningAndScopingEndDate')?.dirty || scheduleConfigSetDateForm.get('planningAndScopingEndDate')?.touched)">
+              <small class="text-danger" *ngIf="auditForm.get('planningAndScopingEndDate').hasError('required')">
+                This field is required.
+              </small>                                 
+            </div>
+            <br>       
+            <div class="form-floating">
+              <input class="form-control" placeholder="fieldWorkStartDate" formControlName="fieldWorkStartDate" id="fieldWorkStartDate" type="date" >
+              <label for="fieldWorkStartDate">Field Work Start Date</label>
+            </div>
+            <div cRow *ngIf="scheduleConfigSetDateForm.get('fieldWorkStartDate')?.invalid && scheduleConfigSetDateForm.get('fieldWorkStartDate')?.errors &&
+                  (scheduleConfigSetDateForm.get('fieldWorkStartDate')?.dirty || scheduleConfigSetDateForm.get('fieldWorkStartDate')?.touched)">
+              <small class="text-danger" *ngIf="auditForm.get('fieldWorkStartDate').hasError('required')">
+                This field is required.
+              </small>                                 
+            </div>
+            <br>       
+            <div class="form-floating">
+              <input class="form-control" placeholder="fieldWorkEndDate" formControlName="fieldWorkEndDate" id="fieldWorkStartDate" type="date" >
+              <label for="fieldWorkEndDate">Field Work End Date</label>
+            </div>
+            <div cRow *ngIf="scheduleConfigSetDateForm.get('fieldWorkEndDate')?.invalid && scheduleConfigSetDateForm.get('fieldWorkEndDate')?.errors &&
+                  (scheduleConfigSetDateForm.get('fieldWorkEndDate')?.dirty || scheduleConfigSetDateForm.get('fieldWorkEndDate')?.touched)">
+              <small class="text-danger" *ngIf="auditForm.get('fieldWorkEndDate').hasError('required')">
+                This field is required.
+              </small>                                 
+            </div>
+            <br>       
             
                    
           </div>

@@ -41,7 +41,7 @@ export class ScheduleConfigurationComponent implements OnInit {
     this.scheduleConfigRiskOwnerForm = this.fb.group({
       id: [''],
       branchId: [null],
-      riskOwnerList:['',[Validators.required]],
+      riskOwnerId:['',[Validators.required]],
     })
     this.scheduleConfigActionOwnerForm = this.fb.group({
       id: [''],
@@ -50,8 +50,8 @@ export class ScheduleConfigurationComponent implements OnInit {
     })
     this.scheduleConfigSetDateForm = this.fb.group({
       id: [''],
-      scheduleId: [null],
-      auditIniciationDate: [''],
+      //scheduleId: [null],
+      auditInitiationDate: [''],
       planningAndScopingStartDate: [''],
       planningAndScopingEndDate: [''],
       fieldWorkStartDate: [''],
@@ -296,10 +296,10 @@ onSubmitSetDate(modalId:any){
 
 }
 
-editSetDate(modalId:any, config:any):void {
+editSetDate(modalId:any):void {
   const localmodalId = modalId; 
   this.http
-    .getById('scheduleConfiguration',config.id)
+    .getById('scheduleConfiguration',this.scheduleParamId)
     .subscribe(res => {
         const response = res as ScheduleSetDate;
         this.scheduleConfigRiskOwnerForm.setValue({id : response.id, scheduleId : response.scheduleId, auditIniciationDate: response.auditIniciationDate, 

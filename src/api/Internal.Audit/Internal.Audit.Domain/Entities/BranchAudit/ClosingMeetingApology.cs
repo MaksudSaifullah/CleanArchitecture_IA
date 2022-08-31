@@ -18,4 +18,7 @@ public class ClosingMeetingApology : EntityBase
 
     [ForeignKey("UserId")]
     public virtual User User { get; set; } = null!;
+
+    [ForeignKey("ClosingMeetingMinutesId")]
+    public virtual ClosingMeetingMinute ClosingMeetingMinute { get; set; } = null!;
 }

@@ -60,7 +60,7 @@ export class NewIssueComponent implements OnInit {
 
   ngOnInit(): void {
     this.reset();
-    this.countryId = "3EE0AB25-BAF2-EC11-B3B0-00155D610B18"; //need to implement LoadCountryId()
+    this.countryId = "2162B8E8-BBF2-EC11-B3B0-00155D610B18"; //need to implement LoadCountryId()
     this.LoadAuditId();
     this.LoadIssueCode();
     this.LoadAuditSchedules();

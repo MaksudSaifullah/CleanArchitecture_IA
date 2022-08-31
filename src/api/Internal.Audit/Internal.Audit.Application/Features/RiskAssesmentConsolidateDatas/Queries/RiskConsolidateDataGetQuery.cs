@@ -7,5 +7,5 @@ using System.Threading.Tasks;
 
 namespace Internal.Audit.Application.Features.RiskAssesmentConsolidateDatas.Queries;
 
-public record RiskConsolidateDataGetQuery(Guid countryId,Guid riskAssesmentId):IRequest<IEnumerable<RiskConsolidateDataGetQueryResponseDTO>>;
+public record RiskConsolidateDataGetQuery(Guid? countryId,Guid? riskAssesmentId,int pageNumber,int pageSize):IRequest<IEnumerable<RiskConsolidateDataGetQueryResponseDTO>>;
 

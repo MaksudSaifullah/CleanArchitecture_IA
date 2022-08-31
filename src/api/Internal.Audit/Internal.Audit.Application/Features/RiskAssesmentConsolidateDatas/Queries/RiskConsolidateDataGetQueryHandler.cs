@@ -18,7 +18,7 @@ public class RiskConsolidateDataGetQueryHandler : IRequestHandler<RiskConsolidat
 
     public async Task<IEnumerable<RiskConsolidateDataGetQueryResponseDTO>> Handle(RiskConsolidateDataGetQuery request, CancellationToken cancellationToken)
     {
-        var result = await _repositoryQuery.GetAllAsync(request.riskAssesmentId,request.countryId);
+        var result = await _repositoryQuery.GetAllAsync(request.riskAssesmentId,request.countryId,request.pageNumber,request.pageSize);      
         return _mapper.Map<IEnumerable<RiskConsolidateDataGetQueryResponseDTO>>(result).ToList();
     }
 

@@ -16,6 +16,11 @@ public class ClosingMeetingPresent : EntityBase
     public Guid UserId { get; set; }
 
     public Guid ClosingMeetingMinutesId { get; set; }
+
     [ForeignKey("UserId")]
     public virtual User User { get; set; } = null!;
+
+    [ForeignKey("ClosingMeetingMinutesId")]
+    public virtual ClosingMeetingMinute ClosingMeetingMinute { get; set; } = null!;
 }
+

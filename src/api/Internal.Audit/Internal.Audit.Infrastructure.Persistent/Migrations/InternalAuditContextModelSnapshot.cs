@@ -438,9 +438,6 @@ namespace Internal.Audit.Infrastructure.Persistent.Migrations
                     b.Property<DateTime?>("ApprovedOn")
                         .HasColumnType("datetime2");
 
-                    b.Property<Guid?>("ClosingMeetingMinuteId")
-                        .HasColumnType("uniqueidentifier");
-
                     b.Property<Guid>("ClosingMeetingMinutesId")
                         .HasColumnType("uniqueidentifier");
 
@@ -476,7 +473,7 @@ namespace Internal.Audit.Infrastructure.Persistent.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ClosingMeetingMinuteId");
+                    b.HasIndex("ClosingMeetingMinutesId");
 
                     b.HasIndex("UserId");
 
@@ -543,9 +540,6 @@ namespace Internal.Audit.Infrastructure.Persistent.Migrations
                         .HasMaxLength(300)
                         .HasColumnType("nvarchar(300)");
 
-                    b.Property<Guid>("MeetingSubjectId")
-                        .HasColumnType("uniqueidentifier");
-
                     b.Property<Guid>("PreparedByUserId")
                         .HasColumnType("uniqueidentifier");
 
@@ -583,9 +577,6 @@ namespace Internal.Audit.Infrastructure.Persistent.Migrations
                     b.Property<DateTime?>("ApprovedOn")
                         .HasColumnType("datetime2");
 
-                    b.Property<Guid?>("ClosingMeetingMinuteId")
-                        .HasColumnType("uniqueidentifier");
-
                     b.Property<Guid>("ClosingMeetingMinutesId")
                         .HasColumnType("uniqueidentifier");
 
@@ -621,7 +612,7 @@ namespace Internal.Audit.Infrastructure.Persistent.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ClosingMeetingMinuteId");
+                    b.HasIndex("ClosingMeetingMinutesId");
 
                     b.HasIndex("UserId");
 
@@ -642,9 +633,6 @@ namespace Internal.Audit.Infrastructure.Persistent.Migrations
 
                     b.Property<DateTime?>("ApprovedOn")
                         .HasColumnType("datetime2");
-
-                    b.Property<Guid?>("ClosingMeetingMinuteId")
-                        .HasColumnType("uniqueidentifier");
 
                     b.Property<Guid>("ClosingMeetingMinutesId")
                         .HasColumnType("uniqueidentifier");
@@ -686,7 +674,7 @@ namespace Internal.Audit.Infrastructure.Persistent.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ClosingMeetingMinuteId");
+                    b.HasIndex("ClosingMeetingMinutesId");
 
                     b.HasIndex("UserId");
 
@@ -1497,12 +1485,6 @@ namespace Internal.Audit.Infrastructure.Persistent.Migrations
                         .HasColumnType("nvarchar(10)");
 
                     b.Property<DateTime>("CreatedOn")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime>("EffectiveFrom")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime>("EffectiveTo")
                         .HasColumnType("datetime2");
 
                     b.Property<bool>("IsDeleted")
@@ -4006,45 +3988,57 @@ namespace Internal.Audit.Infrastructure.Persistent.Migrations
 
             modelBuilder.Entity("Internal.Audit.Domain.Entities.BranchAudit.ClosingMeetingApology", b =>
                 {
-                    b.HasOne("Internal.Audit.Domain.Entities.BranchAudit.ClosingMeetingMinute", null)
+                    b.HasOne("Internal.Audit.Domain.Entities.BranchAudit.ClosingMeetingMinute", "ClosingMeetingMinute")
                         .WithMany("UserApologies")
-                        .HasForeignKey("ClosingMeetingMinuteId");
+                        .HasForeignKey("ClosingMeetingMinutesId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("Internal.Audit.Domain.Entities.Security.User", "User")
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("ClosingMeetingMinute");
 
                     b.Navigation("User");
                 });
 
             modelBuilder.Entity("Internal.Audit.Domain.Entities.BranchAudit.ClosingMeetingPresent", b =>
                 {
-                    b.HasOne("Internal.Audit.Domain.Entities.BranchAudit.ClosingMeetingMinute", null)
+                    b.HasOne("Internal.Audit.Domain.Entities.BranchAudit.ClosingMeetingMinute", "ClosingMeetingMinute")
                         .WithMany("UserPresents")
-                        .HasForeignKey("ClosingMeetingMinuteId");
+                        .HasForeignKey("ClosingMeetingMinutesId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("Internal.Audit.Domain.Entities.Security.User", "User")
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("ClosingMeetingMinute");
 
                     b.Navigation("User");
                 });
 
             modelBuilder.Entity("Internal.Audit.Domain.Entities.BranchAudit.ClosingMeetingSubject", b =>
                 {
-                    b.HasOne("Internal.Audit.Domain.Entities.BranchAudit.ClosingMeetingMinute", null)
+                    b.HasOne("Internal.Audit.Domain.Entities.BranchAudit.ClosingMeetingMinute", "ClosingMeetingMinute")
                         .WithMany("MeetingMinutesSubjects")
-                        .HasForeignKey("ClosingMeetingMinuteId");
+                        .HasForeignKey("ClosingMeetingMinutesId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("Internal.Audit.Domain.Entities.Security.User", "User")
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("ClosingMeetingMinute");
 
                     b.Navigation("User");
                 });

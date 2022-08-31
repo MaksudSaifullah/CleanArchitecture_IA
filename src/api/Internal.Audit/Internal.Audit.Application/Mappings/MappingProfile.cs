@@ -172,6 +172,11 @@ using Internal.Audit.Application.Features.TopicHeads.Queries.GetTopicHeadByCount
 using Internal.Audit.Application.Features.Issues.Queries.GetIssueById;
 using Internal.Audit.Application.Features.Audit.Queries.GetAuditType;
 using Internal.Audit.Application.Features.AuditSchedules.Queries.GetAuditScheduleBranchList;
+using Internal.Audit.Application.Features.ClosingMeetingMinutes.Queries.GetClosingMeetingMinuteList;
+using Internal.Audit.Application.Features.ClosingMeetingMinutes.Commands.AddClosingMeetingMinute;
+using Internal.Audit.Application.Features.ClosingMeetingMinutes.Commands.UpdateClosingMeetingMinute;
+using Internal.Audit.Application.Features.ClosingMeetingMinutes.Commands.DeleteClosingMeetingMinute;
+using Internal.Audit.Application.Features.WeightScoreConfigurations.Commands.AddWeightScoreCommand;
 
 namespace Internal.Audit.Application.Mappings;
 
@@ -463,5 +468,22 @@ public class MappingProfile : Profile
         CreateMap<AuditSchedule, UpdateScheduleCommand>().ReverseMap();
         CreateMap<AuditSchedule, DeleteAuditScheduleCommand>().ReverseMap();
         CreateMap<TopicHead, TopicHeadByCountryIdAndDateRangeDTO>().ReverseMap();
+
+
+        CreateMap<ClosingMeetingMinute, ClosingMeetingMinuteDTO>().ReverseMap();
+        CreateMap<CompositeClosingMeetingMinute, ClosingMeetingMinuteDTO>().ReverseMap();
+        CreateMap<AddMeetingPresent, ClosingMeetingPresent>().ReverseMap();
+        CreateMap<AddMeetingApology, ClosingMeetingApology>().ReverseMap();
+        CreateMap<AddMeetingSubject, ClosingMeetingSubject>().ReverseMap();
+        //CreateMap<CompositeClosingMeetingMinute, AuditPlanByIdDTO>().ReverseMap();
+        //CreateMap<AuditPlan, AuditPlanByIdDTO>().ReverseMap();
+        CreateMap<ClosingMeetingMinute, AddClosingMeetingMinuteResponseDTO>().ReverseMap();
+        CreateMap<ClosingMeetingMinute, AddClosingMeetingMinuteCommand>().ReverseMap();
+        CreateMap<ClosingMeetingMinute, UpdateClosingMeetingMinuteResponseDTO>().ReverseMap();
+        CreateMap<ClosingMeetingMinute, UpdateClosingMeetingMinuteCommand>().ReverseMap();
+        CreateMap<ClosingMeetingMinute, DeleteClosingMeetingMinuteResponseDTO>().ReverseMap();
+        CreateMap<ClosingMeetingMinute, DeleteClosingMeetingMinuteCommand>().ReverseMap();
+        CreateMap<WeightScore, AddweightScoreCommand>().ReverseMap();
+        CreateMap<WeightScore, AddweightScoreCommandRaw>().ReverseMap();
     }
 }

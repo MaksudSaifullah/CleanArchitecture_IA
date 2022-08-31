@@ -55,7 +55,6 @@
     <Folder Include="Features\DataRequestQueue\Command\UpdateDataRequestQueueCommand\" />
     <Folder Include="Features\RiskAssesmentDataManagements\Queries\" />
     <Folder Include="Features\UserCountries\Quiries\" />
-    <Folder Include="Features\WeightScoreConfigurations\Commands\" />
     <Folder Include="Features\WeightScoreConfigurations\Queries\WeightScoreByCountryId\" />
   </ItemGroup>
 

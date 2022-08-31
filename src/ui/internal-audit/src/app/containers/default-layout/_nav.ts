@@ -104,8 +104,20 @@ export const navItems: INavData[] = [
         url: '/branch-audit/workpaper'
       },
       {
+        name: 'Work Paper Create',
+        url: '/branch-audit/workpaperCreate'
+      },
+      {
+        name: 'Closing Meeting Minutes',
+        url: '/branch-audit/closing-meeting-minutes'
+      },
+      {
         name: 'Issue',
         url: '/branch-audit/issue-list'
+      },
+      {
+        name: 'Weight Score Config',
+        url: '/branch-audit/weight-score-config'
       },
     ]
   },

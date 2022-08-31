@@ -56,7 +56,7 @@ export class OverdueTabComponentComponent implements OnInit {
           effectiveTo: formatDate(riskAssessmentResponse.effectiveTo, 'yyyy-MM-dd', 'en'),
           effectiveFrom: formatDate(riskAssessmentResponse.effectiveFrom, 'yyyy-MM-dd', 'en')
         });
-        //this.LoadData();
+        this.LoadData();
     });
   }
 

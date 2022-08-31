@@ -66,10 +66,10 @@ export class RiskAssessmentComponent implements OnInit {
     this.auditPlanForm = this.fb.group({
       id: [''],
       planCode: [''],
-      countryId: ['00000000-0000-0000-0000-000000000000', [Validators.required, Validators.pattern("^(?!null$).*$")]],
+      countryId: [null, [Validators.required, Validators.pattern("^(?!null$).*$")]],
       auditTypeId: [null, [Validators.required, Validators.pattern("^(?!null$).*$")]],
       planningYearId: [null, [Validators.required, Validators.pattern("^(?!null$).*$")]],
-      riskAssessmentId: ['00000000-0000-0000-0000-000000000000', [Validators.required, Validators.pattern("^(?!null$).*$")]],
+      riskAssessmentId: [null, [Validators.required, Validators.pattern("^(?!null$).*$")]],
       assessmentFrom: [Date, [Validators.required]],
       assessmentTo: [Date, [Validators.required]],
     });
@@ -119,11 +119,11 @@ export class RiskAssessmentComponent implements OnInit {
       ordering: false,
       ajax: (dataTablesParameters: any, callback) => {
         this.http.post('DataSync/getSyncDataRiskAssesmentAvg', { "countryId": this.auditPlanForm?.value.countryId, "riskAssesmentId": this.auditPlanForm?.value.riskAssessmentId,
-      "pageNumber": 0, "pageSize": -1 }
+      "pageNumber": ((dataTablesParameters.start / dataTablesParameters.length) + 1), "pageSize": dataTablesParameters.length }
         )
           .subscribe(resp => 
             {
-              that.auditPlanCreateTable = this.dataTableService.datatableMap(resp, callback, 'apt')
+              that.auditPlanCreateTable = this.dataTableService.datatableMap(resp, callback, 'apt');
               console.log( that.auditPlanCreateTable );
             }
             );

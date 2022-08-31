@@ -264,7 +264,7 @@
       </div>
   </div>
   
-<form [formGroup]="auditPlanForm" (ngSubmit)="onAuditPlanSubmit(verticallyCenteredModalAuditPlan)" novalidate>
+<form [formGroup]="auditPlanForm" (ngSubmit)="onAuditPlanSubmit(verticallyCenteredModalAuditPlan)" novalidate width="100%">
   <c-modal #verticallyCenteredModalAuditPlan alignment="center" id="verticallyCenteredModalAuditPlan">
     <c-modal-header>
       <h5 cModalTitle *ngIf="!formService.isEdit(this.auditPlanForm.get('id'))">Create Audit Plan</h5>

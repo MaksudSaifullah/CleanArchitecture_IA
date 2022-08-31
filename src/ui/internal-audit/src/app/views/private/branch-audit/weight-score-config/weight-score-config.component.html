@@ -96,7 +96,7 @@
                   <tr *ngFor="let topic of topicHeads">
                     <td>{{ topic.name }}</td>
                     <!-- <td>{{ topic.id }}</td> -->
-                    <td><input type="text" value="" class="form-control" style="max-width: 200px;" [value]="0" (keyup)="numberOnly($event,'maxLength')" (keydown)="numberOnly($event, 'maxLength')" (change)="GetDatas($event,  topic.id )" ></td>
+                    <td><input type="text" value="" class="form-control" style="max-width: 200px;" [value]="topic.weightScore" (keyup)="numberOnly($event,'maxLength')" (keydown)="numberOnly($event, 'maxLength')" (change)="GetDatas($event,  topic.id )" ></td>
                    
                    
                   </tr>

@@ -31,10 +31,10 @@ public class AddweightScoreCommandHandler : IRequestHandler<AddweightScoreComman
         {
             await _repository.Delete(existsDataList);
         }
-        var UploadDocument = _mapper.Map<WeightScore>(request);
+        var UploadDocument = _mapper.Map<IEnumerable<WeightScore>>(request.WeightScoreData);
         var newUploaweightScore = await _repository.Add(UploadDocument);
         var rowsAffected = await _unitOfWork.CommitAsync();
 
-        return new AddWeightScoreResponseDTO(newUploaweightScore.Id, rowsAffected > 0, rowsAffected > 0 ? "Weight score added Successfully!" : "Error while adding Weight score");
+        return new AddWeightScoreResponseDTO(Guid.NewGuid(), rowsAffected > 0, rowsAffected > 0 ? "Weight score added Successfully!" : "Error while adding Weight score");
     }
 }

@@ -484,5 +484,6 @@ public class MappingProfile : Profile
         CreateMap<ClosingMeetingMinute, DeleteClosingMeetingMinuteResponseDTO>().ReverseMap();
         CreateMap<ClosingMeetingMinute, DeleteClosingMeetingMinuteCommand>().ReverseMap();
         CreateMap<WeightScore, AddweightScoreCommand>().ReverseMap();
+        CreateMap<WeightScore, AddweightScoreCommandRaw>().ReverseMap();
     }
 }

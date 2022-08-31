@@ -31,7 +31,7 @@ export class WeightScoreConfigComponent implements OnInit {
   todate: any;
   calculation: any;
   tableHide: boolean = true;
- request :WeightScoreConfigRequest[]=[];
+  request: WeightScoreConfigRequest[] = [];
   constructor(private http: HttpService, private fb: FormBuilder, private AlertService: AlertService, private customValidator: CutomvalidatorService) { }
 
   ngOnInit(): void {
@@ -54,13 +54,7 @@ export class WeightScoreConfigComponent implements OnInit {
     })
   }
   LoadTableData() {
-    var requestModel = {
-      countryId: this.weightConfigForm.value?.countryId,
-      fromDate: this.weightConfigForm.value?.effectiveFrom,
-      todate: this.weightConfigForm.value?.effectiveTo,
-    }
-    console.log('requestModel')
-    console.log(requestModel)
+
     const that = this;
     this.dtOptions = {
       pagingType: 'full_numbers',
@@ -87,15 +81,15 @@ export class WeightScoreConfigComponent implements OnInit {
         this.AlertService.errorDialog('Error', 'All value sum must need to be equal 100')
         return;
       }
-     let xx:WeightScoreConfigRequest ={weightScoreData:[]};
+      let xx: WeightScoreConfigRequest = { weightScoreData: [] };
 
 
-     this.CreateRequestModel(xx);
-      this.http.post('weightscoreconfiguration',xx).subscribe(x=>{
+      this.CreateRequestModel(xx);
+      this.http.post('weightscoreconfiguration', xx).subscribe(x => {
         this.AlertService.success('Configuration added successfully');
       })
 
-    
+
 
 
 
@@ -105,7 +99,7 @@ export class WeightScoreConfigComponent implements OnInit {
     }
 
   }
-  async CreateRequestModel(xx: WeightScoreConfigRequest): Promise<any>  {
+  async CreateRequestModel(xx: WeightScoreConfigRequest): Promise<any> {
     this.topicHeadCal.forEach(async (ctrl: topicHeadCal) => {
       let x: WeightScoreDatum = {
         countryId: this.weightConfigForm.value?.countryId,
@@ -119,14 +113,18 @@ export class WeightScoreConfigComponent implements OnInit {
   onCancel() {
     this.weightConfigForm.reset();
     this.topicHeadCal = [];
+    this.countryId = null;
+    this.fromDate = null;
+    this.todate = null;
+    this.dataTableService.redraw(this.datatableElement);
   }
   onSearch() {
     if (this.weightConfigForm.valid) {
       console.log(this.weightConfigForm.value?.countryId);
       this.topicHeadCal = [];
-      this.countryId = this.weightConfigForm.value?.countryId,
-        this.fromDate = this.weightConfigForm.value?.effectiveFrom,
-        this.todate = this.weightConfigForm.value?.effectiveTo,
+      this.countryId = this.weightConfigForm.value?.countryId;
+        this.fromDate = this.weightConfigForm.value?.effectiveFrom;
+        this.todate = this.weightConfigForm.value?.effectiveTo;
 
         //console.log('ok')
         // var requestModel = {

@@ -49,6 +49,8 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Features\AuditScheduleConfigurationsOwner\Commands\DeleteAuditScheduleConfigurationsOwnerCommand\" />
+    <Folder Include="Features\AuditScheduleConfigurationsOwner\Queries\" />
     <Folder Include="Features\DataRequestQueue\Command\UpdateDataRequestQueueCommand\" />
     <Folder Include="Features\RiskAssesmentDataManagements\Queries\" />
     <Folder Include="Features\UserCountries\Quiries\" />

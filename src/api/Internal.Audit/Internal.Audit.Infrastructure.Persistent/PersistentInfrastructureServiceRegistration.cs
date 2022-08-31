@@ -88,6 +88,8 @@ using Internal.Audit.Infrastructure.Persistent.Repositories.RiskAssesmentConsoli
 using Internal.Audit.Application.Contracts.Persistent.RiskAssesmentConsolidateDatas;
 using Internal.Audit.Application.Contracts.Persistent.ClosingMeetingMinutes;
 using Internal.Audit.Infrastructure.Persistent.Repositories.ClosingMeetingMinutes;
+using Internal.Audit.Application.Contracts.Persistent.AuditScheduleConfigurationsOwner;
+using Internal.Audit.Infrastructure.Persistent.Repositories.AuditScheduleConfigurationsOwner;
 
 namespace Internal.Audit.Infrastructure.Persistent;
 
@@ -239,6 +241,8 @@ public static class PersistentInfrastructureServiceRegistration
         services.AddScoped<IClosingMeetingPresentCommandRepository, ClosingMeetingPresentCommandRepository>();
         services.AddScoped<IClosingMeetingSubjectCommandRepository, ClosingMeetingSubjectCommandRepository>();
 
+        services.AddScoped<IAuditScheduleConfigurationOwnerCommandRepository, AuditScheduleConfigurationOwnerCommandRepository>();
+        services.AddScoped<IAuditScheduleConfigurationOwnerQueryRepository>(s => new AuditScheduleConfigurationOwnerQueryRepository(configuration.GetConnectionString("InternalAuditDb")));
 
 
         return services;

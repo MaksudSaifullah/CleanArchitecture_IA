@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Mvc;
 using Internal.Audit.Application.Features.AuditSchedules.Commands.UpdateSchedule;
 using Internal.Audit.Application.Features.AuditSchedules.Commands.DeleteAuditSchedule;
 using Internal.Audit.Application.Features.AuditSchedules.Queries.GetAuditScheduleByCreationId;
+using Internal.Audit.Application.Features.AuditScheduleConfigurationsOwner.Commands.AddAuditScheduleConfigurationsOwnerCommand;
 
 namespace Internal.Audit.Api.Controllers;
 
@@ -73,6 +74,13 @@ public class AuditScheduleController : ControllerBase
     public async Task<ActionResult<GetAuditSchedulePlanIdResponseDTO>> GetByAuditCreationId(GetAuditScheduleByCreationIdQuery query)
     {
         var result = await _mediator.Send(query);
+        return Ok(result);
+    }
+
+    [HttpPost("AuditScheudleConfigurationOwner")]
+    public async Task<ActionResult<AuditScheduleConfiurationsOwnerCommandResponseDTO>> AddAuditScheudleConfigurationOwner(AddAuditScheduleConfigurationsOwnerCommand command)
+    {
+        var result = await _mediator.Send(command);
         return Ok(result);
     }
 }

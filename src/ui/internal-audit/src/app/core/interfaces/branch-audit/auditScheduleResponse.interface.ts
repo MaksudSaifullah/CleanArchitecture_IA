@@ -1,5 +1,6 @@
 export interface AuditScheduleResponse {
     id?:                        string;
+    scheduleId:                 string;
     scheduleStartDate:         Date;
     scheduleEndDate:           Date;
     executionState:            string; 

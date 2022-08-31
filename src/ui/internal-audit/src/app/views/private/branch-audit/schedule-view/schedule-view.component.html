@@ -9,7 +9,15 @@
            
               <div class="row">
                 <div class="col-md-6">
-                    <div class="row">
+                  <div class="btn-group" role="group" aria-label="Basic example">
+                    <button type="button" class="btn btnCreateColor" cButton (click)="RedirectToAuditList()"> &#8592; Branch Audit List</button>
+                    <button  class="btn btnCreateColor"  cButton (click)="RedirectToAuditView()">
+                      <svg cIcon name="cilX" size="md" title="Close Button Icon"></svg> Schedule
+                    </button> 
+                    <button  class="btn btnCreateColor"  cButton  (click)="RedirectToScheduelConfiguration()"> Configuration
+                    </button> 
+                  </div>
+                    <!-- <div class="row">
                         <div class="col-md-5" >
                             <button  class="btnCreateColor"  cButton (click)="RedirectToAuditList()">
                               &#8592; Branch Audit List
@@ -24,17 +32,42 @@
                             <button  class="btnCreateColor"  cButton  (click)="RedirectToScheduelConfiguration()"> Configuration
                             </button> 
                          </div>  
-                    </div>
+                    </div> -->
                 </div>
                 <div class="col-md-6">
-                  <div class="a row">
-                   
+                  <div class="a btn-group" role="group" aria-label="Basic example">
+                    <div *ngIf="moveToInprogressDefault" >
+                      <button  class="btn btnCreateColor" (click)="MoveToInprogressClick()" cButton > Move to Inprogress
+                      </button> 
+                    </div>
+                    <div *ngIf="moveToInprogress" >
+                      <button  class="btn btnCreateColor"  cButton [routerLink]="['/branch-audit/schedule-execution', scheduleParamId,auditParamId]"> Execution 
+                      </button> 
+                    </div>
+                    <div *ngIf="moveToInprogress" >
+                      <button  class="btn btnCreateColor"   cButton  (click)="MoveToDoneClick()"> Move to Done 
+                      </button> 
+                    </div>
+                    <div *ngIf="moveToDone" >
+                      <button  class="btn btnCreateColor"   cButton (click)="BackToInprogessClick()" > Back to Inprogress
+                      </button> 
+                    </div>
+                    <div *ngIf="moveToDone" >
+                      <button  class="btn btnCreateColor"   cButton [routerLink]="['/branch-audit/schedule-execution',scheduleParamId,auditParamId]"> View Execution
+                      </button> 
+                    </div>
+                    <div *ngIf="moveToDone" >
+                      <button  class="btn btnCreateColor"   cButton (click)="executionDone()" > Done
+                      </button> 
+                    </div>
+                  </div>
+                  <!-- <div class="a row">
                     <div *ngIf="moveToInprogressDefault" class="col-md-5">
                       <button  class="btnCreateColor" (click)="MoveToInprogressClick()" cButton > Move to Inprogress
                       </button> 
                     </div>
                     <div *ngIf="moveToInprogress" class="col-md-3">
-                      <button  class="btnCreateColor"  cButton [routerLink]="['/branch-audit/schedule-execution']"> Execution 
+                      <button  class="btnCreateColor"  cButton [routerLink]="['/branch-audit/schedule-execution', scheduleParamId,auditParamId]"> Execution 
                       </button> 
                     </div>
                     <div *ngIf="moveToInprogress" class="col-md-5">
@@ -53,8 +86,7 @@
                       <button  class="btnCreateColor"   cButton > Done
                       </button> 
                     </div>
-
-                  </div>
+                  </div> -->
                 </div>
                 
                
@@ -91,9 +123,14 @@
                             <label for="floatingInput">Schedule Id</label>
                           </div>
                           <div class="form-floating col-md-6">
-                            <input type="text" class="form-control" formControlName="countryId" id="countryId" placeholder="countryId">
-                            <label for="floatingInput">Country Name</label>
-                          </div>
+                            <select aria-label="Floating label select example" cSelect id="countryId" formControlName="countryId" name="countryId" >
+                            <option value=null>Select Country</option>
+                            <option *ngFor="let country of countries" [value]="country.id">
+                                {{country.name}}
+                            </option>
+                            </select>
+                            <label for="countryId" class="dropdownLabel">Country</label>
+                        </div>
                         </div>
                         <br>
                         <div class="row">
@@ -122,10 +159,10 @@
                           <div class="form-floating col-md-6">
                             <div cFormFloating >
                               <select aria-label="Floating label select example" cSelect id="executionStatusId" formControlName="executionStatusId" name="executionStatusId" >
-                                <option value=null>Execution Status</option>
-                                <option value=-1>Not Started</option>
-                                <option value=2>In Progress</option>
-                                <option value=3>Done</option>
+                                <option value=null>Select Execution Status</option>
+                                <option value=0>Not Started</option>
+                                <option value=1>In Progress</option>
+                                <option value=2>Done</option>
                               </select>
                               <label for="executionStatusId" class="dropdownLabel">Execution Status</label>
                             </div>    
@@ -183,6 +220,7 @@
                       <th>SL</th>
                       <th>Country</th>
                       <th>Branch</th>
+                      <th>Auditee</th>
                      
                     </tr>
                   </thead>
@@ -192,6 +230,7 @@
                             {{i+1}}
                         </td>
                       <td>{{ branch.countryName }}</td>
+                      <td>{{ branch.branchName }}</td>
                       <td>{{ branch.branchName }}</td>
                      
                     </tr>

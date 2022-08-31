@@ -87,14 +87,14 @@ export const navItems: INavData[] = [
         name: 'Audit Creation',
         url: '/branch-audit/audit'
       },
-      {
-        name: 'Audit View',
-        url: '/branch-audit/audit-view'
-      },
-      {
-        name: 'Audit Schedule',
-        url: '/branch-audit/audit-schedule'
-      },
+      // {
+      //   name: 'Audit View',
+      //   url: '/branch-audit/audit-view'
+      // },
+      // {
+      //   name: 'Audit Schedule',
+      //   url: '/branch-audit/audit-schedule'
+      // },
       {
         name: 'Work Paper Create',
         url: '/branch-audit/workpaperCreate'

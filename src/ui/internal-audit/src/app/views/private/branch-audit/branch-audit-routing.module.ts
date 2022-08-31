@@ -92,7 +92,12 @@ const routes: Routes = [
   {
     path:'new-issue',
     component:NewIssueComponent
-  }
+  },
+  { 
+    path: 'schedule-execution/:scheduleParamId/:auditParamId', 
+    component: ScheduleExecutionComponent 
+   }
+
 ];
 
 @NgModule({

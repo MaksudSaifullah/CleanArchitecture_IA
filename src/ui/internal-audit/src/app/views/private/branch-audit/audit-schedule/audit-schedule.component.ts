@@ -102,10 +102,7 @@ export class AuditScheduleComponent implements OnInit {
     };
    // console.log(this.auditSchedules)
   }
-  OnRowClick(id:string){
-    console.log(id)
-    this.router.navigate(['branch-audit/schedule-view'], {queryParams: {id:id}});
-  }
+
 
   onSubmit(modalId:any):void{
     // console.log(this.auditScheduleForm.getRawValue())
@@ -121,7 +118,6 @@ export class AuditScheduleComponent implements OnInit {
        let branches: AuditScheduleBranch[] = this.auditScheduleCreateForm.value.branchList as AuditScheduleBranch[];
        if (Array.isArray(branches)) {
          branches.forEach(function (value) {
-           
            let branch: AuditScheduleBranch = {  auditScheduleId : auditScheduleId, branchId: value.toString()}
            auditBranchList.push(branch);
          }); 
@@ -164,13 +160,13 @@ export class AuditScheduleComponent implements OnInit {
         auditCreationId: this.auditCreationId,
         scheduleStartDate: auditScheudleFormValue.scheduleStartDate,   
         scheduleEndDate: auditScheudleFormValue.scheduleEndDate,
-        scheduleState:auditScheudleFormValue.scheduleState,
+       // scheduleState:auditScheudleFormValue.scheduleState,
         executionState:auditScheudleFormValue.executionStatusId,
         auditScheduleParticipants : auditParticipantList,
         auditScheduleBranch : auditBranchList
         
       };
-
+      console.log(RequestModelForScheduleUpdate)
 
        if(this.formService.isEdit(this.auditScheduleCreateForm.get('id') as FormControl)){
         this.http.put('AuditSchedule',RequestModelForScheduleUpdate,null).subscribe(x=>{
@@ -198,12 +194,13 @@ export class AuditScheduleComponent implements OnInit {
         });
       }
 
-
+      window.location.reload();
 
      }
    }
 
   edit(modalId:any, id:string):void {
+   // window.location.reload();
     const localmodalId = modalId;
     this.http
       .post('AuditSchedule/getScheduleId', {auditSchduleId : id})
@@ -232,7 +229,6 @@ export class AuditScheduleComponent implements OnInit {
 
   delete(id:string){
     const that = this;
-    //let deleteObject={"id":id};
     this.AlertService.confirmDialog().then(res =>{
       if(res.isConfirmed){
           this.http.delete('AuditSchedule/'+id,{}).subscribe(response=>{
@@ -245,6 +241,8 @@ export class AuditScheduleComponent implements OnInit {
   
 
   getAuditById():void {
+    this.selectedScheduleBranch=[];
+    this.selectedScheduleParticipant=[];
     this.http
       .getById('audit',this.auditParamId)
       .subscribe(res => {
@@ -254,23 +252,24 @@ export class AuditScheduleComponent implements OnInit {
             auditPeriodTo: formatDate(auditResponse.auditPeriodTo, 'yyyy-MM-dd', 'en'),
             scheduleStartDate: '',
             scheduleEndDate: '',
-            executionStatusId : auditResponse.executionState,
-            branchList:'',
-            approverList:'',
-            teamLeaderList:'',
-            auditorList:''});
+            executionStatusId : '',//auditResponse.executionState,
+            branchList:[''],
+            approverList:[''],
+            teamLeaderList:[''],
+            auditorList:['']});
             
             this.auditCreationId=auditResponse.id;
             this.globalCountryId=auditResponse.countryId;
-            console.log(this.globalCountryId)
-            this.http.get('commonValueAndType/getBranch?countryId='+auditResponse.countryId +'&pageNumber=1&pageSize=10').subscribe(resp => {
-              let convertedResp = resp as paginatedResponseInterface<Branch>;
-              this.branches = convertedResp.items;
-            })
+            //console.log(this.globalCountryId)
+            this.LoadBranch();
+            // this.http.get('commonValueAndType/getBranch?countryId='+auditResponse.countryId +'&pageNumber=1&pageSize=10').subscribe(resp => {
+            //   let convertedResp = resp as paginatedResponseInterface<Branch>;
+            //   this.branches = convertedResp.items;
+            // })
             
       });
       this.disabledInputField();
-     // this.clearDDL();
+      this.resetDDL();
   }
 
   LoadUser() {
@@ -346,10 +345,15 @@ export class AuditScheduleComponent implements OnInit {
     this.auditScheduleCreateForm.controls['auditPeriodFrom'].disable();
     this.auditScheduleCreateForm.controls['auditPeriodTo'].disable();
  }
- clearDDL(){
+ resetDDL(){
   this.auditScheduleCreateForm.get('branchList')?.setValue('');
   this.auditScheduleCreateForm.get('approverList')?.setValue('');
   this.auditScheduleCreateForm.get('teamLeaderList')?.setValue('');
+
+  this.auditScheduleCreateForm.reset({
+    branchList:''
+  });
+  //window.location.reload();
  }
 
 }

@@ -7,13 +7,10 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="Features\ClosingMeetingMinutes\**" />
     <Compile Remove="Features\UserCountries\**" />
     <Compile Remove="Features\Users\**" />
-    <EmbeddedResource Remove="Features\ClosingMeetingMinutes\**" />
     <EmbeddedResource Remove="Features\UserCountries\**" />
     <EmbeddedResource Remove="Features\Users\**" />
-    <None Remove="Features\ClosingMeetingMinutes\**" />
     <None Remove="Features\UserCountries\**" />
     <None Remove="Features\Users\**" />
   </ItemGroup>

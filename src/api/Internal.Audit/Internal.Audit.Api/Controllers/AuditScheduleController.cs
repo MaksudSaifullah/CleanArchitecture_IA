@@ -55,7 +55,7 @@ public class AuditScheduleController : ControllerBase
         var result = await _mediator.Send(command);
         return Ok(result);
     }
-    [HttpDelete]
+    [HttpDelete("{Id}")]
     public async Task<ActionResult<DeleteAuditScheduleResponseDTO>> Delete(Guid Id)
     {
         DeleteAuditScheduleCommand command = new DeleteAuditScheduleCommand(Id);

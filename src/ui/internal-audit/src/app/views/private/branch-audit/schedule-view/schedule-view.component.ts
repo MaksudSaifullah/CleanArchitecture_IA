@@ -14,6 +14,9 @@ import {AlertService} from '../../../../core/services/alert.service';
 import { AuditScheduleBranchResponse } from 'src/app/core/interfaces/branch-audit/auditScheduleResponse.interface';
 import { AuditScheduleParticipantResponse } from 'src/app/core/interfaces/branch-audit/auditScheduleResponse.interface';
 import { AuditType } from 'src/app/core/interfaces/branch-audit/AuditType.interface';
+import { ScheduledBranch } from 'src/app/core/interfaces/branch-audit/scheduledBranch.interface';
+import { Audit } from 'src/app/core/interfaces/branch-audit/audit.interface';
+import { country } from 'src/app/core/interfaces/configuration/country.interface';
 
 
 @Component({
@@ -27,9 +30,11 @@ export class ScheduleViewComponent implements OnInit {
   dtOptions: DataTables.Settings = {};
   dataTableService: DatatableService = new DatatableService();
   auditScheduleViewForm: FormGroup;
-  branches: Branch[] = [];
+  scheduledBranch: ScheduledBranch[] = [];
   users: User[]=[];
+  countries: country[]=[];
   auditIdGlobal: any = '00000000-0000-0000-0000-000000000000';
+  countryIdGlobal: any = '00000000-0000-0000-0000-000000000000';
   moveToInprogressDefault=true;
   moveToInprogress=false;
   moveToDone=false;
@@ -56,7 +61,8 @@ export class ScheduleViewComponent implements OnInit {
     //  branchList:[''],
      // approverList:[''],
       teamLeaderList:[''],
-      auditorList:['']
+      auditorList:[''],
+      executionStatusId:['']
       
     })
    }
@@ -69,9 +75,10 @@ export class ScheduleViewComponent implements OnInit {
 
     this.LoadData();
    // this.LoadBranch();
+    this.LoadCountry();
     this.LoadUser();
     this.LoadAuditType();
-
+    this.GetAuditById();
     if(this.scheduleParamId!=undefined){
       this.GetScheduleById(this.scheduleParamId);
     }
@@ -90,16 +97,11 @@ export class ScheduleViewComponent implements OnInit {
       searching: false,
       ordering: false,
       ajax: (dataTablesParameters: any, callback) => {
-        // this.http.get('commonValueAndType/getBranch?countryId=' + this.countryIdGlobal + '&pageNumber=1&pageSize=10000')
-        // .subscribe(resp => that.selectedScheduleBranch = this.dataTableService.datatableMap(resp, callback));
-
         this.http
-        .post('AuditSchedule/getScheduleId', {auditSchduleId : this.auditIdGlobal})
-        .subscribe((res:any) => {
-            const auditScheduleResponse = res[0] as AuditScheduleResponse;
-           // this.selectedScheduleBranch = auditScheduleResponse.auditScheduleBranch;   
-            this.selectedScheduleBranch=  this.dataTableService.datatableMap(res,callback);
-        });
+          .paginatedPost(
+            'AuditSchedule/paginatedScheduleBranch',dataTablesParameters.length,((dataTablesParameters.start/dataTablesParameters.length)+1),
+            {"scheduleId": this.scheduleParamId!=undefined? this.scheduleParamId:this.scheduleParamIdFromConfiguration }
+          ).subscribe(resp => that.scheduledBranch = this.dataTableService.datatableMap(resp,callback));
       },
     };
   }
@@ -114,8 +116,8 @@ export class ScheduleViewComponent implements OnInit {
                         auditId:auditScheduleResponse.auditCreation?.auditId, 
                         auditTypeId: auditScheduleResponse.auditCreation?.auditTypeId,
                         scheduleId: id,
-                        // countryName: auditScheduleResponse.country,
-                       //  executionStatusId: auditScheduleResponse[0].executionStatus,
+                        countryId: this.countryIdGlobal,
+                        executionStatusId: auditScheduleResponse.executionState,
                         auditPeriodFrom: formatDate(auditScheduleResponse.auditCreation?.auditPeriodFrom, 'yyyy-MM-dd', 'en'),
                         auditPeriodTo: formatDate(auditScheduleResponse.auditCreation?.auditPeriodTo, 'yyyy-MM-dd', 'en'),
                         scheduleStartDate: formatDate(auditScheduleResponse.scheduleStartDate, 'yyyy-MM-dd', 'en'),
@@ -125,15 +127,27 @@ export class ScheduleViewComponent implements OnInit {
         });
         this.LoadScheduleBranch(auditScheduleResponse.id);
       });
-    
-   // this.dataTableService.redraw(this.datatableElement);
     this.disabledInputField();
   }
 
+  GetAuditById():void {
+    this.http
+      .getById('audit',this.auditParamId!=undefined?this.auditParamId:this.auditParamIdFromConfiguration)
+      .subscribe(res => {
+          const auditResponse = res as Audit;
+          this.countryIdGlobal=auditResponse.countryId;
+      });
+  }
   LoadUser() {
     this.http.paginatedPost('userlist/Paginated', 100, 1, {"userName": "","employeeName": "","userRole": ""}).subscribe(resp => {
       let convertedResp = resp as paginatedResponseInterface<User>;
       this.users = convertedResp.items;
+    })
+  }
+  LoadCountry() {
+    this.http.paginatedPost('country/paginated', 100, 1, {}).subscribe(resp => {
+      let convertedResp = resp as paginatedResponseInterface<country>;
+      this.countries = convertedResp.items;    
     })
   }
   LoadScheduleBranch(id:any){
@@ -169,13 +183,19 @@ export class ScheduleViewComponent implements OnInit {
      }
      return false;
   }
-
+  executionDone(){
+    const RequestModelForScheduleUpdate = {
+      executionState:2,
+    };
+    this.http.put('AuditSchedule',RequestModelForScheduleUpdate,null).subscribe(x=>{
+      
+    });
+  }
 
   RedirectToAuditList(){
     this.router.navigate(['branch-audit/audit']);
   }
   RedirectToAuditView(){   
-   // this.router.navigate(['branch-audit/audit-view']);
     this.router.navigate(['branch-audit/audit-view'], { queryParams: { id: this.auditParamId!=undefined? this.auditParamId: this.auditParamIdFromConfiguration } });
   }
   RedirectToScheduelConfiguration(){
@@ -192,7 +212,6 @@ export class ScheduleViewComponent implements OnInit {
     this.moveToInprogressDefault=false;
   }
   BackToInprogessClick(){
-    
     this.moveToInprogress=true;
     this.moveToDone=false;
   }
@@ -205,6 +224,7 @@ export class ScheduleViewComponent implements OnInit {
     this.auditScheduleViewForm.controls['scheduleId'].disable();
     this.auditScheduleViewForm.controls['scheduleStartDate'].disable();
     this.auditScheduleViewForm.controls['scheduleEndDate'].disable();
+    this.auditScheduleViewForm.controls['executionStatusId'].disable();
  }
 
 }

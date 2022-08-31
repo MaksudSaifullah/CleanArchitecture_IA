@@ -18,6 +18,7 @@ import { IssueListComponent } from './issue-list/issue-list.component';
 import { AuditPlanViewComponent } from './audit-plan-view/audit-plan-view.component';
 import { ClosingMeetingMinutesComponent } from './closing-meeting-minutes/closing-meeting-minutes.component';
 import { WeightScoreConfigComponent } from './weight-score-config/weight-score-config.component';
+import { ClosingMeetingMinutesCreateComponent } from './closing-meeting-minutes/closing-meeting-minutes-create/closing-meeting-minutes-create.component';
 
 const routes: Routes = [
   {
@@ -105,9 +106,18 @@ const routes: Routes = [
     component: ClosingMeetingMinutesComponent
   },
   {
+    path:'closing-meeting-minutes-create',
+    component: ClosingMeetingMinutesCreateComponent
+  },
+  {
     path:'weight-score-config',
     component:WeightScoreConfigComponent
-  }
+  },
+  { 
+    path: 'schedule-execution/:scheduleParamId/:auditParamId', 
+    component: ScheduleExecutionComponent 
+   }
+
 ];
 
 @NgModule({

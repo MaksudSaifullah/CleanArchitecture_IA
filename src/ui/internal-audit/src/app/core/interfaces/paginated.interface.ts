@@ -8,4 +8,4 @@ export interface paginatedModelInterface{
 export interface paginatedResponseInterface <T> {
   totalCount: number,
   items: T[]
-}
+} 

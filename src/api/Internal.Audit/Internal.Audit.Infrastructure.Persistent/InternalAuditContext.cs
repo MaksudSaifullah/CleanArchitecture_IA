@@ -75,7 +75,8 @@ public class InternalAuditContext: DbContext
     public DbSet<ClosingMeetingMinute> ClosingMeetingMinutes { get; set; }
     public DbSet<ClosingMeetingPresent> ClosingMeetingPresents { get; set; }
     public DbSet<ClosingMeetingSubject> ClosingMeetingSubjects { get; set; }
-    public DbSet<ClosingMeetingApology> ClosingMeetingApologies { get; set; }
+    public DbSet<ClosingMeetingApology> ClosingMeetingApologies { get; set; }//
+    public DbSet<AuditScheduleConfigurationOwner> AuditScheduleConfigurationOwners { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

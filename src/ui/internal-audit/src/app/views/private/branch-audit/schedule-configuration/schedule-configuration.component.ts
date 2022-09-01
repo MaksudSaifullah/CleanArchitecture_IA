@@ -264,38 +264,40 @@ export class ScheduleConfigurationComponent implements OnInit {
 //---------------ACTION OWNER END---------------
 
 //---------------SET DATE START---------------
-onSubmitSetDate(modalId:any){
-  const localmodalId = modalId;
-  if(this.scheduleConfigSetDateForm.valid){
-    if(this.formService.isEdit(this.scheduleConfigSetDateForm.get('id') as FormControl)){
-      this.http.put('scheduleConfiguration',this.scheduleConfigSetDateForm.value,null).subscribe(x=>{
-        let resp = x as CommonResponseInterface;
-          if(resp.success){
-            this.formService.onSaveSuccess(localmodalId,this.datatableElement);
-            this.AlertService.success('Set Date Saved Successful');
-          }
-          else{
-            this.AlertService.errorDialog('Unsuccessful', 'Duplicate Value ');
-          }
+onSubmit(){
+  // const localmodalId = modalId;
+  // if(this.scheduleConfigSetDateForm.valid){
+  //   if(this.formService.isEdit(this.scheduleConfigSetDateForm.get('id') as FormControl)){
+  //     this.http.put('scheduleConfiguration',this.scheduleConfigSetDateForm.value,null).subscribe(x=>{
+  //       let resp = x as CommonResponseInterface;
+  //         if(resp.success){
+  //           this.formService.onSaveSuccess(localmodalId,this.datatableElement);
+  //           this.AlertService.success('Set Date Saved Successful');
+  //         }
+  //         else{
+  //           this.AlertService.errorDialog('Unsuccessful', 'Duplicate Value ');
+  //         }
 
-      });
-    }
-    else{
-      this.http.post('scheduleConfiguration',this.scheduleConfigSetDateForm.value).subscribe(x=>{
-        let resp = x as CommonResponseInterface;
-          if(resp.success){
-            this.formService.onSaveSuccess(localmodalId,this.datatableElement);
-            this.AlertService.success('Set Date Saved Successful');
-          }
-          else{
-            this.AlertService.errorDialog('Unsuccessful', 'Duplicate Value ');
-          }
-      });
-    }
-  }
+  //     });
+  //   }
+  //   else{
+  //     this.http.post('scheduleConfiguration',this.scheduleConfigSetDateForm.value).subscribe(x=>{
+  //       let resp = x as CommonResponseInterface;
+  //         if(resp.success){
+  //           this.formService.onSaveSuccess(localmodalId,this.datatableElement);
+  //           this.AlertService.success('Set Date Saved Successful');
+  //         }
+  //         else{
+  //           this.AlertService.errorDialog('Unsuccessful', 'Duplicate Value ');
+  //         }
+  //     });
+  //   }
+  // }
 
 }
+onCancel(){
 
+}
 editSetDate(modalId:any):void {
   const localmodalId = modalId; 
   this.http

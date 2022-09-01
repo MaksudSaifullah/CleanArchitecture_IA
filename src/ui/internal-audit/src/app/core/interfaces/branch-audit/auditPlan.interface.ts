@@ -11,4 +11,7 @@ export interface auditPlan {
     assessmentCode:    string;
     assessmentFrom:    Date;
     assessmentTo:      Date;
+    createdOn: Date;
+    createdBy: string;
+    planningYear: string;
 }

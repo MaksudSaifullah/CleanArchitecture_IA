@@ -17,15 +17,87 @@
                                 <label cLabel for="planningId">Planning Id</label>
                             </div>
                         </c-col>
-                        <!-- <c-col md>
+                        <c-col md>
                             <div cFormFloating>
-                                <input type="text" class="form-control" formControlName="documentVersion"
-                                    name="documentVersion" id="documentVersion" placeholder="Name">
-                                <label cLabel for="documentVersion">Document Version</label>
+                                <input type="date" class="form-control" formControlName="assessmentFrom"
+                                    name="assessmentFrom" id="assessmentFrom" placeholder="Assessment From">
+                                <label cLabel for="assessmentFrom">Assessment From</label>
                             </div>
-                        </c-col> -->
+                        </c-col>
                     </c-row>
                     <br>
+                    <c-row [gutter]="{g: 2}">
+                        <c-col md>
+                            <div cFormFloating>
+                                <select aria-label="Floating label select example" cSelect id="auditType"
+                                  formControlName="auditType" name="auditType">
+                                  <option *ngIf="auditPlanResponse != null" value="">
+                                    {{auditPlanResponse?.planCode}}
+                                  </option>
+                                </select>
+                                <label for="auditType" class="dropdownLabel">Audit Type</label>
+                              </div>
+                        </c-col>
+                        <c-col md>
+                            <div cFormFloating>
+                                <input type="date" class="form-control" formControlName="assessmentTo"
+                                    name="assessmentTo" id="assessmentTo" placeholder="Assessment To">
+                                <label cLabel for="assessmentTo">Assessment To</label>
+                            </div>
+                        </c-col>
+                    </c-row>
+                    <br>
+                    <c-row [gutter]="{g: 2}">
+                        <c-col md>
+                            <div cFormFloating>
+                                <select aria-label="Floating label select example" cSelect id="planningYear"
+                                  formControlName="planningYear" name="planningYear">
+                                  <option *ngIf="auditPlanResponse != null" value="">
+                                    {{auditPlanResponse?.planCode}}
+                                  </option>
+                                </select>
+                                <label for="planningYear" class="dropdownLabel">Planning Year</label>
+                              </div>
+                        </c-col>
+                        <c-col md>
+                            <div cFormFloating>
+                                <input type="date" class="form-control" formControlName="createdAt"
+                                    name="createdAt" id="createdAt" placeholder="CreatedAt AT">
+                                <label cLabel for="assessmentTo">Assessment To</label>
+                            </div>
+                        </c-col>
+                    </c-row>
+                    <br>
+                    <c-row [gutter]="{g: 2}">
+                        <c-col md>
+                            <div cFormFloating>
+                                <select aria-label="Floating label select example" cSelect id="assesmentId"
+                                  formControlName="assesmentId" name="assesmentId">
+                                  <option *ngIf="auditPlanResponse != null" value="">
+                                    {{auditPlanResponse?.planCode}}
+                                  </option>
+                                </select>
+                                <label for="assesmentId" class="dropdownLabel">Assesment Id</label>
+                              </div>
+                        </c-col>
+                        <c-col md>
+                            <div cFormFloating>
+                                <input type="text" class="form-control" formControlName="countryName"
+                                    name="countryName" id="countryName" placeholder="Country Name">
+                                <label cLabel for="countryName">Country</label>
+                            </div>
+                        </c-col>
+                    </c-row>
+                    <br>
+                    <c-row [gutter]="{g: 2}">
+                        <c-col md>
+                            <div cFormFloating>
+                                <input type="text" class="form-control" formControlName="createdBy"
+                                    name="createdBy" id="createdBy" placeholder="Created By">
+                                <label cLabel for="createdBy">Created By</label>
+                            </div>
+                        </c-col>
+                    </c-row>
                 </form>
             </c-card-body>
         </c-card>

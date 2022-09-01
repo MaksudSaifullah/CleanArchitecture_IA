@@ -1,5 +1,6 @@
 ﻿using Internal.Audit.Application.Contracts.Persistent.AuditScheduleConfigurationsOwner;
 using Internal.Audit.Domain.Entities.BranchAudit;
+using Internal.Audit.Domain.Entities.security;
 using Internal.Audit.Domain.Entities.Security;
 using System;
 using System.Collections.Generic;
@@ -21,13 +22,15 @@ public class AuditScheduleConfigurationOwnerQueryRepository : QueryRepositoryBas
                     FROM [BranchAudit].[AuditScheduleConfigurationOwner] x
                     INNER JOIN security.[User] y
                     on x.UserId=y.Id
+                    inner JOIN security.Branch b
+                    on b.Id=x.BranchId
                     where x.AuditScheduleId=@auditscheduleid
                     and x.CommonValueAuditScheduleRiskOwnerTypetId=@typeid";
         var parameters = new Dictionary<string, object> { { "auditscheduleid", AuditScheduleId }, { "typeid", TypeId } };
-        string splitters = "Id";
+        string splitters = "Id,Id";
         var auditScheduleConfigurationOwnerDictionary = new Dictionary<Guid, AuditScheduleConfigurationOwner>();
         var userDictionary = new Dictionary<Guid, User>();
-        var data = await Get<AuditScheduleConfigurationOwner, User, AuditScheduleConfigurationOwner>(query, (configurationowner, user) =>
+        var data = await Get<AuditScheduleConfigurationOwner, User, Branch, AuditScheduleConfigurationOwner>(query, (configurationowner, user, branch) =>
         {
             AuditScheduleConfigurationOwner uc;
             if (!auditScheduleConfigurationOwnerDictionary.ContainsKey(configurationowner.AuditScheduleId))
@@ -46,6 +49,7 @@ public class AuditScheduleConfigurationOwnerQueryRepository : QueryRepositoryBas
                 userDictionary.Add(user.Id, user);
                 uc.User.Add(user);
             }
+            uc.Branch=branch;
             return uc;
         }, parameters, splitters, false);
         return data.FirstOrDefault();

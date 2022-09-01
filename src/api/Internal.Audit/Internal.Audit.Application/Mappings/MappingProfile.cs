@@ -488,7 +488,10 @@ public class MappingProfile : Profile
         CreateMap<WeightScore, AddweightScoreCommand>().ReverseMap();
         CreateMap<WeightScore, AddweightScoreCommandRaw>().ReverseMap();
         CreateMap<AuditScheduleConfigurationOwner, AddAuditScheduleConfigurationsOwnerCommandRaw>().ReverseMap();//
-        CreateMap<AuditScheduleConfigurationOwner, GetAllByAuditScheduledIdResponseDTO>().ReverseMap();//
+        //CreateMap<AuditScheduleConfigurationOwner, GetAllByAuditScheduledIdResponseDTO>().ReverseMap();//
         CreateMap<User, UserConfiguration>().ReverseMap();//
+        CreateMap<User, UserConfiguration>().ReverseMap();//
+        CreateMap<AuditScheduleConfigurationOwner, GetAllByAuditScheduledIdResponseDTO>() // needs `Inst` -> `InstDTO` map
+    .ForMember(dst => dst.BranchName, opt => opt.MapFrom(src => src.Branch.BranchName)).ReverseMap();
     }
 }

@@ -9,5 +9,5 @@ namespace Internal.Audit.Application.Contracts.Persistent.AuditScheduleConfigura
 
 public interface IAuditScheduleConfigurationOwnerQueryRepository:IAsyncQueryRepository<AuditScheduleConfigurationOwner>
 {
-
+    Task<AuditScheduleConfigurationOwner> GetAllAsync(Guid? AuditScheduleId,int TypeId);
 }

@@ -31,8 +31,8 @@
                             <div cFormFloating>
                                 <select aria-label="Floating label select example" cSelect id="auditType"
                                   formControlName="auditType" name="auditType">
-                                  <option *ngIf="auditPlanResponse != null" value="">
-                                    {{auditPlanResponse?.planCode}}
+                                  <option *ngIf="auditPlanResponse?.auditTypeName != null" value="auditPlanResponse.auditTypeName">
+                                    {{auditPlanResponse.auditTypeName}}
                                   </option>
                                 </select>
                                 <label for="auditType" class="dropdownLabel">Audit Type</label>
@@ -52,8 +52,8 @@
                             <div cFormFloating>
                                 <select aria-label="Floating label select example" cSelect id="planningYear"
                                   formControlName="planningYear" name="planningYear">
-                                  <option *ngIf="auditPlanResponse != null" value="">
-                                    {{auditPlanResponse?.planCode}}
+                                  <option *ngIf="auditPlanResponse?.planningYear != null" value="auditPlanResponse.planningYear">
+                                    {{auditPlanResponse?.planningYear}}
                                   </option>
                                 </select>
                                 <label for="planningYear" class="dropdownLabel">Planning Year</label>
@@ -73,8 +73,8 @@
                             <div cFormFloating>
                                 <select aria-label="Floating label select example" cSelect id="assesmentId"
                                   formControlName="assesmentId" name="assesmentId">
-                                  <option *ngIf="auditPlanResponse != null" value="">
-                                    {{auditPlanResponse?.planCode}}
+                                  <option *ngIf="auditPlanResponse?.assessmentCode != null" value="auditPlanResponse.assessmentCode">
+                                    {{auditPlanResponse?.assessmentCode}}
                                   </option>
                                 </select>
                                 <label for="assesmentId" class="dropdownLabel">Assesment Id</label>

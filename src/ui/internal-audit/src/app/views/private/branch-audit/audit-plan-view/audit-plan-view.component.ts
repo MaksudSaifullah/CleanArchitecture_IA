@@ -62,7 +62,7 @@ export class AuditPlanViewComponent implements OnInit {
     .getById('auditplan', id)
     .subscribe(res => {
         this.auditPlanResponse = res as auditPlan;
-        console.log(res);
+        console.log(this.auditPlanResponse);
         this.auditPlanViewForm.setValue({
           planningId: this.auditPlanResponse.planCode,
           countryName: this.auditPlanResponse.countryName,
@@ -70,7 +70,7 @@ export class AuditPlanViewComponent implements OnInit {
           assessmentFrom: formatDate(this.auditPlanResponse.assessmentFrom, 'yyyy-MM-dd', 'en'),
           createdAt: formatDate(this.auditPlanResponse.createdOn, 'yyyy-MM-dd', 'en'),
           auditType: this.auditPlanResponse.auditTypeName,
-          planningYear: this.auditPlanResponse.planningYear,
+          planningYear: this.auditPlanResponse.planCode,
           assesmentId: this.auditPlanResponse.assessmentCode,
           createdBy: this.auditPlanResponse.createdBy
         });

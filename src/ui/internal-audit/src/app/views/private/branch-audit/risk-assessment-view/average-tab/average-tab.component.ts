@@ -83,7 +83,7 @@ export class AverageTabComponent implements OnInit {
   }
 
   onSubmit(): void {
-    this.http.post('DataSync/getSyncDataRiskAssesmentAvgPost', {datas: }
+    this.http.post('DataSync/PostAvgData', {datas: this.riskAssesmentOverdue}
      )
       .subscribe(resp => {
         this.AlertService.success('Saved Successfully');

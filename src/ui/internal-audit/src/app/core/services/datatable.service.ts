@@ -19,8 +19,12 @@ export class DatatableService {
         data: []
       });
       return convertedResp.items;
-    } else {
+    }
+     else 
+    {
       let convertedResp = resp;
+      console.log(convertedResp)
+
       callback({
         recordsTotal: convertedResp.length == 0 ? 0 : convertedResp[0].totalCount.tc,
         recordsFiltered: convertedResp.length == 0 ? 0 : convertedResp[0].totalCount.tc,

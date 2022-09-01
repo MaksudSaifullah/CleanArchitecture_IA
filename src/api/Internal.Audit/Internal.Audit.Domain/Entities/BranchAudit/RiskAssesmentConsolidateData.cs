@@ -1,4 +1,5 @@
 ﻿using Internal.Audit.Domain.Common;
+using Internal.Audit.Domain.CompositeEntities;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -28,5 +29,6 @@ public class RiskAssesmentConsolidateData : EntityBase
     public string Avg_Score { get; set; }
     public string Avg_Rating { get; set; }
     public string AuditFrequency_Type { get; set; }
-
+    [NotMapped]
+    public EfTotalCount TotalCount { get; set; }
 }

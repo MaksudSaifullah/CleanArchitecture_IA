@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Internal.Audit.Domain.CompositeEntities;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -14,4 +15,6 @@ public record TopicHeadByCountryIdAndDateRangeDTO
     public DateTime EffectiveFrom { get; set; }
     public DateTime EffectiveTo { get; set; }
     public string? Description { get; set; }
+    public decimal WeightScore { get; set; }
+    public EfTotalCount TotalCount { get; set; }
 }

@@ -176,6 +176,9 @@ using Internal.Audit.Application.Features.ClosingMeetingMinutes.Queries.GetClosi
 using Internal.Audit.Application.Features.ClosingMeetingMinutes.Commands.AddClosingMeetingMinute;
 using Internal.Audit.Application.Features.ClosingMeetingMinutes.Commands.UpdateClosingMeetingMinute;
 using Internal.Audit.Application.Features.ClosingMeetingMinutes.Commands.DeleteClosingMeetingMinute;
+using Internal.Audit.Application.Features.WeightScoreConfigurations.Commands.AddWeightScoreCommand;
+using Internal.Audit.Application.Features.AuditScheduleConfigurationsOwner.Commands.AddAuditScheduleConfigurationsOwnerCommand;
+using Internal.Audit.Application.Features.AuditScheduleConfigurationsOwner.Queries.GetAllByAuditScheduleId;
 
 namespace Internal.Audit.Application.Mappings;
 
@@ -471,6 +474,9 @@ public class MappingProfile : Profile
 
         CreateMap<ClosingMeetingMinute, ClosingMeetingMinuteDTO>().ReverseMap();
         CreateMap<CompositeClosingMeetingMinute, ClosingMeetingMinuteDTO>().ReverseMap();
+        CreateMap<AddMeetingPresent, ClosingMeetingPresent>().ReverseMap();
+        CreateMap<AddMeetingApology, ClosingMeetingApology>().ReverseMap();
+        CreateMap<AddMeetingSubject, ClosingMeetingSubject>().ReverseMap();
         //CreateMap<CompositeClosingMeetingMinute, AuditPlanByIdDTO>().ReverseMap();
         //CreateMap<AuditPlan, AuditPlanByIdDTO>().ReverseMap();
         CreateMap<ClosingMeetingMinute, AddClosingMeetingMinuteResponseDTO>().ReverseMap();
@@ -479,5 +485,13 @@ public class MappingProfile : Profile
         CreateMap<ClosingMeetingMinute, UpdateClosingMeetingMinuteCommand>().ReverseMap();
         CreateMap<ClosingMeetingMinute, DeleteClosingMeetingMinuteResponseDTO>().ReverseMap();
         CreateMap<ClosingMeetingMinute, DeleteClosingMeetingMinuteCommand>().ReverseMap();
+        CreateMap<WeightScore, AddweightScoreCommand>().ReverseMap();
+        CreateMap<WeightScore, AddweightScoreCommandRaw>().ReverseMap();
+        CreateMap<AuditScheduleConfigurationOwner, AddAuditScheduleConfigurationsOwnerCommandRaw>().ReverseMap();//
+        //CreateMap<AuditScheduleConfigurationOwner, GetAllByAuditScheduledIdResponseDTO>().ReverseMap();//
+        CreateMap<User, UserConfiguration>().ReverseMap();//
+        CreateMap<User, UserConfiguration>().ReverseMap();//
+        CreateMap<AuditScheduleConfigurationOwner, GetAllByAuditScheduledIdResponseDTO>() // needs `Inst` -> `InstDTO` map
+    .ForMember(dst => dst.BranchName, opt => opt.MapFrom(src => src.Branch.BranchName)).ReverseMap();
     }
 }

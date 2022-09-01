@@ -22,10 +22,10 @@ public class WeightScore : EntityBase
     [Required]
     public decimal Score { get; set; }
 
-    [Required]
-    public DateTime EffectiveFrom { get; set; }
-    [Required]
-    public DateTime EffectiveTo { get; set; }
+    //[Required]
+    //public DateTime EffectiveFrom { get; set; }
+    //[Required]
+    //public DateTime EffectiveTo { get; set; }
 
     //[ForeignKey("CountryId")]
     //public virtual Country Country { get; set; } = null!;

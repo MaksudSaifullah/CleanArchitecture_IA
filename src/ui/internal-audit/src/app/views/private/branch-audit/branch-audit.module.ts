@@ -92,7 +92,6 @@ import { ClosingMeetingMinutesCreateComponent } from './closing-meeting-minutes/
     AccordionModule,
     CdkAccordionModule,
     IconModule,
- 
     
   ]  
 })

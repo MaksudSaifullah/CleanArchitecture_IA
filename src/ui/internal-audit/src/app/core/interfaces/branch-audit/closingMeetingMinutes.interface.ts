@@ -2,6 +2,7 @@ export interface ClosingMeetingMinutes
 {
     id: string;
     meetingMinutesCode?: string;
+    scheduleCode?: string;
     auditScheduleId?: string;
     branchId?: string;
     meetingMinutesDate: Date;

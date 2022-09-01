@@ -81,6 +81,7 @@ export class OverdueTabComponentComponent implements OnInit {
       .subscribe(resp => {
         this.riskAssesmentOverdue = resp as riskAssessmentOverdue[];
         this.dtTrigger.next(resp);
+        
       })
   }
 

@@ -108,8 +108,12 @@ export const navItems: INavData[] = [
         url: '/branch-audit/workpaperCreate'
       },
       {
-        name: 'Closing Meeting Minutes',
+        name: 'Meeting Minutes',
         url: '/branch-audit/closing-meeting-minutes'
+      },
+      {
+        name: 'Meeting Minutes Create',
+        url: '/branch-audit/closing-meeting-minutes-create'
       },
       {
         name: 'Issue',

@@ -1,1 +1,80 @@
-<p>closing-meeting-minutes works!</p>
+
+<div class="animated fadeIn">
+    <div class="row">
+      <div class="col-lg-12">
+        <div class="card">
+          <div class="card-header">
+            <i class="fa fa-align-justify" ></i> Closing Meeting Minutes List
+          </div>
+          <div class="card-body">
+            <form [formGroup]="searchForm">
+              <div class="row" style="margin: 0 auto;">
+                <div class="col-md-8 mb-2">
+                  <!-- <button [cModalToggle]="verticallyCenteredModal.id" class="btnCreateColor" (click)="reset()" cButton>
+                    <svg cIcon name="cilPlus" size="md" title="Add Button Icon"></svg> Create
+                  </button>  -->
+                </div>
+                <div class="col-md-3 mb-2 form-floating">
+
+                <select aria-label="Floating label select example" cSelect id="auditScheduleBranchId"
+                        formControlName="auditScheduleBranchId" name="auditScheduleBranchId"  style="height: 40px;">
+                        <option value="">Select Branch</option>
+                        <option *ngFor="let wpAuditScheduleBranch of wpAuditScheduleBranches" [value]="wpAuditScheduleBranch.branch.branchName">
+                          {{wpAuditScheduleBranch.branch.branchName}}
+                        </option>
+                      </select>
+                  </div>
+
+
+                <div class="col-md-1 mb-2">
+                  <button type="button" class="btn btn-secondary mr-1 btn-block searchBtn" data-toggle="modal" (click)="search()" >
+                    Search
+                  </button>
+                </div>
+              </div>
+           </form>
+            <div class="row overflow-auto">
+                <table datatable [dtOptions]="dtOptions" class="table table-bordered row-border hover datatableStyle" >
+                  <thead>
+                    <tr>
+                      <th>Meeting Minutes Id</th>
+                      <th>Date</th>
+                      <th>Name</th>
+                      <th>Agreed By</th>
+                      <th>Created On</th>
+                      <th class="col-1 text-center">Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody *ngIf="closingMeetingMinutes?.length != 0">
+                    <tr *ngFor="let closingMeetingMinute of closingMeetingMinutes">
+                      <td>{{ closingMeetingMinute.meetingMinutesCode }}</td>
+                      <td>{{ closingMeetingMinute.meetingMinutesDate | date:'mediumDate' }}</td>
+                      <td>{{ closingMeetingMinute.meetingMinutesName }}</td>
+                      <td>{{ closingMeetingMinute.agreedBy }}</td>
+                      <td>{{ closingMeetingMinute.createdOn  | date:'mediumDate'}}</td>
+                      <td class="text-center">
+                        <div class="btn-group" role="group" aria-label="Basic example">
+                          <!-- <button type="button" class="btn btn-secondary btnEditColor" (click) = "edit(workpaper.id)">
+                            <svg cIcon name="cilPencil" size="md" title="Edit Button icon"></svg>
+                          </button> -->
+                          <button type="button" class="btn btn-danger btnDeleteColor" (click)="delete(closingMeetingMinute.id)">                          
+                            <svg cIcon name="cilTrash" size="md" title="Delete Button Icon"></svg>
+                          </button>
+                        </div>
+                      </td>
+                    </tr>
+                  </tbody>
+                  <tbody *ngIf="closingMeetingMinutes?.length == 0">
+                    <tr>
+                      <td colspan="5" class="no-data-available">No data!</td>
+                    </tr>
+                  </tbody>
+                </table>
+  
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  

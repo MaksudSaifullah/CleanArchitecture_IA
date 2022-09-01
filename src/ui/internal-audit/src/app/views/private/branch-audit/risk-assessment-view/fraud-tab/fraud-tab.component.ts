@@ -127,6 +127,14 @@ export class FraudTabComponent implements OnInit {
       i++;
       if (tableDataRow.score == -1 || tableDataRow.rating == "SELECT" || tableDataRow.value == "-1" || tableDataRow.branchId == undefined || tableDataRow.value == "")
       {
+        // const tableDataRow1 = {
+        //   score: "1",
+        //   rating: "Low",
+        //   value: 1,
+        //   branchId: item.branchId,
+        //   isDraft: false
+        // };
+        // tableData.push(tableDataRow1)
         this.AlertService.error('Please fill all the required fields.');
         return;
       }
@@ -138,7 +146,7 @@ export class FraudTabComponent implements OnInit {
       {
         riskAssessmentId: this.id,
         conversionRate: 88,
-        typeId: 6,
+        typeId: 4,
         dataRequestQueueServiceId: this.riskAssesmentOverdue[0].dataRequestQueueSErviceId,
         riskAssesmentDataManagement: tableData
       }).subscribe(x => {

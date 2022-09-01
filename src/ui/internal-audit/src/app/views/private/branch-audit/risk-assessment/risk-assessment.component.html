@@ -228,7 +228,11 @@
                     </thead>
                     <tbody *ngIf="auditPlans?.length != 0">
                       <tr *ngFor="let auditPlan of auditPlans">
-                        <td>{{ auditPlan.planCode }}</td>
+                        <td>
+                        <a [routerLink]="['/branch-audit/audit-plan-view', auditPlan.id]">
+                          {{ auditPlan.assessmentCode }}
+                        </a>
+                        </td>
                         <td>{{ auditPlan.assessmentCode }}</td>
                         <td>{{ auditPlan.countryName }}</td>
                         <td>{{ auditPlan.auditTypeName }}</td>
@@ -260,7 +264,7 @@
       </div>
   </div>
   
-<form [formGroup]="auditPlanForm" (ngSubmit)="onAuditPlanSubmit(verticallyCenteredModalAuditPlan)" novalidate>
+<form [formGroup]="auditPlanForm" (ngSubmit)="onAuditPlanSubmit(verticallyCenteredModalAuditPlan)" novalidate width="100%">
   <c-modal #verticallyCenteredModalAuditPlan alignment="center" id="verticallyCenteredModalAuditPlan">
     <c-modal-header>
       <h5 cModalTitle *ngIf="!formService.isEdit(this.auditPlanForm.get('id'))">Create Audit Plan</h5>
@@ -313,7 +317,7 @@
           </div> 
           <br>
         </div>
-
+        
         
       </div>
         
@@ -391,6 +395,35 @@
       </div>
 
       </div>
+      <div class="row overflow-auto">
+        <table datatable [dtOptions]="dtOptions[2]" class="table table-bordered row-border hover datatableStyle"
+            id="mytable" style="width: 100%;">
+            <thead>
+                <tr>
+                    <th>SL No.</th>
+                    <th>Branch Name</th>
+                    <th>Risk Rating</th>
+                    <th>Audit Frequency</th>
+                    <!-- <th>Active</th> -->
+
+                </tr>
+            </thead>
+            <tbody *ngIf="auditPlanCreateTable?.length != 0">
+                <tr *ngFor="let auditPlan of auditPlanCreateTable; let i = index">
+                    <td> {{i+1}}</td>
+                    <td> {{ auditPlan.branchName }} </td>
+                    <td> {{ auditPlan.avg_Rating }} </td>
+                    <td> {{ auditPlan.avg_Score }} </td>
+                    <!-- <td> {{ documentList.score }} </td> -->
+                </tr>
+            </tbody>
+            <tbody *ngIf="auditPlanCreateTable?.length == 0">
+                <tr>
+                    <td colspan="5" class="no-data-available">No data available!</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
     </c-modal-body> 
       <c-modal-footer>
       <button cButton class="btn btn-primary btnSaveColor me-1" (click)="onAuditPlanSubmit(verticallyCenteredModalAuditPlan)">Save</button>

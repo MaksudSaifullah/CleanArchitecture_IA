@@ -1,0 +1,65 @@
+<c-col xs="12">
+    <div class="container">
+        <c-card class="mb-4">
+            <c-card-header>
+                <strong>View a Plan</strong>
+            </c-card-header>
+            <c-card-body>
+                <button class="ui-btn-left" (click)="goBack()"> &#8592; Back To Assessment List</button>
+                <br>
+                <br>
+                <form [formGroup]="auditPlanViewForm">
+                    <c-row [gutter]="{g: 2}">
+                        <c-col md>
+                            <div cFormFloating>
+                                <input type="text" class="form-control" formControlName="planningId" name="planningId"
+                                    id="planningId" placeholder="planningId" value="">
+                                <label cLabel for="planningId">Planning Id</label>
+                            </div>
+                        </c-col>
+                        <!-- <c-col md>
+                            <div cFormFloating>
+                                <input type="text" class="form-control" formControlName="documentVersion"
+                                    name="documentVersion" id="documentVersion" placeholder="Name">
+                                <label cLabel for="documentVersion">Document Version</label>
+                            </div>
+                        </c-col> -->
+                    </c-row>
+                    <br>
+                </form>
+            </c-card-body>
+        </c-card>
+    </div>
+    <div class="container">
+        <div class="row overflow-auto">
+            <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="table table-bordered row-border hover datatableStyle"
+                id="mytable" style="width: 100%;">
+                <thead>
+                    <tr>
+                        <th>SL No.</th>
+                        <th>Branch Name</th>
+                        <th>Risk Rating</th>
+                        <th>Audit Frequency</th>
+                        <!-- <th>Active</th> -->
+
+                    </tr>
+                </thead>
+                <tbody *ngIf="auditPlanTableData?.length != 0">
+                    <tr *ngFor="let auditPlan of auditPlanTableData; let i = index">
+                        <td> {{i+1}}</td>
+                        <td> {{ auditPlan.branchName }} </td>
+                        <td> {{ auditPlan.avg_Rating }} </td>
+                        <td> {{ auditPlan.avg_Score }} </td>
+                        <!-- <td> {{ documentList.score }} </td> -->
+                    </tr>
+                </tbody>
+                <tbody *ngIf="auditPlanTableData?.length == 0">
+                    <tr>
+                        <td colspan="5" class="no-data-available">No data available!</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+</c-col>`

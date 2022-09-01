@@ -45,7 +45,7 @@
             <br>
             <!-- <button class="btn btn-success text-end" (click)="onConsolidate()"> Consolidate Score </button> -->
             <div class="row overflow-auto">
-                <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="table table-bordered row-border datatableStyle hover" visibility="false">
+                <table datatable [dtOptions]="dtOptions" width="100%" [dtTrigger]="dtTrigger" class="table table-bordered row-border datatableStyle hover" visibility="false">
                     <thead>
                         <tr>
                             <th rowspan="2">SL No.</th>
@@ -102,7 +102,7 @@
                     </tbody>
                     <tbody *ngIf="riskAssesmentOverdue?.length == 0">
                         <tr>
-                            <td colspan="5" class="no-data-available">Please fill up previous data!</td>
+                            <td colspan="17" class="no-data-available">Please fill up previous data!</td>
                         </tr>
                     </tbody>
                 </table>

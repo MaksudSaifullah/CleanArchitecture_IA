@@ -23,8 +23,8 @@ public class AuditScheduleConfigurationOwner : EntityBase
     public Guid BranchId { get; set; }
     [ForeignKey("AuditScheduleId")]
     public virtual AuditSchedule AuditSchedule { get; set; } = null!;
-    [ForeignKey("UserId")]
-    public virtual User User { get; set; } = null!;
+    [NotMapped]
+    public virtual ICollection<User> User { get; set; } = null!;
     [NotMapped]
     public virtual Branch Branch { get; set; } = null!;
 }

@@ -81,7 +81,7 @@ export class AuditPlanViewComponent implements OnInit {
         searching: false,
         ordering: false,
     };
-    this.http.post('DataSync/getSyncDataRiskAssesmentAvg', { "countryId": this.auditPlanResponse?.countryId, "riskAssesmentId": this.auditPlanResponse?.riskAssessmentId}
+    this.http.post('DataSync/getSyncDataRiskAssesmentAvg', { "countryId": this.auditPlanResponse?.countryId, "riskAssesmentId": this.auditPlanResponse?.riskAssessmentId, "pageSize": -1, "pageNumber": 0}
      )
       .subscribe(resp => {
         this.auditPlanTableData = resp as any[];

@@ -146,7 +146,7 @@ export class FraudTabComponent implements OnInit {
       {
         riskAssessmentId: this.id,
         conversionRate: 88,
-        typeId: 4,
+        typeId: 6,
         dataRequestQueueServiceId: this.riskAssesmentOverdue[0].dataRequestQueueSErviceId,
         riskAssesmentDataManagement: tableData
       }).subscribe(x => {
@@ -204,7 +204,7 @@ export class FraudTabComponent implements OnInit {
     if(event.target.value != "-1"){
       this.riskAssesmentOverdue[i].amountConverted = event.target.value;
     }
-    this.LoadScores();
+    //this.LoadScores();
     this.riskAssesmentOverdue[i].text = "SELECT";
     this.riskAssesmentOverdue[i].score = -1;
   }

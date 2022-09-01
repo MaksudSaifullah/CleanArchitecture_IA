@@ -10,12 +10,13 @@ namespace Internal.Audit.Application.Features.AuditPlans.Queries.GetAuditPlanByI
     {
         public Guid Id { get; set; }
         public string? PlanCode { get; set; }
+        public string? CountryName { get; set; }
         public Guid CountryId { get; set; }
         public Guid AuditTypeId { get; set; }
         public string? AuditTypeName { get; set; }
         public string? AssessmentCode { get; set; }
         public Guid RiskAssessmentId { get; set; }
-        public string? YearName { get; set; }
+        public string? PlanningYear { get; set; }
         public Guid PlanningYearId { get; set; }
         public DateTime AssessmentFrom { get; set; }
         public DateTime AssessmentTo { get; set; }

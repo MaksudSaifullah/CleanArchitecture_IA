@@ -35,7 +35,7 @@ public class AuditPlanQueryRepository : QueryRepositoryBase<CompositeAuditPlan>,
 	  ,cnt.Name As CountryName
 	  ,cvt.Text As AuditTypeName
       ,ap.PlanningYearId
-	  ,cvta.Text As YearName
+	  ,cvta.Text As PlanningYear
       ,ap.[AssessmentFrom]
       ,ap.[AssessmentTo]
 	  ,ap.CreatedBy

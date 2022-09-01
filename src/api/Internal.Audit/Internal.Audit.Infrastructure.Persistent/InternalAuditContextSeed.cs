@@ -96,6 +96,12 @@ public class InternalAuditContextSeed
             context.DocumentSources.AddRange(GetWorkPaperDocumentSource());
             await context.SaveChangesAsync();
         }
+    
+        if (!context.CommonValueAndTypes.Where(x => x.Type == "AUDITSCHEDULERISKOWNERTYPE").Any())
+        {
+            context.CommonValueAndTypes.AddRange(AuditScheduleRiskOwnerType());
+            await context.SaveChangesAsync();
+        }
     }
 
 
@@ -713,5 +719,18 @@ public class InternalAuditContextSeed
         return moduleFeatures;
     }
 
-
+    private static IEnumerable<CommonValueAndType> AuditScheduleRiskOwnerType()
+    {
+        return new List<CommonValueAndType>
+        {
+            new CommonValueAndType
+            {
+                IsActive = true,CreatedBy="admin",CreatedOn=DateTime.Now,Type="AUDITSCHEDULERISKOWNERTYPE",SubType="",Value=1,Text="Risk Owner",SortOrder=10,
+            }
+            ,new CommonValueAndType
+            {
+                IsActive = true,CreatedBy="admin",CreatedOn=DateTime.Now,Type="AUDITSCHEDULERISKOWNERTYPE",SubType="",Value=2,Text="Action Owner",SortOrder=20,
+            }
+        };
+    }
 }

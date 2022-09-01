@@ -1,1 +1,211 @@
-<p>closing-meeting-minutes-create works!</p>
+<c-col xs="12">
+    <c-card class="mb-4">
+      <c-card-header>
+        <strong>Closing Meeting Minutes Create</strong>
+      </c-card-header>
+      <c-card-body>
+        <form [formGroup]="cMMForm" (ngSubmit)="onSubmit()" novalidate>
+            <div class="col-md-12" >
+                <input type="hidden" formControlName="id"/>
+        
+        
+                <div class="row">
+                  <div class="col-md-6">
+        
+                    <div class="form-floating mb-3">
+                      <input type="text" class="form-control" formControlName="meetingMinutesCode" id="meetingMinutesCode" placeholder="meetingMinutesCode" [readonly]="true">
+                      <label for="floatingInput">Meeting Id</label>
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+        
+                    <div class="form-floating mb-3">
+                      <input type="text" class="form-control" formControlName="scheduleCode" id="scheduleCode" placeholder="scheduleCode" [readonly]="true">
+                      <label for="floatingInput">Schedule Id</label>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-6">
+                        <div form-floating>
+                          <select aria-label="Floating label select example" cSelect id="auditScheduleBranchId"
+                            formControlName="auditScheduleBranchId" name="auditScheduleBranchId" style="height: 60px;">
+                            <option value=null>Select Branch</option>
+                            <option *ngFor="let wpAuditScheduleBranch of wpAuditScheduleBranches" [value]="wpAuditScheduleBranch.branch.id">
+                              {{wpAuditScheduleBranch.branch.branchName}}
+                            </option>
+                          </select>
+                        </div>
+                        <div cRow *ngIf="(cMMForm.get('auditScheduleBranchId')?.invalid && cMMForm.get('auditScheduleBranchId')?.errors) &&         
+                        (cMMForm.get('auditScheduleBranchId')?.dirty || cMMForm.get('auditScheduleBranchId')?.touched)">
+                        <small class="text-danger">
+                          This field is required.
+                        </small>                                 
+                      </div> 
+                       <br/>
+                      </div>
+
+                      <div class="col-md-6">
+                        <div class="form-floating">
+                            <input class="form-control" placeholder="meetingMinutesDate" formControlName="meetingMinutesDate" id="meetingMinutesDate" type="datetime" >
+                            <label for="meetingMinutesDate">Meeting Date and Time</label>
+                          </div>
+                          <!-- <div cRow *ngIf="workpaperForm.get('testingDate')?.invalid &&
+                          workpaperForm.get('testingDate')?.errors &&
+                                (workpaperForm.get('testingDate')?.dirty || workpaperForm.get('testingDate')?.touched)">
+                            <small class="text-danger"
+                                *ngIf="workpaperForm.get('testingDate').hasError('required')">
+                                This field is required.
+                            </small>
+                          </div> -->
+                          <br>
+                      </div>
+
+
+                     
+                </div>
+        
+                <div class="row">
+                  
+                  <div class="col-md-12">
+                    <div class="form-floating mb-3">
+                        <input type="text" class="form-control" formControlName="meetingMinutesName" id="meetingMinutesName" placeholder="meetingMinutesName">
+                        <label for="floatingInput">Meeting Name</label>
+                      </div>
+                      <!-- <div cRow *ngIf="workpaperForm.get('meetingMinutesName')?.invalid &&
+                      workpaperForm.get('meetingMinutesName')?.errors &&
+                        (workpaperForm.get('meetingMinutesName')?.dirty || workpaperForm.get('meetingMinutesName')?.touched)">
+                    <small class="text-danger"
+                        *ngIf="workpaperForm.get('meetingMinutesName').hasError('required')">
+                        This field is required.
+                    </small>
+                </div> -->
+                <br>
+                  </div>
+                </div>
+        
+                <div class="row">
+
+                  <div class="col-md-6">
+                    <div class="form-floating mb-3">
+                        <input type="text" class="form-control" formControlName="auditOn" id="auditOn" placeholder="auditOn">
+                        <label for="floatingInput">Audit On</label>
+                      </div>
+                      <!-- <div cRow *ngIf="workpaperForm.get('auditOn')?.invalid &&
+                      workpaperForm.get('auditOn')?.errors &&
+                        (workpaperForm.get('auditOn')?.dirty || workpaperForm.get('auditOn')?.touched)">
+                    <small class="text-danger"
+                        *ngIf="workpaperForm.get('auditOn').hasError('required')">
+                        This field is required.
+                    </small>
+                </div> -->
+                <br>
+                  </div>
+
+                  <div class="col-md-6">
+                    <div class="form-floating mb-3">
+                        <input type="text" class="form-control" formControlName="meetingHeld" id="meetingHeld" placeholder="meetingHeld">
+                        <label for="floatingInput">Meeting Held</label>
+                      </div>
+                      <!-- <div cRow *ngIf="workpaperForm.get('meetingHeld')?.invalid &&
+                      workpaperForm.get('meetingHeld')?.errors &&
+                        (workpaperForm.get('meetingHeld')?.dirty || workpaperForm.get('meetingHeld')?.touched)">
+                    <small class="text-danger"
+                        *ngIf="workpaperForm.get('meetingHeld').hasError('required')">
+                        This field is required.
+                    </small>
+                </div> -->
+                  </div>
+
+                  <br>
+                
+                </div>
+        
+                <div class="row">
+                  <div class="col-md-6">
+                    <c-multi-select multiple formControlName="roleList" name="roleList" required>
+                        <!-- <c-multi-select-option *ngFor="let role of roles" [value]="role.id" [selected]="isSelected(role.id)" >{{role.name}}
+                        </c-multi-select-option> -->
+                      </c-multi-select>
+                      <!-- <div cRow *ngIf="countryForm.get('roleList')?.invalid &&
+                      countryForm.get('roleList')?.errors &&
+                            (countryForm.get('roleList')?.dirty || countryForm.get('roleList')?.touched)">
+                        <small class="text-danger" *ngIf="countryForm.get('roleList').hasError('required')">
+                          This field is required.
+                        </small>
+                      </div> -->
+                  </div>
+
+                  <div class="col-md-6">
+                    <c-multi-select multiple formControlName="roleList" name="roleList" required>
+                        <!-- <c-multi-select-option *ngFor="let role of roles" [value]="role.id" [selected]="isSelected(role.id)" >{{role.name}}
+                        </c-multi-select-option> -->
+                      </c-multi-select>
+                      <!-- <div cRow *ngIf="countryForm.get('roleList')?.invalid &&
+                      countryForm.get('roleList')?.errors &&
+                            (countryForm.get('roleList')?.dirty || countryForm.get('roleList')?.touched)">
+                        <small class="text-danger" *ngIf="countryForm.get('roleList').hasError('required')">
+                          This field is required.
+                        </small>
+                      </div> -->
+
+                </div>
+                  
+                </div>
+        
+                <div class="row">
+                    <div class="col-md-6">
+                        <div form-floating>
+                            <select aria-label="Floating label select example" cSelect id="auditScheduleBranchId"
+                              formControlName="auditScheduleBranchId" name="auditScheduleBranchId">
+                              <option value=null>Select Branch</option>
+                              <!-- <option *ngFor="let wpAuditScheduleBranch of wpAuditScheduleBranches" [value]="wpAuditScheduleBranch.branch.id">
+                                {{wpAuditScheduleBranch.branch.branchName}}
+                              </option> -->
+                            </select>
+                          </div>
+                          <!-- <div cRow *ngIf="(workpaperForm.get('auditScheduleBranchId')?.invalid && workpaperForm.get('auditScheduleBranchId')?.errors) &&         
+                          (workpaperForm.get('auditScheduleBranchId')?.dirty || workpaperForm.get('auditScheduleBranchId')?.touched)">
+                          <small class="text-danger">
+                            This field is required.
+                          </small>                                 
+                        </div>  -->
+                         <br/>
+                      </div>
+                      <div class="col-md-6">
+                        <div form-floating>
+                            <select aria-label="Floating label select example" cSelect id="auditScheduleBranchId"
+                              formControlName="auditScheduleBranchId" name="auditScheduleBranchId">
+                              <option value=null>Select Branch</option>
+                              <!-- <option *ngFor="let wpAuditScheduleBranch of wpAuditScheduleBranches" [value]="wpAuditScheduleBranch.branch.id">
+                                {{wpAuditScheduleBranch.branch.branchName}}
+                              </option> -->
+                            </select>
+                          </div>
+                          <!-- <div cRow *ngIf="(workpaperForm.get('auditScheduleBranchId')?.invalid && workpaperForm.get('auditScheduleBranchId')?.errors) &&         
+                          (workpaperForm.get('auditScheduleBranchId')?.dirty || workpaperForm.get('auditScheduleBranchId')?.touched)">
+                          <small class="text-danger">
+                            This field is required.
+                          </small>                                 
+                        </div>  -->
+                         <br/>
+                      </div>
+                </div>
+                
+            </div>
+              <c-col xs="12">
+                <c-col md>
+                  <button cButton class="btn btn-primary btnSaveColor me-1" (click)="onSubmit()">
+                    <svg cIcon name="cilSave" size="md" title="Save Button Icon"></svg> Save
+                  </button>
+                  <!-- <button cButton class="btn btn-danger btnCancelColor me-1" (click)="onCancel()">
+                    <svg cIcon name="cilX" size="md" title="Close Button Icon"></svg>Cancel
+                  </button>
+       -->
+                </c-col>
+              </c-col>
+        </form>
+      </c-card-body>
+    </c-card>
+</c-col>

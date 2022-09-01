@@ -46,7 +46,6 @@ export class RiskProfileComponent implements OnInit {
       effectiveFrom: [Date,[Validators.required]],
       effectiveTo: [Date, [Validators.required]],
       isActive: []
-      
     }, { validator: this.customValidator.checkEffectiveDateToAfterFrom('effectiveFrom', 'effectiveTo') });
     this.searchForm = this.fb.group(
       {
@@ -77,7 +76,6 @@ export class RiskProfileComponent implements OnInit {
           ).subscribe(resp => that.riskProfiles = this.dataTableService.datatableMap(resp,callback));
       },
     };
-
   }
 
   LoadLikelihoodLevel() {

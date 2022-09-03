@@ -19,7 +19,15 @@ export interface ClosingMeetingMinutes
 
 }
 
-export interface UserList{
+export interface UserList
+{
     userId?: string;
     closingMeetingMinutesId?: string; 
+}
+
+export interface ClosingMeetingSubjects
+{
+    userId?: string;
+    closingMeetingMinutesId?: string; 
+    subjectMatter?: string;
 }

@@ -3,7 +3,8 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AuditSchedule } from 'src/app/core/interfaces/branch-audit/auditSchedule.interface';
 import { WPAuditScheduleBranch } from 'src/app/core/interfaces/branch-audit/auditScheduleBranch.interface';
-import { ClosingMeetingMinutes } from 'src/app/core/interfaces/branch-audit/closingMeetingMinutes.interface';
+import { ClosingMeetingMinutes, ClosingMeetingSubjects } from 'src/app/core/interfaces/branch-audit/closingMeetingMinutes.interface';
+import { commonValueAndType } from 'src/app/core/interfaces/configuration/commonValueAndType.interface';
 import { paginatedResponseInterface } from 'src/app/core/interfaces/paginated.interface';
 import { User } from 'src/app/core/interfaces/security/user-registration.interface';
 import { HelperService } from 'src/app/core/services/helper.service';
@@ -23,7 +24,7 @@ export class ClosingMeetingMinutesCreateComponent implements OnInit {
   closingMeetingMinutes: ClosingMeetingMinutes[] = [];
   wpAuditScheduleBranches : WPAuditScheduleBranch[] = [];
   users: User[]=[];
-
+  closingMeetingSubjects: ClosingMeetingSubjects[] =[];
   
   constructor(private http: HttpService ,private router : Router, private fb: FormBuilder, private activateRoute: ActivatedRoute, private AlertService: AlertService, private helper: HelperService) {
     this.loadDropDownValues();
@@ -39,20 +40,6 @@ export class ClosingMeetingMinutesCreateComponent implements OnInit {
       agreedByUserId :  [null,[Validators.required, Validators.pattern("^(?!null$).*$")]],
       presentUserId: [null,[Validators.required, Validators.pattern("^(?!null$).*$")]],
       appologiesUserId: [null,[Validators.required, Validators.pattern("^(?!null$).*$")]],
-
-
-
-
-      sampleName: [null,[Validators.required, Validators.pattern("^(?!null$).*$")]],
-      sampleMonthId:[null,[Validators.required, Validators.pattern("^(?!null$).*$")]],
-      sampleSelectionMethodId:[null,[Validators.required, Validators.pattern("^(?!null$).*$")]],
-      controlActivityNatureId:[null,[Validators.required, Validators.pattern("^(?!null$).*$")]],
-      controlFrequencyId:[null,[Validators.required, Validators.pattern("^(?!null$).*$")]],
-      sampleSizeId:[null,[Validators.required, Validators.pattern("^(?!null$).*$")]],
-   
-     
-      testingConclusionId:[null,[Validators.required, Validators.pattern("^(?!null$).*$")]],
-      documentId:[null,[Validators.required, Validators.pattern("^(?!null$).*$")]],
       
     });
   }
@@ -65,6 +52,7 @@ export class ClosingMeetingMinutesCreateComponent implements OnInit {
   ngOnInit(): void {
     this.paramId = 'C09240DA-02DE-4B96-9A61-C9CA8F741C89';
     this.LoadScheduleData(this.paramId);
+    this.LoadSubjectMatters();
   }
 
 
@@ -81,16 +69,27 @@ export class ClosingMeetingMinutesCreateComponent implements OnInit {
            const scheduleData = res as AuditSchedule;
           let scheduleId = scheduleData.id;
           let countryId = scheduleData.countryId;
-          //this.GetWorkPaperCode(countryId);
+          this.GetMeetingMinutesCode(countryId);
            this.LoadBranches(scheduleId);
-          //  this.workpaperForm.patchValue({
-          //   scheduleCode: scheduleData.scheduleId,
-          //   scheduleStartDate: formatDate(scheduleData.scheduleStartDate, 'yyyy-MM-dd', 'en') ,
-          //   scheduleEndDate:  formatDate(scheduleData.scheduleEndDate, 'yyyy-MM-dd', 'en') });
+           this.cMMForm.patchValue({
+            scheduleCode: scheduleData.scheduleId
+          });
       });
   
   }
 
+  GetMeetingMinutesCode(countryId:any) :void {
+    if( countryId !="null"){
+      this.http.get('commonValueAndType/idcreation?idcreationValue=11&auditType=1&countryId='+ countryId +'')
+    .subscribe(resp => {
+      const convertedResp = resp as commonValueAndType;
+      this.cMMForm.patchValue({
+        meetingMinutesCode : convertedResp.text,
+      });
+    })
+    }
+    
+  }
   LoadBranches(scheduleId:any) {
     this.http.get('commonValueAndType/getAuditScheduleBranch?ScheduleId='+ scheduleId +'').subscribe(resp => {
       let convertedResp = resp as WPAuditScheduleBranch[];
@@ -106,6 +105,32 @@ export class ClosingMeetingMinutesCreateComponent implements OnInit {
     })
   }
 
+  LoadSubjectMatters(){
+    var currentElement: ClosingMeetingSubjects = {
+      subjectMatter: "",
+      userId: ""
+    };
+    this.closingMeetingSubjects.push(currentElement);  
+    console.log("adddddd", this.closingMeetingSubjects);
+  }
+  
+
+
+  addItem() {
+    var currentElement: ClosingMeetingSubjects = {
+      subjectMatter: "",
+      userId: ""
+    };
+    console.log(currentElement);
+      this.closingMeetingSubjects.push(currentElement);
+   }
+  
+   removeItem(index:any) {
+    console.log(index);
+    var currentElement = this.closingMeetingSubjects[index];  
+    this.closingMeetingSubjects.splice(index, 1);
+    console.log(this.closingMeetingSubjects);
+   }
 
 
 }

@@ -198,8 +198,55 @@
                          <br/>
                       </div>
                 </div>
-                
+                <!-- Start add subject matter table region -->
+                    <div class="row">
+                      <table class="table table-bordered row-border hover datatableStyle" >
+                        <thead >
+                          <tr>
+                            <th>SL No</th>
+                            <th>Subject Matter</th>
+                            <th>Action Owner</th>
+                            <th class="col-1 text-center">Actions</th>
+                          </tr>
+                        </thead>
+                        <tbody *ngIf="closingMeetingSubjects?.length != 0">
+          
+                          <tr *ngFor="let row of closingMeetingSubjects; let i = index">
+                            <td> {{i+1}} </td>
+                            <td><input type="text" class="form-control" id="subjectMatter" placeholder="Subject Matter"  name="{{row.subjectMatter}}"> </td>
+                            <td>
+                              <c-multi-select multiple class="form-control" name="{{row.userId}}" >
+                                <c-multi-select-option *ngFor="let user of users" [value]="user.id">{{user.userName}}
+                                </c-multi-select-option>
+                              </c-multi-select>
+                          </td>
+          
+                            <td class="text-center">
+                              <div class="btn-group" role="group" aria-label="Basic example" >
+                                <button type="button" class="btn btn-secondary btnEditColor" (click)="addItem()" >
+                                  <svg cIcon name="cilPlus" size="md" title="Add Button icon"></svg>
+                                </button>
+                                <button type="button" class="btn btn-danger btnDeleteColor" (click)="removeItem(i)">
+                                  <svg cIcon name="cilTrash" size="md" title="Delete Button Icon"></svg>
+                                </button>
+                              </div>
+                            </td>
+                          </tr>                    
+                        </tbody>
+                        <tbody *ngIf="closingMeetingSubjects?.length == 0">
+                          <tr>
+                            <td colspan="5" class="no-data-available">No data!</td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                <!-- End add subject matter table region -->
             </div>
+
+         
+
+
+
               <c-col xs="12">
                 <c-col md>
                   <button cButton class="btn btn-primary btnSaveColor me-1" (click)="onSubmit()">

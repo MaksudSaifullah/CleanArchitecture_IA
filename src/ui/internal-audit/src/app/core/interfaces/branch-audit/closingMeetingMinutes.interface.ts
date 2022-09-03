@@ -13,7 +13,8 @@ export interface ClosingMeetingMinutes
     agreedByUserId?: string;
     presentUserId : UserList[];
     appologiesUserId : UserList[];
-    subjectMatter?: string;
+    subjectMatter?: ClosingMeetingSubjects[];
+    ownerId?: ClosingMeetingSubjects[];
     agreedBy?: string;
     createdOn?: Date;
 

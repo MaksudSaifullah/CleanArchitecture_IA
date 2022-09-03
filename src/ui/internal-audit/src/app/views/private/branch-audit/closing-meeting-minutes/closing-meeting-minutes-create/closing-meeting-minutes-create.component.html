@@ -213,12 +213,18 @@
           
                           <tr *ngFor="let row of closingMeetingSubjects; let i = index">
                             <td> {{i+1}} </td>
-                            <td><input type="text" class="form-control" id="subjectMatter" placeholder="Subject Matter"  name="{{row.subjectMatter}}"> </td>
+                            <td><input type="text" class="form-control" id="subjectMatter" placeholder="Subject Matter"  formControlName="subjectMatter" name="{{row.subjectMatter}}"> </td>
                             <td>
-                              <c-multi-select multiple class="form-control" name="{{row.userId}}" >
+                              <!-- <c-multi-select multiple class="form-control" name="{{row.userId}}" >
                                 <c-multi-select-option *ngFor="let user of users" [value]="user.id">{{user.userName}}
                                 </c-multi-select-option>
-                              </c-multi-select>
+                              </c-multi-select> -->
+                              <select cSelect class="form-control" id="ownerId" formControlName="ownerId" name="{{row.userId}}">
+                                <option value=null>Select</option>
+                              <option *ngFor="let user of users" [value]="user.id">
+                                {{user.userName}}
+                              </option>
+                            </select>
                           </td>
           
                             <td class="text-center">

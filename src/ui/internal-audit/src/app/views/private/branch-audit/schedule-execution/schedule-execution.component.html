@@ -1,1 +1,135 @@
-<p>schedule-execution works!</p>
+
+
+ <div class="card">
+    <div class="card-header">
+      <div class="row">
+        <div class="col-8 ">
+          <h2 >Schedule Execution: {{scheduleId}}</h2>
+          <h5>Audit Type: Branch Audit </h5>
+        </div>
+        <div class="col-4 text-end">
+            <button [routerLink]="['/branch-audit/audit-view',auditParamId]" class="ui-btn-left" > &#8592; Back To Audit</button>
+          </div>
+      </div>
+    </div>
+    <div class="card-body">
+      <div class="row m-2">
+        <div class="col-6 ml-2 text-end">
+          <div class="row">
+            Audit Id: {{auditId}}
+          </div>
+          <div class="row">
+            Review From: {{auditFromDate}} To: {{auditToDate}}
+          </div>
+          <div class="row">
+           
+          </div>
+        </div>
+        <div class="col-6">
+         
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-header">
+       <div class="row">
+        
+        <div class="btn-group" role="group" aria-label="Basic example">
+            <button type="button" class="btn btnCreateColor" cButton > Information</button>
+            <button type="button" >
+                <select aria-label="Floating label select example" cSelect (change)="changeForm()">
+                    <option value=1>Planning & Scopping</option>
+                    <option value=2>Notification To Auditee</option>
+                  </select>
+            </button>
+            <button type="button" >
+                <select aria-label="Floating label select example" cSelect>
+                    <option value=1>Field Work</option>
+                    <option value=2>Branch Checklist</option>
+                    <option value=3>Work Paper</option>
+                    <option value=4>Closing Meeting Minutes</option>
+                  </select>
+            </button>
+        </div>
+       </div>
+       
+    </div>
+    <div class="card-body">
+        <div *ngIf="auditScheduleExecutionViewSelected">
+            <form [formGroup]="auditScheduleExecutionView">
+                <div class="row m-2">
+                    <div class="col-6 ml-2 ">
+                      <div class="row">
+                        Audit Id: {{auditId}}
+                      </div>
+                      <div class="row">
+                        Audit Name: {{auditName}} 
+                      </div>
+                      <div class="row">
+                        Audit Period: {{auditFromDate}} - {{auditToDate}}
+                      </div>
+                      <div class="row">
+                        Audit Type: Branch
+                      </div>
+                      <div class="row">
+                        Schedule ID: {{scheduleId}}
+                      </div>
+                      <br>
+                    </div>
+                    <div class="col-6 text-end">
+                        <div class="row">
+                            Notification to auditee: {{!notificationToAuditee?'Not Sended':'Send'}}
+                        </div>
+                        <div class="row">
+                            Number Of Branch Checklist: {{noOfBranchChecklist}}
+                        </div>
+                        <div class="row">
+                            Number Of Sample Testing Template: {{noOfSampleTestTemplate}}
+                        </div>
+                    </div>
+                  </div>
+                 <div class="row">
+                    <c-col xs="6">
+                        <c-card class="mb-4">
+                          <c-card-header>
+                            <strong>Team Leader</strong>
+                          </c-card-header>
+                          <c-card-body>
+                            <c-row [gutter]="{g: 2}">
+                              <c-col md>
+                                <c-multi-select multiple formControlName="teamLeaderList" name="teamLeaderList" required>
+                                  <c-multi-select-option *ngFor="let user of users" [value]="user.id" [selected]="isSelectedTeamLeader(user.id)">{{user.userName}}
+                                  </c-multi-select-option>
+                                </c-multi-select>
+                              </c-col>
+                            </c-row>
+                          </c-card-body>
+                        </c-card>
+                      </c-col>
+                      <c-col xs="6">
+                        <c-card class="mb-4">
+                          <c-card-header>
+                            <strong>Auditor</strong>
+                          </c-card-header>
+                          <c-card-body>
+                            <c-row [gutter]="{g: 2}">
+                              <c-col md>
+                                <c-multi-select multiple formControlName="auditorList" name="auditorList" required>
+                                  <c-multi-select-option *ngFor="let user of users" [value]="user.id" [selected]="isSelectedAuditor(user.id)" >{{user.userName}}
+                                  </c-multi-select-option>
+                                </c-multi-select>
+                              </c-col>
+                            </c-row>
+                          </c-card-body>
+                        </c-card>
+                      </c-col>
+                 </div>
+                  
+            </form>
+        </div>
+       
+    </div>
+  </div>
+
+

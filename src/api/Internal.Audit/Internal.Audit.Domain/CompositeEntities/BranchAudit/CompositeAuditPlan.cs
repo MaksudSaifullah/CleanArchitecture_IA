@@ -14,7 +14,7 @@ namespace Internal.Audit.Domain.CompositeEntities.BranchAudit
         public string? AuditTypeName { get; set; }
         public Guid AuditTypeId { get; set; }
         public string? AssessmentCode { get; set; }
-        public string? YearName { get; set; }
+        public string? PlanningYear { get; set; }
         public Guid RiskAssessmentId { get; set; }
         public string? PlanCode { get; set; }
         public Guid PlanningYearId { get; set; }

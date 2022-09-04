@@ -4,6 +4,10 @@ namespace Internal.Audit.Application.Features.RiskAssesmentConsolidateDatas.Comm
 
 public class AddConsolidateDataCommand:IRequest<AddConsolidateDataResponseDTO>
 {
+    public IList<AddConsolidateDataCommandObject> Datas { get; set; }
+}
+public class AddConsolidateDataCommandObject
+{
     public Guid RiskAssesmentId { get; set; }
     public string BranchName { get; set; }
     public int BranchId { get; set; }
@@ -19,4 +23,8 @@ public class AddConsolidateDataCommand:IRequest<AddConsolidateDataResponseDTO>
     public string Collection_Rating { get; set; }
     public string Disbursement_Score { get; set; }
     public string Disbursement_Rating { get; set; }
+    public string Avg_Score { get; set; }
+    public string Avg_Rating { get; set; }
+    public string AuditFrequency_Type { get; set; }
 }
+         

@@ -12,7 +12,7 @@ public class AuditScheduleBaseQueryRepository : QueryRepositoryBase<AuditSchedul
 
     public async Task<IEnumerable<AuditSchedule>> GetAuditScheduleByCreationId(Guid? Id)
     {
-        var query = @"select sch.Id,sch.AuditCreationId,sch.ScheduleStartDate,sch.ScheduleEndDate,sch.ScheduleId,cra.Id,cra.AuditPlanId,cra.AuditId,cra.Year,cra.AuditName,cra.AuditTypeId,
+        var query = @"select sch.Id,sch.AuditCreationId,sch.ScheduleStartDate,sch.ScheduleEndDate,sch.ScheduleId,sch.ScheduleState,sch.ExecutionState,cra.Id,cra.AuditPlanId,cra.AuditId,cra.Year,cra.AuditName,cra.AuditTypeId,
 cra.AuditPeriodFrom,cra.AuditPeriodTo,auType.Name as AuditTypeName,participants.*,usr.*,emp.*,asBranch.*,branch.BranchName
 
 from BranchAudit.AuditSchedule sch
@@ -84,7 +84,7 @@ on asBranch.BranchId=branch.Id
 
     public async Task<IEnumerable<AuditSchedule>> GetAuditScheduleById(Guid? Id)
     {
-        var query = @"select sch.Id,sch.AuditCreationId,sch.ScheduleStartDate,sch.ScheduleEndDate,sch.ScheduleId,cra.Id,cra.AuditPlanId,cra.AuditId,cra.Year,cra.AuditName,cra.AuditTypeId,
+        var query = @"select sch.Id,sch.AuditCreationId,sch.ScheduleStartDate,sch.ScheduleEndDate,sch.ScheduleId,sch.ScheduleState,sch.ExecutionState,cra.Id,cra.AuditPlanId,cra.AuditId,cra.Year,cra.AuditName,cra.AuditTypeId,
 cra.AuditPeriodFrom,cra.AuditPeriodTo,auType.Name as AuditTypeName,participants.*,usr.*,emp.*,asBranch.*,branch.BranchName
 
 from BranchAudit.AuditSchedule sch

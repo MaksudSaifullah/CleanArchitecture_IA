@@ -4,5 +4,5 @@ namespace Internal.Audit.Application.Contracts.Persistent.RiskAssesmentConsolida
 
 public interface IRiskAssesmentConsolidateDataQueryrepository:IAsyncQueryRepository<RiskAssesmentConsolidateData>
 {
-    Task<IEnumerable<RiskAssesmentConsolidateData>> GetAllAsync(Guid RiskAssesmentId,Guid CountryId);
+    Task<IEnumerable<RiskAssesmentConsolidateData>> GetAllAsync(Guid? RiskAssesmentId,Guid? CountryId,int pageNumber,int pageSize);
 }

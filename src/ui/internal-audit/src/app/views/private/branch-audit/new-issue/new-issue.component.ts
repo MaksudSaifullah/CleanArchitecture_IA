@@ -7,6 +7,9 @@ import { paginatedResponseInterface } from 'src/app/core/interfaces/paginated.in
 import { FormService } from 'src/app/core/services/form.service';
 import { HttpService } from 'src/app/core/services/http.service';
 import {AlertService} from '../../../../core/services/alert.service';
+import { User } from '../../../../core/interfaces/branch-audit/user.interface';
+import { issueActionPlan } from '../../../../core/interfaces/branch-audit/issueActionPlan.interface';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-new-issue',
@@ -24,7 +27,33 @@ export class NewIssueComponent implements OnInit {
   likelihoodType: commonValueAndType[] = [];
   impactType: commonValueAndType[] = [];
 
-  constructor(private http: HttpService , private fb: FormBuilder, private AlertService: AlertService) { 
+
+  actionPlanCode: any;
+  userList: User[] = [];
+  actionPlans : issueActionPlan[] = [];
+//   actionPlans: [
+//     {
+//       "actionPlanCode": "AC-1001",
+//       "managementPlan": "red pencil",
+//       "owner": "someone",
+//       "targetDate": "red pencil",
+//     } ,
+//     {
+//       "actionPlanCode": "AC-1002",
+//       "managementPlan": " pencil",
+//       "owner": "someone",
+//       "targetDate": "red pencil",
+//     } ,
+//     {
+//       "actionPlanCode": "AC-1003",
+//       "managementPlan": "red ",
+//       "owner": "someone",
+//       "targetDate": "red pencil",
+//     }        
+    
+//  ];
+
+  constructor(private http: HttpService , private fb: FormBuilder, private AlertService: AlertService, private router: Router) { 
     this.issueForm = this.fb.group({
       auditId:[''],
       id: [''],
@@ -60,15 +89,20 @@ export class NewIssueComponent implements OnInit {
 
   ngOnInit(): void {
     this.reset();
-    this.countryId = "3EE0AB25-BAF2-EC11-B3B0-00155D610B18"; //need to implement LoadCountryId()
+    this.countryId = "2162B8E8-BBF2-EC11-B3B0-00155D610B18"; //need to implement LoadCountryId()
     this.LoadAuditId();
     this.LoadIssueCode();
     this.LoadAuditSchedules();
     this.LoadLikelihoodLevel();
     this.LoadImpactLevel();
+    this.LoadUserList();
+    this.LoadActionPlans();
   }
-  onSubmit(){
-    
+  onSubmitNewIssue(){
+    //redirect to action plan modal
+  }
+  onCancelNewIssue(){
+    this.router.navigate(['branch-audit/issue-list']);
   }
   LoadIssueCode(){
     this.http.get('commonValueAndType/idcreation?idcreationValue=12&auditType=1&countryId='+this.countryId).subscribe(resp => {
@@ -95,7 +129,7 @@ export class NewIssueComponent implements OnInit {
       let convertedResp = resp as AuditSchedule[];
       
       this.auditSchedules = convertedResp;     
-      console.log( this.auditSchedules)
+      //console.log( this.auditSchedules)
     })
   }
   LoadLikelihoodLevel() {
@@ -119,6 +153,87 @@ export class NewIssueComponent implements OnInit {
   disabledInputField(){    
     this.issueForm.controls['auditId'].disable();
     this.issueForm.controls['code'].disable();
+ }
+//action plan
+
+LoadActionPlans(){
+  // let tempActionPlan: issueActionPlan = {
+  //   id: "0",
+  //   actionPlanCode: "AC-1001",
+  //   managementPlan: "red pencil",
+  //   owner: "someone",
+  //   targetDate: "red pencil"
+  // };
+  // this.actionPlans.push(tempActionPlan);
+  this.LoadActionPlanCode().then((acPlnCode:any)=>{
+    
+    var currentElement: issueActionPlan = {
+      id: "",
+      actionPlanCode: acPlnCode,
+      managementPlan: '',
+      owner: "",
+      targetDate: ''
+    };
+    this.actionPlans.push(currentElement);  
+
+  }); 
+}
+
+ LoadActionPlanCode(): any {
+  return new Promise((resolve, reject) => {
+    console.log('hello');
+    this.http.get('commonValueAndType/idcreation?idcreationValue=13&auditType=1&countryId='+this.countryId).subscribe(resp => {
+    const temp = resp as commonValueAndType;
+    //this.actionPlans[index].actionPlanCode = temp.text;   
+    console.log(temp.text); 
+    resolve(temp.text);  
+
+  })});
+
+  // let temp:any;
+  // temp = await (this.http.get('commonValueAndType/idcreation?idcreationValue=13&auditType=1&countryId='+this.countryId).subscribe(resp => {
+  //   temp = resp as commonValueAndType;
+  //   //this.actionPlans[index].actionPlanCode = temp.text;   
+  //   console.log(temp.text); 
+  //   return temp.text;   
+  // }));
+  
+}
+LoadUserList() {
+  this.http.paginatedPost('userlist/paginated', 100, 1, {"userName": "",
+  "employeeName": "",
+  "userRole": ""}).subscribe(resp => {
+    let convertedResp = resp as paginatedResponseInterface<User>;
+    this.userList = convertedResp.items;
+  })
+}
+async addItem(index:any, managementPlan:any, targetDate:any) {
+  this.LoadActionPlanCode().then((acPlnCode:any)=>{
+    console.log(index, managementPlan, acPlnCode,targetDate);
+    var currentElement: issueActionPlan = {
+      id: "",
+      actionPlanCode: acPlnCode,
+      managementPlan: '',
+      owner: "",
+      targetDate: targetDate
+    };
+    this.actionPlans.push(currentElement);
+
+  }); 
+  console.log(this.actionPlans);
+ }
+
+ removeItem(index:any) {
+  console.log(index);
+  var currentElement = this.actionPlans[index];  
+  this.actionPlans.splice(index, 1);
+  console.log(this.actionPlans);
+ }
+ onSubmitActionPlan(){
+
+ }
+ onCancelActionPlan(){
+  this.router.navigate(['branch-audit/issue-list']);
  }
 
 }

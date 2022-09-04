@@ -17,8 +17,8 @@ public class CompositeClosingMeetingMinute : EntityBase
     public string? AuditOn { get; set; }
     public string? MeetingHeld { get; set; }
     public Guid PreparedByUserId { get; set; }
+    public string? AgreedBy { get; set; }
     public Guid AgreedByUserId { get; set; }
     public string? SubjectMatter { get; set; }
-    public Guid MeetingSubjectId { get; set; }
 
 }

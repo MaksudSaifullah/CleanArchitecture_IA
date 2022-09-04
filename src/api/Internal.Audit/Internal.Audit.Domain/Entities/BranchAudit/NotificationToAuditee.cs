@@ -11,18 +11,21 @@ public class NotificationToAuditee : EntityBase
     [Required]
     public Guid AuditCreationId { get; set; }
 
-    [Required]
-    [DefaultValue("0")]
-    public bool IsSent { get; set; }
+    //[Required]
+    //[DefaultValue("0")]
+    //public bool IsSent { get; set; }
 
 
     [ForeignKey("AuditCreationId")]
     public virtual AuditCreation AuditCreation { get; set; } = null!;
 
-    //public virtual ICollection<UserCountry> RiskOwnerTo { get; set; } = null!;
-    //public virtual ICollection<OthersTo> OthersTo { get; set; } = null!;
+    //public virtual ICollection<AuditScheduleParticipants> RiskOwnerTo { get; set; } = null!;
 
-    public virtual ICollection<AuditScheduleParticipants> AuditScheduleParticipants { get; set; } = null!;
-    public virtual ICollection<AuditScheduleBranch> AuditScheduleBranch { get; set; } = null!;
+    public virtual ICollection<NotifedUsersTo> OthersTo { get; set; } = null!;
+
+    public virtual ICollection<NotifedUsersCC> CC { get; set; } = null!;
+
+    public virtual ICollection<NotifedUsersBCC> BCC { get; set; } = null!;
+
 
 }

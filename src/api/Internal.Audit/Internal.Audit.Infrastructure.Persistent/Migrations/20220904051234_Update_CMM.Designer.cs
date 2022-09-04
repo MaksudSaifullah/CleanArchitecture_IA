@@ -4,6 +4,7 @@ using Internal.Audit.Infrastructure.Persistent;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Internal.Audit.Infrastructure.Persistent.Migrations
 {
     [DbContext(typeof(InternalAuditContext))]
-    partial class InternalAuditContextModelSnapshot : ModelSnapshot
+    [Migration("20220904051234_Update_CMM")]
+    partial class Update_CMM
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -549,9 +551,6 @@ namespace Internal.Audit.Infrastructure.Persistent.Migrations
                         .HasColumnName("Id")
                         .HasDefaultValueSql("newsequentialid()");
 
-                    b.Property<Guid>("AgreedByUserId")
-                        .HasColumnType("uniqueidentifier");
-
                     b.Property<string>("ApprovedBy")
                         .HasMaxLength(10)
                         .HasColumnType("nvarchar(10)");
@@ -600,9 +599,6 @@ namespace Internal.Audit.Infrastructure.Persistent.Migrations
                         .IsRequired()
                         .HasMaxLength(300)
                         .HasColumnType("nvarchar(300)");
-
-                    b.Property<Guid>("PreparedByUserId")
-                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("ReviewedBy")
                         .HasMaxLength(10)

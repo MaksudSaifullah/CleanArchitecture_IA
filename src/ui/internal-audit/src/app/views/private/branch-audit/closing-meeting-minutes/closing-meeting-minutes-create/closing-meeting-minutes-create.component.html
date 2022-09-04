@@ -124,38 +124,40 @@
                 <div class="row">
                   <div class="col-md-6">
                     <label>Present</label>
-                    <c-multi-select multiple formControlName="appologiesUserId" name="appologiesUserId" required>
+                      <c-multi-select multiple formControlName="closingMeetingPresent" name="closingMeetingPresent" required>
                         <!-- <c-multi-select-option *ngFor="let user of users" [value]="user.id" [selected]="isSelected(user.id)" >{{user.userName}} -->
                           <c-multi-select-option *ngFor="let user of users" [value]="user.id" >{{user.userName}}
                         </c-multi-select-option>
-                      </c-multi-select>
+                        </c-multi-select>
 
-                      <div cRow *ngIf="cMMForm.get('appologiesUserId')?.invalid &&
-                      cMMForm.get('appologiesUserId')?.errors &&
-                            (cMMForm.get('appologiesUserId')?.dirty || cMMForm.get('appologiesUserId')?.touched)">
-                        <small class="text-danger" *ngIf="cMMForm.get('appologiesUserId').hasError('required')">
-                          This field is required.
-                        </small>
-                      </div>
-                      <br>
+                        <div cRow *ngIf="cMMForm.get('closingMeetingPresent')?.invalid &&
+                        cMMForm.get('closingMeetingPresent')?.errors &&
+                              (cMMForm.get('closingMeetingPresent')?.dirty || cMMForm.get('closingMeetingPresent')?.touched)">
+                          <small class="text-danger" *ngIf="cMMForm.get('closingMeetingPresent').hasError('required')">
+                            This field is required.
+                          </small>
+                        </div>
+                        <br>
                   </div>
 
                   <div class="col-md-6">
                     <label>Appologies</label>
-                    <c-multi-select multiple formControlName="presentUserId" name="presentUserId" required>
+
+                    <c-multi-select multiple formControlName="closingMeetingApology" name="closingMeetingApology" required>
                       <!-- <c-multi-select-option *ngFor="let user of users" [value]="user.id" [selected]="isSelected(user.id)" >{{user.userName}} -->
                         <c-multi-select-option *ngFor="let user of users" [value]="user.id" >{{user.userName}}
                       </c-multi-select-option>
-                      </c-multi-select>
+                    </c-multi-select>
 
-                      <div cRow *ngIf="cMMForm.get('presentUserId')?.invalid &&
-                      cMMForm.get('presentUserId')?.errors &&
-                            (cMMForm.get('presentUserId')?.dirty || cMMForm.get('presentUserId')?.touched)">
-                        <small class="text-danger" *ngIf="cMMForm.get('presentUserId').hasError('required')">
-                          This field is required.
-                        </small>
-                      </div>
-                      <br>
+                    <div cRow *ngIf="cMMForm.get('closingMeetingApology')?.invalid &&
+                    cMMForm.get('closingMeetingApology')?.errors &&
+                          (cMMForm.get('closingMeetingApology')?.dirty || cMMForm.get('closingMeetingApology')?.touched)">
+                      <small class="text-danger" *ngIf="cMMForm.get('closingMeetingApology').hasError('required')">
+                        This field is required.
+                      </small>
+                    </div>
+
+                  <br>
                 </div>
                   
                 </div>
@@ -163,16 +165,16 @@
                 <div class="row">
                     <div class="col-md-6">
                         <div form-floating>
-                            <select aria-label="Floating label select example" cSelect id="agreedByUserId"
-                              formControlName="agreedByUserId" name="agreedByUserId">
+                            <select aria-label="Floating label select example" cSelect id="preparedByUserId"
+                              formControlName="preparedByUserId" name="preparedByUserId">
                               <option value=null>Prepared By</option>
                               <option *ngFor="let user of users" [value]="user.id">
                                 {{user.userName}}
                               </option>
                             </select>
                           </div>
-                          <div cRow *ngIf="(cMMForm.get('agreedByUserId')?.invalid && cMMForm.get('agreedByUserId')?.errors) &&         
-                          (cMMForm.get('agreedByUserId')?.dirty || cMMForm.get('agreedByUserId')?.touched)">
+                          <div cRow *ngIf="(cMMForm.get('preparedByUserId')?.invalid && cMMForm.get('preparedByUserId')?.errors) &&         
+                          (cMMForm.get('preparedByUserId')?.dirty || cMMForm.get('preparedByUserId')?.touched)">
                           <small class="text-danger">
                             This field is required.
                           </small>                                 
@@ -198,73 +200,68 @@
                          <br/>
                       </div>
                 </div>
-                <!-- Start add subject matter table region -->
-                    <div class="row">
-                      <table class="table table-bordered row-border hover datatableStyle" >
-                        <thead >
-                          <tr>
-                            <th>SL No</th>
-                            <th>Subject Matter</th>
-                            <th>Action Owner</th>
-                            <th class="col-1 text-center">Actions</th>
-                          </tr>
-                        </thead>
-                        <tbody *ngIf="closingMeetingSubjects?.length != 0">
-          
-                          <tr *ngFor="let row of closingMeetingSubjects; let i = index">
-                            <td> {{i+1}} </td>
-                            <td><input type="text" class="form-control" id="subjectMatter" placeholder="Subject Matter"  formControlName="subjectMatter" name="{{row.subjectMatter}}"> </td>
-                            <td>
-                              <!-- <c-multi-select multiple class="form-control" name="{{row.userId}}" >
-                                <c-multi-select-option *ngFor="let user of users" [value]="user.id">{{user.userName}}
-                                </c-multi-select-option>
-                              </c-multi-select> -->
-                              <select cSelect class="form-control" id="ownerId" formControlName="ownerId" name="{{row.userId}}">
-                                <option value=null>Select</option>
-                              <option *ngFor="let user of users" [value]="user.id">
-                                {{user.userName}}
-                              </option>
-                            </select>
-                          </td>
-          
-                            <td class="text-center">
-                              <div class="btn-group" role="group" aria-label="Basic example" >
-                                <button type="button" class="btn btn-secondary btnEditColor" (click)="addItem()" >
-                                  <svg cIcon name="cilPlus" size="md" title="Add Button icon"></svg>
-                                </button>
-                                <button type="button" class="btn btn-danger btnDeleteColor" (click)="removeItem(i)">
-                                  <svg cIcon name="cilTrash" size="md" title="Delete Button Icon"></svg>
-                                </button>
-                              </div>
-                            </td>
-                          </tr>                    
-                        </tbody>
-                        <tbody *ngIf="closingMeetingSubjects?.length == 0">
-                          <tr>
-                            <td colspan="5" class="no-data-available">No data!</td>
-                          </tr>
-                        </tbody>
-                      </table>
-                    </div>
-                <!-- End add subject matter table region -->
+               
             </div>
 
-         
-
-
-
-              <c-col xs="12">
-                <c-col md>
-                  <button cButton class="btn btn-primary btnSaveColor me-1" (click)="onSubmit()">
-                    <svg cIcon name="cilSave" size="md" title="Save Button Icon"></svg> Save
-                  </button>
-                  <!-- <button cButton class="btn btn-danger btnCancelColor me-1" (click)="onCancel()">
-                    <svg cIcon name="cilX" size="md" title="Close Button Icon"></svg>Cancel
-                  </button>
-       -->
-                </c-col>
-              </c-col>
         </form>
+
+ <!-- Start add subject matter table region -->
+ <div class="row">
+  <table class="table table-bordered row-border hover datatableStyle" >
+    <thead >
+      <tr>
+        <th>SL No</th>
+        <th>Subject Matter</th>
+        <th>Action Owner</th>
+        <th class="col-1 text-center">Actions</th>
+      </tr>
+    </thead>
+    <tbody *ngIf="closingMeetingSubjects?.length != 0">
+
+      <tr *ngFor="let row of closingMeetingSubjects; let i = index">
+        <td> {{i+1}} </td>
+        <td><input type="text" class="form-control" placeholder="Subject Matter"  name="{{row.subjectMatter}}" [(ngModel)]="row.subjectMatter"> </td>
+        <td>
+          <select cSelect class="form-control"  name="{{row.userId}}" [(ngModel)]="row.userId">
+            <option value=null>Select</option>
+          <option *ngFor="let user of users" [value]="user.id">
+            {{user.userName}}
+          </option>
+        </select>
+      </td>
+
+        <td class="text-center">
+          <div class="btn-group" role="group" aria-label="Basic example" >
+            <button type="button" class="btn btn-secondary btnEditColor" (click)="addItem()" >
+              <svg cIcon name="cilPlus" size="md" title="Add Button icon"></svg>
+            </button>
+            <button type="button" class="btn btn-danger btnDeleteColor" (click)="removeItem(i)">
+              <svg cIcon name="cilTrash" size="md" title="Delete Button Icon"></svg>
+            </button>
+          </div>
+        </td>
+      </tr>                    
+    </tbody>
+    <tbody *ngIf="closingMeetingSubjects?.length == 0">
+      <tr>
+        <td colspan="5" class="no-data-available">No data!</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+<!-- End add subject matter table region -->
+
+<c-col xs="12">
+  <c-col md>
+    <button cButton class="btn btn-primary btnSaveColor me-1" (click)="onSubmit()">
+      <svg cIcon name="cilSave" size="md" title="Save Button Icon"></svg> Save
+    </button>
+    <!-- <button cButton class="btn btn-danger btnCancelColor me-1" (click)="onCancel()">
+      <svg cIcon name="cilX" size="md" title="Close Button Icon"></svg>Cancel
+    </button>
+-->
+  </c-col>
+</c-col>
       </c-card-body>
     </c-card>
 </c-col>

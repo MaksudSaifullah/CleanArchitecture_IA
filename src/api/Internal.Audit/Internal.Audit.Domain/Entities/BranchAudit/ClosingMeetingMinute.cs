@@ -39,6 +39,9 @@ public class ClosingMeetingMinute : EntityBase
     [MaxLength(300)]
     public string? MeetingHeld { get; set; }
 
+    public Guid PreparedByUserId { get; set; }
+    public Guid AgreedByUserId { get; set; }
+
     public virtual ICollection<ClosingMeetingPresent> UserPresents { get; set; } = null!;
     public virtual ICollection<ClosingMeetingApology> UserApologies { get; set; } = null!;
     public virtual ICollection<ClosingMeetingSubject> MeetingMinutesSubjects { get; set; } = null!;

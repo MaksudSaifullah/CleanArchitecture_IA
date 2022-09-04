@@ -39,14 +39,13 @@ export class ClosingMeetingMinutesCreateComponent implements OnInit {
       meetingMinutesName:  [null,[Validators.required, Validators.pattern("^(?!null$).*$")]],
       auditOn: [null,[Validators.required, Validators.pattern("^(?!null$).*$")]],
       meetingHeld: [null,[Validators.required, Validators.pattern("^(?!null$).*$")]],
-      presentUserId: [null,[Validators.required, Validators.pattern("^(?!null$).*$")]],
-      appologiesUserId: [null,[Validators.required, Validators.pattern("^(?!null$).*$")]],
-      subjectMatter: [null,[Validators.required, Validators.pattern("^(?!null$).*$")]],
+      preparedByUserId :  [null,[Validators.required, Validators.pattern("^(?!null$).*$")]],
       agreedByUserId :  [null,[Validators.required, Validators.pattern("^(?!null$).*$")]],
-      
+      // subjectMatter : [''],
+      // userId: [''],
       closingMeetingPresent:['',[Validators.required]],
       closingMeetingApology : ['',[Validators.required]],
-      closingMeetingSubject : ['',[Validators.required]],
+      closingMeetingSubject : [''],
     });
   }
 
@@ -63,65 +62,69 @@ export class ClosingMeetingMinutesCreateComponent implements OnInit {
 
 
   onSubmit():void{
+   
     console.log("cmmForm", this.cMMForm);
     const that=this;
     let presentuserList: addMeetingPresent[] = [];
     let appologiesuserList: addMeetingApology[] = [];
     let subjectList: addMeetingSubject[] = [];
-    
+    console.log("subjectListzzzzzzzz", subjectList);
+
     const CMMFormValue = this.cMMForm.getRawValue();
+
+    console.log("CMMFormValue",CMMFormValue);
     let cmmId=CMMFormValue.id==''? null as any: CMMFormValue.id;
    
     if(this.cMMForm.valid){
-      console.log("qqq", this.cMMForm.valid);
-      let present: addMeetingPresent[] = this.cMMForm.value.presentList as addMeetingPresent[];
+
+      let present: addMeetingPresent[] = this.cMMForm.value.closingMeetingPresent as addMeetingPresent[];
       if (Array.isArray(present)) {
         present.forEach(function (value) {
-          let user: addMeetingPresent = {userId: value.toString(), closingMeetingMinutesId : cmmId,}
+          let user: addMeetingPresent = {userId: value.toString()}
           presentuserList.push(user);
         });
       }
-
-      let appologies: addMeetingApology[] = this.cMMForm.value.appologiesList as addMeetingApology[];
+      let appologies: addMeetingApology[] = this.cMMForm.value.closingMeetingApology as addMeetingApology[];
       if (Array.isArray(appologies)) {
         appologies.forEach(function (value) {
-          let user: addMeetingApology = {userId: value.toString(), closingMeetingMinutesId : cmmId, }
+          let user: addMeetingApology = {userId: value.toString(), }
           appologiesuserList.push(user);
         });
       }
-
-      let subjects: addMeetingSubject[] = this.cMMForm.value.subjectList as addMeetingSubject[];
-
+      let subjects: addMeetingSubject[] = this.closingMeetingSubjects as addMeetingSubject[];
+      
       if (Array.isArray(subjects)) {
+     
         subjects.forEach(function (value) {
-          let subject: addMeetingSubject = {userId: value.toString(), closingMeetingMinutesId : cmmId, subjectMatter : value.toString()}
-          console.log("ssssssssssss", subject);
+          let subject: addMeetingSubject = {userId: value.userId?.toString(), subjectMatter : value.subjectMatter?.toString()}
           subjectList.push(subject);
         });
       }
 
-      console.log('presentuserList', presentuserList);
-      console.log('appologiesuserList', appologiesuserList);
-      console.log('subjectList', subjectList);
+      if(subjectList.length <= 0 ){
+        this.AlertService.errorDialog('Unsuccessful', 'Subject');
+      }
 
-
-      const cmmRequestCreateModel = {
+      const cmmRequestCreateModel: ClosingMeetingMinutes = {
         // id:  null as any,
         meetingMinutesCode: CMMFormValue.meetingMinutesCode,
-        auditScheduleBranchId:  this.paramId,
+        auditScheduleId: this.paramId,
+        auditScheduleBranchId:  CMMFormValue.auditScheduleBranchId,
         meetingMinutesDate: CMMFormValue.meetingMinutesDate,
         meetingMinutesName: CMMFormValue.meetingMinutesName,
         auditOn:CMMFormValue.auditOn,
         meetingHeld: CMMFormValue.meetingHeld,
-        agreedByUserId :  CMMFormValue.agreedByUserId,
-        presentUserId: CMMFormValue.presentUserId,
-        appologiesUserId: CMMFormValue.appologiesUserId,
-        subjectMatter: CMMFormValue.subjectMatter,
-        presentList: presentuserList,
-        appologiesList : appologiesuserList,
-        subjectList :subjectList
+        preparedByUserId:  CMMFormValue.preparedByUserId,
+        agreedByUserId: CMMFormValue.agreedByUserId,
+        createdOn: CMMFormValue.createdOn,
+       
+        closingMeetingPresent: presentuserList,
+        closingMeetingApology : appologiesuserList,
+        closingMeetingSubject :subjectList
 
        };
+
+       console.log("THis is Really awesome",cmmRequestCreateModel);
 
        this.http.post('closingmeetingminute',cmmRequestCreateModel).subscribe(x=>{
         let resp = x as BaseResponse;
@@ -133,6 +136,9 @@ export class ClosingMeetingMinutesCreateComponent implements OnInit {
           }
       });
 
+    }
+    else{
+      this.AlertService.errorDialog('Unsuccessful', 'ddd');
     }
   }
 

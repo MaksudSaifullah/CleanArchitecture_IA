@@ -3,7 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AuditSchedule } from 'src/app/core/interfaces/branch-audit/auditSchedule.interface';
 import { WPAuditScheduleBranch } from 'src/app/core/interfaces/branch-audit/auditScheduleBranch.interface';
-import { ClosingMeetingMinutes, ClosingMeetingSubjects, UserList } from 'src/app/core/interfaces/branch-audit/closingMeetingMinutes.interface';
+import { addMeetingApology, addMeetingPresent, addMeetingSubject, ClosingMeetingMinutes} from 'src/app/core/interfaces/branch-audit/closingMeetingMinutes.interface';
 import { BaseResponse } from 'src/app/core/interfaces/common/base-response.interface';
 import { commonValueAndType } from 'src/app/core/interfaces/configuration/commonValueAndType.interface';
 import { paginatedResponseInterface } from 'src/app/core/interfaces/paginated.interface';
@@ -25,7 +25,7 @@ export class ClosingMeetingMinutesCreateComponent implements OnInit {
   closingMeetingMinutes: ClosingMeetingMinutes[] = [];
   wpAuditScheduleBranches : WPAuditScheduleBranch[] = [];
   users: User[]=[];
-  closingMeetingSubjects: ClosingMeetingSubjects[] =[];
+  closingMeetingSubjects: addMeetingSubject[] =[];
   
 
   constructor(private http: HttpService ,private router : Router, private fb: FormBuilder, private activateRoute: ActivatedRoute, private AlertService: AlertService, private helper: HelperService) {
@@ -39,15 +39,14 @@ export class ClosingMeetingMinutesCreateComponent implements OnInit {
       meetingMinutesName:  [null,[Validators.required, Validators.pattern("^(?!null$).*$")]],
       auditOn: [null,[Validators.required, Validators.pattern("^(?!null$).*$")]],
       meetingHeld: [null,[Validators.required, Validators.pattern("^(?!null$).*$")]],
-      agreedByUserId :  [null,[Validators.required, Validators.pattern("^(?!null$).*$")]],
       presentUserId: [null,[Validators.required, Validators.pattern("^(?!null$).*$")]],
       appologiesUserId: [null,[Validators.required, Validators.pattern("^(?!null$).*$")]],
-      ownerId :  [null,[Validators.required, Validators.pattern("^(?!null$).*$")]],
       subjectMatter: [null,[Validators.required, Validators.pattern("^(?!null$).*$")]],
-
-      presentList:['',[Validators.required]],
-      appologiesList : ['',[Validators.required]],
-      subjectList : ['',[Validators.required]],
+      agreedByUserId :  [null,[Validators.required, Validators.pattern("^(?!null$).*$")]],
+      
+      closingMeetingPresent:['',[Validators.required]],
+      closingMeetingApology : ['',[Validators.required]],
+      closingMeetingSubject : ['',[Validators.required]],
     });
   }
 
@@ -64,38 +63,38 @@ export class ClosingMeetingMinutesCreateComponent implements OnInit {
 
 
   onSubmit():void{
-    
+    console.log("cmmForm", this.cMMForm);
     const that=this;
-    let presentuserList: UserList[] = [];
-    let appologiesuserList: UserList[] = [];
-    let subjectList: ClosingMeetingSubjects[] = [];
-
+    let presentuserList: addMeetingPresent[] = [];
+    let appologiesuserList: addMeetingApology[] = [];
+    let subjectList: addMeetingSubject[] = [];
+    
     const CMMFormValue = this.cMMForm.getRawValue();
     let cmmId=CMMFormValue.id==''? null as any: CMMFormValue.id;
-    console.log("sdasdasdasdasdasdasdasd", this.cMMForm);
+   
     if(this.cMMForm.valid){
       console.log("qqq", this.cMMForm.valid);
-      let present: UserList[] = this.cMMForm.value.presentList as UserList[];
+      let present: addMeetingPresent[] = this.cMMForm.value.presentList as addMeetingPresent[];
       if (Array.isArray(present)) {
         present.forEach(function (value) {
-          let user: UserList = {userId: value.toString(), closingMeetingMinutesId : cmmId,}
+          let user: addMeetingPresent = {userId: value.toString(), closingMeetingMinutesId : cmmId,}
           presentuserList.push(user);
         });
       }
 
-      let appologies: UserList[] = this.cMMForm.value.appologiesList as UserList[];
+      let appologies: addMeetingApology[] = this.cMMForm.value.appologiesList as addMeetingApology[];
       if (Array.isArray(appologies)) {
         appologies.forEach(function (value) {
-          let user: UserList = {userId: value.toString(), closingMeetingMinutesId : cmmId, }
+          let user: addMeetingApology = {userId: value.toString(), closingMeetingMinutesId : cmmId, }
           appologiesuserList.push(user);
         });
       }
 
-      let subjects: ClosingMeetingSubjects[] = this.cMMForm.value.subjectList as ClosingMeetingSubjects[];
+      let subjects: addMeetingSubject[] = this.cMMForm.value.subjectList as addMeetingSubject[];
 
       if (Array.isArray(subjects)) {
         subjects.forEach(function (value) {
-          let subject: ClosingMeetingSubjects = {userId: value.toString(), closingMeetingMinutesId : cmmId, subjectMatter : value.toString()}
+          let subject: addMeetingSubject = {userId: value.toString(), closingMeetingMinutesId : cmmId, subjectMatter : value.toString()}
           console.log("ssssssssssss", subject);
           subjectList.push(subject);
         });
@@ -182,7 +181,7 @@ export class ClosingMeetingMinutesCreateComponent implements OnInit {
   }
 
   LoadSubjectMatters(){
-    var currentElement: ClosingMeetingSubjects = {
+    var currentElement: addMeetingSubject = {
       subjectMatter: "",
       userId: ""
     };
@@ -193,7 +192,7 @@ export class ClosingMeetingMinutesCreateComponent implements OnInit {
 
 
   addItem() {
-    var currentElement: ClosingMeetingSubjects = {
+    var currentElement: addMeetingSubject = {
       subjectMatter: "",
       userId: ""
     };

@@ -6,7 +6,10 @@ using System.Threading.Tasks;
 
 namespace Internal.Audit.Application.Features.NotificationToAuditees.Queries.GetNotificationToAuditeeList
 {
-    internal class NotificationToAuditeeListPagingDTO
+    public record NotificationToAuditeeListPagingDTO
     {
+        public IEnumerable<NotificationToAuditeeDTO>? Items { get; set; }
+        public long TotalCount { get; set; }
     }
+
 }

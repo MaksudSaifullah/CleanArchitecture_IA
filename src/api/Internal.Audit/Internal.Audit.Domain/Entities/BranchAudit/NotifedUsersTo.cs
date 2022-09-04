@@ -13,10 +13,12 @@ namespace Internal.Audit.Domain.Entities.BranchAudit;
 [Table("NotifedUsersTo", Schema = "BranchAudit")]
 public class NotifedUsersTo : EntityBase
 {
-
     public Guid UserId { get; set; }
-    public Guid NotificationToAuditeesId { get; set; }
+    public Guid NotificationToAuditeeId { get; set; }
 
     [ForeignKey("UserId")]
     public virtual User User { get; set; } = null!;
+
+    [ForeignKey("NotificationToAuditeeId")]
+    public virtual NotificationToAuditee NotificationToAuditee { get; set; } = null!;
 }

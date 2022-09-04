@@ -11,9 +11,9 @@ public class NotificationToAuditee : EntityBase
     [Required]
     public Guid AuditCreationId { get; set; }
 
-    [Required]
-    [DefaultValue("0")]
-    public bool IsSent { get; set; }
+    //[Required]
+    //[DefaultValue("0")]
+    //public bool IsSent { get; set; }
 
 
     [ForeignKey("AuditCreationId")]

@@ -51,8 +51,8 @@
                       <td>{{ auditSchedule.auditor }}</td>
                       <td>{{ auditSchedule.scheduleStartDate | date:'medium' }}</td>
                       <td>{{ auditSchedule.scheduleEndDate | date:'medium' }}</td>
-                      <td>{{ auditSchedule.executionStatus }}</td>
-                      <td>{{ auditSchedule.scheduleState == 0 ? "Not Started" :auditSchedule.scheduleState == 1 ? "Inprogress": auditSchedule.scheduleState == 3?"Done":""}}</td>
+                      <td>{{ auditSchedule.executionState == 0 ? "Not Started" : auditSchedule.executionState == 1 ? "Inprogress":  auditSchedule.executionState == 2?"Done":""}}</td>
+                      <td>{{ auditSchedule.scheduleState == 0 ? "Pending" :auditSchedule.scheduleState == 1 ? "Approved": auditSchedule.scheduleState == 2?"Done":""}}</td>
                       <td>{{ auditSchedule.createdOn | date:'medium' }}</td>
                       <td>
                         <div class="btn-group" role="group" aria-label="Basic example">
@@ -166,7 +166,7 @@
         <br>
         <div cFormFloating *ngIf="formService.isEdit(this.auditScheduleCreateForm.get('id'))">
           <select aria-label="Floating label select example" cSelect id="executionStatusId" formControlName="executionStatusId" name="executionStatusId" >
-            <option value=null>Execution Status</option>
+            <option value=null>Select Execution Status</option>
             <option value=0>Not Started</option>
             <option value=1>In Progress</option>
             <option value=2>Done</option>

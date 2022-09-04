@@ -18,6 +18,8 @@ namespace Internal.Audit.Application.Features.ClosingMeetingMinutes.Queries.GetC
         public string? MeetingHeld { get; set; }
         public Guid PreparedByUserId { get; set; }
         public Guid AgreedByUserId { get; set; }
+        public string? AgreedBy { get; set; }
+        public DateTime CreatedOn { get; set; }
         public string? SubjectMatter { get; set; }
         public Guid MeetingSubjectId { get; set; }
     }

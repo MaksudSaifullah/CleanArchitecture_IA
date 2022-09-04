@@ -70,7 +70,7 @@ export class AverageTabComponent implements OnInit {
         searching: false,
         ordering: false,
     };
-    this.http.post('DataSync/getSyncDataRiskAssesmentAvg', {countryId: this.pullFromAMBSForm.value.countryId, riskAssesmentId: this.id}
+    this.http.post('DataSync/getSyncDataRiskAssesmentAvg', {countryId: this.pullFromAMBSForm.value.countryId, riskAssesmentId: this.id, "pageNumber": 0, "pageSize": -1}
      )
       .subscribe(resp => {
         this.riskAssesmentOverdue = resp as any[];
@@ -83,7 +83,7 @@ export class AverageTabComponent implements OnInit {
   }
 
   onSubmit(): void {
-    this.http.post('DataSync/getSyncDataRiskAssesmentAvgPost', {countryId: this.pullFromAMBSForm.value.countryId, riskAssesmentId: this.id}
+    this.http.post('DataSync/PostAvgData', {datas: this.riskAssesmentOverdue}
      )
       .subscribe(resp => {
         this.AlertService.success('Saved Successfully');

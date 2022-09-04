@@ -1,4 +1,5 @@
 ﻿using Internal.Audit.Domain.Common;
+using Internal.Audit.Domain.CompositeEntities;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -42,5 +43,7 @@ public class TopicHead : EntityBase
     public virtual ICollection<WorkPaper> WorkPaperList { get; set; } = null!;
     [NotMapped]
     public decimal WeightScore { get; set; }
+    [NotMapped]
+    public EfTotalCount TotalCount { get; set; }
 
 }

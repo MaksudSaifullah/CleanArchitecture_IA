@@ -15,21 +15,26 @@ public class RiskAssesmentConsolidateDataQueryRepository : QueryRepositoryBase<R
     {
     }
 
-    public async  Task<IEnumerable<RiskAssesmentConsolidateData>> GetAllAsync(Guid RiskAssesmentId,Guid CountryId,int PageNumber,int PageSize)
+    public async  Task<IEnumerable<RiskAssesmentConsolidateData>> GetAllAsync(Guid? RiskAssesmentId,Guid? CountryId,int PageNumber,int PageSize)
     {
         var query = "EXEC [dbo].[BA_RiskAssesment_Consolidate] @countryid,@riskassesmentid,@pageNumber,@pageSize";
         var parameters = new Dictionary<string, object> { { "countryid", CountryId }, { "riskassesmentid", RiskAssesmentId }, { "pageNumber", PageNumber }, { "pageSize", PageSize } };
-        string splitters = "TC";
-
-        var data = await Get<RiskAssesmentConsolidateData, EfTotalCount, RiskAssesmentConsolidateData>(query, (dataconsolidate, totalcount) =>
+        var dataexists = await Get(query, parameters);
+        if (dataexists.ToList().Count > 0)
         {
-            RiskAssesmentConsolidateData u;
-            u = dataconsolidate;
-            u.TotalCount= totalcount;
-            return u;
-        }, parameters, splitters, false);
-        var final = data.Distinct();
-        return final;
+            string splitters = "TC";
+
+            var data = await Get<RiskAssesmentConsolidateData, EfTotalCount, RiskAssesmentConsolidateData>(query, (dataconsolidate, totalcount) =>
+            {
+                RiskAssesmentConsolidateData u;
+                u = dataconsolidate;
+                u.TotalCount = totalcount;
+                return u;
+            }, parameters, splitters, false);
+            var final = data.Distinct();
+            return final;
+        }
+        return dataexists;
         //return await Get(query, parameters);
     }
 }

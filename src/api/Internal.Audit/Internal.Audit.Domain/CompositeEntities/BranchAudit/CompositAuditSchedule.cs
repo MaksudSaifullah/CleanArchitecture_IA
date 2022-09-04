@@ -16,9 +16,10 @@ namespace Internal.Audit.Domain.CompositeEntities.BranchAudit
         public string TeamLeader { get; set; }
         public string ScheduleId { get; set; }
         public int ScheduleState { get; set; }
+        public int ExecutionState { get; set; }
         public string Auditor { get; set; }
-        public string ExecutionStatus { get; set; }
-        public string ScheduleStatus { get; set; }
+        //public string ExecutionStatus { get; set; }
+        //public string ScheduleStatus { get; set; }
         public DateTime ScheduleStartDate { get; set; }
         public DateTime ScheduleEndDate { get; set; }
         public DateTime CreatedOn { get; set; }

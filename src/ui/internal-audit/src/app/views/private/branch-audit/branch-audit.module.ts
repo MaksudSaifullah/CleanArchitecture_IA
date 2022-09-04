@@ -31,7 +31,10 @@ import { ScheduleConfigurationComponent } from './schedule-configuration/schedul
 import { ScheduleExecutionComponent } from './schedule-execution/schedule-execution.component';
 import { NewIssueComponent } from './new-issue/new-issue.component';
 import { IssueListComponent } from './issue-list/issue-list.component';
+import { AuditPlanViewComponent } from './audit-plan-view/audit-plan-view.component';
+import { ClosingMeetingMinutesComponent } from './closing-meeting-minutes/closing-meeting-minutes.component';
 import { WeightScoreConfigComponent } from './weight-score-config/weight-score-config.component';
+import { ClosingMeetingMinutesCreateComponent } from './closing-meeting-minutes/closing-meeting-minutes-create/closing-meeting-minutes-create.component';
 
 
 @NgModule({
@@ -54,19 +57,22 @@ import { WeightScoreConfigComponent } from './weight-score-config/weight-score-c
     LoanDisbursementTabComponent,
     FraudTabComponent,
     WorkpaperComponent,
-    
     WorkpaperCreateComponent,
-   
     AuditViewComponent,
     ScheduleViewComponent,
     ScheduleConfigurationComponent,
     ScheduleExecutionComponent,
-      AuditScheduleComponent,
+    AuditScheduleComponent,
     AuditScheduleComponent,
     WorkpaperComponent,
     NewIssueComponent,
     IssueListComponent,
-    WeightScoreConfigComponent
+    AuditPlanViewComponent,
+    IssueListComponent,
+    ClosingMeetingMinutesComponent,
+    IssueListComponent,
+    WeightScoreConfigComponent,
+    ClosingMeetingMinutesCreateComponent
   ],
   imports: [
     CommonModule,
@@ -86,7 +92,6 @@ import { WeightScoreConfigComponent } from './weight-score-config/weight-score-c
     AccordionModule,
     CdkAccordionModule,
     IconModule,
- 
     
   ]  
 })

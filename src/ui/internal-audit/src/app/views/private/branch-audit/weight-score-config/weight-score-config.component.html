@@ -4,7 +4,7 @@
             <strong>Weight Score Configuraiton</strong>
         </c-card-header>
         <c-card-body>
-            <form [formGroup]="weightConfigForm" (ngSubmit)="onSubmit()" novalidate>
+            <form [formGroup]="weightConfigForm" novalidate>
 
                 <c-row [gutter]="{g: 4}">
 
@@ -81,43 +81,50 @@
                 </c-col>
             </form>
             <br>
-            <!-- <div class="row overflow-auto">
+            <div class="row overflow-auto">
               <table datatable [dtOptions]="dtOptions"  class="table table-bordered row-border hover datatableStyle" >
                 <thead>
                   <tr>
-                    <th>Role</th>
-                    <th>Description</th>
+                    <th>Topic Head Name</th>
+                    <!-- <th>Topic Head id</th> -->
+                    <th> Weight Score</th>
                    
-                    <th class="col-1 text-center">Actions</th>
+                 
                   </tr>
                 </thead>
-                <tbody *ngIf="roles?.length != 0">
-                  <tr *ngFor="let role of roles">
-                    <td>{{ role.name }}</td>
-                    <td>{{ role.description }}</td>
+                <tbody *ngIf="topicHeads?.length != 0">
+                  <tr *ngFor="let topic of topicHeads">
+                    <td>{{ topic.name }}</td>
+                    <!-- <td>{{ topic.id }}</td> -->
+                    <td><input type="text" value="" class="form-control" style="max-width: 200px;" [value]="topic.weightScore" (keyup)="numberOnly($event,'maxLength')" (keydown)="numberOnly($event, 'maxLength')" (change)="GetDatas($event,  topic.id )" ></td>
                    
-                    <td class="text-center">
-                      <div class="btn-group" role="group" aria-label="Basic example">
-                        <button type="button" class="btn btn-secondary btnEditColor" (click)="edit(verticallyCenteredModal,role)">
-                          <svg cIcon name="cilPencil" size="md" title="Edit Button icon"></svg>
-                        </button>
-                        <button type="button" class="btn btn-danger btnDeleteColor" (click)="delete(role.id)">
-                          <svg cIcon name="cilTrash" size="md" title="Delete Button Icon"></svg>
-                        </button>
-                      </div>
-                    </td>
+                   
                   </tr>
                 </tbody>
-                <tbody *ngIf="roles?.length == 0">
+                <tbody *ngIf="topicHeads?.length == 0">
                   <tr>
                     <td colspan="5" class="no-data-available">No data!</td>
                   </tr>
                 </tbody>
               </table>
 
-          </div> -->
+              <div>
+                <c-col xs="12">
+                  <c-col md>
+                    <button cButton class="btn btn-primary btnSaveColor me-1" (click)="onSubmit()">
+                      <svg cIcon name="cilSave" size="md" title="Save Button Icon"></svg> Save
+                    </button>
+                    <button cButton class="btn btn-danger btnCancelColor me-1" (click)="onCancel()">
+                      <svg cIcon name="cilX" size="md" title="Close Button Icon"></svg>Cancel
+                    </button>
+        
+                  </c-col>
+                </c-col>
+              </div>
+              
+          </div>
 
-
+         
 
         </c-card-body>
     </c-card>

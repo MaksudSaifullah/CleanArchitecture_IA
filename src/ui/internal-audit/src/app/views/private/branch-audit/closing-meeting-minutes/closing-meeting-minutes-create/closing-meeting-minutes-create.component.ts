@@ -94,7 +94,6 @@ export class ClosingMeetingMinutesCreateComponent implements OnInit {
       let subjects: addMeetingSubject[] = this.closingMeetingSubjects as addMeetingSubject[];
       
       if (Array.isArray(subjects)) {
-     
         subjects.forEach(function (value) {
           let subject: addMeetingSubject = {userId: value.userId?.toString(), subjectMatter : value.subjectMatter?.toString()}
           subjectList.push(subject);
@@ -210,8 +209,5 @@ export class ClosingMeetingMinutesCreateComponent implements OnInit {
     console.log(index);
     var currentElement = this.closingMeetingSubjects[index];  
     this.closingMeetingSubjects.splice(index, 1);
-    console.log(this.closingMeetingSubjects);
-   }
-
-
+  }
 }

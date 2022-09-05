@@ -11,6 +11,7 @@ using Internal.Audit.Application.Features.AuditSchedules.Commands.DeleteAuditSch
 using Internal.Audit.Application.Features.AuditSchedules.Queries.GetAuditScheduleByCreationId;
 using Internal.Audit.Application.Features.AuditScheduleConfigurationsOwner.Commands.AddAuditScheduleConfigurationsOwnerCommand;
 using Internal.Audit.Application.Features.AuditScheduleConfigurationsOwner.Queries.GetAllByAuditScheduleId;
+using Internal.Audit.Application.Features.AuditScheduleConfigurationsOwner.Queries.GetOwnerList;
 
 namespace Internal.Audit.Api.Controllers;
 
@@ -28,6 +29,13 @@ public class AuditScheduleController : ControllerBase
     {
         var auditSchedules = await _mediator.Send(getAuditScheduleListQuery);
         return Ok(auditSchedules);
+
+    }
+    [HttpPost("paginatedOwner")]
+    public async Task<ActionResult<GetAuditScheduleListPagingDTO>> GetOwnerList(GetOwnerListQuery getOwnerListQuery)
+    {
+        var auditScheduleOwners = await _mediator.Send(getOwnerListQuery);
+        return Ok(auditScheduleOwners);
 
     }
     [HttpGet("{Id}")]
@@ -84,10 +92,10 @@ public class AuditScheduleController : ControllerBase
         var result = await _mediator.Send(command);
         return Ok(result);
     }
-    [HttpGet("AuditScheudleConfigurationOwnerGetByScheduleId")]
-    public async Task<ActionResult<GetAllByAuditScheduledIdResponseDTO>> AuditScheudleConfigurationOwnerGetByScheduleId(Guid? AuditSCheduleId,int TypeId)
+    [HttpPost("AuditScheudleConfigurationOwnerGetByScheduleId")]
+    public async Task<ActionResult<GetAllByAuditScheduledIdResponseDTO>> AuditScheudleConfigurationOwnerGetByScheduleId(GetAllByAuditScheduleIdQuery getAllByAuditScheduleIdQuery)
     {
-        var result = await _mediator.Send(new GetAllByAuditScheduleIdQuery(AuditSCheduleId,TypeId));
+        var result = await _mediator.Send(getAllByAuditScheduleIdQuery);
         return Ok(result);
     }
 }

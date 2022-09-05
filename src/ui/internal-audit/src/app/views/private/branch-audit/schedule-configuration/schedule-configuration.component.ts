@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, QueryList, ViewChild } from '@angular/core';
 import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { DataTableDirective } from 'angular-datatables';
@@ -9,12 +9,18 @@ import { DatatableService } from 'src/app/core/services/datatable.service';
 import { FormService } from 'src/app/core/services/form.service';
 import { HttpService } from 'src/app/core/services/http.service';
 import { AlertService } from '../../../../core/services/alert.service';
-import { ScheduleRiskOwner } from 'src/app/core/interfaces/branch-audit/scheduleOwner.interface';
-import { ScheduleActionOwner } from 'src/app/core/interfaces/branch-audit/scheduleOwner.interface';
-import { ScheduleSetDate } from 'src/app/core/interfaces/branch-audit/scheduleOwner.interface';
-import { ScheduleRiskOwnerResponse } from 'src/app/core/interfaces/branch-audit/scheduleOwner.interface';
-import { ScheduleActionOwnerResponse } from 'src/app/core/interfaces/branch-audit/scheduleOwner.interface';
+import { AuditScheduleOwner } from 'src/app/core/interfaces/branch-audit/scheduleOwner.interface';
+import { AuditScheduleOwnerResponse } from 'src/app/core/interfaces/branch-audit/auditScheduleOwnerResponse.interface';
+import { RiskOwner } from 'src/app/core/interfaces/branch-audit/auditScheduleOwnerResponse.interface';
+import { ActionOwner } from 'src/app/core/interfaces/branch-audit/auditScheduleOwnerResponse.interface';
+// import { ScheduleActionOwner } from 'src/app/core/interfaces/branch-audit/scheduleOwner.interface';
+// import { ScheduleSetDate } from 'src/app/core/interfaces/branch-audit/scheduleOwner.interface';
+// import { ScheduleRiskOwnerResponse } from 'src/app/core/interfaces/branch-audit/scheduleOwner.interface';
+// import { ScheduleActionOwnerResponse } from 'src/app/core/interfaces/branch-audit/scheduleOwner.interface';
 import { CommonResponseInterface } from 'src/app/core/interfaces/common-response.interface';
+import { ScheduledBranch } from 'src/app/core/interfaces/branch-audit/scheduledBranch.interface';
+import { Subject } from 'rxjs';
+import { BaseResponse } from 'src/app/core/interfaces/common/base-response.interface';
 
 @Component({
   selector: 'app-schedule-configuration',
@@ -22,12 +28,15 @@ import { CommonResponseInterface } from 'src/app/core/interfaces/common-response
   styleUrls: ['./schedule-configuration.component.scss']
 })
 export class ScheduleConfigurationComponent implements OnInit {
-  @ViewChild(DataTableDirective, {static: false})
-  datatableElement: DataTableDirective | undefined;
+  @ViewChild(DataTableDirective)
+  //datatableElement: DataTableDirective | undefined;
+  dtElements: QueryList<DataTableDirective> | undefined;
   dtOptions: DataTables.Settings[] = [];
-  dataTableService: DatatableService = new DatatableService();
+  //dataTableService: DatatableService = new DatatableService();
   countryIdGlobal: any = '00000000-0000-0000-0000-000000000000';
-  brancheWithRiskOwner: Branch[] = [];
+  scheduledBranch: ScheduledBranch[] = [];
+  auditScheduleRiskOwners: AuditScheduleOwner[]=[];
+  auditScheduleActionOwners: AuditScheduleOwner[]=[];
   brancheWithActionOwner: Branch[] = [];
   scheduleConfigRiskOwnerForm: FormGroup;
   scheduleConfigActionOwnerForm: FormGroup;
@@ -36,17 +45,22 @@ export class ScheduleConfigurationComponent implements OnInit {
   formService: FormService = new FormService();
   scheduleParamId: string='';
   auditParamId: string='';
+  selectedRiskOwner:RiskOwner[]=[];
+  selectedActionOwner:ActionOwner[]=[];
+  dataTableService: DatatableService = new DatatableService();
+  dtTrigger: Subject<any> = new Subject<any>();
+  Data: Array<any> = [];
 
   constructor(private http: HttpService, private fb: FormBuilder, private AlertService: AlertService, private router: Router, private activateRoute: ActivatedRoute) {
     this.scheduleConfigRiskOwnerForm = this.fb.group({
-      id: [''],
+      auditScheduleId: [''],
       branchId: [null],
-      riskOwnerId:['',[Validators.required]],
+      riskOwnerList:['',[Validators.required]],
     })
     this.scheduleConfigActionOwnerForm = this.fb.group({
-      id: [''],
+      auditScheduleId: [''],
       branchId: [null],
-      actionOwnerId: ['']
+      actionOwnerList: ['']
     })
     this.scheduleConfigSetDateForm = this.fb.group({
       id: [''],
@@ -68,9 +82,14 @@ export class ScheduleConfigurationComponent implements OnInit {
     this.LoadDataRiskOwner();
     this.LoadDataActionOwner();
     this.LoadUser();
-   // this.LoadBranch();
+    this.LoadBranch();
   }
-
+  LoadBranch(){
+    this.http.paginatedPost('AuditSchedule/paginatedScheduleBranch', 100, 1, {"scheduleId": this.scheduleParamId }).subscribe(resp => {
+      let convertedResp = resp as paginatedResponseInterface<ScheduledBranch>;
+      this.scheduledBranch = convertedResp.items;
+    })
+ }
   LoadUser() {
     this.http.paginatedPost('userlist/Paginated', 100, 1, {"userName": "","employeeName": "","userRole": ""}).subscribe(resp => {
       let convertedResp = resp as paginatedResponseInterface<User>;
@@ -80,14 +99,13 @@ export class ScheduleConfigurationComponent implements OnInit {
   RedirectToScheduleView(){
     this.router.navigate(['branch-audit/schedule-view'],{ queryParams: { sId: this.scheduleParamId,aId:this.auditParamId } });
   }
-//   LoadBranch(){
-//   this.http.get('commonValueAndType/getBranch?countryId='+'414d221c-0df6-ec11-b3b0-00155d610b18' +'&pageNumber=1&pageSize=10000').subscribe(resp => {
-//     let convertedResp = resp as paginatedResponseInterface<Branch>;
-//     this.brancheWithRiskOwner = convertedResp.items;
-//     this.countryIdGlobal = '414d221c-0df6-ec11-b3b0-00155d610b18'
-//     this.dataTableService.redraw(this.datatableElement);
-//    })
-//  }
+  private ReloadAllDataTable() {
+    this.dtElements?.forEach((dtElement: DataTableDirective, index: number) => {
+      console.log('dt eletemet '+ dtElement)
+      console.log('dt index '+ index)
+      this.dataTableService.redraw(dtElement);
+    });
+  }
 
 //---------------RISK OWNER START---------------
   LoadDataRiskOwner() {
@@ -100,88 +118,87 @@ export class ScheduleConfigurationComponent implements OnInit {
       searching: false,
       ordering: false,
       ajax: (dataTablesParameters: any, callback) => {
-        this.http.get('commonValueAndType/getBranch?countryId=414d221c-0df6-ec11-b3b0-00155d610b18&pageNumber=1&pageSize=10')
-        .subscribe(resp => that.brancheWithRiskOwner = this.dataTableService.datatableMap(resp, callback));
+        this.http
+          .paginatedPost(
+            'AuditSchedule/paginatedOwner',dataTablesParameters.length,((dataTablesParameters.start/dataTablesParameters.length)+1),{"auditScheduleId": this.scheduleParamId,"ownerTypeId":1}
+          ).subscribe(resp => that.auditScheduleRiskOwners = this.dataTableService.datatableMap(resp,callback));
       },
 
     };
   }
 
   onSubmitRiskOwner(modalId:any){
+    const that=this;
     const localmodalId = modalId;
-    let scheduleRiskOwnerList: ScheduleRiskOwner[] = [];
+    let scheduleRiskOwnerList: any [] = [];
  
     if (this.scheduleConfigRiskOwnerForm.valid) {  
 
-      let riskOwners: ScheduleRiskOwner[] = this.scheduleConfigRiskOwnerForm.value.riskOwnerList as ScheduleRiskOwner[];
+      let riskOwners: any [] = this.scheduleConfigRiskOwnerForm.value.riskOwnerList as any;
+      console.log(riskOwners)
       if (Array.isArray(riskOwners)) {
         riskOwners.forEach(function (value) {
-          let riskOwner: ScheduleRiskOwner = { id : null as any, scheduleId:'', branchId: '',userId:''}
+          let riskOwner = { auditScheduleId : that.scheduleParamId, userId:value, branchId: that.scheduleConfigRiskOwnerForm?.value.branchId,commonValueAuditScheduleRiskOwnerTypetId:1}
           scheduleRiskOwnerList.push(riskOwner);
         }); 
+        console.log(scheduleRiskOwnerList);
       }
-      const scheduleConfigRiskOwnerFormValue = this.scheduleConfigRiskOwnerForm.getRawValue();
+     
       const RequestModelForRiskOwner = {
-        
-        id:  null as any,
-        // to do
-        
+        data:  scheduleRiskOwnerList
       };
-      console.log(RequestModelForRiskOwner);
-      // this.http.post('AuditSchedule',RequestModelForRiskOwner).subscribe(x=>{
-      //     this.formService.onSaveSuccess(localmodalId,this.datatableElement);
-      //     this.AlertService.success('Risk Owner Saved Successful');
-      // });
-      
-      if(this.formService.isEdit(this.scheduleConfigRiskOwnerForm.get('id') as FormControl)){
-        this.http.put('scheduleConfiguration',this.scheduleConfigRiskOwnerForm.value,null).subscribe(x=>{
-          let resp = x as CommonResponseInterface;
-            if(resp.success){
-              this.formService.onSaveSuccess(localmodalId,this.datatableElement);
-              this.AlertService.success('Risk Owner Saved Successful');
-            }
-            else{
-              this.AlertService.errorDialog('Unsuccessful', 'Duplicate Value ');
-            }
 
-        });
-      }
-      else{
+      this.http.post('AuditSchedule/AuditScheudleConfigurationOwner',RequestModelForRiskOwner).subscribe(x=>{
+        console.log('x :'+ x);
+        let resp = x as BaseResponse;
+        console.log('res '+ resp)
+          if(resp.success){
+            this.formService.onSaveSuccess(localmodalId,this.ReloadAllDataTable());
+            this.AlertService.success('Risk Owner Saved Successful');
+          }
+          else{
+            this.AlertService.errorDialog('Unsuccessful', 'Duplicate Value ');
+          }
        
-        this.http.post('scheduleConfiguration',this.scheduleConfigRiskOwnerForm.value).subscribe(x=>{
-          let resp = x as CommonResponseInterface;
-            if(resp.success){
-              this.formService.onSaveSuccess(localmodalId,this.datatableElement);
-              this.AlertService.success('Risk Owner Saved Successful');
-            }
-            else{
-              this.AlertService.errorDialog('Unsuccessful', 'Duplicate Value ');
-            }
-        });
-      }
+      });
+
+      // this.http.post('AuditSchedule/AuditScheudleConfigurationOwner', RequestModelForRiskOwner).subscribe(x => {
+
+      //   this.formService.onSaveSuccess(localmodalId, this.ReloadAllDataTable());
+
+      //   this.AlertService.success('Audit Plan Saved Successfully');
+
+      // });
 
     }
   }
   
-  editRiskOwner(modalId:any, config:any):void {
+  editRiskOwner(modalId:any, id:any):void {
     const localmodalId = modalId;
-   
     this.http
-      .getById('scheduleConfiguration',config.id)
+      .post('AuditSchedule/AuditScheudleConfigurationOwnerGetByScheduleId',{"auditScheduleId":this.scheduleParamId,"typeId":1})
       .subscribe(res => {
-          const response = res as ScheduleRiskOwnerResponse;
-          this.scheduleConfigRiskOwnerForm.setValue({id : response.id, branchId : response.branchId, scheduleId: response.scheduleId, riskOwnerList: response.riskOwners});
+          const response = res as AuditScheduleOwnerResponse;
+          this.selectedRiskOwner=response.user;
+          console.log('risk owner :' +this.selectedRiskOwner)
+          this.scheduleConfigRiskOwnerForm.setValue({auditScheduleId : response.auditScheduleId, branchId : response.branchId,  riskOwnerList: response.user});
       });
       localmodalId.visible = true;
   }
 
- 
+  isSelectedRiskOwner(id:any){
+    for (let user of this.selectedRiskOwner){
+      if(user.id==id){
+        return true;
+      }
+     }
+     return false;
+  }
 
 //---------------RISK OWNER END---------------
 
 //---------------ACTION OWNER START---------------
   LoadDataActionOwner() {
-    console.log('skdflskdf')
     const that = this;
     this.dtOptions[1] = {
       pagingType: 'full_numbers',
@@ -191,74 +208,69 @@ export class ScheduleConfigurationComponent implements OnInit {
       searching: false,
       ordering: false,
       ajax: (dataTablesParameters: any, callback) => {
-        this.http.get('commonValueAndType/getBranch?countryId=414d221c-0df6-ec11-b3b0-00155d610b18&pageNumber=1&pageSize=10')
-        .subscribe(resp => that.brancheWithActionOwner = this.dataTableService.datatableMap(resp, callback));
+        this.http
+          .paginatedPost(
+            'AuditSchedule/paginatedOwner',dataTablesParameters.length,((dataTablesParameters.start/dataTablesParameters.length)+1),{"auditScheduleId": this.scheduleParamId,"ownerTypeId":2}
+          ).subscribe(resp => that.auditScheduleActionOwners = this.dataTableService.datatableMap(resp,callback));
       },
+
     };
   }
 
   onSubmitActionOwner(modalId:any){
+    const that=this;
     const localmodalId = modalId;
-      let scheduleActionOwnerList: ScheduleActionOwner[] = [];
-  
-      if (this.scheduleConfigActionOwnerForm.valid) {  
+    let scheduleActionOwnerList: any [] = [];
+ 
+    if (this.scheduleConfigActionOwnerForm.valid) {  
 
-        let riskOwners: ScheduleActionOwner[] = this.scheduleConfigActionOwnerForm.value.riskOwnerList as ScheduleActionOwner[];
-        if (Array.isArray(riskOwners)) {
-          riskOwners.forEach(function (value) {
-            let riskOwner: ScheduleActionOwner = { id : null as any, scheduleId:'', branchId: '',userId:''}
-            scheduleActionOwnerList.push(riskOwner);
-          }); 
-        }
-        const scheduleConfigActionOwnerFormValue = this.scheduleConfigActionOwnerForm.getRawValue();
-        const RequestModelForActionOwner = {
-          
-          id:  null as any,
-          // to do
-          
-        };
-        console.log(RequestModelForActionOwner);
-      
-        if(this.formService.isEdit(this.scheduleConfigActionOwnerForm.get('id') as FormControl)){
-          this.http.put('scheduleConfiguration',this.scheduleConfigActionOwnerForm.value,null).subscribe(x=>{
-            let resp = x as CommonResponseInterface;
-              if(resp.success){
-                this.formService.onSaveSuccess(localmodalId,this.datatableElement);
-                this.AlertService.success('Action Owner Saved Successful');
-              }
-              else{
-                this.AlertService.errorDialog('Unsuccessful', 'Duplicate Value ');
-              }
-
-          });
-        }
-        else{
-        
-          this.http.post('scheduleConfiguration',this.scheduleConfigActionOwnerForm.value).subscribe(x=>{
-            let resp = x as CommonResponseInterface;
-              if(resp.success){
-                this.formService.onSaveSuccess(localmodalId,this.datatableElement);
-                this.AlertService.success('Action Owner Saved Successful');
-              }
-              else{
-                this.AlertService.errorDialog('Unsuccessful', 'Duplicate Value ');
-              }
-          });
-        }
-
-
+      let actionOwners: any [] = this.scheduleConfigActionOwnerForm.value.actionOwnerList as any;
+      if (Array.isArray(actionOwners)) {
+        actionOwners.forEach(function (value) {
+          let actionOwner = { auditScheduleId : that.scheduleParamId, userId:value, branchId: that.scheduleConfigActionOwnerForm?.value.branchId,commonValueAuditScheduleRiskOwnerTypetId:2}
+          scheduleActionOwnerList.push(actionOwner);
+        }); 
+        console.log(scheduleActionOwnerList);
       }
+     
+      const RequestModelForActionOwner = {
+        data:  scheduleActionOwnerList
+      };
+
+      this.http.post('AuditSchedule/AuditScheudleConfigurationOwner',RequestModelForActionOwner).subscribe(x=>{
+        let resp = x as CommonResponseInterface;
+          if(resp.success){
+            this.formService.onSaveSuccess(localmodalId,this.ReloadAllDataTable());
+            this.AlertService.success('Action Owner Saved Successful');
+          }
+          else{
+            this.AlertService.errorDialog('Unsuccessful', 'Duplicate Value ');
+          }
+      });
+    }
+    //this.dataTableService.redraw(this.datatableElement);
   }
 
   editActionOwner(modalId:any, config:any):void {
-    const localmodalId = modalId; 
+    const localmodalId = modalId;
     this.http
-      .getById('scheduleConfiguration',config.id)
+      .post('AuditSchedule/AuditScheudleConfigurationOwnerGetByScheduleId',{"auditScheduleId":this.scheduleParamId,"typeId":2})
       .subscribe(res => {
-          const response = res as ScheduleActionOwnerResponse;
-          this.scheduleConfigRiskOwnerForm.setValue({id : response.id, branchId : response.branchId, scheduleId: response.scheduleId, actionOwnerList: response.actionOwners});
+          const response = res as AuditScheduleOwnerResponse;
+          this.selectedActionOwner=response.user;
+          console.log('action owner :' +this.selectedActionOwner)
+          this.scheduleConfigActionOwnerForm.setValue({auditScheduleId : response.auditScheduleId, branchId : response.branchId,  actionOwnerList: response.user});
       });
       localmodalId.visible = true;
+  }
+
+  isSelectedActionOwner(id:any){
+    for (let user of this.selectedActionOwner){
+      if(user.id==id){
+        return true;
+      }
+     }
+     return false;
   }
 
 //---------------ACTION OWNER END---------------
@@ -299,18 +311,18 @@ onCancel(){
 
 }
 editSetDate(modalId:any):void {
-  const localmodalId = modalId; 
-  this.http
-    .getById('scheduleConfiguration',this.scheduleParamId)
-    .subscribe(res => {
-        const response = res as ScheduleSetDate;
-        this.scheduleConfigRiskOwnerForm.setValue({id : response.id, scheduleId : response.scheduleId, auditIniciationDate: response.auditIniciationDate, 
-          planningAndScopingStartDate: response.planningAndScopingStartDate,
-          planningAndScopingEndDate: response.planningAndScopingEndDate,
-          fieldWorkStartDate: response.fieldWorkStartDate,
-          fieldWorkEndDate: response.fieldWorkEndDate});
-    });
-    localmodalId.visible = true;
+  // const localmodalId = modalId; 
+  // this.http
+  //   .getById('scheduleConfiguration',this.scheduleParamId)
+  //   .subscribe(res => {
+  //       const response = res as ScheduleSetDate;
+  //       this.scheduleConfigRiskOwnerForm.setValue({id : response.id, scheduleId : response.scheduleId, auditIniciationDate: response.auditIniciationDate, 
+  //         planningAndScopingStartDate: response.planningAndScopingStartDate,
+  //         planningAndScopingEndDate: response.planningAndScopingEndDate,
+  //         fieldWorkStartDate: response.fieldWorkStartDate,
+  //         fieldWorkEndDate: response.fieldWorkEndDate});
+  //   });
+  //   localmodalId.visible = true;
 }
 
 //---------------SET DATE END---------------

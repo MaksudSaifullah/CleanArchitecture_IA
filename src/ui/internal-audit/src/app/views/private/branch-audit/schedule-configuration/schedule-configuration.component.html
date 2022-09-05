@@ -41,19 +41,19 @@
                           <th>Action</th>
                         </tr>
                       </thead>
-                      <tbody *ngIf="brancheWithRiskOwner?.length != 0">
-                        <tr *ngFor="let branch of brancheWithRiskOwner let i=index" >
+                      <tbody *ngIf="auditScheduleRiskOwners?.length != 0">
+                        <tr *ngFor="let branch of auditScheduleRiskOwners let i=index" >
                           <td>{{ i+1 }}</td>
-                          <td>{{ branch.countryName }}</td>
                           <td>{{ branch.branchName }}</td>
+                          <td>{{ branch.userName }}</td>
                           <td>
-                            <button type="button" class="btn btn-secondary btnEditColor" (click)="editRiskOwner(verticallyCenteredModalRiskOwner,branch.id)">
+                            <button type="button" class="btn btn-secondary btnEditColor" (click)="editRiskOwner(verticallyCenteredModalRiskOwner,branch.auditScheduleId)">
                               <svg cIcon name="cilPencil" size="md" title="Edit Button icon"></svg>
                             </button>
                           </td>
                         </tr>
                       </tbody>
-                      <tbody *ngIf="brancheWithRiskOwner?.length == 0">
+                      <tbody *ngIf="auditScheduleRiskOwners?.length == 0">
                         <tr>
                           <td colspan="3" class="no-data-available">No data!</td>
                         </tr>
@@ -70,19 +70,19 @@
       <form [formGroup]="scheduleConfigRiskOwnerForm" (ngSubmit)="onSubmitRiskOwner(verticallyCenteredModalRiskOwner)" novalidate>
       <c-modal #verticallyCenteredModalRiskOwner alignment="center" id="verticallyCenteredModalRiskOwner">
         <c-modal-header>
-          <h5 cModalTitle *ngIf="!formService.isEdit(this.scheduleConfigRiskOwnerForm.get('id'))">Add Risk Owner</h5>
-          <h5 cModalTitle *ngIf="formService.isEdit(this.scheduleConfigRiskOwnerForm.get('id'))">Update Risk Owner</h5>
+          <h5 cModalTitle *ngIf="!formService.isEdit(this.scheduleConfigRiskOwnerForm.get('auditScheduleId'))">Add Risk Owner</h5>
+          <h5 cModalTitle *ngIf="formService.isEdit(this.scheduleConfigRiskOwnerForm.get('auditScheduleId'))">Update Risk Owner</h5>
           <button [cModalToggle]="verticallyCenteredModalRiskOwner.id" cButtonClose></button>
         </c-modal-header>
         <c-modal-body>
           <div class="col-lg-12" >
-            <input type="hidden" formControlName="id"/>
+            <input type="hidden" formControlName="auditScheduleId"/>
 
                            
              <div cFormFloating>
               <select aria-label="Floating label select example" cSelect id="branchId" formControlName="branchId" name="branchId">
                 <option value=null>Select Branch</option>
-                <option *ngFor="let branch of brancheWithRiskOwner" [value]="branch.id">
+                <option *ngFor="let branch of scheduledBranch" [value]="branch.branchId">
                   {{branch.branchName}}
                 </option>
               </select>
@@ -105,7 +105,7 @@
                         <c-row [gutter]="{g: 2}">
                           <c-col md>
                             <c-multi-select multiple formControlName="riskOwnerList" name="riskOwnerList" required>
-                              <c-multi-select-option *ngFor="let user of users" [value]="user.id" >{{user.userName}}
+                              <c-multi-select-option *ngFor="let user of users" [value]="user.id" [selected]="isSelectedRiskOwner(user.id)">{{user.userName}}
                               </c-multi-select-option>
                             </c-multi-select>
                           </c-col>
@@ -164,19 +164,19 @@
                           <th>Action</th>
                         </tr>
                       </thead>
-                      <tbody *ngIf="brancheWithActionOwner?.length != 0">
-                        <tr *ngFor="let branch of brancheWithActionOwner let i=index" >
+                      <tbody *ngIf="auditScheduleActionOwners?.length != 0">
+                        <tr *ngFor="let branch of auditScheduleActionOwners let i=index" >
                           <td>{{ i+1 }}</td>
-                          <td>{{ branch.countryName }}</td>
                           <td>{{ branch.branchName }}</td>
+                          <td>{{ branch.userName }}</td>
                           <td>
-                            <button type="button" class="btn btn-secondary btnEditColor" (click)="editActionOwner(verticallyCenteredModalActionOwner,branch.id)">
+                            <button type="button" class="btn btn-secondary btnEditColor" (click)="editActionOwner(verticallyCenteredModalActionOwner,branch.auditScheduleId)">
                               <svg cIcon name="cilPencil" size="md" title="Edit Button icon"></svg>
                             </button>
                           </td>
                         </tr>
                       </tbody>
-                      <tbody *ngIf="brancheWithActionOwner?.length == 0">
+                      <tbody *ngIf="auditScheduleActionOwners?.length == 0">
                         <tr>
                           <td colspan="3" class="no-data-available">No data!</td>
                         </tr>
@@ -193,19 +193,19 @@
       <form [formGroup]="scheduleConfigActionOwnerForm" (ngSubmit)="onSubmitActionOwner(verticallyCenteredModalActionOwner)" novalidate>
       <c-modal #verticallyCenteredModalActionOwner alignment="center" id="verticallyCenteredModalActionOwner">
         <c-modal-header>
-          <h5 cModalTitle *ngIf="!formService.isEdit(this.scheduleConfigActionOwnerForm.get('id'))">Add Action Owner</h5>
-          <h5 cModalTitle *ngIf="formService.isEdit(this.scheduleConfigActionOwnerForm.get('id'))">Update Action Owner</h5>
+          <h5 cModalTitle *ngIf="!formService.isEdit(this.scheduleConfigActionOwnerForm.get('auditScheduleId'))">Add Action Owner</h5>
+          <h5 cModalTitle *ngIf="formService.isEdit(this.scheduleConfigActionOwnerForm.get('auditScheduleId'))">Update Action Owner</h5>
           <button [cModalToggle]="verticallyCenteredModalActionOwner.id" cButtonClose></button>
         </c-modal-header>
         <c-modal-body>
           <div class="col-lg-12" >
-            <input type="hidden" formControlName="id"/>
+            <input type="hidden" formControlName="auditScheduleId"/>
 
                            
              <div cFormFloating>
               <select aria-label="Floating label select example" cSelect id="branchId" formControlName="branchId" name="branchId">
                 <option value=null>Select Branch</option>
-                <option *ngFor="let branch of brancheWithActionOwner" [value]="branch.id">
+                <option *ngFor="let branch of scheduledBranch" [value]="branch.branchId">
                   {{branch.branchName}}
                 </option>
               </select>
@@ -227,8 +227,8 @@
                       <c-card-body>
                         <c-row [gutter]="{g: 2}">
                           <c-col md>
-                            <c-multi-select multiple formControlName="actionOwnerId" name="actionOwnerId" required>
-                              <c-multi-select-option *ngFor="let user of users" [value]="user.id" >{{user.userName}}
+                            <c-multi-select multiple formControlName="actionOwnerList" name="actionOwnerList" required>
+                              <c-multi-select-option *ngFor="let user of users" [value]="user.id" [selected]="isSelectedActionOwner(user.id)">{{user.userName}}
                               </c-multi-select-option>
                             </c-multi-select>
                           </c-col>

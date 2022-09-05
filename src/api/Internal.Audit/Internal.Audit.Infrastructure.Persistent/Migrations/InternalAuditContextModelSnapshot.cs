@@ -3601,6 +3601,9 @@ namespace Internal.Audit.Infrastructure.Persistent.Migrations
                     b.Property<DateTime?>("ApprovedOn")
                         .HasColumnType("datetime2");
 
+                    b.Property<Guid?>("AuditScheduleConfigurationOwnerId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<string>("CreatedBy")
                         .IsRequired()
                         .HasMaxLength(10)
@@ -3667,6 +3670,8 @@ namespace Internal.Audit.Infrastructure.Persistent.Migrations
                         .HasColumnType("nvarchar(30)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("AuditScheduleConfigurationOwnerId");
 
                     b.HasIndex("UserName")
                         .IsUnique();
@@ -4584,6 +4589,13 @@ namespace Internal.Audit.Infrastructure.Persistent.Migrations
                     b.Navigation("Role");
                 });
 
+            modelBuilder.Entity("Internal.Audit.Domain.Entities.Security.User", b =>
+                {
+                    b.HasOne("Internal.Audit.Domain.Entities.BranchAudit.AuditScheduleConfigurationOwner", null)
+                        .WithMany("User")
+                        .HasForeignKey("AuditScheduleConfigurationOwnerId");
+                });
+
             modelBuilder.Entity("Internal.Audit.Domain.Entities.Security.UserCountry", b =>
                 {
                     b.HasOne("Internal.Audit.Domain.Entities.Country", "Country")
@@ -4617,6 +4629,11 @@ namespace Internal.Audit.Infrastructure.Persistent.Migrations
                     b.Navigation("AuditScheduleBranch");
 
                     b.Navigation("AuditScheduleParticipants");
+                });
+
+            modelBuilder.Entity("Internal.Audit.Domain.Entities.BranchAudit.AuditScheduleConfigurationOwner", b =>
+                {
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("Internal.Audit.Domain.Entities.BranchAudit.ClosingMeetingMinute", b =>

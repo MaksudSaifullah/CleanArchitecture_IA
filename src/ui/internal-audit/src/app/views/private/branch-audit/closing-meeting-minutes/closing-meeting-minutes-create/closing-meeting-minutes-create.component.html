@@ -126,7 +126,7 @@
                     <label>Present</label>
                       <c-multi-select multiple formControlName="closingMeetingPresent" name="closingMeetingPresent" required>
                         <!-- <c-multi-select-option *ngFor="let user of users" [value]="user.id" [selected]="isSelected(user.id)" >{{user.userName}} -->
-                          <c-multi-select-option *ngFor="let user of users" [value]="user.id" >{{user.userName}}
+                          <c-multi-select-option *ngFor="let user of users" [value]="user.id" [selected]="isClosingMeetingPresent(user.id)" >{{user.userName}}
                         </c-multi-select-option>
                         </c-multi-select>
 
@@ -144,8 +144,7 @@
                     <label>Appologies</label>
 
                     <c-multi-select multiple formControlName="closingMeetingApology" name="closingMeetingApology" required>
-                      <!-- <c-multi-select-option *ngFor="let user of users" [value]="user.id" [selected]="isSelected(user.id)" >{{user.userName}} -->
-                        <c-multi-select-option *ngFor="let user of users" [value]="user.id" >{{user.userName}}
+                        <c-multi-select-option *ngFor="let user of users" [value]="user.id" [selected]="isClosingMeetingApology(user.id)">{{user.userName}}
                       </c-multi-select-option>
                     </c-multi-select>
 

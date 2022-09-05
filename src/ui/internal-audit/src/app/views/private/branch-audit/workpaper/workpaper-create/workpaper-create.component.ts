@@ -79,17 +79,17 @@ export class WorkpaperCreateComponent implements OnInit {
   async ngOnInit() {
     this.workpaperId = this.activateRoute.snapshot.params['id'];
     this.documentRawSourceInfo = await this.helper.getDocumentSource('Work_Paper') as DocumentSource;
+    this.paramId = 'C09240DA-02DE-4B96-9A61-C9CA8F741C89';
+      this.LoadScheduleData(this.paramId);
     if(this.workpaperId === undefined){
       this.pageName='Create';
-   
-      this.paramId = 'E627A6FD-3C94-4D21-80E7-663419A3CC2C';
-      this.LoadScheduleData(this.paramId);
     }
     else{
       this.pageName='Edit';
       this.workpaperForm.get('documentId')?.clearValidators();//clearValidators
       this.workpaperForm.get('documentId')?.updateValueAndValidity();//updateValueAndValidity
       this.LoadWorkpaperById(this.workpaperId);
+      
     }
   }
 
@@ -102,6 +102,7 @@ export class WorkpaperCreateComponent implements OnInit {
            this.LoadControlFrequency(workpaperData.controlActivityNatureId == null? null : workpaperData.controlActivityNatureId);
            this.LoadSampleSize(workpaperData.controlFrequencyId == null?  null : workpaperData.controlFrequencyId);
             this.LoadBranches(workpaperData.auditScheduleId);
+            this.onChangeTopicHeadDropdownList(workpaperData.topicHeadId == null? null : workpaperData.topicHeadId);
             this.editDocId=workpaperData.documentId;
            this.workpaperForm.patchValue({
 
@@ -269,7 +270,7 @@ export class WorkpaperCreateComponent implements OnInit {
     })
   }
 
-  onChangeTopicHeadDropdownList(filter:string){
+  onChangeTopicHeadDropdownList(filter:any){
     if(filter=="null"){
       this.questions = [];
       this.workpaperForm.patchValue({questionId:"null"});

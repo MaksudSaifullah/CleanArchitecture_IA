@@ -92,13 +92,16 @@ export class ClosingMeetingMinutesCreateComponent implements OnInit {
 
     if( this.cmmId === undefined){
       this.pageName='Create';
-   
       this.paramId = 'C09240DA-02DE-4B96-9A61-C9CA8F741C89';
       this.LoadScheduleData(this.paramId);
+  
       this.LoadSubjectMatters();
     }
     else{
       this.pageName='Edit';
+      this.paramId = 'C09240DA-02DE-4B96-9A61-C9CA8F741C89';
+      this.LoadScheduleData(this.paramId);
+  
       this.LoadMeetingById(this.cmmId);
     }
 
@@ -115,32 +118,46 @@ export class ClosingMeetingMinutesCreateComponent implements OnInit {
            const meetingMinutesData = res as ClosingMeetingMinutes;
 
             this.LoadBranches(meetingMinutesData.auditScheduleId);
-            this.closingMeetingPresent = meetingMinutesData.closingMeetingPresent;
-            this.closingMeetingApology = meetingMinutesData.closingMeetingApology;
+            this.closingMeetingPresent = meetingMinutesData.userPresents as addMeetingPresent[];
+            this.closingMeetingApology = meetingMinutesData.userApologies as addMeetingApology[];
             this.closingMeetingSubjects = meetingMinutesData.meetingMinutesSubjects as addMeetingSubject[];
-          console.log(  this.closingMeetingSubjects);
-          console.log('--------------------------------');
-           this.cMMForm.patchValue({
-
-            id: meetingMinutesData.id,
-            meetingMinutesCode:  meetingMinutesData.meetingMinutesCode,
-            scheduleCode:meetingMinutesData.scheduleCode,
-            auditScheduleBranchId: meetingMinutesData.auditScheduleBranchId,
-            meetingMinutesDate: formatDate(meetingMinutesData.meetingMinutesDate, 'yyyy-MM-dd HH:mm:ss', 'en') ,
-            meetingMinutesName : meetingMinutesData.meetingMinutesName,
-            auditOn : meetingMinutesData.auditOn,
-            meetingHeld : meetingMinutesData.meetingHeld,
-            preparedByUserId: meetingMinutesData.preparedByUserId,
-            agreedByUserId: meetingMinutesData.agreedByUserId,
-            closingMeetingPresent: meetingMinutesData.closingMeetingPresent,
-            closingMeetingApology: meetingMinutesData.closingMeetingApology,
-            closingMeetingSubject: meetingMinutesData.closingMeetingSubject,
+            
+            this.cMMForm.patchValue({
+              id: meetingMinutesData.id,
+              meetingMinutesCode:  meetingMinutesData.meetingMinutesCode,
+              scheduleCode:meetingMinutesData.scheduleCode,
+              auditScheduleBranchId: meetingMinutesData.auditScheduleBranchId,
+              meetingMinutesDate: formatDate(meetingMinutesData.meetingMinutesDate, 'yyyy-MM-dd HH:mm:ss', 'en') ,
+              meetingMinutesName : meetingMinutesData.meetingMinutesName,
+              auditOn : meetingMinutesData.auditOn,
+              meetingHeld : meetingMinutesData.meetingHeld,
+              preparedByUserId: meetingMinutesData.preparedByUserId,
+              agreedByUserId: meetingMinutesData.agreedByUserId,
+              closingMeetingPresent: meetingMinutesData.closingMeetingPresent,
+              closingMeetingApology: meetingMinutesData.closingMeetingApology,
+              closingMeetingSubject: meetingMinutesData.closingMeetingSubject,
           });
     });
   }
 
+  isClosingMeetingPresent(id:any){
+    for (let user of this.closingMeetingPresent){
+      if(user.userId==id){
+        return true;
+      }
+     }
+     return false;
+  }
+  isClosingMeetingApology(id:any){
+    for (let user of this.closingMeetingApology){
+      if(user.userId==id){
+        return true;
+      }
+     }
+     return false;
+  }
+
   onSubmit(): void {
-    console.log('sadffffffffffffff')
     const that = this;
     let presentuserList: addMeetingPresent[] = [];
     let appologiesuserList: addMeetingApology[] = [];

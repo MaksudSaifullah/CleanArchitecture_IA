@@ -62,9 +62,9 @@ public class ClosingMeetingMinuteQueryRepository : QueryRepositoryBase<Composite
 	.value('.','NVARCHAR(MAX)'),1,2,' ')) as ClosingMeetingSubjects
 
   FROM [BranchAudit].[ClosingMeetingMinutes] cmm
-  Inner Join [BranchAudit].[ClosingMeetingPresents] cmp on cmp.ClosingMeetingMinutesId = cmm.Id
-  Inner Join [BranchAudit].[ClosingMeetingApologies] cma on cma.ClosingMeetingMinutesId = cmm.Id
-  Inner Join [BranchAudit].[ClosingMeetingSubjects] cms on cms.ClosingMeetingMinutesId = cmm.Id
+ -- Inner Join [BranchAudit].[ClosingMeetingPresents] cmp on cmp.ClosingMeetingMinutesId = cmm.Id
+ -- Inner Join [BranchAudit].[ClosingMeetingApologies] cma on cma.ClosingMeetingMinutesId = cmm.Id
+ -- Inner Join [BranchAudit].[ClosingMeetingSubjects] cms on cms.ClosingMeetingMinutesId = cmm.Id
   INNER JOIN [security].[User] usr on usr.Id = cmm.AgreedByUserId
    INNER JOIN [security].[User] usrp on usrp.Id = cmm.PreparedByUserId
   INNER JOIN [security].[Branch] brnch on brnch.Id = cmm.AuditScheduleBranchId

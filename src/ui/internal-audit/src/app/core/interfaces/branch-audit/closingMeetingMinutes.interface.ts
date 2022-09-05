@@ -18,7 +18,10 @@ export interface ClosingMeetingMinutes
     closingMeetingPresent: addMeetingPresent[];
     closingMeetingApology: addMeetingApology[];
     closingMeetingSubject: addMeetingSubject[];
-   
+    
+    userPresents?: addMeetingPresent[];
+    userApologies?: addMeetingApology[];
+    meetingMinutesSubjects?: addMeetingSubject[];
 
 }
 

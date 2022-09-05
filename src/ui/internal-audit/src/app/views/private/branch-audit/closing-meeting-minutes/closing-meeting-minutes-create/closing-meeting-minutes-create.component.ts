@@ -110,22 +110,23 @@ export class ClosingMeetingMinutesCreateComponent implements OnInit {
   LoadMeetingById(Id:any){
   
     this.http
-      .getById('closingmeetingminute',Id)
+      .get('closingmeetingminute/BaseId?BaseId='+Id)
       .subscribe( res => {
            const meetingMinutesData = res as ClosingMeetingMinutes;
 
             this.LoadBranches(meetingMinutesData.auditScheduleId);
             this.closingMeetingPresent = meetingMinutesData.closingMeetingPresent;
             this.closingMeetingApology = meetingMinutesData.closingMeetingApology;
-            this.closingMeetingSubjects = meetingMinutesData.closingMeetingSubject;
-
+            this.closingMeetingSubjects = meetingMinutesData.meetingMinutesSubjects as addMeetingSubject[];
+          console.log(  this.closingMeetingSubjects);
+          console.log('--------------------------------');
            this.cMMForm.patchValue({
 
             id: meetingMinutesData.id,
             meetingMinutesCode:  meetingMinutesData.meetingMinutesCode,
             scheduleCode:meetingMinutesData.scheduleCode,
             auditScheduleBranchId: meetingMinutesData.auditScheduleBranchId,
-            meetingMinutesDate: formatDate(meetingMinutesData.meetingMinutesDate, 'yyyy-MM-dd', 'en') ,
+            meetingMinutesDate: formatDate(meetingMinutesData.meetingMinutesDate, 'yyyy-MM-dd HH:mm:ss', 'en') ,
             meetingMinutesName : meetingMinutesData.meetingMinutesName,
             auditOn : meetingMinutesData.auditOn,
             meetingHeld : meetingMinutesData.meetingHeld,
@@ -139,6 +140,7 @@ export class ClosingMeetingMinutesCreateComponent implements OnInit {
   }
 
   onSubmit(): void {
+    console.log('sadffffffffffffff')
     const that = this;
     let presentuserList: addMeetingPresent[] = [];
     let appologiesuserList: addMeetingApology[] = [];
@@ -199,7 +201,8 @@ export class ClosingMeetingMinutesCreateComponent implements OnInit {
           'Unsuccessful',
           'Please fill the last row of Subject Matter Table'
         );
-        
+        return;
+
       }
 
       const cmmRequestCreateModel: ClosingMeetingMinutes = {

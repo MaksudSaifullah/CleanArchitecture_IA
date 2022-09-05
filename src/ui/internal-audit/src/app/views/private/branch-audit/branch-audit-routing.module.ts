@@ -109,7 +109,7 @@ const routes: Routes = [
     path:'closing-meeting-minutes-create',
     component: ClosingMeetingMinutesCreateComponent
   },
-  { path: 'closing-meeting-minutes-creat/:id', 
+  { path: 'closing-meeting-minutes-create/:id', 
   component: ClosingMeetingMinutesCreateComponent 
   },
   {

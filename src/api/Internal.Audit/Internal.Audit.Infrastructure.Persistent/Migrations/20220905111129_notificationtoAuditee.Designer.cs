@@ -4,6 +4,7 @@ using Internal.Audit.Infrastructure.Persistent;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Internal.Audit.Infrastructure.Persistent.Migrations
 {
     [DbContext(typeof(InternalAuditContext))]
-    partial class InternalAuditContextModelSnapshot : ModelSnapshot
+    [Migration("20220905111129_notificationtoAuditee")]
+    partial class notificationtoAuditee
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -564,10 +566,10 @@ namespace Internal.Audit.Infrastructure.Persistent.Migrations
                         .HasMaxLength(300)
                         .HasColumnType("nvarchar(300)");
 
-                    b.Property<Guid>("AuditScheduleBranchId")
+                    b.Property<Guid>("AuditScheduleId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid>("AuditScheduleId")
+                    b.Property<Guid>("BranchId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("CreatedBy")
@@ -3824,9 +3826,6 @@ namespace Internal.Audit.Infrastructure.Persistent.Migrations
                     b.Property<DateTime?>("ApprovedOn")
                         .HasColumnType("datetime2");
 
-                    b.Property<Guid?>("AuditScheduleConfigurationOwnerId")
-                        .HasColumnType("uniqueidentifier");
-
                     b.Property<string>("CreatedBy")
                         .IsRequired()
                         .HasMaxLength(10)
@@ -3893,8 +3892,6 @@ namespace Internal.Audit.Infrastructure.Persistent.Migrations
                         .HasColumnType("nvarchar(30)");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("AuditScheduleConfigurationOwnerId");
 
                     b.HasIndex("UserName")
                         .IsUnique();
@@ -4880,13 +4877,6 @@ namespace Internal.Audit.Infrastructure.Persistent.Migrations
                     b.Navigation("Role");
                 });
 
-            modelBuilder.Entity("Internal.Audit.Domain.Entities.Security.User", b =>
-                {
-                    b.HasOne("Internal.Audit.Domain.Entities.BranchAudit.AuditScheduleConfigurationOwner", null)
-                        .WithMany("User")
-                        .HasForeignKey("AuditScheduleConfigurationOwnerId");
-                });
-
             modelBuilder.Entity("Internal.Audit.Domain.Entities.Security.UserCountry", b =>
                 {
                     b.HasOne("Internal.Audit.Domain.Entities.Country", "Country")
@@ -4920,11 +4910,6 @@ namespace Internal.Audit.Infrastructure.Persistent.Migrations
                     b.Navigation("AuditScheduleBranch");
 
                     b.Navigation("AuditScheduleParticipants");
-                });
-
-            modelBuilder.Entity("Internal.Audit.Domain.Entities.BranchAudit.AuditScheduleConfigurationOwner", b =>
-                {
-                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("Internal.Audit.Domain.Entities.BranchAudit.ClosingMeetingMinute", b =>

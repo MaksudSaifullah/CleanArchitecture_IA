@@ -11,6 +11,7 @@ using Internal.Audit.Application.Features.AuditSchedules.Commands.DeleteAuditSch
 using Internal.Audit.Application.Features.AuditSchedules.Queries.GetAuditScheduleByCreationId;
 using Internal.Audit.Application.Features.AuditScheduleConfigurationsOwner.Commands.AddAuditScheduleConfigurationsOwnerCommand;
 using Internal.Audit.Application.Features.AuditScheduleConfigurationsOwner.Queries.GetAllByAuditScheduleId;
+using Internal.Audit.Application.Features.AuditConfigMilestones.Commands.AddAuditConfigMilestones;
 
 namespace Internal.Audit.Api.Controllers;
 
@@ -88,6 +89,13 @@ public class AuditScheduleController : ControllerBase
     public async Task<ActionResult<GetAllByAuditScheduledIdResponseDTO>> AuditScheudleConfigurationOwnerGetByScheduleId(Guid? AuditSCheduleId,int TypeId)
     {
         var result = await _mediator.Send(new GetAllByAuditScheduleIdQuery(AuditSCheduleId,TypeId));
+        return Ok(result);
+    }
+
+    [HttpPost("AuditScheudleConfigSetDate")]
+    public async Task<ActionResult<AddAuditConfigMilestoneResponseDTO>> AuditScheudleConfigSetDate(AddAuditConfigMilestoneCommand command)
+    {
+        var result = await _mediator.Send(command);
         return Ok(result);
     }
 }

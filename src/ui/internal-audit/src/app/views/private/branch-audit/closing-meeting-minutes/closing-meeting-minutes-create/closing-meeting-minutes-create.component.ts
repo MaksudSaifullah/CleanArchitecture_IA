@@ -1,3 +1,4 @@
+import { formatDate } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -29,7 +30,11 @@ export class ClosingMeetingMinutesCreateComponent implements OnInit {
   closingMeetingMinutes: ClosingMeetingMinutes[] = [];
   wpAuditScheduleBranches: WPAuditScheduleBranch[] = [];
   users: User[] = [];
+  closingMeetingPresent: addMeetingPresent[] = [];
+  closingMeetingApology: addMeetingApology[] =[];
   closingMeetingSubjects: addMeetingSubject[] = [];
+  cmmId:string ='';
+  pageName:string = '';
 
   constructor(
     private http: HttpService,
@@ -82,9 +87,55 @@ export class ClosingMeetingMinutesCreateComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.paramId = 'C09240DA-02DE-4B96-9A61-C9CA8F741C89';
-    this.LoadScheduleData(this.paramId);
-    this.LoadSubjectMatters();
+
+    this.cmmId = this.activateRoute.snapshot.params['id'];
+
+    if( this.cmmId === undefined){
+      this.pageName='Create';
+   
+      this.paramId = 'C09240DA-02DE-4B96-9A61-C9CA8F741C89';
+      this.LoadScheduleData(this.paramId);
+      this.LoadSubjectMatters();
+    }
+    else{
+      this.pageName='Edit';
+      this.LoadMeetingById(this.cmmId);
+    }
+
+   
+  }
+
+
+
+  LoadMeetingById(Id:any){
+  
+    this.http
+      .getById('closingmeetingminute',Id)
+      .subscribe( res => {
+           const meetingMinutesData = res as ClosingMeetingMinutes;
+
+            this.LoadBranches(meetingMinutesData.auditScheduleId);
+            this.closingMeetingPresent = meetingMinutesData.closingMeetingPresent;
+            this.closingMeetingApology = meetingMinutesData.closingMeetingApology;
+            this.closingMeetingSubjects = meetingMinutesData.closingMeetingSubject;
+
+           this.cMMForm.patchValue({
+
+            id: meetingMinutesData.id,
+            meetingMinutesCode:  meetingMinutesData.meetingMinutesCode,
+            scheduleCode:meetingMinutesData.scheduleCode,
+            auditScheduleBranchId: meetingMinutesData.auditScheduleBranchId,
+            meetingMinutesDate: formatDate(meetingMinutesData.meetingMinutesDate, 'yyyy-MM-dd', 'en') ,
+            meetingMinutesName : meetingMinutesData.meetingMinutesName,
+            auditOn : meetingMinutesData.auditOn,
+            meetingHeld : meetingMinutesData.meetingHeld,
+            preparedByUserId: meetingMinutesData.preparedByUserId,
+            agreedByUserId: meetingMinutesData.agreedByUserId,
+            closingMeetingPresent: meetingMinutesData.closingMeetingPresent,
+            closingMeetingApology: meetingMinutesData.closingMeetingApology,
+            closingMeetingSubject: meetingMinutesData.closingMeetingSubject,
+          });
+    });
   }
 
   onSubmit(): void {
@@ -139,17 +190,17 @@ export class ClosingMeetingMinutesCreateComponent implements OnInit {
   //   return;
   //  }
 
-      // if (
-      //   subjectList[subjectList.length - 1].subjectMatter == "" &&
-      //   subjectList[subjectList.length - 1].userId == ""
-      // ) {
-      //   console.log("+++++",subjectList[subjectList.length - 1].subjectMatter);
-      //   this.AlertService.errorDialog(
-      //     'Unsuccessful',
-      //     'Please fill the last row of Subject Matter Table'
-      //   );
+      if (
+        subjectList[subjectList.length - 1].subjectMatter == "" &&
+        subjectList[subjectList.length - 1].userId == ""
+      ) {
+        console.log("+++++",subjectList[subjectList.length - 1].subjectMatter);
+        this.AlertService.errorDialog(
+          'Unsuccessful',
+          'Please fill the last row of Subject Matter Table'
+        );
         
-      // }
+      }
 
       const cmmRequestCreateModel: ClosingMeetingMinutes = {
         // id:  null as any,

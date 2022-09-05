@@ -223,7 +223,7 @@
         <td><input type="text" class="form-control" placeholder="Subject Matter"  name="{{row.subjectMatter}}" [(ngModel)]="row.subjectMatter"> </td>
         <td>
           <select cSelect class="form-control"  name="{{row.userId}}" [(ngModel)]="row.userId">
-            <option value=null>Select</option>
+            <option value="">Select</option>
           <option *ngFor="let user of users" [value]="user.id">
             {{user.userName}}
           </option>

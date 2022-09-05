@@ -109,6 +109,9 @@ const routes: Routes = [
     path:'closing-meeting-minutes-create',
     component: ClosingMeetingMinutesCreateComponent
   },
+  { path: 'closing-meeting-minutes-creat/:id', 
+  component: ClosingMeetingMinutesCreateComponent 
+  },
   {
     path:'weight-score-config',
     component:WeightScoreConfigComponent

@@ -89,19 +89,17 @@ export class ClosingMeetingMinutesCreateComponent implements OnInit {
   ngOnInit(): void {
 
     this.cmmId = this.activateRoute.snapshot.params['id'];
+    this.paramId = 'C09240DA-02DE-4B96-9A61-C9CA8F741C89';
+    this.LoadScheduleData(this.paramId);
 
     if( this.cmmId === undefined){
       this.pageName='Create';
-      this.paramId = 'C09240DA-02DE-4B96-9A61-C9CA8F741C89';
-      this.LoadScheduleData(this.paramId);
-  
+    
       this.LoadSubjectMatters();
     }
     else{
       this.pageName='Edit';
-      this.paramId = 'C09240DA-02DE-4B96-9A61-C9CA8F741C89';
-      this.LoadScheduleData(this.paramId);
-  
+
       this.LoadMeetingById(this.cmmId);
     }
 
@@ -262,6 +260,7 @@ export class ClosingMeetingMinutesCreateComponent implements OnInit {
   }
 
   LoadScheduleData(Id: any): void {
+    debugger;
     this.http.getById('AuditSchedule', Id).subscribe((res) => {
       const scheduleData = res as AuditSchedule;
       let scheduleId = scheduleData.id;

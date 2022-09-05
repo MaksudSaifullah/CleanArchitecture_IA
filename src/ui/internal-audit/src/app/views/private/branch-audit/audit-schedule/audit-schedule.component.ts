@@ -106,7 +106,7 @@ export class AuditScheduleComponent implements OnInit {
 
   onSubmit(modalId:any):void{
     // console.log(this.auditScheduleForm.getRawValue())
- 
+    debugger;
      const localmodalId = modalId;
      let auditParticipantList: AuditScheduleParticipant[] = [];
      let auditBranchList: AuditScheduleBranch[] = [];

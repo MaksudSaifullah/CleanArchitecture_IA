@@ -26,46 +26,53 @@ public class ClosingMeetingMinuteQueryRepository : QueryRepositoryBase<Composite
 		return await GetWithPagingInfo(query, parameters, false);
 	}
 
-	/*public async Task<CompositAuditSchedule> GetById(Guid id)
-	{
-		var query = @"SELECT distinct  a.Id,c.Id CountryId ,c.Name Country,a.ScheduleId,a.ScheduleState,
-(SELECT
-	STUFF((SELECT ', ' + CAST(y.UserName AS nVARCHAR(max)) 
-	FROM [BranchAudit].[AuditScheduleParticipants] x
-	INNER JOIN [security].[User]  y on x.UserId=y.Id
-	WHERE x.UserId=y.Id and x.CommonValueParticipantId=1
+    public async Task<CompositeClosingMeetingMinute> GetById(Guid id)
+    {
+        var query = @"SELECT cmm.[Id]
+      ,cmm.[MeetingMinutesCode]
+      ,cmm.[AuditScheduleId]
+      ,cmm.[MeetingMinutesDate]
+      ,cmm.[MeetingMinutesName]
+      ,cmm.[AuditOn]
+      ,cmm.[MeetingHeld]
+      ,cmm.[AuditScheduleBranchId]
+      ,cmm.[IsDeleted]
+      ,cmm.[AgreedByUserId]
+      ,cmm.[PreparedByUserId]
+	  ,(SELECT
+	STUFF((SELECT ', ' + CAST(usr.UserName AS nVARCHAR(max)) 
+	FROM [BranchAudit].[ClosingMeetingApologies] cma
+	INNER JOIN [security].[User] usr on cma.UserId= usr.Id
+	WHERE cma.UserId= usr.Id
 	FOR XML PATH(''), TYPE)
-	.value('.','NVARCHAR(MAX)'),1,2,' ')) Approver,
-(SELECT
-	STUFF((SELECT ', ' + CAST(y.UserName AS nVARCHAR(max)) 
-	FROM [BranchAudit].[AuditScheduleParticipants] x
-	INNER JOIN [security].[User]  y on x.UserId=y.Id
-	WHERE x.UserId=y.Id and x.CommonValueParticipantId=2
+	.value('.','NVARCHAR(MAX)'),1,2,' ')) as ClosingMeetingApologies
+	,(SELECT
+	STUFF((SELECT ', ' + CAST(usr.UserName AS nVARCHAR(max)) 
+	FROM [BranchAudit].[ClosingMeetingPresents] cmp
+	INNER JOIN [security].[User] usr on cmp.UserId= usr.Id
+	WHERE cmp.UserId= usr.Id
 	FOR XML PATH(''), TYPE)
-	.value('.','NVARCHAR(MAX)'),1,2,' ')) TeamLeader,
-(SELECT
-	STUFF((SELECT ', ' + CAST(y.UserName AS nVARCHAR(max)) 
-	FROM [BranchAudit].[AuditScheduleParticipants] x
-	INNER JOIN [security].[User]  y on x.UserId=y.Id
-	WHERE x.UserId=y.Id and x.CommonValueParticipantId=3
+	.value('.','NVARCHAR(MAX)'),1,2,' ')) as ClosingMeetingPresents
+	,(SELECT
+	STUFF((SELECT ', ' + CAST(usr.UserName AS nVARCHAR(max)) 
+	FROM [BranchAudit].[ClosingMeetingSubjects] cms
+	INNER JOIN [security].[User] usr on cms.UserId= usr.Id
+	WHERE cms.UserId= usr.Id
 	FOR XML PATH(''), TYPE)
-	.value('.','NVARCHAR(MAX)'),1,2,' ')) Auditor,
-	a.ScheduleStartDate,
-	a.ScheduleEndDate,
-a.CreatedOn
-FROM [BranchAudit].AuditSchedule a
-INNER JOIN [BranchAudit].[AuditCreation] ac on a.AuditCreationId=ac.Id
-INNER JOIN [BranchAudit].[AuditPlan] ap on ac.AuditPlanId=ap.Id
-INNER JOIN [BranchAudit].[RiskAssessment] ra on ap.RiskAssessmentId=ra.Id
-INNER JOIN [common].[Country] c on ra.CountryId=c.Id
-INNER JOIN [BranchAudit].[AuditScheduleParticipants] asp on a.Id=asp.AuditScheduleId
-INNER JOIN [security].[User] u on asp.UserId=u.Id
-Where a.[Id] =  @id AND a.IsDeleted = 0 
- ";
-		var parameters = new Dictionary<string, object> { { "id", id } };
+	.value('.','NVARCHAR(MAX)'),1,2,' ')) as ClosingMeetingSubjects
 
-		return await Single(query, parameters);
-	}*/
+  FROM [BranchAudit].[ClosingMeetingMinutes] cmm
+ -- Inner Join [BranchAudit].[ClosingMeetingPresents] cmp on cmp.ClosingMeetingMinutesId = cmm.Id
+ -- Inner Join [BranchAudit].[ClosingMeetingApologies] cma on cma.ClosingMeetingMinutesId = cmm.Id
+ -- Inner Join [BranchAudit].[ClosingMeetingSubjects] cms on cms.ClosingMeetingMinutesId = cmm.Id
+  INNER JOIN [security].[User] usr on usr.Id = cmm.AgreedByUserId
+   INNER JOIN [security].[User] usrp on usrp.Id = cmm.PreparedByUserId
+  INNER JOIN [security].[Branch] brnch on brnch.Id = cmm.AuditScheduleBranchId
+  Where cmm.[Id] =  @id  AND cmm.IsDeleted = 0 ";
+        var parameters = new Dictionary<string, object> { { "id", id } };
+
+        return await Single(query, parameters);
+    }
 }
 
 

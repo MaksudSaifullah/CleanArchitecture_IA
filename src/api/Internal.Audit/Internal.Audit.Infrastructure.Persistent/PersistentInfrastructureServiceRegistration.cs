@@ -236,6 +236,7 @@ public static class PersistentInfrastructureServiceRegistration
 
        
         services.AddScoped<IClosingMeetingMinutesQueryRepository>(s => new ClosingMeetingMinuteQueryRepository(configuration.GetConnectionString("InternalAuditDb")));
+        services.AddScoped<IClosingMeetingMinutesBaseQueryRepository>(s => new ClosingMeetingMinutesBaseQueryRepository(configuration.GetConnectionString("InternalAuditDb")));
         services.AddScoped<IClosingMeetingMinutesCommandRepository, ClosingMeetingMinuteCommandRepository>();
         services.AddScoped<IClosingMeetingApologyCommandRepository, ClosingMeetingApologyCommandRepository>();
         services.AddScoped<IClosingMeetingPresentCommandRepository, ClosingMeetingPresentCommandRepository>();

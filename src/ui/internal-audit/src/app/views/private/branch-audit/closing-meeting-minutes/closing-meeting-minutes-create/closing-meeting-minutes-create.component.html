@@ -48,17 +48,17 @@
 
                       <div class="col-md-6">
                         <div class="form-floating">
-                            <input class="form-control" placeholder="meetingMinutesDate" formControlName="meetingMinutesDate" id="meetingMinutesDate" type="datetime" >
+                            <input class="form-control" placeholder="meetingMinutesDate" formControlName="meetingMinutesDate" id="meetingMinutesDate" type="datetime-local" >
                             <label for="meetingMinutesDate">Meeting Date and Time</label>
                           </div>
-                          <!-- <div cRow *ngIf="workpaperForm.get('testingDate')?.invalid &&
-                          workpaperForm.get('testingDate')?.errors &&
-                                (workpaperForm.get('testingDate')?.dirty || workpaperForm.get('testingDate')?.touched)">
+                          <div cRow *ngIf="cMMForm.get('meetingMinutesDate')?.invalid &&
+                          cMMForm.get('meetingMinutesDate')?.errors &&
+                                (cMMForm.get('meetingMinutesDate')?.dirty || cMMForm.get('meetingMinutesDate')?.touched)">
                             <small class="text-danger"
-                                *ngIf="workpaperForm.get('testingDate').hasError('required')">
+                                *ngIf="cMMForm.get('meetingMinutesDate').hasError('required')">
                                 This field is required.
                             </small>
-                          </div> -->
+                          </div>
                           <br>
                       </div>
 
@@ -73,14 +73,16 @@
                         <input type="text" class="form-control" formControlName="meetingMinutesName" id="meetingMinutesName" placeholder="meetingMinutesName">
                         <label for="floatingInput">Meeting Name</label>
                       </div>
-                      <!-- <div cRow *ngIf="workpaperForm.get('meetingMinutesName')?.invalid &&
-                      workpaperForm.get('meetingMinutesName')?.errors &&
-                        (workpaperForm.get('meetingMinutesName')?.dirty || workpaperForm.get('meetingMinutesName')?.touched)">
+
+
+                      <div cRow *ngIf="cMMForm.get('meetingMinutesName')?.invalid &&
+                      cMMForm.get('meetingMinutesName')?.errors &&
+                        (cMMForm.get('meetingMinutesName')?.dirty || cMMForm.get('meetingMinutesName')?.touched)">
                     <small class="text-danger"
-                        *ngIf="workpaperForm.get('meetingMinutesName').hasError('required')">
+                        *ngIf="cMMForm.get('meetingMinutesName').hasError('required')">
                         This field is required.
                     </small>
-                </div> -->
+                </div>
                 <br>
                   </div>
                 </div>
@@ -92,15 +94,14 @@
                         <input type="text" class="form-control" formControlName="auditOn" id="auditOn" placeholder="auditOn">
                         <label for="floatingInput">Audit On</label>
                       </div>
-                      <!-- <div cRow *ngIf="workpaperForm.get('auditOn')?.invalid &&
-                      workpaperForm.get('auditOn')?.errors &&
-                        (workpaperForm.get('auditOn')?.dirty || workpaperForm.get('auditOn')?.touched)">
+                      <div cRow *ngIf="cMMForm.get('auditOn')?.invalid &&
+                      cMMForm.get('auditOn')?.errors &&
+                        (cMMForm.get('auditOn')?.dirty || cMMForm.get('auditOn')?.touched)">
                     <small class="text-danger"
-                        *ngIf="workpaperForm.get('auditOn').hasError('required')">
+                        *ngIf="cMMForm.get('auditOn').hasError('required')">
                         This field is required.
                     </small>
-                </div> -->
-                <br>
+                </div>
                   </div>
 
                   <div class="col-md-6">
@@ -108,48 +109,53 @@
                         <input type="text" class="form-control" formControlName="meetingHeld" id="meetingHeld" placeholder="meetingHeld">
                         <label for="floatingInput">Meeting Held</label>
                       </div>
-                      <!-- <div cRow *ngIf="workpaperForm.get('meetingHeld')?.invalid &&
-                      workpaperForm.get('meetingHeld')?.errors &&
-                        (workpaperForm.get('meetingHeld')?.dirty || workpaperForm.get('meetingHeld')?.touched)">
+                      <div cRow *ngIf="cMMForm.get('meetingHeld')?.invalid &&
+                      cMMForm.get('meetingHeld')?.errors &&
+                        (cMMForm.get('meetingHeld')?.dirty || cMMForm.get('meetingHeld')?.touched)">
                     <small class="text-danger"
-                        *ngIf="workpaperForm.get('meetingHeld').hasError('required')">
+                        *ngIf="cMMForm.get('meetingHeld').hasError('required')">
                         This field is required.
                     </small>
-                </div> -->
+                </div>
                   </div>
-
-                  <br>
                 
                 </div>
         
                 <div class="row">
                   <div class="col-md-6">
-                    <c-multi-select multiple formControlName="roleList" name="roleList" required>
-                        <!-- <c-multi-select-option *ngFor="let role of roles" [value]="role.id" [selected]="isSelected(role.id)" >{{role.name}}
-                        </c-multi-select-option> -->
+                    <label>Present</label>
+                    <c-multi-select multiple formControlName="appologiesUserId" name="appologiesUserId" required>
+                        <!-- <c-multi-select-option *ngFor="let user of users" [value]="user.id" [selected]="isSelected(user.id)" >{{user.userName}} -->
+                          <c-multi-select-option *ngFor="let user of users" [value]="user.id" >{{user.userName}}
+                        </c-multi-select-option>
                       </c-multi-select>
-                      <!-- <div cRow *ngIf="countryForm.get('roleList')?.invalid &&
-                      countryForm.get('roleList')?.errors &&
-                            (countryForm.get('roleList')?.dirty || countryForm.get('roleList')?.touched)">
-                        <small class="text-danger" *ngIf="countryForm.get('roleList').hasError('required')">
+
+                      <div cRow *ngIf="cMMForm.get('appologiesUserId')?.invalid &&
+                      cMMForm.get('appologiesUserId')?.errors &&
+                            (cMMForm.get('appologiesUserId')?.dirty || cMMForm.get('appologiesUserId')?.touched)">
+                        <small class="text-danger" *ngIf="cMMForm.get('appologiesUserId').hasError('required')">
                           This field is required.
                         </small>
-                      </div> -->
+                      </div>
+                      <br>
                   </div>
 
                   <div class="col-md-6">
-                    <c-multi-select multiple formControlName="roleList" name="roleList" required>
-                        <!-- <c-multi-select-option *ngFor="let role of roles" [value]="role.id" [selected]="isSelected(role.id)" >{{role.name}}
-                        </c-multi-select-option> -->
+                    <label>Appologies</label>
+                    <c-multi-select multiple formControlName="presentUserId" name="presentUserId" required>
+                      <!-- <c-multi-select-option *ngFor="let user of users" [value]="user.id" [selected]="isSelected(user.id)" >{{user.userName}} -->
+                        <c-multi-select-option *ngFor="let user of users" [value]="user.id" >{{user.userName}}
+                      </c-multi-select-option>
                       </c-multi-select>
-                      <!-- <div cRow *ngIf="countryForm.get('roleList')?.invalid &&
-                      countryForm.get('roleList')?.errors &&
-                            (countryForm.get('roleList')?.dirty || countryForm.get('roleList')?.touched)">
-                        <small class="text-danger" *ngIf="countryForm.get('roleList').hasError('required')">
+
+                      <div cRow *ngIf="cMMForm.get('presentUserId')?.invalid &&
+                      cMMForm.get('presentUserId')?.errors &&
+                            (cMMForm.get('presentUserId')?.dirty || cMMForm.get('presentUserId')?.touched)">
+                        <small class="text-danger" *ngIf="cMMForm.get('presentUserId').hasError('required')">
                           This field is required.
                         </small>
-                      </div> -->
-
+                      </div>
+                      <br>
                 </div>
                   
                 </div>
@@ -157,43 +163,90 @@
                 <div class="row">
                     <div class="col-md-6">
                         <div form-floating>
-                            <select aria-label="Floating label select example" cSelect id="auditScheduleBranchId"
-                              formControlName="auditScheduleBranchId" name="auditScheduleBranchId">
-                              <option value=null>Select Branch</option>
-                              <!-- <option *ngFor="let wpAuditScheduleBranch of wpAuditScheduleBranches" [value]="wpAuditScheduleBranch.branch.id">
-                                {{wpAuditScheduleBranch.branch.branchName}}
-                              </option> -->
+                            <select aria-label="Floating label select example" cSelect id="agreedByUserId"
+                              formControlName="agreedByUserId" name="agreedByUserId">
+                              <option value=null>Prepared By</option>
+                              <option *ngFor="let user of users" [value]="user.id">
+                                {{user.userName}}
+                              </option>
                             </select>
                           </div>
-                          <!-- <div cRow *ngIf="(workpaperForm.get('auditScheduleBranchId')?.invalid && workpaperForm.get('auditScheduleBranchId')?.errors) &&         
-                          (workpaperForm.get('auditScheduleBranchId')?.dirty || workpaperForm.get('auditScheduleBranchId')?.touched)">
+                          <div cRow *ngIf="(cMMForm.get('agreedByUserId')?.invalid && cMMForm.get('agreedByUserId')?.errors) &&         
+                          (cMMForm.get('agreedByUserId')?.dirty || cMMForm.get('agreedByUserId')?.touched)">
                           <small class="text-danger">
                             This field is required.
                           </small>                                 
-                        </div>  -->
+                        </div> 
                          <br/>
                       </div>
                       <div class="col-md-6">
                         <div form-floating>
-                            <select aria-label="Floating label select example" cSelect id="auditScheduleBranchId"
-                              formControlName="auditScheduleBranchId" name="auditScheduleBranchId">
-                              <option value=null>Select Branch</option>
-                              <!-- <option *ngFor="let wpAuditScheduleBranch of wpAuditScheduleBranches" [value]="wpAuditScheduleBranch.branch.id">
-                                {{wpAuditScheduleBranch.branch.branchName}}
-                              </option> -->
+                            <select aria-label="Floating label select example" cSelect id="agreedByUserId"
+                              formControlName="agreedByUserId" name="agreedByUserId">
+                              <option value=null>Agreed By</option>
+                              <option *ngFor="let user of users" [value]="user.id">
+                                {{user.userName}}
+                              </option>
                             </select>
                           </div>
-                          <!-- <div cRow *ngIf="(workpaperForm.get('auditScheduleBranchId')?.invalid && workpaperForm.get('auditScheduleBranchId')?.errors) &&         
-                          (workpaperForm.get('auditScheduleBranchId')?.dirty || workpaperForm.get('auditScheduleBranchId')?.touched)">
+                          <div cRow *ngIf="(cMMForm.get('agreedByUserId')?.invalid && cMMForm.get('agreedByUserId')?.errors) &&         
+                          (cMMForm.get('agreedByUserId')?.dirty || cMMForm.get('agreedByUserId')?.touched)">
                           <small class="text-danger">
                             This field is required.
                           </small>                                 
-                        </div>  -->
+                        </div> 
                          <br/>
                       </div>
                 </div>
-                
+                <!-- Start add subject matter table region -->
+                    <div class="row">
+                      <table class="table table-bordered row-border hover datatableStyle" >
+                        <thead >
+                          <tr>
+                            <th>SL No</th>
+                            <th>Subject Matter</th>
+                            <th>Action Owner</th>
+                            <th class="col-1 text-center">Actions</th>
+                          </tr>
+                        </thead>
+                        <tbody *ngIf="closingMeetingSubjects?.length != 0">
+          
+                          <tr *ngFor="let row of closingMeetingSubjects; let i = index">
+                            <td> {{i+1}} </td>
+                            <td><input type="text" class="form-control" id="subjectMatter" placeholder="Subject Matter"  name="{{row.subjectMatter}}"> </td>
+                            <td>
+                              <c-multi-select multiple class="form-control" name="{{row.userId}}" >
+                                <c-multi-select-option *ngFor="let user of users" [value]="user.id">{{user.userName}}
+                                </c-multi-select-option>
+                              </c-multi-select>
+                          </td>
+          
+                            <td class="text-center">
+                              <div class="btn-group" role="group" aria-label="Basic example" >
+                                <button type="button" class="btn btn-secondary btnEditColor" (click)="addItem()" >
+                                  <svg cIcon name="cilPlus" size="md" title="Add Button icon"></svg>
+                                </button>
+                                <button type="button" class="btn btn-danger btnDeleteColor" (click)="removeItem(i)">
+                                  <svg cIcon name="cilTrash" size="md" title="Delete Button Icon"></svg>
+                                </button>
+                              </div>
+                            </td>
+                          </tr>                    
+                        </tbody>
+                        <tbody *ngIf="closingMeetingSubjects?.length == 0">
+                          <tr>
+                            <td colspan="5" class="no-data-available">No data!</td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                <!-- End add subject matter table region -->
             </div>
+
+         
+
+
+
               <c-col xs="12">
                 <c-col md>
                   <button cButton class="btn btn-primary btnSaveColor me-1" (click)="onSubmit()">

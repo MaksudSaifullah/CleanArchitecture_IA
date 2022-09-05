@@ -11,7 +11,23 @@ export interface ClosingMeetingMinutes
     meetingHeld?: string;
     preparedByUserId?: string;
     agreedByUserId?: string;
+    presentUserId : UserList[];
+    appologiesUserId : UserList[];
     subjectMatter?: string;
     agreedBy?: string;
     createdOn?: Date;
+
+}
+
+export interface UserList
+{
+    userId?: string;
+    closingMeetingMinutesId?: string; 
+}
+
+export interface ClosingMeetingSubjects
+{
+    userId?: string;
+    closingMeetingMinutesId?: string; 
+    subjectMatter?: string;
 }

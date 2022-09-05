@@ -35,9 +35,11 @@ public class AuditPlanQueryRepository : QueryRepositoryBase<CompositeAuditPlan>,
 	  ,cnt.Name As CountryName
 	  ,cvt.Text As AuditTypeName
       ,ap.PlanningYearId
-	  ,cvta.Text As YearName
+	  ,cvta.Text As PlanningYear
       ,ap.[AssessmentFrom]
       ,ap.[AssessmentTo]
+	  ,ap.CreatedBy
+	  ,ap.CreatedOn
       ,ap.[IsDeleted]
   FROM [BranchAudit].[AuditPlan] AS ap
   Inner Join [BranchAudit].[RiskAssessment] as ra on ap.RiskAssessmentId = ra.Id

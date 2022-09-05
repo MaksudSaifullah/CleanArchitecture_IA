@@ -1,15 +1,15 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { AuditSchedule } from 'src/app/core/interfaces/branch-audit/auditSchedule.interface';
-import { issue } from 'src/app/core/interfaces/branch-audit/issue.interface';
+import { issue, IssueBranch, IssueOwner, IssueActionPlan } from 'src/app/core/interfaces/branch-audit/issue.interface';
 import { commonValueAndType } from 'src/app/core/interfaces/configuration/commonValueAndType.interface';
 import { paginatedResponseInterface } from 'src/app/core/interfaces/paginated.interface';
 import { FormService } from 'src/app/core/services/form.service';
 import { HttpService } from 'src/app/core/services/http.service';
 import {AlertService} from '../../../../core/services/alert.service';
 import { User } from '../../../../core/interfaces/branch-audit/user.interface';
-import { issueActionPlan } from '../../../../core/interfaces/branch-audit/issueActionPlan.interface';
 import { Router } from '@angular/router';
+import { AuditScheduleBranch, AuditScheduleBranchDetails } from 'src/app/core/interfaces/branch-audit/auditScheduleBranch.interface';
 
 @Component({
   selector: 'app-new-issue',
@@ -24,13 +24,17 @@ export class NewIssueComponent implements OnInit {
   code : commonValueAndType | undefined;
   auditId: any;
   auditSchedules: AuditSchedule[] = [];
+  auditScheduleBranches: AuditScheduleBranchDetails[] = [];
+  issueOwnerList: User[]=[];
   likelihoodType: commonValueAndType[] = [];
   impactType: commonValueAndType[] = [];
+  selectedAuditScheduleBranch: IssueBranch[]=[];
+  selectedIssueOwnerList : IssueOwner[]=[];
 
 
   actionPlanCode: any;
   userList: User[] = [];
-  actionPlans : issueActionPlan[] = [];
+  actionPlans : IssueActionPlan[] = [];
 //   actionPlans: [
 //     {
 //       "actionPlanCode": "AC-1001",
@@ -59,14 +63,15 @@ export class NewIssueComponent implements OnInit {
       id: [''],
       code: [''],
       issueTitle:['', [Validators.required, Validators.minLength(3), Validators.maxLength(500)]],
-      issueOwners:[''],
+      
       ratingType:[''],
       actionOwners:[''],
       targetDate:[Date, [Validators.required]],
       statusType:[''],
 
       auditScheduleId:[null,[Validators.required, Validators.pattern("^(?!null$).*$")]],
-      branchId:[''],
+      branchList:['',[Validators.required]],
+      issueOwnerList:['', [Validators.required]],
       impactTypeId:[null,[Validators.required, Validators.pattern("^(?!null$).*$")]],
       likelihoodTypeId:[null,[Validators.required, Validators.pattern("^(?!null$).*$")]],
       ratingTypeId:[''],
@@ -99,7 +104,11 @@ export class NewIssueComponent implements OnInit {
     this.LoadActionPlans();
   }
   onSubmitNewIssue(){
-    //redirect to action plan modal
+  //  // $('#d2').css('');
+  //   $('#d1').removeClass('active');
+  //   $('#d2').addClass('active');
+  //   $('#d2').css('active','true');     
+  //   $('#d2').prop("active", true);
   }
   onCancelNewIssue(){
     this.router.navigate(['branch-audit/issue-list']);
@@ -109,7 +118,7 @@ export class NewIssueComponent implements OnInit {
      // let convertedResp = resp as commonValueAndType;
       this.code = resp as commonValueAndType;
       this.issueForm.patchValue({code: this.code.text});
-      console.log(this.code);
+      //console.log(this.code);
     })    
   }
   LoadCountryId(){
@@ -122,16 +131,56 @@ export class NewIssueComponent implements OnInit {
   LoadAuditSchedules() 
   {
     const request={
-      creationId: "2C830294-8E18-ED11-B3B2-00155D610B18"
+      creationId: "25865382-7E27-ED11-B3B2-00155D610B18"
     }
-    console.log(request)
+    // console.log(request)
     this.http.post('AuditSchedule/getByAuditCreationId', request).subscribe(resp => {
       let convertedResp = resp as AuditSchedule[];
-      
       this.auditSchedules = convertedResp;     
       //console.log( this.auditSchedules)
     })
   }
+  onSelectAuditSchedule(scheduleId:any){
+    this.LoadBranches(scheduleId);
+    this.LoadIssueOwners();
+  }
+
+  LoadBranches(scheduleId:any){
+    this.auditScheduleBranches = [];
+   // console.log("hello from load branches",scheduleId);
+    this.http.get('commonValueAndType/getAuditScheduleBranch?ScheduleId='+ scheduleId).subscribe(resp => {
+      let convertedResp = resp as AuditScheduleBranchDetails[];
+      this.auditScheduleBranches = convertedResp;     
+      //console.log( this.auditScheduleBranches)
+    })
+  }
+
+  isBranchSelected(branchId:any){
+    for (let branch of this.selectedAuditScheduleBranch){
+      if(branch.branchId == branchId){
+        return true;
+      }
+     }
+     return false;
+  }
+
+  LoadIssueOwners(){
+    console.log("hello from load issue owner");
+    this.http.paginatedPost('userlist/Paginated', 100, 1, {userName: '', employeeName: '', userRole: '',})
+      .subscribe((resp) => {
+        let convertedResp = resp as paginatedResponseInterface<User>;
+        this.issueOwnerList = convertedResp.items;
+      });
+  }
+  isIssueOwnerSelected(ownerId:any){
+    for (let owner of this.selectedIssueOwnerList){
+      if(owner.id == ownerId){
+        return true;
+      }
+     }
+     return false;
+  }
+
   LoadLikelihoodLevel() {
     this.http.get('commonValueAndType/leveloflikelihood').subscribe(resp => {
       let convertedResp = resp as commonValueAndType[];
@@ -152,27 +201,16 @@ export class NewIssueComponent implements OnInit {
   }
   disabledInputField(){    
     this.issueForm.controls['auditId'].disable();
-    this.issueForm.controls['code'].disable();
+    //this.issueForm.controls['code'].disable();
  }
 //action plan
 
 LoadActionPlans(){
-  // let tempActionPlan: issueActionPlan = {
-  //   id: "0",
-  //   actionPlanCode: "AC-1001",
-  //   managementPlan: "red pencil",
-  //   owner: "someone",
-  //   targetDate: "red pencil"
-  // };
-  // this.actionPlans.push(tempActionPlan);
   this.LoadActionPlanCode().then((acPlnCode:any)=>{
     
-    var currentElement: issueActionPlan = {
-      id: "",
+    var currentElement: IssueActionPlan = {    
       actionPlanCode: acPlnCode,
       managementPlan: '',
-      owner: "",
-      targetDate: ''
     };
     this.actionPlans.push(currentElement);  
 
@@ -210,11 +248,11 @@ LoadUserList() {
 async addItem(index:any, managementPlan:any, targetDate:any) {
   this.LoadActionPlanCode().then((acPlnCode:any)=>{
     console.log(index, managementPlan, acPlnCode,targetDate);
-    var currentElement: issueActionPlan = {
+    var currentElement: IssueActionPlan = {
       id: "",
       actionPlanCode: acPlnCode,
-      managementPlan: '',
-      owner: "",
+      managementPlan: managementPlan.text,
+      ownerId: "",
       targetDate: targetDate
     };
     this.actionPlans.push(currentElement);
@@ -230,6 +268,73 @@ async addItem(index:any, managementPlan:any, targetDate:any) {
   console.log(this.actionPlans);
  }
  onSubmitActionPlan(){
+ 
+  if (this.issueForm.valid ){
+    if(this.formService.isEdit(this.issueForm.get('id') as FormControl)){
+      // this.http.put('topicHead',this.issueForm.value,null).subscribe(x=>{
+      //   this.formService.onSaveSuccess(localmodalId, this.ReloadAllDataTable());          
+      //   this.AlertService.success('Topic Head Updated Successful');
+      // });
+    }
+    else {
+      
+
+      let branchList: IssueBranch[] = [];
+      let issueOwnerList: IssueOwner[] = [];
+
+      let useca: IssueBranch[] = this.issueForm.value.branchList as IssueBranch[];
+      let issueOwner: IssueOwner[] = this.issueForm.value.issueOwnerList as IssueOwner[];
+
+      if (Array.isArray(useca)) {
+        useca.forEach(function (value) {
+          let urole: IssueBranch = { branchId: value.toString() }
+          branchList.push(urole);
+        }); 
+        
+      }
+      if (Array.isArray(issueOwner)) {
+        issueOwner.forEach(function (value) {
+          let urole: IssueOwner = { ownerId: value.toString() }
+          issueOwnerList.push(urole);
+        }); 
+        
+      }
+
+      const RequestModel = {
+        
+          code: this.issueForm.value.code,
+          auditScheduleId: this.issueForm.value.auditScheduleId,
+          issueTitle:this.issueForm.value.issueTitle,
+          policy: this.issueForm.value.policy,        
+          impactTypeId: this.issueForm.value.impactTypeId,
+          likelihoodTypeId: this.issueForm.value.likelihoodTypeId,
+          ratingTypeId: this.issueForm.value.ratingTypeId,
+          targetDate: this.issueForm.value.targetDate,        
+          details: this.issueForm.value.details,
+          rootCause: this.issueForm.value.rootCause,
+          businessImpact: this.issueForm.value.businessImpact,
+          potentialRisk: this.issueForm.value.potentialRisk,
+          auditorRecommendation: this.issueForm.value.auditorRecommendation,
+
+          // issueBranchList: this.selectedAuditScheduleBranch,
+           issueOwnerList: issueOwnerList,
+           branches: branchList,
+          actionPlans: this.actionPlans.slice(1),
+          statusTypeId: null,
+          remarks: '',
+        };
+        console.log(RequestModel);
+        this.http.post('issue',RequestModel).subscribe(x=>{
+          //this.formService.onSaveSuccess(this.router.navigate(['branch-audit/issue-list']));
+          this.AlertService.success('Topic Head Saved successfully');
+        });
+    }      
+  }
+  else {     
+    this.issueForm.markAllAsTouched();
+    this.AlertService.error('Provide valid data');
+    return;
+  }
 
  }
  onCancelActionPlan(){

@@ -2,5 +2,6 @@ export interface ScheduledBranch {
     auditScheduleId: string,
     branchId: string,
     branchName: string,
-    countryName: string
+    countryName: string,
+    auditee: string
 }

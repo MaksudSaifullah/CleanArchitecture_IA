@@ -25,45 +25,45 @@ namespace Internal.Audit.Infrastructure.Persistent.Migrations
                 table: "ClosingMeetingMinutes",
                 newName: "AuditScheduleBranchId");
 
-            migrationBuilder.AddColumn<Guid>(
-                name: "AuditScheduleConfigurationOwnerId",
-                schema: "Security",
-                table: "User",
-                type: "uniqueidentifier",
-                nullable: true);
+            //migrationBuilder.AddColumn<Guid>(
+            //    name: "AuditScheduleConfigurationOwnerId",
+            //    schema: "Security",
+            //    table: "User",
+            //    type: "uniqueidentifier",
+            //    nullable: true);
 
-            migrationBuilder.CreateIndex(
-                name: "IX_User_AuditScheduleConfigurationOwnerId",
-                schema: "Security",
-                table: "User",
-                column: "AuditScheduleConfigurationOwnerId");
+            //migrationBuilder.CreateIndex(
+            //    name: "IX_User_AuditScheduleConfigurationOwnerId",
+            //    schema: "Security",
+            //    table: "User",
+            //    column: "AuditScheduleConfigurationOwnerId");
 
-            migrationBuilder.AddForeignKey(
-                name: "FK_User_AuditScheduleConfigurationOwner_AuditScheduleConfigurationOwnerId",
-                schema: "Security",
-                table: "User",
-                column: "AuditScheduleConfigurationOwnerId",
-                principalSchema: "BranchAudit",
-                principalTable: "AuditScheduleConfigurationOwner",
-                principalColumn: "Id");
+            //migrationBuilder.AddForeignKey(
+            //    name: "FK_User_AuditScheduleConfigurationOwner_AuditScheduleConfigurationOwnerId",
+            //    schema: "Security",
+            //    table: "User",
+            //    column: "AuditScheduleConfigurationOwnerId",
+            //    principalSchema: "BranchAudit",
+            //    principalTable: "AuditScheduleConfigurationOwner",
+            //    principalColumn: "Id");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropForeignKey(
-                name: "FK_User_AuditScheduleConfigurationOwner_AuditScheduleConfigurationOwnerId",
-                schema: "Security",
-                table: "User");
+            //migrationBuilder.DropForeignKey(
+            //    name: "FK_User_AuditScheduleConfigurationOwner_AuditScheduleConfigurationOwnerId",
+            //    schema: "Security",
+            //    table: "User");
 
-            migrationBuilder.DropIndex(
-                name: "IX_User_AuditScheduleConfigurationOwnerId",
-                schema: "Security",
-                table: "User");
+            //migrationBuilder.DropIndex(
+            //    name: "IX_User_AuditScheduleConfigurationOwnerId",
+            //    schema: "Security",
+            //    table: "User");
 
-            migrationBuilder.DropColumn(
-                name: "AuditScheduleConfigurationOwnerId",
-                schema: "Security",
-                table: "User");
+            //migrationBuilder.DropColumn(
+            //    name: "AuditScheduleConfigurationOwnerId",
+            //    schema: "Security",
+            //    table: "User");
 
             migrationBuilder.RenameColumn(
                 name: "AuditScheduleBranchId",

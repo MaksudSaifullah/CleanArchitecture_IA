@@ -102,6 +102,11 @@ public class InternalAuditContextSeed
             context.CommonValueAndTypes.AddRange(AuditScheduleRiskOwnerType());
             await context.SaveChangesAsync();
         }
+        if (!context.CommonValueAndTypes.Where(x => x.Type == "AUDITCONFIGMILESTONE").Any())
+        {
+            context.CommonValueAndTypes.AddRange(AuditConfigMileStone());
+            await context.SaveChangesAsync();
+        }
     }
 
 
@@ -730,6 +735,33 @@ public class InternalAuditContextSeed
             ,new CommonValueAndType
             {
                 IsActive = true,CreatedBy="admin",CreatedOn=DateTime.Now,Type="AUDITSCHEDULERISKOWNERTYPE",SubType="",Value=2,Text="Action Owner",SortOrder=20,
+            }
+        };
+    }
+
+    private static IEnumerable<CommonValueAndType> AuditConfigMileStone()
+    {
+        return new List<CommonValueAndType>
+        {
+            new CommonValueAndType
+            {
+                IsActive = true,CreatedBy="admin",CreatedOn=DateTime.Now,Type="AUDITCONFIGMILESTONE",SubType="",Value=1,Text="Audit Initiation Date",SortOrder=10,
+            }
+            ,new CommonValueAndType
+            {
+                IsActive = true,CreatedBy="admin",CreatedOn=DateTime.Now,Type="AUDITCONFIGMILESTONE",SubType="",Value=2,Text="Planning And Scoping Start Date",SortOrder=20,
+            }
+            ,new CommonValueAndType
+            {
+                IsActive = true,CreatedBy="admin",CreatedOn=DateTime.Now,Type="AUDITCONFIGMILESTONE",SubType="",Value=3,Text="Planning And Scoping End Date",SortOrder=30,
+            }
+            ,new CommonValueAndType
+            {
+                IsActive = true,CreatedBy="admin",CreatedOn=DateTime.Now,Type="AUDITCONFIGMILESTONE",SubType="",Value=4,Text="Field Work Start Date",SortOrder=40,
+            }
+            ,new CommonValueAndType
+            {
+                IsActive = true,CreatedBy="admin",CreatedOn=DateTime.Now,Type="AUDITCONFIGMILESTONE",SubType="",Value=5,Text="Field Work End Date",SortOrder=50,
             }
         };
     }

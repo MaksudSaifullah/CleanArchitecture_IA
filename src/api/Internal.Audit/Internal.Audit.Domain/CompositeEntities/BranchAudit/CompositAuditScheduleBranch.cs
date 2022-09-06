@@ -13,6 +13,7 @@ namespace Internal.Audit.Domain.CompositeEntities.BranchAudit
         public Guid BranchId { get; set; }
         public string BranchName { get; set; }
         public string CountryName { get; set; }
+        public string Auditee { get; set; }
 
     }
 }

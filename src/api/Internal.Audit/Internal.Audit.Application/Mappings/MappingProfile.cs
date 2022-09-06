@@ -181,6 +181,13 @@ using Internal.Audit.Application.Features.AuditScheduleConfigurationsOwner.Comma
 using Internal.Audit.Application.Features.AuditScheduleConfigurationsOwner.Queries.GetAllByAuditScheduleId;
 using Internal.Audit.Application.Features.ClosingMeetingMinutes.Queries.GetClosingMeetingMinuteById;
 using Internal.Audit.Application.Features.ClosingMeetingMinutes.Queries.GetClosingMeetingMinutesBaseById;
+using Internal.Audit.Application.Features.NotificationToAuditees.Queries.GetNotificationToAuditeeList;
+using Internal.Audit.Application.Features.NotificationToAuditees.Commands.AddNotificationToAuditee;
+using Internal.Audit.Application.Features.NotificationToAuditees.Commands.UpdateNotificationToAuditee;
+using Internal.Audit.Application.Features.NotificationToAuditees.Commands.DeleteNotificationToAuditee;
+using Internal.Audit.Application.Features.AuditConfigMilestones.Commands.AddAuditConfigMilestones;
+using Internal.Audit.Application.Features.AuditConfigMilestones.Queries.GetByAuditScheduleId;
+using Internal.Audit.Application.Features.AuditScheduleConfigurationsOwner.Queries.GetOwnerList;
 using Internal.Audit.Application.Features.Issues.Commands.AddIssue;
 
 namespace Internal.Audit.Application.Mappings;
@@ -500,11 +507,32 @@ public class MappingProfile : Profile
        
         CreateMap<ClosingMeetingMinute, GetClosingMeetingMinutesResponseDTO>().ReverseMap();
 
+        CreateMap<NotificationToAuditee, NotificationToAuditeeDTO>().ReverseMap();
+        CreateMap<CompositeNotificationToAuditee, NotificationToAuditeeDTO>().ReverseMap();
+        CreateMap<AddNotifedUsersTo, NotifedUsersTo>().ReverseMap();
+        CreateMap<AddNotifedUsersCC, NotifedUsersCC>().ReverseMap();
+        CreateMap<AddNotifedUsersBCC, NotifedUsersBCC>().ReverseMap();
+        CreateMap<NotificationToAuditee, AddNotificationToAuditeeResponseDTO>().ReverseMap();
+        CreateMap<NotificationToAuditee, AddNotificationToAuditeeCommand>().ReverseMap();
+        CreateMap<NotificationToAuditee, UpdateNotificationToAuditeeResponseDTO>().ReverseMap();
+        CreateMap<NotificationToAuditee, UpdateNotificationToAuditeeCommand>().ReverseMap();
+        CreateMap<NotificationToAuditee, DeleteNotificationToAuditeeResponseDTO>().ReverseMap();
+        CreateMap<NotificationToAuditee, DeleteNotificationToAuditeeCommand>().ReverseMap();
+
+
         CreateMap<Issue, AddIssueCommand>().ReverseMap();
         CreateMap<IssueOwner, AddIssueOwnerCommand>().ReverseMap();
         CreateMap<IssueBranch, AddIssueBranchCommand>().ReverseMap();
         CreateMap<IssueActionPlan, AddIssueActionPlanCommand>().ReverseMap();
         CreateMap<IssueActionPlanOwner, AddIssueActionOwnerListCommand>().ReverseMap();
 
+        CreateMap<User, UserConfiguration>().ReverseMap();
+        CreateMap<AuditScheduleConfigurationOwner, GetAllByAuditScheduledIdResponseDTO>() // needs `Inst` -> `InstDTO` map
+    .ForMember(dst => dst.BranchName, opt => opt.MapFrom(src => src.Branch.BranchName)).ReverseMap();
+        CreateMap<AuditConfigMileStone, AddAuditConfigMilestoneCommandRaw>().ReverseMap();
+        CreateMap<AuditConfigMileStone, GetByAuditScheduleByIdMilestoneQueryResponseDTO>().ReverseMap();
+
+
+        CreateMap<CompositAuditScheduleOwner, GetOwnerListResponseDTO>().ReverseMap();
     }
 }

@@ -12,5 +12,6 @@ namespace Internal.Audit.Application.Features.AuditSchedules.Queries.GetAuditSch
         public Guid BranchId { get; set; }
         public string BranchName { get; set; }
         public string CountryName { get; set; }
+        public string Auditee { get; set; }
     }
 }

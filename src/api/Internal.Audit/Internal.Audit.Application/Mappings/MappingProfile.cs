@@ -179,10 +179,6 @@ using Internal.Audit.Application.Features.ClosingMeetingMinutes.Commands.DeleteC
 using Internal.Audit.Application.Features.WeightScoreConfigurations.Commands.AddWeightScoreCommand;
 using Internal.Audit.Application.Features.AuditScheduleConfigurationsOwner.Commands.AddAuditScheduleConfigurationsOwnerCommand;
 using Internal.Audit.Application.Features.AuditScheduleConfigurationsOwner.Queries.GetAllByAuditScheduleId;
-using Internal.Audit.Application.Features.NotificationToAuditees.Queries.GetNotificationToAuditeeList;
-using Internal.Audit.Application.Features.NotificationToAuditees.Commands.AddNotificationToAuditee;
-using Internal.Audit.Application.Features.NotificationToAuditees.Commands.UpdateNotificationToAuditee;
-using Internal.Audit.Application.Features.NotificationToAuditees.Commands.DeleteNotificationToAuditee;
 
 namespace Internal.Audit.Application.Mappings;
 
@@ -497,17 +493,6 @@ public class MappingProfile : Profile
         CreateMap<User, UserConfiguration>().ReverseMap();//
         CreateMap<AuditScheduleConfigurationOwner, GetAllByAuditScheduledIdResponseDTO>() // needs `Inst` -> `InstDTO` map
     .ForMember(dst => dst.BranchName, opt => opt.MapFrom(src => src.Branch.BranchName)).ReverseMap();
-
-        CreateMap<NotificationToAuditee, NotificationToAuditeeDTO>().ReverseMap();
-        CreateMap<CompositeNotificationToAuditee, NotificationToAuditeeDTO>().ReverseMap();
-        CreateMap<AddNotifedUsersTo, NotifedUsersTo>().ReverseMap();
-        CreateMap<AddNotifedUsersCC, NotifedUsersCC>().ReverseMap();
-        CreateMap<AddNotifedUsersBCC, NotifedUsersBCC>().ReverseMap();
-        CreateMap<NotificationToAuditee, AddNotificationToAuditeeResponseDTO>().ReverseMap();
-        CreateMap<NotificationToAuditee, AddNotificationToAuditeeCommand>().ReverseMap();
-        CreateMap<NotificationToAuditee, UpdateNotificationToAuditeeResponseDTO>().ReverseMap();
-        CreateMap<NotificationToAuditee, UpdateNotificationToAuditeeCommand>().ReverseMap();
-        CreateMap<NotificationToAuditee, DeleteNotificationToAuditeeResponseDTO>().ReverseMap();
-        CreateMap<NotificationToAuditee, DeleteNotificationToAuditeeCommand>().ReverseMap();
+       
     }
 }

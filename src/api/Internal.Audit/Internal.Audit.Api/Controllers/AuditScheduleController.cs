@@ -13,6 +13,7 @@ using Internal.Audit.Application.Features.AuditScheduleConfigurationsOwner.Comma
 using Internal.Audit.Application.Features.AuditScheduleConfigurationsOwner.Queries.GetAllByAuditScheduleId;
 using Internal.Audit.Application.Features.AuditConfigMilestones.Commands.AddAuditConfigMilestones;
 using Internal.Audit.Application.Features.AuditConfigMilestones.Queries.GetByAuditScheduleId;
+using Internal.Audit.Application.Features.AuditSchedules.Commands.UpdateScheduleExecution;
 
 namespace Internal.Audit.Api.Controllers;
 
@@ -57,6 +58,12 @@ public class AuditScheduleController : ControllerBase
     public async Task<ActionResult<UpdateScheduleResponseDTO>> Update(UpdateScheduleCommand command)
     {
         var result = await _mediator.Send(command);
+        return Ok(result);
+    }
+    [HttpPut("UpdateState")]
+    public async Task<ActionResult<UpdateScheduleExecutionCommandResponseDTO>> UpdateState(Guid Id, int ExecutionState=-1,int ScheduleState=-1)
+    {
+        var result = await _mediator.Send(new UpdateScheduleExecutionCommand(Id,ExecutionState,ScheduleState));
         return Ok(result);
     }
     [HttpDelete("{Id}")]

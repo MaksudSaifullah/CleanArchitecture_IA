@@ -267,6 +267,7 @@ export class ClosingMeetingMinutesCreateComponent implements OnInit {
       let countryId = scheduleData.countryId;
       this.GetMeetingMinutesCode(countryId);
       this.LoadBranches(scheduleId);
+      console.log("CHECKING",scheduleId);
       this.cMMForm.patchValue({
         scheduleCode: scheduleData.scheduleId,
       });

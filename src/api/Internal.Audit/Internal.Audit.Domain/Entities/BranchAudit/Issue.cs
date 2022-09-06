@@ -10,8 +10,6 @@ namespace Internal.Audit.Domain.Entities.BranchAudit;
 public class Issue : EntityBase
 {
 	[Required]
-	[MaxLength(20)]
-	//[Index("TitleIndex", IsUnique = true)]
 	public string Code { get; set; } = null!;
 	//[Required]
 	//public Guid AuditCreationId { get; set; }
@@ -24,9 +22,8 @@ public class Issue : EntityBase
     [Required]
 	public Guid RatingTypeId { get; set; }
 	[Required]
-	[DefaultValue("0B838C61-2F0E-ED11-B3B2-00155D610B18")]
 	public Guid StatusTypeId { get; set; }
-	[Required]
+    [Required]
 	[MaxLength(500)]
 	public string IssueTitle { get; set; } = null!;
 	[Required]	

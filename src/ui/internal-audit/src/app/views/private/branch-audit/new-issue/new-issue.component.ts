@@ -33,7 +33,7 @@ export class NewIssueComponent implements OnInit {
 
 
   actionPlanCode: any;
-  userList: User[] = [];
+  actionOwnerList: User[] = [];
   actionPlans : IssueActionPlan[] = [];
 //   actionPlans: [
 //     {
@@ -242,14 +242,13 @@ LoadUserList() {
   "employeeName": "",
   "userRole": ""}).subscribe(resp => {
     let convertedResp = resp as paginatedResponseInterface<User>;
-    this.userList = convertedResp.items;
+    this.actionOwnerList = convertedResp.items;
   })
 }
 async addItem(index:any, managementPlan:any, targetDate:any) {
   this.LoadActionPlanCode().then((acPlnCode:any)=>{
     console.log(index, managementPlan, acPlnCode,targetDate);
     var currentElement: IssueActionPlan = {
-      id: "",
       actionPlanCode: acPlnCode,
       managementPlan: managementPlan.text,
       //issueActionPlanOwnerList: [],
@@ -268,6 +267,7 @@ async addItem(index:any, managementPlan:any, targetDate:any) {
   console.log(this.actionPlans);
  }
  onSubmitActionPlan(){
+  console.log(this.actionPlans);
  
   if (this.issueForm.valid ){
     if(this.formService.isEdit(this.issueForm.get('id') as FormControl)){
@@ -312,14 +312,14 @@ async addItem(index:any, managementPlan:any, targetDate:any) {
           // issueBranchList: this.selectedAuditScheduleBranch,
            issueOwnerList: issueOwnerList,
            issueBranchList: branchList,
-           actionPlans: this.actionPlans.slice(1),
+           actionPlans: this.actionPlans,
            //statusTypeId: '', default value set on issue table
            remarks: '',
         };
         console.log(RequestModel);
         this.http.post('issue',RequestModel).subscribe(x=>{
           //this.formService.onSaveSuccess(this.router.navigate(['branch-audit/issue-list']));
-          this.AlertService.success('Topic Head Saved successfully');
+          this.AlertService.success('Issue Saved successfully');
         });
     }      
   }

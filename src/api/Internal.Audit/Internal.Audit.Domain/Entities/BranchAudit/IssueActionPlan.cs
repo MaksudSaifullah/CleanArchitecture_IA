@@ -10,7 +10,6 @@ namespace Internal.Audit.Domain.Entities.BranchAudit;
 public class IssueActionPlan : EntityBase
 {
 	[Required]
-	[MaxLength(20)]
 	public string ActionPlanCode { get; set; } = null!;
 	[Required]
 	public Guid IssueId { get; set; }

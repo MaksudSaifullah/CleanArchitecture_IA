@@ -9,7 +9,7 @@ namespace Internal.Audit.Application.Features.Issues.Commands.AddIssue
         public Guid ImpactTypeId { get; set; }
         public Guid LikelihoodTypeId { get; set; }
         public Guid RatingTypeId { get; set; }
-        public Guid? StatusTypeId { get; set; }
+        public Guid StatusTypeId { get; set; } = new Guid("0B838C61-2F0E-ED11-B3B2-00155D610B18");
         public string IssueTitle { get; set; } = null!;
         public string Policy { get; set; } = null!;
         public DateTime TargetDate { get; set; }

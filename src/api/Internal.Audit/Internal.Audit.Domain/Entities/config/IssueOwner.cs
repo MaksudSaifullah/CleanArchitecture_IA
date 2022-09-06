@@ -18,6 +18,4 @@ public class IssueOwner : EntityBase
 
 	[ForeignKey("IssueId")]
 	public virtual Issue Issue { get; set; } = null!;
-	[ForeignKey("OwnerId")]
-	public virtual Employee Employee { get; set; } = null!;
 }

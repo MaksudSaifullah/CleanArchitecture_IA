@@ -301,9 +301,8 @@
                       <td> {{row.actionPlanCode}} </td>
                       <td><input type="text" class="form-control" id="managementPlan" placeholder="Management Action Plan"  name="{{row.managementPlan}}" #managementPlan [(ngModel)]="row.managementPlan"></td>
                       <td> <!--{{row.owner}} -->
-
                         <c-multi-select multiple class="form-control the_dropdown" [(ngModel)]="row.owner" name="{{row.owner}}">
-                          <c-multi-select-option *ngFor="let owner of userList" [value]="owner.id">{{owner.userName}}
+                          <c-multi-select-option *ngFor="let owner of actionOwnerList" [value]="owner.id">{{owner.userName}}
                           </c-multi-select-option>
                         </c-multi-select>
                       </td>
@@ -335,7 +334,7 @@
                     <svg cIcon name="cilX" size="md" title="Close Button Icon"></svg> Cancel
                   </button>
                 </div>
-                <!-- <div>{{actionPlans | json}}</div> -->
+                <div>{{actionPlans | json}}</div>
 
               </div>
              </div>

@@ -188,12 +188,16 @@ using Internal.Audit.Application.Features.NotificationToAuditees.Commands.Delete
 using Internal.Audit.Application.Features.AuditConfigMilestones.Commands.AddAuditConfigMilestones;
 using Internal.Audit.Application.Features.AuditConfigMilestones.Queries.GetByAuditScheduleId;
 using Internal.Audit.Application.Features.AuditScheduleConfigurationsOwner.Queries.GetOwnerList;
+
 using Internal.Audit.Domain.CompositeEntities.ProcessAndControlAudit;
 using Internal.Audit.Application.Features.RiskCriteriasPCA.Queries.GetRiskCriteriaList;
 using Internal.Audit.Application.Features.RiskCriteriasPCA.Queries.GetRiskCriteriaById;
 using Internal.Audit.Application.Features.RiskCriteriasPCA.Commands.AddRiskCriteria;
 using Internal.Audit.Application.Features.RiskCriteriasPCA.Commands.UpdateRiskCriteria;
 using Internal.Audit.Application.Features.RiskCriteriasPCA.Commands.DeleteRiskCriteria;
+
+using Internal.Audit.Application.Features.Issues.Commands.AddIssue;
+
 
 namespace Internal.Audit.Application.Mappings;
 
@@ -525,6 +529,11 @@ public class MappingProfile : Profile
         CreateMap<NotificationToAuditee, DeleteNotificationToAuditeeCommand>().ReverseMap();
 
 
+        CreateMap<Issue, AddIssueCommand>().ReverseMap();
+        CreateMap<IssueOwner, AddIssueOwnerCommand>().ReverseMap();
+        CreateMap<IssueBranch, AddIssueBranchCommand>().ReverseMap();
+        CreateMap<IssueActionPlan, AddIssueActionPlanCommand>().ReverseMap();
+        CreateMap<IssueActionPlanOwner, AddIssueActionOwnerListCommand>().ReverseMap();
 
         CreateMap<User, UserConfiguration>().ReverseMap();
         CreateMap<AuditScheduleConfigurationOwner, GetAllByAuditScheduledIdResponseDTO>() // needs `Inst` -> `InstDTO` map

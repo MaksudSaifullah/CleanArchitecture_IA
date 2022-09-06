@@ -268,15 +268,9 @@
                     </div>
                     <div class="col-md-6">
                       <div class="a btn-group" role="group" aria-label="Basic example">
-                        <!-- <button [cModalToggle]="verticallyCenteredModalSetDate.id" class="btn btnCreateColor"  cButton > Add </button> 
-                        <button  class="btn btnCreateColor"  cButton (click)="editSetDate(verticallyCenteredModalSetDate.id)">Update</button>  -->
-                        
+                      
                       </div>
-                        <!-- <div class="a row">
-                            <div class="col-md-6">
-                                <button [cModalToggle]="verticallyCenteredModalSetDate.id" class="btnCreateColor"  cButton > Add </button> 
-                            </div>
-                        </div> -->
+                        
                     </div>
                     
                 </div>
@@ -332,86 +326,7 @@
           </div>
         </div>
       </div>
-      <!-- <form [formGroup]="scheduleConfigSetDateForm" (ngSubmit)="onSubmitSetDate(verticallyCenteredModalSetDate)" novalidate>
-      <c-modal #verticallyCenteredModalSetDate alignment="center" id="verticallyCenteredModalSetDate">
-        <c-modal-header>
-          <h5 cModalTitle *ngIf="!formService.isEdit(this.scheduleConfigSetDateForm.get('id'))">Add Action Owner</h5>
-          <h5 cModalTitle *ngIf="formService.isEdit(this.scheduleConfigSetDateForm.get('id'))">Update Action Owner</h5>
-          <button [cModalToggle]="verticallyCenteredModalActionOwner.id" cButtonClose></button>
-        </c-modal-header>
-        <c-modal-body>
-          <div class="col-lg-12" >
-            <input type="hidden" formControlName="id"/>
-
-            <div class="form-floating">
-              <input class="form-control" placeholder="auditInitiationDate" formControlName="auditInitiationDate" id="auditInitiationDate" type="date" >
-              <label for="auditInitiationDate">Audit Initiation Date</label>
-            </div>
-            <div cRow *ngIf="scheduleConfigSetDateForm.get('auditInitiationDate')?.invalid && scheduleConfigSetDateForm.get('auditInitiationDate')?.errors &&
-                  (scheduleConfigSetDateForm.get('auditInitiationDate')?.dirty || scheduleConfigSetDateForm.get('auditInitiationDate')?.touched)">
-              <small class="text-danger" *ngIf="auditForm.get('auditInitiationDate').hasError('required')">
-                This field is required.
-              </small>                                 
-            </div>
-            <br>   
-            <div class="form-floating">
-              <input class="form-control" placeholder="planningAndScopingStartDate" formControlName="planningAndScopingStartDate" id="planningAndScopingStartDate" type="date" >
-              <label for="planningAndScopingStartDate">Planning And Scoping Start Date</label>
-            </div>
-            <div cRow *ngIf="scheduleConfigSetDateForm.get('planningAndScopingStartDate')?.invalid && scheduleConfigSetDateForm.get('planningAndScopingStartDate')?.errors &&
-                  (scheduleConfigSetDateForm.get('planningAndScopingStartDate')?.dirty || scheduleConfigSetDateForm.get('planningAndScopingStartDate')?.touched)">
-              <small class="text-danger" *ngIf="auditForm.get('planningAndScopingStartDate').hasError('required')">
-                This field is required.
-              </small>                                 
-            </div>
-            <br>                   
-            <div class="form-floating">
-              <input class="form-control" placeholder="planningAndScopingEndDate" formControlName="planningAndScopingEndtDate" id="planningAndScopingEndDate" type="date" >
-              <label for="planningAndScopingEndDate">Planning And Scoping End Date</label>
-            </div>
-            <div cRow *ngIf="scheduleConfigSetDateForm.get('planningAndScopingEndDate')?.invalid && scheduleConfigSetDateForm.get('planningAndScopingEndDate')?.errors &&
-                  (scheduleConfigSetDateForm.get('planningAndScopingEndDate')?.dirty || scheduleConfigSetDateForm.get('planningAndScopingEndDate')?.touched)">
-              <small class="text-danger" *ngIf="auditForm.get('planningAndScopingEndDate').hasError('required')">
-                This field is required.
-              </small>                                 
-            </div>
-            <br>       
-            <div class="form-floating">
-              <input class="form-control" placeholder="fieldWorkStartDate" formControlName="fieldWorkStartDate" id="fieldWorkStartDate" type="date" >
-              <label for="fieldWorkStartDate">Field Work Start Date</label>
-            </div>
-            <div cRow *ngIf="scheduleConfigSetDateForm.get('fieldWorkStartDate')?.invalid && scheduleConfigSetDateForm.get('fieldWorkStartDate')?.errors &&
-                  (scheduleConfigSetDateForm.get('fieldWorkStartDate')?.dirty || scheduleConfigSetDateForm.get('fieldWorkStartDate')?.touched)">
-              <small class="text-danger" *ngIf="auditForm.get('fieldWorkStartDate').hasError('required')">
-                This field is required.
-              </small>                                 
-            </div>
-            <br>       
-            <div class="form-floating">
-              <input class="form-control" placeholder="fieldWorkEndDate" formControlName="fieldWorkEndDate" id="fieldWorkStartDate" type="date" >
-              <label for="fieldWorkEndDate">Field Work End Date</label>
-            </div>
-            <div cRow *ngIf="scheduleConfigSetDateForm.get('fieldWorkEndDate')?.invalid && scheduleConfigSetDateForm.get('fieldWorkEndDate')?.errors &&
-                  (scheduleConfigSetDateForm.get('fieldWorkEndDate')?.dirty || scheduleConfigSetDateForm.get('fieldWorkEndDate')?.touched)">
-              <small class="text-danger" *ngIf="auditForm.get('fieldWorkEndDate').hasError('required')">
-                This field is required.
-              </small>                                 
-            </div>
-            <br>       
-            
-                   
-          </div>
-        </c-modal-body>
-        <c-modal-footer>
-          <button cButton class="btn btn-primary btnSaveColor me-1"  (click)="onSubmitActionOwner(verticallyCenteredModalSetDate)">
-            <svg cIcon name="cilSave" size="md" title="Save Button Icon"></svg> Save
-          </button>
-          <button [cModalToggle]="verticallyCenteredModalSetDate.id" cButton class="btn btn-danger btnCancelColor me-1">
-            <svg cIcon name="cilX" size="md" title="Close Button Icon"></svg> Close
-          </button>
-        </c-modal-footer>
-      </c-modal>
-      </form> -->
+     
     </c-tab-pane>
        
 

@@ -41,7 +41,10 @@
                       </button> 
                     </div>
                     <div *ngIf="moveToInprogress" >
-                      <button  class="btn btnCreateColor"  cButton [routerLink]="['/branch-audit/schedule-execution', scheduleParamId,auditParamId]"> Execution 
+                      <button  class="btn btnCreateColor"  cButton 
+                      [routerLink]="['/branch-audit/schedule-execution', 
+                      scheduleParamId!=undefined?scheduleParamId:scheduleParamIdFromConfiguration,
+                      auditParamId!=undefined?auditParamId:auditParamIdFromConfiguration]"> Execution 
                       </button> 
                     </div>
                     <div *ngIf="moveToInprogress" >
@@ -53,7 +56,9 @@
                       </button> 
                     </div>
                     <div *ngIf="moveToDone" >
-                      <button  class="btn btnCreateColor"   cButton [routerLink]="['/branch-audit/schedule-execution',scheduleParamId,auditParamId]"> View Execution
+                      <button  class="btn btnCreateColor"   cButton [routerLink]="['/branch-audit/schedule-execution',
+                      scheduleParamId!=undefined?scheduleParamId:scheduleParamIdFromConfiguration,
+                      auditParamId!=undefined?auditParamId:auditParamIdFromConfiguration]"> View Execution
                       </button> 
                     </div>
                     <div *ngIf="moveToDone" >
@@ -231,7 +236,7 @@
                         </td>
                       <td>{{ branch.countryName }}</td>
                       <td>{{ branch.branchName }}</td>
-                      <td>{{ branch.branchName }}</td>
+                      <td>{{ branch.auditee }}</td>
                      
                     </tr>
                   </tbody>

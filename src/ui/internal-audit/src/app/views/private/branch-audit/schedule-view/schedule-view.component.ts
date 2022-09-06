@@ -199,7 +199,9 @@ export class ScheduleViewComponent implements OnInit {
     this.router.navigate(['branch-audit/audit-view'], { queryParams: { id: this.auditParamId!=undefined? this.auditParamId: this.auditParamIdFromConfiguration } });
   }
   RedirectToScheduelConfiguration(){
-    this.router.navigate(['branch-audit/schedule-configuration'],{ queryParams: { sId: this.scheduleParamId,aId: this.auditParamId } });
+    this.router.navigate(['branch-audit/schedule-configuration'],
+    { queryParams: { sId: this.scheduleParamId!=undefined?this.scheduleParamId:this.scheduleParamIdFromConfiguration ,
+      aId: this.auditParamId!=undefined?this.auditParamId:this.auditParamIdFromConfiguration } });
   }
   MoveToInprogressClick(){
     this.moveToInprogressDefault=false;

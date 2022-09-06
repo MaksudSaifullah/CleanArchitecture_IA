@@ -24,16 +24,21 @@ export class ScheduleExecutionComponent implements OnInit {
   auditToDate:any;
   scheduleParamId:string='';
   auditParamId:string='';
-  auditScheduleExecutionView:FormGroup;
+  auditScheduleExecutionViewForm:FormGroup;
+  auditScheduleExecutionMenuForm:FormGroup;
+  notificationToAuditeeForm:FormGroup;
+  planningAndScopingForm:FormGroup;
   selectedScheduleParticipant: AuditScheduleParticipantResponse []=[];
   users: User[]=[];
   notificationToAuditee:boolean=false
   noOfBranchChecklist:number=0
   noOfSampleTestTemplate:number=0
   auditScheduleExecutionViewSelected:boolean=true;
+  notificationToAuditeeSelected:boolean=false;
+  planningAndScopingSelected:boolean=false;
   
   constructor(private http: HttpService, private fb: FormBuilder, private AlertService: AlertService, private router: Router, private activateRoute: ActivatedRoute) { 
-    this.auditScheduleExecutionView = this.fb.group({
+    this.auditScheduleExecutionViewForm = this.fb.group({
       id: [''],
       auditTypeId: [''],
       countryId: [''],
@@ -43,6 +48,29 @@ export class ScheduleExecutionComponent implements OnInit {
       auditPeriodTo: [''],      
       teamLeaderList:[''],
       auditorList:[''], 
+    })
+    this.notificationToAuditeeForm = this.fb.group({
+      auditId: [''],
+      riskOwnerList:[''],
+      ccList: [''],
+      bccList: [''],      
+      othersList:['']
+    })
+    this.planningAndScopingForm = this.fb.group({
+      id: [''],
+      auditTypeId: [''],
+      countryId: [''],
+      auditId: [''],
+      scheduleId:[''],
+      auditPeriodFrom: [''],
+      auditPeriodTo: [''],      
+      teamLeaderList:[''],
+      auditorList:[''], 
+    })
+    this.auditScheduleExecutionMenuForm=this.fb.group({
+      btn_Info:[],
+      ddl_1:['1'],
+      ddl_2:['1']
     })
   }
 
@@ -72,7 +100,7 @@ export class ScheduleExecutionComponent implements OnInit {
         this.auditFromDate=formatDate(auditScheduleResponse.auditCreation?.auditPeriodFrom, 'yyyy-MM-dd', 'en'),
         this.auditToDate=formatDate(auditScheduleResponse.auditCreation?.auditPeriodTo, 'yyyy-MM-dd', 'en'),
         
-        this.auditScheduleExecutionView.patchValue( 
+        this.auditScheduleExecutionViewForm.patchValue( 
           {
             auditId:auditScheduleResponse.auditCreation?.auditId, 
             auditTypeId: auditScheduleResponse.auditCreation?.auditTypeId,
@@ -84,14 +112,30 @@ export class ScheduleExecutionComponent implements OnInit {
       });
   }
   GetAuditById(id:string){
-    this.http
-    .getById('audit',id)
-    .subscribe(res => {
+    this.http.getById('audit',id).subscribe(res => {
         const auditResponse = res as Audit;
         this.auditName=auditResponse.auditName;
     });
   }
-  changeForm(){
+  gotoView(){
+    this.auditScheduleExecutionViewSelected=true;
+    this.notificationToAuditeeSelected=false;
+    this.planningAndScopingSelected=false;
+  }
+  changeDDL_1Form(){
+    var selectedValue= this.auditScheduleExecutionMenuForm.value.ddl_1;
+    if(selectedValue==1){
+      this.planningAndScopingSelected=true;
+      this.notificationToAuditeeSelected=false;
+      this.auditScheduleExecutionViewSelected=false;
+    }
+    if(selectedValue==2){
+      this.planningAndScopingSelected=false;
+      this.notificationToAuditeeSelected=true;
+      this.auditScheduleExecutionViewSelected=false;
+    }
+  }
+  changeDDL_2Form(){
     
   }
   isSelectedTeamLeader(id:any){

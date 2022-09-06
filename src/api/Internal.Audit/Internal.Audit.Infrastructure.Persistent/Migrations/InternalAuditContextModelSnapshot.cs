@@ -622,10 +622,10 @@ namespace Internal.Audit.Infrastructure.Persistent.Migrations
                         .HasMaxLength(300)
                         .HasColumnType("nvarchar(300)");
 
-                    b.Property<Guid>("AuditScheduleId")
+                    b.Property<Guid>("AuditScheduleBranchId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid>("BranchId")
+                    b.Property<Guid>("AuditScheduleId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("CreatedBy")
@@ -973,6 +973,229 @@ namespace Internal.Audit.Infrastructure.Persistent.Migrations
                     b.HasIndex("IssueId");
 
                     b.ToTable("IssueBranch", "BranchAudit");
+                });
+
+            modelBuilder.Entity("Internal.Audit.Domain.Entities.BranchAudit.NotifedUsersBCC", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier")
+                        .HasColumnName("Id")
+                        .HasDefaultValueSql("newsequentialid()");
+
+                    b.Property<string>("ApprovedBy")
+                        .HasMaxLength(10)
+                        .HasColumnType("nvarchar(10)");
+
+                    b.Property<DateTime?>("ApprovedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("CreatedBy")
+                        .IsRequired()
+                        .HasMaxLength(10)
+                        .HasColumnType("nvarchar(10)");
+
+                    b.Property<DateTime>("CreatedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsDeleted")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bit")
+                        .HasDefaultValueSql("0");
+
+                    b.Property<Guid>("NotificationToAuditeeId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("ReviewedBy")
+                        .HasMaxLength(10)
+                        .HasColumnType("nvarchar(10)");
+
+                    b.Property<DateTime?>("ReviewedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("UpdatedBy")
+                        .HasMaxLength(10)
+                        .HasColumnType("nvarchar(10)");
+
+                    b.Property<DateTime?>("UpdatedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("NotificationToAuditeeId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("NotifedUsersBCC", "BranchAudit");
+                });
+
+            modelBuilder.Entity("Internal.Audit.Domain.Entities.BranchAudit.NotifedUsersCC", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier")
+                        .HasColumnName("Id")
+                        .HasDefaultValueSql("newsequentialid()");
+
+                    b.Property<string>("ApprovedBy")
+                        .HasMaxLength(10)
+                        .HasColumnType("nvarchar(10)");
+
+                    b.Property<DateTime?>("ApprovedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("CreatedBy")
+                        .IsRequired()
+                        .HasMaxLength(10)
+                        .HasColumnType("nvarchar(10)");
+
+                    b.Property<DateTime>("CreatedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsDeleted")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bit")
+                        .HasDefaultValueSql("0");
+
+                    b.Property<Guid>("NotificationToAuditeeId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("ReviewedBy")
+                        .HasMaxLength(10)
+                        .HasColumnType("nvarchar(10)");
+
+                    b.Property<DateTime?>("ReviewedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("UpdatedBy")
+                        .HasMaxLength(10)
+                        .HasColumnType("nvarchar(10)");
+
+                    b.Property<DateTime?>("UpdatedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("NotificationToAuditeeId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("NotifedUsersCC", "BranchAudit");
+                });
+
+            modelBuilder.Entity("Internal.Audit.Domain.Entities.BranchAudit.NotifedUsersTo", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier")
+                        .HasColumnName("Id")
+                        .HasDefaultValueSql("newsequentialid()");
+
+                    b.Property<string>("ApprovedBy")
+                        .HasMaxLength(10)
+                        .HasColumnType("nvarchar(10)");
+
+                    b.Property<DateTime?>("ApprovedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("CreatedBy")
+                        .IsRequired()
+                        .HasMaxLength(10)
+                        .HasColumnType("nvarchar(10)");
+
+                    b.Property<DateTime>("CreatedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsDeleted")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bit")
+                        .HasDefaultValueSql("0");
+
+                    b.Property<Guid>("NotificationToAuditeeId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("ReviewedBy")
+                        .HasMaxLength(10)
+                        .HasColumnType("nvarchar(10)");
+
+                    b.Property<DateTime?>("ReviewedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("UpdatedBy")
+                        .HasMaxLength(10)
+                        .HasColumnType("nvarchar(10)");
+
+                    b.Property<DateTime?>("UpdatedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("NotificationToAuditeeId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("NotifedUsersTo", "BranchAudit");
+                });
+
+            modelBuilder.Entity("Internal.Audit.Domain.Entities.BranchAudit.NotificationToAuditee", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier")
+                        .HasColumnName("Id")
+                        .HasDefaultValueSql("newsequentialid()");
+
+                    b.Property<string>("ApprovedBy")
+                        .HasMaxLength(10)
+                        .HasColumnType("nvarchar(10)");
+
+                    b.Property<DateTime?>("ApprovedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid>("AuditCreationId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("CreatedBy")
+                        .IsRequired()
+                        .HasMaxLength(10)
+                        .HasColumnType("nvarchar(10)");
+
+                    b.Property<DateTime>("CreatedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsDeleted")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bit")
+                        .HasDefaultValueSql("0");
+
+                    b.Property<string>("ReviewedBy")
+                        .HasMaxLength(10)
+                        .HasColumnType("nvarchar(10)");
+
+                    b.Property<DateTime?>("ReviewedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("UpdatedBy")
+                        .HasMaxLength(10)
+                        .HasColumnType("nvarchar(10)");
+
+                    b.Property<DateTime?>("UpdatedOn")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AuditCreationId");
+
+                    b.ToTable("NotificationToAuditee", "BranchAudit");
                 });
 
             modelBuilder.Entity("Internal.Audit.Domain.Entities.BranchAudit.Questionnaire", b =>
@@ -3659,6 +3882,9 @@ namespace Internal.Audit.Infrastructure.Persistent.Migrations
                     b.Property<DateTime?>("ApprovedOn")
                         .HasColumnType("datetime2");
 
+                    b.Property<Guid?>("AuditScheduleConfigurationOwnerId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<string>("CreatedBy")
                         .IsRequired()
                         .HasMaxLength(10)
@@ -3725,6 +3951,8 @@ namespace Internal.Audit.Infrastructure.Persistent.Migrations
                         .HasColumnType("nvarchar(30)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("AuditScheduleConfigurationOwnerId");
 
                     b.HasIndex("UserName")
                         .IsUnique();
@@ -4238,6 +4466,74 @@ namespace Internal.Audit.Infrastructure.Persistent.Migrations
                     b.Navigation("Issue");
                 });
 
+            modelBuilder.Entity("Internal.Audit.Domain.Entities.BranchAudit.NotifedUsersBCC", b =>
+                {
+                    b.HasOne("Internal.Audit.Domain.Entities.BranchAudit.NotificationToAuditee", "NotificationToAuditee")
+                        .WithMany("BCC")
+                        .HasForeignKey("NotificationToAuditeeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Internal.Audit.Domain.Entities.Security.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("NotificationToAuditee");
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("Internal.Audit.Domain.Entities.BranchAudit.NotifedUsersCC", b =>
+                {
+                    b.HasOne("Internal.Audit.Domain.Entities.BranchAudit.NotificationToAuditee", "NotificationToAuditee")
+                        .WithMany("CC")
+                        .HasForeignKey("NotificationToAuditeeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Internal.Audit.Domain.Entities.Security.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("NotificationToAuditee");
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("Internal.Audit.Domain.Entities.BranchAudit.NotifedUsersTo", b =>
+                {
+                    b.HasOne("Internal.Audit.Domain.Entities.BranchAudit.NotificationToAuditee", "NotificationToAuditee")
+                        .WithMany("OthersTo")
+                        .HasForeignKey("NotificationToAuditeeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Internal.Audit.Domain.Entities.Security.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("NotificationToAuditee");
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("Internal.Audit.Domain.Entities.BranchAudit.NotificationToAuditee", b =>
+                {
+                    b.HasOne("Internal.Audit.Domain.Entities.BranchAudit.AuditCreation", "AuditCreation")
+                        .WithMany()
+                        .HasForeignKey("AuditCreationId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("AuditCreation");
+                });
+
             modelBuilder.Entity("Internal.Audit.Domain.Entities.BranchAudit.Questionnaire", b =>
                 {
                     b.HasOne("Internal.Audit.Domain.Entities.BranchAudit.TopicHead", "TopicHead")
@@ -4653,6 +4949,13 @@ namespace Internal.Audit.Infrastructure.Persistent.Migrations
                     b.Navigation("Role");
                 });
 
+            modelBuilder.Entity("Internal.Audit.Domain.Entities.Security.User", b =>
+                {
+                    b.HasOne("Internal.Audit.Domain.Entities.BranchAudit.AuditScheduleConfigurationOwner", null)
+                        .WithMany("User")
+                        .HasForeignKey("AuditScheduleConfigurationOwnerId");
+                });
+
             modelBuilder.Entity("Internal.Audit.Domain.Entities.Security.UserCountry", b =>
                 {
                     b.HasOne("Internal.Audit.Domain.Entities.Country", "Country")
@@ -4688,6 +4991,11 @@ namespace Internal.Audit.Infrastructure.Persistent.Migrations
                     b.Navigation("AuditScheduleParticipants");
                 });
 
+            modelBuilder.Entity("Internal.Audit.Domain.Entities.BranchAudit.AuditScheduleConfigurationOwner", b =>
+                {
+                    b.Navigation("User");
+                });
+
             modelBuilder.Entity("Internal.Audit.Domain.Entities.BranchAudit.ClosingMeetingMinute", b =>
                 {
                     b.Navigation("MeetingMinutesSubjects");
@@ -4702,6 +5010,15 @@ namespace Internal.Audit.Infrastructure.Persistent.Migrations
                     b.Navigation("IssueBranchList");
 
                     b.Navigation("IssueOwnerList");
+                });
+
+            modelBuilder.Entity("Internal.Audit.Domain.Entities.BranchAudit.NotificationToAuditee", b =>
+                {
+                    b.Navigation("BCC");
+
+                    b.Navigation("CC");
+
+                    b.Navigation("OthersTo");
                 });
 
             modelBuilder.Entity("Internal.Audit.Domain.Entities.BranchAudit.RiskAssesmentDataManagementLog", b =>

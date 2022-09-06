@@ -23,8 +23,6 @@ public class UpdateClosingMeetingMinuteCommand : IRequest<UpdateClosingMeetingMi
     public string? MeetingHeld { get; set; }
     public Guid PreparedByUserId { get; set; }
     public Guid AgreedByUserId { get; set; }
-    public string? SubjectMatter { get; set; }
-    public Guid MeetingSubjectId { get; set; }
     public List<AddMeetingPresent> ClosingMeetingPresent { get; set; }
     public List<AddMeetingApology> ClosingMeetingApology { get; set; }
     public List<AddMeetingSubject> ClosingMeetingSubject { get; set; }

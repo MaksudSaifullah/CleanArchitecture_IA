@@ -8,7 +8,7 @@ import { FormService } from 'src/app/core/services/form.service';
 import { HttpService } from 'src/app/core/services/http.service';
 import {AlertService} from '../../../../core/services/alert.service';
 import { User } from '../../../../core/interfaces/branch-audit/user.interface';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { AuditScheduleBranch, AuditScheduleBranchDetails } from 'src/app/core/interfaces/branch-audit/auditScheduleBranch.interface';
 
 @Component({
@@ -17,6 +17,9 @@ import { AuditScheduleBranch, AuditScheduleBranchDetails } from 'src/app/core/in
   styleUrls: ['./new-issue.component.scss']
 })
 export class NewIssueComponent implements OnInit {
+  paramId:string ='';
+  pageName:string = '';
+
   issue: issue[] = [];
   issueForm: FormGroup;
   formService: FormService = new FormService();
@@ -35,6 +38,7 @@ export class NewIssueComponent implements OnInit {
   actionPlanCode: any;
   actionOwnerList: User[] = [];
   actionPlans : IssueActionPlan[] = [];
+  
 //   actionPlans: [
 //     {
 //       "actionPlanCode": "AC-1001",
@@ -57,7 +61,7 @@ export class NewIssueComponent implements OnInit {
     
 //  ];
 
-  constructor(private http: HttpService , private fb: FormBuilder, private AlertService: AlertService, private router: Router) { 
+  constructor(private http: HttpService , private fb: FormBuilder, private AlertService: AlertService, private router: Router,  private activateRoute: ActivatedRoute) { 
     this.issueForm = this.fb.group({
       auditId:[''],
       id: [''],
@@ -93,6 +97,17 @@ export class NewIssueComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.paramId = this.activateRoute.snapshot.params['id'];
+    console.log(this.paramId);
+    if(this.paramId === undefined){
+      this.pageName='New Issue';
+    }
+    else{
+      this.pageName='Edit Issue';
+      this.LoadIssueById(this.paramId);
+    }
+    console.log(this.pageName);
+
     this.reset();
     this.countryId = "2162B8E8-BBF2-EC11-B3B0-00155D610B18"; //need to implement LoadCountryId()
     this.LoadAuditId();
@@ -102,6 +117,9 @@ export class NewIssueComponent implements OnInit {
     this.LoadImpactLevel();
     this.LoadUserList();
     this.LoadActionPlans();
+  }
+  LoadIssueById(paramId: string) {
+    
   }
   onSubmitNewIssue(){
   //  // $('#d2').css('');

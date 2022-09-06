@@ -94,6 +94,8 @@ using Internal.Audit.Application.Contracts.Persistent.AuditConfigMilestones;
 using Internal.Audit.Infrastructure.Persistent.Repositories.AuditConfigMileStones;
 using Internal.Audit.Application.Contracts.Persistent.NotificationToAuditees;
 using Internal.Audit.Infrastructure.Persistent.Repositories.NotificationToAuditees;
+using Internal.Audit.Application.Contracts.Persistent.RiskCriteriasPCA;
+using Internal.Audit.Infrastructure.Persistent.Repositories.RiskCriteriasPCA;
 
 namespace Internal.Audit.Infrastructure.Persistent;
 
@@ -261,6 +263,11 @@ public static class PersistentInfrastructureServiceRegistration
 
         services.AddScoped<IAuditConfigMilestoneCommandReposiotry, AuditConfigMileStoneCommandRepository>();
         services.AddScoped<IAuditConfigMilestoneQueryReposiotry>(s => new AuditConfigMileStoneQueryRepository(configuration.GetConnectionString("InternalAuditDb")));
+
+
+        services.AddScoped<IRiskCriteriaPCACommandRepository, RiskCriteriaPCACommandRepository>();
+        services.AddScoped<IRiskCriteriaPCAQueryRepository>(s => new RiskCriteriaPCAQueryRepository(configuration.GetConnectionString("InternalAuditDb")));
+
 
         return services;
     }

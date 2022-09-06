@@ -12,6 +12,7 @@ using Internal.Audit.Application.Features.AuditSchedules.Queries.GetAuditSchedul
 using Internal.Audit.Application.Features.AuditScheduleConfigurationsOwner.Commands.AddAuditScheduleConfigurationsOwnerCommand;
 using Internal.Audit.Application.Features.AuditScheduleConfigurationsOwner.Queries.GetAllByAuditScheduleId;
 using Internal.Audit.Application.Features.AuditConfigMilestones.Commands.AddAuditConfigMilestones;
+using Internal.Audit.Application.Features.AuditConfigMilestones.Queries.GetByAuditScheduleId;
 
 namespace Internal.Audit.Api.Controllers;
 
@@ -96,6 +97,12 @@ public class AuditScheduleController : ControllerBase
     public async Task<ActionResult<AddAuditConfigMilestoneResponseDTO>> AuditScheudleConfigSetDate(AddAuditConfigMilestoneCommand command)
     {
         var result = await _mediator.Send(command);
+        return Ok(result);
+    }
+    [HttpGet("GetScheudleConfigSetDate")]
+    public async Task<ActionResult<GetByAuditScheduleByIdMilestoneQueryResponseDTO>> GetScheudleConfigSetDate(Guid auditScheduleId)
+    {       
+        var result = await _mediator.Send(new GetByAuditScheduleByIdMilestoneQuery(auditScheduleId));
         return Ok(result);
     }
 }

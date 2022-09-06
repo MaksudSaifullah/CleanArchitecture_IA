@@ -9,4 +9,5 @@ namespace Internal.Audit.Application.Contracts.Persistent.AuditConfigMilestones;
 
 public interface IAuditConfigMilestoneQueryReposiotry:IAsyncQueryRepository<AuditConfigMileStone>
 {
+    Task<IEnumerable<AuditConfigMileStone>> GetByAuditScheduleId(Guid id);
 }

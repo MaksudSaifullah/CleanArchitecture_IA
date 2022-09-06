@@ -252,7 +252,7 @@ async addItem(index:any, managementPlan:any, targetDate:any) {
       id: "",
       actionPlanCode: acPlnCode,
       managementPlan: managementPlan.text,
-      ownerId: "",
+      //issueActionPlanOwnerList: [],
       targetDate: targetDate
     };
     this.actionPlans.push(currentElement);
@@ -277,38 +277,31 @@ async addItem(index:any, managementPlan:any, targetDate:any) {
       // });
     }
     else {
-      
-
       let branchList: IssueBranch[] = [];
-      let issueOwnerList: IssueOwner[] = [];
-
-      let useca: IssueBranch[] = this.issueForm.value.branchList as IssueBranch[];
-      let issueOwner: IssueOwner[] = this.issueForm.value.issueOwnerList as IssueOwner[];
-
-      if (Array.isArray(useca)) {
-        useca.forEach(function (value) {
-          let urole: IssueBranch = { branchId: value.toString() }
-          branchList.push(urole);
-        }); 
-        
+      let issueBranch: IssueBranch[] = this.issueForm.value.branchList as IssueBranch[];
+      if (Array.isArray(issueBranch)) {
+        issueBranch.forEach(function (value) {
+          let br: IssueBranch = { branchId: value.toString() }
+          branchList.push(br);
+        });
       }
+      let issueOwnerList: IssueOwner[] = [];
+      let issueOwner: IssueOwner[] = this.issueForm.value.issueOwnerList as IssueOwner[];
       if (Array.isArray(issueOwner)) {
         issueOwner.forEach(function (value) {
-          let urole: IssueOwner = { ownerId: value.toString() }
-          issueOwnerList.push(urole);
-        }); 
-        
+          let owner: IssueOwner = { ownerId: value.toString() }
+          issueOwnerList.push(owner);
+        });
       }
 
       const RequestModel = {
-        
           code: this.issueForm.value.code,
           auditScheduleId: this.issueForm.value.auditScheduleId,
           issueTitle:this.issueForm.value.issueTitle,
           policy: this.issueForm.value.policy,        
           impactTypeId: this.issueForm.value.impactTypeId,
           likelihoodTypeId: this.issueForm.value.likelihoodTypeId,
-          ratingTypeId: this.issueForm.value.ratingTypeId,
+          ratingTypeId: "19838C61-2F0E-ED11-B3B2-00155D610B18",//this.issueForm.value.ratingTypeId,
           targetDate: this.issueForm.value.targetDate,        
           details: this.issueForm.value.details,
           rootCause: this.issueForm.value.rootCause,
@@ -318,10 +311,10 @@ async addItem(index:any, managementPlan:any, targetDate:any) {
 
           // issueBranchList: this.selectedAuditScheduleBranch,
            issueOwnerList: issueOwnerList,
-           branches: branchList,
-          actionPlans: this.actionPlans.slice(1),
-          statusTypeId: null,
-          remarks: '',
+           issueBranchList: branchList,
+           actionPlans: this.actionPlans.slice(1),
+           //statusTypeId: '', default value set on issue table
+           remarks: '',
         };
         console.log(RequestModel);
         this.http.post('issue',RequestModel).subscribe(x=>{

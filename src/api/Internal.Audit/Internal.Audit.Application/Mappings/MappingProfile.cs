@@ -181,6 +181,7 @@ using Internal.Audit.Application.Features.AuditScheduleConfigurationsOwner.Comma
 using Internal.Audit.Application.Features.AuditScheduleConfigurationsOwner.Queries.GetAllByAuditScheduleId;
 using Internal.Audit.Application.Features.ClosingMeetingMinutes.Queries.GetClosingMeetingMinuteById;
 using Internal.Audit.Application.Features.ClosingMeetingMinutes.Queries.GetClosingMeetingMinutesBaseById;
+using Internal.Audit.Application.Features.Issues.Commands.AddIssue;
 
 namespace Internal.Audit.Application.Mappings;
 
@@ -499,7 +500,11 @@ public class MappingProfile : Profile
        
         CreateMap<ClosingMeetingMinute, GetClosingMeetingMinutesResponseDTO>().ReverseMap();
 
-
+        CreateMap<Issue, AddIssueCommand>().ReverseMap();
+        CreateMap<IssueOwner, AddIssueOwnerCommand>().ReverseMap();
+        CreateMap<IssueBranch, AddIssueBranchCommand>().ReverseMap();
+        CreateMap<IssueActionPlan, AddIssueActionPlanCommand>().ReverseMap();
+        CreateMap<IssueActionPlanOwner, AddIssueActionOwnerListCommand>().ReverseMap();
 
     }
 }

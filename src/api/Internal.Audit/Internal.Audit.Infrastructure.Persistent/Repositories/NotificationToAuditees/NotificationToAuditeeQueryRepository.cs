@@ -21,7 +21,7 @@ public class NotificationToAuditeeQueryRepository : QueryRepositoryBase<Composit
 		{
 			searchTermConverted = searchTermConverted.Replace("{", "").Replace("}", "");
 		}
-		var query = "EXEC [dbo].[GetClosingMeetingMinutesListProcedure] @pageSize,@pageNumber,@searchTerm";
+		var query = "EXEC [dbo].[NotificationToAuditeeListProcedure] @pageSize,@pageNumber,@searchTerm";
 		var parameters = new Dictionary<string, object> { { "@pageSize", pageSize }, { "@pageNumber", pageNumber }, { "@searchTerm", searchTermConverted } };
 		return await GetWithPagingInfo(query, parameters, false);
 	}

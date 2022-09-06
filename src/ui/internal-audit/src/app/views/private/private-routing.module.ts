@@ -26,6 +26,11 @@ const routes: Routes = [{
   loadChildren: () =>
     import('./branch-audit/branch-audit.module').then((m) => m.BranchAuditModule)
 },
+{
+  path: 'process-and-control-audit',
+  loadChildren: () =>
+    import('./process-and-control-audit/process-and-control-audit.module').then((m) => m.ProcessAndControlAuditModule)
+},
 ];
 
 @NgModule({

@@ -8,7 +8,7 @@ namespace Internal.Audit.Infrastructure.Persistent.Migrations
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.Sql(@"ALTER   PROCEDURE [dbo].[GetAuditTypeListProcedure]
+            migrationBuilder.Sql(@"CREATE OR ALTER   PROCEDURE [dbo].[GetAuditTypeListProcedure]
 @pageSize int,
 @pageNumber int
 AS

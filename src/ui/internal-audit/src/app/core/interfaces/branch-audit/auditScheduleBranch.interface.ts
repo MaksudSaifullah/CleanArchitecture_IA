@@ -3,6 +3,12 @@ export interface AuditScheduleBranch {
     branchId : string
 }
 
+export interface AuditScheduleBranchDetails {
+    id?: string;
+    auditScheduleId?: string;
+    branch?: Branch;
+}
+
 
 export interface WPAuditScheduleBranch {
     id:              string;

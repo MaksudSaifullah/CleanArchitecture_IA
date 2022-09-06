@@ -7,10 +7,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Features\NotificationToAuditees\Command\**" />
     <Compile Remove="Features\UserCountries\**" />
     <Compile Remove="Features\Users\**" />
+    <EmbeddedResource Remove="Features\NotificationToAuditees\Command\**" />
     <EmbeddedResource Remove="Features\UserCountries\**" />
     <EmbeddedResource Remove="Features\Users\**" />
+    <None Remove="Features\NotificationToAuditees\Command\**" />
     <None Remove="Features\UserCountries\**" />
     <None Remove="Features\Users\**" />
   </ItemGroup>

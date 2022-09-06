@@ -134,5 +134,16 @@ export const navItems: INavData[] = [
       text: ''
     },
   },
+  {
+    name: 'Process And Control Audit',
+    url: '/process-and-control-audit',
+    iconComponent: { name: 'cil-applications-settings' },
+    children: [
+      {
+        name: 'Risk Configurations',
+        url: '/process-and-control-audit/risk-configurations',
+      },
+    ]
+  },
 
 ];

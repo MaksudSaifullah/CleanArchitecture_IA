@@ -12,7 +12,7 @@ public class IssueActionPlan : EntityBase
 	[Required]
 	[MaxLength(20)]
 	//[Index("Ix_[PlanCode", Order = 1, IsUnique = true)]
-	public string PlanCode { get; set; } = null!;
+	public string ActionPlanCode { get; set; } = null!;
 	[Required]
 	public Guid IssueId { get; set; }
 	[Required]

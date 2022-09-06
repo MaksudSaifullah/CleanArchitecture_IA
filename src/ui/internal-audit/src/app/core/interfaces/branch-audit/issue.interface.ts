@@ -23,5 +23,32 @@ export interface issue {
     remarks?: string | null;
     likelihoodType?: string | null;
     impactType?: string | null;
-    branch?: string | null;
+
+    issueOwnerList?: IssueOwner[];
+    issueBranchList?: IssueBranch[];
+    actionPlans?: IssueActionPlan[];
+}
+
+export interface IssueBranch {
+    id?: string;
+    issueId?: string;
+    branchId?: string;
+}
+export interface IssueOwner{
+    id?: string;
+    issueId?: string;
+    ownerId?: string;
+
+}
+export interface IssueActionPlan{
+    id?: string;
+    issueId?: string;
+    actionPlanCode?: string;
+    ownerId?: string;
+    evidenceDocumentId?: string;
+    managementPlan?: string;
+    targetDate?: Date;
+    isActionTaken?: boolean;
+    actionTakenDate?: Date;
+    actionTakenRemarks?: string
 }

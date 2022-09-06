@@ -186,7 +186,7 @@ onSubmit(): void {
     console.log(this.countryForm)
     const that=this;
     let userList: UserRole[] = [];
-
+    debugger;
     if (this.countryForm.valid) {  
       this.userSelectedCountry=[];
       this.formArray?.value.forEach((ctrl: any) => {    
@@ -204,6 +204,7 @@ onSubmit(): void {
       if (Array.isArray(useca)) {
         useca.forEach(function (value) {
           let urole: UserRole = { roleId: value.toString(),userId: that.paramId===undefined?null:that.paramId}
+          console.log("aaaaaaaaaaaaaaaaaaaaaaaaaaa",urole);
         userList.push(urole);
         }); 
         

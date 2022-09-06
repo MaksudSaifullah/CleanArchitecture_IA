@@ -22,7 +22,7 @@ public class ClosingMeetingMinute : EntityBase
     public Guid AuditScheduleId { get; set; }
 
     [Required]
-    public Guid BranchId { get; set; }
+    public Guid AuditScheduleBranchId { get; set; }
 
     [Required]
     public DateTime MeetingMinutesDate { get; set; }
@@ -39,12 +39,8 @@ public class ClosingMeetingMinute : EntityBase
     [MaxLength(300)]
     public string? MeetingHeld { get; set; }
 
-    [Required]
     public Guid PreparedByUserId { get; set; }
-
-    [Required]
     public Guid AgreedByUserId { get; set; }
-
 
     public virtual ICollection<ClosingMeetingPresent> UserPresents { get; set; } = null!;
     public virtual ICollection<ClosingMeetingApology> UserApologies { get; set; } = null!;

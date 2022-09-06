@@ -1,13 +1,14 @@
-﻿using Internal.Audit.Domain.Common;
+﻿using Internal.Audit.Application.Features.ClosingMeetingMinutes.Commands.AddClosingMeetingMinute;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Internal.Audit.Domain.CompositeEntities.BranchAudit;
+namespace Internal.Audit.Application.Features.ClosingMeetingMinutes.Queries.GetClosingMeetingMinuteById;
 
-public class CompositeClosingMeetingMinute : EntityBase
+
+public record ClosingMeetingMinuteByIdDTO
 {
     public string? MeetingMinutesCode { get; set; }
     public Guid AuditScheduleId { get; set; }
@@ -20,5 +21,4 @@ public class CompositeClosingMeetingMinute : EntityBase
     public string? AgreedBy { get; set; }
     public Guid AgreedByUserId { get; set; }
     public string? SubjectMatter { get; set; }
-
 }

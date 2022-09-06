@@ -1,33 +1,42 @@
 export interface ClosingMeetingMinutes 
 {
-    id: string;
+    id?: string;
     meetingMinutesCode?: string;
     scheduleCode?: string;
     auditScheduleId?: string;
-    branchId?: string;
+    auditScheduleBranchId?: string;
     meetingMinutesDate: Date;
     meetingMinutesName?: string;
     auditOn?: string;
     meetingHeld?: string;
     preparedByUserId?: string;
     agreedByUserId?: string;
-    presentUserId : UserList[];
-    appologiesUserId : UserList[];
-    subjectMatter?: string;
     agreedBy?: string;
     createdOn?: Date;
+    
+
+    closingMeetingPresent: addMeetingPresent[];
+    closingMeetingApology: addMeetingApology[];
+    closingMeetingSubject: addMeetingSubject[];
+    
+    userPresents?: addMeetingPresent[];
+    userApologies?: addMeetingApology[];
+    meetingMinutesSubjects?: addMeetingSubject[];
 
 }
 
-export interface UserList
+export interface addMeetingPresent
 {
     userId?: string;
-    closingMeetingMinutesId?: string; 
 }
 
-export interface ClosingMeetingSubjects
+export interface addMeetingApology
 {
     userId?: string;
-    closingMeetingMinutesId?: string; 
+}
+
+export interface addMeetingSubject
+{
+    userId?: string;
     subjectMatter?: string;
 }

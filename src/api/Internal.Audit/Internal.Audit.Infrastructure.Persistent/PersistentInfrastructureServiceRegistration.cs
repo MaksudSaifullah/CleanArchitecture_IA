@@ -90,6 +90,8 @@ using Internal.Audit.Application.Contracts.Persistent.ClosingMeetingMinutes;
 using Internal.Audit.Infrastructure.Persistent.Repositories.ClosingMeetingMinutes;
 using Internal.Audit.Application.Contracts.Persistent.AuditScheduleConfigurationsOwner;
 using Internal.Audit.Infrastructure.Persistent.Repositories.AuditScheduleConfigurationsOwner;
+using Internal.Audit.Application.Contracts.Persistent.AuditConfigMilestones;
+using Internal.Audit.Infrastructure.Persistent.Repositories.AuditConfigMileStones;
 using Internal.Audit.Application.Contracts.Persistent.NotificationToAuditees;
 using Internal.Audit.Infrastructure.Persistent.Repositories.NotificationToAuditees;
 
@@ -256,6 +258,8 @@ public static class PersistentInfrastructureServiceRegistration
         services.AddScoped<INotificationToAuditeeCCCommandRepository, NotificationToAuditeeCCCommandRepository>();
         services.AddScoped<INotificationToAuditeeBCCCommandRepository, NotificationToAuditeeBCCCommandRepository>();
 
+        services.AddScoped<IAuditConfigMilestoneCommandReposiotry, AuditConfigMileStoneCommandRepository>();
+        services.AddScoped<IAuditConfigMilestoneQueryReposiotry>(s => new AuditConfigMileStoneQueryRepository(configuration.GetConnectionString("InternalAuditDb")));
 
         return services;
     }

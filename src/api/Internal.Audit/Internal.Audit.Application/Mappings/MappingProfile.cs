@@ -185,6 +185,8 @@ using Internal.Audit.Application.Features.NotificationToAuditees.Queries.GetNoti
 using Internal.Audit.Application.Features.NotificationToAuditees.Commands.AddNotificationToAuditee;
 using Internal.Audit.Application.Features.NotificationToAuditees.Commands.UpdateNotificationToAuditee;
 using Internal.Audit.Application.Features.NotificationToAuditees.Commands.DeleteNotificationToAuditee;
+using Internal.Audit.Application.Features.AuditConfigMilestones.Commands.AddAuditConfigMilestones;
+using Internal.Audit.Application.Features.AuditConfigMilestones.Queries.GetByAuditScheduleId;
 
 namespace Internal.Audit.Application.Mappings;
 
@@ -515,6 +517,13 @@ public class MappingProfile : Profile
         CreateMap<NotificationToAuditee, DeleteNotificationToAuditeeResponseDTO>().ReverseMap();
         CreateMap<NotificationToAuditee, DeleteNotificationToAuditeeCommand>().ReverseMap();
 
+
+
+        CreateMap<User, UserConfiguration>().ReverseMap();
+        CreateMap<AuditScheduleConfigurationOwner, GetAllByAuditScheduledIdResponseDTO>() // needs `Inst` -> `InstDTO` map
+    .ForMember(dst => dst.BranchName, opt => opt.MapFrom(src => src.Branch.BranchName)).ReverseMap();
+        CreateMap<AuditConfigMileStone, AddAuditConfigMilestoneCommandRaw>().ReverseMap();
+        CreateMap<AuditConfigMileStone, GetByAuditScheduleByIdMilestoneQueryResponseDTO>().ReverseMap();
 
 
     }

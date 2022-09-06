@@ -77,6 +77,7 @@ public class InternalAuditContext: DbContext
     public DbSet<ClosingMeetingSubject> ClosingMeetingSubjects { get; set; }
     public DbSet<ClosingMeetingApology> ClosingMeetingApologies { get; set; }//
     public DbSet<AuditScheduleConfigurationOwner> AuditScheduleConfigurationOwners { get; set; }
+    public DbSet<AuditConfigMileStone> AuditConfigMileStones { get; set; }
 
     public DbSet<NotificationToAuditee> NotificationToAuditees { get; set; }
     public DbSet<NotifedUsersTo> NotifedUsersTos { get; set; }

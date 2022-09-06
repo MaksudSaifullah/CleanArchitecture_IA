@@ -75,5 +75,5 @@ public class Issue : EntityBase
 	public virtual CommonValueAndType CommonValueStatusType { get; set; } = null!;
 	public virtual ICollection<IssueOwner> IssueOwnerList { get; set; } = null!;
 	public virtual ICollection<IssueBranch> IssueBranchList { get; set; } = null!;
-	public virtual ICollection<IssueActionPlan> ActionPlanList { get; set; } = null!;
+	//public virtual ICollection<IssueActionPlan> ActionPlanList { get; set; } = null!;
 }

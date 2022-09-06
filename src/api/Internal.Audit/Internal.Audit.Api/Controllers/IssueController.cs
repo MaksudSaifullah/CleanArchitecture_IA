@@ -42,12 +42,12 @@ public class IssueController : ControllerBase
         return Ok(result);
     }
 
-    //[HttpPost]
-    //public async Task<ActionResult<AddIssueResponseDTO>> Add(AddIssueCommand command)
-    //{
-    //    var result = await _mediator.Send(command);
-    //    return Ok(result);
-    //}
+    [HttpPost]
+    public async Task<ActionResult<AddIssueResponseDTO>> Add(AddIssueCommand command)
+    {
+        var result = await _mediator.Send(command);
+        return Ok(result);
+    }
 
     //[HttpPut]
     //public async Task<ActionResult<UpdateIssueResponseDTO>> Update(UpdateIssueCommand command)

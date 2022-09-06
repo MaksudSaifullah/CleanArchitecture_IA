@@ -1,0 +1,18 @@
+  <c-nav variant="tabs">
+    <a [active]="true" [cTabContent]="tabContent" [routerLink] [tabPaneIdx]="0" cNavLink>Risk Criteria</a>
+    <a [cTabContent]="tabContent" [routerLink] [tabPaneIdx]="1" cNavLink>Risk Rating</a>
+    <a [cTabContent]="tabContent" [routerLink] [tabPaneIdx]="2" cNavLink>Audit Frequency</a> 
+  </c-nav>
+  <c-col xs="12">
+    <c-card class="mb-4">
+      <c-tab-content #tabContent="cTabContent">
+        <c-tab-pane class="p-3">
+          <app-risk-criteria [id]="id"> </app-risk-criteria>
+        </c-tab-pane>
+        <c-tab-pane class="p-3">
+          <app-risk-rating [id]="id"> </app-risk-rating>
+        </c-tab-pane>
+        <c-tab-pane class="p-3">
+          <app-audit-frequency [id]="id"> </app-audit-frequency>
+        </c-tab-pane>
+      </c-tab-content>

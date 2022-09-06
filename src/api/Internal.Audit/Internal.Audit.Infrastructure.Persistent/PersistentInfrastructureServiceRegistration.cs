@@ -90,6 +90,10 @@ using Internal.Audit.Application.Contracts.Persistent.ClosingMeetingMinutes;
 using Internal.Audit.Infrastructure.Persistent.Repositories.ClosingMeetingMinutes;
 using Internal.Audit.Application.Contracts.Persistent.AuditScheduleConfigurationsOwner;
 using Internal.Audit.Infrastructure.Persistent.Repositories.AuditScheduleConfigurationsOwner;
+using Internal.Audit.Application.Contracts.Persistent.AuditConfigMilestones;
+using Internal.Audit.Infrastructure.Persistent.Repositories.AuditConfigMileStones;
+using Internal.Audit.Application.Contracts.Persistent.NotificationToAuditees;
+using Internal.Audit.Infrastructure.Persistent.Repositories.NotificationToAuditees;
 
 namespace Internal.Audit.Infrastructure.Persistent;
 
@@ -236,6 +240,7 @@ public static class PersistentInfrastructureServiceRegistration
 
        
         services.AddScoped<IClosingMeetingMinutesQueryRepository>(s => new ClosingMeetingMinuteQueryRepository(configuration.GetConnectionString("InternalAuditDb")));
+        services.AddScoped<IClosingMeetingMinutesBaseQueryRepository>(s => new ClosingMeetingMinutesBaseQueryRepository(configuration.GetConnectionString("InternalAuditDb")));
         services.AddScoped<IClosingMeetingMinutesCommandRepository, ClosingMeetingMinuteCommandRepository>();
         services.AddScoped<IClosingMeetingApologyCommandRepository, ClosingMeetingApologyCommandRepository>();
         services.AddScoped<IClosingMeetingPresentCommandRepository, ClosingMeetingPresentCommandRepository>();
@@ -248,6 +253,14 @@ public static class PersistentInfrastructureServiceRegistration
         //services.AddScoped<IAuditScheduleConfigurationOwnerQueryRepository>(s => new AuditScheduleConfigurationOwnerQueryRepository(configuration.GetConnectionString("InternalAuditDb")));
         services.AddScoped<IAuditScheduleOwnerListQueryRepository>(s => new AuditScheduleOwnerListQueryRepository(configuration.GetConnectionString("InternalAuditDb")));
 
+        services.AddScoped<INotificationToAuditeeQueryRepository>(s => new NotificationToAuditeeQueryRepository(configuration.GetConnectionString("InternalAuditDb")));
+        services.AddScoped<INotificationToAuditeeCommandRepository, NotificationToAuditeeCommandRepository>();
+        services.AddScoped<INotificationToAuditeeToCommandRepository, NotificationToAuditeeToCommandRepository>();
+        services.AddScoped<INotificationToAuditeeCCCommandRepository, NotificationToAuditeeCCCommandRepository>();
+        services.AddScoped<INotificationToAuditeeBCCCommandRepository, NotificationToAuditeeBCCCommandRepository>();
+
+        services.AddScoped<IAuditConfigMilestoneCommandReposiotry, AuditConfigMileStoneCommandRepository>();
+        services.AddScoped<IAuditConfigMilestoneQueryReposiotry>(s => new AuditConfigMileStoneQueryRepository(configuration.GetConnectionString("InternalAuditDb")));
 
         return services;
     }

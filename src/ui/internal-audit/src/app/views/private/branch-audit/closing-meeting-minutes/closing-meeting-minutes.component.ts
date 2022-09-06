@@ -83,6 +83,10 @@ export class ClosingMeetingMinutesComponent implements OnInit {
   }
 
 
+  edit(id:string){
+    this.router.navigate(['/branch-audit/closing-meeting-minutes-create/'+ id] );
+  }
+
 
   LoadBranches(scheduleId:any) {
     this.http.get('commonValueAndType/getAuditScheduleBranch?ScheduleId='+ scheduleId +'').subscribe(resp => {

@@ -251,6 +251,7 @@ public static class PersistentInfrastructureServiceRegistration
 
         //services.AddScoped<IAuditScheduleConfigurationOwnerCommandRepository, AuditScheduleConfigurationOwnerCommandRepository>();
         //services.AddScoped<IAuditScheduleConfigurationOwnerQueryRepository>(s => new AuditScheduleConfigurationOwnerQueryRepository(configuration.GetConnectionString("InternalAuditDb")));
+        services.AddScoped<IAuditScheduleOwnerListQueryRepository>(s => new AuditScheduleOwnerListQueryRepository(configuration.GetConnectionString("InternalAuditDb")));
 
         services.AddScoped<INotificationToAuditeeQueryRepository>(s => new NotificationToAuditeeQueryRepository(configuration.GetConnectionString("InternalAuditDb")));
         services.AddScoped<INotificationToAuditeeCommandRepository, NotificationToAuditeeCommandRepository>();

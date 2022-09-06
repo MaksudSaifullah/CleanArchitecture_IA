@@ -7,13 +7,12 @@ using System.Threading.Tasks;
 
 namespace Internal.Audit.Domain.CompositeEntities.BranchAudit
 {
-    public class CompositAuditScheduleBranch: EntityBase
+    public class CompositAuditScheduleOwner: EntityBase
     {
+       
         public Guid AuditScheduleId { get; set; }
-        public Guid BranchId { get; set; }
         public string BranchName { get; set; }
-        public string CountryName { get; set; }
-        public string Auditee { get; set; }
-
+        public string UserName { get; set; }
+        
     }
 }

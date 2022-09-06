@@ -187,6 +187,7 @@ using Internal.Audit.Application.Features.NotificationToAuditees.Commands.Update
 using Internal.Audit.Application.Features.NotificationToAuditees.Commands.DeleteNotificationToAuditee;
 using Internal.Audit.Application.Features.AuditConfigMilestones.Commands.AddAuditConfigMilestones;
 using Internal.Audit.Application.Features.AuditConfigMilestones.Queries.GetByAuditScheduleId;
+using Internal.Audit.Application.Features.AuditScheduleConfigurationsOwner.Queries.GetOwnerList;
 
 namespace Internal.Audit.Application.Mappings;
 
@@ -526,5 +527,6 @@ public class MappingProfile : Profile
         CreateMap<AuditConfigMileStone, GetByAuditScheduleByIdMilestoneQueryResponseDTO>().ReverseMap();
 
 
+        CreateMap<CompositAuditScheduleOwner, GetOwnerListResponseDTO>().ReverseMap();
     }
 }

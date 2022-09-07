@@ -44,11 +44,18 @@ export interface IssueActionPlan{
     id?: string;
     issueId?: string;
     actionPlanCode?: string;
-    ownerId?: string;
+    //ownerId?: string;
+    issueActionPlanOwnerList?: IssueActionPlanOwner[];
     evidenceDocumentId?: string;
     managementPlan?: string;
     targetDate?: Date;
     isActionTaken?: boolean;
     actionTakenDate?: Date;
     actionTakenRemarks?: string
+}
+export interface IssueActionPlanOwner{
+    id?: string;
+    issueActionPlanId?: string;
+    ownerId?: string;
+
 }

@@ -1,5 +1,6 @@
 ﻿using Internal.Audit.Domain.Common;
 using Internal.Audit.Domain.Entities.Config;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -9,15 +10,11 @@ namespace Internal.Audit.Domain.Entities.BranchAudit;
 public class Issue : EntityBase
 {
 	[Required]
-	[MaxLength(20)]
-	//[Index("TitleIndex", IsUnique = true)]
 	public string Code { get; set; } = null!;
 	//[Required]
 	//public Guid AuditCreationId { get; set; }
 	[Required]
 	public Guid AuditScheduleId { get; set; }
-	[Required]
-	public Guid BranchId { get; set; }
     [Required]
     public Guid ImpactTypeId { get; set; }
     [Required]
@@ -26,7 +23,7 @@ public class Issue : EntityBase
 	public Guid RatingTypeId { get; set; }
 	[Required]
 	public Guid StatusTypeId { get; set; }
-	[Required]
+    [Required]
 	[MaxLength(500)]
 	public string IssueTitle { get; set; } = null!;
 	[Required]	
@@ -47,19 +44,17 @@ public class Issue : EntityBase
 
 
     [NotMapped]
-    public string AuditCode { get; set; } = null!;
+    public string? AuditCode { get; set; } = null!;
     [NotMapped]
-    public string IssueOwners { get; set; } = null!;
-    [NotMapped]
-    public string ActionOwners { get; set; } = null!;
-    [NotMapped]
-    public string? RatingType { get; set; }
-    [NotMapped]
-    public string? StatusType { get; set; }
+    public string? IssueOwners { get; set; } = null!;
     [NotMapped]
     public string? LikelihoodType { get; set; }
     [NotMapped]
     public string? ImpactType { get; set; }
+    [NotMapped]
+    public string? RatingType { get; set; }
+    [NotMapped]
+    public string? StatusType { get; set; }
     [NotMapped]
     public string? Branch { get; set; }
 
@@ -75,5 +70,5 @@ public class Issue : EntityBase
 	public virtual CommonValueAndType CommonValueStatusType { get; set; } = null!;
 	public virtual ICollection<IssueOwner> IssueOwnerList { get; set; } = null!;
 	public virtual ICollection<IssueBranch> IssueBranchList { get; set; } = null!;
-	//public virtual ICollection<IssueActionPlan> ActionPlanList { get; set; } = null!;
+	public virtual ICollection<IssueActionPlan> ActionPlans { get; set; } = null!;
 }

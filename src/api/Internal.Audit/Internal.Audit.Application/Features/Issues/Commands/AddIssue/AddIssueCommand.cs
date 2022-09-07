@@ -8,8 +8,8 @@ namespace Internal.Audit.Application.Features.Issues.Commands.AddIssue
         public Guid AuditScheduleId { get; set; }
         public Guid ImpactTypeId { get; set; }
         public Guid LikelihoodTypeId { get; set; }
-        public Guid? RatingTypeId { get; set; }
-        public Guid? StatusTypeId { get; set; }
+        public Guid RatingTypeId { get; set; }
+        public Guid StatusTypeId { get; set; } = new Guid("0B838C61-2F0E-ED11-B3B2-00155D610B18");
         public string IssueTitle { get; set; } = null!;
         public string Policy { get; set; } = null!;
         public DateTime TargetDate { get; set; }
@@ -20,7 +20,7 @@ namespace Internal.Audit.Application.Features.Issues.Commands.AddIssue
         public string AuditorRecommendation { get; set; } = null!;
         public string? Remarks { get; set; }
 
-        public List<AddIssueBranchCommand> Branches { get; set; }
+        public List<AddIssueBranchCommand> IssueBranchList { get; set; }
         public List<AddIssueOwnerCommand> IssueOwnerList { get; set; }
         public List<AddIssueActionPlanCommand> ActionPlans { get; set; }
     }
@@ -42,7 +42,7 @@ namespace Internal.Audit.Application.Features.Issues.Commands.AddIssue
         public Guid? Id { get; set; }
         public string? ActionPlanCode { get; set; } = null!;
         public Guid? IssueId { get; set; }
-        public List<Guid> Owner { get; set; }
+        public List<AddIssueActionOwnerListCommand>? issueActionPlanOwnerList { get; set; }
         public Guid? EvidenceDocumentId { get; set; }
         public string? ManagementPlan { get; set; } = null!;
         public DateTime? TargetDate { get; set; }
@@ -51,8 +51,10 @@ namespace Internal.Audit.Application.Features.Issues.Commands.AddIssue
         public string? ActionTakenRemarks { get; set; }
 
     }
-    //public class OwnerList
-    //{
-    //    public Guid OwnerId { get; set; }
-    //}
+    public class AddIssueActionOwnerListCommand
+    {
+        public Guid? Id { get; set; }
+        public Guid? IssueActionPlanId { get; set; }
+        public Guid OwnerId { get; set; }
+    }
 }

@@ -102,6 +102,10 @@ const routes: Routes = [
     component:NewIssueComponent
   },
   {
+    path:'new-issue/:id',
+    component:NewIssueComponent
+  },
+  {
     path:'closing-meeting-minutes',
     component: ClosingMeetingMinutesComponent
   },

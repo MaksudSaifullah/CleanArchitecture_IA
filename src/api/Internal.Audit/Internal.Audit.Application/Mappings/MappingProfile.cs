@@ -189,6 +189,16 @@ using Internal.Audit.Application.Features.AuditConfigMilestones.Commands.AddAudi
 using Internal.Audit.Application.Features.AuditConfigMilestones.Queries.GetByAuditScheduleId;
 using Internal.Audit.Application.Features.AuditScheduleConfigurationsOwner.Queries.GetOwnerList;
 
+using Internal.Audit.Domain.CompositeEntities.ProcessAndControlAudit;
+using Internal.Audit.Application.Features.RiskCriteriasPCA.Queries.GetRiskCriteriaList;
+using Internal.Audit.Application.Features.RiskCriteriasPCA.Queries.GetRiskCriteriaById;
+using Internal.Audit.Application.Features.RiskCriteriasPCA.Commands.AddRiskCriteria;
+using Internal.Audit.Application.Features.RiskCriteriasPCA.Commands.UpdateRiskCriteria;
+using Internal.Audit.Application.Features.RiskCriteriasPCA.Commands.DeleteRiskCriteria;
+
+using Internal.Audit.Application.Features.Issues.Commands.AddIssue;
+
+
 namespace Internal.Audit.Application.Mappings;
 
 public class MappingProfile : Profile
@@ -519,6 +529,11 @@ public class MappingProfile : Profile
         CreateMap<NotificationToAuditee, DeleteNotificationToAuditeeCommand>().ReverseMap();
 
 
+        CreateMap<Issue, AddIssueCommand>().ReverseMap();
+        CreateMap<IssueOwner, AddIssueOwnerCommand>().ReverseMap();
+        CreateMap<IssueBranch, AddIssueBranchCommand>().ReverseMap();
+        CreateMap<IssueActionPlan, AddIssueActionPlanCommand>().ReverseMap();
+        CreateMap<IssueActionPlanOwner, AddIssueActionOwnerListCommand>().ReverseMap();
 
         CreateMap<User, UserConfiguration>().ReverseMap();
         CreateMap<AuditScheduleConfigurationOwner, GetAllByAuditScheduledIdResponseDTO>() // needs `Inst` -> `InstDTO` map
@@ -528,5 +543,17 @@ public class MappingProfile : Profile
 
 
         CreateMap<CompositAuditScheduleOwner, GetOwnerListResponseDTO>().ReverseMap();
+
+        CreateMap<Internal.Audit.Domain.Entities.ProcessAndControlAudit.RiskCriteria, RiskCriteriaPCADTO>().ReverseMap();
+        CreateMap<CompositeRiskCriteriaPCA, RiskCriteriaPCADTO>().ReverseMap();
+        CreateMap<CompositeRiskCriteriaPCA, RiskCriteriaPCAByIdDTO>().ReverseMap();
+        CreateMap<Internal.Audit.Domain.Entities.ProcessAndControlAudit.RiskCriteria, RiskCriteriaPCAByIdDTO>().ReverseMap();
+        CreateMap<Internal.Audit.Domain.Entities.ProcessAndControlAudit.RiskCriteria, AddRiskCriteriaPCAResponseDTO>().ReverseMap();
+        CreateMap<Internal.Audit.Domain.Entities.ProcessAndControlAudit.RiskCriteria, AddRiskCriteriaPCACommand>().ReverseMap();
+        CreateMap<Internal.Audit.Domain.Entities.ProcessAndControlAudit.RiskCriteria, UpdateRiskCriteriaPCAResponseDTO>().ReverseMap();
+        CreateMap<Internal.Audit.Domain.Entities.ProcessAndControlAudit.RiskCriteria, UpdateRiskCriteriaPCACommand>().ReverseMap();
+        CreateMap<Internal.Audit.Domain.Entities.ProcessAndControlAudit.RiskCriteria, DeleteRiskCriteriaPCAResponseDTO>().ReverseMap();
+        CreateMap<Internal.Audit.Domain.Entities.ProcessAndControlAudit.RiskCriteria, DeleteRiskCriteriaPCACommand>().ReverseMap();
+       // CreateMap<RiskCriteriaDTOs, Internal.Audit.Domain.Entities.ProcessAndControlAudit.RiskCriteria>().ReverseMap();
     }
 }

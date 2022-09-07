@@ -8,7 +8,7 @@ import { FormService } from 'src/app/core/services/form.service';
 import { HttpService } from 'src/app/core/services/http.service';
 import {AlertService} from '../../../../core/services/alert.service';
 import { User } from '../../../../core/interfaces/branch-audit/user.interface';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { AuditScheduleBranch, AuditScheduleBranchDetails } from 'src/app/core/interfaces/branch-audit/auditScheduleBranch.interface';
 
 @Component({
@@ -17,6 +17,9 @@ import { AuditScheduleBranch, AuditScheduleBranchDetails } from 'src/app/core/in
   styleUrls: ['./new-issue.component.scss']
 })
 export class NewIssueComponent implements OnInit {
+  paramId:string ='';
+  pageName:string = '';
+
   issue: issue[] = [];
   issueForm: FormGroup;
   formService: FormService = new FormService();
@@ -33,8 +36,9 @@ export class NewIssueComponent implements OnInit {
 
 
   actionPlanCode: any;
-  userList: User[] = [];
+  actionOwnerList: User[] = [];
   actionPlans : IssueActionPlan[] = [];
+  
 //   actionPlans: [
 //     {
 //       "actionPlanCode": "AC-1001",
@@ -57,7 +61,7 @@ export class NewIssueComponent implements OnInit {
     
 //  ];
 
-  constructor(private http: HttpService , private fb: FormBuilder, private AlertService: AlertService, private router: Router) { 
+  constructor(private http: HttpService , private fb: FormBuilder, private AlertService: AlertService, private router: Router,  private activateRoute: ActivatedRoute) { 
     this.issueForm = this.fb.group({
       auditId:[''],
       id: [''],
@@ -93,6 +97,17 @@ export class NewIssueComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.paramId = this.activateRoute.snapshot.params['id'];
+    console.log(this.paramId);
+    if(this.paramId === undefined){
+      this.pageName='New Issue';
+    }
+    else{
+      this.pageName='Edit Issue';
+      this.LoadIssueById(this.paramId);
+    }
+    console.log(this.pageName);
+
     this.reset();
     this.countryId = "2162B8E8-BBF2-EC11-B3B0-00155D610B18"; //need to implement LoadCountryId()
     this.LoadAuditId();
@@ -102,6 +117,9 @@ export class NewIssueComponent implements OnInit {
     this.LoadImpactLevel();
     this.LoadUserList();
     this.LoadActionPlans();
+  }
+  LoadIssueById(paramId: string) {
+    
   }
   onSubmitNewIssue(){
   //  // $('#d2').css('');
@@ -242,17 +260,16 @@ LoadUserList() {
   "employeeName": "",
   "userRole": ""}).subscribe(resp => {
     let convertedResp = resp as paginatedResponseInterface<User>;
-    this.userList = convertedResp.items;
+    this.actionOwnerList = convertedResp.items;
   })
 }
 async addItem(index:any, managementPlan:any, targetDate:any) {
   this.LoadActionPlanCode().then((acPlnCode:any)=>{
     console.log(index, managementPlan, acPlnCode,targetDate);
     var currentElement: IssueActionPlan = {
-      id: "",
       actionPlanCode: acPlnCode,
       managementPlan: managementPlan.text,
-      ownerId: "",
+      //issueActionPlanOwnerList: [],
       targetDate: targetDate
     };
     this.actionPlans.push(currentElement);
@@ -268,6 +285,7 @@ async addItem(index:any, managementPlan:any, targetDate:any) {
   console.log(this.actionPlans);
  }
  onSubmitActionPlan(){
+  console.log(this.actionPlans);
  
   if (this.issueForm.valid ){
     if(this.formService.isEdit(this.issueForm.get('id') as FormControl)){
@@ -277,38 +295,31 @@ async addItem(index:any, managementPlan:any, targetDate:any) {
       // });
     }
     else {
-      
-
       let branchList: IssueBranch[] = [];
-      let issueOwnerList: IssueOwner[] = [];
-
-      let useca: IssueBranch[] = this.issueForm.value.branchList as IssueBranch[];
-      let issueOwner: IssueOwner[] = this.issueForm.value.issueOwnerList as IssueOwner[];
-
-      if (Array.isArray(useca)) {
-        useca.forEach(function (value) {
-          let urole: IssueBranch = { branchId: value.toString() }
-          branchList.push(urole);
-        }); 
-        
+      let issueBranch: IssueBranch[] = this.issueForm.value.branchList as IssueBranch[];
+      if (Array.isArray(issueBranch)) {
+        issueBranch.forEach(function (value) {
+          let br: IssueBranch = { branchId: value.toString() }
+          branchList.push(br);
+        });
       }
+      let issueOwnerList: IssueOwner[] = [];
+      let issueOwner: IssueOwner[] = this.issueForm.value.issueOwnerList as IssueOwner[];
       if (Array.isArray(issueOwner)) {
         issueOwner.forEach(function (value) {
-          let urole: IssueOwner = { ownerId: value.toString() }
-          issueOwnerList.push(urole);
-        }); 
-        
+          let owner: IssueOwner = { ownerId: value.toString() }
+          issueOwnerList.push(owner);
+        });
       }
 
       const RequestModel = {
-        
           code: this.issueForm.value.code,
           auditScheduleId: this.issueForm.value.auditScheduleId,
           issueTitle:this.issueForm.value.issueTitle,
           policy: this.issueForm.value.policy,        
           impactTypeId: this.issueForm.value.impactTypeId,
           likelihoodTypeId: this.issueForm.value.likelihoodTypeId,
-          ratingTypeId: this.issueForm.value.ratingTypeId,
+          ratingTypeId: "19838C61-2F0E-ED11-B3B2-00155D610B18",//this.issueForm.value.ratingTypeId,
           targetDate: this.issueForm.value.targetDate,        
           details: this.issueForm.value.details,
           rootCause: this.issueForm.value.rootCause,
@@ -318,15 +329,15 @@ async addItem(index:any, managementPlan:any, targetDate:any) {
 
           // issueBranchList: this.selectedAuditScheduleBranch,
            issueOwnerList: issueOwnerList,
-           branches: branchList,
-          actionPlans: this.actionPlans.slice(1),
-          statusTypeId: null,
-          remarks: '',
+           issueBranchList: branchList,
+           actionPlans: this.actionPlans,
+           //statusTypeId: '', default value set on issue table
+           remarks: '',
         };
         console.log(RequestModel);
         this.http.post('issue',RequestModel).subscribe(x=>{
           //this.formService.onSaveSuccess(this.router.navigate(['branch-audit/issue-list']));
-          this.AlertService.success('Topic Head Saved successfully');
+          this.AlertService.success('Issue Saved successfully');
         });
     }      
   }

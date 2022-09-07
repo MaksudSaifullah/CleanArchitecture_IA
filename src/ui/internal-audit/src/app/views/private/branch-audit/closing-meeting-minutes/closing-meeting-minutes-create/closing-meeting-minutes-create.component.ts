@@ -91,15 +91,14 @@ export class ClosingMeetingMinutesCreateComponent implements OnInit {
     this.cmmId = this.activateRoute.snapshot.params['id'];
     this.paramId = 'C09240DA-02DE-4B96-9A61-C9CA8F741C89';
     this.LoadScheduleData(this.paramId);
-
-    if( this.cmmId === undefined){
+    this.LoadBranches(this.paramId);
+    if( this.cmmId === undefined || this.cmmId === " "){
       this.pageName='Create';
     
       this.LoadSubjectMatters();
     }
     else{
       this.pageName='Edit';
-
       this.LoadMeetingById(this.cmmId);
     }
 
@@ -115,11 +114,12 @@ export class ClosingMeetingMinutesCreateComponent implements OnInit {
       .subscribe( res => {
            const meetingMinutesData = res as ClosingMeetingMinutes;
 
-            this.LoadBranches(meetingMinutesData.auditScheduleId);
+          //  this.LoadBranches(meetingMinutesData.auditScheduleId);
             this.closingMeetingPresent = meetingMinutesData.userPresents as addMeetingPresent[];
             this.closingMeetingApology = meetingMinutesData.userApologies as addMeetingApology[];
             this.closingMeetingSubjects = meetingMinutesData.meetingMinutesSubjects as addMeetingSubject[];
-            
+             this.LoadScheduleData(this.paramId);
+         
             this.cMMForm.patchValue({
               id: meetingMinutesData.id,
               meetingMinutesCode:  meetingMinutesData.meetingMinutesCode,
@@ -163,10 +163,6 @@ export class ClosingMeetingMinutesCreateComponent implements OnInit {
 
     
     const CMMFormValue = this.cMMForm.getRawValue();
-   // console.log(CMMFormValue.closingMeetingSubject[this.closingMeetingSubjects.length - 1].subjectMatter);
-
-  
-    console.log('CMMFormValue', CMMFormValue);
     let cmmId = CMMFormValue.id == '' ? (null as any) : CMMFormValue.id;
 
     if (this.cMMForm.valid) {
@@ -198,7 +194,6 @@ export class ClosingMeetingMinutesCreateComponent implements OnInit {
           subjectList.push(subject);
         });
       }
-      console.log(CMMFormValue.closingMeetingSubject);
   //  if(CMMFormValue.closingMeetingSubject == ""){
   //   this.AlertService.errorDialog(
   //     'Unsuccessful',
@@ -211,7 +206,6 @@ export class ClosingMeetingMinutesCreateComponent implements OnInit {
         subjectList[subjectList.length - 1].subjectMatter == "" &&
         subjectList[subjectList.length - 1].userId == ""
       ) {
-        console.log("+++++",subjectList[subjectList.length - 1].subjectMatter);
         this.AlertService.errorDialog(
           'Unsuccessful',
           'Please fill the last row of Subject Matter Table'
@@ -220,57 +214,93 @@ export class ClosingMeetingMinutesCreateComponent implements OnInit {
 
       }
 
-      const cmmRequestCreateModel: ClosingMeetingMinutes = {
-        // id:  null as any,
-        meetingMinutesCode: CMMFormValue.meetingMinutesCode,
-        auditScheduleId: this.paramId,
-        auditScheduleBranchId: CMMFormValue.auditScheduleBranchId,
-        meetingMinutesDate: CMMFormValue.meetingMinutesDate,
-        meetingMinutesName: CMMFormValue.meetingMinutesName,
-        auditOn: CMMFormValue.auditOn,
-        meetingHeld: CMMFormValue.meetingHeld,
-        preparedByUserId: CMMFormValue.preparedByUserId,
-        agreedByUserId: CMMFormValue.agreedByUserId,
-        createdOn: CMMFormValue.createdOn,
-
-        closingMeetingPresent: presentuserList,
-        closingMeetingApology: appologiesuserList,
-        closingMeetingSubject: subjectList,
-      };
-
-      
-
-      console.log('THis is Really awesome', cmmRequestCreateModel);
-
-      this.http
-        .post('closingmeetingminute', cmmRequestCreateModel)
-        .subscribe((x) => {
+      if(this.pageName=='Edit'){
+        const cmmRequestUpdateModel: ClosingMeetingMinutes = {
+          id: this.cMMForm.value?.id,
+          meetingMinutesCode: CMMFormValue.meetingMinutesCode,
+          auditScheduleId: this.paramId,
+          auditScheduleBranchId: CMMFormValue.auditScheduleBranchId,
+          meetingMinutesDate: formatDate(this.cMMForm.value?.meetingMinutesDate, 'yyyy-MM-ddTHH:mm:ss', 'en'),
+          meetingMinutesName: CMMFormValue.meetingMinutesName,
+          auditOn: CMMFormValue.auditOn,
+          meetingHeld: CMMFormValue.meetingHeld,
+          preparedByUserId: CMMFormValue.preparedByUserId,
+          agreedByUserId: CMMFormValue.agreedByUserId,
+  
+          userPresents: presentuserList,
+          userApologies: appologiesuserList,
+          meetingMinutesSubjects: subjectList,
+        };
+        this.http.put('closingmeetingminute',cmmRequestUpdateModel,null).subscribe(x=>{
           let resp = x as BaseResponse;
-          if (resp.success) {
-            this.AlertService.success(
-              'Closing Meeting Minutes Saved Successful'
-            );
-          } else {
-            this.AlertService.errorDialog('Unsuccessful', 'Duplicate Value ');
-          }
+            if(resp.success){
+              this.AlertService.success('Audit Schedule Updated Successful');
+              this.router.navigate(['branch-audit/closing-meeting-minutes'], {
+                // queryParams: {
+                //   myParam: 'inserted', 
+                // },
+              });
+            }
+            else{
+              this.AlertService.errorDialog('Unsuccessful', 'Duplicate Value ');
+            }
+
         });
+      }
+      else{
+        const cmmRequestCreateModel: ClosingMeetingMinutes = {
+          // id:  null as any,
+          meetingMinutesCode: CMMFormValue.meetingMinutesCode,
+          auditScheduleId: this.paramId,
+          auditScheduleBranchId: CMMFormValue.auditScheduleBranchId,
+          meetingMinutesDate: CMMFormValue.meetingMinutesDate,
+          meetingMinutesName: CMMFormValue.meetingMinutesName,
+          auditOn: CMMFormValue.auditOn,
+          meetingHeld: CMMFormValue.meetingHeld,
+          preparedByUserId: CMMFormValue.preparedByUserId,
+          agreedByUserId: CMMFormValue.agreedByUserId,
+          createdOn: CMMFormValue.createdOn,
+  
+          closingMeetingPresent: presentuserList,
+          closingMeetingApology: appologiesuserList,
+          closingMeetingSubject: subjectList,
+        };
+  
+        this.http
+          .post('closingmeetingminute', cmmRequestCreateModel)
+          .subscribe((x) => {
+            let resp = x as BaseResponse;
+            if (resp.success) {
+              this.AlertService.success(
+                'Closing Meeting Minutes Saved Successful'
+              );
+              this.router.navigate(['branch-audit/closing-meeting-minutes'], {
+                // queryParams: {
+                //   myParam: 'inserted', 
+                // },
+              });
+            } else {
+              this.AlertService.errorDialog('Unsuccessful', 'Duplicate Value ');
+            }
+          });
+      }
     } else {
       this.AlertService.errorDialog('Unsuccessful', 'ddd');
     }
   }
 
   LoadScheduleData(Id: any): void {
-    debugger;
     this.http.getById('AuditSchedule', Id).subscribe((res) => {
       const scheduleData = res as AuditSchedule;
       let scheduleId = scheduleData.id;
       let countryId = scheduleData.countryId;
       this.GetMeetingMinutesCode(countryId);
-      this.LoadBranches(scheduleId);
-      console.log("CHECKING",scheduleId);
+      // this.LoadBranches(scheduleId);
       this.cMMForm.patchValue({
         scheduleCode: scheduleData.scheduleId,
+        
       });
+
     });
   }
 
@@ -300,6 +330,7 @@ export class ClosingMeetingMinutesCreateComponent implements OnInit {
       .subscribe((resp) => {
         let convertedResp = resp as WPAuditScheduleBranch[];
         this.wpAuditScheduleBranches = convertedResp;
+
       });
   }
 
@@ -322,7 +353,6 @@ export class ClosingMeetingMinutesCreateComponent implements OnInit {
       userId: '',
     };
     this.closingMeetingSubjects.push(currentElement);
-    console.log('adddddd', this.closingMeetingSubjects);
   }
 
   addItem() {
@@ -330,19 +360,15 @@ export class ClosingMeetingMinutesCreateComponent implements OnInit {
       subjectMatter: '',
       userId: '',
     };
-    console.log(currentElement);
     this.closingMeetingSubjects.push(currentElement);
   }
 
   removeItem(index: any) {
-    console.log(index);
     if(index== 0){
       this.AlertService.errorDialog('Unsuccessful', 'You can not delete the last row');
       return;
     }
     var currentElement = this.closingMeetingSubjects[index];
-    console.log(currentElement);
     this.closingMeetingSubjects.splice(index, 1);
-    console.log(this.closingMeetingSubjects);
   }
 }

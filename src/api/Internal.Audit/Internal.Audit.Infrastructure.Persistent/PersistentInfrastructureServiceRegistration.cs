@@ -262,6 +262,13 @@ public static class PersistentInfrastructureServiceRegistration
         services.AddScoped<IAuditConfigMilestoneCommandReposiotry, AuditConfigMileStoneCommandRepository>();
         services.AddScoped<IAuditConfigMilestoneQueryReposiotry>(s => new AuditConfigMileStoneQueryRepository(configuration.GetConnectionString("InternalAuditDb")));
 
+        services.AddScoped<IClosingMeetingPresentQueryRepository>(s => new ClosingMeetingPresentQueryRepository(configuration.GetConnectionString("InternalAuditDb")));
+        services.AddScoped<IClosingMeetingApologyQueryRepository>(s => new ClosingMeetingApologyQueryRepository(configuration.GetConnectionString("InternalAuditDb")));
+
+        services.AddScoped<IClosingMeetingSubjectQueryRepository>(s => new ClosingMeetingSubjectQueryRepository(configuration.GetConnectionString("InternalAuditDb")));
+
+
+
         return services;
     }
 }

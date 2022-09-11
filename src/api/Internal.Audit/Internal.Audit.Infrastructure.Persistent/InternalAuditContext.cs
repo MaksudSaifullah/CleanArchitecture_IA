@@ -84,6 +84,10 @@ public class InternalAuditContext: DbContext
     public DbSet<NotifedUsersCC> NotifedUsersCCs { get; set; }
     public DbSet<NotifedUsersBCC> NotifedUsersBCCs { get; set; }
     public DbSet<IssueValidation> IssueValidations { get; set; }
+    public DbSet<IssueValidationActionPlan> IssueValidationActionPlans { get; set; }
+    public DbSet<IssueValidationDesignEffectiveNessTestDetail> IssueValidationDesignEffectiveNessTestDetails { get; set; }
+    public DbSet<IssueValidationTestSheet> IssueValidationTestSheets { get; set; }
+    public DbSet<IssueValidationEvidenceDetail> IssueValidationEvidenceDetails { get; set; }
 
     public DbSet<Internal.Audit.Domain.Entities.ProcessAndControlAudit.RiskCriteria> PC_RiskCriterias { get; set; }
 

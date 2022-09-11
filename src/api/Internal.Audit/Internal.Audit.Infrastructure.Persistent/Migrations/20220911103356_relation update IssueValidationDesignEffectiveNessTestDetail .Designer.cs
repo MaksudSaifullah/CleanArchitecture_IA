@@ -4,6 +4,7 @@ using Internal.Audit.Infrastructure.Persistent;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Internal.Audit.Infrastructure.Persistent.Migrations
 {
     [DbContext(typeof(InternalAuditContext))]
-    partial class InternalAuditContextModelSnapshot : ModelSnapshot
+    [Migration("20220911103356_relation update IssueValidationDesignEffectiveNessTestDetail ")]
+    partial class relationupdateIssueValidationDesignEffectiveNessTestDetail
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -1328,9 +1330,6 @@ namespace Internal.Audit.Infrastructure.Persistent.Migrations
                         .HasColumnType("bit")
                         .HasDefaultValueSql("0");
 
-                    b.Property<Guid>("IssueValidationActionPlanId")
-                        .HasColumnType("uniqueidentifier");
-
                     b.Property<Guid>("IssueValidationId")
                         .HasColumnType("uniqueidentifier");
 
@@ -1390,7 +1389,7 @@ namespace Internal.Audit.Infrastructure.Persistent.Migrations
                         .HasColumnType("bit")
                         .HasDefaultValueSql("0");
 
-                    b.Property<Guid>("IssueValidationActionPlanId")
+                    b.Property<Guid?>("IssueValidationActionPlanId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<Guid>("IssueValidationId")
@@ -1412,7 +1411,7 @@ namespace Internal.Audit.Infrastructure.Persistent.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("IssueValidationId");
+                    b.HasIndex("IssueValidationActionPlanId");
 
                     b.ToTable("IssueValidationEvidenceDetail", "BranchAudit");
                 });
@@ -1448,7 +1447,7 @@ namespace Internal.Audit.Infrastructure.Persistent.Migrations
                         .HasColumnType("bit")
                         .HasDefaultValueSql("0");
 
-                    b.Property<Guid>("IssueValidationActionPlanId")
+                    b.Property<Guid?>("IssueValidationActionPlanId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<Guid>("IssueValidationId")
@@ -1470,7 +1469,7 @@ namespace Internal.Audit.Infrastructure.Persistent.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("IssueValidationId");
+                    b.HasIndex("IssueValidationActionPlanId");
 
                     b.ToTable("IssueValidationTestSheet", "BranchAudit");
                 });
@@ -5090,24 +5089,16 @@ namespace Internal.Audit.Infrastructure.Persistent.Migrations
 
             modelBuilder.Entity("Internal.Audit.Domain.Entities.BranchAudit.IssueValidationEvidenceDetail", b =>
                 {
-                    b.HasOne("Internal.Audit.Domain.Entities.BranchAudit.IssueValidationActionPlan", "IssueValidationActionPlan")
+                    b.HasOne("Internal.Audit.Domain.Entities.BranchAudit.IssueValidationActionPlan", null)
                         .WithMany("IssueValidationEvidenceDetails")
-                        .HasForeignKey("IssueValidationId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("IssueValidationActionPlan");
+                        .HasForeignKey("IssueValidationActionPlanId");
                 });
 
             modelBuilder.Entity("Internal.Audit.Domain.Entities.BranchAudit.IssueValidationTestSheet", b =>
                 {
-                    b.HasOne("Internal.Audit.Domain.Entities.BranchAudit.IssueValidationActionPlan", "IssueValidationActionPlan")
+                    b.HasOne("Internal.Audit.Domain.Entities.BranchAudit.IssueValidationActionPlan", null)
                         .WithMany("IssueValidationTestSheets")
-                        .HasForeignKey("IssueValidationId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("IssueValidationActionPlan");
+                        .HasForeignKey("IssueValidationActionPlanId");
                 });
 
             modelBuilder.Entity("Internal.Audit.Domain.Entities.BranchAudit.NotifedUsersBCC", b =>

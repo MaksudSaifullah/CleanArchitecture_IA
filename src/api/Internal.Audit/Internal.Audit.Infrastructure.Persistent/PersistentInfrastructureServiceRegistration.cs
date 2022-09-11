@@ -98,6 +98,8 @@ using Internal.Audit.Application.Contracts.Persistent.RiskCriteriasPCA;
 using Internal.Audit.Infrastructure.Persistent.Repositories.RiskCriteriasPCA;
 using Internal.Audit.Application.Contracts.Persistent.IssueValidations;
 using Internal.Audit.Infrastructure.Persistent.Repositories.IssueValidations;
+using Internal.Audit.Infrastructure.Persistent.Repositories.IssueValidationActionPlans;
+using Internal.Audit.Application.Contracts.Persistent.IssueValidationActionPlans;
 
 namespace Internal.Audit.Infrastructure.Persistent;
 
@@ -280,6 +282,8 @@ public static class PersistentInfrastructureServiceRegistration
         services.AddScoped<IssueValidationCommandRepository, IssueValidationCommandReposiotry>();
         services.AddScoped<IssueValidationQueryRepository>(s => new IssueValidationQueryReposiotry(configuration.GetConnectionString("InternalAuditDb")));
 
+        services.AddScoped<IIssueValidationActionPlanCommandRepository, IssueValidationActionPlanCommandRepository>();
+        services.AddScoped<IIssueValidationActionPlanQueryRepository>(s => new IssueValidationActionPlanQueryRepository(configuration.GetConnectionString("InternalAuditDb")));
 
         return services;
     }

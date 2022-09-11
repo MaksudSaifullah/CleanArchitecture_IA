@@ -47,13 +47,13 @@ public class IssueValidationActionPlan : EntityBase
 public class IssueValidationDesignEffectiveNessTestDetail : EntityBase
 {
 	[Required]
-	public Guid IssueValidationId { get; set; }
+	public Guid IssueValidationActionPlanId { get; set; }
 	[Required]
 	public int CommonQuestionValue { get; set; }
 	public int CommonAnsValue { get; set; }
 	public string Remarks { get; set; }
 	[ForeignKey("IssueValidationId")]
-	public virtual IssueValidation Issue { get; set; } = null!;
+	public virtual IssueValidationActionPlan IssueValidationActionPlan { get; set; } = null!;
 
 }
 
@@ -61,21 +61,25 @@ public class IssueValidationDesignEffectiveNessTestDetail : EntityBase
 public class IssueValidationTestSheet : EntityBase
 {
 	[Required]
-	public Guid IssueValidationId { get; set; }
+	public Guid IssueValidationActionPlanId { get; set; }
 	[Required]
 	public Guid DocumentId { get; set; }
 	[NotMapped]
 	public virtual Document TestingSheet { get; set; } = null!;
+	[ForeignKey("IssueValidationId")]
+	public virtual IssueValidationActionPlan IssueValidationActionPlan { get; set; } = null!;
 
 }
 [Table("IssueValidationEvidenceDetail", Schema = "BranchAudit")]
 public class IssueValidationEvidenceDetail : EntityBase
 {
 	[Required]
-	public Guid IssueValidationId { get; set; }
+	public Guid IssueValidationActionPlanId { get; set; }
 	[Required]
 	public Guid DocumentId { get; set; }
 	[NotMapped]
 	public virtual Document TestingSheet { get; set; } = null!;
+	[ForeignKey("IssueValidationId")]
+	public virtual IssueValidationActionPlan IssueValidationActionPlan { get; set; } = null!;
 
 }

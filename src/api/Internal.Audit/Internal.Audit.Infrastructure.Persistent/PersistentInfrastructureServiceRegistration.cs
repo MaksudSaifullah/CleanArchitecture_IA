@@ -96,6 +96,8 @@ using Internal.Audit.Application.Contracts.Persistent.NotificationToAuditees;
 using Internal.Audit.Infrastructure.Persistent.Repositories.NotificationToAuditees;
 using Internal.Audit.Application.Contracts.Persistent.RiskCriteriasPCA;
 using Internal.Audit.Infrastructure.Persistent.Repositories.RiskCriteriasPCA;
+using Internal.Audit.Application.Contracts.Persistent.IssueValidations;
+using Internal.Audit.Infrastructure.Persistent.Repositories.IssueValidations;
 
 namespace Internal.Audit.Infrastructure.Persistent;
 
@@ -267,6 +269,16 @@ public static class PersistentInfrastructureServiceRegistration
 
         services.AddScoped<IRiskCriteriaPCACommandRepository, RiskCriteriaPCACommandRepository>();
         services.AddScoped<IRiskCriteriaPCAQueryRepository>(s => new RiskCriteriaPCAQueryRepository(configuration.GetConnectionString("InternalAuditDb")));
+
+
+        services.AddScoped<IClosingMeetingPresentQueryRepository>(s => new ClosingMeetingPresentQueryRepository(configuration.GetConnectionString("InternalAuditDb")));
+        services.AddScoped<IClosingMeetingApologyQueryRepository>(s => new ClosingMeetingApologyQueryRepository(configuration.GetConnectionString("InternalAuditDb")));
+
+        services.AddScoped<IClosingMeetingSubjectQueryRepository>(s => new ClosingMeetingSubjectQueryRepository(configuration.GetConnectionString("InternalAuditDb")));
+
+
+        services.AddScoped<IssueValidationCommandRepository, IssueValidationCommandReposiotry>();
+        services.AddScoped<IssueValidationQueryRepository>(s => new IssueValidationQueryReposiotry(configuration.GetConnectionString("InternalAuditDb")));
 
 
         return services;

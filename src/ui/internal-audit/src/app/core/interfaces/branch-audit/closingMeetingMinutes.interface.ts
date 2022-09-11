@@ -5,7 +5,7 @@ export interface ClosingMeetingMinutes
     scheduleCode?: string;
     auditScheduleId?: string;
     auditScheduleBranchId?: string;
-    meetingMinutesDate: Date;
+    meetingMinutesDate: string;
     meetingMinutesName?: string;
     auditOn?: string;
     meetingHeld?: string;
@@ -15,9 +15,9 @@ export interface ClosingMeetingMinutes
     createdOn?: Date;
     
 
-    closingMeetingPresent: addMeetingPresent[];
-    closingMeetingApology: addMeetingApology[];
-    closingMeetingSubject: addMeetingSubject[];
+    closingMeetingPresent?: addMeetingPresent[];
+    closingMeetingApology?: addMeetingApology[];
+    closingMeetingSubject?: addMeetingSubject[];
     
     userPresents?: addMeetingPresent[];
     userApologies?: addMeetingApology[];

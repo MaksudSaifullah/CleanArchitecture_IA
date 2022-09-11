@@ -104,10 +104,6 @@ export const navItems: INavData[] = [
         url: '/branch-audit/workpaper'
       },
       {
-        name: 'Work Paper Create',
-        url: '/branch-audit/workpaperCreate'
-      },
-      {
         name: 'Meeting Minutes',
         url: '/branch-audit/closing-meeting-minutes'
       },

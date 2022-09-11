@@ -81,6 +81,7 @@ export class WorkpaperCreateComponent implements OnInit {
     this.documentRawSourceInfo = await this.helper.getDocumentSource('Work_Paper') as DocumentSource;
     this.paramId = 'C09240DA-02DE-4B96-9A61-C9CA8F741C89';
       this.LoadScheduleData(this.paramId);
+      this.LoadBranches(this.paramId);
     if(this.workpaperId === undefined){
       this.pageName='Create';
     }
@@ -101,7 +102,8 @@ export class WorkpaperCreateComponent implements OnInit {
            const workpaperData = res as workpaper;
            this.LoadControlFrequency(workpaperData.controlActivityNatureId == null? null : workpaperData.controlActivityNatureId);
            this.LoadSampleSize(workpaperData.controlFrequencyId == null?  null : workpaperData.controlFrequencyId);
-            this.LoadBranches(workpaperData.auditScheduleId);
+            //this.LoadBranches(workpaperData.auditScheduleId);
+            this.LoadScheduleData(this.paramId);
             this.onChangeTopicHeadDropdownList(workpaperData.topicHeadId == null? null : workpaperData.topicHeadId);
             this.editDocId=workpaperData.documentId;
            this.workpaperForm.patchValue({
@@ -137,7 +139,7 @@ export class WorkpaperCreateComponent implements OnInit {
           let scheduleId = scheduleData.id;
           let countryId = scheduleData.countryId;
           this.GetWorkPaperCode(countryId);
-          this.LoadBranches(scheduleId);
+          //this.LoadBranches(scheduleId);
            this.workpaperForm.patchValue({
             scheduleCode: scheduleData.scheduleId,
             scheduleStartDate: formatDate(scheduleData.scheduleStartDate, 'yyyy-MM-dd', 'en') ,

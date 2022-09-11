@@ -28,11 +28,11 @@ public class IssueValidation : EntityBase
 	[ForeignKey("IssueId")]
 	public virtual Issue Issue { get; set; } = null!;
 	[ForeignKey("ValidatedByUserId")]
-	public virtual Employee Validator { get; set; } = null!;
+	public virtual User Validator { get; set; } = null!;
 	[ForeignKey("ReviewedByUserID")]
-	public virtual Employee Reviewer { get; set; } = null!;
+	public virtual User Reviewer { get; set; } = null!;
 	[ForeignKey("ApprovedByUserId")]
-	public virtual Employee Approvar { get; set; } = null!;
+	public virtual User Approvar { get; set; } = null!;
 
 	//TODO
 	//[ForeignKey("ReviewEvidenceDocumentId")]

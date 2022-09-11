@@ -197,7 +197,10 @@ using Internal.Audit.Application.Features.RiskCriteriasPCA.Commands.UpdateRiskCr
 using Internal.Audit.Application.Features.RiskCriteriasPCA.Commands.DeleteRiskCriteria;
 
 using Internal.Audit.Application.Features.Issues.Commands.AddIssue;
-
+using Internal.Audit.Application.Features.IssueValidations.Commands.AddIssueValidationCommand;
+using Internal.Audit.Application.Features.IssueValidations.Commands.DeleteIssueValidationCommand;
+using Internal.Audit.Application.Features.IssueValidations.Commands.UpdateIssueValidationCommand;
+using Internal.Audit.Application.Features.IssueValidations.Queries.GetIssueValidationByIssueId;
 
 namespace Internal.Audit.Application.Mappings;
 
@@ -554,6 +557,12 @@ public class MappingProfile : Profile
         CreateMap<Internal.Audit.Domain.Entities.ProcessAndControlAudit.RiskCriteria, UpdateRiskCriteriaPCACommand>().ReverseMap();
         CreateMap<Internal.Audit.Domain.Entities.ProcessAndControlAudit.RiskCriteria, DeleteRiskCriteriaPCAResponseDTO>().ReverseMap();
         CreateMap<Internal.Audit.Domain.Entities.ProcessAndControlAudit.RiskCriteria, DeleteRiskCriteriaPCACommand>().ReverseMap();
-       // CreateMap<RiskCriteriaDTOs, Internal.Audit.Domain.Entities.ProcessAndControlAudit.RiskCriteria>().ReverseMap();
+        // CreateMap<RiskCriteriaDTOs, Internal.Audit.Domain.Entities.ProcessAndControlAudit.RiskCriteria>().ReverseMap();
+        CreateMap<IssueValidation, AddIssueValidationCommand>().ReverseMap();
+        CreateMap<IssueValidation, DeleteIssueValidationCommand>().ReverseMap();
+        CreateMap<IssueValidation, UpdateIssueValidationCommand>().ReverseMap();
+        CreateMap<User, GetIssueValidationUserListResponseDTO>().ReverseMap();//
+        CreateMap<IssueValidation, GetIssueValidationByIssueIdQueryResponseDTO>().ReverseMap();//GetIssueValidationByIssueIdQueryResponseDTO
+
     }
 }

@@ -83,8 +83,9 @@ public class InternalAuditContext: DbContext
     public DbSet<NotifedUsersTo> NotifedUsersTos { get; set; }
     public DbSet<NotifedUsersCC> NotifedUsersCCs { get; set; }
     public DbSet<NotifedUsersBCC> NotifedUsersBCCs { get; set; }
-	
-	public DbSet<Internal.Audit.Domain.Entities.ProcessAndControlAudit.RiskCriteria> PC_RiskCriterias { get; set; }
+    public DbSet<IssueValidation> IssueValidations { get; set; }
+
+    public DbSet<Internal.Audit.Domain.Entities.ProcessAndControlAudit.RiskCriteria> PC_RiskCriterias { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

@@ -25,7 +25,7 @@ export interface issue {
 
     issueOwnerList?: IssueOwner[];
     issueBranchList?: IssueBranch[];
-    actionPlans?: IssueActionPlan[];
+    actionPlans: IssueActionPlan[];
 }
 
 export interface IssueBranch {
@@ -44,10 +44,10 @@ export interface IssueActionPlan{
     issueId?: string;
     actionPlanCode?: string;
     //ownerId?: string;
-    issueActionPlanOwnerList?: IssueActionPlanOwner[];
+    issueActionPlanOwnerList: IssueActionPlanOwner[];
     evidenceDocumentId?: string;
     managementPlan?: string;
-    targetDate?: Date;
+    targetDate: Date;
     isActionTaken?: boolean;
     actionTakenDate?: Date;
     actionTakenRemarks?: string

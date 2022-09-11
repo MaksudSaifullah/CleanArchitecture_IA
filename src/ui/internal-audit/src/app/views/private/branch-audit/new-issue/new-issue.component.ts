@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { AuditSchedule } from 'src/app/core/interfaces/branch-audit/auditSchedule.interface';
-import { issue, IssueBranch, IssueOwner, IssueActionPlan } from 'src/app/core/interfaces/branch-audit/issue.interface';
+import { issue, IssueBranch, IssueOwner, IssueActionPlan, IssueResponse, IssueActionPlanOwner } from 'src/app/core/interfaces/branch-audit/issue.interface';
 import { commonValueAndType } from 'src/app/core/interfaces/configuration/commonValueAndType.interface';
 import { paginatedResponseInterface } from 'src/app/core/interfaces/paginated.interface';
 import { FormService } from 'src/app/core/services/form.service';
@@ -10,6 +10,7 @@ import {AlertService} from '../../../../core/services/alert.service';
 import { User } from '../../../../core/interfaces/branch-audit/user.interface';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AuditScheduleBranch, AuditScheduleBranchDetails } from 'src/app/core/interfaces/branch-audit/auditScheduleBranch.interface';
+import { formatDate } from '@angular/common';
 
 @Component({
   selector: 'app-new-issue',
@@ -31,7 +32,7 @@ export class NewIssueComponent implements OnInit {
   issueOwnerList: User[]=[];
   likelihoodType: commonValueAndType[] = [];
   impactType: commonValueAndType[] = [];
-  selectedAuditScheduleBranch: IssueBranch[]=[];
+  selectedAuditScheduleBranchList: IssueBranch[]=[];
   selectedIssueOwnerList : IssueOwner[]=[];
 
 
@@ -97,40 +98,104 @@ export class NewIssueComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    
     this.paramId = this.activateRoute.snapshot.params['id'];
     console.log(this.paramId);
+
+    this.LoadDropdownValues();
     if(this.paramId === undefined){
-      this.pageName='New Issue';
+      this.pageName='NewIssue';
+      this.LoadIssueCode();
     }
     else{
-      this.pageName='Edit Issue';
+      this.pageName='EditIssue';
       this.LoadIssueById(this.paramId);
     }
-    console.log(this.pageName);
-
+    console.log(this.pageName);    
+  }
+  LoadDropdownValues(){
     this.reset();
     this.countryId = "2162B8E8-BBF2-EC11-B3B0-00155D610B18"; //need to implement LoadCountryId()
     this.LoadAuditId();
-    this.LoadIssueCode();
     this.LoadAuditSchedules();
     this.LoadLikelihoodLevel();
     this.LoadImpactLevel();
     this.LoadUserList();
     this.LoadActionPlans();
   }
-  LoadIssueById(paramId: string) {
+  LoadIssueById(id: any) {
+    this.http
+      .getById('issue','Id?Id='+id)
+      .subscribe(res => {
+           const issueById = res as issue;
+           console.log("***************");
+           console.log(issueById);
+           console.log("***************");
+           this.selectedAuditScheduleBranchList = issueById.issueBranchList as IssueBranch[];
+           this.selectedIssueOwnerList = issueById.issueOwnerList as IssueOwner[];
+           this.onSelectAuditSchedule(issueById.auditScheduleId);
+
+          //  this.employeeId=userData.employee.id;
+
+          //  this.selectedUserCountry = userData.userCountries;
+          //  this.selectedUserRole = userData.userRoles;
+      //     code: [''],
+      // issueTitle:['', [Validators.required, Validators.minLength(3), Validators.maxLength(500)]],
+      
+      // ratingType:[''],
+      // actionOwners:[''],
+      // targetDate:[Date, [Validators.required]],
+      // statusType:[''],
+
+      // auditScheduleId:[null,[Validators.required, Validators.pattern("^(?!null$).*$")]],
+      // branchList:['',[Validators.required]],
+      // issueOwnerList:['', [Validators.required]],
+      // impactTypeId:[null,[Validators.required, Validators.pattern("^(?!null$).*$")]],
+      // likelihoodTypeId:[null,[Validators.required, Validators.pattern("^(?!null$).*$")]],
+      // ratingTypeId:[''],
+      // statusTypeId:[''],
+      // policy:['', [Validators.required, Validators.minLength(3), Validators.maxLength(500)]],
+      // details:['', [Validators.required, Validators.minLength(3)]],
+      // rootCause:['', [Validators.required, Validators.minLength(3)]],
+      // businessImpact:['', [Validators.required, Validators.minLength(3)]],
+      // potentialRisk:['', [Validators.required, Validators.minLength(3)]],
+      // auditorRecommendation:['', [Validators.required, Validators.minLength(3)]],
+
+      // remarks:[''],
+
+      // likelihoodType:[''],
+      // impactType:[''],
+      // branch:[''],
+              this.issueForm.patchValue({id: issueById.id, code: issueById.code, issueTitle: issueById.issueTitle, auditScheduleId: issueById.auditScheduleId,
+                policy:issueById.policy, impactTypeId:issueById.impactTypeId, likelihoodTypeId: issueById.likelihoodTypeId,
+                ratingTypeId: issueById.ratingTypeId, statusTypeId: issueById.statusTypeId, targetDate:formatDate(issueById.targetDate, 'yyyy-MM-dd', 'en'), 
+                details: issueById.details, rootCause: issueById.rootCause, businessImpact: issueById.businessImpact, potentialRisk: issueById.potentialRisk,
+                auditorRecommendation: issueById.auditorRecommendation,
+                branchList:issueById.issueBranchList, issueOwnerList:issueById.issueOwnerList,
+              });
+              this.actionPlans = issueById.actionPlans as IssueActionPlan[];
+              console.log("-----");  
+              console.log(this.issueForm.value);
+              console.log(this.actionPlans);
+              console.log("--------------------------------");
+
+        
+          //  this.selectedUserCountry.forEach((ctrl: any) => {    
+           
+          //   this.formArray?.push(new FormControl(ctrl.countryId));    
+            
+          // });
+          // console.log(this.formArray);
+      });
     
   }
-  onSubmitNewIssue(){
-  //  // $('#d2').css('');
-  //   $('#d1').removeClass('active');
-  //   $('#d2').addClass('active');
-  //   $('#d2').css('active','true');     
-  //   $('#d2').prop("active", true);
+  onContinueNewIssue(){
+  //todo: on click continue, move to next page
   }
   onCancelNewIssue(){
     this.router.navigate(['branch-audit/issue-list']);
   }
+
   LoadIssueCode(){
     this.http.get('commonValueAndType/idcreation?idcreationValue=12&auditType=1&countryId='+this.countryId).subscribe(resp => {
      // let convertedResp = resp as commonValueAndType;
@@ -168,19 +233,22 @@ export class NewIssueComponent implements OnInit {
    // console.log("hello from load branches",scheduleId);
     this.http.get('commonValueAndType/getAuditScheduleBranch?ScheduleId='+ scheduleId).subscribe(resp => {
       let convertedResp = resp as AuditScheduleBranchDetails[];
-      this.auditScheduleBranches = convertedResp;     
-      //console.log( this.auditScheduleBranches)
+      this.auditScheduleBranches = convertedResp;  
+      console.log("load branches");   
+      console.log( this.auditScheduleBranches)
     })
   }
 
   isBranchSelected(branchId:any){
-    for (let branch of this.selectedAuditScheduleBranch){
+    for (let branch of this.selectedAuditScheduleBranchList){
+      console.log(branchId);
       if(branch.branchId == branchId){
         return true;
       }
      }
      return false;
   }
+
 
   LoadIssueOwners(){
     console.log("hello from load issue owner");
@@ -311,6 +379,39 @@ async addItem(index:any, managementPlan:any, targetDate:any) {
           issueOwnerList.push(owner);
         });
       }
+     
+     
+    //   export interface IssueActionPlanOwner{
+    //     id?: string;
+    //     issueActionPlanId?: string;
+    //     ownerId?: string;
+    // }
+    let final : IssueActionPlan[]=[] ;
+      if(Array.isArray(this.actionPlans)){
+
+        this.actionPlans.forEach(function (value:any) {
+          let pp :IssueActionPlanOwner[]=[];
+          value.issueActionPlanOwnerList.forEach(function (guids:any) {
+            let s :IssueActionPlanOwner={
+              ownerId:guids
+            }
+            pp.push(s);
+          });
+          let initial : IssueActionPlan={
+            actionPlanCode:value.actionPlanCode,
+            targetDate:value.targetDate,
+            managementPlan:value.managementPlan,
+            issueActionPlanOwnerList:pp
+
+          } ;
+          final.push(initial);
+
+        });
+
+       
+      }
+       
+     
 
       const RequestModel = {
           code: this.issueForm.value.code,
@@ -326,11 +427,9 @@ async addItem(index:any, managementPlan:any, targetDate:any) {
           businessImpact: this.issueForm.value.businessImpact,
           potentialRisk: this.issueForm.value.potentialRisk,
           auditorRecommendation: this.issueForm.value.auditorRecommendation,
-
-          // issueBranchList: this.selectedAuditScheduleBranch,
            issueOwnerList: issueOwnerList,
            issueBranchList: branchList,
-           actionPlans: this.actionPlans,
+           actionPlans: final,
            //statusTypeId: '', default value set on issue table
            remarks: '',
         };

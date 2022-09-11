@@ -3,9 +3,8 @@ export interface issue {
     code:             string;
     issueTitle?:      string;
     issueOwners?:     string;
-    ratingType?:      string;
-    actionOwners?:    string;    
-    targetDate?:      Date;    
+    ratingType?:      string;   
+    targetDate:      Date;    
     statusType?:      string;
 
     auditScheduleId?: string;
@@ -57,5 +56,10 @@ export interface IssueActionPlanOwner{
     id?: string;
     issueActionPlanId?: string;
     ownerId?: string;
+}
 
+export interface IssueResponse{
+    issueOwnerList?: IssueOwner[];
+    issueBranchList?: IssueBranch[];
+    actionPlans?: IssueActionPlan[];
 }

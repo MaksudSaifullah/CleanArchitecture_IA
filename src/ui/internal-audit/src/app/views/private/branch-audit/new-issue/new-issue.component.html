@@ -20,7 +20,7 @@
               </div>
               <div class="card-body">
                
-                <form [formGroup]="issueForm" (ngSubmit)="onSubmitNewIssue()" novalidate>                
+                <form [formGroup]="issueForm" (ngSubmit)="onContinueNewIssue()" novalidate>                
                     
                         <div class="form-floating mb-3">
                             <input type="text" class="form-control" formControlName="code" id="code" placeholder="code">
@@ -73,7 +73,7 @@
                           <c-multi-select multiple formControlName="branchList" name="branchList" required style="height: 70px;">
                             <!-- <label for="branches">Branches</label>  -->
                             <!-- <c-multi-select-option value="null">Select Branch</c-multi-select-option> -->
-                            <c-multi-select-option *ngFor="let branch of auditScheduleBranches" [value]="branch.branch.id" [selected]="isBranchSelected(branch.value)" #branch>
+                            <c-multi-select-option *ngFor="let branch of auditScheduleBranches" [value]="branch.id" [selected]="isBranchSelected(branch.branch.id)" #branch>
                               {{branch.branch.branchName}}
                             </c-multi-select-option>
                           </c-multi-select>
@@ -259,9 +259,9 @@
                             </div>
                         </div> 
                         <div>
-                          <button cButton class="btn btn-primary btnSaveColor me-1" ng-click="tabs[1].active = true">
+                          <!-- <button cButton class="btn btn-primary btnSaveColor me-1" ng-click="tabs[1].active = true">
                             <svg cIcon name="cilSave" size="md" title="Save Button Icon"></svg> Continue
-                          </button>
+                          </button> -->
                           <button cButton class="btn btn-danger btnCancelColor me-1" (click)="onCancelNewIssue()">
                             <svg cIcon name="cilX" size="md" title="Close Button Icon"></svg> Cancel
                           </button>
@@ -301,7 +301,7 @@
                       <td> {{row.actionPlanCode}} </td>
                       <td><input type="text" class="form-control" id="managementPlan" placeholder="Management Action Plan"  name="{{row.managementPlan}}" #managementPlan [(ngModel)]="row.managementPlan"></td>
                       <td> <!--{{row.owner}} -->
-                        <c-multi-select multiple class="form-control the_dropdown" [(ngModel)]="row.owner" name="{{row.owner}}">
+                        <c-multi-select multiple class="form-control the_dropdown" [(ngModel)]="row.issueActionPlanOwnerList" name="{{row.issueActionPlanOwnerList}}">
                           <c-multi-select-option *ngFor="let owner of actionOwnerList" [value]="owner.id">{{owner.userName}}
                           </c-multi-select-option>
                         </c-multi-select>

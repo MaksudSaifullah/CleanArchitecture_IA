@@ -540,6 +540,12 @@ public class MappingProfile : Profile
         CreateMap<IssueActionPlan, AddIssueActionPlanCommand>().ReverseMap();
         CreateMap<IssueActionPlanOwner, AddIssueActionOwnerListCommand>().ReverseMap();
 
+        CreateMap<Issue, GetIssueByIdResponseDTO>().ReverseMap();
+        CreateMap<IssueOwner, GetIssueOwner>().ReverseMap();
+        CreateMap<IssueBranch, GetIssueBranch>().ReverseMap();
+        CreateMap<IssueActionPlan, GetIssueActionPlan>().ReverseMap();
+        CreateMap<IssueActionPlanOwner, GetIssueActionOwnerList>().ReverseMap();
+
         CreateMap<User, UserConfiguration>().ReverseMap();
         CreateMap<AuditScheduleConfigurationOwner, GetAllByAuditScheduledIdResponseDTO>() // needs `Inst` -> `InstDTO` map
     .ForMember(dst => dst.BranchName, opt => opt.MapFrom(src => src.Branch.BranchName)).ReverseMap();

@@ -3,9 +3,8 @@ export interface issue {
     code:             string;
     issueTitle?:      string;
     issueOwners?:     string;
-    ratingType?:      string;
-    actionOwners?:    string;    
-    targetDate?:      Date;    
+    ratingType?:      string;   
+    targetDate:      Date;    
     statusType?:      string;
 
     auditScheduleId?: string;
@@ -26,7 +25,7 @@ export interface issue {
 
     issueOwnerList?: IssueOwner[];
     issueBranchList?: IssueBranch[];
-    actionPlans?: IssueActionPlan[];
+    actionPlans: IssueActionPlan[];
 }
 
 export interface IssueBranch {
@@ -45,10 +44,10 @@ export interface IssueActionPlan{
     issueId?: string;
     actionPlanCode?: string;
     //ownerId?: string;
-    issueActionPlanOwnerList?: IssueActionPlanOwner[];
+    issueActionPlanOwnerList: IssueActionPlanOwner[];
     evidenceDocumentId?: string;
     managementPlan?: string;
-    targetDate?: Date;
+    targetDate: Date;
     isActionTaken?: boolean;
     actionTakenDate?: Date;
     actionTakenRemarks?: string
@@ -57,5 +56,10 @@ export interface IssueActionPlanOwner{
     id?: string;
     issueActionPlanId?: string;
     ownerId?: string;
+}
 
+export interface IssueResponse{
+    issueOwnerList?: IssueOwner[];
+    issueBranchList?: IssueBranch[];
+    actionPlans?: IssueActionPlan[];
 }

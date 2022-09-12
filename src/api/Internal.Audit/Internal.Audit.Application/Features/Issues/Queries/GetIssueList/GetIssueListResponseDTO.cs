@@ -19,7 +19,7 @@ public record GetIssueListResponseDTO
     //public string? LikelihoodTypeName { get; set; }
 
     public string IssueOwners { get; set; } = null!;
-    public string ActionOwners { get; set; } = null!;
+    public string? ActionOwners { get; set; } = null!;
     public string? RatingType { get; set; }    
     public string? StatusType { get; set; }
 }

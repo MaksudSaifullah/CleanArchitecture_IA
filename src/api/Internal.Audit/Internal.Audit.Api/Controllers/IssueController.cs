@@ -26,14 +26,6 @@ public class IssueController : ControllerBase
         return Ok(result);
     }
 
-    ////[HttpPost("filter")]
-    ////public async Task<ActionResult<IEnumerable<GetQuestionnaireByFilterResponseDTO>>> GetByFilter(GetQuestionnaireFilterDTO Filter)
-    ////{
-    ////    var query = new GetQuestionnaireByFilterQuery(Filter);
-    ////    var result = await _mediator.Send(query);
-    ////    return Ok(result);
-    ////}
-
     [HttpGet("id")]
     public async Task<ActionResult<GetIssueByIdResponseDTO>> GetById(Guid Id)
     {

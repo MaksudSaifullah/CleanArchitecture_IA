@@ -1,1 +1,185 @@
-<p>issue-view works!</p>
+
+<c-nav variant="tabs" id="tabs">
+    <a [active]="true" id="d1" [cTabContent]="tabContent" [routerLink] [tabPaneIdx]="0" cNavLink>Issue</a>
+    <a [cTabContent]="tabContent" id="d2" [routerLink] [tabPaneIdx]="1" cNavLink>Action Plan</a>
+</c-nav>
+<c-col xs="12">
+<c-card class="mb-4">
+<c-tab-content #tabContent="cTabContent">
+    <c-tab-pane class="p-3"> 
+        <div class="animated fadeIn"><div class="row">
+            <div class="col-lg-12">
+            <div class="card">
+                <div class="card-header">
+                <div class="fa fa-align-justify" >
+                    <strong>View Issue</strong>
+                </div> 
+                </div>
+                <div class="card-body">
+                    <div class="row">                        
+                        <div>
+                          <div class="a btn-group" role="group" aria-label="Basic example">
+                            <button  class="btnSaveColor me-1"  cButton > Add Validation
+                            </button> 
+                            <button  class="btnSaveColor me-1"  cButton > View Validation
+                            </button> 
+                            <button  class="btnCancelColor"  cButton> Change Status 
+                            </button> 
+                          </div>
+                        </div>
+                    </div>
+                <br>
+                    <!-- <form [formGroup]="issueViewForm" (ngSubmit)="onSubmit()" novalidate>
+                        <div class="col-md-12" >
+                            <input type="hidden" formControlName="id"/>
+                            <input type="hidden" formControlName="countryId"/>
+                            <input type="hidden" formControlName="auditTypeId"/>
+                              <div cFormFloating>
+                                <div class="row">
+                                  <div class="form-floating col-md-2">
+                                    <input type="text" class="form-control" formControlName="auditId" id="auditId" placeholder="Audit Id">
+                                    <label for="floatingInput">Audit Id</label> 
+                                  </div>
+                                  <div class="form-floating col-md-10">
+                                    <input type="text" class="form-control" formControlName="auditName" id="auditName" placeholder="Audit Name">
+                                    <label for="floatingInput">Audit Name</label>
+                                  </div>
+                                </div>
+                              </div>
+                        </div>
+                    </form> -->
+                    <div class="row overflow-auto">
+                        <table datatable [dtOptions]="dtOptions" class="table table-bordered row-border hover datatableStyle" >
+                                        
+                          <tbody >
+                            <tr>
+                              <td class="col-md-3">Issue ID</td>
+                              <td>{{ issueDetails.code}}</td>
+                            </tr>
+                            <tr>
+                                <td>Issue Title</td>
+                                <td>{{ issueDetails.issueTitle }}</td>
+                            </tr>
+                            <tr>
+                                <td>Issue Status</td>
+                                <td>{{ issueDetails.statusType }}</td>
+                            </tr>
+                            <tr>
+                                <td>Issue Validated</td>
+                                <td>No</td>
+                            </tr>
+                            <tr>
+                                <td>Issue Owners</td>
+                                
+                            </tr>
+                            <tr>
+                                <td>Issue Rating</td>
+                                <td>{{ issueDetails.ratingType }}</td>
+                            </tr>
+                            <tr>
+                                <td>Issue Target Date</td>
+                                <td>{{ issueDetails.targetDate }}</td>
+                            </tr>
+                            <tr>
+                                <td>Issue Description</td>
+                                <td>{{ issueDetails.details }}</td>
+                            </tr>
+                            <tr>
+                                <td>Root Cause</td>
+                                <td>{{ issueDetails.rootCause }}</td>
+                            </tr>
+                            <tr>
+                                <td>Policy/Guideline/SOPs Reference</td>
+                                <td>{{ issueDetails.policy }}</td>
+                            </tr>
+                            <tr>
+                                <td>Potential Business Impact</td>
+                                <td>{{ issueDetails.businessImpact }}</td>
+                            </tr>
+                            <tr>
+                                <td>Potential Risk</td>
+                                <td>{{ issueDetails.potentialRisk }}</td>
+                            </tr>
+                            <tr>
+                                <td>Auditor's Recommendations</td>
+                                <td>{{ issueDetails.auditorRecommendation }}</td>
+                            </tr>
+                            <tr>
+                                <td>Tagged Schedule</td>
+                                <td>{{ issueDetails.auditScheduleId }}</td>
+                            </tr>
+                            <tr>
+                                <td>Branches</td>
+                                <!-- <td>{{ issueDetails. }}</td> -->
+                            </tr>
+                            <tr>
+                                <td>Issue Creation Date</td>
+                                <!-- <td>{{ issueDetails. }}</td> -->
+                            </tr>
+                            <tr>
+                                <td>Issue Created By</td>
+                                <!-- <td>{{ issueDetails. }}</td> -->
+                            </tr>
+                          </tbody>
+                        </table>
+                    </div>
+                </div>            
+            </div>
+            </div>
+        </div></div>
+    </c-tab-pane>
+    <c-tab-pane class="p-3">
+        <div class="animated fadeIn">
+          <div class="row">
+           <div class="col-lg-12">
+             <div class="card" >
+               <div class="card-header"><i class="fa fa-align-justify" ></i> 
+                 <strong>Action Plan List</strong>
+               </div>
+               <div class="card-body" >
+                <div class="row overflow-auto">
+                  <table class="table table-bordered row-border hover datatableStyle">
+                    <thead >
+                      <tr>
+                        <th>SL</th>
+                        <th>Action Plan ID</th>
+                        <th>Management Action Plan</th>
+                        <th>Action Owner</th>
+                        <th>Action Target Date</th>
+                        <th>Actions</th>
+                      </tr>
+                    </thead>
+                    <tbody *ngIf="actionPlans?.length != 0">
+                      <tr *ngFor="let row of actionPlans; let i = index">
+                        
+                        <td> {{i+1}} </td>
+                        <td> {{row.actionPlanCode}} </td>
+                        <td>{{row.managementPlan}}</td>
+                        <td>{{row.userName}}</td>
+                        <td>{{row.targetDate | date: 'yyyy-MM-dd'}}</td>
+                        <td class="text-center">
+                          <div class="btn-group" role="group" >
+                            <!-- <svg cIcon [name]="cil-airplane-mode" [title]="cil-airplane-mode" size="3xl">gjhj</svg> -->
+                            <button type="button" class="btn btn-secondary btnEditColor">
+                              Action taken
+                            </button>                            
+                          </div>
+                        </td>
+                      </tr>                    
+                    </tbody>
+                    <tbody *ngIf="actionPlans?.length == 0">
+                      <tr>
+                        <td colspan="5" class="no-data-available">No data!</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+               </div>
+             </div>
+           </div>
+          </div>
+        </div>
+      </c-tab-pane>
+</c-tab-content>
+</c-card>
+</c-col>

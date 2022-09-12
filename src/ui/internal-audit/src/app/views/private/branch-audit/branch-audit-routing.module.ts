@@ -19,6 +19,7 @@ import { AuditPlanViewComponent } from './audit-plan-view/audit-plan-view.compon
 import { ClosingMeetingMinutesComponent } from './closing-meeting-minutes/closing-meeting-minutes.component';
 import { WeightScoreConfigComponent } from './weight-score-config/weight-score-config.component';
 import { ClosingMeetingMinutesCreateComponent } from './closing-meeting-minutes/closing-meeting-minutes-create/closing-meeting-minutes-create.component';
+import { IssueViewComponent } from './issue-view/issue-view.component';
 
 const routes: Routes = [
   {
@@ -104,6 +105,10 @@ const routes: Routes = [
   {
     path:'new-issue/:id',
     component:NewIssueComponent
+  },
+  {
+    path:'issue-view/:id',
+    component:IssueViewComponent
   },
   {
     path:'closing-meeting-minutes',

@@ -44,7 +44,7 @@
                     </thead>                  
                     <tbody *ngIf="issues?.length != 0">
                       <tr *ngFor="let issue of issues">
-                        <td>{{ issue.code }}</td>
+                        <td><a [routerLink]="['/branch-audit/issue-view',issue.id]">{{ issue.code }}</a></td>
                         <td>{{ issue.issueTitle }}</td>
                         <td>{{ issue.issueOwners }}</td>
                         <td>{{ issue.ratingType }}</td>

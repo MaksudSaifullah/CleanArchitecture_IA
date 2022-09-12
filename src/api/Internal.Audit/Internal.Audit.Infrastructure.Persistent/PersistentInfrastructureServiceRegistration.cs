@@ -222,6 +222,9 @@ public static class PersistentInfrastructureServiceRegistration
 
         services.AddScoped<IIssueCommandRepository, IssueCommandRepository>();
         services.AddScoped<IIssueQueryRepository>(s => new IssueQueryRepository(configuration.GetConnectionString("InternalAuditDb")));
+        services.AddScoped<IIssueBranchCommandRepository, IssueBranchCommandRepository>();
+        services.AddScoped<IIssueOwnerCommandRepository, IssueOwnerCommandRepository>();
+        services.AddScoped<IIssueActionPlanCommandRepository, IssueActionPlanCommandRepository>();
 
         services.AddScoped<IRiskAssesmentDataManagementLogCommandRepository, RiskAssesmentDataManagementLogCommandRepository>();
         services.AddScoped<IRiskAssesmentDataManagementLogQueryRepository>(s => new RiskAssesmentDataManagementLogQueryRepository(configuration.GetConnectionString("InternalAuditDb")));

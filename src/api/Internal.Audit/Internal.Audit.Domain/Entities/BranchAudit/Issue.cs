@@ -64,10 +64,10 @@ public class Issue : EntityBase
 	public virtual AuditSchedule AuditSchedule { get; set; } = null!;
 	//[ForeignKey("BranchId")]
 	//public virtual Branch Branch { get; set; } = null!;
-	public virtual CommonValueAndType CommonValueImpactType { get; set; }
-	public virtual CommonValueAndType CommonValueLikelihoodType { get; set; }
-	public virtual CommonValueAndType CommonValueRatingType { get; set; }
-	public virtual CommonValueAndType CommonValueStatusType { get; set; } = null!;
+	//public virtual CommonValueAndType CommonValueImpactType { get; set; }
+	//public virtual CommonValueAndType CommonValueLikelihoodType { get; set; }
+	//public virtual CommonValueAndType CommonValueRatingType { get; set; }
+	//public virtual CommonValueAndType CommonValueStatusType { get; set; } = null!;
 	public virtual ICollection<IssueOwner> IssueOwnerList { get; set; } = null!;
 	public virtual ICollection<IssueBranch> IssueBranchList { get; set; } = null!;
 	public virtual ICollection<IssueActionPlan> ActionPlans { get; set; } = null!;

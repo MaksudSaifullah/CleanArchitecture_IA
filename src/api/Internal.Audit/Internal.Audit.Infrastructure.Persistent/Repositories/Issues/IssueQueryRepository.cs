@@ -18,21 +18,6 @@ public class IssueQueryRepository : QueryRepositoryBase<Issue>, IIssueQueryRepos
         var query = "EXEC [dbo].[GetIssueListProcedure] @pageSize,@pageNumber,@searchTerm";
         var parameters = new Dictionary<string, object> { { "@pageSize", pageSize }, { "@pageNumber", pageNumber }, { "@searchTerm", searchTermConverted } };
 
-        //string splitters = "Id, Id";
-        //var data = await Get<Issue, Employee, Designation, Issue>(query, (issue, employee, designation) =>
-        //{
-        //    Issue u;
-        //    u = issue;
-        //    u.Employee = employee;
-        //    if (designation != null)
-        //    {
-        //        u.Employee.Designation = designation;
-        //    }
-
-        //    return u;
-        //}, parameters, splitters, false);
-
-        
         return await GetWithPagingInfo(query, parameters, false);
     }
     public async Task<Issue> GetById(Guid id)

@@ -41,18 +41,18 @@ public class IssueController : ControllerBase
         return Ok(result);
     }
 
-    //[HttpPut]
-    //public async Task<ActionResult<UpdateIssueResponseDTO>> Update(UpdateIssueCommand command)
-    //{
-    //    var result = await _mediator.Send(command);
-    //    return Ok(result);
-    //}
+    [HttpPut]
+    public async Task<ActionResult<UpdateIssueResponseDTO>> Update(UpdateIssueCommand command)
+    {
+        var result = await _mediator.Send(command);
+        return Ok(result);
+    }
 
-    //[HttpDelete("id")]
-    //public async Task<ActionResult<DeleteIssueResponseDTO>> Delete(Guid Id)
-    //{
-    //    var command = new DeleteIssueCommand(Id);
-    //    var result = await _mediator.Send(command);
-    //    return Ok(result);
-    //}
+    [HttpDelete("id")]
+    public async Task<ActionResult<DeleteIssueResponseDTO>> Delete(Guid Id)
+    {
+        var command = new DeleteIssueCommand(Id);
+        var result = await _mediator.Send(command);
+        return Ok(result);
+    }
 }

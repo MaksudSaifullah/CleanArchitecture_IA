@@ -201,6 +201,8 @@ using Internal.Audit.Application.Features.IssueValidations.Commands.AddIssueVali
 using Internal.Audit.Application.Features.IssueValidations.Commands.DeleteIssueValidationCommand;
 using Internal.Audit.Application.Features.IssueValidations.Commands.UpdateIssueValidationCommand;
 using Internal.Audit.Application.Features.IssueValidations.Queries.GetIssueValidationByIssueId;
+using Internal.Audit.Application.Features.Issues.Commands.UpdateIssue;
+using Internal.Audit.Application.Features.Issues.Commands.DeleteIssue;
 
 namespace Internal.Audit.Application.Mappings;
 
@@ -538,11 +540,19 @@ public class MappingProfile : Profile
         CreateMap<IssueActionPlan, AddIssueActionPlanCommand>().ReverseMap();
         CreateMap<IssueActionPlanOwner, AddIssueActionOwnerListCommand>().ReverseMap();
 
+        CreateMap<Issue, UpdateIssueCommand>().ReverseMap();
+        CreateMap<IssueOwner, UpdateIssueOwnerCommand>().ReverseMap();
+        CreateMap<IssueBranch, UpdateIssueBranchCommand>().ReverseMap();
+        CreateMap<IssueActionPlan, UpdateIssueActionPlanCommand>().ReverseMap();
+        CreateMap<IssueActionPlanOwner, UpdateIssueActionOwnerListCommand>().ReverseMap();
+
         CreateMap<Issue, GetIssueByIdResponseDTO>().ReverseMap();
         CreateMap<IssueOwner, GetIssueOwner>().ReverseMap();
         CreateMap<IssueBranch, GetIssueBranch>().ReverseMap();
         CreateMap<IssueActionPlan, GetIssueActionPlan>().ReverseMap();
         CreateMap<IssueActionPlanOwner, GetIssueActionOwnerList>().ReverseMap();
+
+        CreateMap<Issue, DeleteIssueCommand>().ReverseMap();
 
         CreateMap<User, UserConfiguration>().ReverseMap();
         CreateMap<AuditScheduleConfigurationOwner, GetAllByAuditScheduledIdResponseDTO>() // needs `Inst` -> `InstDTO` map

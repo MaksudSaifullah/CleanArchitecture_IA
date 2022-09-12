@@ -11,6 +11,7 @@ import { User } from '../../../../core/interfaces/branch-audit/user.interface';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AuditScheduleBranch, AuditScheduleBranchDetails } from 'src/app/core/interfaces/branch-audit/auditScheduleBranch.interface';
 import { formatDate } from '@angular/common';
+import { BaseResponse } from 'src/app/core/interfaces/common/base-response.interface';
 
 @Component({
   selector: 'app-new-issue',
@@ -40,28 +41,6 @@ export class NewIssueComponent implements OnInit {
   actionPlanCode: any;
   actionOwnerList: User[] = [];
   actionPlans : IssueActionPlan[] = [];
-  
-//   actionPlans: [
-//     {
-//       "actionPlanCode": "AC-1001",
-//       "managementPlan": "red pencil",
-//       "owner": "someone",
-//       "targetDate": "red pencil",
-//     } ,
-//     {
-//       "actionPlanCode": "AC-1002",
-//       "managementPlan": " pencil",
-//       "owner": "someone",
-//       "targetDate": "red pencil",
-//     } ,
-//     {
-//       "actionPlanCode": "AC-1003",
-//       "managementPlan": "red ",
-//       "owner": "someone",
-//       "targetDate": "red pencil",
-//     }        
-    
-//  ];
 
   constructor(private http: HttpService , private fb: FormBuilder, private AlertService: AlertService, private router: Router,  private activateRoute: ActivatedRoute) { 
     this.issueForm = this.fb.group({
@@ -159,9 +138,7 @@ export class NewIssueComponent implements OnInit {
         //  this.actionPlans.forEach((ctrl: any) => {   
         //   ctrl.issueActionPlanOwnerList.push('398fc93b-51c6-4de0-88ff-bc62c2d88bdf')
         //   });
-        //   console.log('----------------------------------');
-        //   console.log(this.actionPlans);
-        //   console.log('----------------------------------');
+        //  
 
       });
      
@@ -247,24 +224,24 @@ export class NewIssueComponent implements OnInit {
    // return true;
     // console.log(actionPlanOwnerId);
     // return;
-    // for (let actionOwner of this.actionPlans[indx].issueActionPlanOwnerList){
-    //   if(actionOwner.ownerId == actionPlanOwnerId){
-
-    //     console.log('iftekharrrrrrrrrrrrrrrrrrrrrrrrrrrrr',indx);
-    //      console.log(actionOwner.ownerId,actionPlanOwnerId);
-    //     // console.log(indx, actionPlanOwnerId);
-    //     return true;
-    //   }
-    //  }
-
-    let actionOwner = this.actionPlans[indx].issueActionPlanOwnerList as IssueActionPlanOwner;
+    for (let actionOwner of this.actionPlans[indx].issueActionPlanOwnerList){
       if(actionOwner.ownerId == actionPlanOwnerId){
 
         console.log('iftekharrrrrrrrrrrrrrrrrrrrrrrrrrrrr',indx);
          console.log(actionOwner.ownerId,actionPlanOwnerId);
         // console.log(indx, actionPlanOwnerId);
         return true;
-      }else{}
+      }
+     }
+
+    // let actionOwner = this.actionPlans[indx].issueActionPlanOwnerList as IssueActionPlanOwner;
+    //   if(actionOwner.ownerId == actionPlanOwnerId){
+
+    //     console.log('iftekharrrrrrrrrrrrrrrrrrrrrrrrrrrrr',indx);
+    //      console.log(actionOwner.ownerId,actionPlanOwnerId);
+    //     // console.log(indx, actionPlanOwnerId);
+    //     return true;
+    //   }else{}
      
      return false;
   }
@@ -301,10 +278,8 @@ LoadActionPlans(){
       managementPlan: '',
       targetDate  : new Date(),
       issueActionPlanOwnerList:[]
-
     };
     this.actionPlans.push(currentElement);  
-
   }); 
 }
 
@@ -346,7 +321,6 @@ async addItem(index:any, managementPlan:any, targetDate:any, issueActionPlanOwne
       targetDate: targetDate
     };
     this.actionPlans.push(currentElement);
-
   }); 
   console.log(this.actionPlans);
  }
@@ -358,16 +332,9 @@ async addItem(index:any, managementPlan:any, targetDate:any, issueActionPlanOwne
   console.log(this.actionPlans);
  }
  onSubmitActionPlan(){
+
   console.log(this.actionPlans);
- 
   if (this.issueForm.valid ){
-    if(this.formService.isEdit(this.issueForm.get('id') as FormControl)){
-      // this.http.put('topicHead',this.issueForm.value,null).subscribe(x=>{
-      //   this.formService.onSaveSuccess(localmodalId, this.ReloadAllDataTable());          
-      //   this.AlertService.success('Topic Head Updated Successful');
-      // });
-    }
-    else {
       let branchList: IssueBranch[] = [];
       let issueBranch: IssueBranch[] = this.issueForm.value.branchList as IssueBranch[];
       if (Array.isArray(issueBranch)) {
@@ -384,16 +351,8 @@ async addItem(index:any, managementPlan:any, targetDate:any, issueActionPlanOwne
           issueOwnerList.push(owner);
         });
       }
-     
-     
-    //   export interface IssueActionPlanOwner{
-    //     id?: string;
-    //     issueActionPlanId?: string;
-    //     ownerId?: string;
-    // }
-    let final : IssueActionPlan[]=[] ;
+      let final : IssueActionPlan[]=[] ;
       if(Array.isArray(this.actionPlans)){
-
         this.actionPlans.forEach(function (value:any) {
           let pp :IssueActionPlanOwner[]=[];
           value.issueActionPlanOwnerList.forEach(function (guids:any) {
@@ -407,50 +366,84 @@ async addItem(index:any, managementPlan:any, targetDate:any, issueActionPlanOwne
             targetDate:value.targetDate,
             managementPlan:value.managementPlan,
             issueActionPlanOwnerList:pp
-
-          } ;
+          };
           final.push(initial);
-
         });
-
-       
       }
-       
-     
+      if(this.formService.isEdit(this.issueForm.get('id') as FormControl)){
 
-      const RequestModel = {
-          code: this.issueForm.value.code,
-          auditScheduleId: this.issueForm.value.auditScheduleId,
-          issueTitle:this.issueForm.value.issueTitle,
-          policy: this.issueForm.value.policy,        
-          impactTypeId: this.issueForm.value.impactTypeId,
-          likelihoodTypeId: this.issueForm.value.likelihoodTypeId,
-          ratingTypeId: "19838C61-2F0E-ED11-B3B2-00155D610B18",//this.issueForm.value.ratingTypeId,
-          targetDate: this.issueForm.value.targetDate,        
-          details: this.issueForm.value.details,
-          rootCause: this.issueForm.value.rootCause,
-          businessImpact: this.issueForm.value.businessImpact,
-          potentialRisk: this.issueForm.value.potentialRisk,
-          auditorRecommendation: this.issueForm.value.auditorRecommendation,
+        const PutRequestModel = {
+           id: this.issueForm.value.id,
+           code: this.issueForm.value.code,
+           auditScheduleId: this.issueForm.value.auditScheduleId,
+           issueTitle:this.issueForm.value.issueTitle,
+           policy: this.issueForm.value.policy,        
+           impactTypeId: this.issueForm.value.impactTypeId,
+           likelihoodTypeId: this.issueForm.value.likelihoodTypeId,
+           ratingTypeId: "19838C61-2F0E-ED11-B3B2-00155D610B18",//this.issueForm.value.ratingTypeId,
+           targetDate: this.issueForm.value.targetDate,
+           details: this.issueForm.value.details,
+           rootCause: this.issueForm.value.rootCause,
+           businessImpact: this.issueForm.value.businessImpact,
+           potentialRisk: this.issueForm.value.potentialRisk,
+           auditorRecommendation: this.issueForm.value.auditorRecommendation,
+           issueOwnerList: issueOwnerList,
+           issueBranchList: branchList,
+           actionPlans: final,
+           statusTypeId: '0B838C61-2F0E-ED11-B3B2-00155D610B18', //default value set on issue table
+           remarks: '',
+        };
+        this.http.put('issue', PutRequestModel, null).subscribe(x=>{
+          let resp = x as BaseResponse;
+            if(resp.success){
+              this.AlertService.successDialog('Updated',resp.message);
+              this.router.navigate(['branch-audit/issue-list']);
+            }
+            else{
+              this.AlertService.errorDialog('Unsuccessful', resp.message);
+            }
+        });
+      }
+      else { 
+        const PostRequestModel = {
+          // id: this.issueForm.value.id,
+           code: this.issueForm.value.code,
+           auditScheduleId: this.issueForm.value.auditScheduleId,
+           issueTitle:this.issueForm.value.issueTitle,
+           policy: this.issueForm.value.policy,        
+           impactTypeId: this.issueForm.value.impactTypeId,
+           likelihoodTypeId: this.issueForm.value.likelihoodTypeId,
+           ratingTypeId: "19838C61-2F0E-ED11-B3B2-00155D610B18",//this.issueForm.value.ratingTypeId,
+           targetDate: this.issueForm.value.targetDate,        
+           details: this.issueForm.value.details,
+           rootCause: this.issueForm.value.rootCause,
+           businessImpact: this.issueForm.value.businessImpact,
+           potentialRisk: this.issueForm.value.potentialRisk,
+           auditorRecommendation: this.issueForm.value.auditorRecommendation,
            issueOwnerList: issueOwnerList,
            issueBranchList: branchList,
            actionPlans: final,
            //statusTypeId: '', default value set on issue table
            remarks: '',
-        };
-        console.log(RequestModel);
-        this.http.post('issue',RequestModel).subscribe(x=>{
-          //this.formService.onSaveSuccess(this.router.navigate(['branch-audit/issue-list']));
-          this.AlertService.success('Issue Saved successfully');
-        });
-    }      
-  }
-  else {     
-    this.issueForm.markAllAsTouched();
-    this.AlertService.error('Provide valid data');
-    return;
-  }
-
+       };       
+          this.http.post('issue',PostRequestModel).subscribe(x=>{
+            //this.formService.onSaveSuccess(this.router.navigate(['branch-audit/issue-list']));
+            let resp = x as BaseResponse;
+            if(resp.success){
+              this.AlertService.success('Issue Saved successfully');
+              this.router.navigate(['branch-audit/issue-list']);
+            }
+            else{
+              this.AlertService.errorDialog('Unsuccessful', resp.message);
+            }            
+          });
+      }      
+    }
+    else {     
+      this.issueForm.markAllAsTouched();
+      this.AlertService.error('Provide valid data');
+      return;
+    }
  }
  onCancelActionPlan(){
   this.router.navigate(['branch-audit/issue-list']);

@@ -1,6 +1,6 @@
 ﻿using Internal.Audit.Application.Features.IssueValidationActionPlans.Commands.DeleteActionPlans;
 using Internal.Audit.Application.Features.IssueValidationActionPlans.Commands.IssueActionPlans;
-using Internal.Audit.Application.Features.IssueValidationActionPlans.Commands.UpdateIssueActionPlans;
+using Internal.Audit.Application.Features.IssueValidationActionPlans.Commands.UpdateIssueValidationActionPlans;
 using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -24,7 +24,7 @@ namespace Internal.Audit.Api.Controllers
         }
 
         [HttpPut]
-        public async Task<ActionResult<UpdateIssueActionPlanResponseDTO>> Update(UpdateIssueActionPlanCommand command)
+        public async Task<ActionResult<UpdateIssueValidationActionPlanResponseDTO>> Update(UpdateIssueValidaitonActionPlanCommand command)
         {
             var result = await _mediator.Send(command);
             return Ok(result);

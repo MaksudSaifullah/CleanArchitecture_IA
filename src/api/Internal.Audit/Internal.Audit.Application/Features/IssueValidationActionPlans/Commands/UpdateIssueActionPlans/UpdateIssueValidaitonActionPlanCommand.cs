@@ -1,9 +1,9 @@
 ﻿using Internal.Audit.Application.Features.IssueValidationActionPlans.Commands.IssueActionPlans;
 using MediatR;
 
-namespace Internal.Audit.Application.Features.IssueValidationActionPlans.Commands.UpdateIssueActionPlans;
+namespace Internal.Audit.Application.Features.IssueValidationActionPlans.Commands.UpdateIssueValidationActionPlans;
 
-public class UpdateIssueActionPlanCommand:IRequest<UpdateIssueActionPlanResponseDTO>
+public class UpdateIssueValidaitonActionPlanCommand:IRequest<UpdateIssueValidationActionPlanResponseDTO>
 {
     public Guid Id { get; set; } 
     public string Code { get; set; } = null!;

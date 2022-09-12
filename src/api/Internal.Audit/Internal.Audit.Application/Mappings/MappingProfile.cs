@@ -202,7 +202,7 @@ using Internal.Audit.Application.Features.IssueValidations.Commands.DeleteIssueV
 using Internal.Audit.Application.Features.IssueValidations.Commands.UpdateIssueValidationCommand;
 using Internal.Audit.Application.Features.IssueValidations.Queries.GetIssueValidationByIssueId;
 using Internal.Audit.Application.Features.IssueValidationActionPlans.Commands.IssueActionPlans;
-using Internal.Audit.Application.Features.IssueValidationActionPlans.Commands.UpdateIssueActionPlans;
+using Internal.Audit.Application.Features.IssueValidationActionPlans.Commands.UpdateIssueValidationActionPlans;
 using Internal.Audit.Application.Features.Issues.Commands.UpdateIssue;
 using Internal.Audit.Application.Features.Issues.Commands.DeleteIssue;
 
@@ -585,7 +585,7 @@ public class MappingProfile : Profile
         CreateMap<IssueValidationDesignEffectiveNessTestDetail, IssueValidationDesignEffectiveNessTestDetailDTO>().ReverseMap();
         CreateMap<IssueValidationTestSheet, IssueValidationTestSheetDTO>().ReverseMap();
         CreateMap<IssueValidationEvidenceDetail, IssueValidationEvidenceDetailDTO>().ReverseMap();//
-        CreateMap<IssueValidationActionPlan, UpdateIssueActionPlanCommand>().ReverseMap();//UpdateIssueActionPlanCommand
+        CreateMap<IssueValidationActionPlan, UpdateIssueValidaitonActionPlanCommand>().ReverseMap();//UpdateIssueActionPlanCommand
 
     }
 }

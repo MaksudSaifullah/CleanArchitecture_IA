@@ -52,7 +52,7 @@ public class IssueValidationDesignEffectiveNessTestDetail : EntityBase
 	public int CommonQuestionValue { get; set; }
 	public int CommonAnsValue { get; set; }
 	public string Remarks { get; set; }
-	[ForeignKey("IssueValidationId")]
+	[ForeignKey("IssueValidationActionPlanId")]
 	public virtual IssueValidationActionPlan IssueValidationActionPlan { get; set; } = null!;
 
 }
@@ -66,7 +66,7 @@ public class IssueValidationTestSheet : EntityBase
 	public Guid DocumentId { get; set; }
 	[NotMapped]
 	public virtual Document TestingSheet { get; set; } = null!;
-	[ForeignKey("IssueValidationId")]
+	[ForeignKey("IssueValidationActionPlanId")]
 	public virtual IssueValidationActionPlan IssueValidationActionPlan { get; set; } = null!;
 
 }
@@ -79,7 +79,7 @@ public class IssueValidationEvidenceDetail : EntityBase
 	public Guid DocumentId { get; set; }
 	[NotMapped]
 	public virtual Document TestingSheet { get; set; } = null!;
-	[ForeignKey("IssueValidationId")]
+	[ForeignKey("IssueValidationActionPlanId")]
 	public virtual IssueValidationActionPlan IssueValidationActionPlan { get; set; } = null!;
 
 }

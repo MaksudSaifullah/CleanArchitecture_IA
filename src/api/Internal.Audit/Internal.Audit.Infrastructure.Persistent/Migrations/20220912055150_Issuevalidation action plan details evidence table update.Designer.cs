@@ -4,6 +4,7 @@ using Internal.Audit.Infrastructure.Persistent;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Internal.Audit.Infrastructure.Persistent.Migrations
 {
     [DbContext(typeof(InternalAuditContext))]
-    partial class InternalAuditContextModelSnapshot : ModelSnapshot
+    [Migration("20220912055150_Issuevalidation action plan details evidence table update")]
+    partial class Issuevalidationactionplandetailsevidencetableupdate
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -1331,6 +1333,9 @@ namespace Internal.Audit.Infrastructure.Persistent.Migrations
                     b.Property<Guid>("IssueValidationActionPlanId")
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<Guid>("IssueValidationId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<string>("Remarks")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -1351,7 +1356,7 @@ namespace Internal.Audit.Infrastructure.Persistent.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("IssueValidationActionPlanId");
+                    b.HasIndex("IssueValidationId");
 
                     b.ToTable("IssueValidationDesignEffectiveNessTestDetail", "BranchAudit");
                 });
@@ -1445,6 +1450,9 @@ namespace Internal.Audit.Infrastructure.Persistent.Migrations
                     b.Property<Guid>("IssueValidationActionPlanId")
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<Guid>("IssueValidationId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<string>("ReviewedBy")
                         .HasMaxLength(10)
                         .HasColumnType("nvarchar(10)");
@@ -1461,7 +1469,7 @@ namespace Internal.Audit.Infrastructure.Persistent.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("IssueValidationActionPlanId");
+                    b.HasIndex("IssueValidationId");
 
                     b.ToTable("IssueValidationTestSheet", "BranchAudit");
                 });
@@ -5072,7 +5080,7 @@ namespace Internal.Audit.Infrastructure.Persistent.Migrations
                 {
                     b.HasOne("Internal.Audit.Domain.Entities.BranchAudit.IssueValidationActionPlan", "IssueValidationActionPlan")
                         .WithMany("IssueValidationDesignEffectiveNessTestDetails")
-                        .HasForeignKey("IssueValidationActionPlanId")
+                        .HasForeignKey("IssueValidationId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -5094,7 +5102,7 @@ namespace Internal.Audit.Infrastructure.Persistent.Migrations
                 {
                     b.HasOne("Internal.Audit.Domain.Entities.BranchAudit.IssueValidationActionPlan", "IssueValidationActionPlan")
                         .WithMany("IssueValidationTestSheets")
-                        .HasForeignKey("IssueValidationActionPlanId")
+                        .HasForeignKey("IssueValidationId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 

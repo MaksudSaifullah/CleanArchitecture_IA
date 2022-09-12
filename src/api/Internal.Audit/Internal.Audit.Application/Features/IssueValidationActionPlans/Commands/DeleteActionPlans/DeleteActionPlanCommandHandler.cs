@@ -11,9 +11,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Internal.Audit.Application.Features.IssueValidationActionPlans.Commands.UpdateIssueActionPlans;
+namespace Internal.Audit.Application.Features.IssueValidationActionPlans.Commands.DeleteActionPlans;
 
-public class UpdateIssueActionPlanCommandHandler : IRequestHandler<UpdateIssueActionPlanCommand, UpdateIssueActionPlanResponseDTO>
+public class DeleteActionPlanCommandHandler : IRequestHandler<DeleteActionPlanCommand, DeleteActionPlanCommandResponseDTO>
 {
     private readonly IUnitOfWork _unitOfWork;
     private readonly IIssueValidationActionPlanCommandRepository _repository;
@@ -22,7 +22,7 @@ public class UpdateIssueActionPlanCommandHandler : IRequestHandler<UpdateIssueAc
     private readonly IIssueValidationEvidenceDetailCommandRepository _repositoryEvidenceDetail;
     private readonly IMapper _mapper;
 
-    public UpdateIssueActionPlanCommandHandler(IIssueValidationActionPlanCommandRepository repository, IMapper mapper, IUnitOfWork unitOfWork, IIssueValidationTestCheetCommandRepository repositoryTextCheet,
+    public DeleteActionPlanCommandHandler(IIssueValidationActionPlanCommandRepository repository, IMapper mapper, IUnitOfWork unitOfWork, IIssueValidationTestCheetCommandRepository repositoryTextCheet,
         IIssueValidationDesignEffectiveNessCommandRespository repositoryDesignEffectiveness,
         IIssueValidationEvidenceDetailCommandRepository repositoryEvidenceDetail)
     {
@@ -33,20 +33,20 @@ public class UpdateIssueActionPlanCommandHandler : IRequestHandler<UpdateIssueAc
         _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
         _unitOfWork = unitOfWork ?? throw new ArgumentNullException(nameof(unitOfWork));
     }
-    public async Task<UpdateIssueActionPlanResponseDTO> Handle(UpdateIssueActionPlanCommand request, CancellationToken cancellationToken)
+    public async Task<DeleteActionPlanCommandResponseDTO> Handle(DeleteActionPlanCommand request, CancellationToken cancellationToken)
     {
         var auditActionPlan = await _repository.Get(request.Id);
         if (auditActionPlan == null)
-            return new UpdateIssueActionPlanResponseDTO(request.Id, false, "Invalid action plan Id");
+            return new DeleteActionPlanCommandResponseDTO(request.Id, false, "Invalid action plan Id");
 
-        await _repositoryTextCheet.Delete(_repositoryTextCheet.Get(x => x.IssueValidationActionPlanId == request.Id).Result.ToList());
-        await _repositoryDesignEffectiveness.Delete(_repositoryDesignEffectiveness.Get(x => x.IssueValidationActionPlanId == request.Id).Result.ToList());
-        await _repositoryEvidenceDetail.Delete(_repositoryEvidenceDetail.Get(x => x.IssueValidationActionPlanId == request.Id).Result.ToList());
-
-        var mixed = _mapper.Map(request, auditActionPlan);
-        await _repository.Update(mixed);
+        //await _repositoryTextCheet.Update(_repositoryTextCheet.Get(x => x.IssueValidationActionPlanId == request.Id).Result.ToList());
+        //await _repositoryDesignEffectiveness.Delete(_repositoryDesignEffectiveness.Get(x => x.IssueValidationActionPlanId == request.Id).Result.ToList());
+        //await _repositoryEvidenceDetail.Delete(_repositoryEvidenceDetail.Get(x => x.IssueValidationActionPlanId == request.Id).Result.ToList());
+        auditActionPlan.IsDeleted = true;
+       
+        await _repository.Update(auditActionPlan);
         var rowsAffected = await _unitOfWork.CommitAsync();
-
-        return new UpdateIssueActionPlanResponseDTO(request.Id, rowsAffected > 0, "Updated action plan Id");
+        return new DeleteActionPlanCommandResponseDTO(request.Id, rowsAffected > 0, "Updated action plan Id");
+        
     }
 }

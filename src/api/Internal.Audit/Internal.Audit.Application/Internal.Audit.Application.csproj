@@ -52,8 +52,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Contracts\Persistent\IssueValidationActionPlanDesignEffectiveness\" />
-    <Folder Include="Contracts\Persistent\IssueValidationEvidenceDetail\" />
+    <Folder Include="Contracts\Persistent\NewFolder\" />
     <Folder Include="Features\AuditScheduleConfigurationsOwner\Commands\DeleteAuditScheduleConfigurationsOwnerCommand\" />
     <Folder Include="Features\DataRequestQueue\Command\UpdateDataRequestQueueCommand\" />
     <Folder Include="Features\RiskAssesmentDataManagements\Queries\" />

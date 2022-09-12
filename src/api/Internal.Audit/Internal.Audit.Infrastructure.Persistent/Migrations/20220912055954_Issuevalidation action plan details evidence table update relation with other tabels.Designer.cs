@@ -4,6 +4,7 @@ using Internal.Audit.Infrastructure.Persistent;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Internal.Audit.Infrastructure.Persistent.Migrations
 {
     [DbContext(typeof(InternalAuditContext))]
-    partial class InternalAuditContextModelSnapshot : ModelSnapshot
+    [Migration("20220912055954_Issuevalidation action plan details evidence table update relation with other tabels")]
+    partial class Issuevalidationactionplandetailsevidencetableupdaterelationwithothertabels
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -899,6 +901,14 @@ namespace Internal.Audit.Infrastructure.Persistent.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("AuditScheduleId");
+
+                    b.HasIndex("ImpactTypeId");
+
+                    b.HasIndex("LikelihoodTypeId");
+
+                    b.HasIndex("RatingTypeId");
+
+                    b.HasIndex("StatusTypeId");
 
                     b.ToTable("Issue", "BranchAudit");
                 });
@@ -4961,7 +4971,39 @@ namespace Internal.Audit.Infrastructure.Persistent.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("Internal.Audit.Domain.Entities.Config.CommonValueAndType", "CommonValueImpactType")
+                        .WithMany()
+                        .HasForeignKey("ImpactTypeId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.HasOne("Internal.Audit.Domain.Entities.Config.CommonValueAndType", "CommonValueLikelihoodType")
+                        .WithMany()
+                        .HasForeignKey("LikelihoodTypeId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.HasOne("Internal.Audit.Domain.Entities.Config.CommonValueAndType", "CommonValueRatingType")
+                        .WithMany()
+                        .HasForeignKey("RatingTypeId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.HasOne("Internal.Audit.Domain.Entities.Config.CommonValueAndType", "CommonValueStatusType")
+                        .WithMany()
+                        .HasForeignKey("StatusTypeId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
                     b.Navigation("AuditSchedule");
+
+                    b.Navigation("CommonValueImpactType");
+
+                    b.Navigation("CommonValueLikelihoodType");
+
+                    b.Navigation("CommonValueRatingType");
+
+                    b.Navigation("CommonValueStatusType");
                 });
 
             modelBuilder.Entity("Internal.Audit.Domain.Entities.BranchAudit.IssueActionPlan", b =>

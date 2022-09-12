@@ -1,0 +1,7 @@
+﻿using Internal.Audit.Domain.Entities.BranchAudit;
+
+namespace Internal.Audit.Application.Contracts.Persistent.IssueValidationDesignEffectiveNessTestDetails;
+
+public interface IIssueValidationDesignEffectiveNessQueryRepository:IAsyncQueryRepository<IssueValidationDesignEffectiveNessTestDetail>
+{
+}

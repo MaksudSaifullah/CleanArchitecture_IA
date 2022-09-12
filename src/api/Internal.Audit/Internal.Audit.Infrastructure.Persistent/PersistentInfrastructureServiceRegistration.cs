@@ -98,6 +98,14 @@ using Internal.Audit.Application.Contracts.Persistent.RiskCriteriasPCA;
 using Internal.Audit.Infrastructure.Persistent.Repositories.RiskCriteriasPCA;
 using Internal.Audit.Application.Contracts.Persistent.IssueValidations;
 using Internal.Audit.Infrastructure.Persistent.Repositories.IssueValidations;
+using Internal.Audit.Infrastructure.Persistent.Repositories.IssueValidationActionPlans;
+using Internal.Audit.Application.Contracts.Persistent.IssueValidationActionPlans;
+using Internal.Audit.Application.Contracts.Persistent.IssueValidationActionPlanTestSheets;
+using Internal.Audit.Infrastructure.Persistent.Repositories.IssueValidationActionPlanTestSheets;
+using Internal.Audit.Application.Contracts.Persistent.IssueValidationDesignEffectiveNessTestDetails;
+using Internal.Audit.Infrastructure.Persistent.Repositories.IssueValidationDesignEffectiveNessTestDetails;
+using Internal.Audit.Application.Contracts.Persistent.IssueValidationEvidenceDetails;
+using Internal.Audit.Infrastructure.Persistent.Repositories.IssueValidationEvidenceDetails;
 
 namespace Internal.Audit.Infrastructure.Persistent;
 
@@ -283,6 +291,17 @@ public static class PersistentInfrastructureServiceRegistration
         services.AddScoped<IssueValidationCommandRepository, IssueValidationCommandReposiotry>();
         services.AddScoped<IssueValidationQueryRepository>(s => new IssueValidationQueryReposiotry(configuration.GetConnectionString("InternalAuditDb")));
 
+        services.AddScoped<IIssueValidationTestCheetCommandRepository, IssueValidationTestCheetCommandRepository>();
+        services.AddScoped<IIssueValidationTestCheetQueryRepository>(s => new IssueValidationTestCheetQueryRepository(configuration.GetConnectionString("InternalAuditDb")));
+
+        services.AddScoped<IIssueValidationDesignEffectiveNessCommandRespository, IssueValidationDesignEffectiveNessCommandRespository>();
+        services.AddScoped<IIssueValidationDesignEffectiveNessQueryRepository>(s => new IssueValidationDesignEffectiveNessQueryRepository(configuration.GetConnectionString("InternalAuditDb")));
+
+        services.AddScoped<IIssueValidationEvidenceDetailCommandRepository, IssueValidationEvidenceDetailCommandRepository>();
+        services.AddScoped<IIssueValidationEvidenceDetailQueryRepository>(s => new IssueValidationEvidenceDetailQueryRepository(configuration.GetConnectionString("InternalAuditDb")));
+
+        services.AddScoped<IIssueValidationActionPlanCommandRepository, IssueValidationActionPlanCommandRepository>();
+        services.AddScoped<IIssueValidationActionPlanQueryRepository>(s => new IssueValidationActionPlanQueryRepository(configuration.GetConnectionString("InternalAuditDb")));
 
         return services;
     }

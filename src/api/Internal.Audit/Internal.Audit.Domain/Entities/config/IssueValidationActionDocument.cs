@@ -20,7 +20,7 @@ public class IssueValidationActionDocument : EntityBase
     public bool IsActive { get; set; }
 
     [ForeignKey("IssueValidationActionPlanId")]
-    public virtual IssueValidationActionPlan IssueValidationActionPlan { get; set; } = null!;
+    public virtual IssueValidationActionPlanDraft IssueValidationActionPlan { get; set; } = null!;
     [ForeignKey("IssueValidationActionDocumentTypeId")]
     public virtual IssueValidationActionDocumentType IssueValidationActionDocumentType { get; set; } = null!;
     //TODO

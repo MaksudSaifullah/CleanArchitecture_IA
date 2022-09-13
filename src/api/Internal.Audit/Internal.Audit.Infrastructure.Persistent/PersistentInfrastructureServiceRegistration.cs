@@ -106,6 +106,8 @@ using Internal.Audit.Application.Contracts.Persistent.IssueValidationDesignEffec
 using Internal.Audit.Infrastructure.Persistent.Repositories.IssueValidationDesignEffectiveNessTestDetails;
 using Internal.Audit.Application.Contracts.Persistent.IssueValidationEvidenceDetails;
 using Internal.Audit.Infrastructure.Persistent.Repositories.IssueValidationEvidenceDetails;
+using Internal.Audit.Application.Contracts.Persistent.Checklists;
+using Internal.Audit.Infrastructure.Persistent.Repositories.Checklists;
 
 namespace Internal.Audit.Infrastructure.Persistent;
 
@@ -302,6 +304,18 @@ public static class PersistentInfrastructureServiceRegistration
 
         services.AddScoped<IIssueValidationActionPlanCommandRepository, IssueValidationActionPlanCommandRepository>();
         services.AddScoped<IIssueValidationActionPlanQueryRepository>(s => new IssueValidationActionPlanQueryRepository(configuration.GetConnectionString("InternalAuditDb")));
+
+        services.AddScoped<IChecklistQueryRepository>(s => new ChecklistQueryRepository(configuration.GetConnectionString("InternalAuditDb")));
+        services.AddScoped<IChecklistBaseQueryRepository>(s => new ChecklistBaseQueryRepository(configuration.GetConnectionString("InternalAuditDb")));
+        services.AddScoped<IChecklistTopicDetailQueryRepository>(s => new ChecklistTopicDetailQueryRepository(configuration.GetConnectionString("InternalAuditDb")));
+        services.AddScoped<IChecklistTopicQueryRepository>(s => new ChecklistTopicQueryRepository(configuration.GetConnectionString("InternalAuditDb")));
+
+
+        services.AddScoped<IChecklistCommandRepository, ChecklistCommandRepository>();
+        services.AddScoped<IChecklistTopicCommandRepository, ChecklistTopicCommandRepository>();
+        services.AddScoped<IChecklistTopicDetailCommandRepository, ChecklistTopicDetailCommandRepository>();
+
+
 
         return services;
     }

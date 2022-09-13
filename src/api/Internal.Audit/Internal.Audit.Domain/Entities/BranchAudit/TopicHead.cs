@@ -42,6 +42,8 @@ public class TopicHead : EntityBase
     [NotMapped]
     public virtual ICollection<WorkPaper> WorkPaperList { get; set; } = null!;
     [NotMapped]
+    public virtual ICollection<Checklist> ChecklistList { get; set; } = null!;
+    [NotMapped]
     public decimal WeightScore { get; set; }
     [NotMapped]
     public EfTotalCount TotalCount { get; set; }

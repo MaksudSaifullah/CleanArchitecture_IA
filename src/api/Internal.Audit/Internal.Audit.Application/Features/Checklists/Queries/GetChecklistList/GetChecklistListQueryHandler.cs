@@ -17,7 +17,7 @@ public class GetChecklistListQueryHandler : IRequestHandler<GetChecklistListQuer
 
     public GetChecklistListQueryHandler(IChecklistQueryRepository checklistRepository, IMapper mapper)
     {
-        checklistRepository = checklistRepository ?? throw new ArgumentNullException(nameof(checklistRepository));
+        _checklistRepository = checklistRepository ?? throw new ArgumentNullException(nameof(checklistRepository));
         _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
     }
 

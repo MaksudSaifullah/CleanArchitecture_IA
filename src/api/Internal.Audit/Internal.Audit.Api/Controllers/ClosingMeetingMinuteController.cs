@@ -1,7 +1,9 @@
 ﻿using Internal.Audit.Application.Features.ClosingMeetingMinutes.Commands.AddClosingMeetingMinute;
 using Internal.Audit.Application.Features.ClosingMeetingMinutes.Commands.DeleteClosingMeetingMinute;
 using Internal.Audit.Application.Features.ClosingMeetingMinutes.Commands.UpdateClosingMeetingMinute;
+using Internal.Audit.Application.Features.ClosingMeetingMinutes.Queries.GetClosingMeetingMinuteById;
 using Internal.Audit.Application.Features.ClosingMeetingMinutes.Queries.GetClosingMeetingMinuteList;
+using Internal.Audit.Application.Features.ClosingMeetingMinutes.Queries.GetClosingMeetingMinutesBaseById;
 using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -25,15 +27,23 @@ namespace Internal.Audit.Api.Controllers
             return Ok(closingMeetingMinutes);
 
         }
-
-      /*  [HttpGet("{Id}")]
-        public async Task<ActionResult<AuditPlanByIdDTO>> GetById(Guid Id)
+        //
+        [HttpGet("{Id}")]
+        public async Task<ActionResult<ClosingMeetingMinuteByIdDTO>> GetById(Guid Id)
         {
-            var query = new GetAuditPlanQuery(Id);
-            var auditPlans = await _mediator.Send(query);
-            return Ok(auditPlans);
+            var query = new GetClosingMeetingMinuteQuery(Id);
+            var closingMeetingMinutes = await _mediator.Send(query);
+            return Ok(closingMeetingMinutes);
 
-        }*/
+        }
+        [HttpGet("BaseId")]
+        public async Task<ActionResult<GetClosingMeetingMinutesResponseDTO>> GetByBaseId(Guid BaseId)
+        {
+            var query = new GetClosingMeetingMinutesBaseByIdQuery(BaseId);
+            var closingMeetingMinutes = await _mediator.Send(query);
+            return Ok(closingMeetingMinutes);
+
+        }
 
         [HttpPost]
         public async Task<ActionResult<AddClosingMeetingMinuteResponseDTO>> Add(AddClosingMeetingMinuteCommand command)

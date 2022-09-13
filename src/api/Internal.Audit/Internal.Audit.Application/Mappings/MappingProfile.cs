@@ -179,6 +179,32 @@ using Internal.Audit.Application.Features.ClosingMeetingMinutes.Commands.DeleteC
 using Internal.Audit.Application.Features.WeightScoreConfigurations.Commands.AddWeightScoreCommand;
 using Internal.Audit.Application.Features.AuditScheduleConfigurationsOwner.Commands.AddAuditScheduleConfigurationsOwnerCommand;
 using Internal.Audit.Application.Features.AuditScheduleConfigurationsOwner.Queries.GetAllByAuditScheduleId;
+using Internal.Audit.Application.Features.ClosingMeetingMinutes.Queries.GetClosingMeetingMinuteById;
+using Internal.Audit.Application.Features.ClosingMeetingMinutes.Queries.GetClosingMeetingMinutesBaseById;
+using Internal.Audit.Application.Features.NotificationToAuditees.Queries.GetNotificationToAuditeeList;
+using Internal.Audit.Application.Features.NotificationToAuditees.Commands.AddNotificationToAuditee;
+using Internal.Audit.Application.Features.NotificationToAuditees.Commands.UpdateNotificationToAuditee;
+using Internal.Audit.Application.Features.NotificationToAuditees.Commands.DeleteNotificationToAuditee;
+using Internal.Audit.Application.Features.AuditConfigMilestones.Commands.AddAuditConfigMilestones;
+using Internal.Audit.Application.Features.AuditConfigMilestones.Queries.GetByAuditScheduleId;
+using Internal.Audit.Application.Features.AuditScheduleConfigurationsOwner.Queries.GetOwnerList;
+
+using Internal.Audit.Domain.CompositeEntities.ProcessAndControlAudit;
+using Internal.Audit.Application.Features.RiskCriteriasPCA.Queries.GetRiskCriteriaList;
+using Internal.Audit.Application.Features.RiskCriteriasPCA.Queries.GetRiskCriteriaById;
+using Internal.Audit.Application.Features.RiskCriteriasPCA.Commands.AddRiskCriteria;
+using Internal.Audit.Application.Features.RiskCriteriasPCA.Commands.UpdateRiskCriteria;
+using Internal.Audit.Application.Features.RiskCriteriasPCA.Commands.DeleteRiskCriteria;
+
+using Internal.Audit.Application.Features.Issues.Commands.AddIssue;
+using Internal.Audit.Application.Features.IssueValidations.Commands.AddIssueValidationCommand;
+using Internal.Audit.Application.Features.IssueValidations.Commands.DeleteIssueValidationCommand;
+using Internal.Audit.Application.Features.IssueValidations.Commands.UpdateIssueValidationCommand;
+using Internal.Audit.Application.Features.IssueValidations.Queries.GetIssueValidationByIssueId;
+using Internal.Audit.Application.Features.IssueValidationActionPlans.Commands.IssueActionPlans;
+using Internal.Audit.Application.Features.IssueValidationActionPlans.Commands.UpdateIssueValidationActionPlans;
+using Internal.Audit.Application.Features.Issues.Commands.UpdateIssue;
+using Internal.Audit.Application.Features.Issues.Commands.DeleteIssue;
 
 namespace Internal.Audit.Application.Mappings;
 
@@ -477,8 +503,9 @@ public class MappingProfile : Profile
         CreateMap<AddMeetingPresent, ClosingMeetingPresent>().ReverseMap();
         CreateMap<AddMeetingApology, ClosingMeetingApology>().ReverseMap();
         CreateMap<AddMeetingSubject, ClosingMeetingSubject>().ReverseMap();
-        //CreateMap<CompositeClosingMeetingMinute, AuditPlanByIdDTO>().ReverseMap();
-        //CreateMap<AuditPlan, AuditPlanByIdDTO>().ReverseMap();
+        CreateMap<CompositeClosingMeetingMinute, ClosingMeetingMinuteByIdDTO>().ReverseMap();
+        CreateMap<ClosingMeetingMinute, ClosingMeetingMinuteByIdDTO>().ReverseMap();
+
         CreateMap<ClosingMeetingMinute, AddClosingMeetingMinuteResponseDTO>().ReverseMap();
         CreateMap<ClosingMeetingMinute, AddClosingMeetingMinuteCommand>().ReverseMap();
         CreateMap<ClosingMeetingMinute, UpdateClosingMeetingMinuteResponseDTO>().ReverseMap();
@@ -491,7 +518,74 @@ public class MappingProfile : Profile
         //CreateMap<AuditScheduleConfigurationOwner, GetAllByAuditScheduledIdResponseDTO>().ReverseMap();//
         CreateMap<User, UserConfiguration>().ReverseMap();//
         CreateMap<User, UserConfiguration>().ReverseMap();//
+        CreateMap<AuditScheduleConfigurationOwner, GetAllByAuditScheduledIdResponseDTO>()
+        .ForMember(dst => dst.BranchName, opt => opt.MapFrom(src => src.Branch.BranchName)).ReverseMap();
+       
+        CreateMap<ClosingMeetingMinute, GetClosingMeetingMinutesResponseDTO>().ReverseMap();
+
+        CreateMap<NotificationToAuditee, NotificationToAuditeeDTO>().ReverseMap();
+        CreateMap<CompositeNotificationToAuditee, NotificationToAuditeeDTO>().ReverseMap();
+        CreateMap<AddNotifedUsersTo, NotifedUsersTo>().ReverseMap();
+        CreateMap<AddNotifedUsersCC, NotifedUsersCC>().ReverseMap();
+        CreateMap<AddNotifedUsersBCC, NotifedUsersBCC>().ReverseMap();
+        CreateMap<NotificationToAuditee, AddNotificationToAuditeeResponseDTO>().ReverseMap();
+        CreateMap<NotificationToAuditee, AddNotificationToAuditeeCommand>().ReverseMap();
+        CreateMap<NotificationToAuditee, UpdateNotificationToAuditeeResponseDTO>().ReverseMap();
+        CreateMap<NotificationToAuditee, UpdateNotificationToAuditeeCommand>().ReverseMap();
+        CreateMap<NotificationToAuditee, DeleteNotificationToAuditeeResponseDTO>().ReverseMap();
+        CreateMap<NotificationToAuditee, DeleteNotificationToAuditeeCommand>().ReverseMap();
+
+
+        CreateMap<Issue, AddIssueCommand>().ReverseMap();
+        CreateMap<IssueOwner, AddIssueOwnerCommand>().ReverseMap();
+        CreateMap<IssueBranch, AddIssueBranchCommand>().ReverseMap();
+        CreateMap<IssueActionPlan, AddIssueActionPlanCommand>().ReverseMap();
+        CreateMap<IssueActionPlanOwner, AddIssueActionOwnerListCommand>().ReverseMap();
+
+        CreateMap<Issue, UpdateIssueCommand>().ReverseMap();
+        CreateMap<IssueOwner, UpdateIssueOwnerCommand>().ReverseMap();
+        CreateMap<IssueBranch, UpdateIssueBranchCommand>().ReverseMap();
+        CreateMap<IssueActionPlan, UpdateIssueActionPlanCommand>().ReverseMap();
+        CreateMap<IssueActionPlanOwner, UpdateIssueActionOwnerListCommand>().ReverseMap();
+
+        CreateMap<Issue, GetIssueByIdResponseDTO>().ReverseMap();
+        CreateMap<IssueOwner, GetIssueOwner>().ReverseMap();
+        CreateMap<IssueBranch, GetIssueBranch>().ReverseMap();
+        CreateMap<IssueActionPlan, GetIssueActionPlan>().ReverseMap();
+        CreateMap<IssueActionPlanOwner, GetIssueActionOwnerList>().ReverseMap();
+
+        CreateMap<Issue, DeleteIssueCommand>().ReverseMap();
+
+        CreateMap<User, UserConfiguration>().ReverseMap();
         CreateMap<AuditScheduleConfigurationOwner, GetAllByAuditScheduledIdResponseDTO>() // needs `Inst` -> `InstDTO` map
     .ForMember(dst => dst.BranchName, opt => opt.MapFrom(src => src.Branch.BranchName)).ReverseMap();
+        CreateMap<AuditConfigMileStone, AddAuditConfigMilestoneCommandRaw>().ReverseMap();
+        CreateMap<AuditConfigMileStone, GetByAuditScheduleByIdMilestoneQueryResponseDTO>().ReverseMap();
+
+
+        CreateMap<CompositAuditScheduleOwner, GetOwnerListResponseDTO>().ReverseMap();
+
+        CreateMap<Internal.Audit.Domain.Entities.ProcessAndControlAudit.RiskCriteria, RiskCriteriaPCADTO>().ReverseMap();
+        CreateMap<CompositeRiskCriteriaPCA, RiskCriteriaPCADTO>().ReverseMap();
+        CreateMap<CompositeRiskCriteriaPCA, RiskCriteriaPCAByIdDTO>().ReverseMap();
+        CreateMap<Internal.Audit.Domain.Entities.ProcessAndControlAudit.RiskCriteria, RiskCriteriaPCAByIdDTO>().ReverseMap();
+        CreateMap<Internal.Audit.Domain.Entities.ProcessAndControlAudit.RiskCriteria, AddRiskCriteriaPCAResponseDTO>().ReverseMap();
+        CreateMap<Internal.Audit.Domain.Entities.ProcessAndControlAudit.RiskCriteria, AddRiskCriteriaPCACommand>().ReverseMap();
+        CreateMap<Internal.Audit.Domain.Entities.ProcessAndControlAudit.RiskCriteria, UpdateRiskCriteriaPCAResponseDTO>().ReverseMap();
+        CreateMap<Internal.Audit.Domain.Entities.ProcessAndControlAudit.RiskCriteria, UpdateRiskCriteriaPCACommand>().ReverseMap();
+        CreateMap<Internal.Audit.Domain.Entities.ProcessAndControlAudit.RiskCriteria, DeleteRiskCriteriaPCAResponseDTO>().ReverseMap();
+        CreateMap<Internal.Audit.Domain.Entities.ProcessAndControlAudit.RiskCriteria, DeleteRiskCriteriaPCACommand>().ReverseMap();
+        // CreateMap<RiskCriteriaDTOs, Internal.Audit.Domain.Entities.ProcessAndControlAudit.RiskCriteria>().ReverseMap();
+        CreateMap<IssueValidation, AddIssueValidationCommand>().ReverseMap();
+        CreateMap<IssueValidation, DeleteIssueValidationCommand>().ReverseMap();
+        CreateMap<IssueValidation, UpdateIssueValidationCommand>().ReverseMap();
+        CreateMap<User, GetIssueValidationUserListResponseDTO>().ReverseMap();//
+        CreateMap<IssueValidation, GetIssueValidationByIssueIdQueryResponseDTO>().ReverseMap();
+        CreateMap<IssueValidationActionPlan, IssueActionPlanCommand>().ReverseMap();
+        CreateMap<IssueValidationDesignEffectiveNessTestDetail, IssueValidationDesignEffectiveNessTestDetailDTO>().ReverseMap();
+        CreateMap<IssueValidationTestSheet, IssueValidationTestSheetDTO>().ReverseMap();
+        CreateMap<IssueValidationEvidenceDetail, IssueValidationEvidenceDetailDTO>().ReverseMap();//
+        CreateMap<IssueValidationActionPlan, UpdateIssueValidaitonActionPlanCommand>().ReverseMap();//UpdateIssueActionPlanCommand
+
     }
 }

@@ -7,10 +7,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Features\NotificationToAuditees\Command\**" />
     <Compile Remove="Features\UserCountries\**" />
     <Compile Remove="Features\Users\**" />
+    <EmbeddedResource Remove="Features\NotificationToAuditees\Command\**" />
     <EmbeddedResource Remove="Features\UserCountries\**" />
     <EmbeddedResource Remove="Features\Users\**" />
+    <None Remove="Features\NotificationToAuditees\Command\**" />
     <None Remove="Features\UserCountries\**" />
     <None Remove="Features\Users\**" />
   </ItemGroup>
@@ -49,6 +52,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Contracts\Persistent\NewFolder\" />
     <Folder Include="Features\AuditScheduleConfigurationsOwner\Commands\DeleteAuditScheduleConfigurationsOwnerCommand\" />
     <Folder Include="Features\DataRequestQueue\Command\UpdateDataRequestQueueCommand\" />
     <Folder Include="Features\RiskAssesmentDataManagements\Queries\" />

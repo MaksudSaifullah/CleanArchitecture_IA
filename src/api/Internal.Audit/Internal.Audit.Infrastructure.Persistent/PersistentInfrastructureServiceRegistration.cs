@@ -90,6 +90,22 @@ using Internal.Audit.Application.Contracts.Persistent.ClosingMeetingMinutes;
 using Internal.Audit.Infrastructure.Persistent.Repositories.ClosingMeetingMinutes;
 using Internal.Audit.Application.Contracts.Persistent.AuditScheduleConfigurationsOwner;
 using Internal.Audit.Infrastructure.Persistent.Repositories.AuditScheduleConfigurationsOwner;
+using Internal.Audit.Application.Contracts.Persistent.AuditConfigMilestones;
+using Internal.Audit.Infrastructure.Persistent.Repositories.AuditConfigMileStones;
+using Internal.Audit.Application.Contracts.Persistent.NotificationToAuditees;
+using Internal.Audit.Infrastructure.Persistent.Repositories.NotificationToAuditees;
+using Internal.Audit.Application.Contracts.Persistent.RiskCriteriasPCA;
+using Internal.Audit.Infrastructure.Persistent.Repositories.RiskCriteriasPCA;
+using Internal.Audit.Application.Contracts.Persistent.IssueValidations;
+using Internal.Audit.Infrastructure.Persistent.Repositories.IssueValidations;
+using Internal.Audit.Infrastructure.Persistent.Repositories.IssueValidationActionPlans;
+using Internal.Audit.Application.Contracts.Persistent.IssueValidationActionPlans;
+using Internal.Audit.Application.Contracts.Persistent.IssueValidationActionPlanTestSheets;
+using Internal.Audit.Infrastructure.Persistent.Repositories.IssueValidationActionPlanTestSheets;
+using Internal.Audit.Application.Contracts.Persistent.IssueValidationDesignEffectiveNessTestDetails;
+using Internal.Audit.Infrastructure.Persistent.Repositories.IssueValidationDesignEffectiveNessTestDetails;
+using Internal.Audit.Application.Contracts.Persistent.IssueValidationEvidenceDetails;
+using Internal.Audit.Infrastructure.Persistent.Repositories.IssueValidationEvidenceDetails;
 
 namespace Internal.Audit.Infrastructure.Persistent;
 
@@ -214,6 +230,9 @@ public static class PersistentInfrastructureServiceRegistration
 
         services.AddScoped<IIssueCommandRepository, IssueCommandRepository>();
         services.AddScoped<IIssueQueryRepository>(s => new IssueQueryRepository(configuration.GetConnectionString("InternalAuditDb")));
+        services.AddScoped<IIssueBranchCommandRepository, IssueBranchCommandRepository>();
+        services.AddScoped<IIssueOwnerCommandRepository, IssueOwnerCommandRepository>();
+        services.AddScoped<IIssueActionPlanCommandRepository, IssueActionPlanCommandRepository>();
 
         services.AddScoped<IRiskAssesmentDataManagementLogCommandRepository, RiskAssesmentDataManagementLogCommandRepository>();
         services.AddScoped<IRiskAssesmentDataManagementLogQueryRepository>(s => new RiskAssesmentDataManagementLogQueryRepository(configuration.GetConnectionString("InternalAuditDb")));
@@ -236,6 +255,7 @@ public static class PersistentInfrastructureServiceRegistration
 
        
         services.AddScoped<IClosingMeetingMinutesQueryRepository>(s => new ClosingMeetingMinuteQueryRepository(configuration.GetConnectionString("InternalAuditDb")));
+        services.AddScoped<IClosingMeetingMinutesBaseQueryRepository>(s => new ClosingMeetingMinutesBaseQueryRepository(configuration.GetConnectionString("InternalAuditDb")));
         services.AddScoped<IClosingMeetingMinutesCommandRepository, ClosingMeetingMinuteCommandRepository>();
         services.AddScoped<IClosingMeetingApologyCommandRepository, ClosingMeetingApologyCommandRepository>();
         services.AddScoped<IClosingMeetingPresentCommandRepository, ClosingMeetingPresentCommandRepository>();
@@ -246,7 +266,42 @@ public static class PersistentInfrastructureServiceRegistration
 
         //services.AddScoped<IAuditScheduleConfigurationOwnerCommandRepository, AuditScheduleConfigurationOwnerCommandRepository>();
         //services.AddScoped<IAuditScheduleConfigurationOwnerQueryRepository>(s => new AuditScheduleConfigurationOwnerQueryRepository(configuration.GetConnectionString("InternalAuditDb")));
+        services.AddScoped<IAuditScheduleOwnerListQueryRepository>(s => new AuditScheduleOwnerListQueryRepository(configuration.GetConnectionString("InternalAuditDb")));
 
+        services.AddScoped<INotificationToAuditeeQueryRepository>(s => new NotificationToAuditeeQueryRepository(configuration.GetConnectionString("InternalAuditDb")));
+        services.AddScoped<INotificationToAuditeeCommandRepository, NotificationToAuditeeCommandRepository>();
+        services.AddScoped<INotificationToAuditeeToCommandRepository, NotificationToAuditeeToCommandRepository>();
+        services.AddScoped<INotificationToAuditeeCCCommandRepository, NotificationToAuditeeCCCommandRepository>();
+        services.AddScoped<INotificationToAuditeeBCCCommandRepository, NotificationToAuditeeBCCCommandRepository>();
+
+        services.AddScoped<IAuditConfigMilestoneCommandReposiotry, AuditConfigMileStoneCommandRepository>();
+        services.AddScoped<IAuditConfigMilestoneQueryReposiotry>(s => new AuditConfigMileStoneQueryRepository(configuration.GetConnectionString("InternalAuditDb")));
+
+
+        services.AddScoped<IRiskCriteriaPCACommandRepository, RiskCriteriaPCACommandRepository>();
+        services.AddScoped<IRiskCriteriaPCAQueryRepository>(s => new RiskCriteriaPCAQueryRepository(configuration.GetConnectionString("InternalAuditDb")));
+
+
+        services.AddScoped<IClosingMeetingPresentQueryRepository>(s => new ClosingMeetingPresentQueryRepository(configuration.GetConnectionString("InternalAuditDb")));
+        services.AddScoped<IClosingMeetingApologyQueryRepository>(s => new ClosingMeetingApologyQueryRepository(configuration.GetConnectionString("InternalAuditDb")));
+
+        services.AddScoped<IClosingMeetingSubjectQueryRepository>(s => new ClosingMeetingSubjectQueryRepository(configuration.GetConnectionString("InternalAuditDb")));
+
+
+        services.AddScoped<IssueValidationCommandRepository, IssueValidationCommandReposiotry>();
+        services.AddScoped<IssueValidationQueryRepository>(s => new IssueValidationQueryReposiotry(configuration.GetConnectionString("InternalAuditDb")));
+
+        services.AddScoped<IIssueValidationTestCheetCommandRepository, IssueValidationTestCheetCommandRepository>();
+        services.AddScoped<IIssueValidationTestCheetQueryRepository>(s => new IssueValidationTestCheetQueryRepository(configuration.GetConnectionString("InternalAuditDb")));
+
+        services.AddScoped<IIssueValidationDesignEffectiveNessCommandRespository, IssueValidationDesignEffectiveNessCommandRespository>();
+        services.AddScoped<IIssueValidationDesignEffectiveNessQueryRepository>(s => new IssueValidationDesignEffectiveNessQueryRepository(configuration.GetConnectionString("InternalAuditDb")));
+
+        services.AddScoped<IIssueValidationEvidenceDetailCommandRepository, IssueValidationEvidenceDetailCommandRepository>();
+        services.AddScoped<IIssueValidationEvidenceDetailQueryRepository>(s => new IssueValidationEvidenceDetailQueryRepository(configuration.GetConnectionString("InternalAuditDb")));
+
+        services.AddScoped<IIssueValidationActionPlanCommandRepository, IssueValidationActionPlanCommandRepository>();
+        services.AddScoped<IIssueValidationActionPlanQueryRepository>(s => new IssueValidationActionPlanQueryRepository(configuration.GetConnectionString("InternalAuditDb")));
 
         return services;
     }

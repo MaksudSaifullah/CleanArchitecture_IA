@@ -11,7 +11,7 @@ public class CompositeClosingMeetingMinute : EntityBase
 {
     public string? MeetingMinutesCode { get; set; }
     public Guid AuditScheduleId { get; set; }
-    public Guid BranchId { get; set; }
+    public Guid AuditScheduleBranchId { get; set; }
     public DateTime MeetingMinutesDate { get; set; }
     public string? MeetingMinutesName { get; set; }
     public string? AuditOn { get; set; }

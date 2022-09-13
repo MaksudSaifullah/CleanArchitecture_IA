@@ -13,12 +13,9 @@ public class IssueBranch : EntityBase
     [Required]
     public Guid BranchId { get; set; }
     [Required]
-    [DefaultValue("1")]
-    public bool IsActive { get; set; }
 
     [ForeignKey("IssueId")]
     public virtual Issue Issue { get; set; } = null!;
-    [NotMapped]
-    public virtual Branch Branch { get; set; } = null!;
+
 }
 

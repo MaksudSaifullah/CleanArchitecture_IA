@@ -8,5 +8,4 @@ public class IssueCommandRepository : CommandRepositoryBase<Issue>, IIssueComman
     public IssueCommandRepository(InternalAuditContext context) : base(context)
     {
     }
-
 }

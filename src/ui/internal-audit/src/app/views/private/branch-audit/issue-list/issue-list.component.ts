@@ -13,6 +13,7 @@ import {AlertService} from '../../../../core/services/alert.service';
 import { formatDate } from '@angular/common';
 import { CommonResponseInterface } from 'src/app/core/interfaces/common-response.interface';
 import { Router } from '@angular/router';
+import { BaseResponse } from 'src/app/core/interfaces/common/base-response.interface';
 
 @Component({
   selector: 'app-issue-list',
@@ -107,8 +108,14 @@ export class IssueListComponent implements OnInit {
     const that = this;
     this.AlertService.confirmDialog().then(res =>{
       if(res.isConfirmed){
-          this.http.delete('issue/'+ id ,{}).subscribe(response=>{
-          this.AlertService.successDialog('Deleted','Issue deleted successfully.');
+        this.http.delete('issue/id?Id=' + id, {}).subscribe(response => {
+          let resp = response as BaseResponse;
+          if(resp.success){
+            this.AlertService.successDialog('Deleted',resp.message);
+          }
+          else{
+            this.AlertService.errorDialog('Unsuccessful', resp.message);
+          }
           this.dataTableService.redraw(that.datatableElement);
         })
       }

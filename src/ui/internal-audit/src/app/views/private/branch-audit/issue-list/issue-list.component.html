@@ -36,7 +36,7 @@
                         <th>Issue Title</th>
                         <th>Issue Owner</th>
                         <th>Issue Rating</th>
-                        <th>Action Owner</th>
+                        <!-- <th>Action Owner</th> -->
                         <th>Issue Traget Date</th>  
                         <th>Status</th>  
                         <th class="col-1 text-center">Actions</th>                   
@@ -44,11 +44,11 @@
                     </thead>                  
                     <tbody *ngIf="issues?.length != 0">
                       <tr *ngFor="let issue of issues">
-                        <td>{{ issue.code }}</td>
+                        <td><a [routerLink]="['/branch-audit/issue-view',issue.id]">{{ issue.code }}</a></td>
                         <td>{{ issue.issueTitle }}</td>
                         <td>{{ issue.issueOwners }}</td>
                         <td>{{ issue.ratingType }}</td>
-                        <td>{{ issue.actionOwners }}</td>
+                        <!-- <td>{{ issue.actionOwners }}</td> -->
                         <td>{{ issue.targetDate | date:'medium' }}</td>
                         <td>{{ issue.statusType }}</td>
                         <td class="text-center">

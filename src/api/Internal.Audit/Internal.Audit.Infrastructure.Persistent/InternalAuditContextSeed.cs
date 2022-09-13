@@ -102,6 +102,16 @@ public class InternalAuditContextSeed
             context.CommonValueAndTypes.AddRange(AuditScheduleRiskOwnerType());
             await context.SaveChangesAsync();
         }
+        if (!context.CommonValueAndTypes.Where(x => x.Type == "AUDITCONFIGMILESTONE").Any())
+        {
+            context.CommonValueAndTypes.AddRange(AuditConfigMileStone());
+            await context.SaveChangesAsync();
+        }
+        if (!context.CommonValueAndTypes.Where(x => x.Type == "BranchAuditDesignEffectivenessTestDetails").Any())
+        {
+            context.CommonValueAndTypes.AddRange(BranchAuditDesignEffectivenessTestDetails());
+            await context.SaveChangesAsync();
+        }
     }
 
 
@@ -730,6 +740,60 @@ public class InternalAuditContextSeed
             ,new CommonValueAndType
             {
                 IsActive = true,CreatedBy="admin",CreatedOn=DateTime.Now,Type="AUDITSCHEDULERISKOWNERTYPE",SubType="",Value=2,Text="Action Owner",SortOrder=20,
+            }
+        };
+    }
+
+    private static IEnumerable<CommonValueAndType> AuditConfigMileStone()
+    {
+        return new List<CommonValueAndType>
+        {
+            new CommonValueAndType
+            {
+                IsActive = true,CreatedBy="admin",CreatedOn=DateTime.Now,Type="AUDITCONFIGMILESTONE",SubType="",Value=1,Text="Audit Initiation Date",SortOrder=10,
+            }
+            ,new CommonValueAndType
+            {
+                IsActive = true,CreatedBy="admin",CreatedOn=DateTime.Now,Type="AUDITCONFIGMILESTONE",SubType="",Value=2,Text="Planning And Scoping Start Date",SortOrder=20,
+            }
+            ,new CommonValueAndType
+            {
+                IsActive = true,CreatedBy="admin",CreatedOn=DateTime.Now,Type="AUDITCONFIGMILESTONE",SubType="",Value=3,Text="Planning And Scoping End Date",SortOrder=30,
+            }
+            ,new CommonValueAndType
+            {
+                IsActive = true,CreatedBy="admin",CreatedOn=DateTime.Now,Type="AUDITCONFIGMILESTONE",SubType="",Value=4,Text="Field Work Start Date",SortOrder=40,
+            }
+            ,new CommonValueAndType
+            {
+                IsActive = true,CreatedBy="admin",CreatedOn=DateTime.Now,Type="AUDITCONFIGMILESTONE",SubType="",Value=5,Text="Field Work End Date",SortOrder=50,
+            }
+        };
+    }
+
+    private static IEnumerable<CommonValueAndType> BranchAuditDesignEffectivenessTestDetails()
+    {
+        return new List<CommonValueAndType>
+        {
+            new CommonValueAndType
+            {
+                IsActive = true,CreatedBy="admin",CreatedOn=DateTime.Now,Type="BranchAuditDesignEffectivenessTestDetails",SubType="",Value=1,Text="Is the control sufficient to mitigate the risk (whether the control is automated or manual or any other improved feature of the control)?",SortOrder=10,
+            }
+            ,new CommonValueAndType
+            {
+                IsActive = true,CreatedBy="admin",CreatedOn=DateTime.Now,Type="BranchAuditDesignEffectivenessTestDetails",SubType="",Value=2,Text="Is the control carried out from appropriate level (e.g. person with sufficient knowledge, expertise and authority carrying out the control)?",SortOrder=20,
+            }
+            ,new CommonValueAndType
+            {
+                IsActive = true,CreatedBy="admin",CreatedOn=DateTime.Now,Type="BranchAuditDesignEffectivenessTestDetails",SubType="",Value=3,Text="Is the control carrying out at appropriate stage (e.g. obtaining sign off from supervisor prior to submission the regulatory return)?",SortOrder=30,
+            }
+            ,new CommonValueAndType
+            {
+                IsActive = true,CreatedBy="admin",CreatedOn=DateTime.Now,Type="BranchAuditDesignEffectivenessTestDetails",SubType="",Value=4,Text=" Is the control sustainable (e.g. control has sufficient back up or process note to run in absence of the existing staff)?",SortOrder=40,
+            }
+            ,new CommonValueAndType
+            {
+                IsActive = true,CreatedBy="admin",CreatedOn=DateTime.Now,Type="BranchAuditDesignEffectivenessTestDetails",SubType="",Value=5,Text="Is the control evidenced (i.e. evidence of above three responses while performing the DEA)?",SortOrder=50,
             }
         };
     }

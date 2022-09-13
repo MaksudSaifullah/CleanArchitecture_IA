@@ -104,10 +104,6 @@ export const navItems: INavData[] = [
         url: '/branch-audit/workpaper'
       },
       {
-        name: 'Work Paper Create',
-        url: '/branch-audit/workpaperCreate'
-      },
-      {
         name: 'Meeting Minutes',
         url: '/branch-audit/closing-meeting-minutes'
       },
@@ -133,6 +129,17 @@ export const navItems: INavData[] = [
       color: 'info',
       text: ''
     },
+  },
+  {
+    name: 'Process & Control Audit',
+    url: '/process-and-control-audit',
+    iconComponent: { name: 'cil-applications-settings' },
+    children: [
+      {
+        name: 'Risk Configurations',
+        url: '/process-and-control-audit/risk-configurations',
+      },
+    ]
   },
 
 ];

@@ -19,7 +19,7 @@ public class IssueValidationActionDETestQuestionsAnswer : EntityBase
     public string? Remarks { get; set; }
 
     [ForeignKey("IssueValidationActionId")]
-    public virtual IssueValidationActionPlan IssueValidationActionPlan { get; set; } = null!;
+    public virtual IssueValidationActionPlanDraft IssueValidationActionPlan { get; set; } = null!;
     [ForeignKey("DETestQuestionId")]
     public virtual DETestQuestion DETestQuestion { get; set; } = null!;
 }

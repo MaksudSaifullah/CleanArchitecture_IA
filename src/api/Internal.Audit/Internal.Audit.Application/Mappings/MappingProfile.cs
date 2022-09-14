@@ -205,6 +205,11 @@ using Internal.Audit.Application.Features.IssueValidationActionPlans.Commands.Is
 using Internal.Audit.Application.Features.IssueValidationActionPlans.Commands.UpdateIssueValidationActionPlans;
 using Internal.Audit.Application.Features.Issues.Commands.UpdateIssue;
 using Internal.Audit.Application.Features.Issues.Commands.DeleteIssue;
+using Internal.Audit.Application.Features.Checklists.Queries.GetChecklistList;
+using Internal.Audit.Application.Features.Checklists.Commands.AddChecklist;
+using Internal.Audit.Application.Features.Checklists.Queries.GetChecklistListBaseById;
+using Internal.Audit.Application.Features.Checklists.Commands.UpdateChecklist;
+using Internal.Audit.Application.Features.Checklists.Commands.DeleteChecklist;
 
 namespace Internal.Audit.Application.Mappings;
 
@@ -587,5 +592,19 @@ public class MappingProfile : Profile
         CreateMap<IssueValidationEvidenceDetail, IssueValidationEvidenceDetailDTO>().ReverseMap();//
         CreateMap<IssueValidationActionPlan, UpdateIssueValidaitonActionPlanCommand>().ReverseMap();//UpdateIssueActionPlanCommand
 
+
+        CreateMap<Checklist, ChecklistDTO>().ReverseMap();
+        CreateMap<CompositeChecklist, ChecklistDTO>().ReverseMap();
+        CreateMap<AddChecklistTopic, ChecklistTopic>().ReverseMap();
+        CreateMap<AddChecklistTopicDetail, ChecklistTopicDetail>().ReverseMap();
+        CreateMap<CompositeChecklist, GetChecklistBaseResponseDTO>().ReverseMap();
+        CreateMap<Checklist, GetChecklistBaseResponseDTO>().ReverseMap();
+
+        CreateMap<Checklist, AddChecklistResponseDTO>().ReverseMap();
+        CreateMap<Checklist, AddChecklistCommand>().ReverseMap();
+        CreateMap<Checklist, UpdateChecklistResponseDTO>().ReverseMap();
+        CreateMap<Checklist, UpdateChecklistCommand>().ReverseMap();
+        CreateMap<Checklist, DeleteChecklistResponseDTO>().ReverseMap();
+        CreateMap<Checklist, DeleteChecklistCommand>().ReverseMap();
     }
 }

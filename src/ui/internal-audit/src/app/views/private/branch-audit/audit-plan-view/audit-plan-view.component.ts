@@ -35,10 +35,15 @@ export class AuditPlanViewComponent implements OnInit {
   constructor(private http: HttpService, private fb: FormBuilder,  private activateRoute: ActivatedRoute, private AlertService: AlertService, private helper: HelperService, private customValidator: CutomvalidatorService, private location: Location) {
     this.auditPlanViewForm = this.fb.group({
       planningId: [null, [Validators.required]],
-    },
-      {
-        validator: [this.customValidator.checkIfFieldContainsSpace('documentName'),this.customValidator.checkEffectiveDateToAfterFrom('activeFrom', 'activeTo')],
-      });
+      countryName: [null, [Validators.required]],
+      assessmentTo: [Date, [Validators.required]],
+      assessmentFrom: [Date, [Validators.required]],
+      createdAt: [Date, [Validators.required]],
+      auditType: [null, [Validators.required]],
+      planningYear: [null, [Validators.required]],
+      assesmentId: [null, [Validators.required]],
+      createdBy: [null, [Validators.required]],
+    });
 
     // const p = this.helper.getDocumentSource('Upload_All_Document');
     // let yy=this.http.waitFor(p) ;
@@ -57,12 +62,17 @@ export class AuditPlanViewComponent implements OnInit {
     .getById('auditplan', id)
     .subscribe(res => {
         this.auditPlanResponse = res as auditPlan;
-        console.log(res);
+        console.log(this.auditPlanResponse);
         this.auditPlanViewForm.setValue({
           planningId: this.auditPlanResponse.planCode,
-          // conversionRate: 88,
-          // effectiveTo: formatDate(auditPlanResponse.effectiveTo, 'yyyy-MM-dd', 'en'),
-          // effectiveFrom: formatDate(auditPlanResponse.effectiveFrom, 'yyyy-MM-dd', 'en')
+          countryName: this.auditPlanResponse.countryName,
+          assessmentTo: formatDate(this.auditPlanResponse.assessmentTo, 'yyyy-MM-dd', 'en'),
+          assessmentFrom: formatDate(this.auditPlanResponse.assessmentFrom, 'yyyy-MM-dd', 'en'),
+          createdAt: formatDate(this.auditPlanResponse.createdOn, 'yyyy-MM-dd', 'en'),
+          auditType: this.auditPlanResponse.auditTypeName,
+          planningYear: this.auditPlanResponse.planCode,
+          assesmentId: this.auditPlanResponse.assessmentCode,
+          createdBy: this.auditPlanResponse.createdBy
         });
         this.LoadData();
     });
@@ -81,7 +91,7 @@ export class AuditPlanViewComponent implements OnInit {
         searching: false,
         ordering: false,
     };
-    this.http.post('DataSync/getSyncDataRiskAssesmentAvg', { "countryId": this.auditPlanResponse?.countryId, "riskAssesmentId": this.auditPlanResponse?.riskAssessmentId}
+    this.http.post('DataSync/getSyncDataRiskAssesmentAvg', { "countryId": this.auditPlanResponse?.countryId, "riskAssesmentId": this.auditPlanResponse?.riskAssessmentId, "pageSize": -1, "pageNumber": 0}
      )
       .subscribe(resp => {
         this.auditPlanTableData = resp as any[];

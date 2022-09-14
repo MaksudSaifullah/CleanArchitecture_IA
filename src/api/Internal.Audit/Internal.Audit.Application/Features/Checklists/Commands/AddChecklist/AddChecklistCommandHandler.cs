@@ -32,19 +32,19 @@ public class AddChecklistCommandHandler : IRequestHandler<AddChecklistCommand, A
     }
     public async Task<AddChecklistResponseDTO> Handle(AddChecklistCommand request, CancellationToken cancellationToken)
     {
-        var gid = Guid.NewGuid();
-        request.Id = gid;
+        //var gid = Guid.NewGuid();
+        //request.Id = gid;
 
         var checklist = _mapper.Map<Checklist>(request);
         var checklistAdd = await _checklistRepository.Add(checklist);
 
-        request.ChecklistTopic.ForEach(i => i.ChecklistId = gid);
-        var checklistTopic = _mapper.Map<List<ChecklistTopic>>(request.ChecklistTopic);
-        await _checklistTopicRepository.Add(checklistTopic);
+        //request.ChecklistTopic.ForEach(i => i.ChecklistId = gid);
+        //var checklistTopic = _mapper.Map<List<ChecklistTopic>>(request.ChecklistTopic);
+        //await _checklistTopicRepository.Add(checklistTopic);
 
-        request.ChecklistTopic.FirstOrDefault()?.ChecklistTopicDetail.ForEach(i => i.ChecklistTopicId = gid);
-        var checklistTopicDetail = _mapper.Map<List<ChecklistTopicDetail>>(request.ChecklistTopic.FirstOrDefault()?.ChecklistTopicDetail);
-        await _checklistTopicDetailRepository.Add(checklistTopicDetail);
+        //request.ChecklistTopic.FirstOrDefault()?.ChecklistTopicDetail.ForEach(i => i.ChecklistTopicId = gid);
+        //var checklistTopicDetail = _mapper.Map<List<ChecklistTopicDetail>>(request.ChecklistTopic.FirstOrDefault()?.ChecklistTopicDetail);
+        //await _checklistTopicDetailRepository.Add(checklistTopicDetail);
 
 
 

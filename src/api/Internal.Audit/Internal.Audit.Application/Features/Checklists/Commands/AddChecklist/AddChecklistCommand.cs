@@ -24,7 +24,7 @@ public class AddChecklistCommand : IRequest<AddChecklistResponseDTO>
     public DateTime LastAuditToDate { get; set; }
     public bool IsDraft { get; set; }
 
-    public List<AddChecklistTopic> ChecklistTopic { get; set; }
+    public List<AddChecklistTopic> ChecklistTopicHeads { get; set; }
    // public List<AddChecklistTopicDetail> ChecklistTopicDetail { get; set; }
 
 }
@@ -32,12 +32,12 @@ public class AddChecklistCommand : IRequest<AddChecklistResponseDTO>
 
 public record AddChecklistTopic
 {
-
+    //public Guid? Id { get; set; }
     public Guid TopicHeadId { get; set; }
 
     public Guid ChecklistId { get; set; }
 
-    public List<AddChecklistTopicDetail> ChecklistTopicDetail { get; set; }
+    public List<AddChecklistTopicDetail> ChecklistTopicHeadDetails { get; set; }
 
 }
 

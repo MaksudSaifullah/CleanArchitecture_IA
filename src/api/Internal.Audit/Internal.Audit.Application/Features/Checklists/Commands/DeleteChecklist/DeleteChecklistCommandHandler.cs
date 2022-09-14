@@ -58,7 +58,7 @@ public class DeleteChecklistCommandHandler : IRequestHandler<DeleteChecklistComm
 
         await _checklistTopicRepository.Update(checklistTopicList);
 
-        var checklistTopicDetailList = await _checklistTopicDetailRepository.Get(x =>  topicID.Contains(x.Id.ToString()));
+        var checklistTopicDetailList = await _checklistTopicDetailRepository.Get(x =>  topicID.Contains(x.ChecklistTopicId.ToString()));
 
        // var checklistTopicDetailList = await _checklistTopicDetailQueryRepository.GetAllChecklistTopicDetailByChecklistTopicId(request.Id);
         foreach (var item in checklistTopicDetailList)

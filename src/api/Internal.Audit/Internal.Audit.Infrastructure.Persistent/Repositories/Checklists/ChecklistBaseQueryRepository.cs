@@ -46,12 +46,20 @@ SELECT *
                 cm = checklistDictionary[checklist.Id];
             }
 
-            if (!topicDictionary.ContainsKey(checklist.Id))
+            if (!topicDictionary.ContainsKey(checklisttopic.Id))
             {
                 topicDictionary.Add(checklisttopic.Id, checklisttopic);
                 cm.ChecklistTopicHeads.Add(checklisttopic);
+                cm.ChecklistTopicHeads.FirstOrDefault().ChecklistTopicHeadDetails = new List<ChecklistTopicDetail>();
+                cm.ChecklistTopicHeads.FirstOrDefault().ChecklistTopicHeadDetails.Add(checklisttopicDetail);
             }
-           
+
+            //if (!topicDetailDictionary.ContainsKey(checklisttopic.Id))
+            //{
+            //    topicDetailDictionary.Add(checklisttopicDetail.Id, checklisttopicDetail);
+            //    cm..Add(checklisttopicDetail);
+            //}
+
 
             return cm;
 

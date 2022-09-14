@@ -1,0 +1,80 @@
+
+<div class="animated fadeIn">
+  <div class="row">
+    <div class="col-lg-12">
+      <div class="card">
+        <div class="card-header">
+          <i class="fa fa-align-justify" ></i> Checklist List
+        </div>
+        <div class="card-body">
+          <form [formGroup]="searchForm">
+            <div class="row" style="margin: 0 auto;">
+              <div class="col-md-8 mb-2">
+                <!-- <button [cModalToggle]="verticallyCenteredModal.id" class="btnCreateColor" (click)="reset()" cButton>
+                  <svg cIcon name="cilPlus" size="md" title="Add Button Icon"></svg> Create
+                </button>  -->
+              </div>
+              <div class="col-md-3 mb-2 form-floating">
+
+                <input type="text" formControlName="searchTerm" class="form-control searchInput"  placeholder="Search by Checklist Id  "/>
+                <label class="searchLevel" for="floatingInput">Search by Checklist Id</label>
+
+              <!-- <select aria-label="Floating label select example" cSelect id="auditScheduleBranchId"
+                      formControlName="auditScheduleBranchId" name="auditScheduleBranchId"  style="height: 40px;">
+                      <option value="">Select Branch</option>
+                      <option *ngFor="let wpAuditScheduleBranch of wpAuditScheduleBranches" [value]="wpAuditScheduleBranch.branch.branchName">
+                        {{wpAuditScheduleBranch.branch.branchName}}
+                      </option>
+                    </select> -->
+                </div>
+
+
+              <div class="col-md-1 mb-2">
+                <button type="button" class="btn btn-secondary mr-1 btn-block searchBtn" data-toggle="modal" (click)="search()" >
+                  Search
+                </button>
+              </div>
+            </div>
+         </form>
+          <div class="row overflow-auto">
+              <table datatable [dtOptions]="dtOptions" class="table table-bordered row-border hover datatableStyle" >
+                <thead>
+                  <tr>
+                    <th>Checklist Id</th>
+                    <th>Branch</th>
+                    <th>Created By</th>
+                    <th>Created Date</th>
+                    <th class="col-1 text-center">Actions</th>
+                  </tr>
+                </thead>
+                <tbody *ngIf="checklists?.length != 0">
+                  <tr *ngFor="let checklist of checklists">
+                    <td>{{ checklist.checklistCode }}</td>
+                    <td>{{ checklist.auditScheduleBranchName }}</td>
+                    <td>{{ checklist.createdBy }}</td>
+                    <td>{{ checklist.createdOn  | date:'mediumDate'}}</td>
+                    <td class="text-center">
+                      <div class="btn-group" role="group" aria-label="Basic example">
+                        <button type="button" class="btn btn-secondary btnEditColor" (click) = "edit(checklist.id)">
+                          <svg cIcon name="cilPencil" size="md" title="Edit Button icon"></svg>
+                        </button>
+                        <button type="button" class="btn btn-danger btnDeleteColor" (click)="delete(checklist.id)">                          
+                          <svg cIcon name="cilTrash" size="md" title="Delete Button Icon"></svg>
+                        </button>
+                      </div>
+                    </td>
+                  </tr>
+                </tbody>
+                <tbody *ngIf="checklists?.length == 0">
+                  <tr>
+                    <td colspan="5" class="no-data-available">No data!</td>
+                  </tr>
+                </tbody>
+              </table>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

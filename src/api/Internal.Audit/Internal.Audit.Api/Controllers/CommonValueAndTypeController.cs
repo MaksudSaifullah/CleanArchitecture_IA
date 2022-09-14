@@ -15,6 +15,7 @@ using Internal.Audit.Application.Features.CommonValueAndTypes.Queries.GetLevelOf
 using Internal.Audit.Application.Features.CommonValueAndTypes.Queries.GetLOProductivity;
 using Internal.Audit.Application.Features.CommonValueAndTypes.Queries.GetNatureOfControlActivity;
 using Internal.Audit.Application.Features.CommonValueAndTypes.Queries.GetRiskRating;
+using Internal.Audit.Application.Features.CommonValueAndTypes.Queries.GetRiskRatingInfo;
 using Internal.Audit.Application.Features.CommonValueAndTypes.Queries.GetRiskRatingName;
 using Internal.Audit.Application.Features.CommonValueAndTypes.Queries.GetSampledMonth;
 using Internal.Audit.Application.Features.CommonValueAndTypes.Queries.GetSampleSelectionMethod;
@@ -230,6 +231,14 @@ namespace Internal.Audit.Api.Controllers
         public async Task<ActionResult<SampleSizeDTO>> GetByControlFrequencyId(Guid ControlFrequencyId)
         {
             var query = new GetSizeByFrequencyQuery(ControlFrequencyId);
+            var sampleSizeList = await _mediator.Send(query);
+            return Ok(sampleSizeList);
+
+        }
+        [HttpGet("GetRiskRatingType")]
+        public async Task<ActionResult<GetCommonValueTypeGenericDTO>> GetRiskRatingType(Guid ImpactTypeId, Guid LikelihoodTypeId, DateTime Date)
+        {
+            var query = new GetRiskRatingInfoQuery(ImpactTypeId, LikelihoodTypeId, Date);
             var sampleSizeList = await _mediator.Send(query);
             return Ok(sampleSizeList);
 

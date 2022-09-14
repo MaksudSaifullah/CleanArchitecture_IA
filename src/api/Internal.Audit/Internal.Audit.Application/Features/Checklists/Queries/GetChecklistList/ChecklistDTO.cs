@@ -11,13 +11,7 @@ public record ChecklistDTO
     public string? ChecklistCode { get; set; }
     public Guid AuditScheduleId { get; set; }
     public Guid AuditScheduleBranchId { get; set; }
-    public Guid RegionId { get; set; }
-    public DateTime OpeningDate { get; set; }
-    public DateTime DisbursementDate { get; set; }
-    public string? BranchManagerName { get; set; }
-    public DateTime BMJoiningDate { get; set; }
-    public DateTime AuditDate { get; set; }
-    public string? AuditOn { get; set; }
-    public DateTime LastAuditFromDate { get; set; }
-    public DateTime LastAuditToDate { get; set; }
+    public string? AuditScheduleBranchName { get; set; }
+    public string? CreatedBy { get; set; }
+    public DateTime CreatedOn { get; set; }
 }

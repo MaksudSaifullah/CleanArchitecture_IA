@@ -25,6 +25,6 @@ public class GetChecklistBaseResponseDTO
     public DateTime LastAuditToDate { get; set; }
     public bool IsDraft { get; set; }
 
-    public List<AddChecklistTopic> ChecklistTopic { get; set; }
+    public List<AddChecklistTopic> ChecklistTopicHeads { get; set; }
 
 }

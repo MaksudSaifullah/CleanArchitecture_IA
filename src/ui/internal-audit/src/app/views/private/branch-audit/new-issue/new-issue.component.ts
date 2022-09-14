@@ -120,16 +120,16 @@ export class NewIssueComponent implements OnInit {
             ratingTypeId: issueById.ratingTypeId, statusTypeId: issueById.statusTypeId, targetDate:formatDate(issueById.targetDate, 'yyyy-MM-dd', 'en'), 
             details: issueById.details, rootCause: issueById.rootCause, businessImpact: issueById.businessImpact, potentialRisk: issueById.potentialRisk,
             auditorRecommendation: issueById.auditorRecommendation,
-            branchList:issueById.issueBranchList, issueOwnerList:issueById.issueOwnerList,
+           // branchList:issueById.issueBranchList, issueOwnerList:issueById.issueOwnerList,
           });
          this.actionPlans = issueById.actionPlans as IssueActionPlan[];
 
-         for (var i in  this.actionPlans) {
+        //  for (var i in  this.actionPlans) {
          
-            this.actionPlans[i].issueActionPlanOwnerList[i].ownerId = '398fc93b-51c6-4de0-88ff-bc62c2d88bdf';
-             break; //Stop this loop, we found it!
+        //     this.actionPlans[i].issueActionPlanOwnerList[i].ownerId = '398fc93b-51c6-4de0-88ff-bc62c2d88bdf';
+        //      break; //Stop this loop, we found it!
           
-        }
+        // }
           console.log('----------------------------------');
           console.log(this.actionPlans);
           console.log('----------------------------------');
@@ -224,15 +224,15 @@ export class NewIssueComponent implements OnInit {
    // return true;
     // console.log(actionPlanOwnerId);
     // return;
-    for (let actionOwner of this.actionPlans[indx].issueActionPlanOwnerList){
-      if(actionOwner.ownerId == actionPlanOwnerId){
+    // for (let actionOwner of this.actionPlans[indx].issueActionPlanOwnerList){
+    //   if(actionOwner.ownerId == actionPlanOwnerId){
 
-        console.log('iftekharrrrrrrrrrrrrrrrrrrrrrrrrrrrr',indx);
-         console.log(actionOwner.ownerId,actionPlanOwnerId);
-        // console.log(indx, actionPlanOwnerId);
-        return true;
-      }
-     }
+    //     console.log('iftekharrrrrrrrrrrrrrrrrrrrrrrrrrrrr',indx);
+    //      console.log(actionOwner.ownerId,actionPlanOwnerId);
+    //     // console.log(indx, actionPlanOwnerId);
+    //     return true;
+    //   }
+    //  }
 
     // let actionOwner = this.actionPlans[indx].issueActionPlanOwnerList as IssueActionPlanOwner;
     //   if(actionOwner.ownerId == actionPlanOwnerId){

@@ -12,7 +12,6 @@ public record GetIssueListResponseDTO
     //public string BusinessImpact { get; set; } = null!;
     //public string PotentialRisk { get; set; } = null!;
     //public string AuditorRecommendation { get; set; } = null!;
-    //public string? Remarks { get; set; }
     //public string? AuditScheduleName { get; set; }
     //public string? BranchName { get; set; }
     //public string? ImpactTypeName { get; set; }
@@ -22,4 +21,5 @@ public record GetIssueListResponseDTO
     public string? ActionOwners { get; set; } = null!;
     public string? RatingType { get; set; }    
     public string? StatusType { get; set; }
+    public string? Remarks { get; set; }
 }

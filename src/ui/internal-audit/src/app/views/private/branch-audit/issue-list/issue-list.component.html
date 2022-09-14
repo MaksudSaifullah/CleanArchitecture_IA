@@ -39,6 +39,7 @@
                         <!-- <th>Action Owner</th> -->
                         <th>Issue Traget Date</th>  
                         <th>Status</th>  
+                        <th>Remarks</th>  
                         <th class="col-1 text-center">Actions</th>                   
                       </tr>
                     </thead>                  
@@ -51,6 +52,7 @@
                         <!-- <td>{{ issue.actionOwners }}</td> -->
                         <td>{{ issue.targetDate | date:'medium' }}</td>
                         <td>{{ issue.statusType }}</td>
+                        <td>{{ issue.remarks }}</td>
                         <td class="text-center">
                           <div class="btn-group" role="group" aria-label="Basic example">
                             <button type="button" class="btn btn-secondary btnEditColor" [routerLink]="['/branch-audit/new-issue',issue.id]">

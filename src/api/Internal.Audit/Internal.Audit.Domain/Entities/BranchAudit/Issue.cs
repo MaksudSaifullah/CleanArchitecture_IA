@@ -46,6 +46,8 @@ public class Issue : EntityBase
     [NotMapped]
     public string? AuditCode { get; set; } = null!;
     [NotMapped]
+    public string? AuditScheduleCode { get; set; } = null!;
+    [NotMapped]
     public string? IssueOwners { get; set; } = null!;
     [NotMapped]
     public string? LikelihoodType { get; set; }
@@ -56,7 +58,7 @@ public class Issue : EntityBase
     [NotMapped]
     public string? StatusType { get; set; }
     [NotMapped]
-    public string? Branch { get; set; }
+    public string? Branches { get; set; }
 
 
 

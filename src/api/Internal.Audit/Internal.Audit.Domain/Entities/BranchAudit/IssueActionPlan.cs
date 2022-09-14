@@ -25,9 +25,10 @@ public class IssueActionPlan : EntityBase
 	public DateTime? ActionTakenDate { get; set; }
 	[MaxLength(500)]
 	public string? ActionTakenRemarks { get; set; }
+    [NotMapped]
+    public string? IssueActionPlanOwners { get; set; }
 
-
-	[ForeignKey("IssueId")]
+    [ForeignKey("IssueId")]
 	public virtual Issue Issue { get; set; } = null!;
     public virtual ICollection<IssueActionPlanOwner> issueActionPlanOwnerList { get; set; } = null!;
     //TODO

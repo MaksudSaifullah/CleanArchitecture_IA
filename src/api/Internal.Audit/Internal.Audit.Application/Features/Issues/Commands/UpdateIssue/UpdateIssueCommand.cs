@@ -27,20 +27,20 @@ namespace Internal.Audit.Application.Features.Issues.Commands.UpdateIssue;
     }
     public record UpdateIssueBranchCommand
     {
-        public Guid? Id { get; set; }
+        //public Guid? Id { get; set; }
         public Guid IssueId { get; set; }
         public Guid BranchId { get; set; }
     }
 
     public record UpdateIssueOwnerCommand
     {
-        public Guid? Id { get; set; }
+        //public Guid? Id { get; set; }
         public Guid IssueId { get; set; }
         public Guid OwnerId { get; set; }
     }
     public record UpdateIssueActionPlanCommand
     {
-        public Guid? Id { get; set; }
+        //public Guid? Id { get; set; }
         public string? ActionPlanCode { get; set; } = null!;
         public Guid? IssueId { get; set; }
         public List<UpdateIssueActionOwnerListCommand>? issueActionPlanOwnerList { get; set; }
@@ -54,7 +54,7 @@ namespace Internal.Audit.Application.Features.Issues.Commands.UpdateIssue;
     }
     public class UpdateIssueActionOwnerListCommand
     {
-        public Guid? Id { get; set; }
+        //public Guid? Id { get; set; }
         public Guid? IssueActionPlanId { get; set; }
         public Guid OwnerId { get; set; }
     }

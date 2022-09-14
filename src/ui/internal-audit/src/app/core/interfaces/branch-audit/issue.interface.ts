@@ -1,14 +1,15 @@
 export interface issue {
-    id:               string;
-    code:             string;
-    issueTitle?:      string;
-    issueOwners?:     string;
-    ratingType?:      string;   
-    targetDate:      Date;    
-    statusType?:      string;
+    id: string;
+    code: string;
+    issueTitle?: string;
+    issueOwners?: string;
+    branches?: string;
+    ratingType?: string;
+    targetDate: Date;
+    statusType?: string;
 
     auditScheduleId?: string;
-    branchId?: string;
+    auditScheduleCode?: string;
     impactTypeId?: string;
     likelihoodTypeId?: string;
     ratingTypeId?: string;
@@ -20,6 +21,8 @@ export interface issue {
     potentialRisk?: string;
     auditorRecommendation?: string;
     remarks?: string | null;
+    createdBy?: string;
+    createdOn?: Date;
     likelihoodType?: string | null;
     impactType?: string | null;
 
@@ -33,18 +36,18 @@ export interface IssueBranch {
     issueId?: string;
     branchId?: string;
 }
-export interface IssueOwner{
+export interface IssueOwner {
     id?: string;
     issueId?: string;
     ownerId?: string;
 
 }
-export interface IssueActionPlan{
+export interface IssueActionPlan {
     id?: string;
     issueId?: string;
     actionPlanCode?: string;
-    //ownerId?: string;
     issueActionPlanOwnerList: IssueActionPlanOwner[];
+    issueActionPlanOwners?: string;
     evidenceDocumentId?: string;
     managementPlan?: string;
     targetDate: Date;
@@ -52,13 +55,13 @@ export interface IssueActionPlan{
     actionTakenDate?: Date;
     actionTakenRemarks?: string
 }
-export interface IssueActionPlanOwner{
+export interface IssueActionPlanOwner {
     id?: string;
     issueActionPlanId?: string;
     ownerId?: string;
 }
 
-export interface IssueResponse{
+export interface IssueResponse {
     issueOwnerList?: IssueOwner[];
     issueBranchList?: IssueBranch[];
     actionPlans?: IssueActionPlan[];

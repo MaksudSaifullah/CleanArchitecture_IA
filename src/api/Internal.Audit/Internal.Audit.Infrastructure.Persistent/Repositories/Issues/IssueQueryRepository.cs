@@ -57,14 +57,44 @@ public class IssueQueryRepository : QueryRepositoryBase<Issue>, IIssueQueryRepos
 							
        //                  WHERE issue.[IsDeleted] = 0 and issue.[Id] = @id
        //                  ORDER BY issue.[CreatedOn] DESC";
-        var query = @"select * 
+        var query = @"select 
+                    Issue.*,cvtStatus.Text as StatusType,cvtRating.Text as RatingType, 
+                            AuditSchedule.ScheduleId as AuditScheduleCode,
+                            STUFF((SELECT ', ' + employee.Name
+							FROM [config].[IssueOwner] as issueOwner
+							INNER JOIN [security].[User] as usr on usr.id = issueOwner.OwnerId
+							INNER JOIN  [security].[Employee] as employee on employee.UserId = usr.id
+							WHERE  issueOwner.[IssueId] = issue.[Id]
+							FOR XML PATH(''),TYPE)
+							.value('.','NVARCHAR(MAX)'),1,2,'') AS IssueOwners,
+
+                            STUFF((SELECT ',   ' + Branch.BranchName
+						    FROM BranchAudit.IssueBranch
+						    INNER JOIN security.Branch on Branch.Id = IssueBranch.BranchId									 
+						    WHERE  IssueBranch.[IssueId] = issue.[Id]
+						    FOR XML PATH(''),TYPE)
+						    .value('.','NVARCHAR(MAX)'),1,2,'') AS Branches,
+
+                    IssueActionPlan.*,  STUFF((SELECT ', ' + employee.Name
+							FROM BranchAudit.IssueActionPlanOwner
+							INNER JOIN [security].[User] as usr on usr.id = IssueActionPlanOwner.OwnerId
+							INNER JOIN  [security].[Employee] as employee on employee.UserId = usr.id
+							WHERE IssueActionPlanOwner.IssueActionPlanId = IssueActionPlan.Id
+							FOR XML PATH(''),TYPE)
+							.value('.','NVARCHAR(MAX)'),1,2,'') AS IssueActionPlanOwners,
+                    IssueActionPlanOwner.*, 
+                    IssueBranch.*, 
+                    IssueOwner.*
                         from BranchAudit.Issue 
                         left join BranchAudit.IssueActionPlan on IssueActionPlan.IssueId = Issue.Id
                         left join BranchAudit.IssueActionPlanOwner on IssueActionPlanOwner.IssueActionPlanId = IssueActionPlan.Id
                         left join BranchAudit.IssueBranch on Issue.Id = IssueBranch.IssueId
                         left join Config.IssueOwner on Issue.Id = IssueOwner.IssueId
+                        left join Config.CommonValueAndType as cvtStatus on cvtStatus.Id = Issue.StatusTypeId 
+						left join Config.CommonValueAndType as cvtRating on cvtRating.Id = Issue.RatingTypeId
+                        left join BranchAudit.AuditSchedule on AuditSchedule.Id = Issue.AuditScheduleId
 
-                        where Issue.Id = @id and Issue.IsDeleted = 0";
+                    where Issue.Id = @id and Issue.IsDeleted = 0";
         var parameters = new Dictionary<string, object> { { "id", id } };
         string splitters = "Id, Id, Id, Id";
         var issueList = new Dictionary<Guid, Issue>();

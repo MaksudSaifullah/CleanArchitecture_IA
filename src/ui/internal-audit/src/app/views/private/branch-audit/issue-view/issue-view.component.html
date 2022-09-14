@@ -19,14 +19,14 @@
                     <div class="row">                        
                         <div>
                           <div class="a btn-group" role="group" aria-label="Basic example">
-                            <button  class="btnSaveColor me-1"  cButton > Add Validation
+                            <button  class="btnSaveColor me-1"  cButton> Add Validation
                             </button> 
-                            <button  class="btnSaveColor me-1"  cButton > View Validation
+                            <button  class="btnSaveColor me-1"  cButton> View Validation
                             </button> 
-                            <button  class="btnCancelColor"  cButton> Change Status 
+                            <button  class="btnCancelColor" [cModalToggle]="changeStatusModal.id"  cButton (click)="changeStatus()"> Change Status 
                             </button> 
                           </div>
-                        </div>
+                        </div> 
                     </div>
                 <br>
                     <!-- <form [formGroup]="issueViewForm" (ngSubmit)="onSubmit()" novalidate>
@@ -63,6 +63,7 @@
                             <tr>
                                 <td>Issue Status</td>
                                 <td>{{ issueDetails.statusType }}</td>
+                                <!-- <td>{{statusType}}</td> -->
                             </tr>
                             <tr>
                                 <td>Issue Validated</td>
@@ -70,6 +71,7 @@
                             </tr>
                             <tr>
                                 <td>Issue Owners</td>
+                                <td>{{issueDetails.issueOwners}}</td>
                                 
                             </tr>
                             <tr>
@@ -106,19 +108,19 @@
                             </tr>
                             <tr>
                                 <td>Tagged Schedule</td>
-                                <td>{{ issueDetails.auditScheduleId }}</td>
+                                <td>{{ issueDetails.auditScheduleCode }}</td>
                             </tr>
                             <tr>
                                 <td>Branches</td>
-                                <!-- <td>{{ issueDetails. }}</td> -->
+                                <td>{{issueDetails.branches}}
                             </tr>
                             <tr>
                                 <td>Issue Creation Date</td>
-                                <!-- <td>{{ issueDetails. }}</td> -->
+                                <td>{{ issueDetails.createdOn }}</td>
                             </tr>
                             <tr>
                                 <td>Issue Created By</td>
-                                <!-- <td>{{ issueDetails. }}</td> -->
+                                <td>{{ issueDetails.createdBy }}</td>
                             </tr>
                           </tbody>
                         </table>
@@ -127,6 +129,63 @@
             </div>
             </div>
         </div></div>
+
+        <form [formGroup]="changeStatusForm" (ngSubmit)="onSubmitStatusChange(changeStatusModal)" novalidate>
+          <c-modal #changeStatusModal alignment="center" id="changeStatusModal">
+            <c-modal-header>
+              <h5 cModalTitle>Change Status</h5>
+              <!-- <h5 cModalTitle *ngIf="!formService.isEdit(this.topicHeadForm.get('id'))">Create Topic Head</h5>
+              <h5 cModalTitle *ngIf="formService.isEdit(this.topicHeadForm.get('id'))">Update Topic Head</h5> -->
+              <button [cModalToggle]="changeStatusModal.id" cButtonClose></button>
+            </c-modal-header>
+            <c-modal-body>
+              <div class="col-md-12" >
+                <input type="hidden" formControlName="id"/>
+                <div class="form-floating mb-3">
+                  <select aria-label="Floating label select example" cSelect id="statusTypeId"
+                    formControlName="statusTypeId" name="statusTypeId">
+                    <option value="null">Select Status</option>
+                    <option *ngFor="let status of statuses" [value]="status.id">
+                      {{status.text}}
+                    </option>                  
+                  </select>
+                  <label for="statusTypeId" class="dropdownLabel">Status</label>          
+                  <div cRow *ngIf="((changeStatusForm.get('statusTypeId')?.invalid && changeStatusForm.get('statusTypeId')?.errors)) &&
+                    (changeStatusForm.get('statusTypeId')?.dirty || changeStatusForm.get('statusTypeId')?.touched)">
+                    <small class="text-danger">
+                      This field is required.
+                    </small>                                 
+                  </div>
+                </div>
+                <div class="form-floating mb-3">
+                  <input type="text" class="form-control" formControlName="remarks" id="remarks" placeholder="remarks">
+                  <label for="floatingInput">Remarks</label>
+    
+                  <div cRow *ngIf="changeStatusForm.get('remarks')?.invalid && changeStatusForm.get('remarks')?.errors &&
+                        (changeStatusForm.get('remarks')?.dirty || changeStatusForm.get('remarks')?.touched)">
+                    <small class="text-danger"
+                        *ngIf="changeStatusForm.get('remarks').hasError('required')">
+                        This field is required.
+                    </small>
+                    <small class="text-danger"
+                        *ngIf="changeStatusForm.get('remarks').hasError('minlength')">
+                        The minimum length for this field is {{changeStatusForm.get('remarks').errors.minlength.requiredLength}} characters.
+                    </small>                    
+                  </div>
+                </div>
+              </div>
+            </c-modal-body>
+            <c-modal-footer>
+              <button cButton class="btn btn-primary btnSaveColor me-1" (click)="onSubmitStatusChange(changeStatusModal)">
+                <svg cIcon name="cilSave" size="md" title="Save Button Icon"></svg> Save
+              </button>
+              <!-- <button [cModalToggle]="verticallyCenteredModal.id" cButton class="btn btn-danger btnCancelColor me-1">
+                <svg cIcon name="cilX" size="md" title="Close Button Icon"></svg> Close
+              </button> -->
+            </c-modal-footer>
+          </c-modal>
+        </form>
+    
     </c-tab-pane>
     <c-tab-pane class="p-3">
         <div class="animated fadeIn">
@@ -146,26 +205,30 @@
                         <th>Management Action Plan</th>
                         <th>Action Owner</th>
                         <th>Action Target Date</th>
+                        <th>Evidence</th>
+                        <th>Remarks</th>
                         <th>Actions</th>
                       </tr>
                     </thead>
                     <tbody *ngIf="actionPlans?.length != 0">
                       <tr *ngFor="let row of actionPlans; let i = index">
                         
-                        <td> {{i+1}} </td>
-                        <td> {{row.actionPlanCode}} </td>
+                        <td>{{i+1}} </td>
+                        <td>{{row.actionPlanCode}} </td>
                         <td>{{row.managementPlan}}</td>
-                        <td>{{row.userName}}</td>
+                        <td>{{row.issueActionPlanOwners}}</td>
                         <td>{{row.targetDate | date: 'yyyy-MM-dd'}}</td>
+                        <td>Evidence</td>
+                        <td>{{row.actionTakenRemarks}}</td>
                         <td class="text-center">
-                          <div class="btn-group" role="group" >
+                          <div >
                             <!-- <svg cIcon [name]="cil-airplane-mode" [title]="cil-airplane-mode" size="3xl">gjhj</svg> -->
-                            <button type="button" class="btn btn-secondary btnEditColor">
-                              Action taken
+                            <button type="button" class="btn btn-secondary btnEditColor" [cModalToggle]="actionTakenModal.id">
+                              Action Taken
                             </button>                            
                           </div>
                         </td>
-                      </tr>                    
+                      </tr>
                     </tbody>
                     <tbody *ngIf="actionPlans?.length == 0">
                       <tr>
@@ -179,6 +242,68 @@
            </div>
           </div>
         </div>
+        <form [formGroup]="actionTakenForm" (ngSubmit)="onSubmitStatusChange(actionTakenModal)" novalidate>
+          <c-modal #actionTakenModal alignment="center" id="changeStatusModal">
+            <c-modal-header>
+              <h5 cModalTitle>Action Taken</h5>
+              <!-- <h5 cModalTitle *ngIf="!formService.isEdit(this.topicHeadForm.get('id'))">Create Topic Head</h5>
+              <h5 cModalTitle *ngIf="formService.isEdit(this.topicHeadForm.get('id'))">Update Topic Head</h5> -->
+              <button [cModalToggle]="actionTakenModal.id" cButtonClose></button>
+            </c-modal-header>
+            <c-modal-body>
+              <div class="col-md-12" >
+                <input type="hidden" formControlName="id"/>
+                <div class="form-floating mb-3">
+                  <input type="date" class="form-control" formControlName="actionTakenDate" id="actionTakenDate" placeholder="actionTakenDate">
+                  <label for="floatingInput">Date</label>
+                  <div cRow *ngIf="actionTakenForm.get('actionTakenDate')?.invalid && actionTakenForm.get('actionTakenDate')?.errors &&
+                        (actionTakenForm.get('actionTakenDate')?.dirty || actionTakenForm.get('actionTakenDate')?.touched)">
+                    <small class="text-danger"
+                        *ngIf="actionTakenForm.get('actionTakenDate').hasError('required')">
+                        This field is required.
+                    </small>                                       
+                  </div>
+                </div>
+                <div class="form-floating mb-3">
+                  <input type="text" class="form-control" formControlName="actionTakenRemarks" id="actionTakenRemarks" placeholder="actionTakenRemarks">
+                  <label for="floatingInput">Remarks</label>
+    
+                  <div cRow *ngIf="actionTakenForm.get('actionTakenRemarks')?.invalid && actionTakenForm.get('actionTakenRemarks')?.errors &&
+                        (actionTakenForm.get('actionTakenRemarks')?.dirty || actionTakenForm.get('actionTakenRemarks')?.touched)">
+                    <small class="text-danger"
+                        *ngIf="actionTakenForm.get('actionTakenRemarks').hasError('required')">
+                        This field is required.
+                    </small>
+                    <small class="text-danger"
+                        *ngIf="actionTakenForm.get('actionTakenRemarks').hasError('minlength')">
+                        The minimum length for this field is {{actionTakenForm.get('actionTakenRemarks').errors.minlength.requiredLength}} characters.
+                    </small>                    
+                  </div>
+                </div>
+                <div>
+                  <input type="file" class="form-control" formControlName="evidenceDocumentId" id="evidenceDocumentId" placeholder="evidenceDocumentId" (change)="onUploadDocument($event)">
+
+                  <!-- <label for="evidenceDocumentId">Evidence</label>           -->
+                  <div cRow *ngIf="actionTakenForm.get('evidenceDocumentId')?.invalid && actionTakenForm.get('evidenceDocumentId')?.errors &&
+                            (actionTakenForm.get('evidenceDocumentId')?.dirty || actionTakenForm.get('evidenceDocumentId')?.touched)">
+                    <small class="text-danger" *ngIf="actionTakenForm.get('evidenceDocumentId').hasError('required')">
+                        This field is required.
+                    </small>                        
+                  </div>
+                </div>
+                
+              </div>
+            </c-modal-body>
+            <c-modal-footer>
+              <button cButton class="btn btn-primary btnSaveColor me-1" (click)="onSubmitStatusChange(changeStatusModal)">
+                <svg cIcon name="cilSave" size="md" title="Save Button Icon"></svg> Save
+              </button>
+              <!-- <button [cModalToggle]="verticallyCenteredModal.id" cButton class="btn btn-danger btnCancelColor me-1">
+                <svg cIcon name="cilX" size="md" title="Close Button Icon"></svg> Close
+              </button> -->
+            </c-modal-footer>
+          </c-modal>
+        </form>        
       </c-tab-pane>
 </c-tab-content>
 </c-card>

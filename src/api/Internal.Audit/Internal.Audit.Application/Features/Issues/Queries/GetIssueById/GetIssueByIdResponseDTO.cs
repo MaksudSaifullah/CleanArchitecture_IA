@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -46,6 +48,14 @@ public record GetIssueByIdResponseDTO
     public string PotentialRisk { get; set; } = null!;
     public string AuditorRecommendation { get; set; } = null!;
     public string? Remarks { get; set; }
+    public string? CreatedBy { get; set; }
+    public DateTime? CreatedOn { get; set; }
+    public string? RatingType { get; set; }
+    public string? StatusType { get; set; }
+    public string? IssueOwners { get; set; }
+    public string? Branches { get; set; }
+    public string? AuditScheduleCode { get; set; }
+
 
     public List<GetIssueBranch> IssueBranchList { get; set; }
     public List<GetIssueOwner> IssueOwnerList { get; set; }
@@ -76,6 +86,7 @@ public record GetIssueActionPlan
     public bool? IsActionTaken { get; set; } = false;
     public DateTime? ActionTakenDate { get; set; }
     public string? ActionTakenRemarks { get; set; }
+    public string? IssueActionPlanOwners { get; set; }
 
 }
 public class GetIssueActionOwnerList

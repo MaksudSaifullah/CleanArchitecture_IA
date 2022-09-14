@@ -38,5 +38,18 @@ namespace Internal.Audit.Infrastructure.Persistent.Repositories.CommonValueAndTy
 
             return await Get(query, parameters);
         }
+
+        public async Task<CommonValueAndType> GetRiskRatingType(Guid ImpactTypeId, Guid LikelihoodTypeId, DateTime Date)
+        {
+            var query = @"select y.Id,y.Type,y.SubType ,y.Value,y.Text from [common].[RiskProfile] x
+                        inner join [Config].[CommonValueAndType] y
+                        on x.RatingTypeId=y.Id
+                        where ImpactTypeId=@impactId
+                        and LikelihoodTypeId=@likehoodTypeId
+                        and CAST(@date as date) between EffectiveFrom and EffectiveTo";
+            var parameters = new Dictionary<string, object> { { "impactId", ImpactTypeId }, { "likehoodTypeId", LikelihoodTypeId }, { "date", Date } };
+
+            return await Single(query, parameters);
+        }
     }
 }

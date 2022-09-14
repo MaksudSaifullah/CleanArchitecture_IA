@@ -21,6 +21,7 @@ import { WeightScoreConfigComponent } from './weight-score-config/weight-score-c
 import { ClosingMeetingMinutesCreateComponent } from './closing-meeting-minutes/closing-meeting-minutes-create/closing-meeting-minutes-create.component';
 import { IssueViewComponent } from './issue-view/issue-view.component';
 import { ChecklistComponent } from './checklist/checklist.component';
+import { ChecklistCreateComponent } from './checklist/checklist-create/checklist-create.component';
 
 const routes: Routes = [
   {
@@ -133,7 +134,11 @@ const routes: Routes = [
    {
     path:'checklist',
     component: ChecklistComponent
-  },
+   },
+   {
+    path:'checklist-create',
+    component: ChecklistCreateComponent
+   },
 
 ];
 

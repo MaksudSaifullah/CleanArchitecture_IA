@@ -12,6 +12,7 @@ public class CompositeChecklist : EntityBase
     public string? ChecklistCode { get; set; }
     public Guid AuditScheduleId { get; set; }
     public Guid AuditScheduleBranchId { get; set; }
+    public string? AuditScheduleBranchName { get; set; }
     public Guid RegionId { get; set; }
     public DateTime OpeningDate { get; set; }
     public DateTime DisbursementDate { get; set; }

@@ -36,6 +36,7 @@ import { ClosingMeetingMinutesComponent } from './closing-meeting-minutes/closin
 import { WeightScoreConfigComponent } from './weight-score-config/weight-score-config.component';
 import { ClosingMeetingMinutesCreateComponent } from './closing-meeting-minutes/closing-meeting-minutes-create/closing-meeting-minutes-create.component';
 import { IssueViewComponent } from './issue-view/issue-view.component';
+import { ChecklistComponent } from './checklist/checklist.component';
 
 
 @NgModule({
@@ -74,7 +75,8 @@ import { IssueViewComponent } from './issue-view/issue-view.component';
     IssueListComponent,
     WeightScoreConfigComponent,
     ClosingMeetingMinutesCreateComponent,
-    IssueViewComponent
+    IssueViewComponent,
+    ChecklistComponent
   ],
   imports: [
     CommonModule,

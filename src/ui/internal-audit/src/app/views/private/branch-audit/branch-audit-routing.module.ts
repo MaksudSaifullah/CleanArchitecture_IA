@@ -20,6 +20,7 @@ import { ClosingMeetingMinutesComponent } from './closing-meeting-minutes/closin
 import { WeightScoreConfigComponent } from './weight-score-config/weight-score-config.component';
 import { ClosingMeetingMinutesCreateComponent } from './closing-meeting-minutes/closing-meeting-minutes-create/closing-meeting-minutes-create.component';
 import { IssueViewComponent } from './issue-view/issue-view.component';
+import { ChecklistComponent } from './checklist/checklist.component';
 
 const routes: Routes = [
   {
@@ -128,7 +129,11 @@ const routes: Routes = [
   { 
     path: 'schedule-execution/:scheduleParamId/:auditParamId', 
     component: ScheduleExecutionComponent 
-   }
+   },
+   {
+    path:'checklist',
+    component: ChecklistComponent
+  },
 
 ];
 

@@ -35,37 +35,6 @@ export class IssueViewComponent implements OnInit {
 
 
   constructor(private http: HttpService, private fb: FormBuilder, private router: Router, private activateRoute: ActivatedRoute, private AlertService: AlertService, private helper: HelperService) {
-    // this.issueViewForm = this.fb.group({
-    //   auditId: [''],
-    //   id: [''],
-    //   code: [''],
-    //   issueTitle: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(500)]],
-
-    //   ratingType: [''],
-    //   actionOwners: [''],
-    //   targetDate: [Date, [Validators.required]],
-    //   statusType: [''],
-
-    //   auditScheduleId: [null, [Validators.required, Validators.pattern("^(?!null$).*$")]],
-    //   branchList: ['', [Validators.required]],
-    //   issueOwnerList: ['', [Validators.required]],
-    //   impactTypeId: [null, [Validators.required, Validators.pattern("^(?!null$).*$")]],
-    //   likelihoodTypeId: [null, [Validators.required, Validators.pattern("^(?!null$).*$")]],
-    //   ratingTypeId: [''],
-    //   statusTypeId: [''],
-    //   policy: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(500)]],
-    //   details: ['', [Validators.required, Validators.minLength(3)]],
-    //   rootCause: ['', [Validators.required, Validators.minLength(3)]],
-    //   businessImpact: ['', [Validators.required, Validators.minLength(3)]],
-    //   potentialRisk: ['', [Validators.required, Validators.minLength(3)]],
-    //   auditorRecommendation: ['', [Validators.required, Validators.minLength(3)]],
-
-    //   remarks: [''],
-
-    //   likelihoodType: [''],
-    //   impactType: [''],
-    //   branch: [''],
-    // }),
     this.changeStatusForm = this.fb.group({
       id:[],
       remarks: ['', [Validators.required, Validators.minLength(3)]],
@@ -84,24 +53,7 @@ export class IssueViewComponent implements OnInit {
     this.paramId = this.activateRoute.snapshot.params['id'];
     console.log('paramid', this.paramId);
     this.loadStatuses();
-    // this.actionPlans.push(
-    //   {
-    //     actionPlanCode: 'plan',
-    //     managementPlan: 'mng plan',
-    //     userName: 'isa' + '<br/>' + 'ishita',
-    //     targetDate: new Date,
-    //     issueActionPlanOwnerList: []
-    //   }
-    // );
-    // this.actionPlans.push(
-    //   {
-    //     actionPlanCode: 'plan',
-    //     managementPlan: 'mng plan',
-    //     userName: 'isa' + '<br/>' + 'ishita',
-    //     targetDate: new Date,
-    //     issueActionPlanOwnerList: []
-    //   }
-    // );
+    
     this.LoadIssueById(this.paramId);
   }
   LoadIssueById(id: any) {

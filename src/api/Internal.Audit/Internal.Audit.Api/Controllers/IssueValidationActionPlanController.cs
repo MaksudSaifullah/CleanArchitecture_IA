@@ -17,7 +17,7 @@ namespace Internal.Audit.Api.Controllers
             _mediator = madiator ?? throw new ArgumentNullException(nameof(madiator));
         }
         [HttpPost]
-        public async Task<ActionResult<IssueActionPlanCommandResponseDTO>> Add(IssueActionPlanCommand     command)
+        public async Task<ActionResult<IssueActionPlanCommandResponseDTO>> Add(IssueActionPlanCommand command)
         {
             var result = await _mediator.Send(command);
             return Ok(result);

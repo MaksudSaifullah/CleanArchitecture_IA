@@ -22,115 +22,115 @@
                    
                     <form [formGroup]="issueValidationForm" (ngSubmit)="onContinueIssueValidation()" novalidate>                
                             <div class="form-floating mb-3">
-                                <input type="text" class="form-control" formControlName="code" id="code" placeholder="code">
+                                <input type="text" class="form-control" formControlName="code" id="code" placeholder="code" readonly="readonly">
                                 <label for="floatingInput">Issue Id</label>
                             </div>
                             <div class="form-floating mb-3">
-                                <input type="text" class="form-control" formControlName="issueTitle" id="issueTitle" placeholder="issueTitle">
+                                <input type="text" class="form-control" formControlName="issueTitle" id="issueTitle" placeholder="issueTitle" readonly="readonly">
                                 <label for="floatingInput">Issue Title</label>                                
                             </div>
                             <div class="form-floating mb-3">
-                                <input class="form-control" placeholder="targetDate" formControlName="targetDate" id="targetDate" type="date" >
+                                <input class="form-control" placeholder="targetDate" formControlName="targetDate" id="targetDate" type="date" readonly="readonly">
                                 <label for="floatingInput">Issue Target Date</label>                                
                             </div>
                             <div class="form-floating mb-3">
-                                <input type="text" class="form-control" formControlName="issueTitle" id="issueTitle" placeholder="issueTitle" >
+                                <input type="text" class="form-control" formControlName="issueOwners" id="issueOwners" placeholder="issueOwners" readonly="readonly">
                                 <label for="floatingInput">Issue Owner(s)</label>                                
                             </div>
                             <div class="form-floating mb-3">
-                                <input class="form-control" placeholder="targetDate" formControlName="targetDate" id="targetDate" type="date" >
+                                <input class="form-control" placeholder="auditReportDate" formControlName="auditReportDate" id="auditReportDate" type="date" >
                                 <label for="floatingInput">Audit Report Date</label>                                
                             </div>
                             <div class="form-floating mb-3">
-                                <input type="text" class="form-control" formControlName="issueTitle" id="issueTitle" placeholder="issueTitle" >
+                                <input type="text" class="form-control" formControlName="closureSummary" id="closureSummary" placeholder="closureSummary" >
                                 <label for="floatingInput">Issue Closure Summary</label>                                
                             </div>
                             <div class="form-floating mb-3">
-                                <select aria-label="Floating label select example" cSelect id="auditScheduleId"
-                                  formControlName="auditScheduleId" name="auditScheduleId" style="height: 70px;"  #auditSchedule >
+                                <select aria-label="Floating label select example" cSelect id="validatedByUserId"
+                                  formControlName="validatedByUserId" name="validatedByUserId" style="height: 70px;"  #validatedByUserId >
                                   <option value="null">Select</option>
-                                  <option *ngFor="let user of users" [value]="schedule.id">
+                                  <option *ngFor="let user of users" [value]="user.id">
                                     {{user.userName}}
                                   </option>
                                 </select>
-                                <label for="auditScheduleId">Issue Validated By</label>          
-                                <div cRow *ngIf="((issueValidationForm.get('auditScheduleId')?.invalid && issueValidationForm.get('auditScheduleId')?.errors)) &&
-                                  (issueValidationForm.get('auditScheduleId')?.dirty || issueValidationForm.get('auditScheduleId')?.touched)">
+                                <label for="validatedByUserId">Issue Validated By</label>          
+                                <div cRow *ngIf="((issueValidationForm.get('validatedByUserId')?.invalid && issueValidationForm.get('validatedByUserId')?.errors)) &&
+                                  (issueValidationForm.get('validatedByUserId')?.dirty || issueValidationForm.get('validatedByUserId')?.touched)">
                                   <small class="text-danger">
                                     This field is required.
                                   </small>
                                 </div>
                             </div>
                             <div class="form-floating mb-3">
-                                <input class="form-control" placeholder="targetDate" formControlName="targetDate" id="targetDate" type="date" >
+                                <input class="form-control" placeholder="validationDate" formControlName="validationDate" id="validationDate" type="date" >
                                 <label for="floatingInput">Date of Validation</label>                                
                             </div>
                             <div class="form-floating mb-3">
-                                <select aria-label="Floating label select example" cSelect id="auditScheduleId"
-                                  formControlName="auditScheduleId" name="auditScheduleId" style="height: 70px;"  #auditSchedule >
+                                <select aria-label="Floating label select example" cSelect id="reviewedByUserID"
+                                  formControlName="reviewedByUserID" name="reviewedByUserID" style="height: 70px;"  #auditSchedule >
                                   <option value="null">Select</option>
-                                  <option *ngFor="let user of users" [value]="schedule.id">
+                                  <option *ngFor="let user of users" [value]="user.id">
                                     {{user.userName}}
                                   </option>
                                 </select>
-                                <label for="auditScheduleId">Validation Reviewed By</label>          
-                                <div cRow *ngIf="((issueValidationForm.get('auditScheduleId')?.invalid && issueValidationForm.get('auditScheduleId')?.errors)) &&
-                                  (issueValidationForm.get('auditScheduleId')?.dirty || issueValidationForm.get('auditScheduleId')?.touched)">
+                                <label for="reviewedByUserID">Validation Reviewed By</label>          
+                                <div cRow *ngIf="((issueValidationForm.get('reviewedByUserID')?.invalid && issueValidationForm.get('reviewedByUserID')?.errors)) &&
+                                  (issueValidationForm.get('reviewedByUserID')?.dirty || issueValidationForm.get('reviewedByUserID')?.touched)">
                                   <small class="text-danger">
                                     This field is required.
                                   </small>
                                 </div>
                             </div>
                             <div class="form-floating mb-3">
-                                <input class="form-control" placeholder="targetDate" formControlName="targetDate" id="targetDate" type="date" >
+                                <input class="form-control" placeholder="reviewDate" formControlName="reviewDate" id="reviewDate" type="date" >
                                 <label for="floatingInput">Date of Review</label>                                
                             </div>
                             <div class="form-floating mb-3">
                                 <div class="input-group custom-file-button">
-                                    <label class="input-group-text" for="evidenceDocumentId">Review Evidence</label>
-                                    <input type="file" class="form-control" formControlName="evidenceDocumentId" id="evidenceDocumentId" placeholder="evidenceDocumentId" (change)="onUploadReviewEvidence($event)">
+                                    <label class="input-group-text" for="reviewEvidenceDocumentId">Review Evidence</label>
+                                    <input type="file" class="form-control" formControlName="reviewEvidenceDocumentId" id="reviewEvidenceDocumentId" placeholder="reviewEvidenceDocumentId" (change)="onUploadReviewEvidence($event)">
                                 </div>
-                                <div cRow *ngIf="issueValidationForm.get('evidenceDocumentId')?.invalid && issueValidationForm.get('evidenceDocumentId')?.errors &&
-                                          (issueValidationForm.get('evidenceDocumentId')?.dirty || issueValidationForm.get('evidenceDocumentId')?.touched)">
-                                  <small class="text-danger" *ngIf="issueValidationForm.get('evidenceDocumentId').hasError('required')">
+                                <div cRow *ngIf="issueValidationForm.get('reviewEvidenceDocumentId')?.invalid && issueValidationForm.get('reviewEvidenceDocumentId')?.errors &&
+                                          (issueValidationForm.get('reviewEvidenceDocumentId')?.dirty || issueValidationForm.get('reviewEvidenceDocumentId')?.touched)">
+                                  <small class="text-danger" *ngIf="issueValidationForm.get('reviewEvidenceDocumentId').hasError('required')">
                                       This field is required.
                                   </small>
                                 </div>
                             </div>
                             <div class="form-floating mb-3">
-                                <select aria-label="Floating label select example" cSelect id="auditScheduleId"
-                                  formControlName="auditScheduleId" name="auditScheduleId" style="height: 70px;"  #auditSchedule >
+                                <select aria-label="Floating label select example" cSelect id="approvedByUserId"
+                                  formControlName="approvedByUserId" name="approvedByUserId" style="height: 70px;"  #auditSchedule >
                                   <option value="null">Select</option>
-                                  <option *ngFor="let user of users" [value]="schedule.id">
+                                  <option *ngFor="let user of users" [value]="user.id">
                                     {{user.userName}}
                                   </option>
                                 </select>
-                                <label for="auditScheduleId">Validation Approved By</label>          
-                                <div cRow *ngIf="((issueValidationForm.get('auditScheduleId')?.invalid && issueValidationForm.get('auditScheduleId')?.errors)) &&
-                                  (issueValidationForm.get('auditScheduleId')?.dirty || issueValidationForm.get('auditScheduleId')?.touched)">
+                                <label for="approvedByUserId">Validation Approved By</label>          
+                                <div cRow *ngIf="((issueValidationForm.get('approvedByUserId')?.invalid && issueValidationForm.get('approvedByUserId')?.errors)) &&
+                                  (issueValidationForm.get('approvedByUserId')?.dirty || issueValidationForm.get('approvedByUserId')?.touched)">
                                   <small class="text-danger">
                                     This field is required.
                                   </small>
                                 </div>
                             </div>
                             <div class="form-floating mb-3">
-                                <input class="form-control" placeholder="targetDate" formControlName="targetDate" id="targetDate" type="date" >
+                                <input class="form-control" placeholder="approvalDate" formControlName="approvalDate" id="approvalDate" type="date" >
                                 <label for="floatingInput">Date of Approval</label>                                
                             </div>
                             <div class="row form-floating mb-3">
                                 <div class="input-group custom-file-button">
-                                    <label class="input-group-text" for="evidenceDocumentId">Approval Evidence</label>
-                                    <input type="file" class="form-control" formControlName="evidenceDocumentId" id="evidenceDocumentId" placeholder="evidenceDocumentId" (change)="onUploadApprovalEvidence($event)">
+                                    <label class="input-group-text" for="approvalEvidenceDocumentId">Approval Evidence</label>
+                                    <input type="file" class="form-control" formControlName="approvalEvidenceDocumentId" id="approvalEvidenceDocumentId" placeholder="approvalEvidenceDocumentId" (change)="onUploadApprovalEvidence($event)">
                                 </div>
-                                <div cRow *ngIf="issueValidationForm.get('evidenceDocumentId')?.invalid && issueValidationForm.get('evidenceDocumentId')?.errors &&
-                                            (issueValidationForm.get('evidenceDocumentId')?.dirty || issueValidationForm.get('evidenceDocumentId')?.touched)">
-                                    <small class="text-danger" *ngIf="issueValidationForm.get('evidenceDocumentId').hasError('required')">
+                                <div cRow *ngIf="issueValidationForm.get('approvalEvidenceDocumentId')?.invalid && issueValidationForm.get('approvalEvidenceDocumentId')?.errors &&
+                                            (issueValidationForm.get('approvalEvidenceDocumentId')?.dirty || issueValidationForm.get('approvalEvidenceDocumentId')?.touched)">
+                                    <small class="text-danger" *ngIf="issueValidationForm.get('approvalEvidenceDocumentId').hasError('required')">
                                         This field is required.
                                     </small>                        
                                 </div>                               
                             </div>
                             <div class="form-floating mb-3">
-                                <input class="form-control" placeholder="targetDate" formControlName="targetDate" id="targetDate" type="date" >
+                                <input class="form-control" placeholder="issueClosureDate" formControlName="issueClosureDate" id="issueClosureDate" type="date" >
                                 <label for="floatingInput">Issue Closure and Communication Date</label>                                
                             </div>
 

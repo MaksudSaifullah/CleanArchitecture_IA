@@ -206,5 +206,12 @@ export class IssueViewComponent implements OnInit {
       this.globalFile = event.target.files[0] as File;    
     }
   }
-}
 
+  createNewValidation(){
+    this.router.navigate(['branch-audit/issue-validation', this.paramId]);
+    //[routerLink]="['/branch-audit/issue-view',issue.id]"
+  }
+  viewValidation(){
+    this.router.navigate(['branch-audit/issue-validation', this.paramId]);
+  }
+}

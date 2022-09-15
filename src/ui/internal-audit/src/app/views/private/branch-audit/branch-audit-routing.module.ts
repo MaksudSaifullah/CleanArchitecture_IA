@@ -22,6 +22,7 @@ import { ClosingMeetingMinutesCreateComponent } from './closing-meeting-minutes/
 import { IssueViewComponent } from './issue-view/issue-view.component';
 import { ChecklistComponent } from './checklist/checklist.component';
 import { ChecklistCreateComponent } from './checklist/checklist-create/checklist-create.component';
+import { IssueValidationComponent } from './issue-validation/issue-validation.component';
 
 const routes: Routes = [
   {
@@ -111,6 +112,10 @@ const routes: Routes = [
   {
     path:'issue-view/:id',
     component:IssueViewComponent
+  },
+  {
+    path:'issue-validation/:id',
+    component:IssueValidationComponent
   },
   {
     path:'closing-meeting-minutes',

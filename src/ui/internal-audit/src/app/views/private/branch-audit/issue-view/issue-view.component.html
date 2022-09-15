@@ -19,9 +19,9 @@
                     <div class="row">                        
                         <div>
                           <div class="a btn-group" role="group" aria-label="Basic example">
-                            <button  class="btnSaveColor me-1"  cButton> Add Validation
+                            <button  class="btnSaveColor me-1"  cButton (click)="createNewValidation()"> Add Validation
                             </button> 
-                            <button  class="btnSaveColor me-1"  cButton> View Validation
+                            <button  class="btnSaveColor me-1"  cButton (click)="viewValidation()"> View Validation
                             </button> 
                             <button  class="btnCancelColor" [cModalToggle]="changeStatusModal.id"  cButton (click)="changeStatus()"> Change Status 
                             </button> 

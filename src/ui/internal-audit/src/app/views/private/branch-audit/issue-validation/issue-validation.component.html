@@ -1,0 +1,227 @@
+<!-- <p>issue-validation works!</p>
+<h5>{{issueId}}</h5> -->
+<c-nav variant="tabs" id="tabs">
+    <a [active]="true" id="d1" [cTabContent]="tabContent" [routerLink] [tabPaneIdx]="0" cNavLink>Issue</a>
+    <a [cTabContent]="tabContent" id="d2" [routerLink] [tabPaneIdx]="1" cNavLink>Action Plan</a>
+</c-nav>
+<c-col xs="12">
+    <c-card class="mb-4">
+      <c-tab-content #tabContent="cTabContent">
+        <c-tab-pane class="p-3"> 
+          <div class="animated fadeIn">
+            <div class="row">
+              <div class="col-lg-12">
+                <div class="card">
+                  <div class="card-header">
+                    <div class="fa fa-align-justify" >
+                        <strong *ngIf="!formService.isEdit(this.issueValidationForm.get('id'))">New Issue Validation</strong>
+                        <strong *ngIf="formService.isEdit(this.issueValidationForm.get('id'))">Edit Issue Validation</strong>
+                    </div>
+                  </div>
+                  <div class="card-body">
+                   
+                    <form [formGroup]="issueValidationForm" (ngSubmit)="onContinueIssueValidation()" novalidate>                
+                            <div class="form-floating mb-3">
+                                <input type="text" class="form-control" formControlName="code" id="code" placeholder="code">
+                                <label for="floatingInput">Issue Id</label>
+                            </div>
+                            <div class="form-floating mb-3">
+                                <input type="text" class="form-control" formControlName="issueTitle" id="issueTitle" placeholder="issueTitle">
+                                <label for="floatingInput">Issue Title</label>                                
+                            </div>
+                            <div class="form-floating mb-3">
+                                <input class="form-control" placeholder="targetDate" formControlName="targetDate" id="targetDate" type="date" >
+                                <label for="floatingInput">Issue Target Date</label>                                
+                            </div>
+                            <div class="form-floating mb-3">
+                                <input type="text" class="form-control" formControlName="issueTitle" id="issueTitle" placeholder="issueTitle" >
+                                <label for="floatingInput">Issue Owner(s)</label>                                
+                            </div>
+                            <div class="form-floating mb-3">
+                                <input class="form-control" placeholder="targetDate" formControlName="targetDate" id="targetDate" type="date" >
+                                <label for="floatingInput">Audit Report Date</label>                                
+                            </div>
+                            <div class="form-floating mb-3">
+                                <input type="text" class="form-control" formControlName="issueTitle" id="issueTitle" placeholder="issueTitle" >
+                                <label for="floatingInput">Issue Closure Summary</label>                                
+                            </div>
+                            <div class="form-floating mb-3">
+                                <select aria-label="Floating label select example" cSelect id="auditScheduleId"
+                                  formControlName="auditScheduleId" name="auditScheduleId" style="height: 70px;"  #auditSchedule >
+                                  <option value="null">Select</option>
+                                  <option *ngFor="let user of users" [value]="schedule.id">
+                                    {{user.userName}}
+                                  </option>
+                                </select>
+                                <label for="auditScheduleId">Issue Validated By</label>          
+                                <div cRow *ngIf="((issueValidationForm.get('auditScheduleId')?.invalid && issueValidationForm.get('auditScheduleId')?.errors)) &&
+                                  (issueValidationForm.get('auditScheduleId')?.dirty || issueValidationForm.get('auditScheduleId')?.touched)">
+                                  <small class="text-danger">
+                                    This field is required.
+                                  </small>
+                                </div>
+                            </div>
+                            <div class="form-floating mb-3">
+                                <input class="form-control" placeholder="targetDate" formControlName="targetDate" id="targetDate" type="date" >
+                                <label for="floatingInput">Date of Validation</label>                                
+                            </div>
+                            <div class="form-floating mb-3">
+                                <select aria-label="Floating label select example" cSelect id="auditScheduleId"
+                                  formControlName="auditScheduleId" name="auditScheduleId" style="height: 70px;"  #auditSchedule >
+                                  <option value="null">Select</option>
+                                  <option *ngFor="let user of users" [value]="schedule.id">
+                                    {{user.userName}}
+                                  </option>
+                                </select>
+                                <label for="auditScheduleId">Validation Reviewed By</label>          
+                                <div cRow *ngIf="((issueValidationForm.get('auditScheduleId')?.invalid && issueValidationForm.get('auditScheduleId')?.errors)) &&
+                                  (issueValidationForm.get('auditScheduleId')?.dirty || issueValidationForm.get('auditScheduleId')?.touched)">
+                                  <small class="text-danger">
+                                    This field is required.
+                                  </small>
+                                </div>
+                            </div>
+                            <div class="form-floating mb-3">
+                                <input class="form-control" placeholder="targetDate" formControlName="targetDate" id="targetDate" type="date" >
+                                <label for="floatingInput">Date of Review</label>                                
+                            </div>
+                            <div class="form-floating mb-3">
+                                <div class="input-group custom-file-button">
+                                    <label class="input-group-text" for="evidenceDocumentId">Review Evidence</label>
+                                    <input type="file" class="form-control" formControlName="evidenceDocumentId" id="evidenceDocumentId" placeholder="evidenceDocumentId" (change)="onUploadReviewEvidence($event)">
+                                </div>
+                                <div cRow *ngIf="issueValidationForm.get('evidenceDocumentId')?.invalid && issueValidationForm.get('evidenceDocumentId')?.errors &&
+                                          (issueValidationForm.get('evidenceDocumentId')?.dirty || issueValidationForm.get('evidenceDocumentId')?.touched)">
+                                  <small class="text-danger" *ngIf="issueValidationForm.get('evidenceDocumentId').hasError('required')">
+                                      This field is required.
+                                  </small>
+                                </div>
+                            </div>
+                            <div class="form-floating mb-3">
+                                <select aria-label="Floating label select example" cSelect id="auditScheduleId"
+                                  formControlName="auditScheduleId" name="auditScheduleId" style="height: 70px;"  #auditSchedule >
+                                  <option value="null">Select</option>
+                                  <option *ngFor="let user of users" [value]="schedule.id">
+                                    {{user.userName}}
+                                  </option>
+                                </select>
+                                <label for="auditScheduleId">Validation Approved By</label>          
+                                <div cRow *ngIf="((issueValidationForm.get('auditScheduleId')?.invalid && issueValidationForm.get('auditScheduleId')?.errors)) &&
+                                  (issueValidationForm.get('auditScheduleId')?.dirty || issueValidationForm.get('auditScheduleId')?.touched)">
+                                  <small class="text-danger">
+                                    This field is required.
+                                  </small>
+                                </div>
+                            </div>
+                            <div class="form-floating mb-3">
+                                <input class="form-control" placeholder="targetDate" formControlName="targetDate" id="targetDate" type="date" >
+                                <label for="floatingInput">Date of Approval</label>                                
+                            </div>
+                            <div class="row form-floating mb-3">
+                                <div class="input-group custom-file-button">
+                                    <label class="input-group-text" for="evidenceDocumentId">Approval Evidence</label>
+                                    <input type="file" class="form-control" formControlName="evidenceDocumentId" id="evidenceDocumentId" placeholder="evidenceDocumentId" (change)="onUploadApprovalEvidence($event)">
+                                </div>
+                                <div cRow *ngIf="issueValidationForm.get('evidenceDocumentId')?.invalid && issueValidationForm.get('evidenceDocumentId')?.errors &&
+                                            (issueValidationForm.get('evidenceDocumentId')?.dirty || issueValidationForm.get('evidenceDocumentId')?.touched)">
+                                    <small class="text-danger" *ngIf="issueValidationForm.get('evidenceDocumentId').hasError('required')">
+                                        This field is required.
+                                    </small>                        
+                                </div>                               
+                            </div>
+                            <div class="form-floating mb-3">
+                                <input class="form-control" placeholder="targetDate" formControlName="targetDate" id="targetDate" type="date" >
+                                <label for="floatingInput">Issue Closure and Communication Date</label>                                
+                            </div>
+
+                            <div>
+                              <button cButton class="btn btn-danger btnCancelColor me-1" (click)="onCancelIssueValidation()">
+                                <svg cIcon name="cilX" size="md" title="Close Button Icon"></svg> Cancel
+                              </button>
+                            </div>
+                       
+                    </form>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </c-tab-pane>
+        <c-tab-pane class="p-3">
+            <div class="animated fadeIn">
+              <div class="row">
+               <div class="col-lg-12">
+                 <div class="card" >
+                   <div class="card-header"><i class="fa fa-align-justify" ></i> 
+                     <strong>Action Plan List</strong>
+                   </div>
+                   <div class="card-body" >
+                    <div class="row overflow-auto">
+                      <table class="table table-bordered row-border hover datatableStyle">
+                        <thead >
+                          <tr>
+                            <th>SL</th>
+                            <th>Action Plan ID</th>
+                            <th>Management Action Plan</th>
+                            <th class="col-2">Action Owner</th>
+                            <th>Action Target Date</th>
+                            <th class="col-1 text-center">Actions</th>
+                          </tr>
+                        </thead>
+                        <!-- <tbody *ngIf="actionPlans?.length != 0">
+                          <tr *ngFor="let row of actionPlans; let i = index">
+                            
+                            <td> {{i+1}} </td>
+                            <td> {{row.actionPlanCode}} </td>
+                            <td><input type="text" class="form-control" id="managementPlan" placeholder="Management Action Plan"  name="{{row.managementPlan}}" #managementPlan [(ngModel)]="row.managementPlan"></td>
+                            <td>
+                              <c-multi-select multiple class="form-control the_dropdown" [(ngModel)]="row.issueActionPlanOwnerList"  name="{{row.issueActionPlanOwnerList}}" #issueActionPlanOwnerList>
+                                <c-multi-select-option *ngFor="let owner of actionOwnerList" [value]="owner.id" [selected]="isActionPlanOwnerSelected(i,owner.id)">
+                                  {{owner.userName}}
+                                </c-multi-select-option>
+                              </c-multi-select>
+                             
+                            </td>
+                            <td> <input class="form-control" placeholder="targetDate"  type="date" [(ngModel)]="row.targetDate" [ngModel]="row.targetDate | date: 'yyyy-MM-dd'"  name="{{row.targetDate}}" #targetDate></td>
+                            <td class="text-center">
+                              <div class="btn-group" role="group" aria-label="Basic example" >
+                                
+                                <button type="button" class="btn btn-secondary btnEditColor" (click)="addItem(i, managementPlan.value, targetDate.value, issueActionPlanOwnerList.value)">
+                                  <svg cIcon name="cilPlus" size="md" title="Add Button icon"></svg>
+                                </button>
+                                <button type="button" class="btn btn-danger btnDeleteColor" (click)="removeItem(i)">
+                                  <svg cIcon name="cilTrash" size="md" title="Delete Button Icon"></svg>
+                                </button>
+                              </div>
+                            </td>
+      
+                          </tr>                    
+                        </tbody>
+                        <tbody *ngIf="actionPlans?.length == 0">
+                          <tr>
+                            <td colspan="5" class="no-data-available">No data!</td>
+                          </tr>
+                        </tbody> -->
+                      </table>
+                      <div>
+                        <button cButton class="btn btn-primary btnSaveColor me-1" (click)="onSubmitValidationActionPlan()">
+                          <svg cIcon name="cilSave" size="md" title="Save Button Icon"></svg> Save
+                        </button>
+                        <button cButton class="btn btn-danger btnCancelColor me-1" (click)="onCancelValidationActionPlan()">
+                          <svg cIcon name="cilX" size="md" title="Close Button Icon"></svg> Cancel
+                        </button>
+                      </div>
+                      <!-- <div>{{actionPlans | json}}</div> -->
+      
+                    </div>
+                   </div>
+                 </div>
+               </div>
+              </div>
+            </div>
+          </c-tab-pane>
+      </c-tab-content>
+    </c-card>
+</c-col>
+
+    

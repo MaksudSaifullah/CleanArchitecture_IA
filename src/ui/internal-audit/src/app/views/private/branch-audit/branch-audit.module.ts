@@ -38,6 +38,7 @@ import { ClosingMeetingMinutesCreateComponent } from './closing-meeting-minutes/
 import { IssueViewComponent } from './issue-view/issue-view.component';
 import { ChecklistComponent } from './checklist/checklist.component';
 import { ChecklistCreateComponent } from './checklist/checklist-create/checklist-create.component';
+import { IssueValidationComponent } from './issue-validation/issue-validation.component';
 
 
 @NgModule({
@@ -78,7 +79,8 @@ import { ChecklistCreateComponent } from './checklist/checklist-create/checklist
     ClosingMeetingMinutesCreateComponent,
     IssueViewComponent,
     ChecklistComponent,
-    ChecklistCreateComponent
+    ChecklistCreateComponent,
+    IssueValidationComponent
   ],
   imports: [
     CommonModule,

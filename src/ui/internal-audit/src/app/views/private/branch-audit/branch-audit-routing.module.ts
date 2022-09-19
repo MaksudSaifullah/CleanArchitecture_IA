@@ -118,6 +118,10 @@ const routes: Routes = [
     component:IssueValidationComponent
   },
   {
+    path:'issue-validation/:id/:id2',
+    component:IssueValidationComponent
+  },
+  {
     path:'closing-meeting-minutes',
     component: ClosingMeetingMinutesComponent
   },

@@ -6,8 +6,21 @@ export interface  IssueValidation{
     reviewEvidenceDocumentId:   string;
     approvalEvidenceDocumentId: string;
     closureSummary:             string;
+    auditReportDate:            Date;
     validationDate:             Date;
     reviewDate:                 Date;
     approvalDate:               Date;
     issueClosureDate:           Date;
+    reviewEvidenceDocument: EvidenceDocument;
+    approvalEvidenceDocument: EvidenceDocument;
+
 }
+export interface EvidenceDocument {
+    id?: string;
+    documentSourceId?: string;
+    path?: string;
+    name?: string;
+    format?: string;
+    documentSource?: string;
+}
+

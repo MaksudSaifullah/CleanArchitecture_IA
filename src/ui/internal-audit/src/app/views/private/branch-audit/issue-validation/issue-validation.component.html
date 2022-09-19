@@ -1,8 +1,8 @@
 <!-- <p>issue-validation works!</p>
 <h5>{{issueId}}</h5> -->
 <c-nav variant="tabs" id="tabs">
-    <a [active]="true" id="d1" [cTabContent]="tabContent" [routerLink] [tabPaneIdx]="0" cNavLink>Issue</a>
-    <a [cTabContent]="tabContent" id="d2" [routerLink] [tabPaneIdx]="1" cNavLink>Action Plan</a>
+    <a [active]="true" id="d1" [cTabContent]="tabContent" [routerLink] [tabPaneIdx]="0" cNavLink>Issue Validation</a>
+    <a [cTabContent]="tabContent" id="d2" [routerLink] [tabPaneIdx]="1" cNavLink>Action Plan Validation</a>
 </c-nav>
 <c-col xs="12">
     <c-card class="mb-4">
@@ -85,17 +85,25 @@
                                 <input class="form-control" placeholder="reviewDate" formControlName="reviewDate" id="reviewDate" type="date" >
                                 <label for="floatingInput">Date of Review</label>                                
                             </div>
-                            <div class="form-floating mb-3">
-                                <div class="input-group custom-file-button">
+                            <div class="form-floating mb-3 ">
+                              <div class="row">
+                                <div class="input-group custom-file-button col-md-6">
                                     <label class="input-group-text" for="reviewEvidenceDocumentId">Review Evidence</label>
-                                    <input type="file" class="form-control" formControlName="reviewEvidenceDocumentId" id="reviewEvidenceDocumentId" placeholder="reviewEvidenceDocumentId" (change)="onUploadReviewEvidence($event)">
+                                    <input type="file" title={{reviewDocName}} class="form-control" formControlName="reviewEvidenceDocumentId" id="reviewEvidenceDocumentId" placeholder="reviewEvidenceDocumentId" (change)="onUploadReviewEvidence($event)">
                                 </div>
+                                <div class="col-md-6" *ngIf="reviewEvidenceDocumentId != null">
+                                  <small (click)="fileDownLoad(reviewEvidenceDocumentId)" style="color:blue;cursor: pointer;">
+                                      {{reviewDocName}}
+                                  </small>
+                                </div>
+                              </div>
                                 <div cRow *ngIf="issueValidationForm.get('reviewEvidenceDocumentId')?.invalid && issueValidationForm.get('reviewEvidenceDocumentId')?.errors &&
                                           (issueValidationForm.get('reviewEvidenceDocumentId')?.dirty || issueValidationForm.get('reviewEvidenceDocumentId')?.touched)">
                                   <small class="text-danger" *ngIf="issueValidationForm.get('reviewEvidenceDocumentId').hasError('required')">
                                       This field is required.
                                   </small>
                                 </div>
+                                
                             </div>
                             <div class="form-floating mb-3">
                                 <select aria-label="Floating label select example" cSelect id="approvedByUserId"
@@ -120,7 +128,12 @@
                             <div class="row form-floating mb-3">
                                 <div class="input-group custom-file-button">
                                     <label class="input-group-text" for="approvalEvidenceDocumentId">Approval Evidence</label>
-                                    <input type="file" class="form-control" formControlName="approvalEvidenceDocumentId" id="approvalEvidenceDocumentId" placeholder="approvalEvidenceDocumentId" (change)="onUploadApprovalEvidence($event)">
+                                    <input type="file" title={{approvalDocName}} value={{approvalDocName}} class="form-control" formControlName="approvalEvidenceDocumentId" id="approvalEvidenceDocumentId" placeholder="approvalEvidenceDocumentId" (change)="onUploadApprovalEvidence($event)">
+                                </div>
+                                <div class="col-md-6" *ngIf="reviewEvidenceDocumentId != null">
+                                  <small (click)="fileDownLoad(reviewEvidenceDocumentId)" style="color:blue;cursor: pointer;">
+                                      {{reviewDocName}}
+                                  </small>
                                 </div>
                                 <div cRow *ngIf="issueValidationForm.get('approvalEvidenceDocumentId')?.invalid && issueValidationForm.get('approvalEvidenceDocumentId')?.errors &&
                                             (issueValidationForm.get('approvalEvidenceDocumentId')?.dirty || issueValidationForm.get('approvalEvidenceDocumentId')?.touched)">
@@ -139,7 +152,6 @@
                                 <svg cIcon name="cilX" size="md" title="Close Button Icon"></svg> Cancel
                               </button>
                             </div>
-                       
                     </form>
                   </div>
                 </div>
@@ -204,7 +216,7 @@
                         </tbody> -->
                       </table>
                       <div>
-                        <button cButton class="btn btn-primary btnSaveColor me-1" (click)="onSubmitValidationActionPlan()">
+                        <button cButton class="btn btn-primary btnSaveColor me-1" (click)="onSubmit()">
                           <svg cIcon name="cilSave" size="md" title="Save Button Icon"></svg> Save
                         </button>
                         <button cButton class="btn btn-danger btnCancelColor me-1" (click)="onCancelValidationActionPlan()">

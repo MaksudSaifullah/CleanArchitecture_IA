@@ -164,6 +164,6 @@ export class IssueViewComponent implements OnInit {
     //[routerLink]="['/branch-audit/issue-view',issue.id]"
   }
   viewValidation(){
-    this.router.navigate(['branch-audit/issue-validation', this.paramId]);
+    this.router.navigate(['branch-audit/issue-validation', this.paramId, '5292760F-4937-ED11-B3B2-00155D610B18']);
   }
 }

@@ -10,7 +10,8 @@ Internal audits also provide management with the tools necessary to attain opera
 ### Git Installation
 Git is a DevOps tool for source code management—an open-source version control system (VCS) used to handle small to very large projects efficiently. Git is used to tracking changes in the source code, supporting non-linear development so that multiple developers can work together in near real-time
 For installing Git on your device please follow this link 
-[Install Git]("https://git-scm.com/book/en/v2/Getting-Started-Installing-Git").
+[Install Git](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git).
+
 
 ### Clone GIT Repository
 If git is already installed on your device you need to make a clone or copy of Internal-Audit project repository in a directory of your device.
@@ -31,29 +32,37 @@ The solution is built with using
 - Visual Studio 2022 or higher version
 - .NET 6 core
 - Visual Studio Code
-- **Node** To install : 
-[Node](https://phoenixnap.com/kb/install-node-js-npm-on-windows) 
+- **Node** (for installing Node visit this link): 
+[Install Node](https://phoenixnap.com/kb/install-node-js-npm-on-windows) 
 - **Angular 13+** To install run command ``` npm install -g @angular/cli ```
 
-Clone the project repo:
-
+## Step-1: Clone Project Repository
+ Open git bash. Now copy this bellow command and paste it on the bash terminal and click enter. This will make a clone project of Internal Audit in your directory.
 ```
 git clone http://192.168.100.42/team-ia/internal-audit.git
 ```
-## Backend
-Move to **../api/Internal.Audit** directory:
+## Step-2: Run Backend Application
+
+After clonning the project go to **../api/Internal.Audit** directory:
 
 ```
 cd internal-audit/src/api/Internal.Audit
 ```
-Open the solution with visual studio. 
-Internal Audit database is up in 192.168.97.27,1440 server. If you have database in your local server please change the connection string in appsettings.json then build & run the project.
-![](archive/img/databaseConfiguration.png)
+Open the solution using Visual Studio 22 or hiigher version. 
+Internal Audit database is up in **192.168.97.27,1440** server. If you have database in your local server please change the connection string in **appsettings.json** then build & run the project.
+```json
+{
+  "AllowedHosts": "*",
+  "ConnectionStrings": {
+    "InternalAuditDb": "Data Source=192.168.97.27,1440;Initial Catalog=InternalAuditDb;User ID=sa;Password=oLdViCtOrY2008;TrustServerCertificate=True;"
+  }
+}
+```
 
 
-## Frontend
+## Step 3:  Run Frontend Application
 
-Move to **../ui/Internal.Audit** directory:
+After a successfull build and run now move to **../ui/Internal.Audit** directory:
 ```
 cd internal-audit/src/ui/internal.audit
 ```
@@ -67,7 +76,7 @@ ng serve -o
 ```
 If you are running any angular command e.g. ng serve, ng build, ng new, ng generate etc. from Visual Studio Code Terminal or from command prompt and getting a error related to execution policy, then you can go through the below solution to fix above issue.
 
-Solution: Run the following command from the same terminal or command prompt and re-run the ng command to check if it works on your machine:
+**Solution:** Run the following command from the same terminal or command prompt and re-run the ng command to check if it works on your machine:
 ```
 Set-ExecutionPolicy RemoteSigned -Scope CurrentUser
 ```

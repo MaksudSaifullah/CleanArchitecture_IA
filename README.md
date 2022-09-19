@@ -48,7 +48,7 @@ cd internal-audit/src/api/Internal.Audit
 ```
 Open the solution with visual studio. 
 Internal Audit database is up in 192.168.97.27,1440 server. If you have database in your local server please change the connection string in appsettings.json then build & run the project.
- ![](archive/img/databaseConfiguration.png)
+![](archive/img/databaseConfiguration.png)
 
 
 ## Frontend

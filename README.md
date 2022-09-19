@@ -41,20 +41,19 @@ Clone the project repo:
 git clone http://192.168.100.42/team-ia/internal-audit.git
 ```
 ## Backend
-Move to ../api/Internal.Audit directory:
+Move to **../api/Internal.Audit** directory:
 
 ```
 cd internal-audit/src/api/Internal.Audit
 ```
 Open the solution with visual studio. 
 Internal Audit database is up in 192.168.97.27,1440 server. If you have database in your local server please change the connection string in appsettings.json then build & run the project.
-
-
+ ![](archive/img/databaseConfiguration.png)
 
 
 ## Frontend
 
-Move to ../ui/Internal.Audit directory:
+Move to **../ui/Internal.Audit** directory:
 ```
 cd internal-audit/src/ui/internal.audit
 ```
